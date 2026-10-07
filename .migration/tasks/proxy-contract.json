@@ -4,7 +4,7 @@
   "title": "Establish independent proxy parity expectations from the reference",
   "service": "proxy",
   "kind": "contract-change",
-  "status": "review",
+  "status": "active",
   "owner": "codex",
   "branch": "task/proxy-contract",
   "depends_on": [],
@@ -44,5 +44,5 @@
     }
   ],
   "review": null,
-  "handoff": "Requirements self-approval recorded in contract.md; approval is no longer awaiting a human reviewer. Complete baseline fixtures and reference captures before the contract task/gate can pass. No equivalent Go service is claimed."
+  "handoff": "Implement independent synthetic reference characterization and source-derived baseline cases under the approved bounded environment."
 }
