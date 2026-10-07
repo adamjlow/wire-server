@@ -62,6 +62,10 @@ checks. Set thresholds in the contract before measuring. Document how to switch
 back without incompatible persisted data. HTTP parity alone cannot satisfy these
 gates. Real integration execution remains blocked by root policy until explicitly
 authorized; this design supplies no deployment or integration-test permission.
+The scoped 2026-10-07 preparation decision now permits the task-owned synthetic
+reference characterization environment described in
+[its plan](plans/delegated-review.md). It does not permit the existing integration
+suites or substitute characterization for real candidate parity evidence.
 
 Selection evidence must demonstrate omitted selection preserves existing Haskell
 defaults; explicit per-service Go selection works with supported peers; invalid or

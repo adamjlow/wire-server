@@ -111,6 +111,19 @@ Do not run integration tests (`make ci`, `make ci-fast`, `make ci-safe`,
 They require specific environments. Future parity integration runs require an
 explicit maintainer-authorized environment and policy change first.
 
+The user's 2026-10-07 explicit self-review delegation is recorded in
+[the bounded preparation decision](.migration/reviews/2026-10-07-self-review.md).
+For the listed preparation tasks, review may be by the same actor with a clearly
+annotated delegated self-review label; do not claim an independent reviewer.
+This scoped exception overrides the generic independent/human-review requirement
+for those tasks only. Every substantive evidence criterion still applies.
+The isolated reference characterization environment in that decision and
+[plan](docs/go-migration/plans/delegated-review.md) is authorized. This permits
+only the new task-owned synthetic runner with internal Docker networking,
+trusted test TLS and loopback client ports. Existing integration suites remain
+prohibited. No production change, security exception, or candidate compatibility
+claim is authorized by preparation review.
+
 Build commands must end with
 `| grep -vE 'Compiling|Linking|Preprocessing|Configuring|Building'`.
 Use Bash `set -o pipefail` and inspect the build exit status: grep can exit 1 if
