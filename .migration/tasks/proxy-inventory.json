@@ -4,7 +4,7 @@
   "title": "Map proxy service boundaries, observable behaviour and evidence gaps",
   "service": "proxy",
   "kind": "discovery",
-  "status": "active",
+  "status": "review",
   "owner": "codex",
   "branch": "task/proxy-inventory",
   "depends_on": [],
@@ -26,7 +26,22 @@
       "required_evidence": "Exact make migration-check migration-test invocation, passing output artifact and tested revision."
     }
   ],
-  "evidence": [],
+  "evidence": [
+    {
+      "criterion": "inventory",
+      "result": "pass",
+      "command": "Read source entry points, configuration, middleware and existing tests at f6636ed53315fa7b0fc4c8aa39c0bb30c98b6d5e",
+      "revision": "a87f978f980cccbb54b67414e54df3a786e3a127",
+      "artifact": "docs/go-migration/services/proxy/inventory.md"
+    },
+    {
+      "criterion": "validation",
+      "result": "pass",
+      "command": "make migration-check migration-test; git diff --check",
+      "revision": "a87f978f980cccbb54b67414e54df3a786e3a127",
+      "artifact": "docs/go-migration/services/proxy/inventory.md"
+    }
+  ],
   "review": null,
-  "handoff": "Fixture blocker repaired; resume the source inventory."
+  "handoff": "Source inventory and 32 passing validator tests are ready for independent review. No Haskell-vs-Go parity or service stage advancement is claimed."
 }
