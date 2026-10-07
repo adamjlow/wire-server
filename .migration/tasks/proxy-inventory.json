@@ -4,9 +4,9 @@
   "title": "Map proxy service boundaries, observable behaviour and evidence gaps",
   "service": "proxy",
   "kind": "discovery",
-  "status": "blocked",
-  "owner": "codex",
-  "branch": "task/proxy-inventory",
+  "status": "queued",
+  "owner": null,
+  "branch": null,
   "depends_on": [],
   "write_paths": [
     ".migration/tasks/proxy-inventory.json",
@@ -28,5 +28,5 @@
   ],
   "evidence": [],
   "review": null,
-  "handoff": "Inventory drafted. Validator tests depend on live task status and fail after claiming; repair independent synthetic fixtures before resuming."
+  "handoff": "Fixture blocker repaired; resume the source inventory."
 }
