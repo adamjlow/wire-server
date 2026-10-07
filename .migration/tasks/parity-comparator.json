@@ -4,9 +4,9 @@
   "title": "Prepare independent bounded comparison and incomplete-coverage reporting",
   "service": "framework",
   "kind": "contract-change",
-  "status": "queued",
-  "owner": null,
-  "branch": null,
+  "status": "active",
+  "owner": "codex",
+  "branch": "task/parity-comparator",
   "depends_on": [],
   "write_paths": [
     ".migration/tasks/parity-comparator.json",
