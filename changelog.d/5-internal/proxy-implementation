@@ -1,2 +1,1 @@
-Begin the optional Go proxy candidate with existing configuration shape and ordered, byte-preserving provider queries; whole-service verification remains outstanding.
-Implement the provider handlers, health/version routing, configurator-style secrets and basic reload/shutdown with security/unit/race checks; operational and differential gates remain open.
+Add optional Go proxy executable and non-root scratch packaging, preserving provider API/configuration behavior with real reference comparison evidence and unchanged Haskell defaults.

@@ -4,7 +4,7 @@
   "title": "Implement complete optional Go proxy service",
   "service": "proxy",
   "kind": "implementation",
-  "status": "active",
+  "status": "done",
   "owner": "codex",
   "branch": "task/proxy-implementation",
   "depends_on": [
@@ -33,19 +33,22 @@
   "evidence": [
     {
       "criterion": "service",
-      "result": "blocked",
-      "command": "Seven provider handlers, health/version routing, configuration/query/secrets and basic reload/shutdown implemented with source-derived unit/security tests; complete metrics/log/request-ID/transport/operations and independent differential matrix remain outstanding",
-      "revision": "b56e0d47de1b86690f68ab087fa451901f229d02",
-      "artifact": "go/services/proxy/README.md"
+      "result": "pass",
+      "command": "Review source-cited complete proxy implementation and meaningful provider/config/query/secrets/security/middleware/transport/gzip/metrics/logging/cancellation/shutdown tests; real 103-case API and bounded operational evidence at this candidate. Scope limits remain unverified and service compatibility stays null.",
+      "revision": "76aefa94bd8739b96c3961e03bcec90ba27fe5ae",
+      "artifact": "docs/go-migration/services/proxy/oracle/REVIEW.md"
     },
     {
       "criterion": "checks",
       "result": "pass",
-      "command": "PATH=/home/operator/.cache/wire-migration/toolchains/go/bin:$PATH python3 go/check.py proxy (format/tidy/verify/vet/unit/race/build/vulnerability/license); migration/scope/diff checks",
-      "revision": "b56e0d47de1b86690f68ab087fa451901f229d02",
+      "command": "PATH=/home/operator/.cache/wire-migration/toolchains/go/bin:$PATH python3 go/check.py proxy: formatting/tidy/verify/vet/unit/race/build/vulnerability/license all pass; packaging Python tests (3); migration checker/tests (32), scoped check and git diff --check",
+      "revision": "76aefa94bd8739b96c3961e03bcec90ba27fe5ae",
       "artifact": "go/services/proxy/README.md"
     }
   ],
-  "review": null,
-  "handoff": "Runnable initial Go proxy candidate is committed, with pinned checks passing. Keep this implementation task active until the complete service boundary is implemented and tested. Next: independent live comparison of the existing 65 Haskell cases plus remaining transport/gzip/reload/metrics/log/request-ID/shutdown/load characterization. No candidate equivalence, available selection, Haskell unit success or cargohold implementation is claimed."
+  "review": {
+    "by": "codex (self-review delegated by user)",
+    "artifact": "docs/go-migration/services/proxy/oracle/REVIEW.md"
+  },
+  "handoff": "Optional Go proxy code and packaging complete, self-reviewed under user delegation; exact candidate passes Go checks, 103 live API cases and documented operational/reload/shutdown/switchback/load-smoke checks. Ready for requested approach review before cargohold. This closes code implementation, not formal whole-service verified/available gates: Haskell CI unavailable and native GC diagnostic semantics require a contract decision. Haskell remains supported/default; all commits local on go-migration."
 }
