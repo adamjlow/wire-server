@@ -15,6 +15,7 @@ import (
 	"strconv"
 	"strings"
 	"time"
+	"unicode"
 )
 
 type handler struct {
@@ -49,6 +50,9 @@ func newHandler(config Config, secrets *Secrets, transport http.RoundTripper) *h
 }
 
 func writeError(w http.ResponseWriter, status int, label, message string) {
+	if status == 500 {
+		message = "Internal Server Error"
+	}
 	w.Header().Set("Content-Type", "application/json")
 	b, _ := json.Marshal(struct {
 		Code    int    `json:"code"`
@@ -126,8 +130,8 @@ func (h *handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}{
 		{"/proxy/giphy/v1/gifs", "/v1/gifs", "giphy", "api_key", h.config.GiphyEndpoint, Endpoint{"api.giphy.com", 443}, false},
 		{"/proxy/youtube/v3", "/youtube/v3", "youtube", "key", h.config.YoutubeEndpoint, Endpoint{"www.googleapis.com", 443}, false},
-		{"/proxy/googlemaps/api/staticmap", "/maps/api/staticmap", "googlemaps", "key", h.config.GoogleMapsEndpoint, Endpoint{"maps.googleapis.com", 443}, true},
-		{"/proxy/googlemaps/maps/api/geocode", "/maps/api/geocode", "googlemaps", "key", h.config.GoogleMapsEndpoint, Endpoint{"maps.googleapis.com", 443}, false},
+		{"/proxy/googlemaps/api/staticmap", "/maps/api/staticmap", "googlemaps", "key", h.config.GoogleMapsEndpoint, Endpoint{"www.googleapis.com", 443}, true},
+		{"/proxy/googlemaps/maps/api/geocode", "/maps/api/geocode", "googlemaps", "key", h.config.GoogleMapsEndpoint, Endpoint{"www.googleapis.com", 443}, false},
 	} {
 		if path != route.prefix && (route.static || !strings.HasPrefix(path, route.prefix+"/")) {
 			continue
@@ -183,7 +187,7 @@ func (h *handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 func decimalRunes(value string) bool {
 	for _, c := range value {
-		if c < '0' || c > '9' {
+		if !unicode.IsDigit(c) {
 			return false
 		}
 	}
@@ -226,6 +230,11 @@ func (h *handler) reverse(w http.ResponseWriter, incoming *http.Request, target 
 			return
 		}
 		r.Header.Set("X-Real-IP", "0.0.0.0")
+		if incoming.Method != "GET" {
+			// http-client sends an explicit zero length for the unusual mixed-case
+			// methods accepted by proxyServant's case-insensitive GET check.
+			r.TransferEncoding = []string{"identity"}
+		}
 		response, err := h.client.Do(r)
 		if err != nil {
 			if attempt < 2 && pause(incoming.Context(), 5*time.Millisecond) {
@@ -243,6 +252,15 @@ func (h *handler) reverse(w http.ResponseWriter, incoming *http.Request, target 
 			return
 		}
 		defer response.Body.Close()
+		if response.StatusCode >= 500 {
+			body, err := io.ReadAll(response.Body)
+			if err != nil {
+				internalError(w)
+				return
+			}
+			writeUpstreamError(w, response.StatusCode, body)
+			return
+		}
 		for name, values := range response.Header {
 			for _, value := range values {
 				w.Header().Add(name, value)
@@ -291,12 +309,31 @@ func (h *handler) buffered(ctx context.Context, client *http.Client, method, tar
 }
 
 func plainUpstream(w http.ResponseWriter, response *http.Response, body []byte) {
+	if response.StatusCode >= 500 {
+		writeUpstreamError(w, response.StatusCode, body)
+		return
+	}
 	if values := response.Header.Values("Content-Type"); len(values) > 0 {
 		w.Header().Add("Content-Type", values[0])
 	}
 	w.Header().Add("Content-Type", "text/plain; charset=UTF-8")
 	w.WriteHeader(response.StatusCode)
 	_, _ = w.Write(body)
+}
+
+func writeUpstreamError(w http.ResponseWriter, status int, body []byte) {
+	// catchErrors preserves a serialized Wai.Error; other 5xx bodies become its
+	// message and lose upstream headers. Invalid UTF-8 is decoded leniently.
+	var existing struct {
+		Code    *int    `json:"code"`
+		Label   *string `json:"label"`
+		Message *string `json:"message"`
+	}
+	if json.Unmarshal(body, &existing) == nil && existing.Code != nil && existing.Label != nil && existing.Message != nil {
+		writeError(w, *existing.Code, *existing.Label, *existing.Message)
+		return
+	}
+	writeError(w, status, "server-error", strings.ToValidUTF8(string(body), "\uFFFD"))
 }
 
 func (h *handler) spotify(w http.ResponseWriter, r *http.Request) {

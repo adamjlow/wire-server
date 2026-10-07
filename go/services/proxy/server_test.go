@@ -117,6 +117,9 @@ func TestSpotifyCredentialBoundaryAndIncomingPost(t *testing.T) {
 func TestRawRetryAndWrongMethod(t *testing.T) {
 	var attempts atomic.Int32
 	h, _ := providerHandler(t, func(w http.ResponseWriter, r *http.Request) {
+		if r.Method == "gEt" && r.Header.Get("Content-Length") != "0" {
+			t.Error("mixed-case GET lost source's explicit zero content length")
+		}
 		if attempts.Add(1) < 3 {
 			w.WriteHeader(502)
 			return
@@ -132,6 +135,36 @@ func TestRawRetryAndWrongMethod(t *testing.T) {
 	h.ServeHTTP(w, httptest.NewRequest("POST", "/proxy/giphy/v1/gifs/search", nil))
 	if w.Code != 405 || attempts.Load() != 3 || w.Body.String() != `{"code":405,"label":"method-not-allowed","message":"Method not allowed"}` {
 		t.Fatal("method error/effects changed")
+	}
+}
+
+func TestFinalUpstreamErrorsUseSharedErrorContract(t *testing.T) {
+	for _, test := range []struct {
+		status         int
+		body, expected string
+	}{
+		{502, `{"provider":"synthetic"}`, `{"code":502,"label":"server-error","message":"{\"provider\":\"synthetic\"}"}`},
+		{500, "synthetic-sensitive-detail", `{"code":500,"label":"server-error","message":"Internal Server Error"}`},
+		{503, `{"code":503,"label":"custom","message":"synthetic message"}`, `{"code":503,"label":"custom","message":"synthetic message"}`},
+	} {
+		for _, path := range []string{"/proxy/giphy/v1/gifs/search", "/proxy/spotify/api/token"} {
+			var attempts atomic.Int32
+			h, _ := providerHandler(t, func(w http.ResponseWriter, r *http.Request) {
+				attempts.Add(1)
+				w.Header().Set("X-Provider", "must-not-forward")
+				w.WriteHeader(test.status)
+				_, _ = w.Write([]byte(test.body))
+			})
+			w := httptest.NewRecorder()
+			h.ServeHTTP(w, httptest.NewRequest("GET", path, nil))
+			wantAttempts := int32(1)
+			if test.status == 502 && strings.Contains(path, "giphy") {
+				wantAttempts = 3
+			}
+			if w.Code != test.status || w.Body.String() != test.expected || w.Header().Get("X-Provider") != "" || attempts.Load() != wantAttempts {
+				t.Fatalf("%s status %d: response/effects differ: %d %s", path, test.status, w.Code, w.Body.String())
+			}
+		}
 	}
 }
 
