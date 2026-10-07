@@ -3,6 +3,7 @@
 
 import argparse
 import base64
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 import hashlib
 import gzip
@@ -162,7 +163,93 @@ def candidate_receipt(path):
     return receipt
 
 
-def capture(binary, output, candidate=None, suite="initial"):
+def operational_checks(provider, service_ids, files, launch, report):
+    profile = {"statuses": [200], "headers": {"Content-Type": ["application/json"]},
+               "body": base64.b64encode(b'{"provider":"synthetic"}').decode()}
+    headers = [["Request-Id", "synthetic-operation"]]
+
+    def observed(role, target="/proxy/giphy/v1/gifs/search"):
+        request(provider, "control", "POST", "/reset", [["Content-Type", "application/json"]], json.dumps(profile).encode())
+        response = request(provider, role, "GET", target, headers)
+        effects = request(provider, "control", "GET", "/observations")
+        return {"response": response, "effects": json.loads(base64.b64decode(effects["body_base64"]))}
+
+    operations = report["operations"] = {}
+    operations["before_reload"] = {role: observed(role) for role in service_ids}
+    updated = 'secrets {\n' + '\n'.join(f' {name} = "' +
+        ("synthetic-updated-giphy-secret" if name == "giphy" else f"synthetic-{name}-secret") + '"'
+        for name in ("youtube", "googlemaps", "soundcloud", "giphy", "spotify")) + '\n}\n'
+    secret_file = files / "secrets.conf"
+    secret_file.chmod(0o644); secret_file.write_text(updated); secret_file.chmod(0o444)
+    started = time.monotonic()
+    while True:
+        pair = {role: observed(role) for role in service_ids}
+        if all(v["response"]["status"] == 200 and len(v["effects"]) == 1 and
+               "api_key=synthetic-updated-giphy-secret" in v["effects"][0]["target"] for v in pair.values()):
+            operations["valid_reload"] = pair
+            operations["valid_reload_elapsed_seconds"] = time.monotonic() - started
+            break
+        if time.monotonic() - started > 75:
+            raise TimeoutError("valid synthetic secret reload did not complete")
+        time.sleep(2)
+    print("Both runtimes loaded the changed synthetic secret", flush=True)
+
+    baseline_logs = {role: command(["docker", "logs", cid]).count("Failed reloading config") for role, cid in service_ids.items()}
+    secret_file.chmod(0o644); secret_file.write_text('secrets {\n giphy = [invalid-synthetic\n'); secret_file.chmod(0o444)
+    started = time.monotonic()
+    while not all(command(["docker", "logs", cid]).count("Failed reloading config") > baseline_logs[role]
+                  for role, cid in service_ids.items()):
+        if time.monotonic() - started > 75:
+            raise TimeoutError("invalid synthetic reload was not observed")
+        time.sleep(2)
+    operations["invalid_reload_retention"] = {role: observed(role) for role in service_ids}
+    operations["invalid_reload_elapsed_seconds"] = time.monotonic() - started
+    print("Both runtimes rejected invalid reload and kept the last valid secret", flush=True)
+
+    # Restart both identical images with the same disabled-version configuration.
+    secret_file.chmod(0o644); secret_file.write_text(updated); secret_file.chmod(0o444)
+    config_file = files / "proxy.yaml"
+    config = json.loads(config_file.read_text())
+    config["disabledAPIVersions"] = ["v0", "development"]
+    config["logLevel"] = "Info"; config["logFormat"] = "StructuredJSON"
+    config_file.chmod(0o644); config_file.write_text(json.dumps(config)); config_file.chmod(0o444)
+    operations["variant_config_sha256"] = sha(config_file)
+    replacement = {}
+    for role, cid in service_ids.items():
+        command(["docker", "stop", "--time", "35", cid])
+        operations.setdefault("normal_shutdown", {})[role] = json.loads(command(["docker", "inspect", cid]))[0]["State"]["ExitCode"]
+        # Keep stopped originals for final log capture/cleanup; use distinct names
+        # but retain the fixed role's network alias after disconnecting originals.
+        command(["docker", "network", "disconnect", report["run_id"], cid])
+        image = REFERENCE if role == "reference" else report["candidate"]["image_id"]
+        replacement[role] = launch(role, image, ["--env", "SYSTEM_CERTIFICATE_PATH=/fixture/ca.pem", "--env", "SSL_CERT_FILE=/fixture/ca.pem"], suffix="-variant")
+        ready(provider, role, "/i/status")
+    operations["disabled_versions"] = {role: {version: observed(role, "/" + version + "/proxy/giphy/v1/gifs/search")
+        for version in ("v0", "v19", "v1")} for role in replacement}
+
+    profile["delay_ms"] = 500
+    request(provider, "control", "POST", "/reset", [["Content-Type", "application/json"]], json.dumps(profile).encode())
+    with ThreadPoolExecutor(max_workers=2) as executor:
+        pending = {role: executor.submit(request, provider, role, "GET", "/proxy/giphy/v1/gifs/search", headers) for role in replacement}
+        deadline = time.monotonic() + 5
+        while True:
+            effects = request(provider, "control", "GET", "/observations")
+            if json.loads(base64.b64decode(effects["body_base64"])):
+                break
+            if time.monotonic() > deadline:
+                raise TimeoutError("shutdown request did not reach provider")
+            time.sleep(0.05)
+        for cid in replacement.values():
+            command(["docker", "kill", "--signal=TERM", cid])
+        operations["inflight_shutdown"] = {role: result.result(timeout=15) for role, result in pending.items()}
+    for role, cid in replacement.items():
+        command(["docker", "wait", cid], timeout=40)
+        operations.setdefault("inflight_exit_codes", {})[role] = json.loads(command(["docker", "inspect", cid]))[0]["State"]["ExitCode"]
+        operations.setdefault("structured_logs", {})[role] = command(["docker", "logs", cid])[-65536:]
+    print("Disabled/development versions and in-flight SIGTERM shutdown captured", flush=True)
+
+
+def capture(binary, output, candidate=None, suite="initial", operations=False):
     scenarios(suite)
     binary = Path(binary).absolute()
     if not binary.is_file() or binary.is_symlink():
@@ -234,8 +321,8 @@ def capture(binary, output, candidate=None, suite="initial"):
             if json.loads(command(["docker", "network", "inspect", run_id]))[0]["Internal"] is not True:
                 raise ValueError("network is not isolated")
 
-            def launch(name, image_name, extra=()):
-                container = command(["docker", "run", "--detach", "--name", run_id + "-" + name,
+            def launch(name, image_name, extra=(), suffix=""):
+                container = command(["docker", "run", "--detach", "--name", run_id + "-" + name + suffix,
                                      "--network", run_id, "--network-alias", name,
                                      "--read-only", "--cap-drop=ALL", "--security-opt=no-new-privileges",
                                      "--pids-limit=512", "--memory=1g", "--cpus=2",
@@ -292,6 +379,10 @@ def capture(binary, output, candidate=None, suite="initial"):
             if candidate is not None:
                 report["candidate_metrics"] = request(provider_id, "candidate", "GET", "/i/metrics")
             report["reference_logs"] = command(["docker", "logs", reference_id])[-65536:]
+            if operations:
+                if candidate is None:
+                    raise ValueError("operational comparison requires both runtimes")
+                operational_checks(provider_id, {"reference": reference_id, "candidate": candidate_id}, files, launch, report)
     except (OSError, ValueError, TimeoutError, subprocess.SubprocessError) as error:
         report["failure_category"] = type(error).__name__
         if isinstance(error, (ValueError, TimeoutError)):
@@ -329,9 +420,10 @@ def main():
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--candidate-receipt", type=Path, help="optional validated local Go image/build receipt")
     parser.add_argument("--suite", choices=("initial", "extended"), default="initial")
+    parser.add_argument("--operations", action="store_true", help="compare real 60s reload, disabled versions and SIGTERM drain")
     args = parser.parse_args()
     try:
-        report = capture(args.provider_binary, args.output, args.candidate_receipt, args.suite)
+        report = capture(args.provider_binary, args.output, args.candidate_receipt, args.suite, args.operations)
     except (OSError, ValueError, TimeoutError, subprocess.SubprocessError):
         print("Reference characterization failed; partial evidence retained, no parity claimed")
         return 2
