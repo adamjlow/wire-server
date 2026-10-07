@@ -66,6 +66,9 @@ func TestProfilesRejectUnsafeInput(t *testing.T) {
 		{Statuses: []int{200}, Headers: http.Header{"Location": {"x\r\ny"}}},
 		{Statuses: []int{200}, Headers: http.Header{"Set-Cookie": {"x"}}},
 		{Statuses: []int{200}, Body: make([]byte, limit+1)},
+		{Statuses: []int{200}, Fault: "uncontrolled"},
+		{Statuses: []int{200}, DelayMS: -1},
+		{Statuses: []int{200}, DelayMS: 6001},
 	} {
 		if validProfile(p) {
 			t.Fatal("unsafe profile accepted")

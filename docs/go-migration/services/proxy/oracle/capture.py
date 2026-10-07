@@ -5,6 +5,7 @@ import argparse
 import base64
 from datetime import datetime, timezone
 import hashlib
+import gzip
 import json
 from pathlib import Path
 import re
@@ -49,13 +50,15 @@ def ready(container, role, path):
     raise TimeoutError("isolated fixture did not become ready")
 
 
-def scenarios():
+def scenarios(suite="initial"):
+    if suite not in {"initial", "extended"}:
+        raise ValueError("unknown case suite")
     cases = []
 
     def add(name, target, method="GET", status=200, provider_statuses=None,
             provider_headers=None, body=b"", headers=None):
         cases.append({"id": name, "method": method, "target": target,
-                      "headers": headers or [["Request-Id", "synthetic-reference-case"]],
+                      "headers": headers if headers is not None else [["Request-Id", "synthetic-reference-case"]],
                       "body_base64": base64.b64encode(body).decode(), "expected_status": status,
                       "provider": {"statuses": provider_statuses or [200],
                                    "headers": provider_headers or {"Content-Type": ["application/json"], "X-Provider": ["synthetic"]},
@@ -97,6 +100,44 @@ def scenarios():
         add("version-" + str(version), "/v" + str(version) + paths["giphy"])
     add("version-unknown", "/v99" + paths["giphy"], status=404)
     add("version-internal", "/v0/i/status", status=404)
+    if suite == "extended":
+        # Reuse request specifications from integration/test/Test/Proxy.hs;
+        # provider effects validate the forwarded values against real Haskell.
+        for name, target, method, body in (
+            ("upstream-test-giphy", paths["giphy"] + "?q=monday&limit=100&offset=0", "GET", b""),
+            ("upstream-test-youtube", "/proxy/youtube/v3/wef?gnarz=true", "GET", b""),
+            ("upstream-test-google-geocode", "/proxy/googlemaps/maps/api/geocode/path_segment?geocode=true", "GET", b""),
+            ("upstream-test-google-static", paths["staticmap"] + "?staticmap=true", "GET", b""),
+            ("upstream-test-spotify", "/proxy/spotify/api/token", "POST", b'{"v":"my-spotify-body"}'),
+            ("upstream-test-soundcloud-resolve", "/proxy/soundcloud/resolve?url=https%3A%2F%2Fmy.url", "GET", b"")):
+            add(name, target, method=method, body=body)
+        for status in (500, 503):
+            add("giphy-upstream-" + str(status), paths["giphy"], provider_statuses=[status], status=status)
+            add("spotify-upstream-" + str(status), "/proxy/spotify/api/token", provider_statuses=[status], status=status)
+        for family, path in (("giphy", paths["giphy"]), ("spotify", "/proxy/spotify/api/token"),
+                             ("resolve", "/proxy/soundcloud/resolve?url=synthetic")):
+            for fault in ("close", "incomplete-headers"):
+                add(family + "-transport-" + fault, path, status=502 if family == "giphy" else 500)
+                cases[-1]["provider"]["fault"] = fault
+            add(family + "-redirect", path, provider_statuses=[302, 200],
+                provider_headers={"Content-Type": ["application/json"], "Location": ["https://provider:8443/redirect-target"]})
+        for family, path in (("giphy", paths["giphy"]), ("spotify", "/proxy/spotify/api/token")):
+            add(family + "-gzip-response", path, provider_headers={"Content-Type": ["application/json"], "Content-Encoding": ["gzip"]})
+            cases[-1]["provider"]["body"] = base64.b64encode(gzip.compress(b'{"provider":"synthetic"}', mtime=0)).decode()
+        headers = [["Request-Id", "synthetic-reference-case"], ["Content-Encoding", "gzip"], ["Content-Type", "application/json"]]
+        add("spotify-gzip-request", "/proxy/spotify/api/token", method="POST", body=gzip.compress(b'{"v":"my-spotify-body"}', mtime=0), headers=headers)
+        add("spotify-malformed-gzip", "/proxy/spotify/api/token", method="POST", body=b"invalid gzip", headers=headers, status=400)
+        add("unknown-malformed-gzip", "/unknown", body=b"invalid gzip", headers=headers, status=404)
+        add("health-head", "/i/status", method="HEAD")
+        add("health-post", "/i/status", method="POST", status=405)
+        add("giphy-head", paths["giphy"], method="HEAD", status=405)
+        add("version-unicode", "/v%EF%BC%91" + paths["giphy"], status=404)
+        add("version-bare-v", "/v" + paths["giphy"], status=404)
+        add("version-leading-zero", "/v00" + paths["giphy"], status=404)
+        add("request-id-missing", paths["giphy"], headers=[])
+        add("spotify-repeated-headers", "/proxy/spotify/api/token", method="POST", body=b"synthetic",
+            headers=[["Request-Id", "synthetic-reference-case"], ["Accept", "application/json"], ["Accept", "text/plain"],
+                     ["Content-Type", "application/json"], ["Content-Type", "text/plain"]])
     return cases
 
 
@@ -121,7 +162,8 @@ def candidate_receipt(path):
     return receipt
 
 
-def capture(binary, output, candidate=None):
+def capture(binary, output, candidate=None, suite="initial"):
+    scenarios(suite)
     binary = Path(binary).absolute()
     if not binary.is_file() or binary.is_symlink():
         raise ValueError("provider binary must be a regular non-symlink file")
@@ -137,6 +179,7 @@ def capture(binary, output, candidate=None):
               "run_id": run_id, "started_at": datetime.now(timezone.utc).isoformat(),
               "runner_sha256": sha(__file__), "provider_binary_sha256": sha(binary),
               "provider_source_sha256": sha(ROOT / "provider/main.go"), "cases": []}
+    report["suite"] = suite
     try:
         if candidate is not None:
             receipt = candidate_receipt(candidate)
@@ -215,7 +258,7 @@ def capture(binary, output, candidate=None):
                 ready(provider_id, "candidate", "/i/status")
                 if command(["docker", "inspect", "--format", "{{.Image}}", candidate_id]) != receipt["image_id"]:
                     raise ValueError("running candidate image mismatch")
-            cases = scenarios()
+            cases = scenarios(suite)
             report["scenario_sha256"] = hashlib.sha256(json.dumps(cases, sort_keys=True).encode()).hexdigest()
             for case in cases:
                 reset = request(provider_id, "control", "POST", "/reset", [["Content-Type", "application/json"]],
@@ -285,9 +328,10 @@ def main():
     parser.add_argument("--provider-binary", required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--candidate-receipt", type=Path, help="optional validated local Go image/build receipt")
+    parser.add_argument("--suite", choices=("initial", "extended"), default="initial")
     args = parser.parse_args()
     try:
-        report = capture(args.provider_binary, args.output, args.candidate_receipt)
+        report = capture(args.provider_binary, args.output, args.candidate_receipt, args.suite)
     except (OSError, ValueError, TimeoutError, subprocess.SubprocessError):
         print("Reference characterization failed; partial evidence retained, no parity claimed")
         return 2

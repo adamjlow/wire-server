@@ -29,6 +29,8 @@ type profile struct {
 	Statuses []int       `json:"statuses"`
 	Headers  http.Header `json:"headers"`
 	Body     []byte      `json:"body"`
+	Fault    string      `json:"fault,omitempty"`
+	DelayMS  int         `json:"delay_ms,omitempty"`
 }
 
 type observation struct {
@@ -129,13 +131,16 @@ func validProfile(p profile) bool {
 	if len(p.Statuses) < 1 || len(p.Statuses) > 10 || len(p.Body) > limit || len(p.Headers) > 20 {
 		return false
 	}
+	if (p.Fault != "" && p.Fault != "close" && p.Fault != "incomplete-headers") || p.DelayMS < 0 || p.DelayMS > 6000 {
+		return false
+	}
 	for _, s := range p.Statuses {
 		if s < 200 || s > 599 {
 			return false
 		}
 	}
 	for name, values := range p.Headers {
-		if name != "Content-Type" && name != "Location" && name != "X-Provider" && name != "Retry-After" {
+		if name != "Content-Type" && name != "Content-Encoding" && name != "Location" && name != "X-Provider" && name != "Retry-After" {
 			return false
 		}
 		if len(values) > 10 {
@@ -164,6 +169,26 @@ func (f *fixture) provider(w http.ResponseWriter, r *http.Request) {
 	}
 	f.seen = append(f.seen, observation{Method: r.Method, Target: r.RequestURI,
 		Host: r.Host, Proto: r.Proto, Headers: r.Header.Clone(), Body: b})
+	if f.profile.Fault != "" {
+		conn, _, err := w.(http.Hijacker).Hijack()
+		if err != nil {
+			return
+		}
+		if f.profile.Fault == "incomplete-headers" {
+			_, _ = io.WriteString(conn, "HTTP/1.1 200 OK\r\nX-Synthetic: incomplete")
+		}
+		_ = conn.Close()
+		return
+	}
+	if f.profile.DelayMS > 0 {
+		timer := time.NewTimer(time.Duration(f.profile.DelayMS) * time.Millisecond)
+		defer timer.Stop()
+		select {
+		case <-r.Context().Done():
+			return
+		case <-timer.C:
+		}
+	}
 	index := min(len(f.seen)-1, len(f.profile.Statuses)-1)
 	for name, values := range f.profile.Headers {
 		for _, value := range values {

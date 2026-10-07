@@ -65,7 +65,7 @@ def compare(report):
     foundation.digest(candidate.get("binary_sha256"))
     require(candidate.get("image_id", "").startswith("sha256:"), "missing immutable candidate image")
     foundation.digest(candidate["image_id"][7:])
-    expected = capture.scenarios()
+    expected = capture.scenarios(report.get("suite", "initial"))
     scenario_hash = hashlib.sha256(json.dumps(expected, sort_keys=True).encode()).hexdigest()
     require(report.get("scenario_sha256") == scenario_hash, "scenario identity mismatch")
     cases = foundation.indexed(report.get("cases"))
