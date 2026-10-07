@@ -245,6 +245,9 @@ def capture(binary, output, candidate=None):
                 print(case["id"], response["status"], "provider attempts", len(case["effects"]), flush=True)
             report["capture_complete"] = len(report["cases"]) == len(cases)
             report["source_status_mismatches"] = sum(not c["source_status_matched"] for c in report["cases"])
+            report["reference_metrics"] = request(provider_id, "reference", "GET", "/i/metrics")
+            if candidate is not None:
+                report["candidate_metrics"] = request(provider_id, "candidate", "GET", "/i/metrics")
             report["reference_logs"] = command(["docker", "logs", reference_id])[-65536:]
     except (OSError, ValueError, TimeoutError, subprocess.SubprocessError) as error:
         report["failure_category"] = type(error).__name__
