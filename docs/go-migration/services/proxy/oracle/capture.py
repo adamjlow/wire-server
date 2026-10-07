@@ -52,7 +52,7 @@ def ready(container, role, path):
 
 
 def scenarios(suite="initial"):
-    if suite not in {"initial", "extended"}:
+    if suite not in {"initial", "extended", "operations"}:
         raise ValueError("unknown case suite")
     cases = []
 
@@ -139,6 +139,8 @@ def scenarios(suite="initial"):
         add("spotify-repeated-headers", "/proxy/spotify/api/token", method="POST", body=b"synthetic",
             headers=[["Request-Id", "synthetic-reference-case"], ["Accept", "application/json"], ["Accept", "text/plain"],
                      ["Content-Type", "application/json"], ["Content-Type", "text/plain"]])
+    if suite == "operations":
+        return [case for case in cases if case["id"] in {"health", "unknown-route", "giphy-forward"}]
     return cases
 
 
@@ -163,7 +165,7 @@ def candidate_receipt(path):
     return receipt
 
 
-def operational_checks(provider, service_ids, files, launch, report):
+def operational_checks(provider, service_ids, files, launch, report, mode="full"):
     profile = {"statuses": [200], "headers": {"Content-Type": ["application/json"]},
                "body": base64.b64encode(b'{"provider":"synthetic"}').decode()}
     headers = [["Request-Id", "synthetic-operation"]]
@@ -174,37 +176,41 @@ def operational_checks(provider, service_ids, files, launch, report):
         effects = request(provider, "control", "GET", "/observations")
         return {"response": response, "effects": json.loads(base64.b64decode(effects["body_base64"]))}
 
-    operations = report["operations"] = {}
-    operations["before_reload"] = {role: observed(role) for role in service_ids}
+    operations = report["operations"] = {"mode": mode}
     updated = 'secrets {\n' + '\n'.join(f' {name} = "' +
         ("synthetic-updated-giphy-secret" if name == "giphy" else f"synthetic-{name}-secret") + '"'
         for name in ("youtube", "googlemaps", "soundcloud", "giphy", "spotify")) + '\n}\n'
     secret_file = files / "secrets.conf"
-    secret_file.chmod(0o644); secret_file.write_text(updated); secret_file.chmod(0o444)
-    started = time.monotonic()
-    while True:
-        pair = {role: observed(role) for role in service_ids}
-        if all(v["response"]["status"] == 200 and len(v["effects"]) == 1 and
-               "api_key=synthetic-updated-giphy-secret" in v["effects"][0]["target"] for v in pair.values()):
-            operations["valid_reload"] = pair
-            operations["valid_reload_elapsed_seconds"] = time.monotonic() - started
-            break
-        if time.monotonic() - started > 75:
-            raise TimeoutError("valid synthetic secret reload did not complete")
-        time.sleep(2)
-    print("Both runtimes loaded the changed synthetic secret", flush=True)
+    if mode in {"full", "reload"}:
+        operations["before_reload"] = {role: observed(role) for role in service_ids}
+        secret_file.chmod(0o644); secret_file.write_text(updated); secret_file.chmod(0o444)
+        started = time.monotonic()
+        while True:
+            pair = {role: observed(role) for role in service_ids}
+            if all(v["response"]["status"] == 200 and len(v["effects"]) == 1 and
+                   "api_key=synthetic-updated-giphy-secret" in v["effects"][0]["target"] for v in pair.values()):
+                operations["valid_reload"] = pair
+                operations["valid_reload_elapsed_seconds"] = time.monotonic() - started
+                break
+            if time.monotonic() - started > 75:
+                raise TimeoutError("valid synthetic secret reload did not complete")
+            time.sleep(2)
+        print("Both runtimes loaded the changed synthetic secret", flush=True)
 
-    baseline_logs = {role: command(["docker", "logs", cid]).count("Failed reloading config") for role, cid in service_ids.items()}
-    secret_file.chmod(0o644); secret_file.write_text('secrets {\n giphy = [invalid-synthetic\n'); secret_file.chmod(0o444)
-    started = time.monotonic()
-    while not all(command(["docker", "logs", cid]).count("Failed reloading config") > baseline_logs[role]
-                  for role, cid in service_ids.items()):
-        if time.monotonic() - started > 75:
-            raise TimeoutError("invalid synthetic reload was not observed")
-        time.sleep(2)
-    operations["invalid_reload_retention"] = {role: observed(role) for role in service_ids}
-    operations["invalid_reload_elapsed_seconds"] = time.monotonic() - started
-    print("Both runtimes rejected invalid reload and kept the last valid secret", flush=True)
+        baseline_logs = {role: command(["docker", "logs", cid]).count("Failed reloading config") for role, cid in service_ids.items()}
+        secret_file.chmod(0o644); secret_file.write_text('secrets {\n giphy = [invalid-synthetic\n'); secret_file.chmod(0o444)
+        started = time.monotonic()
+        while not all(command(["docker", "logs", cid]).count("Failed reloading config") > baseline_logs[role]
+                      for role, cid in service_ids.items()):
+            if time.monotonic() - started > 75:
+                raise TimeoutError("invalid synthetic reload was not observed")
+            time.sleep(2)
+        operations["invalid_reload_retention"] = {role: observed(role) for role in service_ids}
+        operations["invalid_reload_elapsed_seconds"] = time.monotonic() - started
+        print("Both runtimes rejected invalid reload and kept the last valid secret", flush=True)
+
+    if mode == "reload":
+        return
 
     # Restart both identical images with the same disabled-version configuration.
     secret_file.chmod(0o644); secret_file.write_text(updated); secret_file.chmod(0o444)
@@ -234,11 +240,14 @@ def operational_checks(provider, service_ids, files, launch, report):
         deadline = time.monotonic() + 5
         while True:
             effects = request(provider, "control", "GET", "/observations")
-            if json.loads(base64.b64decode(effects["body_base64"])):
+            if len(json.loads(base64.b64decode(effects["body_base64"]))) == len(pending):
                 break
             if time.monotonic() > deadline:
                 raise TimeoutError("shutdown request did not reach provider")
             time.sleep(0.05)
+        operations["inflight_active_before_signal"] = all(not result.done() for result in pending.values())
+        if not operations["inflight_active_before_signal"]:
+            raise ValueError("shutdown fixture responses completed before signal; no drain evidence")
         for cid in replacement.values():
             command(["docker", "kill", "--signal=TERM", cid])
         operations["inflight_shutdown"] = {role: result.result(timeout=15) for role, result in pending.items()}
@@ -382,7 +391,7 @@ def capture(binary, output, candidate=None, suite="initial", operations=False):
             if operations:
                 if candidate is None:
                     raise ValueError("operational comparison requires both runtimes")
-                operational_checks(provider_id, {"reference": reference_id, "candidate": candidate_id}, files, launch, report)
+                operational_checks(provider_id, {"reference": reference_id, "candidate": candidate_id}, files, launch, report, operations)
     except (OSError, ValueError, TimeoutError, subprocess.SubprocessError) as error:
         report["failure_category"] = type(error).__name__
         if isinstance(error, (ValueError, TimeoutError)):
@@ -419,8 +428,8 @@ def main():
     parser.add_argument("--provider-binary", required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--candidate-receipt", type=Path, help="optional validated local Go image/build receipt")
-    parser.add_argument("--suite", choices=("initial", "extended"), default="initial")
-    parser.add_argument("--operations", action="store_true", help="compare real 60s reload, disabled versions and SIGTERM drain")
+    parser.add_argument("--suite", choices=("initial", "extended", "operations"), default="initial")
+    parser.add_argument("--operations", nargs="?", const="full", choices=("full", "reload", "shutdown"), help="compare real reload, disabled versions or SIGTERM drain")
     args = parser.parse_args()
     try:
         report = capture(args.provider_binary, args.output, args.candidate_receipt, args.suite, args.operations)

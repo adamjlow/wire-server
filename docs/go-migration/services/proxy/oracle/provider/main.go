@@ -162,26 +162,29 @@ func (f *fixture) provider(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	f.mu.Lock()
-	defer f.mu.Unlock()
 	if len(f.seen) >= 100 {
+		f.mu.Unlock()
 		http.Error(w, "fixture observation limit", 503)
 		return
 	}
 	f.seen = append(f.seen, observation{Method: r.Method, Target: r.RequestURI,
 		Host: r.Host, Proto: r.Proto, Headers: r.Header.Clone(), Body: b})
-	if f.profile.Fault != "" {
+	current := f.profile
+	index := min(len(f.seen)-1, len(current.Statuses)-1)
+	f.mu.Unlock()
+	if current.Fault != "" {
 		conn, _, err := w.(http.Hijacker).Hijack()
 		if err != nil {
 			return
 		}
-		if f.profile.Fault == "incomplete-headers" {
+		if current.Fault == "incomplete-headers" {
 			_, _ = io.WriteString(conn, "HTTP/1.1 200 OK\r\nX-Synthetic: incomplete")
 		}
 		_ = conn.Close()
 		return
 	}
-	if f.profile.DelayMS > 0 {
-		timer := time.NewTimer(time.Duration(f.profile.DelayMS) * time.Millisecond)
+	if current.DelayMS > 0 {
+		timer := time.NewTimer(time.Duration(current.DelayMS) * time.Millisecond)
 		defer timer.Stop()
 		select {
 		case <-r.Context().Done():
@@ -189,14 +192,13 @@ func (f *fixture) provider(w http.ResponseWriter, r *http.Request) {
 		case <-timer.C:
 		}
 	}
-	index := min(len(f.seen)-1, len(f.profile.Statuses)-1)
-	for name, values := range f.profile.Headers {
+	for name, values := range current.Headers {
 		for _, value := range values {
 			w.Header().Add(name, value)
 		}
 	}
-	w.WriteHeader(f.profile.Statuses[index])
-	_, _ = w.Write(f.profile.Body)
+	w.WriteHeader(current.Statuses[index])
+	_, _ = w.Write(current.Body)
 }
 
 func (f *fixture) control(w http.ResponseWriter, r *http.Request) {

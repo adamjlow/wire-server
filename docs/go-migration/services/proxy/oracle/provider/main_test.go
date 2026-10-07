@@ -14,7 +14,34 @@ import (
 	"reflect"
 	"strings"
 	"testing"
+	"time"
 )
+
+func TestControlCanObserveRequestBeforeDelayedResponseCompletes(t *testing.T) {
+	f := &fixture{profile: profile{Statuses: []int{200}, DelayMS: 150}}
+	done := make(chan struct{})
+	go func() { f.provider(httptest.NewRecorder(), httptest.NewRequest("GET", "/inflight", nil)); close(done) }()
+	deadline := time.Now().Add(time.Second)
+	for {
+		w := httptest.NewRecorder()
+		f.control(w, httptest.NewRequest("GET", "/observations", nil))
+		var observations []observation
+		_ = json.Unmarshal(w.Body.Bytes(), &observations)
+		if len(observations) == 1 {
+			break
+		}
+		if time.Now().After(deadline) {
+			t.Fatal("in-flight request was not visible")
+		}
+		time.Sleep(time.Millisecond)
+	}
+	select {
+	case <-done:
+		t.Fatal("control blocked until response completion; shutdown evidence would be invalid")
+	default:
+	}
+	<-done
+}
 
 func TestResponseRetainsFramingHeadersTrailersAndBytes(t *testing.T) {
 	r, err := http.ReadResponse(bufio.NewReader(strings.NewReader("HTTP/1.1 200 OK\r\nContent-Type: a\r\nContent-Type: b\r\nTransfer-Encoding: chunked\r\nTrailer: X-Final\r\n\r\n2\r\nhi\r\n0\r\nX-Final: retained\r\n\r\n")), nil)
