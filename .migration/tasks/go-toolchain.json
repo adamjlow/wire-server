@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "id": "go-toolchain",
+  "title": "Pin optional Go tooling and fail-closed candidate checks",
+  "service": "framework",
+  "kind": "framework",
+  "status": "queued",
+  "owner": null,
+  "branch": null,
+  "depends_on": [],
+  "write_paths": [
+    ".migration/tasks/go-toolchain.json",
+    "docs/go-migration/plans/go-toolchain.md",
+    "go/toolchain.json",
+    "go/.go-version",
+    "go/shell.nix",
+    "go/check.py",
+    "go/test_check.py",
+    "go/tooling",
+    "go/README.md",
+    ".github/workflows/go-candidates.yaml",
+    "changelog.d/5-internal/go-toolchain"
+  ],
+  "plan": "docs/go-migration/plans/go-toolchain.md",
+  "acceptance_criteria": [
+    {
+      "id": "checks",
+      "description": "Pinned optional tooling and fail-closed checks work without affecting Haskell targets.",
+      "required_evidence": "Boundary unit tests, native Go checks, Nix verification or explicit unavailable result, migration validation and diff scope."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": "Optional tooling preparation; no candidate or parity evidence."
+}
