@@ -2,7 +2,7 @@
   "schema_version": 1,
   "service": "proxy",
   "reference_path": "services/proxy",
-  "stage": "contracted",
+  "stage": "implementing",
   "oracle_paths": [
     "services/proxy",
     "docs/go-migration/services/proxy/contract.md",
@@ -15,6 +15,9 @@
     ],
     "contract": [
       "proxy-contract"
+    ],
+    "plan": [
+      "proxy-implementation-plan"
     ]
   },
   "compatibility": null

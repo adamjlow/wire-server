@@ -4,7 +4,7 @@
   "title": "Establish executable whole-service proxy implementation plan",
   "service": "proxy",
   "kind": "discovery",
-  "status": "active",
+  "status": "done",
   "owner": "codex",
   "branch": "task/proxy-implementation-plan",
   "depends_on": [
@@ -26,7 +26,18 @@
       "required_evidence": "Source/baseline/toolchain review, scoped migration and transition checks; no invented runtime/availability evidence."
     }
   ],
-  "evidence": [],
-  "review": null,
-  "handoff": "Queue implementation preparation; candidate code remains a separate task."
+  "evidence": [
+    {
+      "criterion": "plan",
+      "result": "pass",
+      "command": "Source/contract/baseline/toolchain review; exact YAML tag metadata; scoped migration state/transition check",
+      "revision": "3101fcaec529beecebf254b1a900a12713ce733c",
+      "artifact": "docs/go-migration/plans/proxy-implementation.md"
+    }
+  ],
+  "review": {
+    "by": "codex (self-review delegated by user)",
+    "artifact": "docs/go-migration/plans/proxy-implementation.md"
+  },
+  "handoff": "Reviewed executable complete-service plan and initial reference strategy; candidate implementation and complete verification remain separate work."
 }

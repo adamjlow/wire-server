@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "id": "proxy-implementation",
+  "title": "Implement complete optional Go proxy service",
+  "service": "proxy",
+  "kind": "implementation",
+  "status": "queued",
+  "owner": null,
+  "branch": null,
+  "depends_on": [
+    "proxy-contract",
+    "go-toolchain",
+    "proxy-implementation-plan"
+  ],
+  "write_paths": [
+    ".migration/tasks/proxy-implementation.json",
+    "go/services/proxy",
+    "changelog.d/5-internal/proxy-implementation"
+  ],
+  "plan": "docs/go-migration/plans/proxy-implementation.md",
+  "acceptance_criteria": [
+    {
+      "id": "service",
+      "description": "Complete provider/configuration/middleware/operations boundary is implemented according to the approved pinned-source contract.",
+      "required_evidence": "Source-cited candidate code; meaningful provider/config/security/middleware/cancellation/unit/race tests; unresolved parity cases remain unverified."
+    },
+    {
+      "id": "checks",
+      "description": "Pinned Go formatting/module/vet/race/build/vulnerability/license checks and migration validation pass.",
+      "required_evidence": "python3 go/check.py proxy plus migration state/scope checks at the candidate code revision; no Haskell/default/real-parity substitution."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": "Complete-service candidate implementation; no oracle edits or availability claim."
+}
