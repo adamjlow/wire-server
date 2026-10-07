@@ -1,0 +1,60 @@
+# Proxy reference characterization
+
+This independent synthetic fixture runs the pinned Haskell image on a task-owned
+Docker internal network, using a scratch-container provider and a generated
+trusted CA. It captures actual responses and upstream attempts, not mock parity.
+Every report says `parity_verified: false`. No Go service exists yet.
+
+The user-delegated environment decision is in
+[the recorded review](../../../../../.migration/reviews/2026-10-07-self-review.md).
+Source anchor: f6636ed53315fa7b0fc4c8aa39c0bb30c98b6d5e; provider routing/method/query
+expectations come from `Proxy.API.Public` and the proxy route types. Do not change
+the fixtures to make a candidate pass. Review observed unexpected source behaviour
+separately before approving any comparison rule or generated golden.
+
+Use the pinned Go 1.26.8 toolchain. From `oracle/provider`, run:
+
+```sh
+go test -race -count=1 ./... | grep -vE 'Compiling|Linking|Preprocessing|Configuring|Building'
+CGO_ENABLED=0 go build -o /tmp/wire-proxy-reference-provider ./... | grep -vE 'Compiling|Linking|Preprocessing|Configuring|Building'
+```
+
+Inspect the compiler exit status (grep may return 1 for empty output). From the
+repository root, run:
+
+```sh
+python3 -m unittest discover -s docs/go-migration/services/proxy/oracle -p 'test_*.py'
+python3 docs/go-migration/services/proxy/oracle/capture.py --provider-binary /tmp/wire-proxy-reference-provider --output /tmp/wire-proxy-reference-capture
+```
+
+The output directory must not exist. No container ports are published: a
+fixed-role client invoked through Docker exec sends requests inside the internal
+network, with fixture control on container loopback. Profile bodies are bounded,
+header inputs are allowlisted, repeated values
+and raw targets are retained, and only synthetic data is permitted. The provider
+has no dependencies beyond the Go standard library. Its ephemeral test
+CA/private key must never be reused for production. Private key files are removed
+with the temporary directory and are not written into capture artifacts.
+
+Haskell trusts the generated CA using `SYSTEM_CERTIFICATE_PATH` and
+`SSL_CERT_FILE`; `disableTlsForTest` remains false. The certificate-store override
+is described in [the upstream x509-system source](https://github.com/vincenthz/hs-certificate/blob/master/x509-system/System/X509/Unix.hs).
+Positive actual provider observations prove TLS succeeded; negative fixtures
+include disallowed stream host and scheme. Root filesystems/mounts are read-only,
+capabilities are dropped, no privileged/host-network container is used, and only
+containers/network created by this invocation are removed. Existing services and
+integration suites are untouched.
+
+Initial cases cover all seven handlers, four raw-proxy method/query/502-retry
+families, Spotify/Soundcloud inbound POST semantics, forwarding escapes,
+upstream 404, endpath errors, missing URL, Soundcloud 302/failures, health/unknown
+routes and V0..V19/unknown/internal version handling. This is baseline coverage,
+not the complete verification matrix: transport failure/redirect/timeout/gzip,
+disabled/development versions, secret reload, metrics/log fields, shutdown/load
+thresholds and real candidate comparison remain required. Source-status mismatch
+or incomplete capture returns nonzero and is recorded, never silently accepted.
+
+Reports preserve full synthetic response headers and body bytes, provider effects,
+actual image IDs, config/case/runner/provider hashes, CA public hash and provenance
+method. A successful characterization exit is not proof of a complete contract,
+authenticated live capture, binary rebuild, candidate parity or availability.
