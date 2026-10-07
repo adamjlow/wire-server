@@ -4,7 +4,7 @@
   "title": "Establish cargohold HTTP, storage and switchback compatibility expectations",
   "service": "cargohold",
   "kind": "contract-change",
-  "status": "active",
+  "status": "review",
   "owner": "codex",
   "branch": "task/cargohold-contract",
   "depends_on": [],
@@ -27,7 +27,22 @@
       "required_evidence": "Passing make migration-check migration-test at the tested contract revision."
     }
   ],
-  "evidence": [],
+  "evidence": [
+    {
+      "criterion": "contract",
+      "result": "pass",
+      "command": "Source inspection and complete scenario/comparator matrix preparation; human approval remains pending",
+      "revision": "2948060272f7b7eb1080277b40a690eab48c35f5",
+      "artifact": "docs/go-migration/services/cargohold/contract.md"
+    },
+    {
+      "criterion": "validation",
+      "result": "pass",
+      "command": "make migration-check migration-test; git diff --check",
+      "revision": "2948060272f7b7eb1080277b40a690eab48c35f5",
+      "artifact": "docs/go-migration/services/cargohold/contract.md"
+    }
+  ],
   "review": null,
-  "handoff": "Draft is ready for separate human review; no runtime parity is claimed and the service remains registered."
+  "handoff": "Draft complete-service contract is ready for separate human review; no runtime parity or stage advancement is claimed."
 }
