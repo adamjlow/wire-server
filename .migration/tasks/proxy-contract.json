@@ -4,7 +4,7 @@
   "title": "Establish independent proxy parity expectations from the reference",
   "service": "proxy",
   "kind": "contract-change",
-  "status": "active",
+  "status": "review",
   "owner": "codex",
   "branch": "task/proxy-contract",
   "depends_on": [],
@@ -31,18 +31,18 @@
     {
       "criterion": "contract",
       "result": "blocked",
-      "command": "Source-cited contract/scenario matrix prepared; required authorized human review has not yet occurred",
-      "revision": "4afeffb1468837efbae49f0d41289ede00112239",
+      "command": "User-authorized Codex self-review approves source-derived requirements; executable baseline fixtures and reference characterization remain outstanding",
+      "revision": "20853a7dd52ea73b1e68dbc8760cb12c8e08dd6e",
       "artifact": "docs/go-migration/services/proxy/contract.md"
     },
     {
       "criterion": "validation",
       "result": "pass",
-      "command": "make migration-check migration-test; git diff --check",
-      "revision": "4afeffb1468837efbae49f0d41289ede00112239",
+      "command": "make migration-check migration-test; git diff --check; scoped --base/--task checks in isolated temporary worktrees",
+      "revision": "20853a7dd52ea73b1e68dbc8760cb12c8e08dd6e",
       "artifact": "docs/go-migration/services/proxy/contract.md"
     }
   ],
   "review": null,
-  "handoff": "User-authorized self-review: check source claims and correct findings; no runtime parity or deployment approval."
+  "handoff": "Requirements self-approval recorded in contract.md; approval is no longer awaiting a human reviewer. Complete baseline fixtures and reference captures before the contract task/gate can pass. No equivalent Go service is claimed."
 }

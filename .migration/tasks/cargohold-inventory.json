@@ -4,7 +4,7 @@
   "title": "Map the complete cargohold service and persisted compatibility boundary",
   "service": "cargohold",
   "kind": "discovery",
-  "status": "active",
+  "status": "review",
   "owner": "codex",
   "branch": "task/cargohold-inventory",
   "depends_on": [],
@@ -30,18 +30,18 @@
     {
       "criterion": "inventory",
       "result": "pass",
-      "command": "Read cargohold source, routes, middleware, S3 formats and existing tests at f6636ed53315fa7b0fc4c8aa39c0bb30c98b6d5e",
-      "revision": "20dda739d42590f12facc0412edf7d43dfcebaa8",
+      "command": "User-authorized Codex self-review against API.V3.checkMetadata, API.Federation.checkAsset, API.Legacy.downloadOtr and S3.getOtrMetadata; incorrect qualified-owner claim corrected",
+      "revision": "20853a7dd52ea73b1e68dbc8760cb12c8e08dd6e",
       "artifact": "docs/go-migration/services/cargohold/inventory.md"
     },
     {
       "criterion": "validation",
       "result": "pass",
-      "command": "make migration-check migration-test; git diff --check",
-      "revision": "20dda739d42590f12facc0412edf7d43dfcebaa8",
+      "command": "make migration-check migration-test; git diff --check; scoped --base/--task checks in isolated temporary worktrees",
+      "revision": "20853a7dd52ea73b1e68dbc8760cb12c8e08dd6e",
       "artifact": "docs/go-migration/services/cargohold/inventory.md"
     }
   ],
   "review": null,
-  "handoff": "User-authorized self-review: check source claims and correct findings; no runtime parity or deployment approval."
+  "handoff": "Corrected source inventory self-reviewed under explicit user delegation; findings and review provenance are recorded in contract.md. No independent reviewer, completed parity or service stage advancement is claimed."
 }

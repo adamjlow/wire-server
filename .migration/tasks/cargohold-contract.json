@@ -4,7 +4,7 @@
   "title": "Establish cargohold HTTP, storage and switchback compatibility expectations",
   "service": "cargohold",
   "kind": "contract-change",
-  "status": "active",
+  "status": "review",
   "owner": "codex",
   "branch": "task/cargohold-contract",
   "depends_on": [],
@@ -30,19 +30,19 @@
   "evidence": [
     {
       "criterion": "contract",
-      "result": "blocked",
-      "command": "Source-cited contract/scenario matrix prepared; required authorized human review has not yet occurred",
-      "revision": "2948060272f7b7eb1080277b40a690eab48c35f5",
+      "result": "fail",
+      "command": "User-authorized Codex self-review: full approval withheld for source/security conflict (federation domain discarded; legacy OTR owner not compared) and missing baseline fixtures",
+      "revision": "20853a7dd52ea73b1e68dbc8760cb12c8e08dd6e",
       "artifact": "docs/go-migration/services/cargohold/contract.md"
     },
     {
       "criterion": "validation",
       "result": "pass",
-      "command": "make migration-check migration-test; git diff --check",
-      "revision": "2948060272f7b7eb1080277b40a690eab48c35f5",
+      "command": "make migration-check migration-test; git diff --check; scoped --base/--task checks in isolated temporary worktrees",
+      "revision": "20853a7dd52ea73b1e68dbc8760cb12c8e08dd6e",
       "artifact": "docs/go-migration/services/cargohold/contract.md"
     }
   ],
   "review": null,
-  "handoff": "User-authorized self-review: check source claims and correct findings; no runtime parity or deployment approval."
+  "handoff": "Whole-service scope and storage/switchback requirements approved; corrected source/security findings require characterization and an explicit contract disposition. Full contract approval and runtime parity are not claimed."
 }
