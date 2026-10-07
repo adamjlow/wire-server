@@ -1,0 +1,49 @@
+name: Go candidates
+
+on:
+  pull_request:
+    paths: ['go/**', '.github/workflows/go-candidates.yaml']
+  push:
+    branches: [go-migration]
+    paths: ['go/**', '.github/workflows/go-candidates.yaml']
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      GOTOOLCHAIN: local
+      GOWORK: 'off'
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-go@924ae3a1cded613372ab5595356fb5720e22ba16 # v6
+        with:
+          go-version-file: go/.go-version
+          cache-dependency-path: |
+            go/tooling/go.sum
+            go/services/*/go.sum
+      - name: Check tooling boundaries
+        run: python3 -m unittest discover -s go -p 'test_*.py'
+      - name: Check pinned validation tools
+        shell: bash
+        run: |
+          set -o pipefail
+          python3 go/check.py tooling | grep -vE 'Compiling|Linking|Preprocessing|Configuring|Building'
+      - name: Check existing candidate modules
+        shell: bash
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          modules=(go/services/*/go.mod)
+          if (( ${#modules[@]} == 0 )); then
+            echo 'No candidate modules exist yet; no service validation was performed.'
+          fi
+          for module in "${modules[@]}"; do
+            service="${module%/go.mod}"
+            python3 go/check.py "${service##*/}" | grep -vE 'Compiling|Linking|Preprocessing|Configuring|Building'
+          done
