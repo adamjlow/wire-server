@@ -4,7 +4,7 @@
   "title": "Map the complete cargohold service and persisted compatibility boundary",
   "service": "cargohold",
   "kind": "discovery",
-  "status": "active",
+  "status": "review",
   "owner": "codex",
   "branch": "task/cargohold-inventory",
   "depends_on": [],
@@ -26,7 +26,22 @@
       "required_evidence": "Passing make migration-check migration-test output with exact tested revision."
     }
   ],
-  "evidence": [],
+  "evidence": [
+    {
+      "criterion": "inventory",
+      "result": "pass",
+      "command": "Read cargohold source, routes, middleware, S3 formats and existing tests at f6636ed53315fa7b0fc4c8aa39c0bb30c98b6d5e",
+      "revision": "20dda739d42590f12facc0412edf7d43dfcebaa8",
+      "artifact": "docs/go-migration/services/cargohold/inventory.md"
+    },
+    {
+      "criterion": "validation",
+      "result": "pass",
+      "command": "make migration-check migration-test; git diff --check",
+      "revision": "20dda739d42590f12facc0412edf7d43dfcebaa8",
+      "artifact": "docs/go-migration/services/cargohold/inventory.md"
+    }
+  ],
   "review": null,
-  "handoff": "Discovery only; no implementation or parity is claimed."
+  "handoff": "Full source inventory and passing 32 validator tests are ready for independent review. No runtime parity or stage advancement is claimed."
 }
