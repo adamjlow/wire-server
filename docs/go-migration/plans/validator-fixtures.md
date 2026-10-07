@@ -13,3 +13,7 @@ the relevant changelog entry. No contract or runtime source changes.
 Validation: `make migration-check migration-test`; all 32 tests must pass with the
 live proxy task claimed or blocked. Record the result and tested code revision for
 independent review; do not claim self-review as completion.
+
+Result: `make migration-check migration-test` passed all 32 tests at
+`bbf8736894b1daa578f122f01d363da6fb52027a`. Live proxy inventory was blocked;
+no validation assertions or checker rules changed. Independent review is pending.

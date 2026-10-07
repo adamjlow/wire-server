@@ -4,7 +4,7 @@
   "title": "Keep validator tests deterministic as real tasks advance",
   "service": "framework",
   "kind": "framework",
-  "status": "active",
+  "status": "review",
   "owner": "codex",
   "branch": "task/validator-fixtures",
   "depends_on": [],
@@ -22,7 +22,15 @@
       "required_evidence": "make migration-check migration-test output at the tested fixture revision, with unchanged validation assertions."
     }
   ],
-  "evidence": [],
+  "evidence": [
+    {
+      "criterion": "tests",
+      "result": "pass",
+      "command": "make migration-check migration-test",
+      "revision": "bbf8736894b1daa578f122f01d363da6fb52027a",
+      "artifact": "docs/go-migration/plans/validator-fixtures.md"
+    }
+  ],
   "review": null,
-  "handoff": "Claim after proxy inventory reports the live-fixture failure."
+  "handoff": "All 32 tests passed with the live inventory blocked; independent review of the test-fixture repair is pending."
 }
