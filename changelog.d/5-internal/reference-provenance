@@ -1,0 +1,1 @@
+Document source-pinned Nix output identity checks for published proxy and cargohold reference images, with explicit unrun build/parity gates.
