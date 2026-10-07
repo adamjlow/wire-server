@@ -30,7 +30,22 @@
       "required_evidence": "python3 go/check.py proxy plus migration state/scope checks at the candidate code revision; no Haskell/default/real-parity substitution."
     }
   ],
-  "evidence": [],
+  "evidence": [
+    {
+      "criterion": "service",
+      "result": "blocked",
+      "command": "Seven provider handlers, health/version routing, configuration/query/secrets and basic reload/shutdown implemented with source-derived unit/security tests; complete metrics/log/request-ID/transport/operations and independent differential matrix remain outstanding",
+      "revision": "b56e0d47de1b86690f68ab087fa451901f229d02",
+      "artifact": "go/services/proxy/README.md"
+    },
+    {
+      "criterion": "checks",
+      "result": "pass",
+      "command": "PATH=/home/operator/.cache/wire-migration/toolchains/go/bin:$PATH python3 go/check.py proxy (format/tidy/verify/vet/unit/race/build/vulnerability/license); migration/scope/diff checks",
+      "revision": "b56e0d47de1b86690f68ab087fa451901f229d02",
+      "artifact": "go/services/proxy/README.md"
+    }
+  ],
   "review": null,
-  "handoff": "Complete-service candidate implementation; no oracle edits or availability claim."
+  "handoff": "Runnable initial Go proxy candidate is committed, with pinned checks passing. Keep this implementation task active until the complete service boundary is implemented and tested. Next: independent live comparison of the existing 65 Haskell cases plus remaining transport/gzip/reload/metrics/log/request-ID/shutdown/load characterization. No candidate equivalence, available selection, Haskell unit success or cargohold implementation is claimed."
 }
