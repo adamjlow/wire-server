@@ -1,0 +1,2 @@
+Begin the optional Go proxy candidate with existing configuration shape and ordered, byte-preserving provider queries; whole-service verification remains outstanding.
+Implement the provider handlers, health/version routing, configurator-style secrets and basic reload/shutdown with security/unit/race checks; operational and differential gates remain open.
