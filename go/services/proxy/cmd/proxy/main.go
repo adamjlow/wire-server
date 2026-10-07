@@ -9,7 +9,6 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
-	"strconv"
 	"syscall"
 	"time"
 
@@ -31,9 +30,12 @@ func run() error {
 	}
 	ctx, cancel := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
 	defer cancel()
-	go secrets.Watch(ctx, func() { fmt.Fprintln(os.Stderr, "Failed reloading config") })
-	server := &http.Server{Addr: net.JoinHostPort(config.Proxy.Host, strconv.Itoa(config.Proxy.Port)),
-		Handler: proxy.NewHandler(config, secrets), ReadHeaderTimeout: 30 * time.Second}
+	server, logger := proxy.NewServer(config, secrets, ctx)
+	listener, err := net.Listen("tcp", server.Addr)
+	if err != nil {
+		return err
+	}
+	logger.Listening(server.Addr)
 	stopped := make(chan struct{})
 	go func() {
 		defer close(stopped)
@@ -44,7 +46,7 @@ func run() error {
 			_ = server.Close()
 		}
 	}()
-	err = server.ListenAndServe()
+	err = server.Serve(listener)
 	if err == http.ErrServerClosed {
 		<-stopped
 		return nil

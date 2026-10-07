@@ -3,19 +3,20 @@ package proxy
 
 import (
 	"bytes"
-	"compress/gzip"
 	"context"
+	"crypto/rand"
 	"crypto/tls"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io"
 	"net"
 	"net/http"
 	"net/url"
+	"os"
 	"strconv"
 	"strings"
 	"time"
-	"unicode"
 )
 
 type handler struct {
@@ -23,6 +24,8 @@ type handler struct {
 	secrets *Secrets
 	client  *http.Client
 	stream  *http.Client
+	metrics *Metrics
+	logger  *Logger
 }
 
 func NewHandler(config Config, secrets *Secrets) http.Handler {
@@ -40,16 +43,35 @@ func NewHandler(config Config, secrets *Secrets) http.Handler {
 	transport.ResponseHeaderTimeout = 5 * time.Second
 	transport.MaxIdleConnsPerHost = config.HTTPPoolSize
 	transport.MaxIdleConns = 3 * config.HTTPPoolSize
-	return newHandler(config, secrets, transport)
+	h := newHandler(config, secrets, transport)
+	h.logger = NewLogger(config, os.Stdout)
+	return h
+}
+
+func NewServer(config Config, secrets *Secrets, ctx context.Context) (*http.Server, *Logger) {
+	h := NewHandler(config, secrets).(*handler)
+	go secrets.Watch(ctx, h.logger.ReloadFailed)
+	go h.metrics.Collect(ctx)
+	return &http.Server{Addr: net.JoinHostPort(config.Proxy.Host, strconv.Itoa(config.Proxy.Port)),
+		Handler: h, ReadHeaderTimeout: 30 * time.Second, IdleTimeout: 30 * time.Second, ConnState: h.metrics.ConnState}, h.logger
 }
 
 func newHandler(config Config, secrets *Secrets, transport http.RoundTripper) *handler {
-	return &handler{config: config, secrets: secrets,
-		client: &http.Client{Transport: transport},
+	return &handler{config: config, secrets: secrets, metrics: newMetrics(), logger: NewLogger(config, io.Discard),
+		client: &http.Client{Transport: transport, CheckRedirect: func(r *http.Request, via []*http.Request) error {
+			r.Header.Del("Referer")
+			if len(via) > 10 {
+				return errors.New("upstream redirect limit reached")
+			}
+			return nil
+		}},
 		stream: &http.Client{Transport: transport, CheckRedirect: func(*http.Request, []*http.Request) error { return http.ErrUseLastResponse }}}
 }
 
 func writeError(w http.ResponseWriter, status int, label, message string) {
+	if observer, ok := w.(interface{ ErrorObserved(int, string, string) }); ok {
+		observer.ErrorObserved(status, label, message)
+	}
 	if status == 500 {
 		message = "Internal Server Error"
 	}
@@ -104,6 +126,34 @@ func (h *handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		unsniffed(w, 400, nil)
 		return
 	}
+	if path == "/i/metrics" {
+		h.metrics.serve(w)
+		return
+	}
+	requestID := r.Header.Get("Request-Id")
+	if _, present := r.Header["Request-Id"]; !present {
+		var bytes [16]byte
+		_, _ = rand.Read(bytes[:])
+		bytes[6] = (bytes[6] & 0x0f) | 0x40
+		bytes[8] = (bytes[8] & 0x3f) | 0x80
+		requestID = fmt.Sprintf("%x-%x-%x-%x-%x", bytes[:4], bytes[4:6], bytes[6:8], bytes[8:10], bytes[10:])
+		if path != "/i/status" && path != "/api-version" {
+			h.logger.Event("Info", "generated a new request id for local request", logField{"request", requestID}, logField{"method", r.Method}, logField{"path", raw})
+		}
+	}
+	observed := &observedWriter{ResponseWriter: w, logger: h.logger, requestID: requestID}
+	w = observed
+	start := time.Now()
+	defer func() {
+		status := observed.status
+		if status == 0 {
+			status = 200
+		}
+		h.metrics.observe(path, r.Method, status, time.Since(start))
+		if status >= 500 {
+			h.metrics.errors.Add(1)
+		}
+	}()
 	if path == "/i/status" {
 		if r.Method != "GET" && r.Method != "HEAD" {
 			unsniffed(w, 405, nil)
@@ -113,11 +163,7 @@ func (h *handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if strings.EqualFold(r.Header.Get("Content-Encoding"), "gzip") {
-		body, err := gzip.NewReader(r.Body)
-		if err != nil {
-			internalError(w)
-			return
-		}
+		body := &gunzipBody{source: r.Body}
 		defer body.Close()
 		r.Body = body
 	}
@@ -142,7 +188,7 @@ func (h *handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		}
 		secret, ok := h.secrets.get(route.secret)
 		if !ok {
-			internalError(w)
+			writeError(w, 500, "server-error", "Internal Server Error")
 			return
 		}
 		outgoing := route.outgoing
@@ -187,7 +233,7 @@ func (h *handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 func decimalRunes(value string) bool {
 	for _, c := range value {
-		if !unicode.IsDigit(c) {
+		if c < '0' || c > '9' {
 			return false
 		}
 	}
@@ -207,6 +253,10 @@ func requestFor(ctx context.Context, method, target string, body []byte) (*http.
 	if err == nil {
 		// Haskell does not add Go's default User-Agent.
 		r.Header["User-Agent"] = []string{""}
+		// A nil idempotency hint is never sent on the wire. It permits the same
+		// replay on a stale pooled connection that http-client performs, including
+		// Spotify POSTs whose buffered body is available for replay.
+		r.Header["Idempotency-Key"] = nil
 	}
 	return r, err
 }
@@ -235,7 +285,7 @@ func (h *handler) reverse(w http.ResponseWriter, incoming *http.Request, target 
 			// methods accepted by proxyServant's case-insensitive GET check.
 			r.TransferEncoding = []string{"identity"}
 		}
-		response, err := h.client.Do(r)
+		response, err := h.stream.Do(r)
 		if err != nil {
 			if attempt < 2 && pause(incoming.Context(), 5*time.Millisecond) {
 				continue
@@ -339,12 +389,16 @@ func writeUpstreamError(w http.ResponseWriter, status int, body []byte) {
 func (h *handler) spotify(w http.ResponseWriter, r *http.Request) {
 	secret, ok := h.secrets.get("spotify")
 	if !ok {
-		internalError(w)
+		writeError(w, 500, "server-error", "Internal Server Error")
 		return
 	}
 	body, err := io.ReadAll(r.Body)
 	if err != nil {
-		internalError(w)
+		if errors.Is(err, errGunzip) {
+			writeError(w, 400, "client-error", "Invalid request body compression")
+		} else {
+			writeError(w, 500, "server-error", "Internal Server Error")
+		}
 		return
 	}
 	endpoint := Endpoint{"accounts.spotify.com", 443}
@@ -359,7 +413,7 @@ func (h *handler) spotify(w http.ResponseWriter, r *http.Request) {
 	}
 	response, payload, err := h.buffered(r.Context(), h.client, "POST", h.endpointURL(endpoint)+"/api/token", body, headers)
 	if err != nil {
-		internalError(w)
+		writeError(w, 500, "server-error", "Internal Server Error")
 		return
 	}
 	plainUpstream(w, response, payload)
@@ -368,7 +422,7 @@ func (h *handler) spotify(w http.ResponseWriter, r *http.Request) {
 func (h *handler) soundcloud(w http.ResponseWriter, r *http.Request, target string, stream bool) {
 	secret, ok := h.secrets.get("soundcloud")
 	if !ok {
-		internalError(w)
+		writeError(w, 500, "server-error", "Internal Server Error")
 		return
 	}
 	endpoint := Endpoint{"api.soundcloud.com", 443}
@@ -378,7 +432,7 @@ func (h *handler) soundcloud(w http.ResponseWriter, r *http.Request, target stri
 	if !stream {
 		response, body, err := h.buffered(r.Context(), h.client, "GET", h.endpointURL(endpoint)+"/resolve?url="+encodeQueryBytes(target)+"&client_id="+encodeQueryBytes(secret), nil, nil)
 		if err != nil {
-			internalError(w)
+			writeError(w, 500, "server-error", "Internal Server Error")
 			return
 		}
 		plainUpstream(w, response, body)
@@ -395,7 +449,11 @@ func (h *handler) soundcloud(w http.ResponseWriter, r *http.Request, target stri
 	}
 	u.RawQuery += "client_id=" + encodeQueryBytes(secret)
 	response, _, err := h.buffered(r.Context(), h.stream, "GET", u.String(), nil, nil)
-	if err != nil || response.StatusCode != 302 || len(response.Header.Values("Location")) == 0 {
+	if err != nil {
+		writeError(w, 500, "server-error", "Internal Server Error")
+		return
+	}
+	if response.StatusCode != 302 || len(response.Header.Values("Location")) == 0 {
 		internalError(w)
 		return
 	}

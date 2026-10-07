@@ -81,6 +81,9 @@ func decodeConfig(reader io.Reader) (Config, error) {
 			return Config{}, errConfig
 		}
 	}
+	if !member(config.LogLevel, logLevels) || (config.LogFormat != nil && !member(*config.LogFormat, logFormats)) {
+		return Config{}, errConfig
+	}
 	return config, nil
 }
 
