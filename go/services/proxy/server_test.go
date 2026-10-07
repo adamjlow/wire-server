@@ -146,6 +146,7 @@ func TestFinalUpstreamErrorsUseSharedErrorContract(t *testing.T) {
 		{502, `{"provider":"synthetic"}`, `{"code":502,"label":"server-error","message":"{\"provider\":\"synthetic\"}"}`},
 		{500, "synthetic-sensitive-detail", `{"code":500,"label":"server-error","message":"Internal Server Error"}`},
 		{503, `{"code":503,"label":"custom","message":"synthetic message"}`, `{"code":503,"label":"custom","message":"synthetic message"}`},
+		{503, `{"code":503,"label":"custom","message":"<synthetic>&","data":{"domain":"EXAMPLE.COM","path":"/synthetic"},"inner":{"code":500,"label":"inner","message":"detail"}}`, `{"code":503,"data":{"domain":"example.com","path":"/synthetic","type":"federation"},"inner":{"code":500,"label":"inner","message":"detail"},"label":"custom","message":"<synthetic>&"}`},
 	} {
 		for _, path := range []string{"/proxy/giphy/v1/gifs/search", "/proxy/spotify/api/token"} {
 			var attempts atomic.Int32

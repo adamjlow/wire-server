@@ -69,20 +69,24 @@ func newHandler(config Config, secrets *Secrets, transport http.RoundTripper) *h
 }
 
 func writeError(w http.ResponseWriter, status int, label, message string) {
+	writeWireError(w, map[string]any{"code": status, "label": label, "message": message})
+}
+
+func writeWireError(w http.ResponseWriter, value map[string]any) {
+	status := value["code"].(int)
 	if observer, ok := w.(interface{ ErrorObserved(int, string, string) }); ok {
-		observer.ErrorObserved(status, label, message)
+		observer.ErrorObserved(status, value["label"].(string), value["message"].(string))
 	}
 	if status == 500 {
-		message = "Internal Server Error"
+		value["message"] = "Internal Server Error"
 	}
 	w.Header().Set("Content-Type", "application/json")
-	b, _ := json.Marshal(struct {
-		Code    int    `json:"code"`
-		Label   string `json:"label"`
-		Message string `json:"message"`
-	}{status, label, message})
+	var body bytes.Buffer
+	encoder := json.NewEncoder(&body)
+	encoder.SetEscapeHTML(false)
+	_ = encoder.Encode(value)
 	w.WriteHeader(status)
-	_, _ = w.Write(b)
+	_, _ = w.Write(bytes.TrimSuffix(body.Bytes(), []byte("\n")))
 }
 
 func internalError(w http.ResponseWriter) {
@@ -377,16 +381,62 @@ func plainUpstream(w http.ResponseWriter, response *http.Response, body []byte) 
 func writeUpstreamError(w http.ResponseWriter, status int, body []byte) {
 	// catchErrors preserves a serialized Wai.Error; other 5xx bodies become its
 	// message and lose upstream headers. Invalid UTF-8 is decoded leniently.
-	var existing struct {
-		Code    *int    `json:"code"`
-		Label   *string `json:"label"`
-		Message *string `json:"message"`
-	}
-	if json.Unmarshal(body, &existing) == nil && existing.Code != nil && existing.Label != nil && existing.Message != nil {
-		writeError(w, *existing.Code, *existing.Label, *existing.Message)
+	if existing, ok := parseWireError(body); ok {
+		writeWireError(w, existing)
 		return
 	}
 	writeError(w, status, "server-error", strings.ToValidUTF8(string(body), "\uFFFD"))
+}
+
+// Decode only the fields accepted by Wai.Error; normalize federation domains
+// using Data.Domain's ASCII label rules, and retain nested error information.
+func parseWireError(body []byte) (map[string]any, bool) {
+	var value struct {
+		Code    *int    `json:"code"`
+		Label   *string `json:"label"`
+		Message *string `json:"message"`
+		Data    *struct {
+			Domain *string `json:"domain"`
+			Path   *string `json:"path"`
+		} `json:"data"`
+		Inner json.RawMessage `json:"inner"`
+	}
+	if json.Unmarshal(body, &value) != nil || value.Code == nil || value.Label == nil || value.Message == nil {
+		return nil, false
+	}
+	result := map[string]any{"code": *value.Code, "label": *value.Label, "message": *value.Message}
+	if value.Data != nil {
+		if value.Data.Domain == nil || value.Data.Path == nil {
+			return nil, false
+		}
+		domain := strings.ToLower(*value.Data.Domain)
+		parts := strings.Split(domain, ".")
+		if len(domain) > 253 || (len(parts) < 2 && domain != "localhost") {
+			return nil, false
+		}
+		for _, part := range parts {
+			if len(part) == 0 || len(part) > 63 || part[0] == '-' || part[len(part)-1] == '-' {
+				return nil, false
+			}
+			for _, ch := range part {
+				if !(ch >= 'a' && ch <= 'z' || ch >= '0' && ch <= '9' || ch == '-') {
+					return nil, false
+				}
+			}
+		}
+		if last := parts[len(parts)-1][0]; last >= '0' && last <= '9' {
+			return nil, false
+		}
+		result["data"] = map[string]any{"type": "federation", "domain": domain, "path": *value.Data.Path}
+	}
+	if len(value.Inner) > 0 && string(value.Inner) != "null" {
+		inner, ok := parseWireError(value.Inner)
+		if !ok {
+			return nil, false
+		}
+		result["inner"] = inner
+	}
+	return result, true
 }
 
 func (h *handler) spotify(w http.ResponseWriter, r *http.Request) {
