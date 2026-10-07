@@ -12,7 +12,6 @@ import unittest
 SPEC = importlib.util.spec_from_file_location("migration_check", Path(__file__).with_name("check.py"))
 check = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(check)
-REPO = Path(__file__).resolve().parents[2]
 
 
 class ValidationTests(unittest.TestCase):
@@ -23,9 +22,25 @@ class ValidationTests(unittest.TestCase):
         (self.root / "services/proxy").mkdir(parents=True)
         (self.root / "plan.md").write_text("Executable test plan\n")
         (self.root / "report.txt").write_text("Synthetic test evidence\n")
-        self.service = json.loads((REPO / ".migration/services/proxy.json").read_text())
-        self.task = json.loads((REPO / ".migration/tasks/proxy-inventory.json").read_text())
-        self.task["plan"] = "plan.md"
+        # Live service stages and queue claims are mutable; tests use synthetic
+        # records so starting real work cannot change the checks' preconditions.
+        self.service = dict(
+            schema_version=1, service="proxy", reference_path="services/proxy",
+            stage="registered", oracle_paths=["services/proxy",
+                "docs/go-migration/services/proxy/contract.md",
+                "docs/go-migration/services/proxy/oracle"], gates={}, compatibility=None,
+        )
+        self.task = dict(
+            schema_version=1, id="proxy-inventory", title="Synthetic inventory task",
+            service="proxy", kind="discovery", status="queued", owner=None, branch=None,
+            depends_on=[], write_paths=[".migration/tasks/proxy-inventory.json", "inventory.md"],
+            plan="plan.md", acceptance_criteria=[
+                dict(id="inventory", description="Source inventory is complete",
+                     required_evidence="Source-cited inventory and independent review"),
+                dict(id="validation", description="Validator checks pass",
+                     required_evidence="Passing checker output at the tested revision"),
+            ], evidence=[], review=None, handoff="",
+        )
         self.services = {"proxy": self.service}
         self.tasks = {self.task["id"]: self.task}
 
