@@ -4,7 +4,7 @@
   "title": "Establish independent proxy parity expectations from the reference",
   "service": "proxy",
   "kind": "contract-change",
-  "status": "review",
+  "status": "active",
   "owner": "codex",
   "branch": "task/proxy-contract",
   "depends_on": [],
@@ -44,5 +44,5 @@
     }
   ],
   "review": null,
-  "handoff": "Draft is ready for separate human review; no runtime parity is claimed and the service remains registered."
+  "handoff": "User-authorized self-review: check source claims and correct findings; no runtime parity or deployment approval."
 }

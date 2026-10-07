@@ -4,7 +4,7 @@
   "title": "Map the complete cargohold service and persisted compatibility boundary",
   "service": "cargohold",
   "kind": "discovery",
-  "status": "review",
+  "status": "active",
   "owner": "codex",
   "branch": "task/cargohold-inventory",
   "depends_on": [],
@@ -43,5 +43,5 @@
     }
   ],
   "review": null,
-  "handoff": "Full source inventory and passing 32 validator tests are ready for independent review. No runtime parity or stage advancement is claimed."
+  "handoff": "User-authorized self-review: check source claims and correct findings; no runtime parity or deployment approval."
 }

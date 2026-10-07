@@ -4,7 +4,7 @@
   "title": "Establish cargohold HTTP, storage and switchback compatibility expectations",
   "service": "cargohold",
   "kind": "contract-change",
-  "status": "review",
+  "status": "active",
   "owner": "codex",
   "branch": "task/cargohold-contract",
   "depends_on": [],
@@ -44,5 +44,5 @@
     }
   ],
   "review": null,
-  "handoff": "Draft complete-service contract is ready for separate human review; no runtime parity or stage advancement is claimed."
+  "handoff": "User-authorized self-review: check source claims and correct findings; no runtime parity or deployment approval."
 }
