@@ -17,8 +17,8 @@ input values. Tests include expectations from the independently captured Haskell
 baseline, not candidate-generated goldens.
 
 Run `python3 go/check.py proxy` from the repository root with the pinned toolchain
-on PATH. Passing component/scanner checks do not imply a whole service exists or
-that full configuration/transport semantics have been characterized.
+on PATH. Passing component/scanner checks do not establish whole-service
+compatibility or prove full configuration/transport semantics.
 
 Build/run `cmd/proxy` using `-c`/`--config-file`; the default remains
 `/etc/wire/proxy/conf/proxy.yaml`. Existing provider endpoint overrides and secret
