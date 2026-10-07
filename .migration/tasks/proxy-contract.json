@@ -4,9 +4,9 @@
   "title": "Establish independent proxy parity expectations from the reference",
   "service": "proxy",
   "kind": "contract-change",
-  "status": "queued",
-  "owner": null,
-  "branch": null,
+  "status": "active",
+  "owner": "codex",
+  "branch": "task/proxy-contract",
   "depends_on": [],
   "write_paths": [
     ".migration/tasks/proxy-contract.json",
