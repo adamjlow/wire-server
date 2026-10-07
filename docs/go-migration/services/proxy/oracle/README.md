@@ -85,3 +85,21 @@ adding `--candidate-receipt RECEIPT_JSON` to `capture.py`; receipts identify a c
 Go build, SHA256 binary and immutable local scratch image, whose extracted binary
 is checked before launch. A local image ID is not a publisher registry digest or
 independent build attestation. No live provider or production data is involved.
+
+## Completed proxy comparison
+
+See [completion and approach review](REVIEW.md), [103-case API report](comparison-final.json)
+and [operational report](operations-final.json). These supersede the initial
+coverage description without rewriting historical captures. Reproduce with the
+pinned toolchain, a clean candidate image receipt, and the fixture binary:
+
+```sh
+python3 capture.py --provider-binary /absolute/provider --candidate-receipt /absolute/receipt.json --suite extended --operations full --output /absolute/new-output
+python3 compare.py /absolute/new-output/reference.json /absolute/new-output/comparison.json
+python3 check_operations.py /absolute/new-output/reference.json --output /absolute/new-output/operations.json
+python3 -m unittest discover -s . -p 'test_*.py'
+```
+
+The operational comparator requires every declared full-run phase; API-only
+success cannot satisfy it. All data and credentials in retained reports are
+synthetic. No test CA private key is retained.

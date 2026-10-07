@@ -1,0 +1,531 @@
+{
+  "schema_version": 1,
+  "parity_verified": false,
+  "coverage": "initial-live-proxy-cases",
+  "reference_source": "f6636ed53315fa7b0fc4c8aa39c0bb30c98b6d5e",
+  "reference_image": "quay.io/wire/proxy@sha256:460629f6358c93892c3fd6ae5177c685bd787212900339a3bdab2530f875a8f4",
+  "candidate_source": "76aefa94bd8739b96c3961e03bcec90ba27fe5ae",
+  "candidate_image_id": "sha256:319fb63a65849b0c44a30d75802ff22329f93d4ef857b1fc767bb6497d398b92",
+  "fixture_revision": "76aefa94bd8739b96c3961e03bcec90ba27fe5ae",
+  "cases": [
+    {
+      "id": "health",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "unknown-route",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "giphy-forward",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "giphy-post",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "giphy-mixed-get",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "giphy-credentials",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "giphy-retry-502",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "giphy-terminal-502",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "youtube-forward",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "youtube-post",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "youtube-mixed-get",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "youtube-credentials",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "youtube-retry-502",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "youtube-terminal-502",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "staticmap-forward",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "staticmap-post",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "staticmap-mixed-get",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "staticmap-credentials",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "staticmap-retry-502",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "staticmap-terminal-502",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "geocode-forward",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "geocode-post",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "geocode-mixed-get",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "geocode-credentials",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "geocode-retry-502",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "geocode-terminal-502",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "staticmap-extra-path",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "giphy-upstream-404",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "giphy-escaped-path",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "spotify-get",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "spotify-post",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "spotify-extra-path",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "resolve-get",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "resolve-post",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "resolve-extra-path",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "resolve-missing-url",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "stream-get",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "stream-post",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "stream-missing-location",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "stream-not-302",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "stream-wrong-host",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "stream-http-rejected",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "stream-missing-url",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "version-0",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "version-1",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "version-2",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "version-3",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "version-4",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "version-5",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "version-6",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "version-7",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "version-8",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "version-9",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "version-10",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "version-11",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "version-12",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "version-13",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "version-14",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "version-15",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "version-16",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "version-17",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "version-18",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "version-19",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "version-unknown",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "version-internal",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "upstream-test-giphy",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "upstream-test-youtube",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "upstream-test-google-geocode",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "upstream-test-google-static",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "upstream-test-spotify",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "upstream-test-soundcloud-resolve",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "giphy-upstream-500",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "spotify-upstream-500",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "giphy-upstream-503",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "spotify-upstream-503",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "giphy-transport-close",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "giphy-transport-incomplete-headers",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "giphy-redirect",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "spotify-transport-close",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "spotify-transport-incomplete-headers",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "spotify-redirect",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "resolve-transport-close",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "resolve-transport-incomplete-headers",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "resolve-redirect",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "giphy-gzip-response",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "spotify-gzip-response",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "giphy-response-timeout",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "giphy-structured-error",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "spotify-response-timeout",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "spotify-structured-error",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "spotify-redirect-loop",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "resolve-redirect-loop",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "spotify-gzip-request",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "spotify-malformed-gzip",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "unknown-malformed-gzip",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "health-head",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "health-post",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "giphy-head",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "version-unicode",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "version-bare-v",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "version-leading-zero",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "request-id-missing",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "spotify-repeated-headers",
+      "result": "pass",
+      "differences": []
+    }
+  ],
+  "passed": 103,
+  "failed": 0,
+  "capture_sha256": "4db9160b496637a22a5a87a8fc00c7e4051e787019a89a9a29b747ed050fb022",
+  "comparator_sha256": "f3737879aaa8642c62a0eedd1b4c2b76c59b676591868792a478ac1581e1a443"
+}

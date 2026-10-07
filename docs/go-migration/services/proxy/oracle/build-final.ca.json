@@ -1,0 +1,5 @@
+{
+  "source_image": "quay.io/wire/proxy@sha256:460629f6358c93892c3fd6ae5177c685bd787212900339a3bdab2530f875a8f4",
+  "sha256": "2404c5ebc7d236b368d6a2f00b9ac5e01d6e55a75cdf44e4839f5876f45c249b",
+  "ca_certificates": 167
+}

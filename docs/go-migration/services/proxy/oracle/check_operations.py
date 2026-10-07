@@ -3,12 +3,10 @@
 import argparse
 import base64
 from datetime import datetime
-import hashlib
 import json
 import math
 from pathlib import Path
 import re
-import sys
 
 import capture
 import compare
@@ -50,7 +48,7 @@ def metrics(response):
 
 
 def check(report):
-    require(report.get('capture_complete') is True and not report.get('failure_category') and not report.get('cleanup_failed'), 'failed capture')
+    require(report.get('capture_complete') is True and report.get('source_status_mismatches') == 0 and not report.get('failure_category') and not report.get('cleanup_failed'), 'failed capture')
     require(report.get('source_revision') == capture.SOURCE and report.get('reference_image') == capture.REFERENCE, 'reference identity')
     start, finish = (datetime.fromisoformat(report[key]) for key in ('started_at', 'finished_at'))
     def view(response):
