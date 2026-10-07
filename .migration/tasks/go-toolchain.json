@@ -4,9 +4,9 @@
   "title": "Pin optional Go tooling and fail-closed candidate checks",
   "service": "framework",
   "kind": "framework",
-  "status": "queued",
-  "owner": null,
-  "branch": null,
+  "status": "active",
+  "owner": "codex",
+  "branch": "task/go-toolchain",
   "depends_on": [],
   "write_paths": [
     ".migration/tasks/go-toolchain.json",
