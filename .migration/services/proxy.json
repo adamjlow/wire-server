@@ -2,13 +2,17 @@
   "schema_version": 1,
   "service": "proxy",
   "reference_path": "services/proxy",
-  "stage": "registered",
+  "stage": "inventoried",
   "oracle_paths": [
     "services/proxy",
     "docs/go-migration/services/proxy/contract.md",
     "docs/go-migration/services/proxy/oracle",
     "tools/parity"
   ],
-  "gates": {},
+  "gates": {
+    "inventory": [
+      "proxy-inventory"
+    ]
+  },
   "compatibility": null
 }

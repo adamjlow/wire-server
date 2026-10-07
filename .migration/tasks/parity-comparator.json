@@ -4,7 +4,7 @@
   "title": "Prepare independent bounded comparison and incomplete-coverage reporting",
   "service": "framework",
   "kind": "contract-change",
-  "status": "review",
+  "status": "done",
   "owner": "codex",
   "branch": "task/parity-comparator",
   "depends_on": [],
@@ -40,12 +40,15 @@
     },
     {
       "criterion": "review",
-      "result": "blocked",
-      "command": "Separate authorized human oracle review has not yet occurred",
-      "revision": "40686be7ce9826b06ef49ab44c66c891586bab6a",
-      "artifact": "docs/go-migration/plans/parity-comparator.md"
+      "result": "pass",
+      "command": "User expressly delegated self-review; source/negative-test foundation review recorded without claiming independent actor or runtime parity",
+      "revision": "20853a7dd52ea73b1e68dbc8760cb12c8e08dd6e",
+      "artifact": ".migration/reviews/2026-10-07-self-review.md"
     }
   ],
-  "review": null,
-  "handoff": "Comparator is ready for authorized human oracle review. It establishes offline capture agreement only, never runtime parity; neither service is implemented or compatible yet."
+  "review": {
+    "by": "codex (self-review delegated by user)",
+    "artifact": ".migration/reviews/2026-10-07-self-review.md"
+  },
+  "handoff": "Substantive preparation criteria reviewed and approved under explicit user self-review delegation. Same actor; no independent review, candidate equivalence or unrun-check success is claimed."
 }

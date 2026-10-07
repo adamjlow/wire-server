@@ -4,7 +4,7 @@
   "title": "Keep validator tests deterministic as real tasks advance",
   "service": "framework",
   "kind": "framework",
-  "status": "review",
+  "status": "done",
   "owner": "codex",
   "branch": "task/validator-fixtures",
   "depends_on": [],
@@ -31,6 +31,9 @@
       "artifact": "docs/go-migration/plans/validator-fixtures.md"
     }
   ],
-  "review": null,
-  "handoff": "All 32 tests passed with the live inventory blocked; independent review of the test-fixture repair is pending."
+  "review": {
+    "by": "codex (self-review delegated by user)",
+    "artifact": ".migration/reviews/2026-10-07-self-review.md"
+  },
+  "handoff": "Substantive preparation criteria reviewed and approved under explicit user self-review delegation. Same actor; no independent review, candidate equivalence or unrun-check success is claimed."
 }

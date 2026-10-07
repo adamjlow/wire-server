@@ -4,7 +4,7 @@
   "title": "Map the complete cargohold service and persisted compatibility boundary",
   "service": "cargohold",
   "kind": "discovery",
-  "status": "review",
+  "status": "done",
   "owner": "codex",
   "branch": "task/cargohold-inventory",
   "depends_on": [],
@@ -42,6 +42,9 @@
       "artifact": "docs/go-migration/services/cargohold/inventory.md"
     }
   ],
-  "review": null,
-  "handoff": "Corrected source inventory self-reviewed under explicit user delegation; findings and review provenance are recorded in contract.md. No independent reviewer, completed parity or service stage advancement is claimed."
+  "review": {
+    "by": "codex (self-review delegated by user)",
+    "artifact": ".migration/reviews/2026-10-07-self-review.md"
+  },
+  "handoff": "Substantive preparation criteria reviewed and approved under explicit user self-review delegation. Same actor; no independent review, candidate equivalence or unrun-check success is claimed."
 }

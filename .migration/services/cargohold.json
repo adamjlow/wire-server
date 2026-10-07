@@ -2,13 +2,17 @@
   "schema_version": 1,
   "service": "cargohold",
   "reference_path": "services/cargohold",
-  "stage": "registered",
+  "stage": "inventoried",
   "oracle_paths": [
     "services/cargohold",
     "docs/go-migration/services/cargohold/contract.md",
     "docs/go-migration/services/cargohold/oracle",
     "tools/parity"
   ],
-  "gates": {},
+  "gates": {
+    "inventory": [
+      "cargohold-inventory"
+    ]
+  },
   "compatibility": null
 }
