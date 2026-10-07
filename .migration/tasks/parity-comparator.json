@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "id": "parity-comparator",
+  "title": "Prepare independent bounded comparison and incomplete-coverage reporting",
+  "service": "framework",
+  "kind": "contract-change",
+  "status": "queued",
+  "owner": null,
+  "branch": null,
+  "depends_on": [],
+  "write_paths": [
+    ".migration/tasks/parity-comparator.json",
+    "docs/go-migration/plans/parity-comparator.md",
+    "tools/parity",
+    ".migration/services/proxy.json",
+    ".migration/services/cargohold.json",
+    ".github/workflows/parity-comparator.yaml",
+    "changelog.d/5-internal/parity-comparator"
+  ],
+  "plan": "docs/go-migration/plans/parity-comparator.md",
+  "acceptance_criteria": [
+    {
+      "id": "comparisons",
+      "description": "Corruption/incomplete input cannot be reported as successful comparison; no offline result claims runtime parity.",
+      "required_evidence": "Positive and negative schema/comparator/report unit tests at the exact revision, with migration/scope checks."
+    },
+    {
+      "id": "review",
+      "description": "An authorized human reviews this independent comparison oracle before candidate consumption.",
+      "required_evidence": "Independent authorized human review; approval is not inferred from unit test success."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": "Comparator preparation is independent of candidate implementation and awaits human oracle review."
+}
