@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "id": "reference-provenance",
+  "title": "Establish source-pinned Haskell reference build inputs and constraints",
+  "service": "framework",
+  "kind": "discovery",
+  "status": "queued",
+  "owner": null,
+  "branch": null,
+  "depends_on": [],
+  "write_paths": [
+    ".migration/tasks/reference-provenance.json",
+    "docs/go-migration/plans/reference-provenance.md",
+    "changelog.d/5-internal/reference-provenance"
+  ],
+  "plan": "docs/go-migration/plans/reference-provenance.md",
+  "acceptance_criteria": [
+    {
+      "id": "discovery",
+      "description": "Source/image/build identities and remaining constraints are documented truthfully without altering Haskell.",
+      "required_evidence": "Pinned source/archive/submodule records, exact Nix evaluation outcome and build/reference provenance result or explicit blockers."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": "Source provenance discovery only; no service or integration test is launched."
+}
