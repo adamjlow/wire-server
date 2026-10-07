@@ -1,6 +1,7 @@
 # Cargohold compatibility contract
 
-Status: **draft for separate human review**. Task: `cargohold-contract`.
+Status: **self-reviewed; full approval withheld for source/security conflict and
+missing executable baseline fixtures**. Task: `cargohold-contract`.
 Reference source: `f6636ed53315fa7b0fc4c8aa39c0bb30c98b6d5e`.
 Source map: [inventory](inventory.md). No intentional behaviour or storage change
 is proposed. Every supported interface belongs to the whole-service boundary.
@@ -38,8 +39,9 @@ unknown-route and federation errors require characterization rather than guessin
 ## Security and persisted compatibility
 
 Existing ingress headers define authentication; preserve the trust boundary and
-strictly parse IDs/domains/tokens. Federation's qualified user must not acquire
-local ownership by sharing the same UUID. Wrong credentials must not disclose
+parse IDs/domains/tokens according to the pinned reference's accepted syntax.
+The desired domain-aware federation boundary conflicts with the pinned source;
+see the unresolved review finding below. Wrong credentials must not disclose
 private asset existence. No new Go-only schema, object prefix or metadata format.
 Validate input lengths/headers and resource limits before uploads. Use bounded
 streaming and cleanup for cancellation/failure. Keep trusted TLS and never log
@@ -86,3 +88,40 @@ the unmodified Haskell baseline; explicit selection changes only cargohold's ima
 while preserving config/service account/secret mounts/probes. Haskell builds and
 ordinary installations remain usable without Go. Production switching requires
 a separate operator-approved task. This draft authorizes no rollout.
+
+## User-authorized self-review, 2026-10-07
+
+Reviewer: Codex, the same author; self-review explicitly delegated by the user
+in the request quoted in [proxy's review](../proxy/contract.md). No independent
+reviewer or human technical review is claimed.
+
+**Decision: approve the whole-service scope and persisted-format/switchback
+requirements; withhold full cargohold contract approval.** The previous draft
+incorrectly described a desired security property as existing behaviour:
+
+| Finding | Pinned source evidence | Required disposition |
+| --- | --- | --- |
+| Federation loses the requester's domain in the owner check | `CargoHold.API.Federation:checkAsset` passes a qualified principal, but `CargoHold.API.V3:checkMetadata` takes `qUnqualified qown` and compares it directly to the stored unqualified principal | Independently characterize a foreign-domain requester with the owner's UUID, missing/wrong token, on both availability and streaming routes. A domain-aware check is an intentional behaviour change, not like-for-like parity. Resolve in explicit contract/security work before implementing this boundary or claiming complete equivalence. |
+| Legacy OTR does not compare stored user with requester | `CargoHold.S3:getOtrMetadata` requires a parseable stored user; `CargoHold.API.Legacy:downloadOtr` ignores its value (`found _`) | Characterize same/different requester and absent/malformed stored owner. Do not claim that this endpoint already enforces ownership, silently tighten it, or introduce a candidate bypass to obtain a green parity report. |
+
+These are source findings, not a claim of demonstrated exploitation through a
+deployed ingress/federator. No security exception or changed authentication
+contract is approved by this review. Safe preparation and unrelated service
+work can continue; full cargohold availability remains contingent on resolution.
+
+Also make these source quirks explicit in executable fixtures before choosing a
+Go multipart implementation: `API.V3:boundary` consumes an arbitrary line beginning
+with `--`, without comparing delimiter values; the payload's Content-MD5 header
+is accepted but unused; `contentLength` uses `parseOnly decimal` without an
+end-of-input check. `S3:uploadV3` isolates the declared byte count, ignoring the
+remaining trailer, and checks incomplete length after the streaming upload result.
+Do not assume standard-library multipart parsing or automatic MD5 validation
+has the same accepted inputs, errors or persisted effects. Characterize residual
+objects and cleanup before approving any stricter validation as equivalent.
+
+The matrix covers the correct complete service boundary, including bot/provider,
+versioned and legacy APIs, Brig, federation HTTP/2, S3/CloudFront, audit metadata,
+and both switchback directions. Missing case IDs/reference captures, validated
+generated-value/signature comparison, predeclared clock tolerances, numeric load
+thresholds and real runtime/selection evidence still prevent task completion.
+Neither mock comparison nor source review establishes an equivalent Go service.

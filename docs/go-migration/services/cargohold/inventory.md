@@ -68,9 +68,15 @@ abort/error handling; characterize residual objects on incomplete/failing upload
 Downloads accept owner or matching token; a missing stored token makes an asset
 public when no token is supplied. Wrong credentials yield not-found responses
 to avoid disclosing private assets. Delete/renew/delete-token require ownership;
-deleting the token makes the asset public. Federation checks the qualified
-requester against the local qualified owner so remote same-ID users do not become
-local owners. `API.Error` maps the static Wire errors defined in
+deleting the token makes the asset public. Federation passes a qualified
+requester to `API.V3.checkMetadata`, but that function discards the domain before
+comparing against the stored unqualified principal. A remote same-ID principal
+therefore takes the source's owner branch irrespective of domain. Legacy OTR
+downloads require parseable stored user metadata but do not compare its value to
+the requester. Both are security-sensitive source findings requiring explicit
+characterization and contract resolution; domain-aware ownership must not be
+advertised as existing behaviour. See the [self-review](contract.md).
+`API.Error` maps the static Wire errors defined in
 `libs/wire-api/src/Wire/API/Error/Cargohold.hs`.
 
 Keep TLS validation and established ingress trust boundaries. Validate UUIDs,
@@ -114,8 +120,10 @@ log schemas, version handling, shutdown/cancellation and streaming memory limits
 - Missing characterization: exact parser errors/HTTP headers; incomplete upload
   residual effects; SDK signing/addressing/credential-refresh parity; federation
   HTTP/2 framing/error mapping; metric/log fields and shutdown/resource thresholds.
-- Native Haskell tooling is missing locally. Docker can host isolated references;
-  exact reference image/source provenance is not yet established.
+- Native Haskell tooling is missing locally. Docker can host isolated references.
+  [Reference discovery](../../plans/reference-provenance.md) records immutable
+  published images whose configs match source-evaluated Nix output identities;
+  this is not an independent binary rebuild or executed unit/parity evidence.
 
 Next tasks: review complete contract; establish fake Brig/federator and trusted
 local TLS/S3 fixtures; pin maintained SDK/YAML/toolchain; implement all interfaces;

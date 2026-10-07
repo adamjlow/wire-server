@@ -1,1 +1,2 @@
 Document cargohold's public, internal and federation boundaries, persisted S3 formats and migration validation requirements.
+Correct the federation ownership description and explicitly document legacy OTR ownership semantics.
