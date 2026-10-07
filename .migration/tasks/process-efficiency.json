@@ -4,7 +4,7 @@
   "title": "Reduce migration process overhead without weakening compatibility gates",
   "service": "framework",
   "kind": "framework",
-  "status": "active",
+  "status": "done",
   "owner": "codex",
   "branch": "go-migration",
   "depends_on": [],
@@ -31,7 +31,25 @@
       "required_evidence": "make migration-check migration-test, scoped check and git diff --check at the policy revision."
     }
   ],
-  "evidence": [],
-  "review": null,
-  "handoff": "User requested reduced future overhead; documentation-only process change."
+  "evidence": [
+    {
+      "criterion": "guidance",
+      "result": "pass",
+      "command": "Self-review under user-requested process update and existing explicit self-review delegation: root/task/plan/guardrail/template consistent; existing substantive compatibility/security/oracle/default requirements preserved",
+      "revision": "5facf22663173757bdd02db34bd7736c984dfdfd",
+      "artifact": "AGENTS.md"
+    },
+    {
+      "criterion": "checks",
+      "result": "pass",
+      "command": "make migration-check migration-test (32 tests); scope check at claim commit; git diff --check; documentation-only diff with no runtime or validator changes",
+      "revision": "5facf22663173757bdd02db34bd7736c984dfdfd",
+      "artifact": "docs/go-migration/plans/process-efficiency.md"
+    }
+  ],
+  "review": {
+    "by": "codex (self-review delegated by user)",
+    "artifact": "docs/go-migration/plans/process-efficiency.md"
+  },
+  "handoff": "Requested efficiency guidance completed: prioritize executable slices/reference comparison, reuse valid plans/evidence, combine routine updates and support serialized solo work. No service compatibility or deployment approval; existing gates and validator unchanged."
 }
