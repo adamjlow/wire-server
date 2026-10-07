@@ -37,3 +37,12 @@ Native runtime GC measurements retain metric schema/units but measure each
 runtime's own heap and collector; do not assert numeric equivalence. Go reports
 GC CPU averaged over cycles since the last sample and the latest stop-the-world
 pause for GC wall diagnostics. This limitation must be visible in the review.
+
+The six-second delay characterization found that `waiProxyTo` explicitly uses
+`responseTimeoutNone` for the raw forwarding requests, overriding the manager's
+five-second timeout. Buffered Spotify retains the five-second timeout. Source:
+`services/proxy/src/Proxy/API/Public.hs:124` and the reverse-proxy request builder
+[upstream source](https://github.com/fpco/http-reverse-proxy/blob/master/Network/HTTP/ReverseProxy.hs).
+The pinned Haskell image confirms raw 200 versus buffered 500. Correct the raw
+case expectation to 200 under this independent oracle task; retain the earlier
+failed capture without relabeling it as passing evidence.

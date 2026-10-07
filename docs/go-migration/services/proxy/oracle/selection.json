@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "result": "pass",
+  "helm_version": "v3.22.0+g144ca65",
+  "upstream_revision": "f6636ed53315fa7b0fc4c8aa39c0bb30c98b6d5e",
+  "tested_revision": "a173ce0dd5e22abe1e78d3d57a26339c68522e9b",
+  "default_sha256": "8ed215e4b7a5cd23e81e242b36f3beee380b4cade25c18f8186aec2eb5a5df9f",
+  "candidate_sha256": "20614958a6827beba5cc58bfb1deda923fd5a3dcf0c87b1d659fcb5c9bd3c245",
+  "assertions": [
+    "Current default and switchback render byte-identically to upstream.",
+    "Explicit Go repository/tag override changes exactly one image line.",
+    "Service/config/secrets/probes/resources and other service choices remain unchanged."
+  ],
+  "limitations": [
+    "Chart render only; no Kubernetes cluster deployment performed.",
+    "Default do-not-use tag is upstream placeholder; deploy using a known pinned release."
+  ]
+}

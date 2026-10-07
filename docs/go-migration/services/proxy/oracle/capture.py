@@ -126,7 +126,7 @@ def scenarios(suite="initial"):
             add(family + "-gzip-response", path, provider_headers={"Content-Type": ["application/json"], "Content-Encoding": ["gzip"]})
             cases[-1]["provider"]["body"] = base64.b64encode(gzip.compress(b'{"provider":"synthetic"}', mtime=0)).decode()
         for family, path in (("giphy", paths["giphy"]), ("spotify", "/proxy/spotify/api/token")):
-            add(family + "-response-timeout", path, status=502 if family == "giphy" else 500)
+            add(family + "-response-timeout", path, status=200 if family == "giphy" else 500)
             cases[-1]["provider"]["delay_ms"] = 6000
             add(family + "-structured-error", path, status=503, provider_statuses=[503])
             cases[-1]["provider"]["body"] = base64.b64encode(b'{"code":503,"label":"custom","message":"<synthetic>&","data":{"domain":"EXAMPLE.COM","path":"/synthetic"},"inner":{"code":500,"label":"inner","message":"detail"}}').decode()
