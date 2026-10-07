@@ -4,7 +4,7 @@
   "title": "Establish source-pinned Haskell reference build inputs and constraints",
   "service": "framework",
   "kind": "discovery",
-  "status": "active",
+  "status": "review",
   "owner": "codex",
   "branch": "task/reference-provenance",
   "depends_on": [],
@@ -21,7 +21,15 @@
       "required_evidence": "Pinned source/archive/submodule records, exact Nix evaluation outcome and build/reference provenance result or explicit blockers."
     }
   ],
-  "evidence": [],
+  "evidence": [
+    {
+      "criterion": "discovery",
+      "result": "pass",
+      "command": "Exact source/blob mode checks; proxy/cargohold Nix image evaluations; published image Config output identity comparisons; resource dry run and scoped migration check",
+      "revision": "b3545ed29d42272418d968e775199a37d751af71",
+      "artifact": "docs/go-migration/plans/reference-provenance.md"
+    }
+  ],
   "review": null,
-  "handoff": "Source provenance discovery only; no service or integration test is launched."
+  "handoff": "Both published image configs match source-evaluated Nix output identities. Discovery is ready for independent review; no binary rebuild/unit/parity result is claimed. Task-owned reference builder is stopped with its cache retained."
 }
