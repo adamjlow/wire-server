@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "id": "delegated-review",
+  "title": "Record user-delegated preparation review and isolated reference environment",
+  "service": "framework",
+  "kind": "framework",
+  "status": "queued",
+  "owner": null,
+  "branch": null,
+  "depends_on": [],
+  "write_paths": [
+    ".migration/tasks/delegated-review.json",
+    "docs/go-migration/plans/delegated-review.md",
+    ".migration/reviews",
+    "AGENTS.md",
+    "docs/go-migration/PARITY.md",
+    "changelog.d/5-internal/delegated-review"
+  ],
+  "plan": "docs/go-migration/plans/delegated-review.md",
+  "acceptance_criteria": [
+    {
+      "id": "authorization",
+      "description": "User-delegated self-review and bounded isolated reference environment are accurately recorded without weakening production or security boundaries.",
+      "required_evidence": "Durable review decision with exact user instruction and limitations; migration state, scope/transition checks and validator tests."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": "Preparation review delegation; no service equivalence claim."
+}
