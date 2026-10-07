@@ -4,9 +4,9 @@
   "title": "Establish cargohold HTTP, storage and switchback compatibility expectations",
   "service": "cargohold",
   "kind": "contract-change",
-  "status": "queued",
-  "owner": null,
-  "branch": null,
+  "status": "active",
+  "owner": "codex",
+  "branch": "task/cargohold-contract",
   "depends_on": [],
   "write_paths": [
     ".migration/tasks/cargohold-contract.json",
