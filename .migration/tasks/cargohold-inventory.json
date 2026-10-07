@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "id": "cargohold-inventory",
+  "title": "Map the complete cargohold service and persisted compatibility boundary",
+  "service": "cargohold",
+  "kind": "discovery",
+  "status": "queued",
+  "owner": null,
+  "branch": null,
+  "depends_on": [],
+  "write_paths": [
+    ".migration/tasks/cargohold-inventory.json",
+    "docs/go-migration/services/cargohold/inventory.md",
+    "changelog.d/5-internal/cargohold-inventory"
+  ],
+  "plan": "docs/go-migration/plans/proxy-cargohold.md",
+  "acceptance_criteria": [
+    {
+      "id": "inventory",
+      "description": "Source-cited inventory covers all public/internal/federation interfaces, S3 formats, principals, security, operations and tests with explicit unknowns.",
+      "required_evidence": "Inventory at a pinned source revision, independently reviewed for full boundary coverage."
+    },
+    {
+      "id": "validation",
+      "description": "Migration checker and all validator unit tests pass.",
+      "required_evidence": "Passing make migration-check migration-test output with exact tested revision."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": "Discovery only; no implementation or parity is claimed."
+}
