@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "id": "process-efficiency",
+  "title": "Reduce migration process overhead without weakening compatibility gates",
+  "service": "framework",
+  "kind": "framework",
+  "status": "queued",
+  "owner": null,
+  "branch": null,
+  "depends_on": [],
+  "write_paths": [
+    ".migration/tasks/process-efficiency.json",
+    "AGENTS.md",
+    ".agent/PLANS.md",
+    ".agent/TASKS.md",
+    "docs/go-migration/GUARDRAILS.md",
+    "docs/go-migration/templates/service-plan.md",
+    "docs/go-migration/plans/process-efficiency.md",
+    "changelog.d/5-internal/process-efficiency"
+  ],
+  "plan": "docs/go-migration/plans/process-efficiency.md",
+  "acceptance_criteria": [
+    {
+      "id": "guidance",
+      "description": "Reuse existing plans and evidence, combine routine bookkeeping, start direct service validation early, scope repeated checks and honor delegated review transparently; preserve upstream defaults, oracle separation and substantive approval gates.",
+      "required_evidence": "Self-review of consistent root/task/plan/guardrail/template guidance under the user request; no validator relaxation or service approval."
+    },
+    {
+      "id": "checks",
+      "description": "Migration validation, scope and whitespace checks pass with code/defaults unchanged.",
+      "required_evidence": "make migration-check migration-test, scoped check and git diff --check at the policy revision."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": "User requested reduced future overhead; documentation-only process change."
+}
