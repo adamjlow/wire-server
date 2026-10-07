@@ -4,7 +4,7 @@
   "title": "Establish independent proxy parity expectations from the reference",
   "service": "proxy",
   "kind": "contract-change",
-  "status": "active",
+  "status": "review",
   "owner": "codex",
   "branch": "task/proxy-contract",
   "depends_on": [],
@@ -27,7 +27,22 @@
       "required_evidence": "Passing make migration-check migration-test at the tested contract revision."
     }
   ],
-  "evidence": [],
+  "evidence": [
+    {
+      "criterion": "contract",
+      "result": "pass",
+      "command": "Source inspection and complete scenario/comparator matrix preparation; human approval remains pending",
+      "revision": "4afeffb1468837efbae49f0d41289ede00112239",
+      "artifact": "docs/go-migration/services/proxy/contract.md"
+    },
+    {
+      "criterion": "validation",
+      "result": "pass",
+      "command": "make migration-check migration-test; git diff --check",
+      "revision": "4afeffb1468837efbae49f0d41289ede00112239",
+      "artifact": "docs/go-migration/services/proxy/contract.md"
+    }
+  ],
   "review": null,
-  "handoff": "Draft contract preparation can proceed; approval is required before candidate implementation consumes it."
+  "handoff": "Draft is ready for separate human review; no runtime parity is claimed and the service remains registered."
 }
