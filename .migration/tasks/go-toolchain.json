@@ -4,7 +4,7 @@
   "title": "Pin optional Go tooling and fail-closed candidate checks",
   "service": "framework",
   "kind": "framework",
-  "status": "active",
+  "status": "review",
   "owner": "codex",
   "branch": "task/go-toolchain",
   "depends_on": [],
@@ -29,7 +29,15 @@
       "required_evidence": "Boundary unit tests, native Go checks, Nix verification or explicit unavailable result, migration validation and diff scope."
     }
   ],
-  "evidence": [],
+  "evidence": [
+    {
+      "criterion": "checks",
+      "result": "pass",
+      "command": "8 tooling boundary tests; native Go tooling and synthetic executable checks; isolated Nix Go version/format verification; migration validator and scope checks",
+      "revision": "625db4e8cde560579dc08ed25df9ca5e665f9aa5",
+      "artifact": "docs/go-migration/plans/go-toolchain.md"
+    }
+  ],
   "review": null,
-  "handoff": "Optional tooling preparation; no candidate or parity evidence."
+  "handoff": "Optional tooling is ready for independent review; native Haskell/full parity checks are unrun and license/native-code caveats are recorded. No service compatibility is claimed."
 }
