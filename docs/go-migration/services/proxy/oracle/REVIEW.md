@@ -54,8 +54,13 @@ metrics, secrets, missing load samples, undrained shutdown and wrong rollback im
 
 **Approve the implemented proxy API boundary and this bounded evidence.** Do not
 turn a comparator's coverage result into a blanket `parity_verified` assertion.
-Any formal lifecycle promotion must name this candidate/reference and its real
-coverage, and preserve the limitations below. Haskell remains supported/default.
+The code implementation and comparison tasks can close, but the service remains
+`implementing` with `compatibility: null`; this is not a formal `verified` or
+`available` promotion. Whole-project Haskell checks need their proper environment,
+and the native GC diagnostic semantics need an explicit contract decision before
+a full operational-equivalence claim. Broader live coverage should be chosen by
+risk during the approach review, not silently treated as already executed.
+Haskell remains supported/default.
 
 ## Limits that matter
 

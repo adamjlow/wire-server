@@ -4,7 +4,7 @@
   "title": "Capture and compare initial real Haskell and Go proxy behavior",
   "service": "proxy",
   "kind": "contract-change",
-  "status": "active",
+  "status": "done",
   "owner": "codex",
   "branch": "task/proxy-live-comparison",
   "depends_on": [
@@ -30,7 +30,25 @@
       "required_evidence": "Migration checker/tests, scope/diff checks and unchanged upstream/Haskell inputs."
     }
   ],
-  "evidence": [],
-  "review": null,
-  "handoff": "Initial coverage only; full service verification and availability remain separate."
+  "evidence": [
+    {
+      "criterion": "oracle",
+      "result": "pass",
+      "command": "Pinned fixture race tests; 15 Python boundary/comparison/operational negative tests; retained real 103-case capture (including all initial 65 stimuli), 103 pass/0 fail; separate full operational comparison passes. Capture candidate/fixture pins are retained, no blanket compatibility claim.",
+      "revision": "76aefa94bd8739b96c3961e03bcec90ba27fe5ae",
+      "artifact": "docs/go-migration/services/proxy/oracle/REVIEW.md"
+    },
+    {
+      "criterion": "checks",
+      "result": "pass",
+      "command": "make migration-check migration-test (32 tests); scoped migration check against evidence commit; git diff --check; upstream Haskell/source/build/chart inputs unchanged",
+      "revision": "8df725b5d5a4598be1e9ad22934d9ab8c3e58337",
+      "artifact": "docs/go-migration/services/proxy/oracle/selection.json"
+    }
+  ],
+  "review": {
+    "by": "codex (self-review delegated by user)",
+    "artifact": "docs/go-migration/services/proxy/oracle/REVIEW.md"
+  },
+  "handoff": "Independent capture/comparison outcome complete: 103 actual API cases and full bounded operational comparison pass, with raw identities, meaningful negatives and exact coverage retained. Haskell defaults unchanged. Code ready for user approach review; no formal verified/available promotion, Haskell compiler success, full backend deployment or production switch is claimed."
 }
