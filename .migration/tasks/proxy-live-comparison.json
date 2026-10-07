@@ -4,9 +4,9 @@
   "title": "Capture and compare initial real Haskell and Go proxy behavior",
   "service": "proxy",
   "kind": "contract-change",
-  "status": "queued",
-  "owner": null,
-  "branch": null,
+  "status": "active",
+  "owner": "codex",
+  "branch": "task/proxy-live-comparison",
   "depends_on": [
     "proxy-contract",
     "go-toolchain"
