@@ -4,9 +4,9 @@
   "title": "Record user-delegated preparation review and isolated reference environment",
   "service": "framework",
   "kind": "framework",
-  "status": "queued",
-  "owner": null,
-  "branch": null,
+  "status": "active",
+  "owner": "codex",
+  "branch": "task/delegated-review",
   "depends_on": [],
   "write_paths": [
     ".migration/tasks/delegated-review.json",
