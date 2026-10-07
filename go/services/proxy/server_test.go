@@ -3,6 +3,8 @@ package proxy
 
 import (
 	"context"
+	"crypto/tls"
+	"crypto/x509"
 	"io"
 	"net/http"
 	"net/http/httptest"
@@ -12,6 +14,37 @@ import (
 	"sync/atomic"
 	"testing"
 )
+
+func TestProductionTransportUsesHTTP1WithHTTP2CapableTLSProvider(t *testing.T) {
+	var attempts atomic.Int32
+	server := httptest.NewUnstartedServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		attempts.Add(1)
+		if r.Proto != "HTTP/1.1" || r.TLS == nil || r.TLS.NegotiatedProtocol == "h2" {
+			t.Errorf("provider protocol differs from reference: %s", r.Proto)
+		}
+		_, _ = w.Write([]byte("synthetic"))
+	}))
+	server.EnableHTTP2 = true
+	server.StartTLS()
+	t.Cleanup(server.Close)
+	u, _ := url.Parse(server.URL)
+	port, _ := strconv.Atoi(u.Port())
+	h := NewHandler(Config{GiphyEndpoint: &Endpoint{Host: u.Hostname(), Port: port}, HTTPPoolSize: 10},
+		&Secrets{values: map[string]any{"secrets.giphy": "synthetic-giphy-secret"}}).(*handler)
+	transport := h.client.Transport.(*http.Transport)
+	pool := x509.NewCertPool()
+	pool.AddCert(server.Certificate())
+	if transport.TLSClientConfig == nil {
+		transport.TLSClientConfig = new(tls.Config)
+	}
+	transport.TLSClientConfig.RootCAs = pool
+	t.Cleanup(transport.CloseIdleConnections)
+	w := httptest.NewRecorder()
+	h.ServeHTTP(w, httptest.NewRequest("GET", "/proxy/giphy/v1/gifs/search", nil))
+	if w.Code != 200 || w.Body.String() != "synthetic" || attempts.Load() != 1 {
+		t.Fatalf("production TLS transport failed: status=%d attempts=%d", w.Code, attempts.Load())
+	}
+}
 
 func providerHandler(t *testing.T, provider http.HandlerFunc) (*handler, string) {
 	t.Helper()

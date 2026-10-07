@@ -5,6 +5,7 @@ import (
 	"bytes"
 	"compress/gzip"
 	"context"
+	"crypto/tls"
 	"encoding/json"
 	"errors"
 	"io"
@@ -26,6 +27,15 @@ type handler struct {
 func NewHandler(config Config, secrets *Secrets) http.Handler {
 	transport := http.DefaultTransport.(*http.Transport).Clone()
 	transport.ForceAttemptHTTP2 = false
+	// Cloning DefaultTransport can retain its initialized HTTP/2 ALPN settings.
+	// Explicit protocol selection keeps negotiation and request encoding aligned
+	// with the pinned reference's HTTP/1.1 provider requests.
+	transport.Protocols = new(http.Protocols)
+	transport.Protocols.SetHTTP1(true)
+	if transport.TLSClientConfig == nil {
+		transport.TLSClientConfig = new(tls.Config)
+	}
+	transport.TLSClientConfig.NextProtos = []string{"http/1.1"}
 	transport.ResponseHeaderTimeout = 5 * time.Second
 	transport.MaxIdleConnsPerHost = config.HTTPPoolSize
 	transport.MaxIdleConns = 3 * config.HTTPPoolSize
