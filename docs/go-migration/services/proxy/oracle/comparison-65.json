@@ -1,0 +1,341 @@
+{
+  "schema_version": 1,
+  "parity_verified": false,
+  "coverage": "initial-live-proxy-cases",
+  "reference_source": "f6636ed53315fa7b0fc4c8aa39c0bb30c98b6d5e",
+  "reference_image": "quay.io/wire/proxy@sha256:460629f6358c93892c3fd6ae5177c685bd787212900339a3bdab2530f875a8f4",
+  "candidate_source": "4d8c99a32a1304253326d97545adbee5c2cf14a8",
+  "candidate_image_id": "sha256:0a6846655efa2aed5b77ce7be78aab96fdf9d4ab41907dd7826329758ac85c65",
+  "fixture_revision": "4d8c99a32a1304253326d97545adbee5c2cf14a8",
+  "cases": [
+    {
+      "id": "health",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "unknown-route",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "giphy-forward",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "giphy-post",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "giphy-mixed-get",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "giphy-credentials",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "giphy-retry-502",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "giphy-terminal-502",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "youtube-forward",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "youtube-post",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "youtube-mixed-get",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "youtube-credentials",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "youtube-retry-502",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "youtube-terminal-502",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "staticmap-forward",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "staticmap-post",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "staticmap-mixed-get",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "staticmap-credentials",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "staticmap-retry-502",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "staticmap-terminal-502",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "geocode-forward",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "geocode-post",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "geocode-mixed-get",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "geocode-credentials",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "geocode-retry-502",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "geocode-terminal-502",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "staticmap-extra-path",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "giphy-upstream-404",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "giphy-escaped-path",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "spotify-get",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "spotify-post",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "spotify-extra-path",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "resolve-get",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "resolve-post",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "resolve-extra-path",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "resolve-missing-url",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "stream-get",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "stream-post",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "stream-missing-location",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "stream-not-302",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "stream-wrong-host",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "stream-http-rejected",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "stream-missing-url",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "version-0",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "version-1",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "version-2",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "version-3",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "version-4",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "version-5",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "version-6",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "version-7",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "version-8",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "version-9",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "version-10",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "version-11",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "version-12",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "version-13",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "version-14",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "version-15",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "version-16",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "version-17",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "version-18",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "version-19",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "version-unknown",
+      "result": "pass",
+      "differences": []
+    },
+    {
+      "id": "version-internal",
+      "result": "pass",
+      "differences": []
+    }
+  ],
+  "passed": 65,
+  "failed": 0,
+  "capture_sha256": "b23998f9de1b062ebfe252be90c0a15c124c08be36c95888168d306d94e7ae7f",
+  "comparator_sha256": "075ffb032d9d86f2f069a991fb7a7e7477e25ae0fa366e4462af63eb24034a2d"
+}

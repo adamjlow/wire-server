@@ -59,3 +59,29 @@ Reports preserve full synthetic response headers and body bytes, provider effect
 actual image IDs, config/case/runner/provider hashes, CA public hash and provenance
 method. A successful characterization exit is not proof of a complete contract,
 authenticated live capture, binary rebuild, candidate parity or availability.
+
+## First real candidate comparison
+
+`live-65.json` captures both running services, and `comparison-65.json` records
+65 matching cases after correcting TLS ALPN, mixed-case GET framing and shared
+5xx error wrapping. This remains initial coverage, not full service approval.
+The comparator reuses `tools/parity/compare.py` input/byte/header/type validators.
+It permits only valid Date values within the capture window and equivalent
+validated Content-Length/chunked framing. It preserves application headers,
+ordered duplicates, trailers, bodies and all provider attempts exactly.
+Negative tests reject altered status/body/headers/credentials/queries/effects,
+invalid or ambiguous framing, invalid Date/weekday/window, missing cases and
+changed stimuli. Supplied metadata is not authenticated by the comparator.
+
+Same-author review under the user's explicit delegation: approve these narrowly
+scoped comparison rules; they implement the contract's existing framing allowance
+and permit no API/security exception. Successful initial comparison does not
+approve missing middleware, operations, deployment selection or switchback.
+
+Run `python3 .../oracle/compare.py CAPTURE_JSON NEW_REPORT_JSON`; it returns 0
+for agreement in the declared cases, 1 for contract differences and 2 for invalid
+input. Reports always retain `parity_verified: false`. Capture both processes by
+adding `--candidate-receipt RECEIPT_JSON` to `capture.py`; receipts identify a clean
+Go build, SHA256 binary and immutable local scratch image, whose extracted binary
+is checked before launch. A local image ID is not a publisher registry digest or
+independent build attestation. No live provider or production data is involved.

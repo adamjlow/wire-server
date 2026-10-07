@@ -1,0 +1,7090 @@
+{
+  "schema_version": 1,
+  "evidence_kind": "initial-live-proxy-comparison-capture",
+  "parity_verified": false,
+  "source_revision": "f6636ed53315fa7b0fc4c8aa39c0bb30c98b6d5e",
+  "reference_image": "quay.io/wire/proxy@sha256:460629f6358c93892c3fd6ae5177c685bd787212900339a3bdab2530f875a8f4",
+  "provenance_method": "trusted-publisher-image-config-matches-source-evaluated-nix-output",
+  "run_id": "wire-proxy-reference-4b072c84e3e64d2aa4949b59e6af99bb",
+  "started_at": "2026-10-07T18:53:11.927963+00:00",
+  "runner_sha256": "96cc51b82a08359eb09c07be31e0369c917744dd089b9f9dd18a82c601354ad2",
+  "provider_binary_sha256": "0071d26ef4f2ee585468998b72c2e4ac40621cb06c18cedf180a6e21b5b442ac",
+  "provider_source_sha256": "5523237bfeb6fee881b5b6782fd5482dc1be2838deff5c0b0cfef266ebdef6f5",
+  "cases": [
+    {
+      "id": "health",
+      "method": "GET",
+      "target": "/i/status",
+      "headers": [
+        [
+          "Request-Id",
+          "synthetic-reference-case"
+        ]
+      ],
+      "body_base64": "",
+      "expected_status": 200,
+      "provider": {
+        "statuses": [
+          200
+        ],
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:12 GMT"
+          ]
+        },
+        "body_base64": "",
+        "protocol": "HTTP/1.1",
+        "content_length": -1,
+        "transfer_encoding": [
+          "chunked"
+        ],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "effects": [],
+      "source_status_matched": true,
+      "candidate_response": {
+        "status": 200,
+        "headers": {
+          "Content-Length": [
+            "0"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:12 GMT"
+          ]
+        },
+        "body_base64": "",
+        "protocol": "HTTP/1.1",
+        "content_length": 0,
+        "transfer_encoding": [],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "candidate_effects": []
+    },
+    {
+      "id": "unknown-route",
+      "method": "GET",
+      "target": "/not-a-route",
+      "headers": [
+        [
+          "Request-Id",
+          "synthetic-reference-case"
+        ]
+      ],
+      "body_base64": "",
+      "expected_status": 404,
+      "provider": {
+        "statuses": [
+          200
+        ],
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9"
+      },
+      "response": {
+        "status": 404,
+        "headers": {
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:12 GMT"
+          ]
+        },
+        "body_base64": "",
+        "protocol": "HTTP/1.1",
+        "content_length": -1,
+        "transfer_encoding": [
+          "chunked"
+        ],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "effects": [],
+      "source_status_matched": true,
+      "candidate_response": {
+        "status": 404,
+        "headers": {
+          "Content-Length": [
+            "0"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:12 GMT"
+          ]
+        },
+        "body_base64": "",
+        "protocol": "HTTP/1.1",
+        "content_length": 0,
+        "transfer_encoding": [],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "candidate_effects": []
+    },
+    {
+      "id": "giphy-forward",
+      "method": "GET",
+      "target": "/proxy/giphy/v1/gifs/search?q=one+two&tag=a&tag=b&bare&ACCESS_TOKEN=discard&access_token=discard2",
+      "headers": [
+        [
+          "Request-Id",
+          "synthetic-reference-case"
+        ]
+      ],
+      "body_base64": "",
+      "expected_status": 200,
+      "provider": {
+        "statuses": [
+          200
+        ],
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:13 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": -1,
+        "transfer_encoding": [
+          "chunked"
+        ],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "effects": [
+        {
+          "method": "GET",
+          "target": "/v1/gifs/search?api_key=synthetic-giphy-secret&q=one%20two&tag=a&tag=b&bare",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ],
+      "source_status_matched": true,
+      "candidate_response": {
+        "status": 200,
+        "headers": {
+          "Content-Length": [
+            "24"
+          ],
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:13 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": 24,
+        "transfer_encoding": [],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "candidate_effects": [
+        {
+          "method": "GET",
+          "target": "/v1/gifs/search?api_key=synthetic-giphy-secret&q=one%20two&tag=a&tag=b&bare",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ]
+    },
+    {
+      "id": "giphy-post",
+      "method": "POST",
+      "target": "/proxy/giphy/v1/gifs/search",
+      "headers": [
+        [
+          "Request-Id",
+          "synthetic-reference-case"
+        ]
+      ],
+      "body_base64": "",
+      "expected_status": 405,
+      "provider": {
+        "statuses": [
+          200
+        ],
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9"
+      },
+      "response": {
+        "status": 405,
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:12 GMT"
+          ]
+        },
+        "body_base64": "eyJjb2RlIjo0MDUsImxhYmVsIjoibWV0aG9kLW5vdC1hbGxvd2VkIiwibWVzc2FnZSI6Ik1ldGhvZCBub3QgYWxsb3dlZCJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": -1,
+        "transfer_encoding": [
+          "chunked"
+        ],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "effects": [],
+      "source_status_matched": true,
+      "candidate_response": {
+        "status": 405,
+        "headers": {
+          "Content-Length": [
+            "72"
+          ],
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:13 GMT"
+          ]
+        },
+        "body_base64": "eyJjb2RlIjo0MDUsImxhYmVsIjoibWV0aG9kLW5vdC1hbGxvd2VkIiwibWVzc2FnZSI6Ik1ldGhvZCBub3QgYWxsb3dlZCJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": 72,
+        "transfer_encoding": [],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "candidate_effects": []
+    },
+    {
+      "id": "giphy-mixed-get",
+      "method": "gEt",
+      "target": "/proxy/giphy/v1/gifs/search",
+      "headers": [
+        [
+          "Request-Id",
+          "synthetic-reference-case"
+        ]
+      ],
+      "body_base64": "",
+      "expected_status": 200,
+      "provider": {
+        "statuses": [
+          200
+        ],
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:13 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": -1,
+        "transfer_encoding": [
+          "chunked"
+        ],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "effects": [
+        {
+          "method": "gEt",
+          "target": "/v1/gifs/search?api_key=synthetic-giphy-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "Content-Length": [
+              "0"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ],
+      "source_status_matched": true,
+      "candidate_response": {
+        "status": 200,
+        "headers": {
+          "Content-Length": [
+            "24"
+          ],
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:13 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": 24,
+        "transfer_encoding": [],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "candidate_effects": [
+        {
+          "method": "gEt",
+          "target": "/v1/gifs/search?api_key=synthetic-giphy-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "Content-Length": [
+              "0"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ]
+    },
+    {
+      "id": "giphy-credentials",
+      "method": "GET",
+      "target": "/proxy/giphy/v1/gifs/search?key=caller&api_key=caller&key=again&x=%2F%FF",
+      "headers": [
+        [
+          "Request-Id",
+          "synthetic-reference-case"
+        ]
+      ],
+      "body_base64": "",
+      "expected_status": 200,
+      "provider": {
+        "statuses": [
+          200
+        ],
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:13 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": -1,
+        "transfer_encoding": [
+          "chunked"
+        ],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "effects": [
+        {
+          "method": "GET",
+          "target": "/v1/gifs/search?api_key=synthetic-giphy-secret&key=caller&api_key=caller&key=again&x=%2F%FF",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ],
+      "source_status_matched": true,
+      "candidate_response": {
+        "status": 200,
+        "headers": {
+          "Content-Length": [
+            "24"
+          ],
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:13 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": 24,
+        "transfer_encoding": [],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "candidate_effects": [
+        {
+          "method": "GET",
+          "target": "/v1/gifs/search?api_key=synthetic-giphy-secret&key=caller&api_key=caller&key=again&x=%2F%FF",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ]
+    },
+    {
+      "id": "giphy-retry-502",
+      "method": "GET",
+      "target": "/proxy/giphy/v1/gifs/search",
+      "headers": [
+        [
+          "Request-Id",
+          "synthetic-reference-case"
+        ]
+      ],
+      "body_base64": "",
+      "expected_status": 200,
+      "provider": {
+        "statuses": [
+          502,
+          502,
+          200
+        ],
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:14 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": -1,
+        "transfer_encoding": [
+          "chunked"
+        ],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "effects": [
+        {
+          "method": "GET",
+          "target": "/v1/gifs/search?api_key=synthetic-giphy-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "target": "/v1/gifs/search?api_key=synthetic-giphy-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "target": "/v1/gifs/search?api_key=synthetic-giphy-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ],
+      "source_status_matched": true,
+      "candidate_response": {
+        "status": 200,
+        "headers": {
+          "Content-Length": [
+            "24"
+          ],
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:14 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": 24,
+        "transfer_encoding": [],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "candidate_effects": [
+        {
+          "method": "GET",
+          "target": "/v1/gifs/search?api_key=synthetic-giphy-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "target": "/v1/gifs/search?api_key=synthetic-giphy-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "target": "/v1/gifs/search?api_key=synthetic-giphy-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ]
+    },
+    {
+      "id": "giphy-terminal-502",
+      "method": "GET",
+      "target": "/proxy/giphy/v1/gifs/search",
+      "headers": [
+        [
+          "Request-Id",
+          "synthetic-reference-case"
+        ]
+      ],
+      "body_base64": "",
+      "expected_status": 502,
+      "provider": {
+        "statuses": [
+          502
+        ],
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9"
+      },
+      "response": {
+        "status": 502,
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:14 GMT"
+          ]
+        },
+        "body_base64": "eyJjb2RlIjo1MDIsImxhYmVsIjoic2VydmVyLWVycm9yIiwibWVzc2FnZSI6IntcInByb3ZpZGVyXCI6XCJzeW50aGV0aWNcIn0ifQ==",
+        "protocol": "HTTP/1.1",
+        "content_length": -1,
+        "transfer_encoding": [
+          "chunked"
+        ],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "effects": [
+        {
+          "method": "GET",
+          "target": "/v1/gifs/search?api_key=synthetic-giphy-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "target": "/v1/gifs/search?api_key=synthetic-giphy-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "target": "/v1/gifs/search?api_key=synthetic-giphy-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ],
+      "source_status_matched": true,
+      "candidate_response": {
+        "status": 502,
+        "headers": {
+          "Content-Length": [
+            "76"
+          ],
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:14 GMT"
+          ]
+        },
+        "body_base64": "eyJjb2RlIjo1MDIsImxhYmVsIjoic2VydmVyLWVycm9yIiwibWVzc2FnZSI6IntcInByb3ZpZGVyXCI6XCJzeW50aGV0aWNcIn0ifQ==",
+        "protocol": "HTTP/1.1",
+        "content_length": 76,
+        "transfer_encoding": [],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "candidate_effects": [
+        {
+          "method": "GET",
+          "target": "/v1/gifs/search?api_key=synthetic-giphy-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "target": "/v1/gifs/search?api_key=synthetic-giphy-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "target": "/v1/gifs/search?api_key=synthetic-giphy-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ]
+    },
+    {
+      "id": "youtube-forward",
+      "method": "GET",
+      "target": "/proxy/youtube/v3/search?q=one+two&tag=a&tag=b&bare&ACCESS_TOKEN=discard&access_token=discard2",
+      "headers": [
+        [
+          "Request-Id",
+          "synthetic-reference-case"
+        ]
+      ],
+      "body_base64": "",
+      "expected_status": 200,
+      "provider": {
+        "statuses": [
+          200
+        ],
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:14 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": -1,
+        "transfer_encoding": [
+          "chunked"
+        ],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "effects": [
+        {
+          "method": "GET",
+          "target": "/youtube/v3/search?key=synthetic-youtube-secret&q=one%20two&tag=a&tag=b&bare",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ],
+      "source_status_matched": true,
+      "candidate_response": {
+        "status": 200,
+        "headers": {
+          "Content-Length": [
+            "24"
+          ],
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:14 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": 24,
+        "transfer_encoding": [],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "candidate_effects": [
+        {
+          "method": "GET",
+          "target": "/youtube/v3/search?key=synthetic-youtube-secret&q=one%20two&tag=a&tag=b&bare",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ]
+    },
+    {
+      "id": "youtube-post",
+      "method": "POST",
+      "target": "/proxy/youtube/v3/search",
+      "headers": [
+        [
+          "Request-Id",
+          "synthetic-reference-case"
+        ]
+      ],
+      "body_base64": "",
+      "expected_status": 405,
+      "provider": {
+        "statuses": [
+          200
+        ],
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9"
+      },
+      "response": {
+        "status": 405,
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:14 GMT"
+          ]
+        },
+        "body_base64": "eyJjb2RlIjo0MDUsImxhYmVsIjoibWV0aG9kLW5vdC1hbGxvd2VkIiwibWVzc2FnZSI6Ik1ldGhvZCBub3QgYWxsb3dlZCJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": -1,
+        "transfer_encoding": [
+          "chunked"
+        ],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "effects": [],
+      "source_status_matched": true,
+      "candidate_response": {
+        "status": 405,
+        "headers": {
+          "Content-Length": [
+            "72"
+          ],
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:15 GMT"
+          ]
+        },
+        "body_base64": "eyJjb2RlIjo0MDUsImxhYmVsIjoibWV0aG9kLW5vdC1hbGxvd2VkIiwibWVzc2FnZSI6Ik1ldGhvZCBub3QgYWxsb3dlZCJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": 72,
+        "transfer_encoding": [],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "candidate_effects": []
+    },
+    {
+      "id": "youtube-mixed-get",
+      "method": "gEt",
+      "target": "/proxy/youtube/v3/search",
+      "headers": [
+        [
+          "Request-Id",
+          "synthetic-reference-case"
+        ]
+      ],
+      "body_base64": "",
+      "expected_status": 200,
+      "provider": {
+        "statuses": [
+          200
+        ],
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:15 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": -1,
+        "transfer_encoding": [
+          "chunked"
+        ],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "effects": [
+        {
+          "method": "gEt",
+          "target": "/youtube/v3/search?key=synthetic-youtube-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "Content-Length": [
+              "0"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ],
+      "source_status_matched": true,
+      "candidate_response": {
+        "status": 200,
+        "headers": {
+          "Content-Length": [
+            "24"
+          ],
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:15 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": 24,
+        "transfer_encoding": [],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "candidate_effects": [
+        {
+          "method": "gEt",
+          "target": "/youtube/v3/search?key=synthetic-youtube-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "Content-Length": [
+              "0"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ]
+    },
+    {
+      "id": "youtube-credentials",
+      "method": "GET",
+      "target": "/proxy/youtube/v3/search?key=caller&api_key=caller&key=again&x=%2F%FF",
+      "headers": [
+        [
+          "Request-Id",
+          "synthetic-reference-case"
+        ]
+      ],
+      "body_base64": "",
+      "expected_status": 200,
+      "provider": {
+        "statuses": [
+          200
+        ],
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:15 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": -1,
+        "transfer_encoding": [
+          "chunked"
+        ],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "effects": [
+        {
+          "method": "GET",
+          "target": "/youtube/v3/search?key=synthetic-youtube-secret&key=caller&api_key=caller&key=again&x=%2F%FF",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ],
+      "source_status_matched": true,
+      "candidate_response": {
+        "status": 200,
+        "headers": {
+          "Content-Length": [
+            "24"
+          ],
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:15 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": 24,
+        "transfer_encoding": [],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "candidate_effects": [
+        {
+          "method": "GET",
+          "target": "/youtube/v3/search?key=synthetic-youtube-secret&key=caller&api_key=caller&key=again&x=%2F%FF",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ]
+    },
+    {
+      "id": "youtube-retry-502",
+      "method": "GET",
+      "target": "/proxy/youtube/v3/search",
+      "headers": [
+        [
+          "Request-Id",
+          "synthetic-reference-case"
+        ]
+      ],
+      "body_base64": "",
+      "expected_status": 200,
+      "provider": {
+        "statuses": [
+          502,
+          502,
+          200
+        ],
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:16 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": -1,
+        "transfer_encoding": [
+          "chunked"
+        ],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "effects": [
+        {
+          "method": "GET",
+          "target": "/youtube/v3/search?key=synthetic-youtube-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "target": "/youtube/v3/search?key=synthetic-youtube-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "target": "/youtube/v3/search?key=synthetic-youtube-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ],
+      "source_status_matched": true,
+      "candidate_response": {
+        "status": 200,
+        "headers": {
+          "Content-Length": [
+            "24"
+          ],
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:16 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": 24,
+        "transfer_encoding": [],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "candidate_effects": [
+        {
+          "method": "GET",
+          "target": "/youtube/v3/search?key=synthetic-youtube-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "target": "/youtube/v3/search?key=synthetic-youtube-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "target": "/youtube/v3/search?key=synthetic-youtube-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ]
+    },
+    {
+      "id": "youtube-terminal-502",
+      "method": "GET",
+      "target": "/proxy/youtube/v3/search",
+      "headers": [
+        [
+          "Request-Id",
+          "synthetic-reference-case"
+        ]
+      ],
+      "body_base64": "",
+      "expected_status": 502,
+      "provider": {
+        "statuses": [
+          502
+        ],
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9"
+      },
+      "response": {
+        "status": 502,
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:16 GMT"
+          ]
+        },
+        "body_base64": "eyJjb2RlIjo1MDIsImxhYmVsIjoic2VydmVyLWVycm9yIiwibWVzc2FnZSI6IntcInByb3ZpZGVyXCI6XCJzeW50aGV0aWNcIn0ifQ==",
+        "protocol": "HTTP/1.1",
+        "content_length": -1,
+        "transfer_encoding": [
+          "chunked"
+        ],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "effects": [
+        {
+          "method": "GET",
+          "target": "/youtube/v3/search?key=synthetic-youtube-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "target": "/youtube/v3/search?key=synthetic-youtube-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "target": "/youtube/v3/search?key=synthetic-youtube-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ],
+      "source_status_matched": true,
+      "candidate_response": {
+        "status": 502,
+        "headers": {
+          "Content-Length": [
+            "76"
+          ],
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:16 GMT"
+          ]
+        },
+        "body_base64": "eyJjb2RlIjo1MDIsImxhYmVsIjoic2VydmVyLWVycm9yIiwibWVzc2FnZSI6IntcInByb3ZpZGVyXCI6XCJzeW50aGV0aWNcIn0ifQ==",
+        "protocol": "HTTP/1.1",
+        "content_length": 76,
+        "transfer_encoding": [],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "candidate_effects": [
+        {
+          "method": "GET",
+          "target": "/youtube/v3/search?key=synthetic-youtube-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "target": "/youtube/v3/search?key=synthetic-youtube-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "target": "/youtube/v3/search?key=synthetic-youtube-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ]
+    },
+    {
+      "id": "staticmap-forward",
+      "method": "GET",
+      "target": "/proxy/googlemaps/api/staticmap?q=one+two&tag=a&tag=b&bare&ACCESS_TOKEN=discard&access_token=discard2",
+      "headers": [
+        [
+          "Request-Id",
+          "synthetic-reference-case"
+        ]
+      ],
+      "body_base64": "",
+      "expected_status": 200,
+      "provider": {
+        "statuses": [
+          200
+        ],
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:16 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": -1,
+        "transfer_encoding": [
+          "chunked"
+        ],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "effects": [
+        {
+          "method": "GET",
+          "target": "/maps/api/staticmap?key=synthetic-googlemaps-secret&q=one%20two&tag=a&tag=b&bare",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ],
+      "source_status_matched": true,
+      "candidate_response": {
+        "status": 200,
+        "headers": {
+          "Content-Length": [
+            "24"
+          ],
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:16 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": 24,
+        "transfer_encoding": [],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "candidate_effects": [
+        {
+          "method": "GET",
+          "target": "/maps/api/staticmap?key=synthetic-googlemaps-secret&q=one%20two&tag=a&tag=b&bare",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ]
+    },
+    {
+      "id": "staticmap-post",
+      "method": "POST",
+      "target": "/proxy/googlemaps/api/staticmap",
+      "headers": [
+        [
+          "Request-Id",
+          "synthetic-reference-case"
+        ]
+      ],
+      "body_base64": "",
+      "expected_status": 405,
+      "provider": {
+        "statuses": [
+          200
+        ],
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9"
+      },
+      "response": {
+        "status": 405,
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:16 GMT"
+          ]
+        },
+        "body_base64": "eyJjb2RlIjo0MDUsImxhYmVsIjoibWV0aG9kLW5vdC1hbGxvd2VkIiwibWVzc2FnZSI6Ik1ldGhvZCBub3QgYWxsb3dlZCJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": -1,
+        "transfer_encoding": [
+          "chunked"
+        ],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "effects": [],
+      "source_status_matched": true,
+      "candidate_response": {
+        "status": 405,
+        "headers": {
+          "Content-Length": [
+            "72"
+          ],
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:17 GMT"
+          ]
+        },
+        "body_base64": "eyJjb2RlIjo0MDUsImxhYmVsIjoibWV0aG9kLW5vdC1hbGxvd2VkIiwibWVzc2FnZSI6Ik1ldGhvZCBub3QgYWxsb3dlZCJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": 72,
+        "transfer_encoding": [],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "candidate_effects": []
+    },
+    {
+      "id": "staticmap-mixed-get",
+      "method": "gEt",
+      "target": "/proxy/googlemaps/api/staticmap",
+      "headers": [
+        [
+          "Request-Id",
+          "synthetic-reference-case"
+        ]
+      ],
+      "body_base64": "",
+      "expected_status": 200,
+      "provider": {
+        "statuses": [
+          200
+        ],
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:17 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": -1,
+        "transfer_encoding": [
+          "chunked"
+        ],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "effects": [
+        {
+          "method": "gEt",
+          "target": "/maps/api/staticmap?key=synthetic-googlemaps-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "Content-Length": [
+              "0"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ],
+      "source_status_matched": true,
+      "candidate_response": {
+        "status": 200,
+        "headers": {
+          "Content-Length": [
+            "24"
+          ],
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:17 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": 24,
+        "transfer_encoding": [],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "candidate_effects": [
+        {
+          "method": "gEt",
+          "target": "/maps/api/staticmap?key=synthetic-googlemaps-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "Content-Length": [
+              "0"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ]
+    },
+    {
+      "id": "staticmap-credentials",
+      "method": "GET",
+      "target": "/proxy/googlemaps/api/staticmap?key=caller&api_key=caller&key=again&x=%2F%FF",
+      "headers": [
+        [
+          "Request-Id",
+          "synthetic-reference-case"
+        ]
+      ],
+      "body_base64": "",
+      "expected_status": 200,
+      "provider": {
+        "statuses": [
+          200
+        ],
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:17 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": -1,
+        "transfer_encoding": [
+          "chunked"
+        ],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "effects": [
+        {
+          "method": "GET",
+          "target": "/maps/api/staticmap?key=synthetic-googlemaps-secret&key=caller&api_key=caller&key=again&x=%2F%FF",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ],
+      "source_status_matched": true,
+      "candidate_response": {
+        "status": 200,
+        "headers": {
+          "Content-Length": [
+            "24"
+          ],
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:17 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": 24,
+        "transfer_encoding": [],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "candidate_effects": [
+        {
+          "method": "GET",
+          "target": "/maps/api/staticmap?key=synthetic-googlemaps-secret&key=caller&api_key=caller&key=again&x=%2F%FF",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ]
+    },
+    {
+      "id": "staticmap-retry-502",
+      "method": "GET",
+      "target": "/proxy/googlemaps/api/staticmap",
+      "headers": [
+        [
+          "Request-Id",
+          "synthetic-reference-case"
+        ]
+      ],
+      "body_base64": "",
+      "expected_status": 200,
+      "provider": {
+        "statuses": [
+          502,
+          502,
+          200
+        ],
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:18 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": -1,
+        "transfer_encoding": [
+          "chunked"
+        ],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "effects": [
+        {
+          "method": "GET",
+          "target": "/maps/api/staticmap?key=synthetic-googlemaps-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "target": "/maps/api/staticmap?key=synthetic-googlemaps-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "target": "/maps/api/staticmap?key=synthetic-googlemaps-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ],
+      "source_status_matched": true,
+      "candidate_response": {
+        "status": 200,
+        "headers": {
+          "Content-Length": [
+            "24"
+          ],
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:18 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": 24,
+        "transfer_encoding": [],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "candidate_effects": [
+        {
+          "method": "GET",
+          "target": "/maps/api/staticmap?key=synthetic-googlemaps-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "target": "/maps/api/staticmap?key=synthetic-googlemaps-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "target": "/maps/api/staticmap?key=synthetic-googlemaps-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ]
+    },
+    {
+      "id": "staticmap-terminal-502",
+      "method": "GET",
+      "target": "/proxy/googlemaps/api/staticmap",
+      "headers": [
+        [
+          "Request-Id",
+          "synthetic-reference-case"
+        ]
+      ],
+      "body_base64": "",
+      "expected_status": 502,
+      "provider": {
+        "statuses": [
+          502
+        ],
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9"
+      },
+      "response": {
+        "status": 502,
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:18 GMT"
+          ]
+        },
+        "body_base64": "eyJjb2RlIjo1MDIsImxhYmVsIjoic2VydmVyLWVycm9yIiwibWVzc2FnZSI6IntcInByb3ZpZGVyXCI6XCJzeW50aGV0aWNcIn0ifQ==",
+        "protocol": "HTTP/1.1",
+        "content_length": -1,
+        "transfer_encoding": [
+          "chunked"
+        ],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "effects": [
+        {
+          "method": "GET",
+          "target": "/maps/api/staticmap?key=synthetic-googlemaps-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "target": "/maps/api/staticmap?key=synthetic-googlemaps-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "target": "/maps/api/staticmap?key=synthetic-googlemaps-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ],
+      "source_status_matched": true,
+      "candidate_response": {
+        "status": 502,
+        "headers": {
+          "Content-Length": [
+            "76"
+          ],
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:18 GMT"
+          ]
+        },
+        "body_base64": "eyJjb2RlIjo1MDIsImxhYmVsIjoic2VydmVyLWVycm9yIiwibWVzc2FnZSI6IntcInByb3ZpZGVyXCI6XCJzeW50aGV0aWNcIn0ifQ==",
+        "protocol": "HTTP/1.1",
+        "content_length": 76,
+        "transfer_encoding": [],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "candidate_effects": [
+        {
+          "method": "GET",
+          "target": "/maps/api/staticmap?key=synthetic-googlemaps-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "target": "/maps/api/staticmap?key=synthetic-googlemaps-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "target": "/maps/api/staticmap?key=synthetic-googlemaps-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ]
+    },
+    {
+      "id": "geocode-forward",
+      "method": "GET",
+      "target": "/proxy/googlemaps/maps/api/geocode/search?q=one+two&tag=a&tag=b&bare&ACCESS_TOKEN=discard&access_token=discard2",
+      "headers": [
+        [
+          "Request-Id",
+          "synthetic-reference-case"
+        ]
+      ],
+      "body_base64": "",
+      "expected_status": 200,
+      "provider": {
+        "statuses": [
+          200
+        ],
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:18 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": -1,
+        "transfer_encoding": [
+          "chunked"
+        ],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "effects": [
+        {
+          "method": "GET",
+          "target": "/maps/api/geocode/search?key=synthetic-googlemaps-secret&q=one%20two&tag=a&tag=b&bare",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ],
+      "source_status_matched": true,
+      "candidate_response": {
+        "status": 200,
+        "headers": {
+          "Content-Length": [
+            "24"
+          ],
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:18 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": 24,
+        "transfer_encoding": [],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "candidate_effects": [
+        {
+          "method": "GET",
+          "target": "/maps/api/geocode/search?key=synthetic-googlemaps-secret&q=one%20two&tag=a&tag=b&bare",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ]
+    },
+    {
+      "id": "geocode-post",
+      "method": "POST",
+      "target": "/proxy/googlemaps/maps/api/geocode/search",
+      "headers": [
+        [
+          "Request-Id",
+          "synthetic-reference-case"
+        ]
+      ],
+      "body_base64": "",
+      "expected_status": 405,
+      "provider": {
+        "statuses": [
+          200
+        ],
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9"
+      },
+      "response": {
+        "status": 405,
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:18 GMT"
+          ]
+        },
+        "body_base64": "eyJjb2RlIjo0MDUsImxhYmVsIjoibWV0aG9kLW5vdC1hbGxvd2VkIiwibWVzc2FnZSI6Ik1ldGhvZCBub3QgYWxsb3dlZCJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": -1,
+        "transfer_encoding": [
+          "chunked"
+        ],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "effects": [],
+      "source_status_matched": true,
+      "candidate_response": {
+        "status": 405,
+        "headers": {
+          "Content-Length": [
+            "72"
+          ],
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:19 GMT"
+          ]
+        },
+        "body_base64": "eyJjb2RlIjo0MDUsImxhYmVsIjoibWV0aG9kLW5vdC1hbGxvd2VkIiwibWVzc2FnZSI6Ik1ldGhvZCBub3QgYWxsb3dlZCJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": 72,
+        "transfer_encoding": [],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "candidate_effects": []
+    },
+    {
+      "id": "geocode-mixed-get",
+      "method": "gEt",
+      "target": "/proxy/googlemaps/maps/api/geocode/search",
+      "headers": [
+        [
+          "Request-Id",
+          "synthetic-reference-case"
+        ]
+      ],
+      "body_base64": "",
+      "expected_status": 200,
+      "provider": {
+        "statuses": [
+          200
+        ],
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:19 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": -1,
+        "transfer_encoding": [
+          "chunked"
+        ],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "effects": [
+        {
+          "method": "gEt",
+          "target": "/maps/api/geocode/search?key=synthetic-googlemaps-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "Content-Length": [
+              "0"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ],
+      "source_status_matched": true,
+      "candidate_response": {
+        "status": 200,
+        "headers": {
+          "Content-Length": [
+            "24"
+          ],
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:19 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": 24,
+        "transfer_encoding": [],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "candidate_effects": [
+        {
+          "method": "gEt",
+          "target": "/maps/api/geocode/search?key=synthetic-googlemaps-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "Content-Length": [
+              "0"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ]
+    },
+    {
+      "id": "geocode-credentials",
+      "method": "GET",
+      "target": "/proxy/googlemaps/maps/api/geocode/search?key=caller&api_key=caller&key=again&x=%2F%FF",
+      "headers": [
+        [
+          "Request-Id",
+          "synthetic-reference-case"
+        ]
+      ],
+      "body_base64": "",
+      "expected_status": 200,
+      "provider": {
+        "statuses": [
+          200
+        ],
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:19 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": -1,
+        "transfer_encoding": [
+          "chunked"
+        ],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "effects": [
+        {
+          "method": "GET",
+          "target": "/maps/api/geocode/search?key=synthetic-googlemaps-secret&key=caller&api_key=caller&key=again&x=%2F%FF",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ],
+      "source_status_matched": true,
+      "candidate_response": {
+        "status": 200,
+        "headers": {
+          "Content-Length": [
+            "24"
+          ],
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:19 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": 24,
+        "transfer_encoding": [],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "candidate_effects": [
+        {
+          "method": "GET",
+          "target": "/maps/api/geocode/search?key=synthetic-googlemaps-secret&key=caller&api_key=caller&key=again&x=%2F%FF",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ]
+    },
+    {
+      "id": "geocode-retry-502",
+      "method": "GET",
+      "target": "/proxy/googlemaps/maps/api/geocode/search",
+      "headers": [
+        [
+          "Request-Id",
+          "synthetic-reference-case"
+        ]
+      ],
+      "body_base64": "",
+      "expected_status": 200,
+      "provider": {
+        "statuses": [
+          502,
+          502,
+          200
+        ],
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:19 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": -1,
+        "transfer_encoding": [
+          "chunked"
+        ],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "effects": [
+        {
+          "method": "GET",
+          "target": "/maps/api/geocode/search?key=synthetic-googlemaps-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "target": "/maps/api/geocode/search?key=synthetic-googlemaps-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "target": "/maps/api/geocode/search?key=synthetic-googlemaps-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ],
+      "source_status_matched": true,
+      "candidate_response": {
+        "status": 200,
+        "headers": {
+          "Content-Length": [
+            "24"
+          ],
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:20 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": 24,
+        "transfer_encoding": [],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "candidate_effects": [
+        {
+          "method": "GET",
+          "target": "/maps/api/geocode/search?key=synthetic-googlemaps-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "target": "/maps/api/geocode/search?key=synthetic-googlemaps-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "target": "/maps/api/geocode/search?key=synthetic-googlemaps-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ]
+    },
+    {
+      "id": "geocode-terminal-502",
+      "method": "GET",
+      "target": "/proxy/googlemaps/maps/api/geocode/search",
+      "headers": [
+        [
+          "Request-Id",
+          "synthetic-reference-case"
+        ]
+      ],
+      "body_base64": "",
+      "expected_status": 502,
+      "provider": {
+        "statuses": [
+          502
+        ],
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9"
+      },
+      "response": {
+        "status": 502,
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:20 GMT"
+          ]
+        },
+        "body_base64": "eyJjb2RlIjo1MDIsImxhYmVsIjoic2VydmVyLWVycm9yIiwibWVzc2FnZSI6IntcInByb3ZpZGVyXCI6XCJzeW50aGV0aWNcIn0ifQ==",
+        "protocol": "HTTP/1.1",
+        "content_length": -1,
+        "transfer_encoding": [
+          "chunked"
+        ],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "effects": [
+        {
+          "method": "GET",
+          "target": "/maps/api/geocode/search?key=synthetic-googlemaps-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "target": "/maps/api/geocode/search?key=synthetic-googlemaps-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "target": "/maps/api/geocode/search?key=synthetic-googlemaps-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ],
+      "source_status_matched": true,
+      "candidate_response": {
+        "status": 502,
+        "headers": {
+          "Content-Length": [
+            "76"
+          ],
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:20 GMT"
+          ]
+        },
+        "body_base64": "eyJjb2RlIjo1MDIsImxhYmVsIjoic2VydmVyLWVycm9yIiwibWVzc2FnZSI6IntcInByb3ZpZGVyXCI6XCJzeW50aGV0aWNcIn0ifQ==",
+        "protocol": "HTTP/1.1",
+        "content_length": 76,
+        "transfer_encoding": [],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "candidate_effects": [
+        {
+          "method": "GET",
+          "target": "/maps/api/geocode/search?key=synthetic-googlemaps-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "target": "/maps/api/geocode/search?key=synthetic-googlemaps-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "target": "/maps/api/geocode/search?key=synthetic-googlemaps-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ]
+    },
+    {
+      "id": "staticmap-extra-path",
+      "method": "GET",
+      "target": "/proxy/googlemaps/api/staticmap/extra",
+      "headers": [
+        [
+          "Request-Id",
+          "synthetic-reference-case"
+        ]
+      ],
+      "body_base64": "",
+      "expected_status": 404,
+      "provider": {
+        "statuses": [
+          200
+        ],
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9"
+      },
+      "response": {
+        "status": 404,
+        "headers": {
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:20 GMT"
+          ]
+        },
+        "body_base64": "",
+        "protocol": "HTTP/1.1",
+        "content_length": -1,
+        "transfer_encoding": [
+          "chunked"
+        ],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "effects": [],
+      "source_status_matched": true,
+      "candidate_response": {
+        "status": 404,
+        "headers": {
+          "Content-Length": [
+            "0"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:20 GMT"
+          ]
+        },
+        "body_base64": "",
+        "protocol": "HTTP/1.1",
+        "content_length": 0,
+        "transfer_encoding": [],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "candidate_effects": []
+    },
+    {
+      "id": "giphy-upstream-404",
+      "method": "GET",
+      "target": "/proxy/giphy/v1/gifs/search",
+      "headers": [
+        [
+          "Request-Id",
+          "synthetic-reference-case"
+        ]
+      ],
+      "body_base64": "",
+      "expected_status": 404,
+      "provider": {
+        "statuses": [
+          404
+        ],
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9"
+      },
+      "response": {
+        "status": 404,
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:21 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": -1,
+        "transfer_encoding": [
+          "chunked"
+        ],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "effects": [
+        {
+          "method": "GET",
+          "target": "/v1/gifs/search?api_key=synthetic-giphy-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ],
+      "source_status_matched": true,
+      "candidate_response": {
+        "status": 404,
+        "headers": {
+          "Content-Length": [
+            "24"
+          ],
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:21 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": 24,
+        "transfer_encoding": [],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "candidate_effects": [
+        {
+          "method": "GET",
+          "target": "/v1/gifs/search?api_key=synthetic-giphy-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ]
+    },
+    {
+      "id": "giphy-escaped-path",
+      "method": "GET",
+      "target": "/proxy/giphy/v1/gifs/a%2Fb%20c?q=%26%3D",
+      "headers": [
+        [
+          "Request-Id",
+          "synthetic-reference-case"
+        ]
+      ],
+      "body_base64": "",
+      "expected_status": 200,
+      "provider": {
+        "statuses": [
+          200
+        ],
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:21 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": -1,
+        "transfer_encoding": [
+          "chunked"
+        ],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "effects": [
+        {
+          "method": "GET",
+          "target": "/v1/gifs/a%2Fb%20c?api_key=synthetic-giphy-secret&q=%26%3D",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ],
+      "source_status_matched": true,
+      "candidate_response": {
+        "status": 200,
+        "headers": {
+          "Content-Length": [
+            "24"
+          ],
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:21 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": 24,
+        "transfer_encoding": [],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "candidate_effects": [
+        {
+          "method": "GET",
+          "target": "/v1/gifs/a%2Fb%20c?api_key=synthetic-giphy-secret&q=%26%3D",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ]
+    },
+    {
+      "id": "spotify-get",
+      "method": "GET",
+      "target": "/proxy/spotify/api/token",
+      "headers": [
+        [
+          "Request-Id",
+          "synthetic-reference-case"
+        ]
+      ],
+      "body_base64": "",
+      "expected_status": 200,
+      "provider": {
+        "statuses": [
+          200
+        ],
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": [
+            "application/json",
+            "text/plain; charset=UTF-8"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:21 GMT"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": -1,
+        "transfer_encoding": [
+          "chunked"
+        ],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "effects": [
+        {
+          "method": "POST",
+          "target": "/api/token",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "Authorization": [
+              "synthetic-spotify-secret"
+            ],
+            "Content-Length": [
+              "0"
+            ]
+          },
+          "body": ""
+        }
+      ],
+      "source_status_matched": true,
+      "candidate_response": {
+        "status": 200,
+        "headers": {
+          "Content-Length": [
+            "24"
+          ],
+          "Content-Type": [
+            "application/json",
+            "text/plain; charset=UTF-8"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:21 GMT"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": 24,
+        "transfer_encoding": [],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "candidate_effects": [
+        {
+          "method": "POST",
+          "target": "/api/token",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "Authorization": [
+              "synthetic-spotify-secret"
+            ],
+            "Content-Length": [
+              "0"
+            ]
+          },
+          "body": ""
+        }
+      ]
+    },
+    {
+      "id": "spotify-post",
+      "method": "POST",
+      "target": "/proxy/spotify/api/token",
+      "headers": [
+        [
+          "Request-Id",
+          "synthetic-reference-case"
+        ],
+        [
+          "Accept",
+          "application/json"
+        ],
+        [
+          "Content-Type",
+          "application/x-www-form-urlencoded"
+        ],
+        [
+          "Authorization",
+          "synthetic-client-credential"
+        ],
+        [
+          "X-Client",
+          "exclude-me"
+        ]
+      ],
+      "body_base64": "c3ludGhldGljPWJvZHk=",
+      "expected_status": 200,
+      "provider": {
+        "statuses": [
+          200
+        ],
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": [
+            "application/json",
+            "text/plain; charset=UTF-8"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:21 GMT"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": -1,
+        "transfer_encoding": [
+          "chunked"
+        ],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "effects": [
+        {
+          "method": "POST",
+          "target": "/api/token",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept": [
+              "application/json"
+            ],
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "Authorization": [
+              "synthetic-spotify-secret"
+            ],
+            "Content-Length": [
+              "14"
+            ],
+            "Content-Type": [
+              "application/x-www-form-urlencoded"
+            ]
+          },
+          "body": "c3ludGhldGljPWJvZHk="
+        }
+      ],
+      "source_status_matched": true,
+      "candidate_response": {
+        "status": 200,
+        "headers": {
+          "Content-Length": [
+            "24"
+          ],
+          "Content-Type": [
+            "application/json",
+            "text/plain; charset=UTF-8"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:22 GMT"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": 24,
+        "transfer_encoding": [],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "candidate_effects": [
+        {
+          "method": "POST",
+          "target": "/api/token",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept": [
+              "application/json"
+            ],
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "Authorization": [
+              "synthetic-spotify-secret"
+            ],
+            "Content-Length": [
+              "14"
+            ],
+            "Content-Type": [
+              "application/x-www-form-urlencoded"
+            ]
+          },
+          "body": "c3ludGhldGljPWJvZHk="
+        }
+      ]
+    },
+    {
+      "id": "spotify-extra-path",
+      "method": "GET",
+      "target": "/proxy/spotify/api/token/extra",
+      "headers": [
+        [
+          "Request-Id",
+          "synthetic-reference-case"
+        ]
+      ],
+      "body_base64": "",
+      "expected_status": 404,
+      "provider": {
+        "statuses": [
+          200
+        ],
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9"
+      },
+      "response": {
+        "status": 404,
+        "headers": {
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:21 GMT"
+          ]
+        },
+        "body_base64": "",
+        "protocol": "HTTP/1.1",
+        "content_length": -1,
+        "transfer_encoding": [
+          "chunked"
+        ],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "effects": [],
+      "source_status_matched": true,
+      "candidate_response": {
+        "status": 404,
+        "headers": {
+          "Content-Length": [
+            "0"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:22 GMT"
+          ]
+        },
+        "body_base64": "",
+        "protocol": "HTTP/1.1",
+        "content_length": 0,
+        "transfer_encoding": [],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "candidate_effects": []
+    },
+    {
+      "id": "resolve-get",
+      "method": "GET",
+      "target": "/proxy/soundcloud/resolve?url=https%3A%2F%2Fsynthetic.invalid%2Fsong",
+      "headers": [
+        [
+          "Request-Id",
+          "synthetic-reference-case"
+        ]
+      ],
+      "body_base64": "",
+      "expected_status": 200,
+      "provider": {
+        "statuses": [
+          200
+        ],
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": [
+            "application/json",
+            "text/plain; charset=UTF-8"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:21 GMT"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": -1,
+        "transfer_encoding": [
+          "chunked"
+        ],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "effects": [
+        {
+          "method": "GET",
+          "target": "/resolve?url=https%3A%2F%2Fsynthetic.invalid%2Fsong&client_id=synthetic-soundcloud-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ]
+          },
+          "body": ""
+        }
+      ],
+      "source_status_matched": true,
+      "candidate_response": {
+        "status": 200,
+        "headers": {
+          "Content-Length": [
+            "24"
+          ],
+          "Content-Type": [
+            "application/json",
+            "text/plain; charset=UTF-8"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:22 GMT"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": 24,
+        "transfer_encoding": [],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "candidate_effects": [
+        {
+          "method": "GET",
+          "target": "/resolve?url=https%3A%2F%2Fsynthetic.invalid%2Fsong&client_id=synthetic-soundcloud-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ]
+          },
+          "body": ""
+        }
+      ]
+    },
+    {
+      "id": "resolve-post",
+      "method": "POST",
+      "target": "/proxy/soundcloud/resolve?url=https%3A%2F%2Fsynthetic.invalid%2Fsong",
+      "headers": [
+        [
+          "Request-Id",
+          "synthetic-reference-case"
+        ],
+        [
+          "Accept",
+          "application/json"
+        ],
+        [
+          "Content-Type",
+          "application/x-www-form-urlencoded"
+        ],
+        [
+          "Authorization",
+          "synthetic-client-credential"
+        ],
+        [
+          "X-Client",
+          "exclude-me"
+        ]
+      ],
+      "body_base64": "c3ludGhldGljPWJvZHk=",
+      "expected_status": 200,
+      "provider": {
+        "statuses": [
+          200
+        ],
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": [
+            "application/json",
+            "text/plain; charset=UTF-8"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:22 GMT"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": -1,
+        "transfer_encoding": [
+          "chunked"
+        ],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "effects": [
+        {
+          "method": "GET",
+          "target": "/resolve?url=https%3A%2F%2Fsynthetic.invalid%2Fsong&client_id=synthetic-soundcloud-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ]
+          },
+          "body": ""
+        }
+      ],
+      "source_status_matched": true,
+      "candidate_response": {
+        "status": 200,
+        "headers": {
+          "Content-Length": [
+            "24"
+          ],
+          "Content-Type": [
+            "application/json",
+            "text/plain; charset=UTF-8"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:22 GMT"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": 24,
+        "transfer_encoding": [],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "candidate_effects": [
+        {
+          "method": "GET",
+          "target": "/resolve?url=https%3A%2F%2Fsynthetic.invalid%2Fsong&client_id=synthetic-soundcloud-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ]
+          },
+          "body": ""
+        }
+      ]
+    },
+    {
+      "id": "resolve-extra-path",
+      "method": "GET",
+      "target": "/proxy/soundcloud/resolve/extra",
+      "headers": [
+        [
+          "Request-Id",
+          "synthetic-reference-case"
+        ]
+      ],
+      "body_base64": "",
+      "expected_status": 404,
+      "provider": {
+        "statuses": [
+          200
+        ],
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9"
+      },
+      "response": {
+        "status": 404,
+        "headers": {
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:22 GMT"
+          ]
+        },
+        "body_base64": "",
+        "protocol": "HTTP/1.1",
+        "content_length": -1,
+        "transfer_encoding": [
+          "chunked"
+        ],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "effects": [],
+      "source_status_matched": true,
+      "candidate_response": {
+        "status": 404,
+        "headers": {
+          "Content-Length": [
+            "0"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:23 GMT"
+          ]
+        },
+        "body_base64": "",
+        "protocol": "HTTP/1.1",
+        "content_length": 0,
+        "transfer_encoding": [],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "candidate_effects": []
+    },
+    {
+      "id": "resolve-missing-url",
+      "method": "GET",
+      "target": "/proxy/soundcloud/resolve",
+      "headers": [
+        [
+          "Request-Id",
+          "synthetic-reference-case"
+        ]
+      ],
+      "body_base64": "",
+      "expected_status": 400,
+      "provider": {
+        "statuses": [
+          200
+        ],
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9"
+      },
+      "response": {
+        "status": 400,
+        "headers": {
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:22 GMT"
+          ]
+        },
+        "body_base64": "UXVlcnkgcGFyYW1ldGVyIHVybCBpcyByZXF1aXJlZA==",
+        "protocol": "HTTP/1.1",
+        "content_length": -1,
+        "transfer_encoding": [
+          "chunked"
+        ],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "effects": [],
+      "source_status_matched": true,
+      "candidate_response": {
+        "status": 400,
+        "headers": {
+          "Content-Length": [
+            "31"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:23 GMT"
+          ]
+        },
+        "body_base64": "UXVlcnkgcGFyYW1ldGVyIHVybCBpcyByZXF1aXJlZA==",
+        "protocol": "HTTP/1.1",
+        "content_length": 31,
+        "transfer_encoding": [],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "candidate_effects": []
+    },
+    {
+      "id": "stream-get",
+      "method": "GET",
+      "target": "/proxy/soundcloud/stream?url=https%3A%2F%2Fprovider%3A8443%2Faudio",
+      "headers": [
+        [
+          "Request-Id",
+          "synthetic-reference-case"
+        ]
+      ],
+      "body_base64": "",
+      "expected_status": 302,
+      "provider": {
+        "statuses": [
+          302
+        ],
+        "headers": {
+          "Location": [
+            "https://synthetic.invalid/download"
+          ]
+        },
+        "body": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9"
+      },
+      "response": {
+        "status": 302,
+        "headers": {
+          "Content-Type": [
+            "text/plain; charset=UTF-8"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:22 GMT"
+          ],
+          "Location": [
+            "https://synthetic.invalid/download"
+          ]
+        },
+        "body_base64": "",
+        "protocol": "HTTP/1.1",
+        "content_length": -1,
+        "transfer_encoding": [
+          "chunked"
+        ],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "effects": [
+        {
+          "method": "GET",
+          "target": "/audio?client_id=synthetic-soundcloud-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ]
+          },
+          "body": ""
+        }
+      ],
+      "source_status_matched": true,
+      "candidate_response": {
+        "status": 302,
+        "headers": {
+          "Content-Length": [
+            "0"
+          ],
+          "Content-Type": [
+            "text/plain; charset=UTF-8"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:23 GMT"
+          ],
+          "Location": [
+            "https://synthetic.invalid/download"
+          ]
+        },
+        "body_base64": "",
+        "protocol": "HTTP/1.1",
+        "content_length": 0,
+        "transfer_encoding": [],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "candidate_effects": [
+        {
+          "method": "GET",
+          "target": "/audio?client_id=synthetic-soundcloud-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ]
+          },
+          "body": ""
+        }
+      ]
+    },
+    {
+      "id": "stream-post",
+      "method": "POST",
+      "target": "/proxy/soundcloud/stream?url=https%3A%2F%2Fprovider%3A8443%2Faudio",
+      "headers": [
+        [
+          "Request-Id",
+          "synthetic-reference-case"
+        ]
+      ],
+      "body_base64": "",
+      "expected_status": 302,
+      "provider": {
+        "statuses": [
+          302
+        ],
+        "headers": {
+          "Location": [
+            "https://synthetic.invalid/download"
+          ]
+        },
+        "body": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9"
+      },
+      "response": {
+        "status": 302,
+        "headers": {
+          "Content-Type": [
+            "text/plain; charset=UTF-8"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:23 GMT"
+          ],
+          "Location": [
+            "https://synthetic.invalid/download"
+          ]
+        },
+        "body_base64": "",
+        "protocol": "HTTP/1.1",
+        "content_length": -1,
+        "transfer_encoding": [
+          "chunked"
+        ],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "effects": [
+        {
+          "method": "GET",
+          "target": "/audio?client_id=synthetic-soundcloud-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ]
+          },
+          "body": ""
+        }
+      ],
+      "source_status_matched": true,
+      "candidate_response": {
+        "status": 302,
+        "headers": {
+          "Content-Length": [
+            "0"
+          ],
+          "Content-Type": [
+            "text/plain; charset=UTF-8"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:24 GMT"
+          ],
+          "Location": [
+            "https://synthetic.invalid/download"
+          ]
+        },
+        "body_base64": "",
+        "protocol": "HTTP/1.1",
+        "content_length": 0,
+        "transfer_encoding": [],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "candidate_effects": [
+        {
+          "method": "GET",
+          "target": "/audio?client_id=synthetic-soundcloud-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ]
+          },
+          "body": ""
+        }
+      ]
+    },
+    {
+      "id": "stream-missing-location",
+      "method": "GET",
+      "target": "/proxy/soundcloud/stream?url=https%3A%2F%2Fprovider%3A8443%2Faudio",
+      "headers": [
+        [
+          "Request-Id",
+          "synthetic-reference-case"
+        ]
+      ],
+      "body_base64": "",
+      "expected_status": 500,
+      "provider": {
+        "statuses": [
+          302
+        ],
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9"
+      },
+      "response": {
+        "status": 500,
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:23 GMT"
+          ]
+        },
+        "body_base64": "eyJjb2RlIjo1MDAsImxhYmVsIjoiaW50ZXJuYWwtZXJyb3IiLCJtZXNzYWdlIjoiSW50ZXJuYWwgU2VydmVyIEVycm9yIn0=",
+        "protocol": "HTTP/1.1",
+        "content_length": -1,
+        "transfer_encoding": [
+          "chunked"
+        ],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "effects": [
+        {
+          "method": "GET",
+          "target": "/audio?client_id=synthetic-soundcloud-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ]
+          },
+          "body": ""
+        }
+      ],
+      "source_status_matched": true,
+      "candidate_response": {
+        "status": 500,
+        "headers": {
+          "Content-Length": [
+            "71"
+          ],
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:24 GMT"
+          ]
+        },
+        "body_base64": "eyJjb2RlIjo1MDAsImxhYmVsIjoiaW50ZXJuYWwtZXJyb3IiLCJtZXNzYWdlIjoiSW50ZXJuYWwgU2VydmVyIEVycm9yIn0=",
+        "protocol": "HTTP/1.1",
+        "content_length": 71,
+        "transfer_encoding": [],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "candidate_effects": [
+        {
+          "method": "GET",
+          "target": "/audio?client_id=synthetic-soundcloud-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ]
+          },
+          "body": ""
+        }
+      ]
+    },
+    {
+      "id": "stream-not-302",
+      "method": "GET",
+      "target": "/proxy/soundcloud/stream?url=https%3A%2F%2Fprovider%3A8443%2Faudio",
+      "headers": [
+        [
+          "Request-Id",
+          "synthetic-reference-case"
+        ]
+      ],
+      "body_base64": "",
+      "expected_status": 500,
+      "provider": {
+        "statuses": [
+          200
+        ],
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9"
+      },
+      "response": {
+        "status": 500,
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:23 GMT"
+          ]
+        },
+        "body_base64": "eyJjb2RlIjo1MDAsImxhYmVsIjoiaW50ZXJuYWwtZXJyb3IiLCJtZXNzYWdlIjoiSW50ZXJuYWwgU2VydmVyIEVycm9yIn0=",
+        "protocol": "HTTP/1.1",
+        "content_length": -1,
+        "transfer_encoding": [
+          "chunked"
+        ],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "effects": [
+        {
+          "method": "GET",
+          "target": "/audio?client_id=synthetic-soundcloud-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ]
+          },
+          "body": ""
+        }
+      ],
+      "source_status_matched": true,
+      "candidate_response": {
+        "status": 500,
+        "headers": {
+          "Content-Length": [
+            "71"
+          ],
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:24 GMT"
+          ]
+        },
+        "body_base64": "eyJjb2RlIjo1MDAsImxhYmVsIjoiaW50ZXJuYWwtZXJyb3IiLCJtZXNzYWdlIjoiSW50ZXJuYWwgU2VydmVyIEVycm9yIn0=",
+        "protocol": "HTTP/1.1",
+        "content_length": 71,
+        "transfer_encoding": [],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "candidate_effects": [
+        {
+          "method": "GET",
+          "target": "/audio?client_id=synthetic-soundcloud-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ]
+          },
+          "body": ""
+        }
+      ]
+    },
+    {
+      "id": "stream-wrong-host",
+      "method": "GET",
+      "target": "/proxy/soundcloud/stream?url=https%3A%2F%2Fother.invalid%2Faudio",
+      "headers": [
+        [
+          "Request-Id",
+          "synthetic-reference-case"
+        ]
+      ],
+      "body_base64": "",
+      "expected_status": 500,
+      "provider": {
+        "statuses": [
+          200
+        ],
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9"
+      },
+      "response": {
+        "status": 500,
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:23 GMT"
+          ]
+        },
+        "body_base64": "eyJjb2RlIjo1MDAsImxhYmVsIjoiaW50ZXJuYWwtZXJyb3IiLCJtZXNzYWdlIjoiSW50ZXJuYWwgU2VydmVyIEVycm9yIn0=",
+        "protocol": "HTTP/1.1",
+        "content_length": -1,
+        "transfer_encoding": [
+          "chunked"
+        ],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "effects": [],
+      "source_status_matched": true,
+      "candidate_response": {
+        "status": 500,
+        "headers": {
+          "Content-Length": [
+            "71"
+          ],
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:24 GMT"
+          ]
+        },
+        "body_base64": "eyJjb2RlIjo1MDAsImxhYmVsIjoiaW50ZXJuYWwtZXJyb3IiLCJtZXNzYWdlIjoiSW50ZXJuYWwgU2VydmVyIEVycm9yIn0=",
+        "protocol": "HTTP/1.1",
+        "content_length": 71,
+        "transfer_encoding": [],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "candidate_effects": []
+    },
+    {
+      "id": "stream-http-rejected",
+      "method": "GET",
+      "target": "/proxy/soundcloud/stream?url=http%3A%2F%2Fprovider%3A8443%2Faudio",
+      "headers": [
+        [
+          "Request-Id",
+          "synthetic-reference-case"
+        ]
+      ],
+      "body_base64": "",
+      "expected_status": 500,
+      "provider": {
+        "statuses": [
+          200
+        ],
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9"
+      },
+      "response": {
+        "status": 500,
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:25 GMT"
+          ]
+        },
+        "body_base64": "eyJjb2RlIjo1MDAsImxhYmVsIjoiaW50ZXJuYWwtZXJyb3IiLCJtZXNzYWdlIjoiSW50ZXJuYWwgU2VydmVyIEVycm9yIn0=",
+        "protocol": "HTTP/1.1",
+        "content_length": -1,
+        "transfer_encoding": [
+          "chunked"
+        ],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "effects": [],
+      "source_status_matched": true,
+      "candidate_response": {
+        "status": 500,
+        "headers": {
+          "Content-Length": [
+            "71"
+          ],
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:25 GMT"
+          ]
+        },
+        "body_base64": "eyJjb2RlIjo1MDAsImxhYmVsIjoiaW50ZXJuYWwtZXJyb3IiLCJtZXNzYWdlIjoiSW50ZXJuYWwgU2VydmVyIEVycm9yIn0=",
+        "protocol": "HTTP/1.1",
+        "content_length": 71,
+        "transfer_encoding": [],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "candidate_effects": []
+    },
+    {
+      "id": "stream-missing-url",
+      "method": "GET",
+      "target": "/proxy/soundcloud/stream",
+      "headers": [
+        [
+          "Request-Id",
+          "synthetic-reference-case"
+        ]
+      ],
+      "body_base64": "",
+      "expected_status": 400,
+      "provider": {
+        "statuses": [
+          200
+        ],
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9"
+      },
+      "response": {
+        "status": 400,
+        "headers": {
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:25 GMT"
+          ]
+        },
+        "body_base64": "UXVlcnkgcGFyYW1ldGVyIHVybCBpcyByZXF1aXJlZA==",
+        "protocol": "HTTP/1.1",
+        "content_length": -1,
+        "transfer_encoding": [
+          "chunked"
+        ],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "effects": [],
+      "source_status_matched": true,
+      "candidate_response": {
+        "status": 400,
+        "headers": {
+          "Content-Length": [
+            "31"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:25 GMT"
+          ]
+        },
+        "body_base64": "UXVlcnkgcGFyYW1ldGVyIHVybCBpcyByZXF1aXJlZA==",
+        "protocol": "HTTP/1.1",
+        "content_length": 31,
+        "transfer_encoding": [],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "candidate_effects": []
+    },
+    {
+      "id": "version-0",
+      "method": "GET",
+      "target": "/v0/proxy/giphy/v1/gifs/search",
+      "headers": [
+        [
+          "Request-Id",
+          "synthetic-reference-case"
+        ]
+      ],
+      "body_base64": "",
+      "expected_status": 200,
+      "provider": {
+        "statuses": [
+          200
+        ],
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:25 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": -1,
+        "transfer_encoding": [
+          "chunked"
+        ],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "effects": [
+        {
+          "method": "GET",
+          "target": "/v1/gifs/search?api_key=synthetic-giphy-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ],
+      "source_status_matched": true,
+      "candidate_response": {
+        "status": 200,
+        "headers": {
+          "Content-Length": [
+            "24"
+          ],
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:25 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": 24,
+        "transfer_encoding": [],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "candidate_effects": [
+        {
+          "method": "GET",
+          "target": "/v1/gifs/search?api_key=synthetic-giphy-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ]
+    },
+    {
+      "id": "version-1",
+      "method": "GET",
+      "target": "/v1/proxy/giphy/v1/gifs/search",
+      "headers": [
+        [
+          "Request-Id",
+          "synthetic-reference-case"
+        ]
+      ],
+      "body_base64": "",
+      "expected_status": 200,
+      "provider": {
+        "statuses": [
+          200
+        ],
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:25 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": -1,
+        "transfer_encoding": [
+          "chunked"
+        ],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "effects": [
+        {
+          "method": "GET",
+          "target": "/v1/gifs/search?api_key=synthetic-giphy-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ],
+      "source_status_matched": true,
+      "candidate_response": {
+        "status": 200,
+        "headers": {
+          "Content-Length": [
+            "24"
+          ],
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:26 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": 24,
+        "transfer_encoding": [],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "candidate_effects": [
+        {
+          "method": "GET",
+          "target": "/v1/gifs/search?api_key=synthetic-giphy-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ]
+    },
+    {
+      "id": "version-2",
+      "method": "GET",
+      "target": "/v2/proxy/giphy/v1/gifs/search",
+      "headers": [
+        [
+          "Request-Id",
+          "synthetic-reference-case"
+        ]
+      ],
+      "body_base64": "",
+      "expected_status": 200,
+      "provider": {
+        "statuses": [
+          200
+        ],
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:26 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": -1,
+        "transfer_encoding": [
+          "chunked"
+        ],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "effects": [
+        {
+          "method": "GET",
+          "target": "/v1/gifs/search?api_key=synthetic-giphy-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ],
+      "source_status_matched": true,
+      "candidate_response": {
+        "status": 200,
+        "headers": {
+          "Content-Length": [
+            "24"
+          ],
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:26 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": 24,
+        "transfer_encoding": [],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "candidate_effects": [
+        {
+          "method": "GET",
+          "target": "/v1/gifs/search?api_key=synthetic-giphy-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ]
+    },
+    {
+      "id": "version-3",
+      "method": "GET",
+      "target": "/v3/proxy/giphy/v1/gifs/search",
+      "headers": [
+        [
+          "Request-Id",
+          "synthetic-reference-case"
+        ]
+      ],
+      "body_base64": "",
+      "expected_status": 200,
+      "provider": {
+        "statuses": [
+          200
+        ],
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:26 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": -1,
+        "transfer_encoding": [
+          "chunked"
+        ],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "effects": [
+        {
+          "method": "GET",
+          "target": "/v1/gifs/search?api_key=synthetic-giphy-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ],
+      "source_status_matched": true,
+      "candidate_response": {
+        "status": 200,
+        "headers": {
+          "Content-Length": [
+            "24"
+          ],
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:26 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": 24,
+        "transfer_encoding": [],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "candidate_effects": [
+        {
+          "method": "GET",
+          "target": "/v1/gifs/search?api_key=synthetic-giphy-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ]
+    },
+    {
+      "id": "version-4",
+      "method": "GET",
+      "target": "/v4/proxy/giphy/v1/gifs/search",
+      "headers": [
+        [
+          "Request-Id",
+          "synthetic-reference-case"
+        ]
+      ],
+      "body_base64": "",
+      "expected_status": 200,
+      "provider": {
+        "statuses": [
+          200
+        ],
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:26 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": -1,
+        "transfer_encoding": [
+          "chunked"
+        ],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "effects": [
+        {
+          "method": "GET",
+          "target": "/v1/gifs/search?api_key=synthetic-giphy-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ],
+      "source_status_matched": true,
+      "candidate_response": {
+        "status": 200,
+        "headers": {
+          "Content-Length": [
+            "24"
+          ],
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:26 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": 24,
+        "transfer_encoding": [],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "candidate_effects": [
+        {
+          "method": "GET",
+          "target": "/v1/gifs/search?api_key=synthetic-giphy-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ]
+    },
+    {
+      "id": "version-5",
+      "method": "GET",
+      "target": "/v5/proxy/giphy/v1/gifs/search",
+      "headers": [
+        [
+          "Request-Id",
+          "synthetic-reference-case"
+        ]
+      ],
+      "body_base64": "",
+      "expected_status": 200,
+      "provider": {
+        "statuses": [
+          200
+        ],
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:26 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": -1,
+        "transfer_encoding": [
+          "chunked"
+        ],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "effects": [
+        {
+          "method": "GET",
+          "target": "/v1/gifs/search?api_key=synthetic-giphy-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ],
+      "source_status_matched": true,
+      "candidate_response": {
+        "status": 200,
+        "headers": {
+          "Content-Length": [
+            "24"
+          ],
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:27 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": 24,
+        "transfer_encoding": [],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "candidate_effects": [
+        {
+          "method": "GET",
+          "target": "/v1/gifs/search?api_key=synthetic-giphy-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ]
+    },
+    {
+      "id": "version-6",
+      "method": "GET",
+      "target": "/v6/proxy/giphy/v1/gifs/search",
+      "headers": [
+        [
+          "Request-Id",
+          "synthetic-reference-case"
+        ]
+      ],
+      "body_base64": "",
+      "expected_status": 200,
+      "provider": {
+        "statuses": [
+          200
+        ],
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:27 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": -1,
+        "transfer_encoding": [
+          "chunked"
+        ],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "effects": [
+        {
+          "method": "GET",
+          "target": "/v1/gifs/search?api_key=synthetic-giphy-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ],
+      "source_status_matched": true,
+      "candidate_response": {
+        "status": 200,
+        "headers": {
+          "Content-Length": [
+            "24"
+          ],
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:27 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": 24,
+        "transfer_encoding": [],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "candidate_effects": [
+        {
+          "method": "GET",
+          "target": "/v1/gifs/search?api_key=synthetic-giphy-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ]
+    },
+    {
+      "id": "version-7",
+      "method": "GET",
+      "target": "/v7/proxy/giphy/v1/gifs/search",
+      "headers": [
+        [
+          "Request-Id",
+          "synthetic-reference-case"
+        ]
+      ],
+      "body_base64": "",
+      "expected_status": 200,
+      "provider": {
+        "statuses": [
+          200
+        ],
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:27 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": -1,
+        "transfer_encoding": [
+          "chunked"
+        ],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "effects": [
+        {
+          "method": "GET",
+          "target": "/v1/gifs/search?api_key=synthetic-giphy-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ],
+      "source_status_matched": true,
+      "candidate_response": {
+        "status": 200,
+        "headers": {
+          "Content-Length": [
+            "24"
+          ],
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:27 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": 24,
+        "transfer_encoding": [],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "candidate_effects": [
+        {
+          "method": "GET",
+          "target": "/v1/gifs/search?api_key=synthetic-giphy-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ]
+    },
+    {
+      "id": "version-8",
+      "method": "GET",
+      "target": "/v8/proxy/giphy/v1/gifs/search",
+      "headers": [
+        [
+          "Request-Id",
+          "synthetic-reference-case"
+        ]
+      ],
+      "body_base64": "",
+      "expected_status": 200,
+      "provider": {
+        "statuses": [
+          200
+        ],
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:27 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": -1,
+        "transfer_encoding": [
+          "chunked"
+        ],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "effects": [
+        {
+          "method": "GET",
+          "target": "/v1/gifs/search?api_key=synthetic-giphy-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ],
+      "source_status_matched": true,
+      "candidate_response": {
+        "status": 200,
+        "headers": {
+          "Content-Length": [
+            "24"
+          ],
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:27 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": 24,
+        "transfer_encoding": [],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "candidate_effects": [
+        {
+          "method": "GET",
+          "target": "/v1/gifs/search?api_key=synthetic-giphy-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ]
+    },
+    {
+      "id": "version-9",
+      "method": "GET",
+      "target": "/v9/proxy/giphy/v1/gifs/search",
+      "headers": [
+        [
+          "Request-Id",
+          "synthetic-reference-case"
+        ]
+      ],
+      "body_base64": "",
+      "expected_status": 200,
+      "provider": {
+        "statuses": [
+          200
+        ],
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:27 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": -1,
+        "transfer_encoding": [
+          "chunked"
+        ],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "effects": [
+        {
+          "method": "GET",
+          "target": "/v1/gifs/search?api_key=synthetic-giphy-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ],
+      "source_status_matched": true,
+      "candidate_response": {
+        "status": 200,
+        "headers": {
+          "Content-Length": [
+            "24"
+          ],
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:27 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": 24,
+        "transfer_encoding": [],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "candidate_effects": [
+        {
+          "method": "GET",
+          "target": "/v1/gifs/search?api_key=synthetic-giphy-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ]
+    },
+    {
+      "id": "version-10",
+      "method": "GET",
+      "target": "/v10/proxy/giphy/v1/gifs/search",
+      "headers": [
+        [
+          "Request-Id",
+          "synthetic-reference-case"
+        ]
+      ],
+      "body_base64": "",
+      "expected_status": 200,
+      "provider": {
+        "statuses": [
+          200
+        ],
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:27 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": -1,
+        "transfer_encoding": [
+          "chunked"
+        ],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "effects": [
+        {
+          "method": "GET",
+          "target": "/v1/gifs/search?api_key=synthetic-giphy-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ],
+      "source_status_matched": true,
+      "candidate_response": {
+        "status": 200,
+        "headers": {
+          "Content-Length": [
+            "24"
+          ],
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:28 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": 24,
+        "transfer_encoding": [],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "candidate_effects": [
+        {
+          "method": "GET",
+          "target": "/v1/gifs/search?api_key=synthetic-giphy-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ]
+    },
+    {
+      "id": "version-11",
+      "method": "GET",
+      "target": "/v11/proxy/giphy/v1/gifs/search",
+      "headers": [
+        [
+          "Request-Id",
+          "synthetic-reference-case"
+        ]
+      ],
+      "body_base64": "",
+      "expected_status": 200,
+      "provider": {
+        "statuses": [
+          200
+        ],
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:28 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": -1,
+        "transfer_encoding": [
+          "chunked"
+        ],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "effects": [
+        {
+          "method": "GET",
+          "target": "/v1/gifs/search?api_key=synthetic-giphy-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ],
+      "source_status_matched": true,
+      "candidate_response": {
+        "status": 200,
+        "headers": {
+          "Content-Length": [
+            "24"
+          ],
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:28 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": 24,
+        "transfer_encoding": [],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "candidate_effects": [
+        {
+          "method": "GET",
+          "target": "/v1/gifs/search?api_key=synthetic-giphy-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ]
+    },
+    {
+      "id": "version-12",
+      "method": "GET",
+      "target": "/v12/proxy/giphy/v1/gifs/search",
+      "headers": [
+        [
+          "Request-Id",
+          "synthetic-reference-case"
+        ]
+      ],
+      "body_base64": "",
+      "expected_status": 200,
+      "provider": {
+        "statuses": [
+          200
+        ],
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:28 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": -1,
+        "transfer_encoding": [
+          "chunked"
+        ],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "effects": [
+        {
+          "method": "GET",
+          "target": "/v1/gifs/search?api_key=synthetic-giphy-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ],
+      "source_status_matched": true,
+      "candidate_response": {
+        "status": 200,
+        "headers": {
+          "Content-Length": [
+            "24"
+          ],
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:28 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": 24,
+        "transfer_encoding": [],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "candidate_effects": [
+        {
+          "method": "GET",
+          "target": "/v1/gifs/search?api_key=synthetic-giphy-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ]
+    },
+    {
+      "id": "version-13",
+      "method": "GET",
+      "target": "/v13/proxy/giphy/v1/gifs/search",
+      "headers": [
+        [
+          "Request-Id",
+          "synthetic-reference-case"
+        ]
+      ],
+      "body_base64": "",
+      "expected_status": 200,
+      "provider": {
+        "statuses": [
+          200
+        ],
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:28 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": -1,
+        "transfer_encoding": [
+          "chunked"
+        ],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "effects": [
+        {
+          "method": "GET",
+          "target": "/v1/gifs/search?api_key=synthetic-giphy-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ],
+      "source_status_matched": true,
+      "candidate_response": {
+        "status": 200,
+        "headers": {
+          "Content-Length": [
+            "24"
+          ],
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:28 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": 24,
+        "transfer_encoding": [],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "candidate_effects": [
+        {
+          "method": "GET",
+          "target": "/v1/gifs/search?api_key=synthetic-giphy-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ]
+    },
+    {
+      "id": "version-14",
+      "method": "GET",
+      "target": "/v14/proxy/giphy/v1/gifs/search",
+      "headers": [
+        [
+          "Request-Id",
+          "synthetic-reference-case"
+        ]
+      ],
+      "body_base64": "",
+      "expected_status": 200,
+      "provider": {
+        "statuses": [
+          200
+        ],
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:28 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": -1,
+        "transfer_encoding": [
+          "chunked"
+        ],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "effects": [
+        {
+          "method": "GET",
+          "target": "/v1/gifs/search?api_key=synthetic-giphy-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ],
+      "source_status_matched": true,
+      "candidate_response": {
+        "status": 200,
+        "headers": {
+          "Content-Length": [
+            "24"
+          ],
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:28 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": 24,
+        "transfer_encoding": [],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "candidate_effects": [
+        {
+          "method": "GET",
+          "target": "/v1/gifs/search?api_key=synthetic-giphy-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ]
+    },
+    {
+      "id": "version-15",
+      "method": "GET",
+      "target": "/v15/proxy/giphy/v1/gifs/search",
+      "headers": [
+        [
+          "Request-Id",
+          "synthetic-reference-case"
+        ]
+      ],
+      "body_base64": "",
+      "expected_status": 200,
+      "provider": {
+        "statuses": [
+          200
+        ],
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:28 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": -1,
+        "transfer_encoding": [
+          "chunked"
+        ],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "effects": [
+        {
+          "method": "GET",
+          "target": "/v1/gifs/search?api_key=synthetic-giphy-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ],
+      "source_status_matched": true,
+      "candidate_response": {
+        "status": 200,
+        "headers": {
+          "Content-Length": [
+            "24"
+          ],
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:28 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": 24,
+        "transfer_encoding": [],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "candidate_effects": [
+        {
+          "method": "GET",
+          "target": "/v1/gifs/search?api_key=synthetic-giphy-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ]
+    },
+    {
+      "id": "version-16",
+      "method": "GET",
+      "target": "/v16/proxy/giphy/v1/gifs/search",
+      "headers": [
+        [
+          "Request-Id",
+          "synthetic-reference-case"
+        ]
+      ],
+      "body_base64": "",
+      "expected_status": 200,
+      "provider": {
+        "statuses": [
+          200
+        ],
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:29 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": -1,
+        "transfer_encoding": [
+          "chunked"
+        ],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "effects": [
+        {
+          "method": "GET",
+          "target": "/v1/gifs/search?api_key=synthetic-giphy-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ],
+      "source_status_matched": true,
+      "candidate_response": {
+        "status": 200,
+        "headers": {
+          "Content-Length": [
+            "24"
+          ],
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:29 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": 24,
+        "transfer_encoding": [],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "candidate_effects": [
+        {
+          "method": "GET",
+          "target": "/v1/gifs/search?api_key=synthetic-giphy-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ]
+    },
+    {
+      "id": "version-17",
+      "method": "GET",
+      "target": "/v17/proxy/giphy/v1/gifs/search",
+      "headers": [
+        [
+          "Request-Id",
+          "synthetic-reference-case"
+        ]
+      ],
+      "body_base64": "",
+      "expected_status": 200,
+      "provider": {
+        "statuses": [
+          200
+        ],
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:29 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": -1,
+        "transfer_encoding": [
+          "chunked"
+        ],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "effects": [
+        {
+          "method": "GET",
+          "target": "/v1/gifs/search?api_key=synthetic-giphy-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ],
+      "source_status_matched": true,
+      "candidate_response": {
+        "status": 200,
+        "headers": {
+          "Content-Length": [
+            "24"
+          ],
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:29 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": 24,
+        "transfer_encoding": [],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "candidate_effects": [
+        {
+          "method": "GET",
+          "target": "/v1/gifs/search?api_key=synthetic-giphy-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ]
+    },
+    {
+      "id": "version-18",
+      "method": "GET",
+      "target": "/v18/proxy/giphy/v1/gifs/search",
+      "headers": [
+        [
+          "Request-Id",
+          "synthetic-reference-case"
+        ]
+      ],
+      "body_base64": "",
+      "expected_status": 200,
+      "provider": {
+        "statuses": [
+          200
+        ],
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:29 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": -1,
+        "transfer_encoding": [
+          "chunked"
+        ],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "effects": [
+        {
+          "method": "GET",
+          "target": "/v1/gifs/search?api_key=synthetic-giphy-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ],
+      "source_status_matched": true,
+      "candidate_response": {
+        "status": 200,
+        "headers": {
+          "Content-Length": [
+            "24"
+          ],
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:29 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": 24,
+        "transfer_encoding": [],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "candidate_effects": [
+        {
+          "method": "GET",
+          "target": "/v1/gifs/search?api_key=synthetic-giphy-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ]
+    },
+    {
+      "id": "version-19",
+      "method": "GET",
+      "target": "/v19/proxy/giphy/v1/gifs/search",
+      "headers": [
+        [
+          "Request-Id",
+          "synthetic-reference-case"
+        ]
+      ],
+      "body_base64": "",
+      "expected_status": 200,
+      "provider": {
+        "statuses": [
+          200
+        ],
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:29 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": -1,
+        "transfer_encoding": [
+          "chunked"
+        ],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "effects": [
+        {
+          "method": "GET",
+          "target": "/v1/gifs/search?api_key=synthetic-giphy-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ],
+      "source_status_matched": true,
+      "candidate_response": {
+        "status": 200,
+        "headers": {
+          "Content-Length": [
+            "24"
+          ],
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:29 GMT"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body_base64": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9",
+        "protocol": "HTTP/1.1",
+        "content_length": 24,
+        "transfer_encoding": [],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "candidate_effects": [
+        {
+          "method": "GET",
+          "target": "/v1/gifs/search?api_key=synthetic-giphy-secret",
+          "host": "provider:8443",
+          "protocol": "HTTP/1.1",
+          "headers": {
+            "Accept-Encoding": [
+              "gzip"
+            ],
+            "X-Real-Ip": [
+              "0.0.0.0"
+            ]
+          },
+          "body": ""
+        }
+      ]
+    },
+    {
+      "id": "version-unknown",
+      "method": "GET",
+      "target": "/v99/proxy/giphy/v1/gifs/search",
+      "headers": [
+        [
+          "Request-Id",
+          "synthetic-reference-case"
+        ]
+      ],
+      "body_base64": "",
+      "expected_status": 404,
+      "provider": {
+        "statuses": [
+          200
+        ],
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9"
+      },
+      "response": {
+        "status": 404,
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:29 GMT"
+          ]
+        },
+        "body_base64": "eyJjb2RlIjo0MDQsImxhYmVsIjoidW5zdXBwb3J0ZWQtdmVyc2lvbiIsIm1lc3NhZ2UiOiJWZXJzaW9uIHY5OSBpcyBub3Qgc3VwcG9ydGVkIn0=",
+        "protocol": "HTTP/1.1",
+        "content_length": -1,
+        "transfer_encoding": [
+          "chunked"
+        ],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "effects": [],
+      "source_status_matched": true,
+      "candidate_response": {
+        "status": 404,
+        "headers": {
+          "Content-Length": [
+            "83"
+          ],
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:29 GMT"
+          ]
+        },
+        "body_base64": "eyJjb2RlIjo0MDQsImxhYmVsIjoidW5zdXBwb3J0ZWQtdmVyc2lvbiIsIm1lc3NhZ2UiOiJWZXJzaW9uIHY5OSBpcyBub3Qgc3VwcG9ydGVkIn0=",
+        "protocol": "HTTP/1.1",
+        "content_length": 83,
+        "transfer_encoding": [],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "candidate_effects": []
+    },
+    {
+      "id": "version-internal",
+      "method": "GET",
+      "target": "/v0/i/status",
+      "headers": [
+        [
+          "Request-Id",
+          "synthetic-reference-case"
+        ]
+      ],
+      "body_base64": "",
+      "expected_status": 404,
+      "provider": {
+        "statuses": [
+          200
+        ],
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "X-Provider": [
+            "synthetic"
+          ]
+        },
+        "body": "eyJwcm92aWRlciI6InN5bnRoZXRpYyJ9"
+      },
+      "response": {
+        "status": 404,
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:29 GMT"
+          ]
+        },
+        "body_base64": "eyJjb2RlIjo0MDQsImxhYmVsIjoidW5zdXBwb3J0ZWQtdmVyc2lvbiIsIm1lc3NhZ2UiOiJJbnRlcm5hbCBBUElzIChgL2kvLi4uYCkgYXJlIG5vdCB1bmRlciB2ZXJzaW9uIGNvbnRyb2wifQ==",
+        "protocol": "HTTP/1.1",
+        "content_length": -1,
+        "transfer_encoding": [
+          "chunked"
+        ],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "effects": [],
+      "source_status_matched": true,
+      "candidate_response": {
+        "status": 404,
+        "headers": {
+          "Content-Length": [
+            "109"
+          ],
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Wed, 07 Oct 2026 18:53:30 GMT"
+          ]
+        },
+        "body_base64": "eyJjb2RlIjo0MDQsImxhYmVsIjoidW5zdXBwb3J0ZWQtdmVyc2lvbiIsIm1lc3NhZ2UiOiJJbnRlcm5hbCBBUElzIChgL2kvLi4uYCkgYXJlIG5vdCB1bmRlciB2ZXJzaW9uIGNvbnRyb2wifQ==",
+        "protocol": "HTTP/1.1",
+        "content_length": 109,
+        "transfer_encoding": [],
+        "close": false,
+        "uncompressed": false,
+        "trailers": null
+      },
+      "candidate_effects": []
+    }
+  ],
+  "candidate": {
+    "source_revision": "4d8c99a32a1304253326d97545adbee5c2cf14a8",
+    "binary_sha256": "b8bacd235b71dc14af6a4dbcf36687bdbad721e47a94e63311dd43557f8954a3",
+    "image_id": "sha256:0a6846655efa2aed5b77ce7be78aab96fdf9d4ab41907dd7826329758ac85c65",
+    "build_info": {
+      "GoVersion": "go1.26.8",
+      "Path": "github.com/adamjlow/wire-server/go/services/proxy/cmd/proxy",
+      "Main": {
+        "Path": "github.com/adamjlow/wire-server/go/services/proxy",
+        "Version": "(devel)"
+      },
+      "Deps": [
+        {
+          "Path": "go.yaml.in/yaml/v3",
+          "Version": "v3.0.4",
+          "Sum": "h1:tfq32ie2Jv2UxXFdLJdh3jXuOzWiL1fo0bu/FbuKpbc="
+        }
+      ],
+      "Settings": [
+        {
+          "Key": "-buildmode",
+          "Value": "exe"
+        },
+        {
+          "Key": "-compiler",
+          "Value": "gc"
+        },
+        {
+          "Key": "CGO_ENABLED",
+          "Value": "0"
+        },
+        {
+          "Key": "GOARCH",
+          "Value": "amd64"
+        },
+        {
+          "Key": "GOOS",
+          "Value": "linux"
+        },
+        {
+          "Key": "GOAMD64",
+          "Value": "v1"
+        },
+        {
+          "Key": "vcs",
+          "Value": "git"
+        },
+        {
+          "Key": "vcs.revision",
+          "Value": "4d8c99a32a1304253326d97545adbee5c2cf14a8"
+        },
+        {
+          "Key": "vcs.time",
+          "Value": "2026-10-07T18:53:11Z"
+        },
+        {
+          "Key": "vcs.modified",
+          "Value": "false"
+        }
+      ]
+    }
+  },
+  "provider_build_info": {
+    "GoVersion": "go1.26.8",
+    "Path": "wire.local/proxy-reference-provider",
+    "Main": {
+      "Path": "wire.local/proxy-reference-provider",
+      "Version": "(devel)"
+    },
+    "Settings": [
+      {
+        "Key": "-buildmode",
+        "Value": "exe"
+      },
+      {
+        "Key": "-compiler",
+        "Value": "gc"
+      },
+      {
+        "Key": "CGO_ENABLED",
+        "Value": "0"
+      },
+      {
+        "Key": "GOARCH",
+        "Value": "amd64"
+      },
+      {
+        "Key": "GOOS",
+        "Value": "linux"
+      },
+      {
+        "Key": "GOAMD64",
+        "Value": "v1"
+      },
+      {
+        "Key": "vcs",
+        "Value": "git"
+      },
+      {
+        "Key": "vcs.revision",
+        "Value": "bcf8d0095b767a08575dbad6a1719cd6d69a3636"
+      },
+      {
+        "Key": "vcs.time",
+        "Value": "2026-10-07T18:34:39Z"
+      },
+      {
+        "Key": "vcs.modified",
+        "Value": "false"
+      }
+    ]
+  },
+  "fixture_revision": "4d8c99a32a1304253326d97545adbee5c2cf14a8",
+  "provider_image_id": "sha256:339502abb65f68c44d5320780b7e3a383bfa220ad0c587bd3ece75e058000cee",
+  "test_ca_sha256": "4431bb9a85a6941929d56e6ada91cbd96fdc351d18609cdfbee6e0b9ee196fbe",
+  "config_sha256": "3af879f33520207d9dbd0764cdabc555f48151e7b71412f87f8a0a3d592ab2af",
+  "reference_image_id": "sha256:befc5a172c75f28353fbaea2d6550c8279c25f2444bb624ab39d9114d82a5235",
+  "scenario_sha256": "d18e7620a1ed2dcae3ef72662b8ed1d9b2faa9e01ae754549f5d6325cc574873",
+  "capture_complete": true,
+  "source_status_mismatches": 0,
+  "reference_logs": "E, request=synthetic-reference-case, code=502, label=server-error, \"{\"provider\":\"synthetic\"}\"\nE, request=synthetic-reference-case, code=502, label=server-error, \"{\"provider\":\"synthetic\"}\"\nE, request=synthetic-reference-case, code=502, label=server-error, \"{\"provider\":\"synthetic\"}\"\nE, request=synthetic-reference-case, code=502, label=server-error, \"{\"provider\":\"synthetic\"}\"\nE, request=synthetic-reference-case, missing location header\nE, request=synthetic-reference-case, code=500, label=internal-error, \"Internal server error\"\nE, request=synthetic-reference-case, unexpected upstream response\nE, request=synthetic-reference-case, code=500, label=internal-error, \"Internal server error\"\nE, request=synthetic-reference-case, insecure stream url\nE, request=synthetic-reference-case, code=500, label=internal-error, \"Internal server error\"\nE, request=synthetic-reference-case, insecure stream url\nE, request=synthetic-reference-case, code=500, label=internal-error, \"Internal server error\"",
+  "container_logs": {
+    "ce8bed2e5f0869990fa2d201e6cebef44d111af2bde974198f2b26ab7216f390": "",
+    "59f1e795c41db162dcf9646648b6c02c0172feb7c1aee3d73fb6da65c669849c": "E, request=synthetic-reference-case, code=502, label=server-error, \"{\"provider\":\"synthetic\"}\"\nE, request=synthetic-reference-case, code=502, label=server-error, \"{\"provider\":\"synthetic\"}\"\nE, request=synthetic-reference-case, code=502, label=server-error, \"{\"provider\":\"synthetic\"}\"\nE, request=synthetic-reference-case, code=502, label=server-error, \"{\"provider\":\"synthetic\"}\"\nE, request=synthetic-reference-case, missing location header\nE, request=synthetic-reference-case, code=500, label=internal-error, \"Internal server error\"\nE, request=synthetic-reference-case, unexpected upstream response\nE, request=synthetic-reference-case, code=500, label=internal-error, \"Internal server error\"\nE, request=synthetic-reference-case, insecure stream url\nE, request=synthetic-reference-case, code=500, label=internal-error, \"Internal server error\"\nE, request=synthetic-reference-case, insecure stream url\nE, request=synthetic-reference-case, code=500, label=internal-error, \"Internal server error\"\n",
+    "34b92506736146c3fc412e868129c9f39b4a5cb49d443c6914e3de86bf7bc07e": "",
+    "6ccd877fe9b6da17113ae1ca09d875e3533f7378732a4c4e24e5c25e0716ecdd": ""
+  },
+  "finished_at": "2026-10-07T18:53:30.514297+00:00"
+}
