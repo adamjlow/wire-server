@@ -6,7 +6,8 @@
   "oracle_paths": [
     "services/cargohold",
     "docs/go-migration/services/cargohold/contract.md",
-    "docs/go-migration/services/cargohold/oracle"
+    "docs/go-migration/services/cargohold/oracle",
+    "tools/parity"
   ],
   "gates": {},
   "compatibility": null

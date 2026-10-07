@@ -6,7 +6,8 @@
   "oracle_paths": [
     "services/proxy",
     "docs/go-migration/services/proxy/contract.md",
-    "docs/go-migration/services/proxy/oracle"
+    "docs/go-migration/services/proxy/oracle",
+    "tools/parity"
   ],
   "gates": {},
   "compatibility": null

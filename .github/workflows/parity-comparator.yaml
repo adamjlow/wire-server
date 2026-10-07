@@ -1,0 +1,21 @@
+name: Parity comparator self-tests
+
+on:
+  pull_request:
+    paths: ['tools/parity/**', '.github/workflows/parity-comparator.yaml']
+  push:
+    branches: [go-migration]
+    paths: ['tools/parity/**', '.github/workflows/parity-comparator.yaml']
+
+permissions:
+  contents: read
+
+jobs:
+  self-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - run: python3 -m unittest discover -s tools/parity -p 'test_*.py' -v

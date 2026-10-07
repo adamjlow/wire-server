@@ -42,3 +42,28 @@ protections unless a maintainer authorizes changes. Existing Haskell stays defau
 
 Runtime parity, S3 switchback, production selection, real Haskell build checks and
 contract approval remain outside these self-tests and cannot be called passing.
+
+## Results and remaining evidence
+
+28 comparator tests pass. They independently corrupt status, body, headers,
+ordered provider query/effects, request stimulus, step order, identity pins and
+assertions. They verify JSON null/missing, bool/number, numeric spelling, array
+order, duplicate members and UTF-8 handling; blocked/skipped/missing capture and
+unverified provenance cannot pass. CLI tests cover hashes, exclusive reports,
+symlinks, oversized/nonregular input and capture-value non-disclosure. A policy
+test proves candidate tasks cannot claim the comparator after oracle protection
+was added to both service records. All 32 migration validator tests also pass.
+
+No real service was launched. Offline reports explicitly state that supplied
+assertions/provenance are declarations and parity is not verified. Human oracle
+review remains pending; no lifecycle or compatibility claim is advanced.
+
+Reference investigation confirmed the inspected SHA exists in public upstream,
+using its immutable [commit API](https://api.github.com/repos/wireapp/wire-server/commits/f6636ed53315fa7b0fc4c8aa39c0bb30c98b6d5e).
+The registry's [proxy manifest API](https://quay.io/api/v1/repository/wire/proxy/manifest/sha256:460629f6358c93892c3fd6ae5177c685bd787212900339a3bdab2530f875a8f4)
+exposes no source label in its metadata, and public release notes do not tie that
+image digest to the inspected SHA. This is still unverified reference provenance.
+The generic-message-proto submodule's exact gitlink is publicly resolvable; the
+enterprise submodule repository returned anonymous HTTP 404. Selected-service
+Nix evaluation/build may avoid enterprise; whole-project checks cannot assume
+that private source is available. No failure is relabelled as a pass.
