@@ -15,3 +15,25 @@ Sequence:
 Commands: pinned PATH `python3 -m unittest discover -s docs/go-migration/services/proxy/oracle -p 'test_*.py'`; fixture `go test -race -count=1 ./...` with the required build-output filter; `capture.py --help`; new `compare.py --help`; `make migration-check migration-test`; scoped migration check at the claim commit; `git diff --check`.
 
 Artifacts: oracle capture/comparison reports and this plan. Rollback: remove only this invocation's containers/network and optional fixture/candidate images; Haskell defaults and upstream inputs remain unchanged. Outstanding whole-service operations, full characterization, selection/switchback and Haskell checks remain separate requirements.
+
+## Final risk-focused comparison
+
+Extend the same independent runner with upstream request specifications, transport
+failures, redirects/loops, response timeouts, gzip, HEAD, structured error data,
+real secret reload/invalid retention, metrics, configured logging, disabled
+versions, active-request SIGTERM drain and image switchback. Keep historical
+captures; do not relabel their candidate/fixture revisions.
+
+Before the final run, define a small load smoke test: 40 forwarded requests per
+runtime, concurrency four, zero non-200 responses, exact synthetic response body;
+candidate p95 client-observed latency no greater than max(1 second, twice the
+reference p95), and reported candidate memory below the existing chart's 50 MiB
+limit. This includes Docker client startup and is a regression smoke test, not a
+production throughput/capacity claim. Existing integration executable/full stack
+remain outside the authorized environment. Proxy makes no RPC to Haskell peer
+services and owns no database/queue; image-only rendering preserves their choices.
+
+Native runtime GC measurements retain metric schema/units but measure each
+runtime's own heap and collector; do not assert numeric equivalence. Go reports
+GC CPU averaged over cycles since the last sample and the latest stop-the-world
+pause for GC wall diagnostics. This limitation must be visible in the review.

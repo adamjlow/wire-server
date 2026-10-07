@@ -36,7 +36,7 @@ def request(container, role, method, target, headers=(), body=b""):
     payload = {"method": method, "target": target, "headers": list(headers),
                "body_base64": base64.b64encode(body).decode()}
     return json.loads(command(["docker", "exec", "--interactive", container, "/provider", "-client", role],
-                              timeout=20, input=json.dumps(payload)))
+                              timeout=35, input=json.dumps(payload)))
 
 
 def ready(container, role, path):
@@ -125,6 +125,14 @@ def scenarios(suite="initial"):
         for family, path in (("giphy", paths["giphy"]), ("spotify", "/proxy/spotify/api/token")):
             add(family + "-gzip-response", path, provider_headers={"Content-Type": ["application/json"], "Content-Encoding": ["gzip"]})
             cases[-1]["provider"]["body"] = base64.b64encode(gzip.compress(b'{"provider":"synthetic"}', mtime=0)).decode()
+        for family, path in (("giphy", paths["giphy"]), ("spotify", "/proxy/spotify/api/token")):
+            add(family + "-response-timeout", path, status=502 if family == "giphy" else 500)
+            cases[-1]["provider"]["delay_ms"] = 6000
+            add(family + "-structured-error", path, status=503, provider_statuses=[503])
+            cases[-1]["provider"]["body"] = base64.b64encode(b'{"code":503,"label":"custom","message":"<synthetic>&","data":{"domain":"EXAMPLE.COM","path":"/synthetic"},"inner":{"code":500,"label":"inner","message":"detail"}}').decode()
+        for family, path in (("spotify", "/proxy/spotify/api/token"), ("resolve", "/proxy/soundcloud/resolve?url=synthetic")):
+            add(family + "-redirect-loop", path, status=500, provider_statuses=[302],
+                provider_headers={"Location": ["https://provider:8443/loop"]})
         headers = [["Request-Id", "synthetic-reference-case"], ["Content-Encoding", "gzip"], ["Content-Type", "application/json"]]
         add("spotify-gzip-request", "/proxy/spotify/api/token", method="POST", body=gzip.compress(b'{"v":"my-spotify-body"}', mtime=0), headers=headers)
         add("spotify-malformed-gzip", "/proxy/spotify/api/token", method="POST", body=b"invalid gzip", headers=headers, status=400)
@@ -181,6 +189,21 @@ def operational_checks(provider, service_ids, files, launch, report, mode="full"
         ("synthetic-updated-giphy-secret" if name == "giphy" else f"synthetic-{name}-secret") + '"'
         for name in ("youtube", "googlemaps", "soundcloud", "giphy", "spotify")) + '\n}\n'
     secret_file = files / "secrets.conf"
+    if mode == "full":
+        # Bounded smoke test, not a production capacity benchmark. Thresholds
+        # are declared in the plan before capture. Client startup is included.
+        profile["delay_ms"] = 0
+        performance = operations["performance"] = {}
+        for role, cid in service_ids.items():
+            request(provider, "control", "POST", "/reset", [["Content-Type", "application/json"]], json.dumps(profile).encode())
+            def timed(_):
+                started = time.monotonic()
+                response = request(provider, role, "GET", "/proxy/giphy/v1/gifs/search", headers)
+                return {"seconds": time.monotonic() - started, "status": response["status"], "body_base64": response["body_base64"]}
+            with ThreadPoolExecutor(max_workers=4) as executor:
+                samples = list(executor.map(timed, range(40)))
+            memory = json.loads(command(["docker", "stats", "--no-stream", "--format", "{{json .}}", cid]))["MemUsage"]
+            performance[role] = {"samples": samples, "memory_usage": memory}
     if mode in {"full", "reload"}:
         operations["before_reload"] = {role: observed(role) for role in service_ids}
         secret_file.chmod(0o644); secret_file.write_text(updated); secret_file.chmod(0o444)
@@ -255,6 +278,14 @@ def operational_checks(provider, service_ids, files, launch, report, mode="full"
         command(["docker", "wait", cid], timeout=40)
         operations.setdefault("inflight_exit_codes", {})[role] = json.loads(command(["docker", "inspect", cid]))[0]["State"]["ExitCode"]
         operations.setdefault("structured_logs", {})[role] = command(["docker", "logs", cid])[-65536:]
+    # The endpoint selected for Go is restarted with the pinned Haskell image,
+    # unchanged configuration and synthetic secrets. Proxy owns no stored data.
+    command(["docker", "network", "disconnect", report["run_id"], replacement["candidate"]])
+    switched = launch("candidate", REFERENCE, ["--env", "SYSTEM_CERTIFICATE_PATH=/fixture/ca.pem", "--env", "SSL_CERT_FILE=/fixture/ca.pem"], suffix="-switchback")
+    ready(provider, "candidate", "/i/status")
+    profile["delay_ms"] = 0
+    operations["switchback"] = {"image": REFERENCE, "image_id": command(["docker", "inspect", "--format", "{{.Image}}", switched]),
+        "config_sha256": sha(config_file), "observation": observed("candidate", "/v1/proxy/giphy/v1/gifs/search")}
     print("Disabled/development versions and in-flight SIGTERM shutdown captured", flush=True)
 
 

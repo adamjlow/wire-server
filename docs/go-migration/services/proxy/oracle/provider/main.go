@@ -94,7 +94,7 @@ func runClient(role string, input io.Reader, output io.Writer) error {
 		}
 		r.Header.Add(pair[0], pair[1])
 	}
-	client := &http.Client{Timeout: 12 * time.Second,
+	client := &http.Client{Timeout: 25 * time.Second,
 		Transport:     &http.Transport{DisableCompression: true, Proxy: nil},
 		CheckRedirect: func(*http.Request, []*http.Request) error { return http.ErrUseLastResponse }}
 	response, err := client.Do(r)
@@ -303,7 +303,7 @@ func main() {
 	f := &fixture{profile: profile{Statuses: []int{200}, Headers: http.Header{"Content-Type": {"application/json"}}, Body: []byte(`{"provider":"synthetic"}`)}}
 	server := func(address string, handler http.HandlerFunc) *http.Server {
 		return &http.Server{Addr: address, Handler: handler, ReadHeaderTimeout: 3 * time.Second,
-			ReadTimeout: 5 * time.Second, WriteTimeout: 5 * time.Second, IdleTimeout: 5 * time.Second, MaxHeaderBytes: 32768}
+			ReadTimeout: 5 * time.Second, WriteTimeout: 10 * time.Second, IdleTimeout: 5 * time.Second, MaxHeaderBytes: 32768}
 	}
 	go func() {
 		if server(":8081", f.control).ListenAndServe() != nil {
