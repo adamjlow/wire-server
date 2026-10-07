@@ -1,2 +1,3 @@
 Draft source-derived proxy compatibility requirements and independent parity comparisons for review.
 Record user-authorized self-approval of requirements, method/query edge cases and outstanding executable parity evidence.
+Add trusted-TLS isolated fixtures and retain 65 actual pinned-Haskell reference cases with no candidate parity claim.

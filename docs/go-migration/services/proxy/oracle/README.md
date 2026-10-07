@@ -3,7 +3,8 @@
 This independent synthetic fixture runs the pinned Haskell image on a task-owned
 Docker internal network, using a scratch-container provider and a generated
 trusted CA. It captures actual responses and upstream attempts, not mock parity.
-Every report says `parity_verified: false`. No Go service exists yet.
+Every report says `parity_verified: false`. This initial baseline contains no Go
+service observations.
 
 The user-delegated environment decision is in
 [the recorded review](../../../../../.migration/reviews/2026-10-07-self-review.md).

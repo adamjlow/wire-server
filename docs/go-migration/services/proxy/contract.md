@@ -1,6 +1,7 @@
 # Proxy compatibility contract
 
-Status: **requirements self-approved; executable baseline fixtures outstanding**.
+Status: **requirements and initial executable baseline self-approved;
+complete candidate verification outstanding**.
 Task: `proxy-contract`. Approval scope and evidence limits are recorded below.
 Reference source: `f6636ed53315fa7b0fc4c8aa39c0bb30c98b6d5e`.
 Source map: [inventory](inventory.md). No intentional behaviour exception is
@@ -99,10 +100,49 @@ coverage and explicit `parity_verified: false` prevent its own result being a
 verified-runtime claim. It still lacks live capture, transport/gzip rules and
 the cargohold mappings required by these contracts. Self-tests are not parity.
 
-Outstanding before full contract/task completion: executable source-derived
+At the requirements-only review, outstanding items included executable source-derived
 fixtures with case IDs and reference captures; characterization of parser,
 redirect, timeout, log/metric and shutdown behaviour; numeric operational
 thresholds before load testing. Published image configuration matching evaluated
 Nix output identities is useful provenance evidence, not an independent binary
 rebuild. Default Haskell build/unit/chart checks have not been executed. There is
-currently no Go service implementation to approve as contract-equivalent.
+was no Go service implementation to approve as contract-equivalent. The initial
+baseline review below resolves the baseline-fixture prerequisite; full runtime
+verification remains outstanding.
+
+## Initial executable baseline review, 2026-10-07
+
+The [independent fixture](oracle/README.md) at
+`49677f516018906a6818650e8b8a2ede4b66ce72` now supplies 65 executable baseline
+cases and [actual Haskell captures](oracle/reference-65.json). All 65 source-derived
+status expectations matched, with provider attempts recorded for every case.
+The pinned image ran with `disableTlsForTest: false`, a generated trusted CA,
+an internal Docker network and no published ports. A fixed-role internal client
+uses Docker exec; it cannot take an arbitrary destination. Cleanup succeeded.
+Fixture binary build metadata names Go 1.26.8, this exact clean source revision
+and `CGO_ENABLED=0`; report hashes bind the binary, source, scenarios and config.
+
+Self-review decision under the user's existing delegation: **approve this initial
+source-derived baseline and the contract for implementation preparation**. The
+baseline is not complete verification coverage and the report explicitly says
+`parity_verified: false`. Six orchestration boundary/cleanup tests and five Go
+provider/client/certificate tests (with race detection) passed. These tests prove
+fixture behavior and capture protections, not candidate service equivalence.
+
+Preserve these observed details in a candidate: raw reverse-proxy query spaces
+render as `%20`, not `+`; duplicate caller keys remain after the injected key;
+502 gets three total attempts; mixed-case GET is accepted; Spotify and Soundcloud
+resolve return both upstream Content-Type and `text/plain; charset=UTF-8` in that
+order. Stream's empty 302 also has that plain Content-Type. The caught stream
+failure's actual JSON message is `Internal Server Error`, rather than the casing
+of `Proxy.API.Public:error500`. Unknown routes return empty 404 without an
+application Content-Type. Header duplicates and error text are contractual.
+
+Full verification still requires transport failures/redirects/timeouts, gzip,
+disabled/development version expansion, forged version/request-ID handling,
+secret reload (including invalid/missing updates), metrics/log schemas,
+cancellation/shutdown/resource/load thresholds, default deployment rendering,
+and a real Go candidate with complete differential and switchback evidence.
+Existing full integration suites and production remain excluded. Neither the
+baseline nor contract approval permits `verified`/`available` or populating a
+compatibility claim. Cargohold's security/source decision is unaffected.
