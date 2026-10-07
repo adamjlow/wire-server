@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "id": "validator-fixtures",
+  "title": "Keep validator tests deterministic as real tasks advance",
+  "service": "framework",
+  "kind": "framework",
+  "status": "queued",
+  "owner": null,
+  "branch": null,
+  "depends_on": [],
+  "write_paths": [
+    ".migration/tasks/validator-fixtures.json",
+    "docs/go-migration/plans/validator-fixtures.md",
+    "tools/migration/test_check.py",
+    "changelog.d/5-internal/migration-validator-fixtures"
+  ],
+  "plan": "docs/go-migration/plans/validator-fixtures.md",
+  "acceptance_criteria": [
+    {
+      "id": "tests",
+      "description": "All 32 validator tests pass independently of the live work queue status.",
+      "required_evidence": "make migration-check migration-test output at the tested fixture revision, with unchanged validation assertions."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": "Claim after proxy inventory reports the live-fixture failure."
+}
