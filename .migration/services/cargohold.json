@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "service": "cargohold",
+  "reference_path": "services/cargohold",
+  "stage": "registered",
+  "oracle_paths": [
+    "services/cargohold",
+    "docs/go-migration/services/cargohold/contract.md",
+    "docs/go-migration/services/cargohold/oracle"
+  ],
+  "gates": {},
+  "compatibility": null
+}

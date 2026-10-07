@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "id": "proxy-inventory",
+  "title": "Map proxy service boundaries, observable behaviour and evidence gaps",
+  "service": "proxy",
+  "kind": "discovery",
+  "status": "queued",
+  "owner": null,
+  "branch": null,
+  "depends_on": [],
+  "write_paths": [
+    ".migration/tasks/proxy-inventory.json",
+    "docs/go-migration/services/proxy/inventory.md",
+    "changelog.d/5-internal/proxy-inventory"
+  ],
+  "plan": "docs/go-migration/plans/proxy-inventory.md",
+  "acceptance_criteria": [
+    {
+      "id": "inventory",
+      "description": "Source-cited inventory covers interfaces, dependencies, effects, security, operations and test gaps; unknowns are explicit.",
+      "required_evidence": "Inventory file pinned to inspected source revision, independently reviewed for coverage and accurate citations."
+    },
+    {
+      "id": "validation",
+      "description": "Migration records and validator tests pass with the final inventory task changes.",
+      "required_evidence": "Exact make migration-check migration-test invocation, passing output artifact and tested revision."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": "Unclaimed discovery only; coordinator may reprioritize before dispatch."
+}

@@ -1,25 +1,55 @@
-# AGENTS.md
+# Agent operating rules
 
-This file explains the processes, expectations and tools of this project to AI
-agents. (It might contain some hints for humans as well ;) ).
+## Mission and boundaries
 
-See https://agents.md/ for details about this file type.
+Maintain an upstream-compatible Wire server with optional Go implementations of
+whole services. Haskell remains supported, the default, and the behavioural
+reference even when a deployment chooses Go. Preserve existing build, install,
+configuration and upgrade behaviour for users who do not opt in. Behavioural
+compatibility matters more than implementation similarity: do not mechanically
+translate Haskell abstractions into Go.
 
-# Project Overview
+- `AGENTS.md` is policy; `docs/go-migration/` is persistent knowledge;
+  `.migration/` is current machine-readable state; CI/tests supply evidence.
+- Significant migration work needs an executable plan following
+  [.agent/PLANS.md](.agent/PLANS.md). Every task needs bounded write scope,
+  acceptance criteria and required evidence; follow [.agent/TASKS.md](.agent/TASKS.md).
+- Read broadly, write only within the claimed task's paths. Check git status
+  before work; preserve unrelated changes. Parallel writers need non-overlapping
+  claims and separate worktrees. Shared files need a serialized owner.
+- Implementation tasks must not weaken their oracle to pass. Contracts, golden
+  fixtures, normalization rules, compatibility expectations and reference
+  behaviour change only in explicit, separately reviewed `contract-change` tasks.
+- Advance service state only when the documented objective gates pass. Missing,
+  skipped or unavailable checks are not passes. Never invent evidence or approvals.
+- Haskell and Go coexist as separate service processes. Do not split a service
+  across a shared Haskell/Go runtime. Do not bundle language replacement with
+  unrelated architecture, storage or protocol changes unless explicitly planned.
+- Operators select implementations per service. Never infer a new default or
+  permission to remove Haskell from Go availability or a deployment's rollout.
+  Preserve compatible data and a tested route back to Haskell.
+- Keep Go work additive and upstream edits small. Do not reorganize upstream
+  code, require Go for existing Haskell workflows or fork shared contracts to
+  accommodate a candidate. Follow [upstream sync](docs/go-migration/UPSTREAM.md);
+  reassess compatibility on upstream changes and record exact tested revisions.
+- Keep fork work on `go-migration`; task PRs target that branch in `origin`.
+  Reserve `develop` for tracking upstream. Review upstream merges into
+  `go-migration` on separate sync branches; never force-push shared history.
+- Do not silently change externally observable behaviour. Record new behaviour,
+  constraints and unresolved questions in the service dossier, not just chat.
+- Humans control contract exceptions, per-deployment production switches and changes
+  to these guardrails. Ordinary bounded work proceeds autonomously within policy.
+  See [guardrails](docs/go-migration/GUARDRAILS.md) and
+  [lifecycle](docs/go-migration/SERVICE-LIFECYCLE.md).
 
-`wire-server` is a mono-repo Haskell project.
+## Existing Haskell project
 
-Services - which mostly serve HTTP requests - are located in `services/`.
-Libraries are located in `libs/`. The new integration testsuite is in
-`integration/`.
-
-The fundamental idea is to have `Polysemy` effects for all behaviour and keep
-the services shallow. Because we started to refactor in this direction, there's
-still a lot of code around that does business logic in services. We slowly want
-to migrate this.
-
-The testsuite in `integration/` is our current approach to integration tests.
-We're migrating old integration tests from service Cabal sub-projects to it.
+Services live in `services/`, libraries in `libs/`, and the current integration
+suite in `integration/`. Haskell work uses Polysemy effects and shallow services;
+legacy business logic is still being moved into libraries. This is a Haskell
+convention, not a requirement to reproduce its architecture in Go. Prefer record
+dot syntax over lenses for simple cases. Follow the existing
+[coding conventions](docs/src/developer/developer/coding-conventions.md).
 
 # Development Environment
 
@@ -68,115 +98,46 @@ Remote agents will probably want to use this way.
   - `make c package=<PACKAGE> test=1 | grep -vE 'Compiling|Linking|Preprocessing|Configuring|Building'`
   - `cabal test <TESTSUITE> | grep -vE 'Compiling|Linking|Preprocessing|Configuring|Building'`
 
-## Examples
+## Quality expectations
 
-Build and run tests for `wire-subsystems` (as exemplary Haskell package):
-`make c package=wire-subsystems test=1 | grep -vE 'Compiling|Linking|Preprocessing|Configuring|Building'`
+Haskell changes must type check without warnings and all changed packages' unit
+tests must pass. Before finishing, check the whole project, all unit tests,
+Cabal/Nix dependency alignment and formatting using the commands above. Preserve
+`-Werror`. Record exact failures or unavailable tools; never claim unrun checks
+passed. Dependency changes require regenerating and reviewing local Nix derivations.
 
-Build and run tests for `wire-subsystems` (as exemplary Haskell package)
-directly with Cabal:
-`cabal test wire-subsystems | grep -vE 'Compiling|Linking|Preprocessing|Configuring|Building'`
+Do not run integration tests (`make ci`, `make ci-fast`, `make ci-safe`,
+`make devtest` without a unit-test package, integration executables or test suites).
+They require specific environments. Future parity integration runs require an
+explicit maintainer-authorized environment and policy change first.
 
-# Quality expectations
+Build commands must end with
+`| grep -vE 'Compiling|Linking|Preprocessing|Configuring|Building'`.
+Use Bash `set -o pipefail` and inspect the build exit status: grep can exit 1 if
+all output is filtered, and must not mask a failed build.
+For fast feedback use `cabal repl <PACKAGE> --enable-tests` or
+`cabal repl all --enable-tests --enable-multi-repl`, then `:reload`.
+Framework validation: `make migration-check migration-test`.
 
-- Ensure that the whole project type checks
-- Ensure that there are no compiler warnings
-- Ensure that all unit tests are "green" (executed successfully) by
-  running them
-- Ensure that Cabal and Nix dependencies are aligned
-- Ensure that the code is formatted according to our formatting rules
+Preserve [PR guidelines](docs/src/developer/developer/pr-guidelines.md), the PR
+checklist and CODEOWNERS. Add an appropriate `changelog.d/` entry; retain schema,
+API routing and configuration review requirements. Do not edit generated files
+by hand or bypass the Nix/Cabal workflow.
 
-# Agent commandments
+## Security requirements
 
-Ensure these after every change:
+For each bounded coding task, state concrete security requirements and relevant
+framework/version constraints in its plan before implementation. Explain security
+choices and alternatives. Refine underspecified security work into scoped tasks.
 
-- Haskell code still type checks
-- Unit tests of all changed packages are green
-
-When finishing a task, fulfill all [Quality expectations](#quality-expectations).
-
-Do not run integration tests (e.g. `make ci` or Cabal testsuite names ending in
-`-integration`) as these depend on specific environments/requirements.
-
-Prefer record dot syntax over lenses, but not at all cost (i.e. only for the
-simple cases).
-
-Build commands (e.g. `make c`, `cabal build` or `cabal test`) should always end
-with this command line filter: `| grep -vE
-'Compiling|Linking|Preprocessing|Configuring|Building'`. The filter ensures
-that only relevant output is displayed.
-
-# Security Guidelines
-
-For all code generated in this chat, adhere to the following guidelines:
-
-### 1. Be Explicit About Security Requirements
-- Always request and enforce secure coding practices directly.
-- Example prompts to follow:
-  - “Generate a Python function to query a database using parameterized queries and no string concatenation.”
-  - “Write input validation code for usernames using a whitelist approach.”
-- Do **not** accept vague prompts such as:
-  - “Write code to query a database.”
-  - “Generate authentication logic.”
-
-### 2. Prevent Sensitive Data Leaks
-- Never generate production secrets, API keys, credentials, personal data, or customer-identifying information.
-- Always use placeholders (e.g., `YOUR_API_KEY_HERE`) or synthetic/anonymized data.
-
-### 3. Limit Scope & Keep It Modular
-- Focus on narrow, well-defined tasks.
-- Example: “Generate a secure password hashing function using Argon2id with parameters selected according to the OWASP Password Storage Cheat Sheet.”
-- Reject overly broad requests like “Write a full secure authentication system.”
-- Propose security requirements before generating code.
-- Discuss alternatives, evaluate them, and provide a step-by-step implementation plan.
-
-### 4. Specify Safe Practices & Standards
-- Always reference frameworks, versions, and security guidelines.
-- Example: “Use Flask 3.0 and follow OWASP secure coding practices.”
-- Example: “Use your web framework’s built-in auto-escaping/output encoding to prevent XSS.”
-- Example: “Sanitize user-provided rich HTML content on the client using DOMPurify before rendering.”
-### 5. Control Library Choices
-- Only use secure, widely adopted, actively maintained dependencies.
-- Ensure libraries have no known high-severity CVEs.
-- Example: “Suggest Node.js packages updated in the last 6 months.”
-
-### 6. Request Validation & Error Handling
-- Always include strict server-side validation.
-- Error messages must be generic and never disclose sensitive details.
-- Example: “Generate a file upload handler with size limits, MIME type checks, and safe error messages.”
-
-### 7. Avoid Dangerous Features by Default
-- Exclude risky features unless explicitly requested.
-- Example:
-  - Do not use `eval`.
-  - Do not disable SSL/TLS verification.
-
-### 8. Request Tests for Security
-- Always generate tests verifying security protections.
-- Integrate tests into CI/CD pipelines.
-- Examples:
-  - “Write unit tests confirming rejection of invalid input and prevention of XSS.”
-  - “Generate a pytest suite covering edge cases, including malicious inputs.”
-
-### 9. Ask for Explanations
-- Always justify security decisions in generated code.
-- Example: “Explain how this code prevents SQL injection.”
-- Example: “List all security measures in your code.”
-
-### 10. Avoid Blind Trust in Input Handling
-- Do not assume inputs are safe.
-- Explicitly include strict validation.
-- Always use parameterized queries.
-
-### 11. Constrain the Role
-- Only fulfill narrowly scoped coding tasks.
-- Example: “Generate input validation for email addresses only.”
-- Reject broad, open-ended prompts like:
-  - “Write a secure web app.”
-
-### 12. Follow Up Iteratively
-- Treat the first response as a draft.
-- Accept refinements and improvements from the user.
-- Example refinements:
-  - “Improve error handling to avoid information disclosure.”
-  - “Replace insecure library X with a more secure alternative.”
+- Use synthetic data/placeholders; never commit credentials, production secrets,
+  customer-identifying data or unsanitized captures. Follow [SECURITY.md](SECURITY.md).
+- Treat input as untrusted: validate server-side, bound resource use, use
+  parameterized queries and framework output escaping where applicable. Errors
+  must avoid sensitive details while preserving the reviewed external contract.
+- Keep TLS verification enabled. Do not use eval or execute untrusted task text.
+- Prefer established, maintained dependencies. Check selected versions for known
+  high-severity vulnerabilities; do not add dependencies without justification.
+- Test security boundaries and malformed input, integrate those tests into CI,
+  and explain the protections. Never weaken auth, crypto or security tests to
+  obtain parity; resolve unsafe reference behaviour through reviewed contract work.

@@ -61,6 +61,12 @@ private network.
 
 ## Development setup
 
+For optional Go service implementations, see the
+[migration framework](docs/go-migration/README.md). It defines operating rules,
+service lifecycle gates, task ownership and compatibility evidence. Haskell remains
+supported, the default and the reference; operators will be able to opt in per
+service. Existing build, installation and upgrade workflows remain unchanged.
+
 ### How to build `wire-server` binaries
 
 There are two options:

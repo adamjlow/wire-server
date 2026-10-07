@@ -1,0 +1,27 @@
+name: Migration framework
+
+on:
+  pull_request:
+  push:
+    branches: [go-migration]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Validate migration state and checker
+        run: make migration-check migration-test
+      - name: Validate transitions from PR base
+        if: github.event_name == 'pull_request'
+        env:
+          MIGRATION_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: python3 tools/migration/check.py --base "$MIGRATION_BASE_SHA"

@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "id": "example-inventory",
+  "title": "Describe a bounded outcome",
+  "service": "example",
+  "kind": "discovery",
+  "status": "queued",
+  "owner": null,
+  "branch": null,
+  "depends_on": [],
+  "write_paths": [
+    ".migration/tasks/example-inventory.json",
+    "docs/go-migration/services/example/inventory.md"
+  ],
+  "plan": "docs/go-migration/services/example/plan.md",
+  "acceptance_criteria": [
+    {
+      "id": "inventory",
+      "description": "Source-cited inventory covers interfaces, dependencies, effects, security, operations and test gaps; unknowns are explicit.",
+      "required_evidence": "Inventory file pinned to inspected source revision, independently reviewed for coverage and accurate citations."
+    },
+    {
+      "id": "validation",
+      "description": "Migration records and validator tests pass with the final inventory task changes.",
+      "required_evidence": "Exact make migration-check migration-test invocation, passing output artifact and tested revision."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": "Replace example fields, register the service and create a real plan before queueing."
+}

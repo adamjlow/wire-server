@@ -39,6 +39,14 @@ export HSPEC_OPTIONS ?= --fail-on=focused
 
 default: install
 
+# Migration metadata checks need only Python 3.10+; no service environment.
+.PHONY: migration-check migration-test
+migration-check:
+	python3 tools/migration/check.py
+
+migration-test:
+	python3 -m unittest discover -s tools/migration -p 'test_*.py' -v
+
 init:
 	mkdir -p dist
 

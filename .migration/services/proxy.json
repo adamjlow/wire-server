@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "service": "proxy",
+  "reference_path": "services/proxy",
+  "stage": "registered",
+  "oracle_paths": [
+    "services/proxy",
+    "docs/go-migration/services/proxy/contract.md",
+    "docs/go-migration/services/proxy/oracle"
+  ],
+  "gates": {},
+  "compatibility": null
+}

@@ -1,0 +1,1 @@
+Add a repository-local framework for optional Go service implementations, with Haskell defaults preserved, upstream-sync guidance, revision-pinned compatibility evidence and validated task ownership/lifecycle gates. No service implementation or deployment behaviour changes.
