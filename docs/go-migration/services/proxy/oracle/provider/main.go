@@ -57,6 +57,8 @@ func clientEndpoint(role string) (string, error) {
 	switch role {
 	case "reference":
 		return "http://reference:8080", nil
+	case "candidate":
+		return "http://candidate:8080", nil
 	case "control":
 		return "http://127.0.0.1:8081", nil
 	default:
@@ -102,11 +104,25 @@ func runClient(role string, input io.Reader, output io.Writer) error {
 	if err != nil || len(payload) > 8*limit {
 		return fmt.Errorf("fixture response exceeds limit")
 	}
+	return encodeResponse(output, response, payload)
+}
+
+// net/http consumes framing headers while parsing. Retain those fields alongside
+// headers/trailers so a comparator cannot hide invalid framing as normalization.
+func encodeResponse(output io.Writer, response *http.Response, payload []byte) error {
 	return json.NewEncoder(output).Encode(struct {
-		Status  int         `json:"status"`
-		Headers http.Header `json:"headers"`
-		Body    []byte      `json:"body_base64"`
-	}{response.StatusCode, response.Header, append([]byte{}, payload...)})
+		Status           int         `json:"status"`
+		Headers          http.Header `json:"headers"`
+		Body             []byte      `json:"body_base64"`
+		Protocol         string      `json:"protocol"`
+		ContentLength    int64       `json:"content_length"`
+		TransferEncoding []string    `json:"transfer_encoding"`
+		Close            bool        `json:"close"`
+		Uncompressed     bool        `json:"uncompressed"`
+		Trailers         http.Header `json:"trailers"`
+	}{response.StatusCode, response.Header, append([]byte{}, payload...),
+		response.Proto, response.ContentLength, append([]string{}, response.TransferEncoding...),
+		response.Close, response.Uncompressed, response.Trailer})
 }
 
 func validProfile(p profile) bool {

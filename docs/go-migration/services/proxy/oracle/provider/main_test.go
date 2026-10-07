@@ -1,17 +1,46 @@
 package main
 
 import (
+	"bufio"
 	"bytes"
 	"crypto/x509"
 	"encoding/json"
 	"encoding/pem"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"os"
 	"path/filepath"
+	"reflect"
 	"strings"
 	"testing"
 )
+
+func TestResponseRetainsFramingHeadersTrailersAndBytes(t *testing.T) {
+	r, err := http.ReadResponse(bufio.NewReader(strings.NewReader("HTTP/1.1 200 OK\r\nContent-Type: a\r\nContent-Type: b\r\nTransfer-Encoding: chunked\r\nTrailer: X-Final\r\n\r\n2\r\nhi\r\n0\r\nX-Final: retained\r\n\r\n")), nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	body, err := io.ReadAll(r.Body)
+	if err != nil {
+		t.Fatal(err)
+	}
+	var output bytes.Buffer
+	if err := encodeResponse(&output, r, body); err != nil {
+		t.Fatal(err)
+	}
+	var observed struct {
+		Protocol         string      `json:"protocol"`
+		ContentLength    int64       `json:"content_length"`
+		TransferEncoding []string    `json:"transfer_encoding"`
+		Headers          http.Header `json:"headers"`
+		Trailers         http.Header `json:"trailers"`
+		Body             []byte      `json:"body_base64"`
+	}
+	if json.Unmarshal(output.Bytes(), &observed) != nil || observed.Protocol != "HTTP/1.1" || observed.ContentLength != -1 || !reflect.DeepEqual(observed.TransferEncoding, []string{"chunked"}) || !reflect.DeepEqual(observed.Headers.Values("Content-Type"), []string{"a", "b"}) || observed.Trailers.Get("X-Final") != "retained" || string(observed.Body) != "hi" {
+		t.Fatal("response observations lost framing or application values")
+	}
+}
 
 func TestClientRejectsExternalRolesAndInvalidInputBeforeNetwork(t *testing.T) {
 	for _, role := range []string{"http://production.invalid", "provider", ""} {

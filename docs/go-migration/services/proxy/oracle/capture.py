@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Isolated synthetic Haskell characterization, never a parity verifier."""
+"""Isolated synthetic reference/candidate capture, never a full parity verifier."""
 
 import argparse
 import base64
@@ -29,7 +29,7 @@ def sha(path):
 
 
 def request(container, role, method, target, headers=(), body=b""):
-    if role not in {"reference", "control"} or not re.fullmatch(r"[a-f0-9]{64}", container):
+    if role not in {"reference", "candidate", "control"} or not re.fullmatch(r"[a-f0-9]{64}", container):
         raise ValueError("invalid internal fixture client endpoint")
     payload = {"method": method, "target": target, "headers": list(headers),
                "body_base64": base64.b64encode(body).decode()}
@@ -100,7 +100,28 @@ def scenarios():
     return cases
 
 
-def capture(binary, output):
+def candidate_receipt(path):
+    path = Path(path)
+    if path.is_symlink() or not path.is_file() or path.stat().st_size > 1024 * 1024:
+        raise ValueError("candidate receipt must be a bounded regular file")
+    receipt = json.loads(path.read_text())
+    if set(receipt) != {"source_revision", "binary_sha256", "image_id", "build_info"}:
+        raise ValueError("invalid candidate receipt fields")
+    for field, pattern in (("source_revision", r"[a-f0-9]{40}"),
+                           ("binary_sha256", r"[a-f0-9]{64}"), ("image_id", r"sha256:[a-f0-9]{64}")):
+        if not isinstance(receipt[field], str) or not re.fullmatch(pattern, receipt[field]):
+            raise ValueError("invalid candidate identity")
+    build = receipt["build_info"]
+    settings = {v["Key"]: v["Value"] for v in build.get("Settings", [])}
+    if (build.get("GoVersion") != "go1.26.8" or
+        build.get("Path") != "github.com/adamjlow/wire-server/go/services/proxy/cmd/proxy" or
+        settings.get("vcs.revision") != receipt["source_revision"] or
+        settings.get("vcs.modified") != "false" or settings.get("CGO_ENABLED") != "0"):
+        raise ValueError("candidate compiler or clean-source build identity mismatch")
+    return receipt
+
+
+def capture(binary, output, candidate=None):
     binary = Path(binary).absolute()
     if not binary.is_file() or binary.is_symlink():
         raise ValueError("provider binary must be a regular non-symlink file")
@@ -117,6 +138,17 @@ def capture(binary, output):
               "runner_sha256": sha(__file__), "provider_binary_sha256": sha(binary),
               "provider_source_sha256": sha(ROOT / "provider/main.go"), "cases": []}
     try:
+        if candidate is not None:
+            receipt = candidate_receipt(candidate)
+            command(["git", "cat-file", "-e", receipt["source_revision"] + "^{commit}"])
+            image_config = json.loads(command(["docker", "image", "inspect", receipt["image_id"]]))[0]
+            cfg = image_config["Config"]
+            if (image_config["Id"] != receipt["image_id"] or cfg["User"] != "65534:65534" or
+                cfg["Entrypoint"] != ["/proxy"] or
+                cfg.get("Labels", {}).get("org.opencontainers.image.revision") != receipt["source_revision"]):
+                raise ValueError("candidate image configuration identity mismatch")
+            report["evidence_kind"] = "initial-live-proxy-comparison-capture"
+            report["candidate"] = receipt
         build = json.loads(command([str(binary), "-build-info"]))
         if build["GoVersion"] != "go1.26.8" or build["Path"] != "wire.local/proxy-reference-provider":
             raise ValueError("provider compiler or module identity mismatch")
@@ -125,6 +157,15 @@ def capture(binary, output):
         with tempfile.TemporaryDirectory(prefix=run_id + "-") as temporary:
             files = Path(temporary)
             files.chmod(0o755)
+            if candidate is not None:
+                verification_id = command(["docker", "create", "--name", run_id + "-verify", receipt["image_id"]])
+                if not re.fullmatch(r"[a-f0-9]{64}", verification_id):
+                    raise ValueError("invalid candidate verification container identity")
+                containers.append(verification_id)
+                command(["docker", "cp", verification_id + ":/proxy", str(files / "candidate-binary")])
+                if sha(files / "candidate-binary") != receipt["binary_sha256"]:
+                    raise ValueError("candidate image binary does not match build receipt")
+                (files / "candidate-binary").unlink()
             shutil.copyfile(binary, files / "provider")
             (files / "provider").chmod(0o555)
             command([str(binary), "-init", str(files)])
@@ -157,7 +198,7 @@ def capture(binary, output):
                                      "--pids-limit=512", "--memory=1g", "--cpus=2",
                                      "--mount", "type=bind,source=" + str(files) + ",target=/fixture,readonly",
                                      *extra, image_name,
-                                     *(["-c", "/fixture/proxy.yaml"] if name == "reference" else [])])
+                                     *(["-c", "/fixture/proxy.yaml"] if name in {"reference", "candidate"} else [])])
                 if not re.fullmatch(r"[a-f0-9]{64}", container):
                     raise ValueError("unexpected container identity")
                 containers.append(container)
@@ -169,6 +210,11 @@ def capture(binary, output):
                 ["--env", "SYSTEM_CERTIFICATE_PATH=/fixture/ca.pem", "--env", "SSL_CERT_FILE=/fixture/ca.pem"])
             ready(provider_id, "reference", "/i/status")
             report["reference_image_id"] = command(["docker", "inspect", "--format", "{{.Image}}", reference_id])
+            if candidate is not None:
+                candidate_id = launch("candidate", receipt["image_id"], ["--env", "SSL_CERT_FILE=/fixture/ca.pem"])
+                ready(provider_id, "candidate", "/i/status")
+                if command(["docker", "inspect", "--format", "{{.Image}}", candidate_id]) != receipt["image_id"]:
+                    raise ValueError("running candidate image mismatch")
             cases = scenarios()
             report["scenario_sha256"] = hashlib.sha256(json.dumps(cases, sort_keys=True).encode()).hexdigest()
             for case in cases:
@@ -184,6 +230,17 @@ def capture(binary, output):
                 case["response"] = response
                 case["effects"] = json.loads(base64.b64decode(effects["body_base64"]))
                 case["source_status_matched"] = response["status"] == case["expected_status"]
+                if candidate is not None:
+                    reset = request(provider_id, "control", "POST", "/reset", [["Content-Type", "application/json"]],
+                                    json.dumps(case["provider"]).encode())
+                    if reset["status"] != 200:
+                        raise ValueError("candidate provider reset failed")
+                    case["candidate_response"] = request(provider_id, "candidate", case["method"], case["target"],
+                                                        case["headers"], base64.b64decode(case["body_base64"], validate=True))
+                    effects = request(provider_id, "control", "GET", "/observations")
+                    if effects["status"] != 200:
+                        raise ValueError("candidate provider capture failed")
+                    case["candidate_effects"] = json.loads(base64.b64decode(effects["body_base64"]))
                 report["cases"].append(case)
                 print(case["id"], response["status"], "provider attempts", len(case["effects"]), flush=True)
             report["capture_complete"] = len(report["cases"]) == len(cases)
@@ -224,9 +281,10 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--provider-binary", required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--candidate-receipt", type=Path, help="optional validated local Go image/build receipt")
     args = parser.parse_args()
     try:
-        report = capture(args.provider_binary, args.output)
+        report = capture(args.provider_binary, args.output, args.candidate_receipt)
     except (OSError, ValueError, TimeoutError, subprocess.SubprocessError):
         print("Reference characterization failed; partial evidence retained, no parity claimed")
         return 2
