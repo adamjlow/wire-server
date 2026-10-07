@@ -20,6 +20,9 @@ func run() error {
 	flag.StringVar(&filename, "c", filename, "configuration file")
 	flag.StringVar(&filename, "config-file", filename, "configuration file")
 	flag.Parse()
+	if flag.NArg() != 0 {
+		return fmt.Errorf("unexpected positional argument")
+	}
 	config, err := proxy.LoadConfig(filename)
 	if err != nil {
 		return err

@@ -31,6 +31,7 @@ def valid_output(path):
 
 def build(output):
     output = valid_output(Path(output))
+    valid_output(output.with_suffix(".ca.json"))
     if command(["git", "status", "--porcelain"], cwd=ROOT):
         raise ValueError("image requires a clean committed checkout")
     revision = command(["git", "rev-parse", "HEAD"], cwd=ROOT)

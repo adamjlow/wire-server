@@ -137,6 +137,8 @@ func (h *handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		bytes[6] = (bytes[6] & 0x0f) | 0x40
 		bytes[8] = (bytes[8] & 0x3f) | 0x80
 		requestID = fmt.Sprintf("%x-%x-%x-%x-%x", bytes[:4], bytes[4:6], bytes[6:8], bytes[8:10], bytes[10:])
+		r = r.Clone(r.Context())
+		r.Header.Set("Request-Id", requestID)
 		if path != "/i/status" && path != "/api-version" {
 			h.logger.Event("Info", "generated a new request id for local request", logField{"request", requestID}, logField{"method", r.Method}, logField{"path", raw})
 		}
@@ -287,6 +289,7 @@ func (h *handler) reverse(w http.ResponseWriter, incoming *http.Request, target 
 		}
 		response, err := h.stream.Do(r)
 		if err != nil {
+			h.logger.Event("Warn", "gateway error", logField{"request", incoming.Header.Get("Request-Id")}, logField{"error", "upstream transport failed"})
 			if attempt < 2 && pause(incoming.Context(), 5*time.Millisecond) {
 				continue
 			}

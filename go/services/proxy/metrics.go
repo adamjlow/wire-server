@@ -83,15 +83,19 @@ func (m *Metrics) Collect(ctx context.Context) {
 		}
 		var stats runtime.MemStats
 		runtime.ReadMemStats(&stats)
-		sample := []runtimemetrics.Sample{{Name: "/cpu/classes/gc/total:cpu-seconds"}}
+		sample := []runtimemetrics.Sample{{Name: "/cpu/classes/gc/total:cpu-seconds"}, {Name: "/gc/heap/live:bytes"}}
 		runtimemetrics.Read(sample)
 		cpu := sample[0].Value.Float64()
+		live := float64(sample[1].Value.Uint64())
 		m.mu.Lock()
 		m.gcValues[0] = float64(stats.TotalAlloc)
-		m.gcValues[1] = math.Max(m.gcValues[1], float64(stats.HeapAlloc))
-		m.gcValues[2] = float64(stats.HeapAlloc)
+		m.gcValues[1] = math.Max(m.gcValues[1], live)
+		m.gcValues[2] = live
 		if stats.NumGC > previousGC {
-			m.gcValues[3] = cpu - previousCPU
+			// Go exposes cumulative GC CPU, not the last individual cycle. This
+			// gauge is the mean per cycle in the sample interval; document that
+			// diagnostic limitation rather than misreporting the interval total.
+			m.gcValues[3] = (cpu - previousCPU) / float64(stats.NumGC-previousGC)
 			m.gcValues[4] = float64(stats.PauseNs[(stats.NumGC-1)%256]) / 1e9
 		}
 		m.mu.Unlock()
