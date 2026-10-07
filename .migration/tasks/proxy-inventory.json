@@ -4,9 +4,9 @@
   "title": "Map proxy service boundaries, observable behaviour and evidence gaps",
   "service": "proxy",
   "kind": "discovery",
-  "status": "queued",
-  "owner": null,
-  "branch": null,
+  "status": "active",
+  "owner": "codex",
+  "branch": "task/proxy-inventory",
   "depends_on": [],
   "write_paths": [
     ".migration/tasks/proxy-inventory.json",
