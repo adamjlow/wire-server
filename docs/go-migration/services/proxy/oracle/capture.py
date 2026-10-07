@@ -119,7 +119,7 @@ def scenarios(suite="initial"):
             for fault in ("close", "incomplete-headers"):
                 add(family + "-transport-" + fault, path, status=502 if family == "giphy" else 500)
                 cases[-1]["provider"]["fault"] = fault
-            add(family + "-redirect", path, provider_statuses=[302, 200],
+            add(family + "-redirect", path, status=302 if family == "giphy" else 200, provider_statuses=[302, 200],
                 provider_headers={"Content-Type": ["application/json"], "Location": ["https://provider:8443/redirect-target"]})
         for family, path in (("giphy", paths["giphy"]), ("spotify", "/proxy/spotify/api/token")):
             add(family + "-gzip-response", path, provider_headers={"Content-Type": ["application/json"], "Content-Encoding": ["gzip"]})
