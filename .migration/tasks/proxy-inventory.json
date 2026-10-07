@@ -4,7 +4,7 @@
   "title": "Map proxy service boundaries, observable behaviour and evidence gaps",
   "service": "proxy",
   "kind": "discovery",
-  "status": "active",
+  "status": "blocked",
   "owner": "codex",
   "branch": "task/proxy-inventory",
   "depends_on": [],
@@ -28,5 +28,5 @@
   ],
   "evidence": [],
   "review": null,
-  "handoff": "Source inventory in progress; independent review remains required."
+  "handoff": "Inventory drafted. Validator tests depend on live task status and fail after claiming; repair independent synthetic fixtures before resuming."
 }
