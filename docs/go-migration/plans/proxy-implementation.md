@@ -62,3 +62,14 @@ Plan acceptance: source contract/baseline, toolchain/dependency approach, comple
 bounded candidate task, independent verification sequence and rollback are
 reviewed under the user's explicit self-review delegation. Unknowns are listed
 and do not authorize partial verified/available claims.
+
+## Preparation review, 2026-10-07
+
+Codex self-reviewed this plan under the user's explicit ongoing request to review
+and self-approve work that meets the migration goals (same actor, no independent
+review claimed). Approve the implementation sequence and baseline strategy.
+The 65-case Haskell capture is pinned and initial only; all omitted verification
+families stay mandatory. YAML v3.0.4 is an explicit security-maintained stable
+pin confirmed by Go module metadata; accepting the dependency still requires
+the candidate scanner/license tests. No security exception, Go compatibility
+claim or production/default switch is approved.
