@@ -38,6 +38,11 @@ func TestProductionTransportUsesHTTP1WithHTTP2CapableTLSProvider(t *testing.T) {
 		transport.TLSClientConfig = new(tls.Config)
 	}
 	transport.TLSClientConfig.RootCAs = pool
+	h.raw.Transport.(*http.Transport).TLSClientConfig.RootCAs = pool
+	if h.raw.Transport.(*http.Transport).ResponseHeaderTimeout != 0 || transport.ResponseHeaderTimeout != 5*1000000000 {
+		t.Fatal("raw and buffered response timeouts differ from source")
+	}
+	t.Cleanup(h.raw.Transport.(*http.Transport).CloseIdleConnections)
 	t.Cleanup(transport.CloseIdleConnections)
 	w := httptest.NewRecorder()
 	h.ServeHTTP(w, httptest.NewRequest("GET", "/proxy/giphy/v1/gifs/search", nil))

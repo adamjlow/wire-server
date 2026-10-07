@@ -24,6 +24,7 @@ type handler struct {
 	secrets *Secrets
 	client  *http.Client
 	stream  *http.Client
+	raw     *http.Client
 	metrics *Metrics
 	logger  *Logger
 }
@@ -57,6 +58,13 @@ func NewServer(config Config, secrets *Secrets, ctx context.Context) (*http.Serv
 }
 
 func newHandler(config Config, secrets *Secrets, transport http.RoundTripper) *handler {
+	rawTransport := transport
+	if underlying, ok := transport.(*http.Transport); ok {
+		clone := underlying.Clone()
+		// waiProxyTo explicitly overrides the manager timeout with None.
+		clone.ResponseHeaderTimeout = 0
+		rawTransport = clone
+	}
 	return &handler{config: config, secrets: secrets, metrics: newMetrics(), logger: NewLogger(config, io.Discard),
 		client: &http.Client{Transport: transport, CheckRedirect: func(r *http.Request, via []*http.Request) error {
 			r.Header.Del("Referer")
@@ -65,6 +73,7 @@ func newHandler(config Config, secrets *Secrets, transport http.RoundTripper) *h
 			}
 			return nil
 		}},
+		raw:    &http.Client{Transport: rawTransport, CheckRedirect: func(*http.Request, []*http.Request) error { return http.ErrUseLastResponse }},
 		stream: &http.Client{Transport: transport, CheckRedirect: func(*http.Request, []*http.Request) error { return http.ErrUseLastResponse }}}
 }
 
@@ -291,7 +300,7 @@ func (h *handler) reverse(w http.ResponseWriter, incoming *http.Request, target 
 			// methods accepted by proxyServant's case-insensitive GET check.
 			r.TransferEncoding = []string{"identity"}
 		}
-		response, err := h.stream.Do(r)
+		response, err := h.raw.Do(r)
 		if err != nil {
 			h.logger.Event("Warn", "gateway error", logField{"request", incoming.Header.Get("Request-Id")}, logField{"error", "upstream transport failed"})
 			if attempt < 2 && pause(incoming.Context(), 5*time.Millisecond) {
