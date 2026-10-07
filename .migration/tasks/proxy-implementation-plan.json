@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "id": "proxy-implementation-plan",
+  "title": "Establish executable whole-service proxy implementation plan",
+  "service": "proxy",
+  "kind": "discovery",
+  "status": "queued",
+  "owner": null,
+  "branch": null,
+  "depends_on": [
+    "proxy-contract",
+    "go-toolchain",
+    "reference-provenance"
+  ],
+  "write_paths": [
+    ".migration/tasks/proxy-implementation-plan.json",
+    ".migration/services/proxy.json",
+    "docs/go-migration/plans/proxy-implementation.md",
+    "changelog.d/5-internal/proxy-implementation-plan"
+  ],
+  "plan": "docs/go-migration/plans/proxy-implementation.md",
+  "acceptance_criteria": [
+    {
+      "id": "plan",
+      "description": "Complete implementation sequence, approved baseline, optional pinned tooling, security boundaries, independently owned verification and switchback are concrete.",
+      "required_evidence": "Source/baseline/toolchain review, scoped migration and transition checks; no invented runtime/availability evidence."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": "Queue implementation preparation; candidate code remains a separate task."
+}
