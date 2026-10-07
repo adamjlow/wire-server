@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "id": "proxy-live-comparison",
+  "title": "Capture and compare initial real Haskell and Go proxy behavior",
+  "service": "proxy",
+  "kind": "contract-change",
+  "status": "queued",
+  "owner": null,
+  "branch": null,
+  "depends_on": [
+    "proxy-contract",
+    "go-toolchain"
+  ],
+  "write_paths": [
+    ".migration/tasks/proxy-live-comparison.json",
+    "docs/go-migration/plans/proxy-live-comparison.md",
+    "docs/go-migration/services/proxy/oracle",
+    "changelog.d/5-internal/proxy-live-comparison"
+  ],
+  "plan": "docs/go-migration/plans/proxy-live-comparison.md",
+  "acceptance_criteria": [
+    {
+      "id": "oracle",
+      "description": "Independent fixture captures both runtimes with honest identities, framing and unchanged initial stimuli; narrowly reviewed comparator rejects contract differences.",
+      "required_evidence": "Go fixture race/security tests, Python boundary/negative comparison tests, real 65-case capture comparison and retained raw reports; explicitly limited coverage, no full parity claim."
+    },
+    {
+      "id": "checks",
+      "description": "Migration state and task scope validate with upstream defaults preserved.",
+      "required_evidence": "Migration checker/tests, scope/diff checks and unchanged upstream/Haskell inputs."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": "Initial coverage only; full service verification and availability remain separate."
+}
