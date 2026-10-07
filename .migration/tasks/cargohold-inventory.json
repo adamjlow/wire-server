@@ -4,9 +4,9 @@
   "title": "Map the complete cargohold service and persisted compatibility boundary",
   "service": "cargohold",
   "kind": "discovery",
-  "status": "queued",
-  "owner": null,
-  "branch": null,
+  "status": "active",
+  "owner": "codex",
+  "branch": "task/cargohold-inventory",
   "depends_on": [],
   "write_paths": [
     ".migration/tasks/cargohold-inventory.json",
