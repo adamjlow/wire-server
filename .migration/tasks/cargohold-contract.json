@@ -30,8 +30,8 @@
   "evidence": [
     {
       "criterion": "contract",
-      "result": "pass",
-      "command": "Source inspection and complete scenario/comparator matrix preparation; human approval remains pending",
+      "result": "blocked",
+      "command": "Source-cited contract/scenario matrix prepared; required authorized human review has not yet occurred",
       "revision": "2948060272f7b7eb1080277b40a690eab48c35f5",
       "artifact": "docs/go-migration/services/cargohold/contract.md"
     },
