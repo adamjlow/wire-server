@@ -4,7 +4,7 @@
   "title": "Prepare independent bounded comparison and incomplete-coverage reporting",
   "service": "framework",
   "kind": "contract-change",
-  "status": "active",
+  "status": "review",
   "owner": "codex",
   "branch": "task/parity-comparator",
   "depends_on": [],
@@ -30,7 +30,22 @@
       "required_evidence": "Independent authorized human review; approval is not inferred from unit test success."
     }
   ],
-  "evidence": [],
+  "evidence": [
+    {
+      "criterion": "comparisons",
+      "result": "pass",
+      "command": "28 comparator/security/CLI/policy tests; 32 migration validator tests; scoped transition/diff checks",
+      "revision": "40686be7ce9826b06ef49ab44c66c891586bab6a",
+      "artifact": "docs/go-migration/plans/parity-comparator.md"
+    },
+    {
+      "criterion": "review",
+      "result": "blocked",
+      "command": "Separate authorized human oracle review has not yet occurred",
+      "revision": "40686be7ce9826b06ef49ab44c66c891586bab6a",
+      "artifact": "docs/go-migration/plans/parity-comparator.md"
+    }
+  ],
   "review": null,
-  "handoff": "Comparator preparation is independent of candidate implementation and awaits human oracle review."
+  "handoff": "Comparator is ready for authorized human oracle review. It establishes offline capture agreement only, never runtime parity; neither service is implemented or compatible yet."
 }
