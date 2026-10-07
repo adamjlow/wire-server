@@ -39,6 +39,19 @@ def synthetic_report():
 
 
 class ComparisonTests(unittest.TestCase):
+    def test_head_is_self_delimited_and_connection_close_is_transport_metadata(self):
+        start = datetime(2026, 10, 7, 18, 0, tzinfo=timezone.utc)
+        finish = datetime(2026, 10, 7, 18, 0, 2, tzinfo=timezone.utc)
+        response = synthetic_report()["cases"][0]["response"]
+        response["body_base64"] = ""
+        response["transfer_encoding"] = []
+        response["close"] = True
+        left = compare.response_view(response, start, finish, "HEAD")
+        response["close"] = False
+        right = compare.response_view(response, start, finish, "HEAD")
+        self.assertEqual(left, right)
+        with self.assertRaises(ValueError): compare.response_view(response, start, finish, "GET")
+
     def test_equivalent_validated_framing_does_not_claim_full_parity(self):
         result = compare.compare(synthetic_report())
         self.assertEqual(65, result["passed"])

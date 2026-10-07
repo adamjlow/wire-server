@@ -30,7 +30,7 @@ def response_view(response, start, finish, method):
     if transfer:
         require(length == -1 and "content-length" not in headers, "ambiguous chunked framing")
     elif length < 0:
-        require(response["close"] is True, "unframed persistent response")
+        require(response["close"] is True or method == "HEAD" or response["status"] in (204, 304), "unframed persistent response")
     if "content-length" in headers:
         require(headers["content-length"] == [str(length)] and length >= 0, "inconsistent content length")
     if length >= 0 and method != "HEAD" and response["status"] not in (204, 304):
@@ -48,8 +48,7 @@ def response_view(response, start, finish, method):
     headers.pop("date")
     headers.pop("content-length", None)
     trailers = foundation.headers([[k, v] for k, values in (response["trailers"] or {}).items() for v in values])
-    return {"status": response["status"], "headers": headers, "body": payload,
-            "close": response["close"], "trailers": trailers}
+    return {"status": response["status"], "headers": headers, "body": payload, "trailers": trailers}
 
 
 def compare(report):
