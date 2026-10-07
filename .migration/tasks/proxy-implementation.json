@@ -4,9 +4,9 @@
   "title": "Implement complete optional Go proxy service",
   "service": "proxy",
   "kind": "implementation",
-  "status": "queued",
-  "owner": null,
-  "branch": null,
+  "status": "active",
+  "owner": "codex",
+  "branch": "task/proxy-implementation",
   "depends_on": [
     "proxy-contract",
     "go-toolchain",
