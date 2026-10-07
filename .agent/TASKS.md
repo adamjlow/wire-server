@@ -3,11 +3,12 @@
 1. Read root/local policy, the service record, dossier and plan. Inspect git
    status. Run `make migration-check` and select a `queued` task whose dependencies
    are `done`. `blocked` tasks require their documented blocker to be resolved.
-2. A coordinator assigns a unique owner, branch/worktree and changes the task to
-   `active`. Create task branches from the fork's `go-migration` branch and target
-   PRs there; `develop` is reserved for upstream tracking. Merge the claim into
-   `go-migration`, the shared coordination branch, before dispatch.
-   Rebase and revalidate claims; two branches independently passing are not a lock.
+2. Assign an owner and actual branch/worktree, then change the task to `active`.
+   A serialized solo writer may work directly on `go-migration`. Concurrent
+   writers use separate task branches/worktrees from `go-migration`, with claims
+   merged centrally before dispatch. Task PRs target `go-migration`; `develop`
+   is reserved for upstream tracking. Rebase and revalidate concurrent claims;
+   two branches independently passing are not a lock.
 3. Read anywhere. Write only the claimed exact files/directory prefixes, including
    your task record and changelog. Paths are literal; no wildcards. Each active
    or `review` task reserves all its write paths. Review keeps the reservation.
@@ -22,8 +23,20 @@
    includes staged and unstaged changes, deletions, and both sides of renames.
 5. Reviewers verify evidence, security, oracle independence, and scope. Move to
    `done` only when every criterion has passing evidence and independent review
-   is recorded. Contract-change and operations reviews must be by an authorized
-   human. The coordinator alone updates service gates in a separately scoped task.
+   is recorded, or explicit user-delegated self-review applies to this exact work.
+   Cite that authority and annotate the same actor accurately; a distinct review
+   label is not an independent identity. Contract exceptions and production
+   switches still require authorized human approval. The coordinator alone
+   updates service gates in a separately scoped task.
+
+One task should cover a meaningful outcome, including its routine plan updates,
+tests, documentation and review evidence wherever scope and kind permit. Do not
+split each bookkeeping step into a new task. Genuine contract/oracle changes
+remain separate from candidate implementation; concurrent scopes stay disjoint.
+Batch routine evidence/status updates at meaningful milestones or handoff, and
+reuse passing checks while their relevant inputs remain unchanged. Preserve
+legal state transitions and full tested-revision evidence; a metadata-only
+commit does not require a new service build.
 
 Allowed transitions: `queued → active → review → done`; `active/review → blocked`;
 `blocked → queued`; `review → active` for rework. Terminal `done` records are

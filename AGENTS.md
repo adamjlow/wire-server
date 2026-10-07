@@ -42,6 +42,40 @@ translate Haskell abstractions into Go.
   See [guardrails](docs/go-migration/GUARDRAILS.md) and
   [lifecycle](docs/go-migration/SERVICE-LIFECYCLE.md).
 
+## Working efficiently
+
+- Prioritize runnable service code and direct comparisons with the Haskell
+  reference. Establish a small executable slice early, then expand coverage.
+  Add migration infrastructure only to solve a concrete implementation or
+  validation problem encountered in that work.
+- Reuse the existing service plan, reference captures, tooling and recorded
+  decisions while their inputs remain valid. Update the relevant document with
+  new findings; do not create another discovery or approval task for an already
+  settled question. Keep current status and evidence in the task record.
+- Choose tasks around meaningful outcomes. Include routine planning, code,
+  tests, documentation and review evidence in the same bounded task where its
+  kind and scope permit. Separate genuine contract/oracle changes, deployment
+  operations and concurrent ownership; preserve the validator's protections.
+- A single writer may work directly on `go-migration`, with that actual branch
+  recorded in the claim. Extra worktrees and centrally merged claims are needed
+  for concurrent writers, not routine solo increments. Never work on `develop`.
+- Run focused checks during development and required checks at handoff. Reuse
+  successful evidence for unchanged inputs; rerun checks when relevant code,
+  dependencies, fixtures, tooling or environment changes, or failures remain.
+  Bookkeeping alone does not justify repeating expensive service builds.
+- Keep metadata commits to the minimum needed for legal claim transitions and
+  exact tested-revision evidence. Do not chase a self-referential final SHA or
+  create separate tasks for each planning/review/status update.
+- Honor explicit user review delegation within its stated scope. Record the
+  authority once and cite it; label same-author review honestly and never imply
+  independence. Delegation does not replace tests or approve security exceptions,
+  production switches or an unverified compatibility claim.
+- If preparation produces no runnable increment or new behavioral evidence
+  after 15 minutes, reassess the next step and report the concrete blocker.
+  Subsequent updates should identify implemented behavior, test findings or a
+  necessary unresolved dependency. Repeated documentation-only progress is a
+  reason to narrow the work and return to implementation or direct validation.
+
 ## Existing Haskell project
 
 Services live in `services/`, libraries in `libs/`, and the current integration

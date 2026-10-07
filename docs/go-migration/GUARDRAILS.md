@@ -8,10 +8,20 @@ Blocked checks stay blocked. Write permissions are literal repository-relative
 files or directory prefixes, not globs. Concurrent active/review scopes must not
 overlap, including shared docs and task/service records.
 
+Apply the efficiency rules in [AGENTS.md](../../AGENTS.md): reuse valid plans,
+decisions and test evidence; favor executable service work and direct reference
+comparisons; keep routine bookkeeping within the outcome's task. These rules
+do not relax oracle ownership, security tests, evidence requirements or service
+gates. Explicit user-delegated review applies only to its stated work and must
+be recorded as same-author review, never as an independent reviewer. Record the
+delegation once and cite it rather than creating repeated approval tasks.
+
 ## Three human controls
 
 1. **Contract/oracle changes:** an authorized maintainer approves a separate
-   `contract-change` task and review before candidate work consumes it. This
+   `contract-change` task and review before candidate work consumes it. A user
+   may explicitly delegate review of bounded characterization work; that does
+   not delegate approval of a behavioral or security exception. This
    includes fixtures, goldens, normalization, compatibility expectations and
    reference behaviour. Record old/new behaviour, justification, impacted clients
    and negative tests. An unsafe reference behaviour is escalated here.
