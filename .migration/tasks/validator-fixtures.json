@@ -4,9 +4,9 @@
   "title": "Keep validator tests deterministic as real tasks advance",
   "service": "framework",
   "kind": "framework",
-  "status": "queued",
-  "owner": null,
-  "branch": null,
+  "status": "active",
+  "owner": "codex",
+  "branch": "task/validator-fixtures",
   "depends_on": [],
   "write_paths": [
     ".migration/tasks/validator-fixtures.json",
