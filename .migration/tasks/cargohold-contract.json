@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "id": "cargohold-contract",
+  "title": "Establish cargohold HTTP, storage and switchback compatibility expectations",
+  "service": "cargohold",
+  "kind": "contract-change",
+  "status": "queued",
+  "owner": null,
+  "branch": null,
+  "depends_on": [],
+  "write_paths": [
+    ".migration/tasks/cargohold-contract.json",
+    "docs/go-migration/services/cargohold/contract.md",
+    "docs/go-migration/services/cargohold/oracle",
+    "changelog.d/5-internal/cargohold-contract"
+  ],
+  "plan": "docs/go-migration/plans/proxy-cargohold.md",
+  "acceptance_criteria": [
+    {
+      "id": "contract",
+      "description": "Contract covers the complete observed service, negative/security/operation scenarios and narrowly defined nondeterminism.",
+      "required_evidence": "Source-cited contract and fixtures with a separate authorized human review; no behaviour exception or invented parity."
+    },
+    {
+      "id": "validation",
+      "description": "Migration checker and all validator tests pass.",
+      "required_evidence": "Passing make migration-check migration-test at the tested contract revision."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": "Draft is ready for separate human review; no runtime parity is claimed and the service remains registered."
+}
