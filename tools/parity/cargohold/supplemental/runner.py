@@ -27,7 +27,7 @@ def inside():
     execute()
 
 
-def host(binary, output, group):
+def host(binary, output, group, federator=None):
     sys.path.insert(0, str(ROOT/'tools/parity/docker'))
     import environment
     output = environment.destination(output)
@@ -35,6 +35,8 @@ def host(binary, output, group):
         raise ValueError('commit candidate inputs before smoke')
     revision = call(['git', 'rev-parse', 'HEAD'])
     binary = binary.resolve(strict=True)
+    if group=='mixed' and federator is None:raise ValueError('mixed requires a compiled synthetic h2c fixture')
+    if federator is not None:federator=federator.resolve(strict=True)
     output.mkdir()
     (output/'reports').mkdir()
     (output/'reports').chmod(0o777)
@@ -66,6 +68,8 @@ def host(binary, output, group):
         for source, target, readonly in [(ROOT, '/source', True), (binary, '/candidate/cargohold', True),
             (Path(__file__).parent.resolve(), '/probe', True), (output/'fixtures', '/fixtures', True), (output/'reports', '/reports', False)]:
             args += ['--mount', 'type=bind,source='+str(source)+',target='+target+(',readonly' if readonly else '')]
+        if federator is not None:
+            args += ['--mount', 'type=bind,source='+str(federator)+',target=/candidate/federator,readonly']
         args += [runner, '-c', 'for runner_python in /nix/store/*-python3-*/bin/python3; do if [[ -x "$runner_python" ]]; then exec "$runner_python" /probe/runner.py --inside; fi; done; exit 2']
         identity = call(args)
         owned.append(identity)
@@ -74,6 +78,7 @@ def host(binary, output, group):
         receipt = {'source_revision': revision, 'runner_image': runner, 'store_image': store,
                    'candidate_sha256': hashlib.sha256(binary.read_bytes()).hexdigest(), 'exit_code': result.returncode,
                    'internal_network': True, 'published_ports': False, 'whole_service_parity': False, 'group': group,
+                   'federator_sha256': hashlib.sha256(federator.read_bytes()).hexdigest() if federator else None,
                    'config_sha256': hashlib.sha256((output/'fixtures/config.json').read_bytes()).hexdigest()}
         (output/'run.json').write_text(json.dumps(receipt, indent=2)+'\n')
         if result.returncode:
@@ -88,14 +93,15 @@ def host(binary, output, group):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--inside', action='store_true')
-    parser.add_argument('--group', choices=['core','extended','configuration'], default='core')
+    parser.add_argument('--group', choices=['core','extended','configuration','mixed'], default='core')
     parser.add_argument('--binary', type=Path)
+    parser.add_argument('--federator', type=Path)
     parser.add_argument('--output', type=Path)
     args = parser.parse_args()
     if args.inside:
         inside()
     elif args.binary and args.output:
-        host(args.binary, args.output, args.group)
+        host(args.binary, args.output, args.group, args.federator)
     else:
         parser.error('--binary and --output required')
 

@@ -120,11 +120,13 @@ def execute():
         return effects
     try:
         hs=start('haskell');go=start('go')
-        if os.environ.get('CARGOHOLD_SUPPLEMENT_GROUP') in ('extended','configuration'):
+        if os.environ.get('CARGOHOLD_SUPPLEMENT_GROUP') in ('extended','configuration','mixed'):
             if os.environ['CARGOHOLD_SUPPLEMENT_GROUP']=='extended':
                 from extended import run
-            else:
+            elif os.environ['CARGOHOLD_SUPPLEMENT_GROUP']=='configuration':
                 from configuration import run
+            else:
+                from mixed import run
             records=run(ref,ports,start,stop,request,store_effects,hs,go)
             result={'result':'supplemental-observed','whole_service_parity':False,'cases':records,
                     'mismatches':[r['id'] for r in records if not r['equal']]}
