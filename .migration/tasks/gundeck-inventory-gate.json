@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "id": "gundeck-inventory-gate",
+  "title": "Publish gundeck inventory gate",
+  "service": "framework",
+  "kind": "framework",
+  "status": "active",
+  "owner": "codex",
+  "branch": "go-migration",
+  "depends_on": [
+    "gundeck-inventory"
+  ],
+  "write_paths": [
+    ".migration/tasks/gundeck-inventory-gate.json",
+    ".migration/services/gundeck.json"
+  ],
+  "plan": "docs/go-migration/plans/gundeck.md",
+  "acceptance_criteria": [
+    {
+      "id": "inventory",
+      "description": "Publish inventoried stage from completed source discovery without compatibility claim.",
+      "required_evidence": "Reviewed done inventory and valid adjacent state/scope transition."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": "Set inventoried only; Haskell default and compatibility null."
+}
