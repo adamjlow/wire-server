@@ -104,3 +104,16 @@ records successful gofmt/tidy/verify/vet/race/build/vulnerability/license checks
 at source 7044e09e43f0716400ffd5bb046a5d9ac6196f06 (unchanged Go code since bcbcd).
 Remaining work is the declared audit/config/failure/mixed-federation/operational
 supplement, packaging/selection and the final original-suite run and review.
+
+## Optional local container
+
+`python3 go/services/cargohold/build_image.py --receipt /absolute/new-receipt.json`
+builds a non-root scratch image with the pinned Go compiler and verified CA bundle
+from the qualified reference runner. The receipt binds the clean source, binary
+and local image; a separate CA receipt records its provenance. It never pushes
+or deploys. The default config path matches the existing Helm deployment.
+
+Tag the receipt’s image ID as `wire-cargohold-go:local` to use `helm-values.yaml`
+as an explicit overlay with `charts/wire-server`. The chart already supports
+per-service image selection; its existing Haskell defaults remain unchanged.
+Container and deployment validation remain outstanding.
