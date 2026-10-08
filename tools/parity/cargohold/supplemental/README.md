@@ -66,3 +66,9 @@ disabled-version and five S3 fault cases. [First 35-case capture](extended-initi
 and [identity](extended-initial-run.json) retain four failing observations: gzip
 parser diagnostics, DELETE token handling and two generic 500 messages. Real S3
 abort effects already match. The 24 MiB upload persists identical bytes and metadata.
+
+The repaired [35-case extended run](extended-observations.json) and [identity](extended-run.json)
+match all cases at candidate source 3c9e31c160fa86df86bf85c3f9b7c4351153c063.
+Gzip diagnostics, DELETE header parsing and failure messages were corrected in
+candidate code; assertions and failure effects were preserved. Core 38 evidence
+applies to its earlier binary and will be rerun after the remaining relevant work.
