@@ -1,0 +1,25 @@
+{
+  "kind": "initial-candidate-quality-snapshot",
+  "result": "pass",
+  "go_version": "go1.26.8",
+  "git_base": "8ae1bc2a272d93ab8251b825f515c724c5ec5dcd",
+  "sources_sha256": {
+    "backends.go": "9ec3b00b62a393b632cd441eeb281a2f3b90022c74f096e44173660ca7e7b82f",
+    "bulk.go": "f480b85204fcbe965f4e51770d7bf5a5fcd0c8764df1005ab0da3667cc01eb20",
+    "cmd/cannon/main.go": "21fdf16c57e633edf3ed31e65a976895f9127e271dc7a0941edfb83c39a74f8f",
+    "config.go": "e00a244014f36d7f27d18af9b4e02e51e19d6c764040195f0a1a17f00b91954d",
+    "events.go": "9ff47b4c7c40c942fa223ea973e04734e2d1d990882b48e21cf9a3ff8e881ede",
+    "events_test.go": "00f37ce4372e8f888585f6df58e6988850cbe72946b1e72aa6471e8763a7f45d",
+    "go.mod": "7409ed57eeca278c6f15fd2dce76afe212c93a4a95574f396f8d5ebe001d6ccf",
+    "go.sum": "4d1b293c3ad83f4bfda47974aa1fc551f20df15f2f642c441aa7f36594187c7c",
+    "logging.go": "575f8ae4d1f01f160f6d14b0e2f0011e7bdf584f82456590ba9c0cedfcf62e8a",
+    "metrics.go": "112aebea6540dd4ff4a2870118962fc869c94a298e74cd911564cdbe44d4b8a4",
+    "pool.go": "5b0cb84d9c507b572ebe5c69901db35883041ad7fcc18a95f2acc728cf31621a",
+    "reference_test.go": "a4c528b09d8d39fb518fbd5b74ff819c50bebb0c0153606b47dd4ba2d3c21862",
+    "server.go": "41f7194cfb29dff6290d3eeb536debaac42430b715034014e2bf2a6dde3a360b"
+  },
+  "command": "PATH=pinned-Go GOMAXPROCS=2 GOMEMLIMIT=512MiB python3 go/check.py cannon",
+  "coverage": "format,tidy,verify,vet,race,build,module vulnerability and dependency/local license checks; actual Haskell HTTP10 golden captures and candidate boundary tests",
+  "e2e_executed": false,
+  "compatibility_claim": false
+}
