@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "id": "harness-readiness",
+  "title": "Automate bounded parity checks and prepare original e2e test reuse",
+  "service": "framework",
+  "kind": "framework",
+  "status": "queued",
+  "owner": null,
+  "branch": null,
+  "depends_on": [
+    "proxy-implementation",
+    "proxy-live-comparison"
+  ],
+  "write_paths": [
+    ".migration/tasks/harness-readiness.json",
+    "docs/go-migration/plans/harness-readiness.md",
+    "tools/parity/harness.py",
+    "tools/parity/test_harness.py",
+    "tools/parity/e2e-tests.json",
+    "tools/parity/README.md",
+    "AGENTS.md",
+    "docs/go-migration/PARITY.md",
+    ".github/workflows/migration.yaml",
+    "changelog.d/5-internal/harness-readiness"
+  ],
+  "plan": "docs/go-migration/plans/harness-readiness.md",
+  "acceptance_criteria": [
+    {
+      "id": "automation",
+      "description": "One-command real proxy comparison and additive upstream e2e binary selection preserve original assertions and Haskell defaults.",
+      "required_evidence": "Actual proxy capture/comparison; staged selection tests; required upstream test catalogue and incomplete-report negatives; honest missing e2e environment."
+    },
+    {
+      "id": "checks",
+      "description": "Harness boundaries, retained comparisons and migration state/scope pass; efficient risk-based stopping rules recorded.",
+      "required_evidence": "Harness/foundation/retained-oracle unit checks and CI wiring; migration tests/scope/diff; unchanged Haskell sources."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": ""
+}
