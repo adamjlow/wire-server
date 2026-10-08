@@ -189,12 +189,7 @@ func (s *Server) serveHTTP(w http.ResponseWriter, r *http.Request) {
 		bareError(w, 400, "Failed reading: takeWhile1")
 		return
 	}
-	if token := requestToken(r); token != nil && !validToken(*token) {
-		field := "header Asset-Token"
-		if _, present := r.Header["Asset-Token"]; !present {
-			field = "query parameter asset_token"
-		}
-		bareError(w, 400, "Error parsing "+field+" failed: Failed reading: Invalid url-safe base-64 characters: "+*token)
+	if r.Method == "GET" && !validateRequestToken(w, r) {
 		return
 	}
 	meta, err := s.Store.Metadata(r.Context(), key)
@@ -421,7 +416,7 @@ func assetError(w http.ResponseWriter, code int, label, message string) {
 	w.WriteHeader(code)
 	_ = json.NewEncoder(w).Encode(map[string]any{"code": code, "label": label, "message": message})
 }
-func serverError(w http.ResponseWriter) { assetError(w, 500, "server-error", "Server Error.") }
+func serverError(w http.ResponseWriter) { assetError(w, 500, "server-error", "Internal Server Error") }
 
 func randToken() (string, error) {
 	b := make([]byte, 16)
@@ -447,6 +442,18 @@ func validToken(token string) bool {
 		if (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || (c >= '0' && c <= '9') || c == '-' || c == '_' || c == '=' {
 			continue
 		}
+		return false
+	}
+	return true
+}
+
+func validateRequestToken(w http.ResponseWriter, r *http.Request) bool {
+	if token := requestToken(r); token != nil && !validToken(*token) {
+		field := "header Asset-Token"
+		if _, present := r.Header["Asset-Token"]; !present {
+			field = "query parameter asset_token"
+		}
+		bareError(w, 400, "Error parsing "+field+" failed: Failed reading: Invalid url-safe base-64 characters: "+*token)
 		return false
 	}
 	return true

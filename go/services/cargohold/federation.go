@@ -83,6 +83,9 @@ func (s *Server) remoteDownload(w http.ResponseWriter, r *http.Request, domain, 
 		w.WriteHeader(400)
 		return
 	}
+	if !validateRequestToken(w, r) {
+		return
+	}
 	if s.Config.Federator == nil {
 		assetError(w, 400, "federation-not-enabled", "no federator configured")
 		return

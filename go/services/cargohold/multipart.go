@@ -123,6 +123,14 @@ func parseUpload(input io.Reader) (*bufio.Reader, uploadSettings, int64, error) 
 }
 
 func partHeaders(r *bufio.Reader, p *parserPosition, payload bool) (map[string]string, parserPosition, error) {
+	if prefix, _ := r.Peek(2); len(prefix) == 2 && string(prefix) != "--" {
+		position := *p
+		if prefix[0] == '-' {
+			position.column++
+			position.offset++
+		}
+		return nil, position, fmt.Errorf("Expected: MIME boundary, -, Failed reading: satisfyWith at %d:%d (%d)", position.line, position.column, position.offset)
+	}
 	line, err := p.lineFrom(r)
 	if err != nil {
 		return nil, *p, err
