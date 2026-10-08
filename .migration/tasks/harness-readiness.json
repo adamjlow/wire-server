@@ -4,7 +4,7 @@
   "title": "Automate bounded parity checks and prepare original e2e test reuse",
   "service": "framework",
   "kind": "framework",
-  "status": "active",
+  "status": "done",
   "owner": "codex",
   "branch": "go-migration",
   "depends_on": [
@@ -36,7 +36,25 @@
       "required_evidence": "Harness/foundation/retained-oracle unit checks and CI wiring; migration tests/scope/diff; unchanged Haskell sources."
     }
   ],
-  "evidence": [],
-  "review": null,
-  "handoff": ""
+  "evidence": [
+    {
+      "criterion": "automation",
+      "result": "pass",
+      "command": "One-command proxy API execution: actual pinned Haskell and identified Go candidate, 103 pass/0 fail. Eight harness boundaries validate unchanged-original e2e staging, required catalogue and fail-closed reports. Missing full e2e environment reported explicitly, not as a pass.",
+      "revision": "0fae335b5cb5df7b7794bde68aea8177e327d3ef",
+      "artifact": "docs/go-migration/plans/harness-readiness.md"
+    },
+    {
+      "criterion": "checks",
+      "result": "pass",
+      "command": "36 parity/harness tests, 15 oracle tests, 32 migration tests, workflow YAML/embedded Python parsing, scoped migration and whitespace checks. Metadata-only change selection tested; Haskell sources/build inputs/default charts unchanged.",
+      "revision": "6ae6ae0e2e6ca8ef6d4478edf588ad8b57924d23",
+      "artifact": "docs/go-migration/plans/harness-readiness.md"
+    }
+  ],
+  "review": {
+    "by": "codex (self-review delegated by user)",
+    "artifact": "docs/go-migration/plans/harness-readiness.md"
+  },
+  "handoff": "Bounded automation/preparation complete: one-command proxy runtime comparison passed, original e2e binary-selection adapter and fail-closed required-test catalogue tested, local CI wiring and risk-based stop rules in place. Proxy automation is validated; original e2e adapter is not runtime-qualified because compiled Haskell bundle and disposable backend dependencies are absent. Provision that environment and run Haskell baseline before cargohold; no user manual testing required. No service promotion, production change, original-suite success or remote-CI success claimed."
 }
