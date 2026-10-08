@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "id": "cargohold-plan",
+  "title": "Specify bounded Go cargohold implementation and validation matrix",
+  "service": "cargohold",
+  "kind": "discovery",
+  "status": "queued",
+  "owner": null,
+  "branch": null,
+  "depends_on": [
+    "cargohold-reference",
+    "go-toolchain"
+  ],
+  "write_paths": [
+    ".migration/tasks/cargohold-plan.json",
+    "docs/go-migration/plans/cargohold-implementation.md",
+    "changelog.d/5-internal/cargohold-plan"
+  ],
+  "plan": "docs/go-migration/plans/cargohold-implementation.md",
+  "acceptance_criteria": [
+    {
+      "id": "plan",
+      "description": "Executable whole-service plan reuses qualified original tests, declares finite supplemental contract/effect/switchback/security/operation checks and preserves Haskell defaults.",
+      "required_evidence": "Source/evidence-linked matrix, implementation slices, module/toolchain/dependency choices checked for vulnerabilities/licenses, concrete commands and stop rules; pending security disposition is explicit."
+    },
+    {
+      "id": "checks",
+      "description": "Planning and dependency checks remain additive and do not consume an unapproved contract.",
+      "required_evidence": "Isolated dependency proof and machine/scoped validation; no Go service implementation or security exception claimed."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": "Plan safe implementation and validate dependencies while the inherited federation security decision is pending."
+}
