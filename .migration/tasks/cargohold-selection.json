@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "id": "cargohold-selection",
+  "title": "Cargohold selection",
+  "service": "cargohold",
+  "kind": "operations",
+  "status": "queued",
+  "owner": null,
+  "branch": null,
+  "depends_on": [
+    "cargohold-verification"
+  ],
+  "write_paths": [
+    ".migration/tasks/cargohold-selection.json"
+  ],
+  "plan": "docs/go-migration/plans/cargohold-implementation.md",
+  "acceptance_criteria": [
+    {
+      "id": "selection",
+      "description": "Review and record the completed finite selection acceptance criteria from the existing whole-service plan.",
+      "required_evidence": "Actual unchanged original 27, finite 112 supplemental records, exact runtime/source identities, preserved defaults, image/render selection and delegated review; reuse valid evidence without repeating unchanged inputs."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": "Bounded publication of existing completed validation; no new tests, behavior changes or production rollout."
+}

@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "id": "cargohold-verification",
+  "title": "Cargohold verification",
+  "service": "cargohold",
+  "kind": "verification",
+  "status": "queued",
+  "owner": null,
+  "branch": null,
+  "depends_on": [
+    "cargohold-implementation",
+    "cargohold-supplemental"
+  ],
+  "write_paths": [
+    ".migration/tasks/cargohold-verification.json"
+  ],
+  "plan": "docs/go-migration/plans/cargohold-implementation.md",
+  "acceptance_criteria": [
+    {
+      "id": "parity",
+      "description": "Review and record the completed finite parity acceptance criteria from the existing whole-service plan.",
+      "required_evidence": "Actual unchanged original 27, finite 112 supplemental records, exact runtime/source identities, preserved defaults, image/render selection and delegated review; reuse valid evidence without repeating unchanged inputs."
+    },
+    {
+      "id": "security",
+      "description": "Review and record the completed finite security acceptance criteria from the existing whole-service plan.",
+      "required_evidence": "Actual unchanged original 27, finite 112 supplemental records, exact runtime/source identities, preserved defaults, image/render selection and delegated review; reuse valid evidence without repeating unchanged inputs."
+    },
+    {
+      "id": "operations",
+      "description": "Review and record the completed finite operations acceptance criteria from the existing whole-service plan.",
+      "required_evidence": "Actual unchanged original 27, finite 112 supplemental records, exact runtime/source identities, preserved defaults, image/render selection and delegated review; reuse valid evidence without repeating unchanged inputs."
+    },
+    {
+      "id": "rollback",
+      "description": "Review and record the completed finite rollback acceptance criteria from the existing whole-service plan.",
+      "required_evidence": "Actual unchanged original 27, finite 112 supplemental records, exact runtime/source identities, preserved defaults, image/render selection and delegated review; reuse valid evidence without repeating unchanged inputs."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": "Bounded publication of existing completed validation; no new tests, behavior changes or production rollout."
+}

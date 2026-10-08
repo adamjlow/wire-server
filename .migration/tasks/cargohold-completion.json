@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "id": "cargohold-completion",
+  "title": "Cargohold completion",
+  "service": "framework",
+  "kind": "framework",
+  "status": "queued",
+  "owner": null,
+  "branch": null,
+  "depends_on": [
+    "cargohold-implementation",
+    "cargohold-supplemental"
+  ],
+  "write_paths": [
+    ".migration/tasks/cargohold-completion.json",
+    ".migration/services/cargohold.json"
+  ],
+  "plan": "docs/go-migration/plans/cargohold-implementation.md",
+  "acceptance_criteria": [
+    {
+      "id": "gates",
+      "description": "Review and record the completed finite gates acceptance criteria from the existing whole-service plan.",
+      "required_evidence": "Actual unchanged original 27, finite 112 supplemental records, exact runtime/source identities, preserved defaults, image/render selection and delegated review; reuse valid evidence without repeating unchanged inputs."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": "Bounded publication of existing completed validation; no new tests, behavior changes or production rollout."
+}
