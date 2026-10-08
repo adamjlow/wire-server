@@ -17,12 +17,12 @@ Use original schema and resource initialization commands against only this stack
 Run Haskell first, then the same runner can substitute exactly one service binary.
 
 Security requirements: fixed argv, synthetic fixture credentials, immutable image
-identities, no socket/host mounts or published ports, no privileged containers,
+identities, no Docker socket or host system mounts or published ports, no privileged containers,
 verified test TLS, bounded startup/test time and memory, own cleanup only.
 Read-only original source/fixtures, separate writable temporary runtime/reports.
 Do not reset shared databases. Reject missing/failed/skipped test reports.
 Existing dependency versions are test-only upstream fixtures, not recommendations
-for production. Disk has 8.5 GiB free initially; inspect and fail before exhaustion,
+for production. Disk has 8.5 GiB free initially; inspect and reserve 2 GiB for disposable data and fail before exhaustion,
 never prune unrelated workloads. Rollback removes only this generated project.
 
 Steps: claim; build private stack renderer/controller and fixture/runtime adapter;
@@ -38,3 +38,14 @@ Use `python3 tools/parity/docker/environment.py --help` for the controller;
 `make migration-check migration-test` for focused checks. Runtime qualification
 is required in addition to these unit tests. Same-author review is delegated by
 the user; annotate it explicitly. No production or security exception approval.
+
+## First runtime attempt
+
+At 484b1bd5e611a3ca9884c731c9bf88b266fe9d3a all required dependency images
+resolved, the private stack and TLS Redis cluster started, and original Haskell
+Cassandra schema migration commands executed. No original test assertions ran.
+Elasticsearch detected the host filesystem at 98% use and set its flood-stage
+read-only watermark. Stopped only the owned runner and retained failure/logs;
+controller cleanup removed its project containers/networks/volumes. Use a bounded
+1 GiB tmpfs for disposable search data on retry, retaining the 2 GiB host disk
+reserve for other backend data. No unrelated images, caches or services removed.

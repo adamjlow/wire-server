@@ -146,6 +146,7 @@ def private_compose(upstream, project, output, image):
         service['mem_limit']='2g' if name in ('cassandra','elasticsearch') else '1g'
         service['pids_limit']=512
         service['cpus']=2
+        if name=='elasticsearch':service['tmpfs']=['/usr/share/elasticsearch/data:rw,nosuid,nodev,size=1g,uid=1000,gid=1000']
         if name=='rabbitmq':service['environment']={'RABBITMQ_USERNAME':'guest','RABBITMQ_PASSWORD':'alpaca-grapefruit'}
         for volume in service.get('volumes',[]):
             if volume['type']=='bind':volume['read_only']=True
@@ -182,7 +183,9 @@ def validate_isolation(spec):
         if any(service.get(key) for key in ('ports','container_name','privileged','network_mode','pid','devices')):
             raise ValueError('host exposure or global identity is forbidden')
         for volume in service.get('volumes',[]):
-            if volume['type']=='bind' and (volume['source'].endswith('docker.sock') or volume['target']=='/'):
+            if volume['type']=='bind' and volume['target']!='/reports' and not volume.get('read_only'):
+                raise ValueError('source and fixtures must be read-only')
+            if volume['type']=='bind' and (not Path(volume['source']).resolve().is_relative_to(ROOT) and volume['target'] not in ('/fixtures','/reports') or volume['source'].endswith('docker.sock') or volume['target']=='/'):
                 raise ValueError('unsafe mount')
 
 
@@ -204,6 +207,7 @@ def prepare(output, receipt_path):
     (output/'compose.json').write_text(json.dumps(spec,indent=2)+'\n')
     record={'schema_version':1,'project':project,'source_revision':command(['git','rev-parse','HEAD']),
             'runner_image_id':image,'result':'prepared','e2e_executed':False,
+            'compose_sha256':hashlib.sha256((output/'compose.json').read_bytes()).hexdigest(),
             'files_sha256':{str(p.relative_to(output)):hashlib.sha256(p.read_bytes()).hexdigest()
                             for p in sorted((output/'fixtures').iterdir())}}
     (output/'environment.json').write_text(json.dumps(record,indent=2)+'\n')
@@ -213,11 +217,18 @@ def prepare(output, receipt_path):
 def run(output,service):
     output=output.resolve(strict=True)
     record=json.loads((output/'environment.json').read_text())
+    if output.is_relative_to(ROOT):raise ValueError('environment must be outside checkout')
+    if hashlib.sha256((output/'compose.json').read_bytes()).hexdigest()!=record['compose_sha256']:
+        raise ValueError('prepared Compose inputs changed')
+    for name,checksum in record['files_sha256'].items():
+        path=output/name
+        if not path.resolve(strict=True).is_relative_to(output/'fixtures') or path.is_symlink() or hashlib.sha256(path.read_bytes()).hexdigest()!=checksum:
+            raise ValueError('prepared fixtures changed')
     spec=json.loads((output/'compose.json').read_text());validate_isolation(spec)
     if record['source_revision']!=command(['git','rev-parse','HEAD']) or command(['git','status','--porcelain']):
         raise ValueError('environment source revision changed')
     if record['project']!=spec['name']:raise ValueError('project identity mismatch')
-    if shutil.disk_usage(output).free<6*1024**3:raise ValueError('need at least 6 GiB free before dependency pulls')
+    if shutil.disk_usage(output).free<2*1024**3:raise ValueError('need at least 2 GiB free for disposable dependency data')
     # Check private fixed Redis/DNS fixture subnets do not overlap other stacks.
     import ipaddress
     ids=command(['docker','network','ls','--quiet']).splitlines()
@@ -242,6 +253,7 @@ def run(output,service):
     record['dependencies']={name:spec['services'][name]['image'] for name in DEPENDENCIES}
     spec['services']['runner']['command']=['environment','--service',service]
     (output/'compose.json').write_text(json.dumps(spec,indent=2)+'\n')
+    record['compose_sha256']=hashlib.sha256((output/'compose.json').read_bytes()).hexdigest()
     compose=['docker','compose','-p',record['project'],'-f',str(output/'compose.json')]
     try:
         command([*compose,'up','--detach',*[name for name in DEPENDENCIES if name!='redis-cluster']],timeout=240)
