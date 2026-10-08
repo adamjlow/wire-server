@@ -4,7 +4,7 @@
   "title": "Freeze gundeck finite contract and original/synthetic reference evidence",
   "service": "gundeck",
   "kind": "contract-change",
-  "status": "active",
+  "status": "done",
   "owner": "codex",
   "branch": "go-migration",
   "depends_on": [
@@ -39,7 +39,32 @@
       "required_evidence": "Actual harness/framework tests and bounded self-review, no production/shared targets or unsafe security exception."
     }
   ],
-  "evidence": [],
-  "review": null,
-  "handoff": "Extend existing runner catalogue/selection to gundeck and four-Go; validate synthetic SNS platform apps and original PushToken baseline, freeze uncovered finite reference captures. Immediately proceed to executable Go slice when reference ready."
+  "evidence": [
+    {
+      "criterion": "contract",
+      "result": "pass",
+      "command": "Review frozen whole-service source and actual38 HTTP/Redis,13 seeded storage,40 native/provider/config/ops observations and pinned dependency proof; explicit inherited concerns/TLS unsupported scope.",
+      "revision": "0e7f6fef1a5e5001fc2396120ae411c241f90642",
+      "artifact": ".migration/reviews/gundeck-contract.md"
+    },
+    {
+      "criterion": "baseline",
+      "result": "pass",
+      "command": "Original unchanged all-Haskell40 pass/no skips/errors with process0/cleanup0; additive service catalogue/strict four-Go selection and separate reference-only lane validated; actual synthetic SNS/SQS native feedback executed.",
+      "revision": "0e7f6fef1a5e5001fc2396120ae411c241f90642",
+      "artifact": ".migration/reviews/gundeck-contract.md"
+    },
+    {
+      "criterion": "validation",
+      "result": "pass",
+      "command": "make migration-check migration-test and private16/shared8 harness tests pass; scoped contract diff/defaults preserved; delegated same-author review, no unsafe security exception.",
+      "revision": "0e7f6fef1a5e5001fc2396120ae411c241f90642",
+      "artifact": ".migration/reviews/gundeck-contract.md"
+    }
+  ],
+  "review": {
+    "by": "codex (self-review delegated by user)",
+    "artifact": ".migration/reviews/gundeck-contract.md"
+  },
+  "handoff": "Approved reference/source matrix; build runnable Go1.26.8 health/presence/notification slice immediately, compare frozen requests/storage and then complete whole delivery/native/feedback. Exact candidate original72/four-Go, finite supplements, loaded shutdown, persisted switchback and optional packaging remain required."
 }

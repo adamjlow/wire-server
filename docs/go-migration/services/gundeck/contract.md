@@ -1,6 +1,6 @@
 # Gundeck observable contract
 
-Status: reference characterization in progress; not approved for implementation yet.
+Status: approved frozen reference for implementation under delegated self-review.
 Reference/upstream f6636ed53315fa7b0fc4c8aa39c0bb30c98b6d5e. Scope is the whole
 optional gundeck process; Haskell remains supported/default. The source-cited
 [inventory](inventory.md) and [finite plan](../../plans/gundeck.md) define routes,
@@ -16,8 +16,8 @@ original35 Events/Notifications/Demo plus PushToken registration/VoIP rejection,
 MLS pagination/oversize-since and Cells ignored events. Original test code and
 assertions are untouched. Native Haskell legacy gundeck-integration executable is
 absent; its source informs uncovered stimuli but is not claimed executed.
-Original all-Haskell40 baseline is running in the owned private environment;
-only its actual complete XML/run and cleanup can establish a baseline pass.
+[Original all-Haskell40](oracle/baseline.run.json) passed, no failures/errors/skips,
+with [XML](oracle/baseline.xml) and [process0/owned cleanup0](oracle/baseline.environment.json).
 Four-Go selection requires exact proxy/cargohold/cannon/gundeck identities; final
 combined runner uses proxy5/cargohold27/gundeck40 once (72 original cases), retaining
 all original35 cannon assertions without executing them twice.
@@ -46,17 +46,27 @@ existing schema/consistency, TTL and timeuuid ordering. Fixture CQL is fixed
 synthetic literal setup, never accepted caller data; production uses parameters.
 The side process is always reaped and own fixture notification/payload rows removed.
 
-## Delivery/provider effects still to characterize
+## Delivery/provider effects
 
 Mandatory scope remains persistence before asynchronous delivery, origin/client
 selection, Redis outage and generation-safe cleanup, additional Redis writes,
 RabbitMQ persistent/transient expiration and Cells routing, native token sharing/
 replacement/error mappings, SNS notice envelopes and SQS feedback acknowledgement/
-cleanup. Actual original PushToken tests supply native registration/cleanup where
-available; bounded synthetic provider observations must cover the remaining effects
-before a candidate consumes the oracle. Candidate-only mocks cannot qualify them.
-Private upstream init provisions SNS platform applications and SQS queues; full
-baseline/native results and synthetic feedback characterization remain pending.
+cleanup. Actual original40 supply event delivery/persistence/deadletter/transient/expiry/
+registration, Cells and notification paging assertions. Source-defined queue names,
+properties/routing remain Wire.API.Notification and Gundeck.Run/Client/Push; reuse
+unchanged cannon shared queue source/reference proof rather than duplicate every
+original event assertion. [Native/config/ops40](oracle/native-reference.json) actual
+Haskell capture supplies typed token error responses, shared owner metadata and
+replacement migration, GCM high/low and APNS envelopes, disabled publish cleanup,
+TTL/permanent feedback and shared cleanup/deleted receipts. Its [review](oracle/native-reference-review.md)
+defines exact semantic record comparison and narrowly incidental raw AWS request
+entry ordering/polling/notice UUID normalization. SQS malformed events retain their
+receipt; delete occurs only after valid decode and successful callback (Aws.listen);
+unknown/TTL feedback retains token state. Candidate security tests must verify this
+source-defined failure behavior. Private init provisions synthetic SNS applications
+and SQS queues; original PushToken assertions passed against that setup. No production
+AWS certification is claimed.
 
 Source correction to discovery: `Push/Native.hs.publish` calls
 `Aws.publish endpoint payload mempty`; **SNS message attributes are empty**.
@@ -82,8 +92,15 @@ inherited cleanup failure, not a passing clean shutdown. Runtime-specific exit a
 internal diagnostic text are not API identity targets: the Go candidate must prove
 clean exit0<=4s, plus one bounded in-flight push shutdown. Keep the failed first
 capture in history/receipt and do not relabel it pass. One40request/concurrency2
-smoke must preserve p95<=2*reference+100ms and RSS<=192MiB. Config/CLI/metric/log and
-compression/version routing captures are pending; no operational gate passes yet.
+smoke must preserve p95<=2*reference+100ms and RSS<=192MiB. Native40 additionally retains gzip request decoding, five required-field startup
+rejections, CLI config/default-path help, exercised counter names/types and one
+40-request smoke (reference RSS42888KiB/p951.79ms). Haskell counters are lazy:
+required exercised types match; additional zero counters may be exposed. Existing
+source-defined logformats/disabled API version/gzip response behavior must be preserved
+and tested in candidate negatives. Loaded bounded shutdown remains a candidate
+operational check; reference idle native fixture exits0 in0.008s while seeded
+storage fixture exposed an intermittent MVar exit1. No candidate operational gate
+is passed by reference evidence alone.
 
 Completion requires exact final source/binary/module/security proof, full original
 four-Go72 pass with remaining pinned Haskell peers, finite uncovered comparisons,
@@ -91,3 +108,5 @@ real Redis/Cassandra/token/queue Haskell-to-Go and Go-to-Haskell switchback, opt
 nonroot Docker image and one-service Helm selector preserving Haskell defaults.
 No local native Haskell compile/unit check is claimed; unchanged source retains CI.
 Future upstream changes invalidate old compatibility until requalified.
+
+Dependency choice: [pinned decision and actual module vulnerability/license proof](oracle/dependency-decision.json). Use Go1.26.8, maintained Redis/AWS SDK modules and standard SQS Query/XML with SDK SigV4 to preserve configured provider compatibility; [AWS documents both Query and JSON support](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-json-faqs.html). No custom authentication crypto or obsolete SDK. Final whole module must pass pinned checks.
