@@ -1,0 +1,6 @@
+{
+  "source_revision": "cc9f8416bac8797a915b9725611640acda14dcef",
+  "binary_sha256": "9190c2f15e418c50e6f9e329a1f70a77d5667125f10a2072009c9ff996c63644",
+  "go_version": "go version go1.26.8 linux/amd64",
+  "purpose": "partial runnable notification core, not qualified whole service"
+}

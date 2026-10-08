@@ -39,6 +39,10 @@ func openRedis(c RedisEndpoint, additional bool) (redis.UniversalClient, error) 
 		}
 	}
 	if c.Mode == "cluster" {
+		if options.TLSConfig != nil {
+			// tls.DialWithDialer infers the actual redirected node hostname.
+			options.TLSConfig.ServerName = ""
+		}
 		return redis.NewClusterClient(options.Cluster()), nil
 	}
 	if c.Mode != "master" {

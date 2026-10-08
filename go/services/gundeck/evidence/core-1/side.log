@@ -1,0 +1,2 @@
+redis: 2026/10/08 19:38:37 pool.go:770: redis: connection pool: failed to dial after 5 attempts: tls: failed to verify certificate: x509: certificate is valid for 172.20.0.34, not 172.20.0.31
+redis: 2026/10/08 19:38:38 pool.go:770: redis: connection pool: failed to dial after 5 attempts: tls: failed to verify certificate: x509: certificate is valid for 172.20.0.33, not 172.20.0.31

@@ -1,16 +1,22 @@
 package gundeck
 
 import (
+	"bytes"
+	"compress/gzip"
 	"context"
 	"encoding/json"
 	"fmt"
 	"github.com/apache/cassandra-gocql-driver/v2"
+	"github.com/aws/aws-sdk-go-v2/aws"
+	"github.com/aws/aws-sdk-go-v2/service/sns"
 	"github.com/redis/go-redis/v9"
 	"io"
 	"net/http"
 	"net/url"
+	"os"
 	"strconv"
 	"strings"
+	"sync"
 	"time"
 )
 
@@ -21,6 +27,9 @@ type Server struct {
 	logger     *Logger
 	cassandra  *gocql.Session
 	http       *http.Client
+	aws        aws.Config
+	sns        *sns.Client
+	tokenMu    sync.Mutex
 }
 
 func NewServer(c Config) (*Server, error) {
@@ -41,6 +50,14 @@ func NewServer(c Config) (*Server, error) {
 			s.cassandra.Close()
 			return nil, err
 		}
+	}
+	s.logger = NewLogger(c, os.Stdout)
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+	s.aws, s.sns, err = openAWS(ctx, c)
+	if err != nil {
+		s.Close()
+		return nil, err
 	}
 	return s, nil
 }
@@ -114,8 +131,12 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	switch {
+	case path == "/i/push/v2" && r.Method == "POST":
+		s.pushHTTP(w, r)
 	case path == "/i/status" && r.Method == "GET":
 		emptyJSON(w, 200)
+	case (path == "/push/tokens" && (r.Method == "GET" || r.Method == "POST")) || (strings.HasPrefix(path, "/push/tokens/") && r.Method == "DELETE"):
+		s.tokensHTTP(w, r, path)
 	case (path == "/notifications" || strings.HasPrefix(path, "/notifications/")) && r.Method == "GET":
 		s.notificationHTTP(w, r, path, version)
 	case path == "/i/user" && r.Method == "DELETE":
@@ -123,7 +144,23 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		if !ok {
 			return
 		}
+		addresses, err := s.lookupTokens(r.Context(), user, false)
+		if err != nil {
+			tokenFailure(w, err)
+			return
+		}
+		s.tokenMu.Lock()
+		err = s.deleteTokens(r.Context(), addresses, nil)
+		s.tokenMu.Unlock()
+		if err != nil {
+			tokenFailure(w, err)
+			return
+		}
 		uid, _ := gocql.ParseUUID(user)
+		if err = s.query(r.Context(), "DELETE FROM user_push WHERE usr = ?", uid).RetryPolicy(&gocql.SimpleRetryPolicy{NumRetries: 5}).Exec(); err != nil {
+			tokenFailure(w, err)
+			return
+		}
 		if err := s.query(r.Context(), "DELETE FROM notifications WHERE user = ?", uid).RetryPolicy(&gocql.SimpleRetryPolicy{NumRetries: 5}).Exec(); err != nil {
 			failure(w, 500, "server-error", "Server Error")
 			return
@@ -218,4 +255,41 @@ func presenceJSONError(err error) string {
 		return "Unexpected end-of-input, expecting record key literal or }"
 	}
 	return "Invalid presence JSON"
+}
+
+func (s *Server) pushHTTP(w http.ResponseWriter, r *http.Request) {
+	var input io.Reader = r.Body
+	if r.Header.Get("Content-Encoding") == "gzip" {
+		compressed, err := gzip.NewReader(r.Body)
+		if err != nil {
+			plain(w, 400, "Invalid compressed JSON")
+			return
+		}
+		defer compressed.Close()
+		input = compressed
+	}
+	raw, err := io.ReadAll(input)
+	if err != nil {
+		failure(w, 500, "server-error", "Server Error")
+		return
+	}
+	trimmed := bytes.TrimSpace(raw)
+	if bytes.Equal(trimmed, []byte("{")) {
+		plain(w, 400, "Unexpected end-of-input, expecting record key literal or }")
+		return
+	}
+	if len(trimmed) > 0 && trimmed[0] == '{' {
+		plain(w, 400, "Error in $: parsing [] failed, expected Array, but encountered Object")
+		return
+	}
+	var pushes []json.RawMessage
+	if err = json.Unmarshal(raw, &pushes); err != nil {
+		plain(w, 400, "Invalid push JSON")
+		return
+	}
+	if len(pushes) > 0 {
+		failure(w, 501, "not-implemented", "Push delivery qualification in progress")
+		return
+	}
+	emptyJSON(w, 200)
 }

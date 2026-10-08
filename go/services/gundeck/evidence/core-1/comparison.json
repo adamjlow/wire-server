@@ -1,0 +1,61 @@
+{
+  "result": "pass",
+  "purpose": "partial Cassandra notification core only; not whole-service qualification",
+  "e2e_executed": false,
+  "binary_sha256": "9190c2f15e418c50e6f9e329a1f70a77d5667125f10a2072009c9ff996c63644",
+  "oracle_script_sha256": "e03bc589760a474c09d7ec6ccf4783237daf85991a246ea883618451ce6fd1e0",
+  "comparisons": [
+    {
+      "name": "page-byte-limit",
+      "pass": true
+    },
+    {
+      "name": "page-byte-limit-client",
+      "pass": true
+    },
+    {
+      "name": "last-all",
+      "pass": true
+    },
+    {
+      "name": "last-client-scans-skipped-rows",
+      "pass": true
+    },
+    {
+      "name": "referenced-payload",
+      "pass": true
+    },
+    {
+      "name": "missing-referenced-payload",
+      "pass": true
+    },
+    {
+      "name": "malformed-inline-payload",
+      "pass": true
+    },
+    {
+      "name": "null-payload",
+      "pass": true
+    },
+    {
+      "name": "wrong-client-notification",
+      "pass": true
+    },
+    {
+      "name": "since-filtered-client",
+      "pass": true
+    },
+    {
+      "name": "user-cleanup",
+      "pass": true
+    },
+    {
+      "name": "after-user-cleanup",
+      "pass": true
+    },
+    {
+      "name": "idle-shutdown",
+      "pass": true
+    }
+  ]
+}
