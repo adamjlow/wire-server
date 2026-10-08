@@ -4,7 +4,7 @@
   "title": "Cargohold verification",
   "service": "cargohold",
   "kind": "verification",
-  "status": "active",
+  "status": "done",
   "owner": "codex",
   "branch": "go-migration",
   "depends_on": [
@@ -37,7 +37,39 @@
       "required_evidence": "Actual unchanged original 27, finite 112 supplemental records, exact runtime/source identities, preserved defaults, image/render selection and delegated review; reuse valid evidence without repeating unchanged inputs."
     }
   ],
-  "evidence": [],
-  "review": null,
-  "handoff": "Bounded publication of existing completed validation; no new tests, behavior changes or production rollout."
+  "evidence": [
+    {
+      "criterion": "parity",
+      "result": "pass",
+      "command": "Review original 27 pass/no skips/errors, all 112 finite supplemental records, source/binary/config identities, preserved inherited security disposition, bounded operational thresholds and actual bidirectional storage switchback. Exact candidate and image pins; see retained full review and raw reports.",
+      "revision": "68a36b9137ce26566b2db91902469e8159885656",
+      "artifact": "go/services/cargohold/REVIEW.md"
+    },
+    {
+      "criterion": "security",
+      "result": "pass",
+      "command": "Review original 27 pass/no skips/errors, all 112 finite supplemental records, source/binary/config identities, preserved inherited security disposition, bounded operational thresholds and actual bidirectional storage switchback. Exact candidate and image pins; see retained full review and raw reports.",
+      "revision": "68a36b9137ce26566b2db91902469e8159885656",
+      "artifact": "go/services/cargohold/REVIEW.md"
+    },
+    {
+      "criterion": "operations",
+      "result": "pass",
+      "command": "Review original 27 pass/no skips/errors, all 112 finite supplemental records, source/binary/config identities, preserved inherited security disposition, bounded operational thresholds and actual bidirectional storage switchback. Exact candidate and image pins; see retained full review and raw reports.",
+      "revision": "68a36b9137ce26566b2db91902469e8159885656",
+      "artifact": "go/services/cargohold/REVIEW.md"
+    },
+    {
+      "criterion": "rollback",
+      "result": "pass",
+      "command": "Review original 27 pass/no skips/errors, all 112 finite supplemental records, source/binary/config identities, preserved inherited security disposition, bounded operational thresholds and actual bidirectional storage switchback. Exact candidate and image pins; see retained full review and raw reports.",
+      "revision": "68a36b9137ce26566b2db91902469e8159885656",
+      "artifact": "go/services/cargohold/REVIEW.md"
+    }
+  ],
+  "review": {
+    "by": "codex (self-review delegated by user)",
+    "artifact": "go/services/cargohold/REVIEW.md"
+  },
+  "handoff": "Complete finite verification at pinned 68a36b9137ce26566b2db91902469e8159885656. Historical evidence reused only for unchanged production/tooling inputs; final original suite and every supplement same binary. No production rollout."
 }
