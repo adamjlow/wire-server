@@ -9,8 +9,8 @@ import (
 
 type auditMetadata struct {
 	ConvID struct {
-		ID     string `json:"id"`
 		Domain string `json:"domain"`
+		ID     string `json:"id"`
 	} `json:"convId"`
 	Filename string `json:"filename"`
 	Filetype string `json:"filetype"`
@@ -42,11 +42,11 @@ func requestPrincipal(r *http.Request) (string, string) {
 	return kind, r.Header.Get("Z-" + kind)
 }
 
-func (s *Server) audit(event, kind, id, domain string, stored map[string]string, pathField, path, ip string) {
+func (s *Server) audit(r *http.Request, event, kind, id, domain string, stored map[string]string, pathField, path, ip string) {
 	if !s.Config.Settings.AssetAuditLogEnabled {
 		return
 	}
-	fields := []logField{{"audit", "true"}, {"event", event}}
+	fields := []logField{{"audit", "True"}, {"event", event}, {"request", r.Header.Get("Request-Id")}}
 	prefix := "downloader"
 	message := "Asset audit log: download"
 	if event == "file-upload" {

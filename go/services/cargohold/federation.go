@@ -69,7 +69,7 @@ func (s *Server) federation(w http.ResponseWriter, r *http.Request, route string
 		return
 	}
 	defer body.Close()
-	s.audit("file-download", "user", request.User, r.Header.Get("Wire-Origin-Domain"), meta, "download.path", key, r.Header.Get("Wire-Origin-Remote-IP"))
+	s.audit(r, "file-download", "user", request.User, r.Header.Get("Wire-Origin-Domain"), meta, "download.path", key, r.Header.Get("Wire-Origin-Remote-IP"))
 	w.Header().Set("Content-Type", "application/octet-stream")
 	_, _ = io.Copy(w, body)
 }
@@ -135,7 +135,7 @@ func (s *Server) remoteDownload(w http.ResponseWriter, r *http.Request, domain, 
 		return
 	}
 	defer response.Body.Close()
-	s.audit("remote-download", "user", user, s.Config.Settings.FederationDomain, nil, "", domain, response.Header.Get("Wire-Remote-IP"))
+	s.audit(r, "remote-download", "user", user, s.Config.Settings.FederationDomain, nil, "", domain, response.Header.Get("Wire-Remote-IP"))
 	w.Header().Set("Content-Type", "application/octet-stream")
 	_, _ = io.Copy(w, response.Body)
 }

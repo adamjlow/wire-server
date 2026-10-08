@@ -87,7 +87,7 @@ func (s *Server) serveHTTP(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		meta, _ := s.Store.Metadata(r.Context(), key)
-		s.audit("download-url-creation", "", "", "", meta, "", location, "")
+		s.audit(r, "download-url-creation", "", "", "", meta, "", location, "")
 		writeJSON(w, 200, location)
 		return
 	}
@@ -285,7 +285,7 @@ func (s *Server) redirect(w http.ResponseWriter, r *http.Request, key, host stri
 		return
 	}
 	kind, owner := requestPrincipal(r)
-	s.audit("download-url-creation", kind, owner, s.Config.Settings.FederationDomain, meta, "", location, "")
+	s.audit(r, "download-url-creation", kind, owner, s.Config.Settings.FederationDomain, meta, "", location, "")
 	w.Header().Set("Location", location)
 	w.WriteHeader(302)
 }
@@ -325,11 +325,16 @@ func (s *Server) upload(w http.ResponseWriter, r *http.Request, principal, owner
 	}
 	meta := map[string]string{principal: owner}
 	if s.Config.Settings.AssetAuditLogEnabled {
-		if len(settings.ConvID) == 0 || settings.Filename == nil || settings.Filetype == nil {
+		if (len(settings.ConvID) == 0 || string(settings.ConvID) == "null") || settings.Filename == nil || settings.Filetype == nil {
 			assetError(w, 400, "missing-audit-metadata", "Missing required asset audit metadata")
 			return
 		}
-		audit, err := json.Marshal(map[string]any{"convId": json.RawMessage(settings.ConvID), "filename": *settings.Filename, "filetype": *settings.Filetype})
+		var conversation map[string]string
+		if err := json.Unmarshal(settings.ConvID, &conversation); err != nil {
+			assetError(w, 400, "client-error", "Invalid asset audit metadata")
+			return
+		}
+		audit, err := json.Marshal(map[string]any{"convId": map[string]string{"domain": conversation["domain"], "id": conversation["id"]}, "filename": *settings.Filename, "filetype": *settings.Filetype})
 		if err != nil {
 			assetError(w, 400, "client-error", "Invalid asset audit metadata")
 			return
@@ -370,7 +375,7 @@ func (s *Server) upload(w http.ResponseWriter, r *http.Request, principal, owner
 		}
 		response["expires"] = time.Now().UTC().Add(time.Duration(days) * 24 * time.Hour).Format("2006-01-02T15:04:05.000Z")
 	}
-	s.audit("file-upload", principal, owner, s.Config.Settings.FederationDomain, meta, "upload.path", "v3/"+ret+"/"+id, "")
+	s.audit(r, "file-upload", principal, owner, s.Config.Settings.FederationDomain, meta, "upload.path", "v3/"+ret+"/"+id, "")
 	s.uploads.Add(1)
 	s.bytes.Add(uint64(n))
 	location := principal + "/assets/" + key
@@ -428,7 +433,7 @@ func randToken() (string, error) {
 func percentEncode(data []byte) string {
 	var out strings.Builder
 	for _, b := range data {
-		if (b >= 'A' && b <= 'Z') || (b >= 'a' && b <= 'z') || (b >= '0' && b <= '9') || b == '-' || b == '_' || b == '.' || b == '~' {
+		if (b >= 'A' && b <= 'Z') || (b >= 'a' && b <= 'z') || (b >= '0' && b <= '9') || strings.ContainsRune("-_.~:@&=+$,", rune(b)) {
 			out.WriteByte(b)
 		} else {
 			fmt.Fprintf(&out, "%%%02X", b)
