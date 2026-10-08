@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "id": "cannon-selection",
+  "title": "Cannon optional selection",
+  "service": "cannon",
+  "kind": "operations",
+  "status": "active",
+  "owner": "codex",
+  "branch": "go-migration",
+  "depends_on": [
+    "cannon-verification"
+  ],
+  "write_paths": [
+    ".migration/tasks/cannon-selection.json"
+  ],
+  "plan": "docs/go-migration/plans/cannon.md",
+  "acceptance_criteria": [
+    {
+      "id": "selection",
+      "description": "Optional whole-service selection preserves Haskell defaults and supports qualified mixed deployment/switchback.",
+      "required_evidence": "Actual final nonroot/readonly/private-network image smoke and exact binary/image pins; existing full Helm renders change only cannon container image, preserve defaults and fail closed; original67 mixed and real persisted switchback pass."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": "Review actual final optional image, unchanged validated Helm selector/defaults and mixed/switchback proofs; no production switch or remote push."
+}
