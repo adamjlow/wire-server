@@ -40,5 +40,5 @@
     }
   ],
   "review": null,
-  "handoff": "Active full-service candidate. Runnable bot/provider S3 slice builds; 3 focused unit tests and full Go quality checks pass. Six real S3 cases match retained Haskell status/stored effects; signed byte reads/delete pass; cleanup verified. User/Brig/token/version/legacy/federation/audit/CloudFront/config/middleware/operations and whole-service original-suite/switchback validation remain. Security disposition resolved under approved contract."
+  "handoff": "Active whole-service candidate: original 27 compiled Haskell cargo tests pass at f410fca816fdca360720ca3565143a88a49185a7 with Go selected for cargo static/dynamic domains and all other services Haskell; same baseline fixtures, exit/cleanup zero. User/Brig/token/version/legacy/federation/audit metadata routes implemented; subsequent CloudFront/config/domain/HEAD source alignment has focused checks. Audit logs, exact parser/failure semantics, operational/config variants, packaging and finite supplemental/mixed-cargo/switchback validation remain. Full compatibility not claimed."
 }
