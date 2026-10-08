@@ -1,0 +1,1174 @@
+{
+  "result": "supplemental-observed",
+  "whole_service_parity": false,
+  "cases": [
+    {
+      "id": "federation-get-asset-owner-no-token",
+      "responses": {
+        "haskell": {
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": {
+            "available": true
+          }
+        },
+        "go": {
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": {
+            "available": true
+          }
+        }
+      },
+      "equal": true
+    },
+    {
+      "id": "federation-stream-asset-owner-no-token",
+      "responses": {
+        "haskell": {
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body": "cargo-fixture"
+        },
+        "go": {
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body": "cargo-fixture"
+        }
+      },
+      "equal": true
+    },
+    {
+      "id": "federation-get-asset-owner-wrong-token",
+      "responses": {
+        "haskell": {
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": {
+            "available": true
+          }
+        },
+        "go": {
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": {
+            "available": true
+          }
+        }
+      },
+      "equal": true
+    },
+    {
+      "id": "federation-stream-asset-owner-wrong-token",
+      "responses": {
+        "haskell": {
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body": "cargo-fixture"
+        },
+        "go": {
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body": "cargo-fixture"
+        }
+      },
+      "equal": true
+    },
+    {
+      "id": "federation-get-asset-other-no-token",
+      "responses": {
+        "haskell": {
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": {
+            "available": false
+          }
+        },
+        "go": {
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": {
+            "available": false
+          }
+        }
+      },
+      "equal": true
+    },
+    {
+      "id": "federation-stream-asset-other-no-token",
+      "responses": {
+        "haskell": {
+          "status": 404,
+          "content_type": "application/json",
+          "body": {
+            "code": 404,
+            "label": "not-found",
+            "message": "Asset not found"
+          }
+        },
+        "go": {
+          "status": 404,
+          "content_type": "application/json",
+          "body": {
+            "code": 404,
+            "label": "not-found",
+            "message": "Asset not found"
+          }
+        }
+      },
+      "equal": true
+    },
+    {
+      "id": "federation-get-asset-other-wrong-token",
+      "responses": {
+        "haskell": {
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": {
+            "available": false
+          }
+        },
+        "go": {
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": {
+            "available": false
+          }
+        }
+      },
+      "equal": true
+    },
+    {
+      "id": "federation-stream-asset-other-wrong-token",
+      "responses": {
+        "haskell": {
+          "status": 404,
+          "content_type": "application/json",
+          "body": {
+            "code": 404,
+            "label": "not-found",
+            "message": "Asset not found"
+          }
+        },
+        "go": {
+          "status": 404,
+          "content_type": "application/json",
+          "body": {
+            "code": 404,
+            "label": "not-found",
+            "message": "Asset not found"
+          }
+        }
+      },
+      "equal": true
+    },
+    {
+      "id": "federation-get-asset-other-correct-token",
+      "responses": {
+        "haskell": {
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": {
+            "available": true
+          }
+        },
+        "go": {
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": {
+            "available": true
+          }
+        }
+      },
+      "equal": true
+    },
+    {
+      "id": "federation-stream-asset-other-correct-token",
+      "responses": {
+        "haskell": {
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body": "cargo-fixture"
+        },
+        "go": {
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body": "cargo-fixture"
+        }
+      },
+      "equal": true
+    },
+    {
+      "id": "legacy-otr-same-requester",
+      "responses": {
+        "haskell": {
+          "status": 302,
+          "content_type": null,
+          "body": "",
+          "signed": {
+            "scheme": "http",
+            "host": "localhost:4570",
+            "path": "/dummy-bucket/otr/44444444-4444-4444-8444-444444444444/33333333-3333-4333-8333-333333333333",
+            "query": {
+              "X-Amz-Algorithm": [
+                "AWS4-HMAC-SHA256"
+              ],
+              "X-Amz-Credential": [
+                "GKdeadbeefcafebabe0000000000000000/<validated-signing-date>/eu-west-1/s3/aws4_request"
+              ],
+              "X-Amz-Expires": [
+                "300"
+              ],
+              "X-Amz-SignedHeaders": [
+                "host"
+              ]
+            },
+            "read_status": 200,
+            "body_sha256": "fb9403aa45ae8dca85a17201022faba905e70891b601d0f260666ecf6ea9aa94",
+            "body_length": 13
+          }
+        },
+        "go": {
+          "status": 302,
+          "content_type": null,
+          "body": "",
+          "signed": {
+            "scheme": "http",
+            "host": "localhost:4570",
+            "path": "/dummy-bucket/otr/44444444-4444-4444-8444-444444444444/33333333-3333-4333-8333-333333333333",
+            "query": {
+              "X-Amz-Algorithm": [
+                "AWS4-HMAC-SHA256"
+              ],
+              "X-Amz-Credential": [
+                "GKdeadbeefcafebabe0000000000000000/<validated-signing-date>/eu-west-1/s3/aws4_request"
+              ],
+              "X-Amz-Expires": [
+                "300"
+              ],
+              "X-Amz-SignedHeaders": [
+                "host"
+              ]
+            },
+            "read_status": 200,
+            "body_sha256": "fb9403aa45ae8dca85a17201022faba905e70891b601d0f260666ecf6ea9aa94",
+            "body_length": 13
+          }
+        }
+      },
+      "equal": true
+    },
+    {
+      "id": "legacy-otr-different-requester",
+      "responses": {
+        "haskell": {
+          "status": 302,
+          "content_type": null,
+          "body": "",
+          "signed": {
+            "scheme": "http",
+            "host": "localhost:4570",
+            "path": "/dummy-bucket/otr/44444444-4444-4444-8444-444444444444/33333333-3333-4333-8333-333333333333",
+            "query": {
+              "X-Amz-Algorithm": [
+                "AWS4-HMAC-SHA256"
+              ],
+              "X-Amz-Credential": [
+                "GKdeadbeefcafebabe0000000000000000/<validated-signing-date>/eu-west-1/s3/aws4_request"
+              ],
+              "X-Amz-Expires": [
+                "300"
+              ],
+              "X-Amz-SignedHeaders": [
+                "host"
+              ]
+            },
+            "read_status": 200,
+            "body_sha256": "fb9403aa45ae8dca85a17201022faba905e70891b601d0f260666ecf6ea9aa94",
+            "body_length": 13
+          }
+        },
+        "go": {
+          "status": 302,
+          "content_type": null,
+          "body": "",
+          "signed": {
+            "scheme": "http",
+            "host": "localhost:4570",
+            "path": "/dummy-bucket/otr/44444444-4444-4444-8444-444444444444/33333333-3333-4333-8333-333333333333",
+            "query": {
+              "X-Amz-Algorithm": [
+                "AWS4-HMAC-SHA256"
+              ],
+              "X-Amz-Credential": [
+                "GKdeadbeefcafebabe0000000000000000/<validated-signing-date>/eu-west-1/s3/aws4_request"
+              ],
+              "X-Amz-Expires": [
+                "300"
+              ],
+              "X-Amz-SignedHeaders": [
+                "host"
+              ]
+            },
+            "read_status": 200,
+            "body_sha256": "fb9403aa45ae8dca85a17201022faba905e70891b601d0f260666ecf6ea9aa94",
+            "body_length": 13
+          }
+        }
+      },
+      "equal": true
+    },
+    {
+      "id": "legacy-otr-missing-stored-user",
+      "responses": {
+        "haskell": {
+          "status": 404,
+          "content_type": "application/json;charset=utf-8",
+          "body": {
+            "code": 404,
+            "label": "not-found",
+            "message": "Asset not found"
+          }
+        },
+        "go": {
+          "status": 404,
+          "content_type": "application/json;charset=utf-8",
+          "body": {
+            "code": 404,
+            "label": "not-found",
+            "message": "Asset not found"
+          }
+        }
+      },
+      "equal": true
+    },
+    {
+      "id": "legacy-otr-malformed-stored-user",
+      "responses": {
+        "haskell": {
+          "status": 404,
+          "content_type": "application/json;charset=utf-8",
+          "body": {
+            "code": 404,
+            "label": "not-found",
+            "message": "Asset not found"
+          }
+        },
+        "go": {
+          "status": 404,
+          "content_type": "application/json;charset=utf-8",
+          "body": {
+            "code": 404,
+            "label": "not-found",
+            "message": "Asset not found"
+          }
+        }
+      },
+      "equal": true
+    },
+    {
+      "id": "multipart-canonical",
+      "responses": {
+        "haskell": {
+          "response": {
+            "status": 201,
+            "content_type": "application/json;charset=utf-8",
+            "body": {
+              "domain": "example.com",
+              "key": "3-2-<validated-uuidv4>",
+              "token": "<validated-16-byte-token>"
+            },
+            "location": "bot/assets/3-2-<validated-uuidv4>"
+          },
+          "objects": [
+            {
+              "size": 13,
+              "type": "application/octet-stream",
+              "metadata": {
+                "bot": "11111111-1111-4111-8111-111111111111",
+                "token": "<validated-16-byte-token>"
+              },
+              "sha256": "fb9403aa45ae8dca85a17201022faba905e70891b601d0f260666ecf6ea9aa94"
+            }
+          ],
+          "open_uploads": []
+        },
+        "go": {
+          "response": {
+            "status": 201,
+            "content_type": "application/json;charset=utf-8",
+            "body": {
+              "domain": "example.com",
+              "key": "3-2-<validated-uuidv4>",
+              "token": "<validated-16-byte-token>"
+            },
+            "location": "bot/assets/3-2-<validated-uuidv4>"
+          },
+          "objects": [
+            {
+              "size": 13,
+              "type": "application/octet-stream",
+              "metadata": {
+                "bot": "11111111-1111-4111-8111-111111111111",
+                "token": "<validated-16-byte-token>"
+              },
+              "sha256": "fb9403aa45ae8dca85a17201022faba905e70891b601d0f260666ecf6ea9aa94"
+            }
+          ],
+          "open_uploads": []
+        }
+      },
+      "equal": true
+    },
+    {
+      "id": "multipart-unequal-delimiters",
+      "responses": {
+        "haskell": {
+          "response": {
+            "status": 201,
+            "content_type": "application/json;charset=utf-8",
+            "body": {
+              "domain": "example.com",
+              "key": "3-2-<validated-uuidv4>",
+              "token": "<validated-16-byte-token>"
+            },
+            "location": "bot/assets/3-2-<validated-uuidv4>"
+          },
+          "objects": [
+            {
+              "size": 13,
+              "type": "application/octet-stream",
+              "metadata": {
+                "bot": "11111111-1111-4111-8111-111111111111",
+                "token": "<validated-16-byte-token>"
+              },
+              "sha256": "fb9403aa45ae8dca85a17201022faba905e70891b601d0f260666ecf6ea9aa94"
+            }
+          ],
+          "open_uploads": []
+        },
+        "go": {
+          "response": {
+            "status": 201,
+            "content_type": "application/json;charset=utf-8",
+            "body": {
+              "domain": "example.com",
+              "key": "3-2-<validated-uuidv4>",
+              "token": "<validated-16-byte-token>"
+            },
+            "location": "bot/assets/3-2-<validated-uuidv4>"
+          },
+          "objects": [
+            {
+              "size": 13,
+              "type": "application/octet-stream",
+              "metadata": {
+                "bot": "11111111-1111-4111-8111-111111111111",
+                "token": "<validated-16-byte-token>"
+              },
+              "sha256": "fb9403aa45ae8dca85a17201022faba905e70891b601d0f260666ecf6ea9aa94"
+            }
+          ],
+          "open_uploads": []
+        }
+      },
+      "equal": true
+    },
+    {
+      "id": "multipart-wrong-md5",
+      "responses": {
+        "haskell": {
+          "response": {
+            "status": 201,
+            "content_type": "application/json;charset=utf-8",
+            "body": {
+              "domain": "example.com",
+              "key": "3-2-<validated-uuidv4>",
+              "token": "<validated-16-byte-token>"
+            },
+            "location": "bot/assets/3-2-<validated-uuidv4>"
+          },
+          "objects": [
+            {
+              "size": 13,
+              "type": "application/octet-stream",
+              "metadata": {
+                "bot": "11111111-1111-4111-8111-111111111111",
+                "token": "<validated-16-byte-token>"
+              },
+              "sha256": "fb9403aa45ae8dca85a17201022faba905e70891b601d0f260666ecf6ea9aa94"
+            }
+          ],
+          "open_uploads": []
+        },
+        "go": {
+          "response": {
+            "status": 201,
+            "content_type": "application/json;charset=utf-8",
+            "body": {
+              "domain": "example.com",
+              "key": "3-2-<validated-uuidv4>",
+              "token": "<validated-16-byte-token>"
+            },
+            "location": "bot/assets/3-2-<validated-uuidv4>"
+          },
+          "objects": [
+            {
+              "size": 13,
+              "type": "application/octet-stream",
+              "metadata": {
+                "bot": "11111111-1111-4111-8111-111111111111",
+                "token": "<validated-16-byte-token>"
+              },
+              "sha256": "fb9403aa45ae8dca85a17201022faba905e70891b601d0f260666ecf6ea9aa94"
+            }
+          ],
+          "open_uploads": []
+        }
+      },
+      "equal": true
+    },
+    {
+      "id": "multipart-decimal-length-suffix",
+      "responses": {
+        "haskell": {
+          "response": {
+            "status": 201,
+            "content_type": "application/json;charset=utf-8",
+            "body": {
+              "domain": "example.com",
+              "key": "3-2-<validated-uuidv4>",
+              "token": "<validated-16-byte-token>"
+            },
+            "location": "bot/assets/3-2-<validated-uuidv4>"
+          },
+          "objects": [
+            {
+              "size": 13,
+              "type": "application/octet-stream",
+              "metadata": {
+                "bot": "11111111-1111-4111-8111-111111111111",
+                "token": "<validated-16-byte-token>"
+              },
+              "sha256": "fb9403aa45ae8dca85a17201022faba905e70891b601d0f260666ecf6ea9aa94"
+            }
+          ],
+          "open_uploads": []
+        },
+        "go": {
+          "response": {
+            "status": 201,
+            "content_type": "application/json;charset=utf-8",
+            "body": {
+              "domain": "example.com",
+              "key": "3-2-<validated-uuidv4>",
+              "token": "<validated-16-byte-token>"
+            },
+            "location": "bot/assets/3-2-<validated-uuidv4>"
+          },
+          "objects": [
+            {
+              "size": 13,
+              "type": "application/octet-stream",
+              "metadata": {
+                "bot": "11111111-1111-4111-8111-111111111111",
+                "token": "<validated-16-byte-token>"
+              },
+              "sha256": "fb9403aa45ae8dca85a17201022faba905e70891b601d0f260666ecf6ea9aa94"
+            }
+          ],
+          "open_uploads": []
+        }
+      },
+      "equal": true
+    },
+    {
+      "id": "multipart-missing-trailer",
+      "responses": {
+        "haskell": {
+          "response": {
+            "status": 201,
+            "content_type": "application/json;charset=utf-8",
+            "body": {
+              "domain": "example.com",
+              "key": "3-2-<validated-uuidv4>",
+              "token": "<validated-16-byte-token>"
+            },
+            "location": "bot/assets/3-2-<validated-uuidv4>"
+          },
+          "objects": [
+            {
+              "size": 13,
+              "type": "application/octet-stream",
+              "metadata": {
+                "bot": "11111111-1111-4111-8111-111111111111",
+                "token": "<validated-16-byte-token>"
+              },
+              "sha256": "fb9403aa45ae8dca85a17201022faba905e70891b601d0f260666ecf6ea9aa94"
+            }
+          ],
+          "open_uploads": []
+        },
+        "go": {
+          "response": {
+            "status": 201,
+            "content_type": "application/json;charset=utf-8",
+            "body": {
+              "domain": "example.com",
+              "key": "3-2-<validated-uuidv4>",
+              "token": "<validated-16-byte-token>"
+            },
+            "location": "bot/assets/3-2-<validated-uuidv4>"
+          },
+          "objects": [
+            {
+              "size": 13,
+              "type": "application/octet-stream",
+              "metadata": {
+                "bot": "11111111-1111-4111-8111-111111111111",
+                "token": "<validated-16-byte-token>"
+              },
+              "sha256": "fb9403aa45ae8dca85a17201022faba905e70891b601d0f260666ecf6ea9aa94"
+            }
+          ],
+          "open_uploads": []
+        }
+      },
+      "equal": true
+    },
+    {
+      "id": "multipart-incomplete-data",
+      "responses": {
+        "haskell": {
+          "response": {
+            "status": 400,
+            "content_type": "application/json",
+            "body": {
+              "code": 400,
+              "label": "incomplete-body",
+              "message": "HTTP content-length header does not match body size"
+            }
+          },
+          "objects": [
+            {
+              "size": 10,
+              "type": "application/octet-stream",
+              "metadata": {
+                "bot": "11111111-1111-4111-8111-111111111111",
+                "token": "<validated-16-byte-token>"
+              },
+              "sha256": "67beab79f7f6efc4fcce8e1906ba6dd8c587c79f9e23dfed4a31f427356cc541"
+            }
+          ],
+          "open_uploads": []
+        },
+        "go": {
+          "response": {
+            "status": 400,
+            "content_type": "application/json",
+            "body": {
+              "code": 400,
+              "label": "incomplete-body",
+              "message": "HTTP content-length header does not match body size"
+            }
+          },
+          "objects": [
+            {
+              "size": 10,
+              "type": "application/octet-stream",
+              "metadata": {
+                "bot": "11111111-1111-4111-8111-111111111111",
+                "token": "<validated-16-byte-token>"
+              },
+              "sha256": "67beab79f7f6efc4fcce8e1906ba6dd8c587c79f9e23dfed4a31f427356cc541"
+            }
+          ],
+          "open_uploads": []
+        }
+      },
+      "equal": true
+    },
+    {
+      "id": "gzip-upload",
+      "responses": {
+        "haskell": {
+          "response": {
+            "status": 400,
+            "content_type": "application/json",
+            "body": {
+              "code": 400,
+              "label": "client-error",
+              "message": "Expected: MIME boundary, -, Failed reading: satisfyWith at 1:1 (0)"
+            }
+          },
+          "objects": [],
+          "open_uploads": []
+        },
+        "go": {
+          "response": {
+            "status": 400,
+            "content_type": "application/json",
+            "body": {
+              "code": 400,
+              "label": "client-error",
+              "message": "Expected: , Failed reading: satisfy at 2:1 (94)"
+            }
+          },
+          "objects": [],
+          "open_uploads": []
+        }
+      },
+      "equal": false
+    },
+    {
+      "id": "arbitrary-chunk-boundaries",
+      "responses": {
+        "haskell": {
+          "response": {
+            "status": 201,
+            "content_type": "application/json;charset=utf-8",
+            "body": {
+              "domain": "example.com",
+              "key": "3-2-<validated-uuidv4>",
+              "token": "<validated-16-byte-token>"
+            },
+            "location": "bot/assets/3-2-<validated-uuidv4>"
+          },
+          "objects": [
+            {
+              "size": 13,
+              "type": "application/octet-stream",
+              "metadata": {
+                "bot": "11111111-1111-4111-8111-111111111111",
+                "token": "<validated-16-byte-token>"
+              },
+              "sha256": "fb9403aa45ae8dca85a17201022faba905e70891b601d0f260666ecf6ea9aa94"
+            }
+          ],
+          "open_uploads": []
+        },
+        "go": {
+          "response": {
+            "status": 201,
+            "content_type": "application/json;charset=utf-8",
+            "body": {
+              "domain": "example.com",
+              "key": "3-2-<validated-uuidv4>",
+              "token": "<validated-16-byte-token>"
+            },
+            "location": "bot/assets/3-2-<validated-uuidv4>"
+          },
+          "objects": [
+            {
+              "size": 13,
+              "type": "application/octet-stream",
+              "metadata": {
+                "bot": "11111111-1111-4111-8111-111111111111",
+                "token": "<validated-16-byte-token>"
+              },
+              "sha256": "fb9403aa45ae8dca85a17201022faba905e70891b601d0f260666ecf6ea9aa94"
+            }
+          ],
+          "open_uploads": []
+        }
+      },
+      "equal": true
+    },
+    {
+      "id": "multipart-24MiB",
+      "responses": {
+        "haskell": {
+          "response": {
+            "status": 201,
+            "content_type": "application/json;charset=utf-8",
+            "body": {
+              "domain": "example.com",
+              "key": "3-2-<validated-uuidv4>",
+              "token": "<validated-16-byte-token>"
+            },
+            "location": "bot/assets/3-2-<validated-uuidv4>"
+          },
+          "objects": [
+            {
+              "size": 25165824,
+              "type": "application/octet-stream",
+              "metadata": {
+                "bot": "11111111-1111-4111-8111-111111111111",
+                "token": "<validated-16-byte-token>"
+              },
+              "sha256": "f2deb61684a0aa6f0fb8d808348b5ec16d3f209e80619a72a40be9465bbd61d5"
+            }
+          ],
+          "open_uploads": []
+        },
+        "go": {
+          "response": {
+            "status": 201,
+            "content_type": "application/json;charset=utf-8",
+            "body": {
+              "domain": "example.com",
+              "key": "3-2-<validated-uuidv4>",
+              "token": "<validated-16-byte-token>"
+            },
+            "location": "bot/assets/3-2-<validated-uuidv4>"
+          },
+          "objects": [
+            {
+              "size": 25165824,
+              "type": "application/octet-stream",
+              "metadata": {
+                "bot": "11111111-1111-4111-8111-111111111111",
+                "token": "<validated-16-byte-token>"
+              },
+              "sha256": "f2deb61684a0aa6f0fb8d808348b5ec16d3f209e80619a72a40be9465bbd61d5"
+            }
+          ],
+          "open_uploads": []
+        }
+      },
+      "equal": true
+    },
+    {
+      "id": "delete-ignores-token-haskell",
+      "response": {
+        "status": 200,
+        "content_type": null,
+        "body": ""
+      },
+      "equal": true
+    },
+    {
+      "id": "delete-ignores-token-go",
+      "response": {
+        "status": 400,
+        "content_type": null,
+        "body": "Error parsing header Asset-Token failed: Failed reading: Invalid url-safe base-64 characters: !!!"
+      },
+      "equal": false
+    },
+    {
+      "id": "token-create-haskell",
+      "response": {
+        "status": 200,
+        "content_type": "application/json;charset=utf-8",
+        "body": {
+          "token": "<validated-16-byte-token>"
+        }
+      },
+      "equal": true
+    },
+    {
+      "id": "token-delete-haskell",
+      "responses": [
+        {
+          "status": 200,
+          "content_type": null,
+          "body": ""
+        },
+        {
+          "status": 302,
+          "content_type": null,
+          "body": "",
+          "signed": {
+            "scheme": "http",
+            "host": "localhost:4570",
+            "path": "/dummy-bucket/v3/persistent/33333333-3333-4333-8333-333333333333",
+            "query": {
+              "X-Amz-Algorithm": [
+                "AWS4-HMAC-SHA256"
+              ],
+              "X-Amz-Credential": [
+                "GKdeadbeefcafebabe0000000000000000/<validated-signing-date>/eu-west-1/s3/aws4_request"
+              ],
+              "X-Amz-Expires": [
+                "300"
+              ],
+              "X-Amz-SignedHeaders": [
+                "host"
+              ]
+            },
+            "read_status": 200,
+            "body_sha256": "fb9403aa45ae8dca85a17201022faba905e70891b601d0f260666ecf6ea9aa94",
+            "body_length": 13
+          }
+        }
+      ],
+      "equal": true
+    },
+    {
+      "id": "token-create-go",
+      "response": {
+        "status": 200,
+        "content_type": "application/json;charset=utf-8",
+        "body": {
+          "token": "<validated-16-byte-token>"
+        }
+      },
+      "equal": true
+    },
+    {
+      "id": "token-delete-go",
+      "responses": [
+        {
+          "status": 200,
+          "content_type": null,
+          "body": ""
+        },
+        {
+          "status": 302,
+          "content_type": null,
+          "body": "",
+          "signed": {
+            "scheme": "http",
+            "host": "localhost:4570",
+            "path": "/dummy-bucket/v3/persistent/33333333-3333-4333-8333-333333333333",
+            "query": {
+              "X-Amz-Algorithm": [
+                "AWS4-HMAC-SHA256"
+              ],
+              "X-Amz-Credential": [
+                "GKdeadbeefcafebabe0000000000000000/<validated-signing-date>/eu-west-1/s3/aws4_request"
+              ],
+              "X-Amz-Expires": [
+                "300"
+              ],
+              "X-Amz-SignedHeaders": [
+                "host"
+              ]
+            },
+            "read_status": 200,
+            "body_sha256": "fb9403aa45ae8dca85a17201022faba905e70891b601d0f260666ecf6ea9aa94",
+            "body_length": 13
+          }
+        }
+      ],
+      "equal": true
+    },
+    {
+      "id": "disabled-version",
+      "responses": {
+        "haskell": {
+          "status": 404,
+          "content_type": "application/json",
+          "body": {
+            "code": 404,
+            "label": "unsupported-version",
+            "message": "Version v2 is not supported"
+          }
+        },
+        "go": {
+          "status": 404,
+          "content_type": "application/json",
+          "body": {
+            "code": 404,
+            "label": "unsupported-version",
+            "message": "Version v2 is not supported"
+          }
+        }
+      },
+      "equal": true
+    },
+    {
+      "id": "s3-missing",
+      "responses": {
+        "haskell": {
+          "response": {
+            "status": 404,
+            "content_type": "application/json;charset=utf-8",
+            "body": {
+              "code": 404,
+              "label": "not-found",
+              "message": "Asset not found"
+            }
+          },
+          "s3_operations": [
+            "HEAD"
+          ],
+          "injected": 1
+        },
+        "go": {
+          "response": {
+            "status": 404,
+            "content_type": "application/json;charset=utf-8",
+            "body": {
+              "code": 404,
+              "label": "not-found",
+              "message": "Asset not found"
+            }
+          },
+          "s3_operations": [
+            "HEAD"
+          ],
+          "injected": 1
+        }
+      },
+      "equal": true
+    },
+    {
+      "id": "s3-denied",
+      "responses": {
+        "haskell": {
+          "response": {
+            "status": 404,
+            "content_type": "application/json;charset=utf-8",
+            "body": {
+              "code": 404,
+              "label": "not-found",
+              "message": "Asset not found"
+            }
+          },
+          "s3_operations": [
+            "HEAD"
+          ],
+          "injected": 1
+        },
+        "go": {
+          "response": {
+            "status": 404,
+            "content_type": "application/json;charset=utf-8",
+            "body": {
+              "code": 404,
+              "label": "not-found",
+              "message": "Asset not found"
+            }
+          },
+          "s3_operations": [
+            "HEAD"
+          ],
+          "injected": 1
+        }
+      },
+      "equal": true
+    },
+    {
+      "id": "s3-throttled",
+      "responses": {
+        "haskell": {
+          "response": {
+            "status": 403,
+            "content_type": "application/json",
+            "body": {
+              "code": 403,
+              "label": "unauthorised",
+              "message": "Unauthorised operation"
+            }
+          },
+          "s3_operations": [
+            "HEAD",
+            "HEAD"
+          ],
+          "injected": 1
+        },
+        "go": {
+          "response": {
+            "status": 403,
+            "content_type": "application/json",
+            "body": {
+              "code": 403,
+              "label": "unauthorised",
+              "message": "Unauthorised operation"
+            }
+          },
+          "s3_operations": [
+            "HEAD",
+            "HEAD"
+          ],
+          "injected": 1
+        }
+      },
+      "equal": true
+    },
+    {
+      "id": "s3-part",
+      "responses": {
+        "haskell": {
+          "response": {
+            "status": 500,
+            "content_type": "application/json",
+            "body": {
+              "code": 500,
+              "label": "server-error",
+              "message": "Internal Server Error"
+            }
+          },
+          "objects": [],
+          "open_uploads": [],
+          "s3_operations": [
+            "create",
+            "part",
+            "abort"
+          ]
+        },
+        "go": {
+          "response": {
+            "status": 500,
+            "content_type": "application/json",
+            "body": {
+              "code": 500,
+              "label": "server-error",
+              "message": "Server Error."
+            }
+          },
+          "objects": [],
+          "open_uploads": [],
+          "s3_operations": [
+            "create",
+            "part",
+            "abort"
+          ]
+        }
+      },
+      "equal": false
+    },
+    {
+      "id": "s3-complete",
+      "responses": {
+        "haskell": {
+          "response": {
+            "status": 500,
+            "content_type": "application/json",
+            "body": {
+              "code": 500,
+              "label": "server-error",
+              "message": "Internal Server Error"
+            }
+          },
+          "objects": [],
+          "open_uploads": [],
+          "s3_operations": [
+            "create",
+            "part",
+            "complete",
+            "abort"
+          ]
+        },
+        "go": {
+          "response": {
+            "status": 500,
+            "content_type": "application/json",
+            "body": {
+              "code": 500,
+              "label": "server-error",
+              "message": "Server Error."
+            }
+          },
+          "objects": [],
+          "open_uploads": [],
+          "s3_operations": [
+            "create",
+            "part",
+            "complete",
+            "abort"
+          ]
+        }
+      },
+      "equal": false
+    }
+  ],
+  "mismatches": [
+    "gzip-upload",
+    "delete-ignores-token-go",
+    "s3-part",
+    "s3-complete"
+  ]
+}

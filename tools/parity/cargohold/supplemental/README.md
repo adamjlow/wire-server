@@ -60,3 +60,9 @@ added optional packaging only; the mounted candidate was unchanged. Audit S3
 metadata bytes, null rejection and request/event log fields now match without
 normalizing away those differences. Retention key/expiry/token relationships and
 principal precedence also match. The finite whole-service matrix remains incomplete.
+
+`--group extended` executes the planned 20 replay cases plus streaming, token,
+disabled-version and five S3 fault cases. [First 35-case capture](extended-initial-observations.json)
+and [identity](extended-initial-run.json) retain four failing observations: gzip
+parser diagnostics, DELETE token handling and two generic 500 messages. Real S3
+abort effects already match. The 24 MiB upload persists identical bytes and metadata.
