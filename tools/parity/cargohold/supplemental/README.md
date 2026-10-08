@@ -30,3 +30,11 @@ A process exit zero means observations were captured and switchback hard checks
 passed. Inspect every `equal`/mismatch value before a compatibility claim; no
 successful process exit converts mismatches to passing evidence. All owned
 resources are removed in finally; nonzero cleanup propagates failure.
+
+The next retained [25-case observations](core-observations.json) and
+[run identity](core-run.json) have no mismatches at candidate source
+bcbcd03b01f22a9f2e751b4c7385467a5912d1e3. Parser error strings and malformed
+token handling now match; JSON content types and presigned fixed query parameters
+were corrected in candidate code. Signed internal URLs were actually fetched
+before narrow clock/signature normalization. This remains a partial matrix,
+explicitly whole_service_parity false. Owned controller cleanup succeeded.

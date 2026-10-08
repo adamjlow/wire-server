@@ -32,5 +32,5 @@
   ],
   "evidence": [],
   "review": null,
-  "handoff": "Turn the existing finite matrix into executable reference-derived supplemental assertions, without modifying original e2e tests or Haskell behavior."
+  "handoff": "Active finite supplement. 25 observed comparisons now match real Haskell and Go at bcbcd03b01f22a9f2e751b4c7385467a5912d1e3, including 9 exact multipart error messages/effects, token/auth/legacy/internal URL cases, audit missing metadata and 6 user/bot/provider switchback scenarios with cross-runtime token copy. Captures retained; no whole-service parity claim. Remaining declared audit/config/failure/mixed-runtime/operation cases and focused controller checks still required."
 }
