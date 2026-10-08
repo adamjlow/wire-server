@@ -77,6 +77,7 @@ def run(ref,ports,start,stop,request,store_effects,hs,go):
         hs=start('haskell',overrides={'federator':{'port':8098}});go=start('go',overrides={'federator':{'port':8098}})
         actual={kind:request(kind,'GET','/assets/v4/foreign.example.com/3-2-'+ASSET,{'Z-User':OWNER}) for kind in ports}
         records.append({'id':'remote-transport-failure','responses':actual,'equal':actual['haskell']==actual['go']})
+        Path('/reports/mixed-partial.json').write_text(json.dumps({'cases':records,'whole_service_parity':False},indent=2)+'\n')
         log.flush()
         traces=[json.loads(line) for line in Path('/reports/federator.log').read_text().splitlines() if line.startswith('{')]
         required={'mixed-'+kind+'-'+label for kind in ports for label in ['owner','token','private-denial']}

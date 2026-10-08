@@ -32,6 +32,14 @@ func main() {
 			w.WriteHeader(200)
 			return
 		}
+		if r.URL.Path == "/rpc/foreign.example.com/brig/api-version" && r.ProtoMajor == 2 && r.Method == "POST" {
+			evidence := map[string]any{"protocol": r.ProtoMajor, "route": "api-version", "origin": r.Header.Get("Wire-Origin-Domain"), "request_id": r.Header.Get("Wire-Origin-Request-Id"), "version": r.Header.Get("X-Wire-API-Version")}
+			encoded, _ := json.Marshal(evidence)
+			log.Print(string(encoded))
+			w.Header().Set("Content-Type", "application/json")
+			_, _ = w.Write([]byte(`{"supported_versions":[0,1,2,3,4],"supported":[0,1]}`))
+			return
+		}
 		parts := strings.Split(strings.Trim(r.URL.Path, "/"), "/")
 		if r.ProtoMajor != 2 || r.Method != "POST" || len(parts) != 4 || parts[0] != "rpc" || parts[1] != "foreign.example.com" || parts[2] != "cargohold" || (parts[3] != "get-asset" && parts[3] != "stream-asset") {
 			w.WriteHeader(400)
