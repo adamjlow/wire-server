@@ -55,7 +55,8 @@ original67: proxy5/cargohold27/cannon35, no failures/errors/skips; all three Go
 services with remaining pinned Haskell peers, unchanged assertions/timeouts,
 process0 and owned cleanup0. Ten HTTP records, seven config outcomes
 and 28 actual frozen boundary records are the finite supplement; the reference
-metadata’s29 count is a narrative typo, to be corrected in a separate contract task.
+metadata’s29 count was a narrative typo, corrected in the separately reviewed
+[cannon count correction](../../../.migration/reviews/cannon-count-correction.md).
 Generated debug/startup diagnostic prefixes are incidental per frozen rules;
 statuses, content types, frame opcodes/close reasons, provider effects and ordered
 bulk values remain exact. Performance/drain use only predeclared bounds.

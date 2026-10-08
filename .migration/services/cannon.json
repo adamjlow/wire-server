@@ -2,7 +2,7 @@
   "schema_version": 1,
   "service": "cannon",
   "reference_path": "services/cannon",
-  "stage": "verified",
+  "stage": "available",
   "oracle_paths": [
     "services/cannon",
     "docs/go-migration/services/cannon/contract.md",
@@ -29,6 +29,9 @@
     ],
     "rollback": [
       "cannon-verification"
+    ],
+    "selection": [
+      "cannon-selection"
     ]
   },
   "compatibility": {

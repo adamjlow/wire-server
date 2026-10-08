@@ -4,7 +4,7 @@
   "title": "Publish qualified optional cannon availability",
   "service": "framework",
   "kind": "framework",
-  "status": "active",
+  "status": "done",
   "owner": "codex",
   "branch": "go-migration",
   "depends_on": [
@@ -24,7 +24,18 @@
       "required_evidence": "Done implementation/count correction/verification/selection tasks, final exact source/binary/review, scoped transition and state tests; Haskell defaults preserved."
     }
   ],
-  "evidence": [],
-  "review": null,
-  "handoff": "Publish adjacent verified then available stages for exact qualified tuple; close count correction note only. No production code/default edits."
+  "evidence": [
+    {
+      "criterion": "gates",
+      "result": "pass",
+      "command": "Review done implementation/count-correction/verification/selection, final67 and finite same-binary matrix; publish adjacent verified then available with exact qualified compatibility. Scoped transitions/state checks pass. No default, schema, production source or remote deployment changes.",
+      "revision": "411f525e421d15e673870ace345462c4c4f80372",
+      "artifact": ".migration/services/cannon.json"
+    }
+  ],
+  "review": {
+    "by": "codex (self-review delegated by user)",
+    "artifact": "go/services/cannon/REVIEW.md"
+  },
+  "handoff": "Optional whole-service cannon available for exact supported tuple after delegated self-review. Original67 mixed all3Go plus pinned Haskell peers and finite supplements/switchback/image pass. Haskell remains supported/default; no additional remote push or production switch."
 }
