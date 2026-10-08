@@ -267,6 +267,11 @@ func writeJSON(w http.ResponseWriter, status int, value any) {
 	_ = json.NewEncoder(w).Encode(value)
 }
 func (s *Server) storeError(w http.ResponseWriter, err error) {
+	// Signing/endpoint exceptions use the runtime error serializer, whereas
+	// an absent GET asset uses the API response serializer with a charset.
+	if wrapped, ok := w.(*responseContext); ok {
+		w = wrapped.ResponseWriter
+	}
 	if errors.Is(err, errNotFound) {
 		assetError(w, 404, "not-found", "Asset not found")
 	} else {
