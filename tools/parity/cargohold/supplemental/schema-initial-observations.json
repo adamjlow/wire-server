@@ -1,0 +1,140 @@
+{
+  "result": "supplemental-observed",
+  "whole_service_parity": false,
+  "cases": [
+    {
+      "id": "empty-retention",
+      "responses": {
+        "haskell": {
+          "response": {
+            "status": 400,
+            "content_type": "application/json",
+            "body": {
+              "code": 400,
+              "label": "client-error",
+              "message": "Expected: , Failed reading: Error in $.retention: Unexpected value for enum AssetRetention_LTU4Mjc4NDIz at 5:32 (93)"
+            }
+          },
+          "objects": [],
+          "open_uploads": []
+        },
+        "go": {
+          "response": {
+            "status": 201,
+            "content_type": "application/json;charset=utf-8",
+            "body": {
+              "domain": "example.com",
+              "key": "3-2-<validated-uuidv4>",
+              "token": "<validated-16-byte-token>"
+            },
+            "location": "bot/assets/3-2-<validated-uuidv4>"
+          },
+          "objects": [
+            {
+              "size": 13,
+              "type": "application/octet-stream",
+              "metadata": {
+                "bot": "11111111-1111-4111-8111-111111111111",
+                "token": "<validated-16-byte-token>"
+              },
+              "sha256": "fb9403aa45ae8dca85a17201022faba905e70891b601d0f260666ecf6ea9aa94"
+            }
+          ],
+          "open_uploads": []
+        }
+      },
+      "equal": false
+    },
+    {
+      "id": "invalid-conversation-uuid",
+      "responses": {
+        "haskell": {
+          "response": {
+            "status": 400,
+            "content_type": "application/json",
+            "body": {
+              "code": 400,
+              "label": "client-error",
+              "message": "Expected: , Failed reading: Error in $.convId.id: Invalid UUID at 5:66 (127)"
+            }
+          },
+          "objects": [],
+          "open_uploads": []
+        },
+        "go": {
+          "response": {
+            "status": 201,
+            "content_type": "application/json;charset=utf-8",
+            "body": {
+              "domain": "example.com",
+              "key": "3-2-<validated-uuidv4>",
+              "token": "<validated-16-byte-token>"
+            },
+            "location": "bot/assets/3-2-<validated-uuidv4>"
+          },
+          "objects": [
+            {
+              "size": 13,
+              "type": "application/octet-stream",
+              "metadata": {
+                "bot": "11111111-1111-4111-8111-111111111111",
+                "token": "<validated-16-byte-token>"
+              },
+              "sha256": "fb9403aa45ae8dca85a17201022faba905e70891b601d0f260666ecf6ea9aa94"
+            }
+          ],
+          "open_uploads": []
+        }
+      },
+      "equal": false
+    },
+    {
+      "id": "invalid-audit-mime",
+      "responses": {
+        "haskell": {
+          "response": {
+            "status": 400,
+            "content_type": "application/json",
+            "body": {
+              "code": 400,
+              "label": "client-error",
+              "message": "Expected: , Failed reading: Error in $.filetype: Invalid MIME type at 5:38 (99)"
+            }
+          },
+          "objects": [],
+          "open_uploads": []
+        },
+        "go": {
+          "response": {
+            "status": 201,
+            "content_type": "application/json;charset=utf-8",
+            "body": {
+              "domain": "example.com",
+              "key": "3-2-<validated-uuidv4>",
+              "token": "<validated-16-byte-token>"
+            },
+            "location": "bot/assets/3-2-<validated-uuidv4>"
+          },
+          "objects": [
+            {
+              "size": 13,
+              "type": "application/octet-stream",
+              "metadata": {
+                "bot": "11111111-1111-4111-8111-111111111111",
+                "token": "<validated-16-byte-token>"
+              },
+              "sha256": "fb9403aa45ae8dca85a17201022faba905e70891b601d0f260666ecf6ea9aa94"
+            }
+          ],
+          "open_uploads": []
+        }
+      },
+      "equal": false
+    }
+  ],
+  "mismatches": [
+    "empty-retention",
+    "invalid-conversation-uuid",
+    "invalid-audit-mime"
+  ]
+}
