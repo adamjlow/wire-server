@@ -4,9 +4,9 @@
   "title": "Specify bounded Go cargohold implementation and validation matrix",
   "service": "cargohold",
   "kind": "discovery",
-  "status": "queued",
-  "owner": null,
-  "branch": null,
+  "status": "active",
+  "owner": "codex",
+  "branch": "go-migration",
   "depends_on": [
     "cargohold-reference",
     "go-toolchain"
