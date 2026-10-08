@@ -1,0 +1,6 @@
+{
+  "source_revision": "fc855dc77d2e7513d9cf8b0ea509652dbc6d3167",
+  "binary_sha256": "748940daa66aefcc9c74cec71f417d7eea1fdb2ee2db8ff1891ba33d123b02e8",
+  "go_version": "go1.26.8",
+  "purpose": "partial notification/Redis/token HTTP core; no whole-service qualification"
+}

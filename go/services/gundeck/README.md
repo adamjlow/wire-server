@@ -1,8 +1,8 @@
 # Optional Go gundeck (in development)
 
-The first runnable increment supports health, Redis-compatible presence and server
-time. Notification storage/retrieval, delivery, native/SQS and final qualification
-are being completed under the active whole-service task. This is not an available
+The runnable implementation includes Redis-compatible presence, Cassandra
+notifications, websocket/native delivery, SNS tokens, SQS feedback and consumable
+RabbitMQ queues. Qualification is in progress under the whole-service task. This is not an available
 replacement yet. Haskell remains supported/default; source contracts and fixture
 oracle live in docs/go-migration/services/gundeck. No remote push or production
 switch is performed.
@@ -14,3 +14,6 @@ supported. Unsafe TLS verification bypass is rejected. Presence writes retain
 schema/TTL and additional writes; old fields/URI values are readable; delivery
 cleanup uses compare-before-delete. Presence API DELETE retains Haskell's no-op.
 The whole-service acceptance matrix must pass before selecting this in deployment.
+
+Retained core-2 evidence passes the unchanged frozen HTTP38 and storage13 captures.
+Native40 and original72 mixed-service e2e, switchback and packaging remain required.

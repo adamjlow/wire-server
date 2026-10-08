@@ -16,6 +16,9 @@ func main() {
 	path := "/etc/wire/gundeck/conf/gundeck.yaml"
 	flag.StringVar(&path, "config-file", path, "configuration path (default /etc/wire/gundeck/conf/gundeck.yaml)")
 	flag.StringVar(&path, "c", path, "configuration path")
+	flag.Usage = func() {
+		fmt.Fprintln(os.Stdout, "Usage: gundeck [-c|--config-file FILE]\nconfiguration path (default /etc/wire/gundeck/conf/gundeck.yaml)")
+	}
 	flag.Parse()
 	c, err := gundeck.LoadConfig(path)
 	if err != nil {
@@ -53,5 +56,6 @@ func main() {
 		if server.Shutdown(ctx) != nil {
 			_ = server.Close()
 		}
+		_ = service.Drain(ctx)
 	}
 }

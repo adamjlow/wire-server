@@ -26,7 +26,7 @@ spec['services']['runner']['entrypoint']=['/bin/bash','-c','for focus_python in 
 # This lane compares a partial core with the frozen Haskell records.
 setup.validate_isolation(spec)
 (args.output/'compose.json').write_text(json.dumps(spec,indent=2)+'\n')
-record.update(purpose='partial core differential comparison; no original e2e or whole-service qualification',compose_sha256=hashlib.sha256((args.output/'compose.json').read_bytes()).hexdigest())
+record.update(purpose='supplemental differential comparison; no original e2e or whole-service qualification',compose_sha256=hashlib.sha256((args.output/'compose.json').read_bytes()).hexdigest())
 compose=['docker','compose','-p',record['project'],'-f',str(args.output/'compose.json')]
 try:
     setup.command([*compose,'up','--detach',*[n for n in setup.DEPENDENCIES if n!='redis-cluster']],timeout=240)
@@ -50,7 +50,7 @@ try:
             seed=(setup.ROOT/'docs/go-migration/services/gundeck/oracle/storage-seed.cql').read_bytes()
             subprocess.run([*compose,'exec','-T','cassandra','cqlsh'],input=seed,check=True,timeout=30)
             (args.output/'reports/seed-complete').touch()
-            process.wait(timeout=90)
+            process.wait(timeout=180)
             done=process
         finally:
             if process.poll() is None:

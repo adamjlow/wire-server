@@ -165,14 +165,14 @@ func (s *Server) updateEndpoint(ctx context.Context, address pushAddress, users 
 	}
 	return err
 }
-func (s *Server) createEndpoint(ctx context.Context, address pushAddress) (string, error) {
+func (s *Server) createEndpoint(ctx context.Context, address pushAddress) (string, bool, error) {
 	arn := "arn:aws:sns:" + s.Config.AWS.Region + ":" + s.Config.AWS.Account + ":app/" + address.Transport + "/" + s.Config.AWS.ArnEnv + "-" + address.App
 	response, err := s.sns.CreatePlatformEndpoint(ctx, &sns.CreatePlatformEndpointInput{PlatformApplicationArn: aws.String(arn), Token: aws.String(address.Token), CustomUserData: aws.String(address.User), Attributes: map[string]string{"Enabled": "true"}})
 	if err == nil {
 		if response.EndpointArn == nil {
-			return "", fmt.Errorf("endpoint missing ARN")
+			return "", false, fmt.Errorf("endpoint missing ARN")
 		}
-		return *response.EndpointArn, nil
+		return *response.EndpointArn, true, nil
 	}
 	code, message := serviceError(err)
 	prefix := "Invalid parameter: Token Reason: Endpoint "
@@ -180,20 +180,20 @@ func (s *Server) createEndpoint(ctx context.Context, address pushAddress) (strin
 	if code == "InvalidParameter" && strings.HasPrefix(message, prefix) && strings.HasSuffix(message, suffix) {
 		existing := strings.TrimSuffix(strings.TrimPrefix(message, prefix), suffix)
 		if !strings.HasPrefix(existing, "arn:aws:sns:") {
-			return "", fmt.Errorf("invalid endpoint ARN")
+			return "", false, fmt.Errorf("invalid endpoint ARN")
 		}
-		return existing, nil
+		return existing, false, nil
 	}
 	if code == "InvalidParameter" && (strings.HasPrefix(message, "Invalid parameter: Token Reason: must be at most 8192 bytes long in UTF-8 encoding") || strings.HasPrefix(message, "Invalid parameter: Token Reason: iOS device tokens must be no more than 400 hexadecimal characters")) {
-		return "", &tokenError{413, "token-too-long", "Push token length must be < 8192 for GCM or 400 for APNS"}
+		return "", false, &tokenError{413, "token-too-long", "Push token length must be < 8192 for GCM or 400 for APNS"}
 	}
 	if code == "InvalidParameter" && strings.HasPrefix(message, "Invalid parameter: Token") {
-		return "", &tokenError{404, "invalid-token", "Invalid push token"}
+		return "", false, &tokenError{404, "invalid-token", "Invalid push token"}
 	}
 	if endpointNotFound(err) || code == "AuthorizationError" || code == "AuthorizationErrorException" {
-		return "", &tokenError{404, "app-not-found", "App does not exist"}
+		return "", false, &tokenError{404, "app-not-found", "App does not exist"}
 	}
-	return "", err
+	return "", false, err
 }
 func endpointMatches(arn string, token PushToken) bool {
 	parts := strings.SplitN(arn, ":", 6)
@@ -209,6 +209,10 @@ func endpointMatches(arn string, token PushToken) bool {
 	return app[len(app)-1] == token.App
 }
 func (s *Server) registerToken(ctx context.Context, user, connection string, token PushToken) error {
+	if !s.acquireBudget(1) {
+		return &tokenError{413, "sns-thread-budget-reached", "Too many concurrent calls to SNS; is SNS down?"}
+	}
+	defer s.releaseBudget(1)
 	s.tokenMu.Lock()
 	defer s.tokenMu.Unlock()
 	addresses, err := s.lookupTokens(ctx, user, false)
@@ -229,9 +233,16 @@ func (s *Server) registerToken(ctx context.Context, user, connection string, tok
 	address := pushAddress{User: user, PushToken: token, Connection: []byte(connection), ARN: current}
 	for attempt := 0; attempt < 3; attempt++ {
 		if address.ARN == "" {
-			address.ARN, err = s.createEndpoint(ctx, address)
+			var fresh bool
+			address.ARN, fresh, err = s.createEndpoint(ctx, address)
 			if err != nil {
 				return err
+			}
+			if fresh {
+				if err = s.insertToken(ctx, address); err != nil {
+					return err
+				}
+				return s.deleteTokens(ctx, old, &address)
 			}
 		}
 		attrs, err := s.endpoint(ctx, address.ARN)
@@ -327,9 +338,20 @@ func tokenFailure(w http.ResponseWriter, err error) {
 	failure(w, 500, "server-error", "Server Error")
 }
 func (s *Server) tokensHTTP(w http.ResponseWriter, r *http.Request, path string) {
-	user, ok := principal(w, r)
-	if !ok {
-		return
+	user := ""
+	if strings.HasPrefix(path, "/i/push-tokens/") {
+		user = strings.TrimPrefix(path, "/i/push-tokens/")
+		if !uuidValid(user) {
+			plain(w, 400, "invalid UUID")
+			return
+		}
+		user = strings.ToLower(user)
+	} else {
+		var ok bool
+		user, ok = principal(w, r)
+		if !ok {
+			return
+		}
 	}
 	if r.Method == http.MethodPost && path == "/push/tokens" {
 		connection, exists := r.Header["Z-Connection"]

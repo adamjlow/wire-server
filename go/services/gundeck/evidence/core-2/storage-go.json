@@ -1,0 +1,218 @@
+{
+  "schema_version": 1,
+  "kind": "finite-seeded-storage-characterization",
+  "binary_sha256": "748940daa66aefcc9c74cec71f417d7eea1fdb2ee2db8ff1891ba33d123b02e8",
+  "script_sha256": "e03bc589760a474c09d7ec6ccf4783237daf85991a246ea883618451ce6fd1e0",
+  "config_sha256": "cc4c7471126424541c8ac1529e2229fc0d9f2bbf6f7fee6aeca4eaf9b1bb0851",
+  "records": [
+    {
+      "name": "page-byte-limit",
+      "observed": {
+        "status": 200,
+        "content_type": "application/json;charset=utf-8",
+        "body": {
+          "has_more": true,
+          "notifications": [
+            {
+              "id": "00000001-0000-1000-8000-000000000001",
+              "payload": [
+                {
+                  "seq": 1
+                }
+              ]
+            },
+            {
+              "id": "00000002-0000-1000-8000-000000000001",
+              "payload": [
+                {
+                  "seq": 2
+                }
+              ]
+            },
+            {
+              "id": "00000003-0000-1000-8000-000000000001",
+              "payload": [
+                {
+                  "seq": 3
+                }
+              ]
+            }
+          ],
+          "time": "<validated-current-UTC-second>"
+        }
+      }
+    },
+    {
+      "name": "page-byte-limit-client",
+      "observed": {
+        "status": 200,
+        "content_type": "application/json;charset=utf-8",
+        "body": {
+          "has_more": true,
+          "notifications": [
+            {
+              "id": "00000001-0000-1000-8000-000000000001",
+              "payload": [
+                {
+                  "seq": 1
+                }
+              ]
+            },
+            {
+              "id": "00000002-0000-1000-8000-000000000001",
+              "payload": [
+                {
+                  "seq": 2
+                }
+              ]
+            }
+          ],
+          "time": "<validated-current-UTC-second>"
+        }
+      }
+    },
+    {
+      "name": "last-all",
+      "observed": {
+        "status": 200,
+        "content_type": "application/json;charset=utf-8",
+        "body": {
+          "id": "00000008-0000-1000-8000-000000000001",
+          "payload": [
+            {
+              "seq": 8
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "last-client-scans-skipped-rows",
+      "observed": {
+        "status": 200,
+        "content_type": "application/json;charset=utf-8",
+        "body": {
+          "id": "00000004-0000-1000-8000-000000000001",
+          "payload": [
+            {
+              "seq": 4
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "referenced-payload",
+      "observed": {
+        "status": 200,
+        "content_type": "application/json;charset=utf-8",
+        "body": {
+          "id": "00000004-0000-1000-8000-000000000001",
+          "payload": [
+            {
+              "seq": 4
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "missing-referenced-payload",
+      "observed": {
+        "status": 404,
+        "content_type": "application/json;charset=utf-8",
+        "body": {
+          "code": 404,
+          "label": "not-found",
+          "message": "Some notifications not found"
+        }
+      }
+    },
+    {
+      "name": "malformed-inline-payload",
+      "observed": {
+        "status": 404,
+        "content_type": "application/json;charset=utf-8",
+        "body": {
+          "code": 404,
+          "label": "not-found",
+          "message": "Some notifications not found"
+        }
+      }
+    },
+    {
+      "name": "null-payload",
+      "observed": {
+        "status": 404,
+        "content_type": "application/json;charset=utf-8",
+        "body": {
+          "code": 404,
+          "label": "not-found",
+          "message": "Some notifications not found"
+        }
+      }
+    },
+    {
+      "name": "wrong-client-notification",
+      "observed": {
+        "status": 404,
+        "content_type": "application/json;charset=utf-8",
+        "body": {
+          "code": 404,
+          "label": "not-found",
+          "message": "Some notifications not found"
+        }
+      }
+    },
+    {
+      "name": "since-filtered-client",
+      "observed": {
+        "status": 200,
+        "content_type": "application/json;charset=utf-8",
+        "body": {
+          "has_more": true,
+          "notifications": [
+            {
+              "id": "00000004-0000-1000-8000-000000000001",
+              "payload": [
+                {
+                  "seq": 4
+                }
+              ]
+            }
+          ],
+          "time": "<validated-current-UTC-second>"
+        }
+      }
+    },
+    {
+      "name": "user-cleanup",
+      "observed": {
+        "status": 200,
+        "content_type": "application/json;charset=utf-8",
+        "body": ""
+      }
+    },
+    {
+      "name": "after-user-cleanup",
+      "observed": {
+        "status": 200,
+        "content_type": "application/json;charset=utf-8",
+        "body": {
+          "has_more": false,
+          "notifications": [],
+          "time": "<validated-current-UTC-second>"
+        }
+      }
+    },
+    {
+      "name": "idle-shutdown",
+      "observed": {
+        "exit_code": 0,
+        "seconds": 0.00316536333411932,
+        "bound_seconds": 4
+      }
+    }
+  ],
+  "cleanup": "side process reaped, own synthetic notifications removed via user cleanup; fixture payload row removed by outer CQL cleanup"
+}

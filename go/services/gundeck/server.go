@@ -9,6 +9,7 @@ import (
 	"github.com/apache/cassandra-gocql-driver/v2"
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/service/sns"
+	amqp "github.com/rabbitmq/amqp091-go"
 	"github.com/redis/go-redis/v9"
 	"io"
 	"net/http"
@@ -21,15 +22,29 @@ import (
 )
 
 type Server struct {
-	Config     Config
-	redis      redis.UniversalClient
-	additional redis.UniversalClient
-	logger     *Logger
-	cassandra  *gocql.Session
-	http       *http.Client
-	aws        aws.Config
-	sns        *sns.Client
-	tokenMu    sync.Mutex
+	Config           Config
+	redis            redis.UniversalClient
+	additional       redis.UniversalClient
+	logger           *Logger
+	cassandra        *gocql.Session
+	http             *http.Client
+	aws              aws.Config
+	sns              *sns.Client
+	tokenMu          sync.Mutex
+	rabbitMu         sync.Mutex
+	rabbit           *amqp.Connection
+	rabbitChan       *amqp.Channel
+	background       context.Context
+	cancelBackground context.CancelFunc
+	deliverySlots    chan struct{}
+	deliveryWG       sync.WaitGroup
+	feedbackWG       sync.WaitGroup
+	awsHTTP          *http.Client
+	queueURL         string
+	metricsMu        sync.Mutex
+	counters         map[string]uint64
+	budgetMu         sync.Mutex
+	budgetSpent      int
 }
 
 func NewServer(c Config) (*Server, error) {
@@ -52,6 +67,10 @@ func NewServer(c Config) (*Server, error) {
 		}
 	}
 	s.logger = NewLogger(c, os.Stdout)
+	s.background, s.cancelBackground = context.WithCancel(context.Background())
+	s.deliverySlots = make(chan struct{}, 1024)
+	s.counters = map[string]uint64{}
+	s.awsHTTP = &http.Client{Timeout: 30 * time.Second, CheckRedirect: func(*http.Request, []*http.Request) error { return http.ErrUseLastResponse }}
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 	s.aws, s.sns, err = openAWS(ctx, c)
@@ -62,6 +81,14 @@ func NewServer(c Config) (*Server, error) {
 	return s, nil
 }
 func (s *Server) Close() {
+	if s.cancelBackground != nil {
+		s.cancelBackground()
+	}
+	s.feedbackWG.Wait()
+	s.deliveryWG.Wait()
+	if s.rabbit != nil {
+		_ = s.rabbit.Close()
+	}
 	if s.cassandra != nil {
 		s.cassandra.Close()
 	}
@@ -131,6 +158,63 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	switch {
+	case path == "/i/metrics" && r.Method == "GET":
+		w.Header().Set("Content-Type", "text/plain; version=0.0.4")
+		s.metricsMu.Lock()
+		for name, value := range s.counters {
+			_, _ = fmt.Fprintf(w, "# TYPE %s counter\n%s %d\n", name, name, value)
+		}
+		s.metricsMu.Unlock()
+	case strings.HasPrefix(path, "/i/push-tokens/") && r.Method == "GET":
+		s.tokensHTTP(w, r, path)
+	case strings.HasPrefix(path, "/i/users/") && strings.HasSuffix(path, "/consumable-notifications") && r.Method == "POST":
+		parts := strings.Split(strings.TrimPrefix(path, "/i/users/"), "/")
+		if len(parts) != 4 || parts[1] != "clients" {
+			plain(w, 404, "")
+			return
+		}
+		if !uuidValid(parts[0]) {
+			plain(w, 400, "invalid UUID")
+			return
+		}
+		if !clientValid(parts[2]) {
+			plain(w, 400, "Failed reading: takeWhile1")
+			return
+		}
+		if err := s.registerConsumable(r.Context(), strings.ToLower(parts[0]), strings.ToLower(parts[2])); err != nil {
+			failure(w, 500, "server-error", "Server Error")
+			return
+		}
+		plain(w, 204, "")
+	case strings.HasPrefix(path, "/i/clients/") && r.Method == "DELETE":
+		user, ok := principal(w, r)
+		if !ok {
+			return
+		}
+		client := strings.TrimPrefix(path, "/i/clients/")
+		if !clientValid(client) {
+			plain(w, 400, "Failed reading: takeWhile1")
+			return
+		}
+		addresses, err := s.lookupTokens(r.Context(), user, false)
+		if err != nil {
+			tokenFailure(w, err)
+			return
+		}
+		selected := []pushAddress{}
+		for _, address := range addresses {
+			if address.Client == strings.ToLower(client) {
+				selected = append(selected, address)
+			}
+		}
+		s.tokenMu.Lock()
+		err = s.deleteTokens(r.Context(), selected, nil)
+		s.tokenMu.Unlock()
+		if err != nil {
+			tokenFailure(w, err)
+			return
+		}
+		emptyJSON(w, 200)
 	case path == "/i/push/v2" && r.Method == "POST":
 		s.pushHTTP(w, r)
 	case path == "/i/status" && r.Method == "GET":
@@ -243,6 +327,20 @@ func (s *Server) Ready(ctx context.Context) error {
 	if err := s.redis.Ping(ctx).Err(); err != nil {
 		return fmt.Errorf("Redis initialization failed")
 	}
+	var version int32
+	if err := s.query(ctx, "SELECT version FROM meta WHERE id=1 ORDER BY version DESC LIMIT 1").Scan(&version); err != nil || version < 12 {
+		return fmt.Errorf("Cassandra schema version must be at least 12")
+	}
+	s.rabbitMu.Lock()
+	_, err := s.rabbitChannel()
+	s.rabbitMu.Unlock()
+	if err != nil {
+		return err
+	}
+	if err = s.openFeedback(ctx); err != nil {
+		return err
+	}
+	s.feedbackWG.Go(s.listenFeedback)
 	return nil
 }
 
@@ -282,14 +380,28 @@ func (s *Server) pushHTTP(w http.ResponseWriter, r *http.Request) {
 		plain(w, 400, "Error in $: parsing [] failed, expected Array, but encountered Object")
 		return
 	}
-	var pushes []json.RawMessage
-	if err = json.Unmarshal(raw, &pushes); err != nil {
+	pushes, err := validatePushes(raw)
+	if err != nil {
 		plain(w, 400, "Invalid push JSON")
 		return
 	}
-	if len(pushes) > 0 {
-		failure(w, 501, "not-implemented", "Push delivery qualification in progress")
+	if err = s.pushAll(r.Context(), pushes); err != nil {
+		failure(w, 500, "server-error", "Server Error")
 		return
 	}
+
 	emptyJSON(w, 200)
+}
+
+func (s *Server) count(name string) { s.metricsMu.Lock(); s.counters[name]++; s.metricsMu.Unlock() }
+func (s *Server) Drain(ctx context.Context) error {
+	done := make(chan struct{})
+	go func() { s.deliveryWG.Wait(); close(done) }()
+	select {
+	case <-done:
+		return nil
+	case <-ctx.Done():
+		s.cancelBackground()
+		return ctx.Err()
+	}
 }

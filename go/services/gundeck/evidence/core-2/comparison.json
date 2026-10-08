@@ -1,0 +1,213 @@
+{
+  "result": "pass",
+  "purpose": "partial notification/Redis/token HTTP core; no push delivery or whole-service qualification",
+  "e2e_executed": false,
+  "binary_sha256": "748940daa66aefcc9c74cec71f417d7eea1fdb2ee2db8ff1891ba33d123b02e8",
+  "oracle_script_sha256": "e03bc589760a474c09d7ec6ccf4783237daf85991a246ea883618451ce6fd1e0",
+  "comparisons": [
+    {
+      "name": "page-byte-limit",
+      "pass": true
+    },
+    {
+      "name": "page-byte-limit-client",
+      "pass": true
+    },
+    {
+      "name": "last-all",
+      "pass": true
+    },
+    {
+      "name": "last-client-scans-skipped-rows",
+      "pass": true
+    },
+    {
+      "name": "referenced-payload",
+      "pass": true
+    },
+    {
+      "name": "missing-referenced-payload",
+      "pass": true
+    },
+    {
+      "name": "malformed-inline-payload",
+      "pass": true
+    },
+    {
+      "name": "null-payload",
+      "pass": true
+    },
+    {
+      "name": "wrong-client-notification",
+      "pass": true
+    },
+    {
+      "name": "since-filtered-client",
+      "pass": true
+    },
+    {
+      "name": "user-cleanup",
+      "pass": true
+    },
+    {
+      "name": "after-user-cleanup",
+      "pass": true
+    },
+    {
+      "name": "idle-shutdown",
+      "pass": true
+    },
+    {
+      "name": "health",
+      "pass": true
+    },
+    {
+      "name": "missing-principal",
+      "pass": true
+    },
+    {
+      "name": "invalid-principal",
+      "pass": true
+    },
+    {
+      "name": "empty-page",
+      "pass": true
+    },
+    {
+      "name": "missing-last",
+      "pass": true
+    },
+    {
+      "name": "missing-id",
+      "pass": true
+    },
+    {
+      "name": "invalid-id",
+      "pass": true
+    },
+    {
+      "name": "invalid-since-v2",
+      "pass": true
+    },
+    {
+      "name": "invalid-since-v3",
+      "pass": true
+    },
+    {
+      "name": "non-v1-since",
+      "pass": true
+    },
+    {
+      "name": "missing-since-v2",
+      "pass": true
+    },
+    {
+      "name": "missing-since-v3",
+      "pass": true
+    },
+    {
+      "name": "invalid-client",
+      "pass": true
+    },
+    {
+      "name": "size-too-small",
+      "pass": true
+    },
+    {
+      "name": "size-too-large",
+      "pass": true
+    },
+    {
+      "name": "size-minimum",
+      "pass": true
+    },
+    {
+      "name": "time-before-v9",
+      "pass": true
+    },
+    {
+      "name": "time-v9",
+      "pass": true
+    },
+    {
+      "name": "empty-tokens",
+      "pass": true
+    },
+    {
+      "name": "delete-absent-token",
+      "pass": true
+    },
+    {
+      "name": "token-missing-connection",
+      "pass": true
+    },
+    {
+      "name": "invalid-push-json",
+      "pass": true
+    },
+    {
+      "name": "invalid-push-object",
+      "pass": true
+    },
+    {
+      "name": "empty-push-list",
+      "pass": true
+    },
+    {
+      "name": "empty-presence",
+      "pass": true
+    },
+    {
+      "name": "invalid-presence-user",
+      "pass": true
+    },
+    {
+      "name": "presence-missing-ids",
+      "pass": true
+    },
+    {
+      "name": "presence-invalid-ids",
+      "pass": true
+    },
+    {
+      "name": "invalid-presence-json",
+      "pass": true
+    },
+    {
+      "name": "presence-no-content-type",
+      "pass": true
+    },
+    {
+      "name": "presence-list",
+      "pass": true
+    },
+    {
+      "name": "presence-multiple-users",
+      "pass": true
+    },
+    {
+      "name": "presence-delete-noop",
+      "pass": true
+    },
+    {
+      "name": "presence-after-delete",
+      "pass": true
+    },
+    {
+      "name": "presence-stored-shape",
+      "pass": true
+    },
+    {
+      "name": "presence-ttl",
+      "pass": true
+    },
+    {
+      "name": "legacy-and-malformed-presence",
+      "pass": true
+    },
+    {
+      "name": "presence-cleaned",
+      "pass": true
+    }
+  ]
+}
