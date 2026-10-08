@@ -4,9 +4,9 @@
   "title": "Inventory cannon contracts and existing original tests",
   "service": "cannon",
   "kind": "discovery",
-  "status": "queued",
-  "owner": null,
-  "branch": null,
+  "status": "active",
+  "owner": "codex",
+  "branch": "go-migration",
   "depends_on": [
     "proxy-cargohold-combined"
   ],
