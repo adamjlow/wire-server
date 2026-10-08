@@ -4,7 +4,7 @@
   "title": "Advance approved cargohold gates and claim whole-service implementation",
   "service": "framework",
   "kind": "framework",
-  "status": "active",
+  "status": "done",
   "owner": "codex",
   "branch": "go-migration",
   "depends_on": [
@@ -25,7 +25,18 @@
       "required_evidence": "Machine state/transition validation; no candidate compatibility or availability claimed."
     }
   ],
-  "evidence": [],
-  "review": null,
-  "handoff": "User exact-parity disposition resolved security blocker; begin runnable candidate work."
+  "evidence": [
+    {
+      "criterion": "gates",
+      "result": "pass",
+      "command": "Machine state and scoped adjacent transition checks pass at each gate: inventoried to contracted, then contracted to implementing. Approved contract and completed plan retained; queued implementation limited to additive candidate/task/changelog paths.",
+      "revision": "02f0c06ef079a52db42f2ba62d88a2a3f7a8797c",
+      "artifact": ".migration/services/cargohold.json"
+    }
+  ],
+  "review": {
+    "by": "codex (self-review delegated by user)",
+    "artifact": "docs/go-migration/services/cargohold/contract.md"
+  },
+  "handoff": "Implementation gates advanced legally with no availability or compatibility claim. User disposition resolved; candidate task ready."
 }
