@@ -57,3 +57,40 @@ warmup because CoreDNS's upstream SRV target `localhost.` did not resolve throug
 Docker's internal-network resolver. Add the exact loopback hostname to the owned
 runner's hosts file; retain original DNS SRV records and federation assertions.
 No selected assertions passed and no compatibility claim follows from this run.
+
+## Qualified outcome
+
+All five original proxy and 27 selected core cargohold functions passed on
+Haskell at controller revision 603570565533a2f03ea100399825d0799bf199e6,
+using runner image ed51ca479409d6a633f07a7a7bc44758c21083670d8a913217f20318dbffde36
+(runtime source 484b1bd5e611a3ca9884c731c9bf88b266fe9d3a). Go selection at
+c75686850f4d92c13a41e311b86bc861e8b86271 passed the same five proxy functions
+with Go proxy source 0fae335b5cb5df7b7794bde68aea8177e327d3ef, binary
+7868aa4b6b914daeb65a8033506dc03963af4ba34b37f0ef0bf4e2b2e7001238, and
+Haskell peers. Only the selected service is replaced for static and dynamic
+backends. The three fixture hashes match. Retained complete XML, process exits,
+images, fixture/candidate hashes and successful cleanup are in
+[baselines](../../../tools/parity/docker/baselines/). Build receipts retain the
+actual runtime inputs; do not relabel the older Haskell baselines as newer runs.
+
+No source Haskell, original test, fixture, chart, Nix or Cabal inputs changed.
+47 focused harness/environment tests and 32 migration tests pass. Local full
+Haskell compilation/units remain unavailable, not passed; original upstream CI
+remains intact. No Go cargohold implementation, complete contract equivalence,
+production switch, source attestation or security exception is claimed. Existing
+cargohold security findings still need explicit contract disposition before
+those boundaries are implemented or full compatibility is claimed.
+
+Review: **codex (self-review delegated by user)** under the user's explicit
+self-review and trusted autonomous-development instructions. Verified complete
+original reports, fixture equality, selected Go executable identity, pinned
+Haskell peers, private networks/no published ports, synthetic fixtures and
+cleanup of only owned resources. Approve this bounded environment outcome;
+retain service-specific compatibility gates and unresolved contract findings.
+The next requested goal is building optional Go cargohold using this harness.
+
+Final controller review ensures log collection timeout cannot skip owned-stack
+cleanup and unsuccessful cleanup cannot return a qualified pass. A focused
+injected-timeout check exercises that security boundary. Original suite results
+are reused for unchanged runtime/fixture inputs; documentation and this cleanup
+error-path check do not justify rebuilding Haskell or repeating passed suites.

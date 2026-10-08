@@ -301,11 +301,16 @@ def run(output,service):
             (output/'setup-error.log').write_text(error.stderr or '')
         raise
     finally:
-        subprocess.run([*compose,'logs','--no-color','--tail','100'],stdout=(output/'dependencies.log').open('w'),
-                       stderr=subprocess.STDOUT,timeout=30)
-        cleanup=subprocess.run([*compose,'down','--volumes','--timeout','10'],capture_output=True,text=True,timeout=90)
-        record['cleanup_exit_code']=cleanup.returncode
-        (output/'environment.json').write_text(json.dumps(record,indent=2)+'\n')
+        try:
+            with (output/'dependencies.log').open('w') as log:
+                subprocess.run([*compose,'logs','--no-color','--tail','100'],stdout=log,
+                               stderr=subprocess.STDOUT,timeout=30)
+        finally:
+            cleanup=subprocess.run([*compose,'down','--volumes','--remove-orphans','--timeout','10'],capture_output=True,text=True,timeout=90)
+            record['cleanup_exit_code']=cleanup.returncode
+            if cleanup.returncode!=0:record['result']='failed'
+            (output/'environment.json').write_text(json.dumps(record,indent=2)+'\n')
+            if cleanup.returncode!=0:raise ValueError('owned stack cleanup failed')
 
 
 def main():

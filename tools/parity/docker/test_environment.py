@@ -51,4 +51,36 @@ class EnvironmentTests(unittest.TestCase):
         self.assertEqual(base['redis'],environment.peer_config(base,'gundeck',1)['redis'])
         self.assertEqual('dummy-bucket2',environment.peer_config(base,'cargohold',1)['aws']['s3Bucket'])
 
+    def test_log_timeout_still_cleans_only_the_owned_project(self):
+        import json
+        import subprocess
+        from unittest.mock import patch
+        with tempfile.TemporaryDirectory() as tmp:
+            output=Path(tmp);(output/'reports').mkdir()
+            spec=self.spec();spec['services']={name:{'image':'synthetic:test'} for name in environment.DEPENDENCIES}
+            spec['services']['runner']={'image':'sha256:'+'b'*64}
+            raw=json.dumps(spec);(output/'compose.json').write_text(raw)
+            record={'project':spec['name'],'source_revision':'c'*40,'files_sha256':{},
+                    'compose_sha256':environment.hashlib.sha256(raw.encode()).hexdigest()}
+            (output/'environment.json').write_text(json.dumps(record))
+            (output/'reports/proxy.run.json').write_text(json.dumps({'result':'pass','e2e_executed':True}))
+            def command(args,**kwargs):
+                if args[:3]==['git','rev-parse','HEAD']:return 'c'*40
+                if args[:3]==['git','status','--porcelain']:return ''
+                if args[:3]==['docker','network','ls']:return 'owned-test-network'
+                if args[:3]==['docker','network','inspect']:return '[]'
+                if args[:3]==['docker','image','inspect']:return json.dumps([{'RepoDigests':['synthetic@sha256:'+'d'*64]}])
+                return 'PONG'
+            calls=[]
+            def execute(args,**kwargs):
+                calls.append(args)
+                if 'logs' in args:raise subprocess.TimeoutExpired(args,30)
+                return subprocess.CompletedProcess(args,0)
+            with patch.object(environment,'command',side_effect=command),patch.object(environment.subprocess,'run',side_effect=execute),self.assertRaises(subprocess.TimeoutExpired):
+                environment.run(output,'proxy')
+            self.assertEqual('down',calls[-1][6])
+            self.assertEqual(spec['name'],calls[-1][3])
+            self.assertIn('--volumes',calls[-1])
+            self.assertEqual(0,json.loads((output/'environment.json').read_text())['cleanup_exit_code'])
+
 if __name__=='__main__':unittest.main()

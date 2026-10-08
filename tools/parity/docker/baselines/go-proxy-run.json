@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "service": "proxy",
+  "base_image": "quay.io/wire/integration@sha256:f5db439022d1c0ccf071c25f9c0d132ed21a9e5e3647db59c593d33614bc4f27",
+  "required_tests": [
+    "Proxy.testProxyGiphy",
+    "Proxy.testProxyYoutube",
+    "Proxy.testProxyGoogleMaps",
+    "Proxy.testProxySpotify",
+    "Proxy.testProxySoundcloud"
+  ],
+  "candidate": {
+    "path": "/candidate/proxy",
+    "sha256": "7868aa4b6b914daeb65a8033506dc03963af4ba34b37f0ef0bf4e2b2e7001238"
+  },
+  "config_sha256": "d8834dad54e1f851e689ac00691cd527aac69e0e9ce00baf149835433812c73c",
+  "e2e_executed": true,
+  "result": "pass",
+  "process_exit_code": 0,
+  "validated_report": {
+    "tests": 5,
+    "sha256": "5951f8d963d6f6026ee2ccb17df4dbc4b1f283b55ab557bdb1141d10cc123f72"
+  }
+}

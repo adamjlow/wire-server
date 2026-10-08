@@ -30,33 +30,63 @@ inside those original functions are retained; tests are not translated into Go.
 `environment_ready: false`. It proves the published executables/test catalogue
 are usable in Docker, not that backend dependencies or e2e assertions passed.
 
-## Running the original suite in a provisioned environment
+## Automated private baseline and candidate runs
 
-The image also provides `suite --service proxy|cargohold --config FILE --output FILE`,
-with optional `--candidate FILE`. Configuration must be outside a `services/`
-directory so the published suite uses its existing PATH service-launch mode.
-Supply synthetic service configs at `/etc/wire/<service>/conf/<service>.yaml`,
-original fixture material, a writable report volume, and task-owned disposable
-backend dependencies/static Haskell peers. The publisher image has no standalone
-`run-services` executable; static peers belong to the environment orchestrator.
+Build the runner once, then provision and run a selected service's original tests:
 
-For a selected Go binary, mount it read-only and pass `--candidate`; the runner
-creates a temporary PATH entry for exactly that service. Other services resolve
-to the pinned Haskell executables. It calls the original compiled test suite with
-the catalogued tests, then requires complete successful XML results using the
-shared harness checker. Missing/skipped/failed cases or nonzero process exits
-cannot pass. Execution and report validation are recorded in a `.run.json` sidecar.
+```sh
+python3 tools/parity/docker/control.py build --output /absolute/new-build.json
+python3 tools/parity/docker/environment.py prepare --receipt /absolute/new-build.json --output /absolute/new-environment
+python3 tools/parity/docker/environment.py run --output /absolute/new-environment --service cargohold
+```
 
-Full execution requires `WIRE_E2E_DISPOSABLE=1`, which is an explicit readiness
-signal, **not proof of isolation or permission to use shared infrastructure**.
-The orchestrator must establish a private internal Docker network, no published
-host ports, synthetic fixtures/configuration and task-owned dependency volumes.
-Never point these tests at production or run the upstream development Compose
-file unchanged: it contains fixed container names, subnets and host port bindings.
-The dependency environment and static-peer initialization have not yet been
-provisioned/qualified by this runner build. No full e2e success is claimed.
+`prepare` records configuration hashes and a unique project; `run` resolves the
+upstream test dependency images to immutable digests, starts private internal
+networks with no published ports, initializes synthetic schemas/resources and
+starts the pinned Haskell peers. The original compiled suite starts its dynamic
+peers itself, from a temporary service/dist layout inside the container. Reports
+and logs are retained outside the checkout. The controller removes only its
+project's containers, networks and volumes after execution. Commands are bounded;
+missing/failed/skipped cases and nonzero exits cannot pass. The expensive setup
+and original tests are executed automatically; the user is not the test runner.
 
-Architecture: one test-runner image plus separate disposable database, object-store,
-queue, cache/search and Haskell-peer containers. Keep long-lived host services and
-compiler installation out of this setup. Once the private stack is qualified,
-run the same original suite first with Haskell and then with one Go substitution.
+To select one Go service, add `--candidate /absolute/service-binary
+--candidate-receipt /absolute/build.json` to **prepare**, then run the selected
+service as above. The build receipt must identify the binary SHA-256 and full
+source revision. The controller checks its checksum before starting, mounts it
+read-only and replaces only that service in the temporary dist layout for both
+static and dynamic peers. All other executables remain Haskell. Use a new output
+directory for each attempt and a clean committed checkout. Source revisions,
+runner/dependency images, fixture hashes, candidate hash and complete XML/run
+reports are recorded; a publisher image is not independent source attestation.
+
+The same image supports standalone `suite --service proxy|cargohold --config FILE
+--output FILE [--candidate FILE]` in a separately provisioned private environment.
+Configs outside `services/` use the upstream PATH launch mode and `/etc/wire`
+layout. The controller uses the upstream local service/dist mode instead. Do not
+run the original development Compose file unchanged: its global names and host
+ports are inappropriate for this disposable setup.
+
+The fixture Redis cluster and CoreDNS use upstream private advertised IPs. The
+controller rejects overlap with existing networks; run one stack at a time on a
+Docker daemon. Search data uses bounded memory-backed storage to avoid the host's
+Elasticsearch disk watermark. The first image pulls need several GB (runner
+about 3.9 GB plus dependencies about 4 GB); keep at least 2 GiB free for test data.
+No GHC, Cabal, Nix or backend packages are installed on the host. The enterprise
+peer fixture comes from its public chart because the private submodule is not
+available; the actual published Haskell executable runs. These selected tests do
+not qualify unrelated enterprise, dynamic DNS administration or OpenSearch paths.
+
+## Actual qualification
+
+[Retained baselines](baselines/) record all five original proxy and 27 selected
+core cargohold tests passing on Haskell, then the same five proxy tests passing
+with the identified Go proxy and Haskell peers. The fixtures match across runs;
+all owned stacks were cleaned up. Baselines used controller revision
+`603570565533a2f03ea100399825d0799bf199e6`; Go selection used
+`c75686850f4d92c13a41e311b86bc861e8b86271` and Go proxy source
+`0fae335b5cb5df7b7794bde68aea8177e327d3ef`. Exact runner image/input provenance
+is in the two environment build receipts. This qualifies original-test reuse and
+service selection. It does not claim Go cargohold compatibility or complete
+coverage of any future service's contract; supplement the selected suite only
+for concrete gaps in that service's finite acceptance matrix.

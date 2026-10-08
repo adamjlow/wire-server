@@ -219,3 +219,7 @@ networks, no host ports, synthetic fixtures, owned dependency volumes and pinned
 Haskell peers. This narrowly scoped exception overrides the general integration
 execution prohibition for this environment; shared/production targets remain
 prohibited. Missing baseline reports cannot qualify the setup or a Go candidate.
+The same user's explicit self-review and autonomous-development delegation applies
+to this bounded environment task; label same-author review honestly and retain
+all substantive test/evidence requirements. This does not approve service
+contract exceptions or production switches.
