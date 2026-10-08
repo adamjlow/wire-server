@@ -80,6 +80,29 @@ func TestUploadLimitAndIncompletePersistedEffect(t *testing.T) {
 	}
 }
 
+func TestInvalidUploadMetadataHasNoStorageEffects(t *testing.T) {
+	var c Config
+	c.Settings.MaxTotalBytes = 1024
+	c.Settings.FederationDomain = "example.com"
+	for _, settings := range []string{
+		`{"public":false,"retention":""}`,
+		`{"public":false,"convId":{"id":"invalid","domain":"example.com"}}`,
+		`{"public":false,"filetype":"invalid"}`,
+	} {
+		store := &fixtureStore{}
+		server := NewServer(c, store)
+		r := httptest.NewRequest("POST", "/bot/assets", strings.NewReader(body(settings, "abc", "3")))
+		r.Header.Set("Z-Type", "bot")
+		r.Header.Set("Z-Bot", "11111111-1111-4111-8111-111111111111")
+		r.Header.Set("Content-Type", "multipart/mixed")
+		w := httptest.NewRecorder()
+		server.ServeHTTP(w, r)
+		if w.Code != 400 || store.calls != 0 {
+			t.Fatalf("settings=%s code=%d store calls=%d", settings, w.Code, store.calls)
+		}
+	}
+}
+
 func TestPrincipalAndPrivateTokenBoundary(t *testing.T) {
 	store := &fixtureStore{meta: map[string]string{"bot": "11111111-1111-4111-8111-111111111111", "token": "private"}}
 	server := NewServer(Config{}, store)

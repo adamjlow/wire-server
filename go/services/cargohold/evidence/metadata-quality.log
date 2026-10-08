@@ -1,0 +1,31 @@
+all modules verified
+ok  	github.com/adamjlow/wire-server/go/services/cargohold	1.155s
+?   	github.com/adamjlow/wire-server/go/services/cargohold/cmd/cargohold	[no test files]
+all modules verified
+No vulnerabilities found.
+W1008 12:26:36.703657 2279195 library.go:394] module github.com/adamjlow/wire-server/go/services/cargohold has empty version, defaults to HEAD. The license URL may be incorrect. Please verify!
+github.com/adamjlow/wire-server/go/services/cargohold,https://github.com/adamjlow/wire-server/blob/HEAD/go/services/cargohold/LICENSE,AGPL-3.0
+github.com/aws/aws-sdk-go-v2,https://github.com/aws/aws-sdk-go-v2/blob/v1.47.1/LICENSE.txt,Apache-2.0
+github.com/aws/aws-sdk-go-v2/aws/protocol/eventstream,https://github.com/aws/aws-sdk-go-v2/blob/aws/protocol/eventstream/v1.7.20/aws/protocol/eventstream/LICENSE.txt,Apache-2.0
+github.com/aws/aws-sdk-go-v2/config,https://github.com/aws/aws-sdk-go-v2/blob/config/v1.33.7/config/LICENSE.txt,Apache-2.0
+github.com/aws/aws-sdk-go-v2/credentials,https://github.com/aws/aws-sdk-go-v2/blob/credentials/v1.20.7/credentials/LICENSE.txt,Apache-2.0
+github.com/aws/aws-sdk-go-v2/feature/ec2/imds,https://github.com/aws/aws-sdk-go-v2/blob/feature/ec2/imds/v1.20.1/feature/ec2/imds/LICENSE.txt,Apache-2.0
+github.com/aws/aws-sdk-go-v2/internal/configsources,https://github.com/aws/aws-sdk-go-v2/blob/internal/configsources/v1.5.4/internal/configsources/LICENSE.txt,Apache-2.0
+github.com/aws/aws-sdk-go-v2/internal/endpoints/v2,https://github.com/aws/aws-sdk-go-v2/blob/internal/endpoints/v2.8.4/internal/endpoints/v2/LICENSE.txt,Apache-2.0
+github.com/aws/aws-sdk-go-v2/internal/sync/singleflight,https://github.com/aws/aws-sdk-go-v2/blob/v1.47.1/internal/sync/singleflight/LICENSE,BSD-3-Clause
+github.com/aws/aws-sdk-go-v2/internal/v4a,https://github.com/aws/aws-sdk-go-v2/blob/internal/v4a/v1.5.4/internal/v4a/LICENSE.txt,Apache-2.0
+github.com/aws/aws-sdk-go-v2/service/internal/accept-encoding,https://github.com/aws/aws-sdk-go-v2/blob/service/internal/accept-encoding/v1.13.19/service/internal/accept-encoding/LICENSE.txt,Apache-2.0
+github.com/aws/aws-sdk-go-v2/service/internal/checksum,https://github.com/aws/aws-sdk-go-v2/blob/service/internal/checksum/v1.11.5/service/internal/checksum/LICENSE.txt,Apache-2.0
+github.com/aws/aws-sdk-go-v2/service/internal/presigned-url,https://github.com/aws/aws-sdk-go-v2/blob/service/internal/presigned-url/v1.14.4/service/internal/presigned-url/LICENSE.txt,Apache-2.0
+github.com/aws/aws-sdk-go-v2/service/internal/s3shared,https://github.com/aws/aws-sdk-go-v2/blob/service/internal/s3shared/v1.20.4/service/internal/s3shared/LICENSE.txt,Apache-2.0
+github.com/aws/aws-sdk-go-v2/service/s3,https://github.com/aws/aws-sdk-go-v2/blob/service/s3/v1.114.1/service/s3/LICENSE.txt,Apache-2.0
+github.com/aws/aws-sdk-go-v2/service/signin,https://github.com/aws/aws-sdk-go-v2/blob/service/signin/v1.10.2/service/signin/LICENSE.txt,Apache-2.0
+github.com/aws/aws-sdk-go-v2/service/sso,https://github.com/aws/aws-sdk-go-v2/blob/service/sso/v1.38.2/service/sso/LICENSE.txt,Apache-2.0
+github.com/aws/aws-sdk-go-v2/service/ssooidc,https://github.com/aws/aws-sdk-go-v2/blob/service/ssooidc/v1.43.2/service/ssooidc/LICENSE.txt,Apache-2.0
+github.com/aws/aws-sdk-go-v2/service/sts,https://github.com/aws/aws-sdk-go-v2/blob/service/sts/v1.51.2/service/sts/LICENSE.txt,Apache-2.0
+github.com/aws/smithy-go,https://github.com/aws/smithy-go/blob/v1.28.1/LICENSE,Apache-2.0
+github.com/aws/smithy-go/internal/sync/singleflight,https://github.com/aws/smithy-go/blob/v1.28.1/internal/sync/singleflight/LICENSE,BSD-3-Clause
+go.yaml.in/yaml/v3,https://github.com/yaml/go-yaml/blob/v3.0.4/LICENSE,MIT
+golang.org/x/net,https://cs.opensource.google/go/x/net/+/v0.59.0:LICENSE,BSD-3-Clause
+golang.org/x/text,https://cs.opensource.google/go/x/text/+/v0.42.0:LICENSE,BSD-3-Clause
+Go module checks passed: cargohold; Go 1.26.8
