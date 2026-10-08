@@ -4,7 +4,7 @@
   "title": "Run unchanged original tests with Go proxy and Go cargohold together",
   "service": "cargohold",
   "kind": "contract-change",
-  "status": "active",
+  "status": "done",
   "owner": "codex",
   "branch": "go-migration",
   "depends_on": [
@@ -29,7 +29,25 @@
       "required_evidence": "Focused selection/identity negatives, existing harness/controller checks, scoped state validation and delegated review. Private synthetic Docker only, no defaults or production changes."
     }
   ],
-  "evidence": [],
-  "review": null,
-  "handoff": "Authorized by user ok go: extend selection, build pinned runner, reuse identified candidates, run two original suites against one shared two-Go/Haskell environment, retain and review results. No supplemental repeats."
+  "evidence": [
+    {
+      "criterion": "combined",
+      "result": "pass",
+      "command": "Original 5 proxy and 27 cargohold tests passed in one private environment with both Go services selected; both reports record matching two Go hashes, all nine other staged backend hashes equal qualified Haskell preflight. No skips/errors; cleanup exit zero.",
+      "revision": "a998e043ad4ac5e382ba3609f4c8a332e4fdd8be",
+      "artifact": "tools/parity/docker/baselines/combined-review.md"
+    },
+    {
+      "criterion": "harness",
+      "result": "pass",
+      "command": "12 runner/controller tests, 32 migration validator tests, fresh image build/preflight, scope and diff checks pass. Existing single-service behavior retained; no assertions/catalogue/service code changes.",
+      "revision": "a998e043ad4ac5e382ba3609f4c8a332e4fdd8be",
+      "artifact": "tools/parity/docker/baselines/combined-review.md"
+    }
+  ],
+  "review": {
+    "by": "codex (self-review delegated by user)",
+    "artifact": "tools/parity/docker/baselines/combined-review.md"
+  },
+  "handoff": "Combined two-Go/Haskell original e2e outcome complete: all 32 pass on exact recorded binary/source tuple, both test backends, owned cleanup zero. Reusable multi-service selector and durable evidence retained; no full backend suite, push or production switch."
 }
