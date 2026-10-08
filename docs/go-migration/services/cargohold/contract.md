@@ -1,7 +1,7 @@
 # Cargohold compatibility contract
 
-Status: **self-reviewed; full approval withheld for source/security conflict and
-missing executable baseline fixtures**. Task: `cargohold-contract`.
+Status: **approved for implementation under the user's 2026-10-08 exact-parity
+disposition and delegated self-review; runtime verification still required**. Task: `cargohold-contract`.
 Reference source: `f6636ed53315fa7b0fc4c8aa39c0bb30c98b6d5e`.
 Source map: [inventory](inventory.md). No intentional behaviour or storage change
 is proposed. Every supported interface belongs to the whole-service boundary.
@@ -19,7 +19,7 @@ is proposed. Every supported interface belongs to the whole-service boundary.
 | Retention | All five names/numbers; persistent default; volatile 28-day and expiring 365-day millisecond expiry; configured store lifecycle assumptions |
 | Signed downloads | S3 path/virtual/auto addressing, endpoint override, configured TTL, multi-ingress match/failure; CloudFront precedence, RSA-SHA1 canned policy/300-second TTL and base64 rules |
 | Legacy assets | Plain/conv/plain/OTR routes; existing UUID and `otr/<conversation>/<asset>` keys; legacy metadata access rules and signed URL output |
-| Federation/internal | Unversioned health/internal signed URL; origin-qualified availability/stream authorization; outgoing HTTP/2 remote availability/stream; remote errors/deletion rejection |
+| Federation/internal | Unversioned health/internal signed URL; reference UUID-based availability/stream authorization; outgoing HTTP/2 remote availability/stream; remote errors/deletion rejection |
 | Audit/operations | Enabled metadata requirement, encoded/raw audit metadata reads and preservation, log field schemas, metrics, existing config/CLI/AWS discovery/probes, streaming memory/cancellation/shutdown |
 | Failure and switchback | S3 retries/error/abort/incomplete-upload effects; Haskell-written objects read/modified by Go and Go-written objects read/modified by Haskell, with token/audit/bytes retained |
 
@@ -40,9 +40,10 @@ unknown-route and federation errors require characterization rather than guessin
 
 Existing ingress headers define authentication; preserve the trust boundary and
 parse IDs/domains/tokens according to the pinned reference's accepted syntax.
-The desired domain-aware federation boundary conflicts with the pinned source;
-see the unresolved review finding below. Wrong credentials must not disclose
-private asset existence. No new Go-only schema, object prefix or metadata format.
+Preserve the pinned source's unqualified owner-UUID federation comparison under
+the explicit user disposition below. Different-UUID requests still require the
+correct token or a public object; the matching-UUID bypass is a documented serious
+security concern. Do not claim domain-aware authorization in this migration. No new Go-only schema, object prefix or metadata format.
 Validate input lengths/headers and resource limits before uploads. Use bounded
 streaming and cleanup for cancellation/failure. Keep trusted TLS and never log
 real credentials, personal audit data or signed URL signatures in artifacts.
@@ -87,7 +88,7 @@ latency/error thresholds and abort criteria. Verify default chart output against
 the unmodified Haskell baseline; explicit selection changes only cargohold's image
 while preserving config/service account/secret mounts/probes. Haskell builds and
 ordinary installations remain usable without Go. Production switching requires
-a separate operator-approved task. This draft authorizes no rollout.
+a separate operator-approved task. This contract authorizes no rollout.
 
 ## User-authorized self-review, 2026-10-07
 
@@ -125,3 +126,50 @@ and both switchback directions. Missing case IDs/reference captures, validated
 generated-value/signature comparison, predeclared clock tolerances, numeric load
 thresholds and real runtime/selection evidence still prevent task completion.
 Neither mock comparison nor source review establishes an equivalent Go service.
+
+## Resolved disposition and implementation approval, 2026-10-08
+
+User decision: "we must mirror how the backend works today but note down any
+serious security concerns/improvements." This explicitly resolves the previously
+escalated choice in favor of existing behavior during migration. Record security
+improvements separately; implement neither a Go-only authorization change nor an
+unrequested Haskell security patch. Approval applies to behavioral compatibility,
+not a claim that the inherited behavior is secure or production cutover approved.
+
+The real reference observations in [oracle/reference.json](oracle/reference.json)
+and [capture identity](oracle/run.json) resolve the preceding characterization
+requests. These are copies of the separately completed reference task's exact
+artifacts, not new observations or candidate results. Ten federation controls
+show matching owner UUID accepts absent/wrong tokens from a foreign origin on
+both availability and streaming; different UUID rejects absent/wrong tokens and
+accepts the correct token. Four legacy OTR controls show either requester reads
+when stored uploader metadata is parseable; absent/malformed uploader returns
+404. Six multipart controls retain unequal delimiters, ignored Content-MD5,
+length suffixes, absent closing trailer and incomplete-body partial-object effects.
+Use these exact expectations; no blanket normalization of authorization/errors.
+
+The serious federation concern and improvement are recorded in
+[security concerns](oracle/security-concerns.md). Legacy OTR behavior is recorded
+as existing shared encrypted-asset access rather than asserted to be an exploit.
+Deployment reachability/impact is unverified; findings describe tested service
+behavior, not demonstrated exploitation of a deployed system.
+
+The implementation acceptance matrix and numeric operational thresholds are in
+[the completed plan](../../plans/cargohold-implementation.md). All 27 original
+compiled Haskell functions have passing retained baseline reports under
+tools/parity/docker/baselines/haskell-cargohold.xml. Additional source-defined
+cases in that finite matrix are mandatory verification work, not preexisting
+passes. Generated expiry comparison permits 2 seconds around observed request
+time while requiring the correct retention duration and millisecond representation.
+Signed URL TTL comparisons permit 2 seconds between clocks and preserve configured
+TTL, target, signing scope and independently verified signatures. Invalid
+signatures or changed authorization cannot be normalized. Supplemental assertions
+must be reviewed in protected oracle work before candidate parity consumption.
+
+Reviewer: codex (self-review delegated by user), same author, citing the explicit
+prior self-review delegation and today's human disposition. The whole-service
+contract now accurately describes the reference, retains negative controls and
+requires future real candidate/storage/operation/selection evidence. Approve the
+contract for implementation; no Go candidate equivalence or availability claimed.
+Historical withheld review above remains the record of the earlier finding;
+this disposition supersedes its unresolved status.

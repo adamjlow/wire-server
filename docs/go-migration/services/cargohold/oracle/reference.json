@@ -1,0 +1,450 @@
+{
+  "schema_version": 1,
+  "result": "reference-observed",
+  "candidate": null,
+  "parity_verified": false,
+  "binary_sha256": "566403eed45f5632cd5fe628a85003a9f454757c4ac2b836a99c832d9a5faf0b",
+  "config_sha256": "6d0492c98365332a8dd30cd610b50f69aeca0bef4d6118d2559e4dd00dc8caf9",
+  "observations": [
+    {
+      "id": "federation-get-matching-uuid-missing-token",
+      "method": "POST",
+      "path": "/federation/get-asset",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body_sha256": "631f4d836f9d199ee9721cc528112d8b61d2b90455bb214dd364596b487fe6b6",
+      "body_length": 18,
+      "expected_status": 200,
+      "json": {
+        "available": true
+      },
+      "status_matches_source": true,
+      "expected_available": true,
+      "available_matches_source": true
+    },
+    {
+      "id": "federation-stream-matching-uuid-missing-token",
+      "method": "POST",
+      "path": "/federation/stream-asset",
+      "status": 200,
+      "content_type": "application/octet-stream",
+      "body_sha256": "fb9403aa45ae8dca85a17201022faba905e70891b601d0f260666ecf6ea9aa94",
+      "body_length": 13,
+      "expected_status": 200,
+      "text": "cargo-fixture",
+      "status_matches_source": true,
+      "authorized_bytes_match": true
+    },
+    {
+      "id": "federation-get-matching-uuid-wrong-token",
+      "method": "POST",
+      "path": "/federation/get-asset",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body_sha256": "631f4d836f9d199ee9721cc528112d8b61d2b90455bb214dd364596b487fe6b6",
+      "body_length": 18,
+      "expected_status": 200,
+      "json": {
+        "available": true
+      },
+      "status_matches_source": true,
+      "expected_available": true,
+      "available_matches_source": true
+    },
+    {
+      "id": "federation-stream-matching-uuid-wrong-token",
+      "method": "POST",
+      "path": "/federation/stream-asset",
+      "status": 200,
+      "content_type": "application/octet-stream",
+      "body_sha256": "fb9403aa45ae8dca85a17201022faba905e70891b601d0f260666ecf6ea9aa94",
+      "body_length": 13,
+      "expected_status": 200,
+      "text": "cargo-fixture",
+      "status_matches_source": true,
+      "authorized_bytes_match": true
+    },
+    {
+      "id": "federation-get-different-uuid-missing-token",
+      "method": "POST",
+      "path": "/federation/get-asset",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body_sha256": "9c9729d235cfd4897778afaf5651db6b7e91ca68f8c5d052d66de5e09734d668",
+      "body_length": 19,
+      "expected_status": 200,
+      "json": {
+        "available": false
+      },
+      "status_matches_source": true,
+      "expected_available": false,
+      "available_matches_source": true
+    },
+    {
+      "id": "federation-stream-different-uuid-missing-token",
+      "method": "POST",
+      "path": "/federation/stream-asset",
+      "status": 404,
+      "content_type": "application/json",
+      "body_sha256": "2dabcf113c2b341809c738ca05a47a005e73c0ef50a7e119d1b50e1b56290657",
+      "body_length": 60,
+      "expected_status": 404,
+      "json": {
+        "code": 404,
+        "label": "not-found",
+        "message": "Asset not found"
+      },
+      "status_matches_source": true,
+      "authorized_bytes_match": null
+    },
+    {
+      "id": "federation-get-different-uuid-wrong-token",
+      "method": "POST",
+      "path": "/federation/get-asset",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body_sha256": "9c9729d235cfd4897778afaf5651db6b7e91ca68f8c5d052d66de5e09734d668",
+      "body_length": 19,
+      "expected_status": 200,
+      "json": {
+        "available": false
+      },
+      "status_matches_source": true,
+      "expected_available": false,
+      "available_matches_source": true
+    },
+    {
+      "id": "federation-stream-different-uuid-wrong-token",
+      "method": "POST",
+      "path": "/federation/stream-asset",
+      "status": 404,
+      "content_type": "application/json",
+      "body_sha256": "2dabcf113c2b341809c738ca05a47a005e73c0ef50a7e119d1b50e1b56290657",
+      "body_length": 60,
+      "expected_status": 404,
+      "json": {
+        "code": 404,
+        "label": "not-found",
+        "message": "Asset not found"
+      },
+      "status_matches_source": true,
+      "authorized_bytes_match": null
+    },
+    {
+      "id": "federation-get-different-uuid-correct-token",
+      "method": "POST",
+      "path": "/federation/get-asset",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body_sha256": "631f4d836f9d199ee9721cc528112d8b61d2b90455bb214dd364596b487fe6b6",
+      "body_length": 18,
+      "expected_status": 200,
+      "json": {
+        "available": true
+      },
+      "status_matches_source": true,
+      "expected_available": true,
+      "available_matches_source": true
+    },
+    {
+      "id": "federation-stream-different-uuid-correct-token",
+      "method": "POST",
+      "path": "/federation/stream-asset",
+      "status": 200,
+      "content_type": "application/octet-stream",
+      "body_sha256": "fb9403aa45ae8dca85a17201022faba905e70891b601d0f260666ecf6ea9aa94",
+      "body_length": 13,
+      "expected_status": 200,
+      "text": "cargo-fixture",
+      "status_matches_source": true,
+      "authorized_bytes_match": true
+    },
+    {
+      "id": "legacy-otr-same-requester",
+      "method": "GET",
+      "path": "/conversations/44444444-4444-4444-8444-444444444444/otr/assets/33333333-3333-4333-8333-333333333333",
+      "status": 302,
+      "content_type": null,
+      "body_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "body_length": 0,
+      "expected_status": 302,
+      "text": "",
+      "signed_download": {
+        "scheme": "http",
+        "host": "localhost:4570",
+        "path": "/dummy-bucket/otr/44444444-4444-4444-8444-444444444444/33333333-3333-4333-8333-333333333333",
+        "query": {
+          "X-Amz-Algorithm": [
+            "AWS4-HMAC-SHA256"
+          ],
+          "X-Amz-Credential": [
+            "GKdeadbeefcafebabe0000000000000000/20261008/eu-west-1/s3/aws4_request"
+          ],
+          "X-Amz-Date": [
+            "20261008T084820Z"
+          ],
+          "X-Amz-Expires": [
+            "300"
+          ],
+          "X-Amz-SignedHeaders": [
+            "host"
+          ]
+        },
+        "read_status": 200,
+        "body_sha256": "fb9403aa45ae8dca85a17201022faba905e70891b601d0f260666ecf6ea9aa94",
+        "body_length": 13
+      },
+      "authorized_bytes_match": true,
+      "status_matches_source": true
+    },
+    {
+      "id": "legacy-otr-different-requester",
+      "method": "GET",
+      "path": "/conversations/44444444-4444-4444-8444-444444444444/otr/assets/33333333-3333-4333-8333-333333333333",
+      "status": 302,
+      "content_type": null,
+      "body_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "body_length": 0,
+      "expected_status": 302,
+      "text": "",
+      "signed_download": {
+        "scheme": "http",
+        "host": "localhost:4570",
+        "path": "/dummy-bucket/otr/44444444-4444-4444-8444-444444444444/33333333-3333-4333-8333-333333333333",
+        "query": {
+          "X-Amz-Algorithm": [
+            "AWS4-HMAC-SHA256"
+          ],
+          "X-Amz-Credential": [
+            "GKdeadbeefcafebabe0000000000000000/20261008/eu-west-1/s3/aws4_request"
+          ],
+          "X-Amz-Date": [
+            "20261008T084820Z"
+          ],
+          "X-Amz-Expires": [
+            "300"
+          ],
+          "X-Amz-SignedHeaders": [
+            "host"
+          ]
+        },
+        "read_status": 200,
+        "body_sha256": "fb9403aa45ae8dca85a17201022faba905e70891b601d0f260666ecf6ea9aa94",
+        "body_length": 13
+      },
+      "authorized_bytes_match": true,
+      "status_matches_source": true
+    },
+    {
+      "id": "legacy-otr-missing-stored-user",
+      "method": "GET",
+      "path": "/conversations/44444444-4444-4444-8444-444444444444/otr/assets/33333333-3333-4333-8333-333333333333",
+      "status": 404,
+      "content_type": "application/json;charset=utf-8",
+      "body_sha256": "2dabcf113c2b341809c738ca05a47a005e73c0ef50a7e119d1b50e1b56290657",
+      "body_length": 60,
+      "expected_status": 404,
+      "json": {
+        "code": 404,
+        "label": "not-found",
+        "message": "Asset not found"
+      },
+      "status_matches_source": true
+    },
+    {
+      "id": "legacy-otr-malformed-stored-user",
+      "method": "GET",
+      "path": "/conversations/44444444-4444-4444-8444-444444444444/otr/assets/33333333-3333-4333-8333-333333333333",
+      "status": 404,
+      "content_type": "application/json;charset=utf-8",
+      "body_sha256": "2dabcf113c2b341809c738ca05a47a005e73c0ef50a7e119d1b50e1b56290657",
+      "body_length": 60,
+      "expected_status": 404,
+      "json": {
+        "code": 404,
+        "label": "not-found",
+        "message": "Asset not found"
+      },
+      "status_matches_source": true
+    },
+    {
+      "id": "multipart-canonical",
+      "method": "POST",
+      "path": "/bot/assets",
+      "status": 201,
+      "content_type": "application/json;charset=utf-8",
+      "body_sha256": "b06226577c6aed09ed66972f37f9310b2c49123710a07d902d650a95dbef655c",
+      "body_length": 108,
+      "expected_status": 201,
+      "json": {
+        "domain": "example.com",
+        "key": "3-2-3c5fc495-25e1-4f8f-b94e-5736f25de6f0",
+        "token": "P_PuaK4mZcy24aoJR7TORA=="
+      },
+      "location": "bot/assets/3-2-3c5fc495-25e1-4f8f-b94e-5736f25de6f0",
+      "status_matches_source": true,
+      "created_objects": [
+        {
+          "key": "v3/persistent/3c5fc495-25e1-4f8f-b94e-5736f25de6f0",
+          "size": 13,
+          "content_type": "application/octet-stream",
+          "metadata": {
+            "bot": "11111111-1111-4111-8111-111111111111",
+            "token": "P_PuaK4mZcy24aoJR7TORA=="
+          },
+          "body_sha256": "fb9403aa45ae8dca85a17201022faba905e70891b601d0f260666ecf6ea9aa94"
+        }
+      ],
+      "multipart_uploads": []
+    },
+    {
+      "id": "multipart-unequal-delimiters",
+      "method": "POST",
+      "path": "/bot/assets",
+      "status": 201,
+      "content_type": "application/json;charset=utf-8",
+      "body_sha256": "f46ebf2d097fbf0fa1117f8e8b60b18adcfbe4b06dc13288a80f430d12f5ae75",
+      "body_length": 108,
+      "expected_status": 201,
+      "json": {
+        "domain": "example.com",
+        "key": "3-2-29d129ab-5920-4dda-bc32-88d1110da4fb",
+        "token": "fRh3E2n7l89DOWqNJ_CI8A=="
+      },
+      "location": "bot/assets/3-2-29d129ab-5920-4dda-bc32-88d1110da4fb",
+      "status_matches_source": true,
+      "created_objects": [
+        {
+          "key": "v3/persistent/29d129ab-5920-4dda-bc32-88d1110da4fb",
+          "size": 13,
+          "content_type": "application/octet-stream",
+          "metadata": {
+            "bot": "11111111-1111-4111-8111-111111111111",
+            "token": "fRh3E2n7l89DOWqNJ_CI8A=="
+          },
+          "body_sha256": "fb9403aa45ae8dca85a17201022faba905e70891b601d0f260666ecf6ea9aa94"
+        }
+      ],
+      "multipart_uploads": []
+    },
+    {
+      "id": "multipart-wrong-md5",
+      "method": "POST",
+      "path": "/bot/assets",
+      "status": 201,
+      "content_type": "application/json;charset=utf-8",
+      "body_sha256": "4c7458a03683c82f0a776dd31ba1255b1105da47987b563d7e0667a3531560cd",
+      "body_length": 108,
+      "expected_status": 201,
+      "json": {
+        "domain": "example.com",
+        "key": "3-2-98d87a4f-0d58-4835-8e2b-282d250682f3",
+        "token": "sk_jS3XJyWtvr_BuiewI0g=="
+      },
+      "location": "bot/assets/3-2-98d87a4f-0d58-4835-8e2b-282d250682f3",
+      "status_matches_source": true,
+      "created_objects": [
+        {
+          "key": "v3/persistent/98d87a4f-0d58-4835-8e2b-282d250682f3",
+          "size": 13,
+          "content_type": "application/octet-stream",
+          "metadata": {
+            "bot": "11111111-1111-4111-8111-111111111111",
+            "token": "sk_jS3XJyWtvr_BuiewI0g=="
+          },
+          "body_sha256": "fb9403aa45ae8dca85a17201022faba905e70891b601d0f260666ecf6ea9aa94"
+        }
+      ],
+      "multipart_uploads": []
+    },
+    {
+      "id": "multipart-decimal-length-suffix",
+      "method": "POST",
+      "path": "/bot/assets",
+      "status": 201,
+      "content_type": "application/json;charset=utf-8",
+      "body_sha256": "51e24bd6523fde505364eddf66e969202d42fc34c38a5c2fb8fee2505c4a52b2",
+      "body_length": 108,
+      "expected_status": 201,
+      "json": {
+        "domain": "example.com",
+        "key": "3-2-101c2816-c5bf-4dd9-b6c9-94c0a55f4970",
+        "token": "26FfReNTbDk0EnYqEREoKA=="
+      },
+      "location": "bot/assets/3-2-101c2816-c5bf-4dd9-b6c9-94c0a55f4970",
+      "status_matches_source": true,
+      "created_objects": [
+        {
+          "key": "v3/persistent/101c2816-c5bf-4dd9-b6c9-94c0a55f4970",
+          "size": 13,
+          "content_type": "application/octet-stream",
+          "metadata": {
+            "bot": "11111111-1111-4111-8111-111111111111",
+            "token": "26FfReNTbDk0EnYqEREoKA=="
+          },
+          "body_sha256": "fb9403aa45ae8dca85a17201022faba905e70891b601d0f260666ecf6ea9aa94"
+        }
+      ],
+      "multipart_uploads": []
+    },
+    {
+      "id": "multipart-missing-trailer",
+      "method": "POST",
+      "path": "/bot/assets",
+      "status": 201,
+      "content_type": "application/json;charset=utf-8",
+      "body_sha256": "194d966ee7795d700b7e84b86b4a6593dad0b24bc8724f9cdfe6df9a673acea0",
+      "body_length": 108,
+      "expected_status": 201,
+      "json": {
+        "domain": "example.com",
+        "key": "3-2-42495444-4f2b-4d69-b33f-1d1a25800dc9",
+        "token": "hubbvrH9Cry9d4ndGFlcjw=="
+      },
+      "location": "bot/assets/3-2-42495444-4f2b-4d69-b33f-1d1a25800dc9",
+      "status_matches_source": true,
+      "created_objects": [
+        {
+          "key": "v3/persistent/42495444-4f2b-4d69-b33f-1d1a25800dc9",
+          "size": 13,
+          "content_type": "application/octet-stream",
+          "metadata": {
+            "bot": "11111111-1111-4111-8111-111111111111",
+            "token": "hubbvrH9Cry9d4ndGFlcjw=="
+          },
+          "body_sha256": "fb9403aa45ae8dca85a17201022faba905e70891b601d0f260666ecf6ea9aa94"
+        }
+      ],
+      "multipart_uploads": []
+    },
+    {
+      "id": "multipart-incomplete-data",
+      "method": "POST",
+      "path": "/bot/assets",
+      "status": 400,
+      "content_type": "application/json",
+      "body_sha256": "d7261644279a9ca624788f7efa47e7c8ab7e65469908af6b2cc1946b7d6fbaf8",
+      "body_length": 102,
+      "expected_status": 400,
+      "json": {
+        "code": 400,
+        "label": "incomplete-body",
+        "message": "HTTP content-length header does not match body size"
+      },
+      "status_matches_source": true,
+      "created_objects": [
+        {
+          "key": "v3/persistent/9d3245a4-843c-45b0-8823-26b0b918b3ee",
+          "size": 10,
+          "content_type": "application/octet-stream",
+          "metadata": {
+            "bot": "11111111-1111-4111-8111-111111111111",
+            "token": "MIGNerrnLmwDEqpvi6ff4w=="
+          },
+          "body_sha256": "67beab79f7f6efc4fcce8e1906ba6dd8c587c79f9e23dfed4a31f427356cc541"
+        }
+      ],
+      "multipart_uploads": []
+    }
+  ]
+}

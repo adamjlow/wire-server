@@ -1,2 +1,1 @@
-Draft cargohold's HTTP, S3 format, authorization and cross-implementation switchback requirements for review.
-Record self-review findings: federation drops the owner domain and legacy OTR does not compare owners; withhold full contract approval pending resolution and fixtures.
+Approve the existing cargohold contract for optional Go implementation under the user's exact-parity disposition; retain reference observations and serious security concerns for separate fixes.
