@@ -33,6 +33,7 @@ def host(binary, output, group):
     output = environment.destination(output)
     if call(['git', 'status', '--porcelain']):
         raise ValueError('commit candidate inputs before smoke')
+    revision = call(['git', 'rev-parse', 'HEAD'])
     binary = binary.resolve(strict=True)
     output.mkdir()
     (output/'reports').mkdir()
@@ -50,7 +51,8 @@ def host(binary, output, group):
         common = ['--network', network, '--user', '65534:65534', '--read-only', '--cap-drop=ALL',
                   '--security-opt=no-new-privileges', '--pids-limit=256', '--memory=1g', '--cpus=2',
                   '--tmpfs', '/tmp:rw,nosuid,nodev,size=128m,mode=1777']
-        store_id = call(['docker', 'create', '--name', name+'-store', *common, '--network-alias', 'store',
+        store_id = call(['docker', 'create', '--name', name+'-store', *common, '--network-alias', 'store', '--network-alias', 's3.garage.localhost',
+            '--network-alias', 'dummy-bucket.s3.garage.localhost',
             '--env', 'GARAGE_DEFAULT_ACCESS_KEY='+environment.SYNTHETIC_ENV['AWS_ACCESS_KEY_ID'],
             '--env', 'GARAGE_DEFAULT_SECRET_KEY='+environment.SYNTHETIC_ENV['AWS_SECRET_ACCESS_KEY'],
             '--env', 'GARAGE_DEFAULT_BUCKET=dummy-bucket', '--mount', 'type=bind,source='+str(ROOT/'deploy/dockerephemeral/docker/garage.toml')+',target=/etc/garage.toml,readonly',
@@ -69,7 +71,7 @@ def host(binary, output, group):
         owned.append(identity)
         with (output/'capture.log').open('x') as stream:
             result = subprocess.run(['docker', 'start', '--attach', identity], stdout=stream, stderr=subprocess.STDOUT, timeout=420)
-        receipt = {'source_revision': call(['git', 'rev-parse', 'HEAD']), 'runner_image': runner, 'store_image': store,
+        receipt = {'source_revision': revision, 'runner_image': runner, 'store_image': store,
                    'candidate_sha256': hashlib.sha256(binary.read_bytes()).hexdigest(), 'exit_code': result.returncode,
                    'internal_network': True, 'published_ports': False, 'whole_service_parity': False, 'group': group,
                    'config_sha256': hashlib.sha256((output/'fixtures/config.json').read_bytes()).hexdigest()}
@@ -86,7 +88,7 @@ def host(binary, output, group):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--inside', action='store_true')
-    parser.add_argument('--group', choices=['core','extended'], default='core')
+    parser.add_argument('--group', choices=['core','extended','configuration'], default='core')
     parser.add_argument('--binary', type=Path)
     parser.add_argument('--output', type=Path)
     args = parser.parse_args()
