@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "kind": "reference-config-and-queue-characterization",
+  "reference_revision": "f6636ed53315fa7b0fc4c8aa39c0bb30c98b6d5e",
+  "controller_revision": "0575d90e83caa1cfcb80774ae8b83f7d3b152de6",
+  "runner_image_id": "sha256:f88496cd7850c4a32563e2085d41d2647e1038682a61fe0ffb5540c07f88ad7b",
+  "reference_binary_sha256": "cbc200caf92757bb7909b82c73d942072eac557c0eab1ce755aedeb8bf5c705d",
+  "files_sha256": {
+    "capture_config.py": "fb727cf479cd6056bf9c4453210a33adee07ae9a9643344a9d8d51f354320c2b",
+    "config-reference.json": "01cf38373dc74b3decc19903a5e2502ed903026e539d8d6bd16a04b7664c4230",
+    "capture_queue_flags.py": "c7363bcdd259e1c7dd9e069c6de719387b71dfa1250025391f9355a6a0c73ceb",
+    "queue-flags-reference.json": "a0537991a400564a615747ee033a2ed01e034824a1d8256d9b19b598e93bf12f"
+  },
+  "scope": "Six invalid config startups exit1, CLI help exit0, read-only metadata from actual original-test-created client queues. No queue/user/schema mutation. Runtime exception stacks/temporary config paths are incidental; reject/exit/CLI path acceptance exact. Python CA chain/hostname verification stays required; optional X509 strict extension check matches qualified upstream fixture clients.",
+  "e2e_executed": false,
+  "candidate_parity": false
+}

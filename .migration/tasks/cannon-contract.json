@@ -4,7 +4,7 @@
   "title": "Freeze cannon contract and qualify original-test Haskell baseline",
   "service": "cannon",
   "kind": "contract-change",
-  "status": "active",
+  "status": "done",
   "owner": "codex",
   "branch": "go-migration",
   "depends_on": [
@@ -39,7 +39,32 @@
       "required_evidence": "Meaningful exact variant/selection/identity negatives, required harness/state/scope checks and delegated self-review."
     }
   ],
-  "evidence": [],
-  "review": null,
-  "handoff": "Extend original catalogue with exact parameter variants and private selector for cannon; run real all-Haskell 35-case baseline before runnable candidate work. Source contract/matrix first, serious inherited concerns recorded separately."
+  "evidence": [
+    {
+      "criterion": "contract",
+      "result": "pass",
+      "command": "Source review freezes whole classic/event/effect/config/operational contract and finite original35+uncovered stimuli before candidate work. Actual Haskell ten HTTP+29 boundary+six config/CLI observations and actual queue flags retained with immutable identities, capture helper correction explicit; no candidate assertions weakened. Dependency build, module vulnerability and license checks pass.",
+      "revision": "0575d90e83caa1cfcb80774ae8b83f7d3b152de6",
+      "artifact": "docs/go-migration/services/cannon/contract.md"
+    },
+    {
+      "criterion": "baseline",
+      "result": "pass",
+      "command": "Corrected private runner executes unchanged original35, exact complete XML validated, no failures/skips, all-Haskell identities; process0 and owned cleanup0. Failed first attempt retained without waiver; real persistent idle-tunnel/half-close regression verifies repair.",
+      "revision": "0575d90e83caa1cfcb80774ae8b83f7d3b152de6",
+      "artifact": "docs/go-migration/services/cannon/oracle/baseline.run.json"
+    },
+    {
+      "criterion": "checks",
+      "result": "pass",
+      "command": "Eight harness tests, fourteen container/controller tests and thirty-two state tests pass; scoped check against active claim and git diff --check pass. Original35 catalogue exact typing variants and three-selection fail-closed negatives; reference/defaults untouched. Delegated same-author review records authority/limits.",
+      "revision": "0575d90e83caa1cfcb80774ae8b83f7d3b152de6",
+      "artifact": "docs/go-migration/services/cannon/contract.md"
+    }
+  ],
+  "review": {
+    "by": "codex (self-review delegated by user)",
+    "artifact": "docs/go-migration/services/cannon/contract.md"
+  },
+  "handoff": "Whole source contract frozen and original all-Haskell35/35 baseline qualified; reference supplements retained and helper correction explicit before candidate use. Reuse reviewed inventory finite plan/dependency proof in serialized adjacent lifecycle coordination, then implement runnable classic slice followed by events. No compatibility/availability/default/production/push claim."
 }

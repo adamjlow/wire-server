@@ -1,0 +1,18 @@
+{
+  "temporary_queue_flags": [],
+  "schema_version": 1,
+  "kind": "read-only-original-queue-flags",
+  "client_queue_flags": [
+    {
+      "durable": true,
+      "auto_delete": false,
+      "exclusive": false,
+      "arguments": {
+        "x-dead-letter-exchange": "dead-user-notifications",
+        "x-dead-letter-routing-key": "dead-user-notifications",
+        "x-queue-type": "quorum"
+      }
+    }
+  ],
+  "result": "captured"
+}

@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "kind": "reference-only-finite-boundary-characterization",
+  "reference_revision": "f6636ed53315fa7b0fc4c8aa39c0bb30c98b6d5e",
+  "controller_revision": "0575d90e83caa1cfcb80774ae8b83f7d3b152de6",
+  "runner_image_id": "sha256:f88496cd7850c4a32563e2085d41d2647e1038682a61fe0ffb5540c07f88ad7b",
+  "project": "wire-e2e-3579ffaeb90c45918e50f5308ef0ba22",
+  "reference_binary_sha256": "cbc200caf92757bb7909b82c73d942072eac557c0eab1ce755aedeb8bf5c705d",
+  "script_sha256": "199662249a78680fa2402ff1b04fe51c1bccec17f73e1985a28f9a1729a6e065",
+  "observations_sha256": "b49d9de42dad7bbaa9e3745aeec69e3d6d394087f038c54c245e6b237344568f",
+  "records": 29,
+  "scope": "Owned side Haskell cannon on16083 and synthetic fake presence16086, same initialized private broker/Cassandra, own temporary event queues only. Original assertion users/queues/config untouched. Side process terminated/reaped and fake endpoint stopped in finally.",
+  "e2e_executed": false,
+  "candidate_parity": false,
+  "normalization": "Exact semantic JSON/status/Content-Type/opcode/close reasons/provider effects; smoke p95<=2*reference+100ms and RSS<=192MiB, shutdown<=4s; Prometheus gauge numeric formatting normalized only after parsing TYPE gauge and count.",
+  "queue_capture_script_sha256": "c7363bcdd259e1c7dd9e069c6de719387b71dfa1250025391f9355a6a0c73ceb",
+  "capture_script": "docs/go-migration/services/cannon/oracle/capture_boundaries_reference_run.py",
+  "candidate_stimulus_script": "docs/go-migration/services/cannon/oracle/capture_boundaries.py",
+  "candidate_stimulus_script_sha256": "b132e1570d1c283b1fbbe9f3cfebc18201dd6e861acfe4c1c1a39f92d5873a48",
+  "handshake_note": "Actual capture used a fixed 17-byte synthetic challenge key accepted by Haskell. Canonical candidate stimulus corrects this helper bug to a fixed RFC6455 16-byte key; all other stimuli and comparison assertions unchanged. Original Demo/Notifications reference tests supply real standard-key handshake coverage. This is a fixture correction before candidate consumption, not candidate result-driven assertion weakening. Key itself/Sec-WebSocket-Accept are challenge-dependent, not equality targets; no malformed-key parity claim."
+}
