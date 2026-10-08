@@ -120,6 +120,14 @@ def execute():
         return effects
     try:
         hs=start('haskell');go=start('go')
+        if os.environ.get('CARGOHOLD_SUPPLEMENT_GROUP')=='extended':
+            from extended import run
+            records=run(ref,ports,start,stop,request,store_effects,hs,go)
+            result={'result':'supplemental-observed','whole_service_parity':False,'cases':records,
+                    'mismatches':[r['id'] for r in records if not r['equal']]}
+            Path('/reports/supplemental.json').write_text(json.dumps(result,indent=2)+'\n')
+            print(json.dumps({'cases':len(records),'mismatches':result['mismatches']}))
+            return
         headers={'Z-Bot':OWNER,'Z-Type':'bot','Content-Type':'multipart/mixed; boundary=wire'}
         original=ref.multipart()
         cases=[('missing-first-length',original.replace(b'Content-Length: 41\r\n',b'',1)),

@@ -27,7 +27,7 @@ def inside():
     execute()
 
 
-def host(binary, output):
+def host(binary, output, group):
     sys.path.insert(0, str(ROOT/'tools/parity/docker'))
     import environment
     output = environment.destination(output)
@@ -57,7 +57,7 @@ def host(binary, output):
             store, '/garage', 'server', '--single-node', '--default-bucket'])
         owned.append(store_id)
         call(['docker', 'start', store_id])
-        args = ['docker', 'create', '--name', name+'-runner', *common, '--entrypoint', '/bin/bash']
+        args = ['docker', 'create', '--name', name+'-runner', *common, '--env', 'CARGOHOLD_SUPPLEMENT_GROUP='+group, '--entrypoint', '/bin/bash']
         for key, value in environment.SYNTHETIC_ENV.items():
             if key.startswith('AWS_') or key == 'HOME':
                 args += ['--env', key+'='+value]
@@ -68,10 +68,11 @@ def host(binary, output):
         identity = call(args)
         owned.append(identity)
         with (output/'capture.log').open('x') as stream:
-            result = subprocess.run(['docker', 'start', '--attach', identity], stdout=stream, stderr=subprocess.STDOUT, timeout=180)
+            result = subprocess.run(['docker', 'start', '--attach', identity], stdout=stream, stderr=subprocess.STDOUT, timeout=420)
         receipt = {'source_revision': call(['git', 'rev-parse', 'HEAD']), 'runner_image': runner, 'store_image': store,
                    'candidate_sha256': hashlib.sha256(binary.read_bytes()).hexdigest(), 'exit_code': result.returncode,
-                   'internal_network': True, 'published_ports': False, 'whole_service_parity': False}
+                   'internal_network': True, 'published_ports': False, 'whole_service_parity': False, 'group': group,
+                   'config_sha256': hashlib.sha256((output/'fixtures/config.json').read_bytes()).hexdigest()}
         (output/'run.json').write_text(json.dumps(receipt, indent=2)+'\n')
         if result.returncode:
             raise ValueError('supplemental run failed; inspect capture.log/reports')
@@ -85,13 +86,14 @@ def host(binary, output):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--inside', action='store_true')
+    parser.add_argument('--group', choices=['core','extended'], default='core')
     parser.add_argument('--binary', type=Path)
     parser.add_argument('--output', type=Path)
     args = parser.parse_args()
     if args.inside:
         inside()
     elif args.binary and args.output:
-        host(args.binary, args.output)
+        host(args.binary, args.output, args.group)
     else:
         parser.error('--binary and --output required')
 
