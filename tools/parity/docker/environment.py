@@ -185,7 +185,7 @@ def validate_isolation(spec):
         for volume in service.get('volumes',[]):
             if volume['type']=='bind' and volume['target']!='/reports' and not volume.get('read_only'):
                 raise ValueError('source and fixtures must be read-only')
-            if volume['type']=='bind' and (not Path(volume['source']).resolve().is_relative_to(ROOT) and volume['target'] not in ('/fixtures','/reports','/candidate/proxy','/candidate/cargohold','/candidate/cannon') or volume['source'].endswith('docker.sock') or volume['target']=='/'):
+            if volume['type']=='bind' and (not Path(volume['source']).resolve().is_relative_to(ROOT) and volume['target'] not in ('/fixtures','/reports','/candidate/proxy','/candidate/cargohold','/candidate/cannon','/candidate/gundeck') or volume['source'].endswith('docker.sock') or volume['target']=='/'):
                 raise ValueError('unsafe mount')
 
 
@@ -220,7 +220,7 @@ def prepare(output, receipt_path, candidate=None, candidate_receipt=None, peers=
         selected=identified_candidate(candidate,candidate_receipt)
     peer_candidates={}
     for name,path,build_receipt in peers:
-        if name not in ('proxy','cargohold','cannon') or name in peer_candidates or candidate is not None:
+        if name not in ('proxy','cargohold','cannon','gundeck') or name in peer_candidates or candidate is not None:
             raise ValueError('unsupported, duplicate or ambiguous candidate selection')
         peer_candidates[name]=identified_candidate(path,build_receipt)
     (output/'compose.json').write_text(json.dumps(spec,indent=2)+'\n')
@@ -276,8 +276,10 @@ def run(output,service):
         raise ValueError('combined run requires two unambiguous identified candidates')
     if service=='proxy-cargohold-cannon' and (set(peers)!={'proxy','cargohold','cannon'} or record.get('candidate') is not None):
         raise ValueError('combined run requires three unambiguous identified candidates')
+    if service=='proxy-cargohold-cannon-gundeck' and (set(peers)!={'proxy','cargohold','cannon','gundeck'} or record.get('candidate') is not None):
+        raise ValueError('combined run requires four unambiguous identified candidates')
     for name,selection in peers.items():
-        if name not in ('proxy','cargohold','cannon'):raise ValueError('unsupported candidate selection')
+        if name not in ('proxy','cargohold','cannon','gundeck'):raise ValueError('unsupported candidate selection')
         candidate=Path(selection['path'])
         if hashlib.sha256(candidate.read_bytes()).hexdigest()!=selection['sha256']:raise ValueError('candidate binary changed')
         spec['services']['runner']['command']+=['--peer-candidate',name,'/candidate/'+name]
@@ -310,7 +312,7 @@ def run(output,service):
             result=subprocess.run([*compose,'run','--rm','--no-deps','runner'],stdout=log,stderr=subprocess.STDOUT,timeout=1800)
         record.update(result='pass' if result.returncode==0 else 'failed',process_exit_code=result.returncode)
         if result.returncode!=0:raise ValueError('baseline failed; inspect retained baseline log')
-        suites=('proxy','cargohold','cannon') if service=='proxy-cargohold-cannon' else ('proxy','cargohold') if service=='proxy-cargohold' else (service,)
+        suites=('proxy','cargohold','gundeck') if service=='proxy-cargohold-cannon-gundeck' else ('proxy','cargohold','cannon') if service=='proxy-cargohold-cannon' else ('proxy','cargohold') if service=='proxy-cargohold' else (service,)
         for name in suites:
             suite=json.loads((output/'reports'/(name+'.run.json')).read_text())
             if suite.get('result')!='pass' or suite.get('e2e_executed') is not True:raise ValueError('original suite did not pass')
@@ -342,7 +344,7 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__);sub=parser.add_subparsers(dest='command',required=True)
     prep=sub.add_parser('prepare');prep.add_argument('--output',type=Path,required=True);prep.add_argument('--receipt',type=Path,required=True);prep.add_argument('--candidate',type=Path);prep.add_argument('--candidate-receipt',type=Path)
     prep.add_argument('--select',nargs=3,action='append',default=[],metavar=('SERVICE','BINARY','RECEIPT'))
-    execute=sub.add_parser('run');execute.add_argument('--output',type=Path,required=True);execute.add_argument('--service',choices=('proxy','cargohold','cannon','proxy-cargohold','proxy-cargohold-cannon'),required=True)
+    execute=sub.add_parser('run');execute.add_argument('--output',type=Path,required=True);execute.add_argument('--service',choices=('proxy','cargohold','cannon','gundeck','proxy-cargohold','proxy-cargohold-cannon','proxy-cargohold-cannon-gundeck'),required=True)
     args=parser.parse_args()
     try:
         result=prepare(args.output,args.receipt,args.candidate,args.candidate_receipt,args.select) if args.command=='prepare' else run(args.output,args.service)

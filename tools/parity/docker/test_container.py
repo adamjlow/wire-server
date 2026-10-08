@@ -50,6 +50,26 @@ class ContainerTests(unittest.TestCase):
         with self.assertRaises(ValueError):runtime.selections('proxy-cargohold-cannon',None,pairs[:2])
         self.assertEqual({'cannon'},set(runtime.selections('cannon',executable,[])))
 
+    def test_four_service_selection_requires_exactly_four_candidates(self):
+        executable=self.root/'candidate';executable.write_text('synthetic');executable.chmod(0o755)
+        pairs=[(name,str(executable)) for name in ('proxy','cargohold','cannon','gundeck')]
+        self.assertEqual({'proxy','cargohold','cannon','gundeck'},set(runtime.selections('proxy-cargohold-cannon-gundeck',None,pairs)))
+        for invalid in (pairs[:3],pairs+[pairs[-1]],pairs+[('brig',str(executable))]):
+            with self.assertRaises(ValueError):runtime.selections('proxy-cargohold-cannon-gundeck',None,invalid)
+        self.assertEqual({'gundeck'},set(runtime.selections('gundeck',executable,[])))
+        with self.assertRaises(ValueError):runtime.selections('proxy-cargohold-cannon-gundeck',executable,pairs)
+
+    def test_gundeck_catalogue_keeps_original_cannon_cases_and_adds_provider_cases(self):
+        original=runner.CATALOGUE
+        try:
+            runner.CATALOGUE=FILES.parent/'e2e-tests.json'
+            names=runner.names('gundeck')
+            self.assertEqual(40,len(names));self.assertEqual(40,len(set(names)))
+            self.assertTrue(set(runner.names('cannon')).issubset(names))
+            self.assertIn('PushToken.testRegisterPushToken',names)
+            self.assertIn('PushToken.testVoipTokenRegistrationFails',names)
+        finally:runner.CATALOGUE=original
+
     def test_persistent_tunnel_survives_idle_polls_and_preserves_half_close(self):
         class Echo(socketserver.BaseRequestHandler):
             def handle(self):

@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "description": "Original35 cannon event/notification/demo cases plus five native token/pagination/Cells cases; original assertions unchanged. Four-Go run uses gundeck40 once, avoiding duplicate cannon35.",
+  "services": {
+    "gundeck": [
+      {
+        "source": "integration/test/Test/Events.hs",
+        "module": "Test.Events",
+        "tests": [
+          "testConsumeEventsOneWebSocket",
+          "testWebSocketTimeout",
+          "testConsumeTempEvents",
+          "testTemporaryQueuesAreDeletedAfterUse",
+          "testSendMessageNoReturnToSenderWithConsumableNotificationsProteus",
+          "testEventsForSpecificClients",
+          "testConsumeEventsForDifferentUsers",
+          "testConsumeEventsWhileHavingLegacyClients",
+          "testConsumeEventsAcks",
+          "testConsumeEventsMultipleAcks",
+          "testConsumeEventsAckNewEventWithoutAckingOldOne",
+          "testEventsDeadLettered",
+          "testEventsDeadLetteredWithReconnect",
+          "testTransientEventsDoNotTriggerDeadLetters",
+          "testTransientEvents",
+          "testChannelLimit",
+          "testChannelKilled",
+          "testSingleConsumer",
+          "testPrefetchCount",
+          "testEndOfInitialSync",
+          "testEndOfInitialSyncMoreEventsAfterSyncMessage",
+          "testEndOfInitialSyncIgnoreExpired",
+          "testEndOfInitialSyncAckMultiple",
+          "testTypingIndicatorIsNotSentToOwnClient",
+          "testBackendPusherRecoversFromQueueDeletion"
+        ],
+        "variants": {
+          "testTypingIndicatorIsNotSentToOwnClient": [
+            "federated=false",
+            "federated=true"
+          ]
+        }
+      },
+      {
+        "source": "integration/test/Test/Notifications.hs",
+        "module": "Test.Notifications",
+        "tests": [
+          "testFetchAllNotifications",
+          "testLastNotification",
+          "testInvalidNotification",
+          "testAddClientNotification",
+          "testBulkPushSameMessage",
+          "testGetServerTime",
+          "testTargetClientPush"
+        ]
+      },
+      {
+        "source": "integration/test/Test/Demo.hs",
+        "module": "Test.Demo",
+        "tests": [
+          "testModifiedCannon",
+          "testWebSockets"
+        ]
+      },
+      {
+        "source": "integration/test/Test/PushToken.hs",
+        "module": "Test.PushToken",
+        "tests": [
+          "testRegisterPushToken",
+          "testVoipTokenRegistrationFails"
+        ]
+      },
+      {
+        "source": "integration/test/Test/MLS/Notifications.hs",
+        "module": "Test.MLS.Notifications",
+        "tests": [
+          "testNotificationPagination",
+          "testNotificationPaginationOversizeSince"
+        ]
+      },
+      {
+        "source": "integration/test/Test/Cells.hs",
+        "module": "Test.Cells",
+        "tests": [
+          "testCellsIgnoredEvents"
+        ]
+      }
+    ]
+  }
+}
