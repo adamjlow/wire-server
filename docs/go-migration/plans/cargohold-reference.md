@@ -25,8 +25,9 @@ calling the ignored uploader identity an authorization defect.
 
 Also characterize the finite parser gaps named in the source review: unequal
 multipart delimiters, unused MD5, decimal length suffix, incomplete declared data
-and persisted effects. Use a synthetic Brig endpoint only for upload eligibility,
-validate its fixed contract, and do not translate original integration assertions.
+and persisted effects. Use the source-defined bot upload endpoint to exercise the shared parser without
+Brig eligibility dependencies; ordinary user eligibility remains covered by the
+qualified original e2e suite. Do not translate original integration assertions.
 Keep exact baseline observations; stricter behavior must not be called parity.
 
 Commands: `python3 tools/parity/cargohold/reference.py --output /absolute/new-dir`;
