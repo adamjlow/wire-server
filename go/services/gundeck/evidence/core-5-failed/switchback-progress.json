@@ -1,0 +1,28 @@
+{
+  "records": [
+    {
+      "name": "haskell-presence-write",
+      "pass": true
+    },
+    {
+      "name": "haskell-token-write",
+      "pass": true
+    },
+    {
+      "name": "haskell-notification-write",
+      "pass": true
+    },
+    {
+      "name": "haskell-notification-persisted",
+      "pass": true
+    },
+    {
+      "name": "haskell-queue-register",
+      "pass": true
+    },
+    {
+      "name": "haskell-queue-publish",
+      "pass": true
+    }
+  ]
+}

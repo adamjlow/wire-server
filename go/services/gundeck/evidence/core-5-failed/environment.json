@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "project": "wire-e2e-c0d41e5883e648f7a545a54465feef12",
+  "source_revision": "77ba3a0b13dcaad66464c62a2a6cd6635697dd5c",
+  "runner_image_id": "sha256:a21a2edacf0f3a48a68079b3450de4badd6a75623e2224d602e33669f5470ba0",
+  "runner_revision": "ecad4ffad7d14626c3b5cea96067564bb69db181",
+  "candidate": null,
+  "peer_candidates": {},
+  "result": "failed",
+  "e2e_executed": false,
+  "compose_sha256": "9206a7d82af8815cd554802e0895a76409dc515aac9aeddd5efa2c14669762e5",
+  "files_sha256": {
+    "fixtures/configs.json": "8cc34c41cc248ae804d822a60fb610b0adead84c3e79663eb33243ef70c99876",
+    "fixtures/integration.json": "d8834dad54e1f851e689ac00691cd527aac69e0e9ce00baf149835433812c73c",
+    "fixtures/peers.json": "ca8438ea9464138dc0c75868b62eb8b12113343dada8336524c3ea467dd3a490"
+  },
+  "side_candidate": {
+    "path": "/home/operator/.cache/wire-migration/gundeck-core-20261008/gundeck-5",
+    "sha256": "b40eaca3fc643bf80a46d456eead804969d0c362a85338666c01c8da0c485b27",
+    "source_revision": "77ba3a0b13dcaad66464c62a2a6cd6635697dd5c"
+  },
+  "purpose": "supplemental differential comparison; no original e2e or whole-service qualification",
+  "process_exit_code": 1,
+  "cleanup_exit_code": 0
+}

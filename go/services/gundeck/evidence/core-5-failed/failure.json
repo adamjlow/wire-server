@@ -1,0 +1,6 @@
+{
+  "result": "failed",
+  "reason": "Trusted runner Python3.13 strict X509 rejects upstream synthetic RabbitMQ CA missing keyUsage; frozen HTTP38/storage13/native40 captured before fixture switchback stopped. Cleanup0. Replaced management client with existing verified curl approach; no TLS verification disabled.",
+  "source_revision": "77ba3a0b13dcaad66464c62a2a6cd6635697dd5c",
+  "candidate_sha256": "b40eaca3fc643bf80a46d456eead804969d0c362a85338666c01c8da0c485b27"
+}

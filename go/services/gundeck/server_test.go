@@ -5,6 +5,7 @@ import (
 	"compress/gzip"
 	"net/http"
 	"net/http/httptest"
+	"strings"
 	"testing"
 )
 
@@ -37,5 +38,19 @@ func TestGzipAppliesToWholeAPISurface(t *testing.T) {
 	(&Server{}).ServeHTTP(response, request)
 	if response.Code != 400 || response.Body.String() != "Unexpected end-of-input, expecting record key literal or }" {
 		t.Fatal("presence gzip was not decoded", response.Body.String())
+	}
+}
+
+func TestNativeAndPushJSONContentTypeRemainsRequired(t *testing.T) {
+	for _, path := range []string{"/v9/push/tokens", "/i/push/v2"} {
+		for _, media := range []string{"", "text/plain"} {
+			request := httptest.NewRequest(http.MethodPost, path, strings.NewReader("{}"))
+			request.Header.Set("Content-Type", media)
+			response := httptest.NewRecorder()
+			(&Server{}).ServeHTTP(response, request)
+			if response.Code != 415 {
+				t.Fatalf("%s with %q returned %d", path, media, response.Code)
+			}
+		}
 	}
 }

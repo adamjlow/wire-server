@@ -341,6 +341,10 @@ func tokenFailure(w http.ResponseWriter, err error) {
 	failure(w, 500, "server-error", "Server Error")
 }
 func (s *Server) tokensHTTP(w http.ResponseWriter, r *http.Request, path string) {
+	if r.Method == http.MethodPost && !jsonMediaType(r) {
+		plain(w, 415, "")
+		return
+	}
 	user := ""
 	if strings.HasPrefix(path, "/i/push-tokens/") {
 		user = strings.TrimPrefix(path, "/i/push-tokens/")

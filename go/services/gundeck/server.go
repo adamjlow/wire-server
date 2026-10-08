@@ -238,6 +238,10 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		}
 		emptyJSON(w, 200)
 	case path == "/i/push/v2" && r.Method == "POST":
+		if !jsonMediaType(r) {
+			plain(w, 415, "")
+			return
+		}
 		s.pushHTTP(w, r)
 	case path == "/i/status" && r.Method == "GET":
 		emptyJSON(w, 200)

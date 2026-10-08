@@ -1,17 +1,17 @@
 all modules verified
-ok  	github.com/adamjlow/wire-server/go/services/gundeck	1.015s
+ok  	github.com/adamjlow/wire-server/go/services/gundeck	1.017s
 ?   	github.com/adamjlow/wire-server/go/services/gundeck/cmd/gundeck	[no test files]
 all modules verified
 No vulnerabilities found.
-W1008 20:09:15.886603 2675837 library.go:141] "github.com/cespare/xxhash/v2" contains non-Go code that can't be inspected for further dependencies:
+W1008 20:21:41.272326 2686556 library.go:141] "github.com/cespare/xxhash/v2" contains non-Go code that can't be inspected for further dependencies:
 /home/operator/go/pkg/mod/github.com/cespare/xxhash/v2@v2.3.0/xxhash_amd64.s
-W1008 20:09:15.886644 2675837 library.go:141] "golang.org/x/sys/cpu" contains non-Go code that can't be inspected for further dependencies:
+W1008 20:21:41.272384 2686556 library.go:141] "golang.org/x/sys/cpu" contains non-Go code that can't be inspected for further dependencies:
 /home/operator/go/pkg/mod/golang.org/x/sys@v0.48.0/cpu/cpu_gc_x86.s
-W1008 20:09:16.359382 2675857 library.go:141] "github.com/cespare/xxhash/v2" contains non-Go code that can't be inspected for further dependencies:
+W1008 20:21:41.758434 2686576 library.go:141] "github.com/cespare/xxhash/v2" contains non-Go code that can't be inspected for further dependencies:
 /home/operator/go/pkg/mod/github.com/cespare/xxhash/v2@v2.3.0/xxhash_amd64.s
-W1008 20:09:16.359419 2675857 library.go:141] "golang.org/x/sys/cpu" contains non-Go code that can't be inspected for further dependencies:
+W1008 20:21:41.758486 2686576 library.go:141] "golang.org/x/sys/cpu" contains non-Go code that can't be inspected for further dependencies:
 /home/operator/go/pkg/mod/golang.org/x/sys@v0.48.0/cpu/cpu_gc_x86.s
-W1008 20:09:16.436972 2675857 library.go:394] module github.com/adamjlow/wire-server/go/services/gundeck has empty version, defaults to HEAD. The license URL may be incorrect. Please verify!
+W1008 20:21:41.846169 2686576 library.go:394] module github.com/adamjlow/wire-server/go/services/gundeck has empty version, defaults to HEAD. The license URL may be incorrect. Please verify!
 github.com/adamjlow/wire-server/go/services/gundeck,https://github.com/adamjlow/wire-server/blob/HEAD/go/services/gundeck/LICENSE,AGPL-3.0
 github.com/apache/cassandra-gocql-driver/v2,https://github.com/apache/cassandra-gocql-driver/blob/v2.1.2/LICENSE,Apache-2.0
 github.com/aws/aws-sdk-go-v2,https://github.com/aws/aws-sdk-go-v2/blob/v1.47.2/LICENSE.txt,Apache-2.0

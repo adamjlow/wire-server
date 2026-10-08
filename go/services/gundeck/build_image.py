@@ -91,7 +91,7 @@ def main():
         build(args.receipt)
         return 0
     except (ValueError, OSError, subprocess.SubprocessError, KeyError):
-        print("Cannon image build failed; no image pushed or deployment changed")
+        print("Gundeck image build failed; no image pushed or deployment changed")
         return 2
 
 if __name__ == "__main__": raise SystemExit(main())

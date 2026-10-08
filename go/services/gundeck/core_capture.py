@@ -88,7 +88,8 @@ def core(service,candidate,config,output,implementations=None):
         Path('/reports/core.json').write_text(json.dumps(report,indent=2)+'\n')
         return report,0 if report['result']=='pass' else 1
     finally:Path('/reports/capture-complete').touch()
-runner.suite=core
-report,code=runtime.run('gundeck')
-print(json.dumps(report,indent=2))
-raise SystemExit(code)
+if __name__=='__main__':
+    runner.suite=core
+    report,code=runtime.run('gundeck')
+    print(json.dumps(report,indent=2))
+    raise SystemExit(code)

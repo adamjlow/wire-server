@@ -1,5 +1,4 @@
 """One real Redis/Cassandra/SNS/RabbitMQ switchback and bounded loaded shutdown."""
-import base64
 import hashlib
 import http.client
 import http.server
@@ -7,13 +6,11 @@ import json
 import os
 from pathlib import Path
 import shutil
-import ssl
 import subprocess
 import tempfile
 import threading
 import time
 import urllib.parse
-import urllib.request
 
 from capture_native import Providers as State
 from capture_http_presence import redis_command
@@ -74,15 +71,23 @@ def run(binary):
         if code!=200:raise ValueError('switchback notification lookup failed')
         return value['notifications']
     ca='/source/deploy/dockerephemeral/rabbitmq-config/certificates/ca.pem'
-    tls=ssl.create_default_context(cafile=ca)
-    auth=base64.b64encode((os.environ['RABBITMQ_USERNAME']+':'+os.environ['RABBITMQ_PASSWORD']).encode()).decode()
+    auth=os.environ['RABBITMQ_USERNAME']+':'+os.environ['RABBITMQ_PASSWORD']
     management='https://localhost:15671/api/queues/'+urllib.parse.quote(config['rabbitmq']['vHost'],safe='')+'/'+urllib.parse.quote(QUEUE,safe='')
     def rabbit(method,suffix='',body=None):
-        req=urllib.request.Request(management+suffix,data=None if body is None else json.dumps(body).encode(),method=method,headers={'Authorization':'Basic '+auth,'Content-Type':'application/json'})
-        with urllib.request.urlopen(req,context=tls,timeout=5) as response:
-            raw=response.read(65537)
-            if len(raw)>65536:raise ValueError('broker fixture response exceeds bound')
-            return None if not raw else json.loads(raw)
+        # Use the trusted runner's curl, as the dependency harness does. It
+        # verifies the fixture CA and hostname; Python 3.13 strict X509 rejects
+        # this upstream synthetic CA's missing keyUsage extension.
+        command=['curl','--fail','--silent','--show-error','--cacert',ca,
+                 '--max-time','5','--max-filesize','65536','--user',auth,
+                 '--request',method,'--header','Content-Type: application/json']
+        if body is not None:command.extend(['--data-binary','@-'])
+        command.append(management+suffix)
+        result=subprocess.run(command,input=None if body is None else json.dumps(body).encode(),
+                              capture_output=True,timeout=6)
+        if result.returncode:raise ValueError('verified broker fixture request failed')
+        raw=result.stdout
+        if len(raw)>65536:raise ValueError('broker fixture response exceeds bound')
+        return None if not raw else json.loads(raw)
     def queue_message():
         deadline=time.monotonic()+5
         while True:
