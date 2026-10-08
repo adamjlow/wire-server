@@ -4,9 +4,9 @@
   "title": "Build isolated upstream e2e runner container",
   "service": "framework",
   "kind": "framework",
-  "status": "queued",
-  "owner": null,
-  "branch": null,
+  "status": "active",
+  "owner": "codex",
+  "branch": "go-migration",
   "depends_on": [
     "harness-readiness"
   ],
