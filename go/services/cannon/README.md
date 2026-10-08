@@ -1,33 +1,64 @@
-# Optional Go cannon candidate
+# Optional Go cannon
 
-Work in progress against the frozen cannon contract. Haskell remains supported
-and the default; this module does not yet claim whole-service parity/availability.
-Go 1.26.8, existing upstream YAML and required RabbitMQ credential environment.
+Candidate on `go-migration`; final original-suite validation is pending.
+Haskell remains supported and default. This replaces the whole cannon process;
+Cassandra schemas, RabbitMQ queue names/effects and gundeck contracts stay shared.
+The finite plan and protected contract are under `docs/go-migration/services/cannon`
+and `docs/go-migration/plans/cannon.md`. Exact qualification and limits are in
+[delegated review](REVIEW.md).
 
-Build from this module with `go build -o cannon ./cmd/cannon`; run with `-c` or
-`--config-file`, default `/etc/wire/cannon/conf/cannon.yaml`. Backend dependencies
-remain existing Cassandra, RabbitMQ and gundeck processes. There is no schema or
-queue-layout migration. TLS verification remains required; the inherited explicit
-insecureSkipVerifyTls=true configuration is deliberately unqualified and rejected
-under repository policy. No production config in the qualification matrix needs
-that bypass; resolve its contract disposition separately rather than silently
-advertising compatibility for it.
+Use pinned Go1.26.8 and the existing upstream YAML configuration and RabbitMQ
+credential environment. From this module:
 
-Current runnable behavior: classic await/websocket aliases, presence registration,
-raw binary push, ordered typed bulk responses, generation-safe cleanup, pongs,
-consumable events with prefetch500, typed ack/full-sync/sync marker, Cassandra
-missed-notification recovery, temporary/client queues, connection/channel capacity,
-inactivity and two-phase signal drain. Metrics/configured log formats are present.
-The original 35 Haskell baseline is qualified; the candidate must pass those same
-unchanged assertions and protected supplements, then switchback and combined
-three-Go validation before support is claimed. Unit/race tests already compare
-ten actual Haskell HTTP captures and check classic/raw delivery, atomic bulk input
-validation, integer precision, strict ack types/range and trusted-certificate
-rejection. Unit passes do not substitute for original e2e or switchback.
+```sh
+go build -o cannon ./cmd/cannon
+./cannon --config-file /etc/wire/cannon/conf/cannon.yaml
+```
 
-Use `python3 go/check.py cannon` with the pinned compiler on PATH for the full
-format/tidy/verify/vet/race/build/vulnerability/license checks. The module is
-AGPL-3.0-or-later; dependency proof and pinned versions are in the protected oracle.
-Serious inherited concerns (payload logs, explicit TLS bypass, invalid drain
-configuration, expiration units) remain recorded in the contract, without
-bundling protocol/storage/security changes into the language replacement.
+`-c` is the short config option; the path above is also the default. Existing
+Cassandra, RabbitMQ and gundeck remain required. Classic await/websocket presence,
+raw/bulk push and consumable events/ack/full-sync/markers use the existing network
+and storage protocols. TLS verification is required: Go explicitly rejects
+`insecureSkipVerifyTls=true`. Keep Haskell for deployments requiring that option
+until its contract/security disposition is resolved. No unsafe TLS-mode parity
+is claimed. Serious inherited concerns are separately recorded in the contract.
+
+Full checks: `python3 go/check.py cannon` from repository root with the pinned
+compiler on PATH. This runs format/tidy/module verification/vet/race/build and
+vulnerability/license checks. Security regressions cover strict typed acknowledgements,
+atomic bulk validation/integer precision, generation-safe cleanup and trusted TLS.
+Dependencies are pinned per module; no Go tooling is added to the Haskell workflow.
+The module is AGPL-3.0-or-later.
+
+The optional local container command requires a clean committed checkout:
+
+```sh
+python3 go/services/cannon/build_image.py --receipt /absolute/new-image-receipt.json
+```
+
+It builds a non-root scratch image with the tested binary and a verified CA bundle
+from the qualified publisher image, records immutable identities, and never pushes
+or deploys. Select your own published image through your existing Helm invocation:
+
+```sh
+--post-renderer ./go/services/cannon/helm_postrender.py --post-renderer-args YOUR_CANNON_IMAGE
+```
+
+This changes only the cannon container in the cannon StatefulSet. The nginz
+sidecar, configurator init container, volumes, config, arguments and original test
+hook remain. Omitting selection returns byte-identical manifests; invalid or
+ambiguous targets fail closed. Existing chart sources are unchanged. A chart image
+values overlay would also replace the Haskell test image, which is why the selector
+operates on the named service container in the render.
+
+Original Haskell tests run automatically in the authorized private Docker harness,
+with exact binaries selected before static/dynamic backend startup. The finite
+qualification includes the original35 cannon assertions, 10 HTTP/7 config/28
+uncovered boundary records, queue/Cassandra Haskell↔Go switchback, bounded loaded
+drain/smoke and the original67 with all three Go components plus Haskell peers.
+`cmd/parity-fixture` is a synthetic private verification utility; the production
+image contains only `cmd/cannon`. Never run it against shared or production stores.
+Retained failures are part of the evidence; a failed run does not qualify support.
+Future upstream changes require the repository’s existing sync/requalification
+process. Rollback selects the original whole Haskell process/image using the same
+queues and schemas; no production switch is performed by this work.

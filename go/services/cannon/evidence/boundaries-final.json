@@ -1,0 +1,269 @@
+{
+  "schema_version": 1,
+  "kind": "finite-uncovered-boundary-capture",
+  "binary_sha256": "8c79692b44a06ff15ec0b887be0e45fd462e84a24c1df29c319ae27f453c5e67",
+  "config_sha256": "475d842521f132d54e3580edf701ec1ea0918f0e71ac946c7cf4d52bac45c898",
+  "records": [
+    {
+      "name": "origin-accepted",
+      "observed": 101
+    },
+    {
+      "name": "presence-registration",
+      "observed": {
+        "client_id": "abcd",
+        "device_id": "fixture",
+        "resource": "http://127.0.0.1:16083/i/push/11111111-1111-4111-8111-111111111111/fixture",
+        "user_id": "11111111-1111-4111-8111-111111111111"
+      }
+    },
+    {
+      "name": "pong-1",
+      "observed": {
+        "opcode": 2,
+        "payload": "pong"
+      }
+    },
+    {
+      "name": "pong-2",
+      "observed": {
+        "opcode": 2,
+        "payload": "pong"
+      }
+    },
+    {
+      "name": "pong-9",
+      "observed": {
+        "opcode": 10,
+        "payload": "ping"
+      }
+    },
+    {
+      "name": "raw-push-http",
+      "observed": {
+        "status": 200,
+        "content_type": null,
+        "body": ""
+      }
+    },
+    {
+      "name": "raw-push-frame",
+      "observed": {
+        "opcode": 2,
+        "bytes": " {\"raw\": [1, 2], \"synthetic\": true} "
+      }
+    },
+    {
+      "name": "replacement-push",
+      "observed": {
+        "status": 200,
+        "content_type": null,
+        "body": ""
+      }
+    },
+    {
+      "name": "replacement-frame",
+      "observed": {
+        "opcode": 2,
+        "payload": {
+          "raw": [
+            1,
+            2
+          ],
+          "synthetic": true
+        }
+      }
+    },
+    {
+      "name": "ordered-bulk",
+      "observed": {
+        "status": 200,
+        "content_type": "application/json;charset=utf-8",
+        "body": {
+          "bulkpush_resp": [
+            {
+              "notif_id": "22222222-2222-4222-8222-222222222222",
+              "target": {
+                "user_id": "11111111-1111-4111-8111-111111111111",
+                "conn_id": "fixture"
+              },
+              "status": "push_status_ok"
+            },
+            {
+              "notif_id": "22222222-2222-4222-8222-222222222222",
+              "target": {
+                "user_id": "11111111-1111-4111-8111-111111111111",
+                "conn_id": "gone"
+              },
+              "status": "push_status_gone"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "typed-bulk-frame",
+      "observed": {
+        "opcode": 2,
+        "payload": {
+          "id": "22222222-2222-4222-8222-222222222222",
+          "transient": false,
+          "payload": [
+            {
+              "type": "synthetic"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "remote-presence",
+      "observed": {
+        "status": 200,
+        "content_type": null,
+        "body": ""
+      }
+    },
+    {
+      "name": "missing-presence",
+      "observed": {
+        "status": 404,
+        "content_type": "application/json;charset=utf-8",
+        "body": ""
+      }
+    },
+    {
+      "name": "missing-push",
+      "observed": {
+        "status": 410,
+        "content_type": "application/json;charset=utf-8",
+        "body": {
+          "code": 410,
+          "label": "general",
+          "message": "client gone"
+        }
+      }
+    },
+    {
+      "name": "failed-registration-close",
+      "observed": {
+        "opcode": 8,
+        "code": 1000,
+        "reason": "close"
+      }
+    },
+    {
+      "name": "failed-registration-attempts",
+      "observed": 4
+    },
+    {
+      "name": "failed-registration-push",
+      "observed": {
+        "status": 410,
+        "content_type": "application/json;charset=utf-8",
+        "body": {
+          "code": 410,
+          "label": "general",
+          "message": "client gone"
+        }
+      }
+    },
+    {
+      "name": "malformed-ack",
+      "observed": {
+        "opcode": 8,
+        "code": 1003,
+        "reason": "failed-to-parse"
+      }
+    },
+    {
+      "name": "missing-ack-field",
+      "observed": {
+        "opcode": 8,
+        "code": 1003,
+        "reason": "failed-to-parse"
+      }
+    },
+    {
+      "name": "unexpected-full-sync",
+      "observed": {
+        "opcode": 8,
+        "code": 1003,
+        "reason": "unexpected-ack"
+      }
+    },
+    {
+      "name": "temporary-queue-flags",
+      "observed": [
+        {
+          "durable": false,
+          "auto_delete": true,
+          "exclusive": true,
+          "arguments": {
+            "x-queue-type": "classic"
+          }
+        }
+      ]
+    },
+    {
+      "name": "event-inactivity-ping",
+      "observed": {
+        "opcode": 9,
+        "payload": "ping"
+      }
+    },
+    {
+      "name": "event-inactivity-close",
+      "observed": {
+        "opcode": 8,
+        "code": 1002,
+        "reason": "inactivity"
+      }
+    },
+    {
+      "name": "smoke",
+      "observed": {
+        "requests": 40,
+        "concurrency": 2,
+        "p95_ms": 1.1329064145684242,
+        "rss_kib": 16392
+      }
+    },
+    {
+      "name": "classic-gauge",
+      "observed": {
+        "status": 200,
+        "lines": [
+          "# HELP net_websocket_clients Number of connected websocket clients",
+          "# TYPE net_websocket_clients gauge",
+          "net_websocket_clients 1.0"
+        ]
+      }
+    },
+    {
+      "name": "drain-classic-close",
+      "observed": {
+        "opcode": 8,
+        "code": 1000,
+        "reason": "close"
+      }
+    },
+    {
+      "name": "drain-event-close",
+      "observed": {
+        "opcode": 8,
+        "code": 1001,
+        "reason": ""
+      }
+    },
+    {
+      "name": "drain",
+      "observed": {
+        "exit_code": 0,
+        "seconds": 1.0183767238631845,
+        "bound_seconds": 4
+      }
+    }
+  ],
+  "result": "captured"
+}
