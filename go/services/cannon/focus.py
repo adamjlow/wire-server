@@ -18,7 +18,7 @@ results=[]
 
 def focused(service, unused_candidate, config, unused_output, implementations=None):
     runner.names=lambda name: CASES if name=='cannon' else original_names(name)
-    for label in ('haskell','go'):
+    for label in (('go',) if os.environ.get('WIRE_CANNON_FOCUS_CANDIDATE_ONLY')=='1' else ('haskell','go')):
         if label=='go':
             link=runtime.WORK/'dist/cannon';link.unlink();link.symlink_to(candidate)
         # These two unchanged tests start their own dynamic backend; static peers

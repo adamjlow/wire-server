@@ -81,7 +81,10 @@ func (s *Server) events(w http.ResponseWriter, r *http.Request, user string, cli
 		return
 	}
 	closed := channel.NotifyClose(make(chan *amqp.Error, 1))
-	deliveries, err := channel.Consume(queue.Name, "", false, false, false, false, nil)
+	// Haskell AMQP consumeMsgs sends basic.consume with nowait=true. Preserve
+	// that subscription sequence: waiting for consume-ok adds a different
+	// scheduling boundary before initial queue delivery and WebSocket acceptance.
+	deliveries, err := channel.Consume(queue.Name, "", false, false, false, true, nil)
 	if err != nil {
 		failure(w, r, 500, "server-error", "Server Error")
 		return

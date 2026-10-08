@@ -1,0 +1,1 @@
+<?xml version='1.0' ?><testsuites name="wire-server"><testsuite name="integration" tests="2" failures="0" time="367.30226682"><testcase name="Events.testEventsForSpecificClients" time="124.149337636" /><testcase name="Events.testSingleConsumer" time="243.152929184" /></testsuite></testsuites>

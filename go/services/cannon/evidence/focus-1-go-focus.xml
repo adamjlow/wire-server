@@ -1,0 +1,45 @@
+<?xml version='1.0' ?><testsuites name="wire-server"><testsuite name="integration" tests="2" failures="1" time="124.100070242"><testcase name="Events.testEventsForSpecificClients" time="122.306784831" /><testcase name="Events.testSingleConsumer" time="1.793285411"><failure>assertion failure:
+Did not expect event: 
+{
+    &quot;data&quot;: {
+        &quot;delivery_tag&quot;: 1,
+        &quot;event&quot;: {
+            &quot;id&quot;: &quot;3eb1af90-c339-11f1-8001-867b052f056b&quot;,
+            &quot;payload&quot;: [
+                {
+                    &quot;client&quot;: {
+                        &quot;capabilities&quot;: {
+                            &quot;capabilities&quot;: [
+                                &quot;legalhold-implicit-consent&quot;
+                            ]
+                        },
+                        &quot;id&quot;: &quot;a861f64f006e12c6&quot;,
+                        &quot;label&quot;: &quot;Test Device&quot;,
+                        &quot;mls_public_keys&quot;: {},
+                        &quot;model&quot;: &quot;Test Model&quot;,
+                        &quot;time&quot;: &quot;2026-10-08T16:56:45.162Z&quot;,
+                        &quot;type&quot;: &quot;permanent&quot;
+                    },
+                    &quot;type&quot;: &quot;user.client-add&quot;
+                }
+            ]
+        }
+    },
+    &quot;type&quot;: &quot;event&quot;
+}
+
+call stack: 
+1. assertFailure at test/Test/Events.hs:1152
+
+2. assertNoEventHelper at test/Test/Events.hs:1157
+
+3. assertNoEvent_ at test/Test/Events.hs:666
+
+4. k at test/Testlib/ModService.hs:89
+
+5. withModifiedBackend at test/Test/Events.hs:650
+
+
+
+Set WIRE_INTEGRATION_TEST_VERBOSITY=1 if you want to see complete trace of the HTTP traffic in curl pseudo-syntax.
+</failure></testcase></testsuite></testsuites>
