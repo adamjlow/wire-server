@@ -15,6 +15,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import urlsplit
 from datetime import datetime
 import re
+import uuid
 
 ROOT=Path('/source')
 OWNER='11111111-1111-4111-8111-111111111111'
@@ -67,9 +68,11 @@ def execute():
             time.sleep(.2)
     config=json.loads(Path('/fixtures/config.json').read_text())
     ports={'haskell':8084,'go':8085};processes=[];logs=[];records=[]
-    def start(kind,audit=False):
+    def start(kind,audit=False,overrides=None):
         cfg=copy.deepcopy(config);cfg['cargohold']['port']=ports[kind];cfg['settings']['assetAuditLogEnabled']=audit
         cfg['logLevel']='Info';cfg['logFormat']='StructuredJSON'
+        if overrides:
+            for section,values in overrides.items():cfg[section].update(values)
         path=Path('/tmp/config-'+kind+'.json');path.write_text(json.dumps(cfg))
         log=open('/reports/'+kind+('-audit' if audit else '')+'.log','w');logs.append(log)
         executable='/sbin/cargohold' if kind=='haskell' else '/candidate/cargohold'
@@ -147,6 +150,40 @@ def execute():
         compare('legacy-plain','GET','/assets/'+ASSET+'?conv_id='+CONV,{'Z-User':OWNER})
         compare('legacy-conversation-plain','GET','/conversations/'+CONV+'/assets/'+ASSET,{'Z-User':OWNER})
         compare('missing-legacy','GET','/assets/'+OTHER+'?conv_id='+CONV,{'Z-User':OWNER})
+        def body_with(settings):
+            raw=json.dumps(settings,separators=(',',':')).encode()
+            return b'--wire\r\nContent-Type: application/json\r\nContent-Length: '+str(len(raw)).encode()+b'\r\n\r\n'+raw+b'\r\n--wire\r\nContent-Type: text/plain\r\nContent-Length: 13\r\n\r\n'+DATA+b'\r\n--wire--\r\n'
+        def upload_compare(name,settings,principal='bot',extra=None):
+            outcomes={}
+            for kind in ports:
+                before={o['Key'] for o in ref.aws('list-objects-v2','--bucket','dummy-bucket').get('Contents',[])}
+                h={'Z-'+principal:OWNER,'Content-Type':'multipart/mixed; boundary=wire','Request-Id':name}
+                if principal!='user':h['Z-Type']=principal
+                if extra:h.update(extra)
+                path='/assets/v3' if principal=='user' else '/'+principal+'/assets'
+                started=time.time();response=request(kind,'POST',path,h,body_with(settings))
+                if response['status']==201:
+                    asset=response['body'];parts=asset['key'].split('-',2)
+                    if parts[0]!='3' or uuid.UUID(parts[2]).version!=4:raise ValueError('generated key is not UUIDv4')
+                    if response['location'].split('/')[-1]!=asset['key']:raise ValueError('Location/key mismatch')
+                    normalized_key='3-'+parts[1]+'-<validated-uuidv4>'
+                    response['location']=response['location'].replace(asset['key'],normalized_key);asset['key']=normalized_key
+                    if 'token' in asset:
+                        if len(base64.urlsafe_b64decode(asset['token']))!=16:raise ValueError('invalid generated token')
+                        asset['token']='<validated-16-byte-token>'
+                    if 'expires' in asset:
+                        if not re.fullmatch(r'.*\.[0-9]{3}Z',asset['expires']):raise ValueError('expiration lacks millisecond precision')
+                        duration=28*86400 if settings['retention']=='volatile' else 365*86400
+                        actual=datetime.fromisoformat(asset['expires'].replace('Z','+00:00')).timestamp()
+                        if abs(actual-(started+duration))>2:raise ValueError('incorrect expiration duration')
+                        asset['expires']='<validated-retention-expiry>'
+                outcomes[kind]={'response':response,'objects':store_effects(before),'open_uploads':ref.aws('list-multipart-uploads','--bucket','dummy-bucket').get('Uploads',[])}
+            records.append({'id':name,'responses':outcomes,'equal':outcomes['haskell']==outcomes['go']})
+        for retention in ['eternal','persistent','volatile','eternal-infrequent_access','expiring']:
+            upload_compare('retention-'+retention,{'public':False,'retention':retention})
+        for principal in ['user','bot','provider']:
+            upload_compare('principal-precedence-'+principal,{'public':False},principal,
+                {'Z-Bot':OTHER,'Z-Provider':OTHER,'Z-User':OTHER,'Z-'+principal:OWNER})
         # Shared bucket switchback: writes through one real service, reads/changes/deletes through the other.
         for writer,reader in [('haskell','go'),('go','haskell')]:
             for principal in ['user','bot','provider']:
@@ -172,6 +209,34 @@ def execute():
         # Seeded raw/encoded audit data and audit-required uploads use both real runtimes.
         stop(hs);stop(go);hs=start('haskell',True);go=start('go',True)
         compare('audit-missing','POST','/bot/assets',headers,ref.multipart())
+        audit={'convId':{'id':CONV,'domain':'example.com'},'filename':'synthetic-file.txt','filetype':'text/plain'}
+        upload_compare('audit-enabled-valid',dict(audit,public=False))
+        upload_compare('audit-null-conversation',dict(audit,convId=None,public=False))
+        # Log schema/value comparison for a fixed synthetic request; no signed URLs or secrets are logged.
+        for log in logs:log.flush()
+        events={}
+        for kind in ports:
+            found=[]
+            for line in Path('/reports/'+kind+'-audit.log').read_text().splitlines():
+                try:event=json.loads(line)
+                except ValueError:continue
+                if event.get('event')=='file-upload' and event.get('file.name')=='synthetic-file.txt':
+                    event=dict(event);event.pop('time',None)
+                    if 'upload.path' in event:
+                        key=event['upload.path'].split('/')[-1]
+                        if uuid.UUID(key).version!=4:raise ValueError('invalid audit path UUID')
+                        event['upload.path']='v3/persistent/<validated-uuidv4>'
+                    found.append(event)
+            events[kind]=found
+        records.append({'id':'audit-upload-log','responses':events,'equal':bool(events['haskell']) and events['haskell']==events['go']})
+        for encoding in ['raw','encoded']:
+            value=json.dumps(audit,separators=(',',':'))
+            if encoding=='encoded':
+                from urllib.parse import quote
+                value=quote(value,safe='')
+            ref.seed('v3/persistent/'+ASSET,{'user':OWNER,'token':ref.TOKEN,'wire-metadata':value})
+            compare('audit-seeded-'+encoding,'GET','/assets/v4/example.com/3-2-'+ASSET,{'Z-User':OWNER})
+
         result={'result':'supplemental-observed','whole_service_parity':False,'cases':records,
                 'mismatches':[r['id'] for r in records if not r['equal']]}
         Path('/reports/supplemental.json').write_text(json.dumps(result,indent=2)+'\n')
