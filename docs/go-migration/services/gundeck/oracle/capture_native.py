@@ -116,7 +116,9 @@ def run(binary):
             except (ValueError,UnicodeDecodeError):value=raw.decode()
             return {'status':response.status,'content_type':response.getheader('Content-Type'),'body':value}
         finally:conn.close()
-    def record(name,value):records.append({'name':name,'observed':value})
+    def record(name,value):
+        records.append({'name':name,'observed':value})
+        Path('/reports/native-capture-progress.json').write_text(json.dumps({'records':records,'provider_calls':state.calls},indent=2)+'\n')
     def token(value,app='test',transport='GCM'):return {'transport':transport,'app':app,'token':value,'client':'abcd'}
     def wait(check):
         deadline=time.monotonic()+10

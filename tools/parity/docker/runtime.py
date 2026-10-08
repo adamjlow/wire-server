@@ -233,7 +233,10 @@ def run(service,candidate=None,peer_candidates=()):
         os.chdir(WORK)
         if service == 'gundeck-reference':
             capture=SOURCE/'docs/go-migration/services/gundeck/oracle/capture_native.py'
-            result=subprocess.run([sys.executable,str(capture)],check=True,capture_output=True,text=True,timeout=120)
+            result=subprocess.run([sys.executable,str(capture)],capture_output=True,text=True,timeout=120)
+            Path('/reports/native-reference.stderr').write_text(result.stderr)
+            if result.returncode:
+                raise ValueError('reference capture failed; inspect native-reference.stderr')
             observed=json.loads(result.stdout)
             if observed.get('kind')!='finite-native-feedback-characterization' or not observed.get('records'):
                 raise ValueError('reference capture missing observations')

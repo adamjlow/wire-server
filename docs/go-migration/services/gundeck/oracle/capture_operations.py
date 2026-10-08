@@ -33,7 +33,7 @@ def run(port, binary, config, pid):
         if line.startswith('# TYPE push_native_'):
             _,_,name,kind=line.split();types[name]=kind
     if metrics['status']!=200 or len(types)!=6 or set(types.values())!={'counter'}:
-        raise ValueError('native metrics surface missing')
+        raise ValueError('native metrics surface missing: '+str(metrics['status'])+' '+json.dumps(types))
     record('native-metric-types',types)
     started=time.monotonic()
     def once(_):
