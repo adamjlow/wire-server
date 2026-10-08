@@ -2,7 +2,7 @@
   "schema_version": 1,
   "service": "cargohold",
   "reference_path": "services/cargohold",
-  "stage": "implementing",
+  "stage": "verified",
   "oracle_paths": [
     "services/cargohold",
     "docs/go-migration/services/cargohold/contract.md",
@@ -18,7 +18,24 @@
     ],
     "plan": [
       "cargohold-plan"
+    ],
+    "parity": [
+      "cargohold-verification"
+    ],
+    "security": [
+      "cargohold-verification"
+    ],
+    "operations": [
+      "cargohold-verification"
+    ],
+    "rollback": [
+      "cargohold-verification"
     ]
   },
-  "compatibility": null
+  "compatibility": {
+    "upstream_revision": "f6636ed53315fa7b0fc4c8aa39c0bb30c98b6d5e",
+    "reference_revision": "f6636ed53315fa7b0fc4c8aa39c0bb30c98b6d5e",
+    "candidate_revision": "68a36b9137ce26566b2db91902469e8159885656",
+    "verification_task": "cargohold-verification"
+  }
 }
