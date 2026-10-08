@@ -32,5 +32,5 @@
   ],
   "evidence": [],
   "review": null,
-  "handoff": "Active finite supplement. Retained passing groups: 38 core at 803ad4e59de9d48348af1902f1f0c41458937f81; 35 extended at 3c9e31c160fa86df86bf85c3f9b7c4351153c063; 11 configuration at 41226a9ad92b180e4ed9d43961aafbb130f03fc6. Exact responses/effects/signing fields compared, actual S3 byte reads/abort effects and CloudFront independent signature/tamper verification executed; all earlier mismatches retained. Remaining audit-inclusive switchback, mixed-runtime federation, cancellation and bounded operation/metrics/drain matrix, controller identity/negative checks and review required. No whole-service parity claim."
+  "handoff": "Active finite supplement. Retained groups: 38 core at 803ad4; 35 extended at 3c9e31; 11 config at 41226a; 15 real mixed-runtime/audit-switchback/wire controls at e5dcc6d384dbe62da834922ba57e8cba7af57d94; four bounded operational records at 6038dd4bb9a8d5d40583ec847e7f687fae30af88 (40 requests per runtime, concurrency 2, signed 24 MiB bytes, metric definitions/histogram schema/count deltas and fixed p95/RSS). Raw metric text/sample data and all failed initial observations retained. Remaining cancellation/disconnect and loaded SIGTERM drain, controller identity/negative-check review and exact final candidate relevant revalidation required. No whole-service parity claim."
 }

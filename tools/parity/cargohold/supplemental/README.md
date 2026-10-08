@@ -107,3 +107,14 @@ Candidate application metric definitions are missing; that criterion fails.
 Runtime GC metrics are excluded, but HTTP histogram labels/counts/schema, S3
 counters, connection gauge and AWS credential-expiry gauge remain required.
 Cancellation and loaded shutdown/drain are still outstanding.
+
+The repaired [operational comparison](operations-observations.json), [identity](operations-run.json)
+and [samples](operations-samples.json) pass at candidate
+6038dd4bb9a8d5d40583ec847e7f687fae30af88. Both actual 40-request smokes meet
+the agreed limits and verify 24 MiB signed bytes. Application HELP/TYPE definitions,
+HTTP histogram labels/threshold schema and actual count deltas match; buckets
+are cumulative, +Inf equals count and sums are nonnegative. S3 counter deltas
+match the uploaded byte total. GC/heap identity and latency bucket values remain
+incidental, while measured external p95/RSS must satisfy the predeclared limits.
+Cancellation and loaded shutdown/drain remain required; this is not a whole-service
+parity claim. Failed initial metric evidence is preserved.
