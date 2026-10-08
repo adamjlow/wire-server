@@ -2,12 +2,16 @@
   "schema_version": 1,
   "service": "cannon",
   "reference_path": "services/cannon",
-  "stage": "registered",
+  "stage": "inventoried",
   "oracle_paths": [
     "services/cannon",
     "docs/go-migration/services/cannon/contract.md",
     "docs/go-migration/services/cannon/oracle"
   ],
-  "gates": {},
+  "gates": {
+    "inventory": [
+      "cannon-inventory"
+    ]
+  },
   "compatibility": null
 }
