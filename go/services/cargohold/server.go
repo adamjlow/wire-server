@@ -161,7 +161,7 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			http.NotFound(w, r)
 			return
 		}
-		domain = segments[0]
+		domain = strings.ToLower(segments[0])
 		segments = segments[1:]
 	}
 	if len(segments) != 1 {

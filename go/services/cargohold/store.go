@@ -3,7 +3,6 @@ package cargohold
 import (
 	"bytes"
 	"context"
-	"errors"
 	"io"
 	"net/http"
 	"net/url"
@@ -14,7 +13,6 @@ import (
 	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/service/s3"
 	"github.com/aws/aws-sdk-go-v2/service/s3/types"
-	"github.com/aws/smithy-go"
 )
 
 type Store interface {
@@ -27,9 +25,10 @@ type Store interface {
 }
 
 type S3Store struct {
-	client   *s3.Client
-	config   aws.Config
-	settings Config
+	client     *s3.Client
+	config     aws.Config
+	settings   Config
+	cloudFront *cloudFrontSigner
 }
 
 func NewS3Store(ctx context.Context, settings Config) (*S3Store, error) {
@@ -40,7 +39,11 @@ func NewS3Store(ctx context.Context, settings Config) (*S3Store, error) {
 	c.RequestChecksumCalculation = aws.RequestChecksumCalculationWhenRequired
 	c.ResponseChecksumValidation = aws.ResponseChecksumValidationWhenRequired
 	c.HTTPClient = &http.Client{Transport: &http.Transport{Proxy: http.ProxyFromEnvironment, MaxIdleConns: 2048, MaxIdleConnsPerHost: 1024, ResponseHeaderTimeout: 10 * time.Second}}
-	s := &S3Store{config: c, settings: settings}
+	signer, err := newCloudFrontSigner(settings)
+	if err != nil {
+		return nil, err
+	}
+	s := &S3Store{config: c, settings: settings, cloudFront: signer}
 	s.client = s.clientFor(settings.AWS.Endpoint)
 	return s, nil
 }
@@ -94,17 +97,17 @@ func (s *S3Store) Upload(ctx context.Context, key string, meta map[string]string
 
 func (s *S3Store) Metadata(ctx context.Context, key string) (map[string]string, error) {
 	out, err := s.client.HeadObject(ctx, &s3.HeadObjectInput{Bucket: aws.String(s.settings.AWS.Bucket), Key: aws.String(key)})
-	var api smithy.APIError
-	if errors.As(err, &api) && (api.ErrorCode() == "NotFound" || api.ErrorCode() == "NoSuchKey" || api.ErrorCode() == "AccessDenied") {
-		return nil, nil
-	}
+	// Reference execCatch hides every exhausted HEAD failure as absent metadata.
 	if err != nil {
-		return nil, err
+		return nil, nil
 	}
 	return out.Metadata, nil
 }
 
 func (s *S3Store) SignedURL(ctx context.Context, key, host string) (string, error) {
+	if s.cloudFront != nil {
+		return s.cloudFront.signedURL(key, time.Now())
+	}
 	ep := s.settings.AWS.DownloadEndpoint
 	if ep == "" {
 		ep = s.settings.AWS.Endpoint

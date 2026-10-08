@@ -1,10 +1,12 @@
 # Optional Go cargohold candidate
 
 Work in progress against the approved whole-service contract. Haskell is still
-the supported default. This first runnable slice implements bot/provider
-upload, S3 multipart persistence, signed download and deletion; it is not a
-complete or verified replacement. User/legacy/federation/token/audit/CloudFront,
-full configuration/version middleware, logging and operational parity remain.
+the supported default. The candidate implements user/bot/provider upload,
+S3 multipart persistence, signed download/delete, tokens, versioned routes,
+legacy reads, federation availability/streaming and outbound h2c, audit metadata
+and CloudFront signing. It is not yet a verified complete replacement. Audit
+logging, exact parser/failure behavior, full configuration/operation parity,
+packaging and the remaining finite supplemental/switchback checks remain.
 
 Use pinned Go 1.26.8 and the existing upstream cargohold YAML:
 
@@ -47,6 +49,29 @@ captures. This smoke reuses their expectations read-only, leaves protected oracl
 files untouched, and explicitly marks whole_service_parity false. It does not
 execute the original 27 cargo tests or replace whole-service verification.
 
-Next: user/Brig and token/versioned routes, audit metadata, legacy/federation,
-CloudFront/config variants, exact parser errors and middleware/operation behavior,
-then the original suite and the already bounded supplemental/switchback matrix.
+## Original suite execution
+
+At source f410fca816fdca360720ca3565143a88a49185a7, the unchanged original
+compiled cargohold suite passed all 27 selected functions with zero failures,
+errors or skips. Go replaces cargohold (static and dynamically spawned processes);
+all other service executables remain Haskell. This means the two cargo domains in
+that suite both select Go; mixed Haskell/Go cargohold federation is still a
+supplemental requirement, not established by this run.
+
+[Original XML](evidence/core-e2e.xml), [suite run](evidence/core-e2e-run.json) and
+[environment identities](evidence/core-e2e-environment.json) retain exact binary,
+images/config/fixtures and process/cleanup exits. Binary SHA256:
+6b2358eaec0c5b8a43797890e8293e47fa8a4228a344cc6af85baec05cfd8aa4.
+The owned controller stack returned pass/exit 0/cleanup 0; subsequent Docker
+inspection confirmed its unique containers/networks were removed. Retained
+Haskell baseline uses the same fixture hashes. This is real original-assertion
+reuse, not translated test specifications or a whole-service availability claim.
+
+Subsequent candidate changes validate required configuration fields and supported
+version/addressing choices, implement CloudFront RSA-SHA1/300-second canned-policy
+signatures, align domain case folding/validation and exhausted HEAD failure
+behavior with source. They have focused security/crypto/config tests; the original
+27 report above applies to its recorded binary, not silently to later code.
+Next finish audit logging/parser/error/operational parity, packaging, and the
+already bounded supplemental/mixed-runtime/switchback matrix. Revalidate the
+final binary through the original suite once those relevant changes settle.

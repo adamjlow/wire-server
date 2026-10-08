@@ -149,10 +149,15 @@ func (s *Server) federationResponseError(w http.ResponseWriter, response *http.R
 }
 
 func validDomain(domain string) bool {
+	domain = strings.ToLower(domain)
 	if len(domain) == 0 || len(domain) > 253 {
 		return false
 	}
-	for _, label := range strings.Split(domain, ".") {
+	labels := strings.Split(domain, ".")
+	if (len(labels) < 2 && domain != "localhost") || (len(labels[len(labels)-1]) > 0 && labels[len(labels)-1][0] >= '0' && labels[len(labels)-1][0] <= '9') {
+		return false
+	}
+	for _, label := range labels {
 		if len(label) == 0 || len(label) > 63 || label[0] == '-' || label[len(label)-1] == '-' {
 			return false
 		}
