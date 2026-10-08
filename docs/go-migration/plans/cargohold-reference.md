@@ -37,3 +37,45 @@ and S3 effects. Review observations honestly under existing user self-review
 and isolated characterization authority. If behavior needs human contract/security
 disposition, present a concrete observed choice; progress on other safe preparation
 while awaiting it. No production change, push or candidate equivalence claim.
+
+## Actual reference outcome
+
+20 real reference cases completed at 14d93fd039ef56e1a309f7668623c59690411afb
+using the qualified immutable runner and real task-owned Garage S3. Retained
+[observations](../../../tools/parity/cargohold/reference.json) and
+[identities](../../../tools/parity/cargohold/run.json) are service-layer source
+characterization, with `candidate: null` and `parity_verified: false`. The actual
+cargohold binary hash matches the earlier compiled-suite preflight exactly.
+
+- Foreign origin plus matching owner UUID: get-asset available true and stream
+  returns the seeded private bytes, with missing or wrong token. Different UUID
+  plus missing/wrong token: unavailable/404; correct token: available/real bytes.
+- Legacy OTR: same and different requester obtain 302 and valid signed downloads
+  of the seeded bytes. Missing/malformed stored user returns 404. This records
+  existing behavior; the uploader identity is not an owner-only read rule.
+- Shared bot/user/provider multipart parser: canonical, unequal delimiters, wrong
+  MD5, decimal length suffix and missing trailer each return 201 and store the
+  exact 13-byte payload as octet-stream with bot/token metadata. Incomplete data
+  returns 400/incomplete-body but leaves a completed 10-byte S3 object; no open
+  multipart upload remains. Do not silently change these persisted effects.
+
+The first attempt lacked the required bot token-type header and observed 403
+before parsing. A subsequent tool correction distinguished relative 201 upload
+Locations from signed 302 downloads. Signature verification needed the exact
+signed Host header, not the loopback IP default. Final controls verify real
+bytes and fail if authorization/status/source expectations differ; earlier failed
+probes are not reported as passing captures. Four focused tests enforce fixture
+isolation, signature redaction/Host fidelity, relative Locations and short-body
+construction. They are discovered by the existing parity CI unit command.
+
+User decision requested after these concrete observations: preserve existing
+federation UUID behavior for exact migration parity and track a security fix
+separately, or fix the check in both runtimes first. GUARDRAILS.md reserves unsafe
+reference disposition to the user; self-review cannot invent that exception.
+No Go code or full contract approval is claimed while this decision is pending.
+
+Same-author review: **codex (self-review delegated by user)** under the existing
+isolated characterization authority. Approve the source observation outcome,
+not a changed/bypassed authentication contract or candidate equivalence. All
+owned capture containers and private networks were removed. Original Haskell
+source/defaults/fixtures and original e2e assertions remain unchanged.
