@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "id": "cannon-implementation",
+  "title": "Build and validate the optional whole-service Go cannon candidate",
+  "service": "cannon",
+  "kind": "implementation",
+  "status": "queued",
+  "owner": null,
+  "branch": null,
+  "depends_on": [
+    "cannon-inventory",
+    "cannon-contract",
+    "go-toolchain"
+  ],
+  "write_paths": [
+    ".migration/tasks/cannon-implementation.json",
+    "go/services/cannon",
+    "changelog.d/5-internal/cannon-implementation"
+  ],
+  "plan": "docs/go-migration/plans/cannon.md",
+  "acceptance_criteria": [
+    {
+      "id": "service",
+      "description": "Runnable whole-service Go cannon preserves frozen classic/event protocols, queue/Cassandra/presence effects, config and bounded operations.",
+      "required_evidence": "First runnable classic comparison then complete events implementation; exact final source/binary, original35 and frozen supplemental outcomes reviewed. Optional packaging/defaults and switchback verified separately before availability."
+    },
+    {
+      "id": "quality",
+      "description": "Formatting, build, vet, race/security and dependency checks pass for the final candidate.",
+      "required_evidence": "Actual pinned Go check output; meaningful generation/typed ack/input/TLS/concurrency regressions; no protected-oracle or Haskell-default changes."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": "Start runnable classic await/push/presence slice immediately using approved dependency pins; compare frozen HTTP/classic reference, then add RabbitMQ events and Cassandra recovery. Keep oracle immutable and preserve supported Haskell defaults."
+}

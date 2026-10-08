@@ -4,7 +4,7 @@
   "title": "Advance approved cannon gates and queue whole-service implementation",
   "service": "framework",
   "kind": "framework",
-  "status": "active",
+  "status": "done",
   "owner": "codex",
   "branch": "go-migration",
   "depends_on": [
@@ -26,7 +26,18 @@
       "required_evidence": "State/transition/scope checks; explicit reuse of inventory finite executable plan plus contract dependency proof; no candidate compatibility or default change."
     }
   ],
-  "evidence": [],
-  "review": null,
-  "handoff": "Serialized whole-service coordination. Reuse reviewed finite plan rather than duplicate discovery; optional candidate code needs implementing stage first."
+  "evidence": [
+    {
+      "criterion": "gates",
+      "result": "pass",
+      "command": "Adjacent registered->inventoried->contracted->implementing transitions individually validated. Done inventory explicitly reviewed finite plan, contract supplies actual35 baseline and pinned compiled/scanned dependencies; reuse recorded in contract review. Queued candidate scope is additive task/module/changelog only; no current compatibility or selection/default claim.",
+      "revision": "c733faa20960fa8ae3ee6f98db106256e4d2f22a",
+      "artifact": "docs/go-migration/services/cannon/contract.md"
+    }
+  ],
+  "review": {
+    "by": "codex (self-review delegated by user)",
+    "artifact": "docs/go-migration/services/cannon/contract.md"
+  },
+  "handoff": "Legal adjacent gates advanced with the existing reviewed plan; candidate ready to claim. Whole service not implemented/verified/available yet, compatibility null. No push/default/security exception/production switch."
 }
