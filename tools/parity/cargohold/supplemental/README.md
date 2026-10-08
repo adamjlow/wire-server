@@ -138,3 +138,10 @@ while waiting for process exit, adding the full 30-second grace period after the
 bytes had drained. The controller now closes that client before waiting; the
 predeclared 30-second bound is unchanged. Go truncates the active response, a
 candidate bug requiring code repair. No failed report is relabelled as passing.
+
+[Repaired lifecycle capture](lifecycle-observations.json) and [identity](lifecycle-run.json)
+match all six cases at candidate a9ce03028fb577278312cf78f048624076f36f35.
+The cancellation effects include the same single unfinished 6 MiB part, with
+owned cleanup after observation. During SIGTERM, both reject new requests, stay
+alive while the peer stream is held, drain the complete 2 MiB download, and exit
+zero within the fixed 30-second limit. CLI help/config rejection also match.

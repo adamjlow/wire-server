@@ -120,7 +120,7 @@ def execute():
         return effects
     try:
         hs=start('haskell');go=start('go')
-        if os.environ.get('CARGOHOLD_SUPPLEMENT_GROUP') in ('extended','configuration','mixed','operations','lifecycle'):
+        if os.environ.get('CARGOHOLD_SUPPLEMENT_GROUP') in ('extended','configuration','mixed','operations','lifecycle','schema'):
             if os.environ['CARGOHOLD_SUPPLEMENT_GROUP']=='extended':
                 from extended import run
             elif os.environ['CARGOHOLD_SUPPLEMENT_GROUP']=='configuration':
@@ -129,8 +129,10 @@ def execute():
                 from mixed import run
             elif os.environ['CARGOHOLD_SUPPLEMENT_GROUP']=='operations':
                 from operations import run
-            else:
+            elif os.environ['CARGOHOLD_SUPPLEMENT_GROUP']=='lifecycle':
                 from lifecycle import run
+            else:
+                from schema_cases import run
             records=run(ref,ports,start,stop,request,store_effects,hs,go)
             result={'result':'supplemental-observed','whole_service_parity':False,'cases':records,
                     'mismatches':[r['id'] for r in records if not r['equal']]}
