@@ -35,7 +35,7 @@ def host(binary, output, group, federator=None):
         raise ValueError('commit candidate inputs before smoke')
     revision = call(['git', 'rev-parse', 'HEAD'])
     binary = binary.resolve(strict=True)
-    if group=='mixed' and federator is None:raise ValueError('mixed requires a compiled synthetic h2c fixture')
+    if group in ('mixed','lifecycle') and federator is None:raise ValueError('mixed requires a compiled synthetic h2c fixture')
     if federator is not None:federator=federator.resolve(strict=True)
     output.mkdir()
     (output/'reports').mkdir()
@@ -93,7 +93,7 @@ def host(binary, output, group, federator=None):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--inside', action='store_true')
-    parser.add_argument('--group', choices=['core','extended','configuration','mixed','operations'], default='core')
+    parser.add_argument('--group', choices=['core','extended','configuration','mixed','operations','lifecycle'], default='core')
     parser.add_argument('--binary', type=Path)
     parser.add_argument('--federator', type=Path)
     parser.add_argument('--output', type=Path)

@@ -17,17 +17,32 @@ import (
 func main() {
 	var lock sync.Mutex
 	target := "8085"
+	var held bool
+	var release chan struct{}
 	handler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if r.URL.Path == "/control" {
 			var value struct {
 				Target string `json:"target"`
+				Hold   *bool  `json:"hold"`
 			}
-			if r.Method != "POST" || json.NewDecoder(io.LimitReader(r.Body, 128)).Decode(&value) != nil || (value.Target != "8084" && value.Target != "8085") {
+			if r.Method != "POST" || json.NewDecoder(io.LimitReader(r.Body, 128)).Decode(&value) != nil || ((value.Target != "" && value.Target != "8084" && value.Target != "8085") || (value.Target == "" && value.Hold == nil)) {
 				w.WriteHeader(400)
 				return
 			}
 			lock.Lock()
-			target = value.Target
+			if value.Target != "" {
+				target = value.Target
+			}
+			if value.Hold != nil {
+				if *value.Hold && !held {
+					release = make(chan struct{})
+					held = true
+				}
+				if !*value.Hold && held {
+					close(release)
+					held = false
+				}
+			}
 			lock.Unlock()
 			w.WriteHeader(200)
 			return
@@ -84,6 +99,26 @@ func main() {
 		}
 		w.Header().Set("Wire-Remote-IP", "192.0.2.20")
 		w.WriteHeader(resp.StatusCode)
+		lock.Lock()
+		wait := release
+		hold := held
+		lock.Unlock()
+		if parts[3] == "stream-asset" && hold && resp.StatusCode == 200 {
+			first := make([]byte, 8192)
+			n, err := io.ReadFull(resp.Body, first)
+			if err != nil && err != io.ErrUnexpectedEOF {
+				return
+			}
+			if _, err := w.Write(first[:n]); err != nil {
+				return
+			}
+			w.(http.Flusher).Flush()
+			select {
+			case <-wait:
+			case <-r.Context().Done():
+				return
+			}
+		}
 		_, _ = io.Copy(w, io.LimitReader(resp.Body, 28*1024*1024+1))
 	})
 	server := http.Server{Addr: "127.0.0.1:8097", Handler: h2c.NewHandler(handler, &http2.Server{}), ReadHeaderTimeout: 10 * time.Second}
