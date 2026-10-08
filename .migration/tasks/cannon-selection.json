@@ -4,7 +4,7 @@
   "title": "Cannon optional selection",
   "service": "cannon",
   "kind": "operations",
-  "status": "active",
+  "status": "done",
   "owner": "codex",
   "branch": "go-migration",
   "depends_on": [
@@ -21,7 +21,18 @@
       "required_evidence": "Actual final nonroot/readonly/private-network image smoke and exact binary/image pins; existing full Helm renders change only cannon container image, preserve defaults and fail closed; original67 mixed and real persisted switchback pass."
     }
   ],
-  "evidence": [],
-  "review": null,
-  "handoff": "Review actual final optional image, unchanged validated Helm selector/defaults and mixed/switchback proofs; no production switch or remote push."
+  "evidence": [
+    {
+      "criterion": "selection",
+      "result": "pass",
+      "command": "Review final image sha256:3e3fb5782d0054fe1788f0c6c6dc9895fd9c40c8092651b45ff4f130fe4e49cc containing exact final binary: UID65534/read-only/capDropALL/default config/private owned network/no host ports/health200/SIGTERM0. Reuse unchanged real Helm3.22 render proof: only cannon StatefulSet service image changes, omitted selection byte-identical and invalid shapes fail closed. Final all3Go original67 and bidirectional real persisted switchback pass.",
+      "revision": "411f525e421d15e673870ace345462c4c4f80372",
+      "artifact": "go/services/cannon/REVIEW.md"
+    }
+  ],
+  "review": {
+    "by": "codex (self-review delegated by user)",
+    "artifact": "go/services/cannon/REVIEW.md"
+  },
+  "handoff": "Optional packaging qualified; Haskell supported/default. No pushed image, production install or traffic switch."
 }
