@@ -4,7 +4,7 @@
   "title": "Publish gundeck contract and implementation-plan gates",
   "service": "framework",
   "kind": "framework",
-  "status": "active",
+  "status": "done",
   "owner": "codex",
   "branch": "go-migration",
   "depends_on": [
@@ -23,7 +23,18 @@
       "required_evidence": "Done reference contract and executable finite inventory/plan, pinned Go tooling; legal scoped state transitions without compatibility claim."
     }
   ],
-  "evidence": [],
-  "review": null,
-  "handoff": "Publish contracted then implementing only; actual Go qualification remains unsatisfied."
+  "evidence": [
+    {
+      "criterion": "gates",
+      "result": "pass",
+      "command": "Review done inventory/contract and existing pinned Go toolchain; scoped adjacent contracted then implementing stage validation passes. No candidate compatibility/default change.",
+      "revision": "2d7e5ddb216c9024727f4d947162c1402d00f44d",
+      "artifact": ".migration/services/gundeck.json"
+    }
+  ],
+  "review": {
+    "by": "codex (self-review delegated by user)",
+    "artifact": ".migration/reviews/gundeck-contract.md"
+  },
+  "handoff": "Whole-service implementation ready; exact tested candidate evidence still required before verified/available."
 }
