@@ -100,6 +100,9 @@ func parseUpload(input io.Reader) (*bufio.Reader, uploadSettings, int64, error) 
 		}
 		return r, settings, 0, p.failure(message)
 	}
+	if err = validateUploadSettings(raw, &settings); err != nil {
+		return r, settings, 0, p.failure(err.Error())
+	}
 	p = newPosition()
 	line, err := p.lineFrom(r)
 	if err != nil {
@@ -120,6 +123,47 @@ func parseUpload(input io.Reader) (*bufio.Reader, uploadSettings, int64, error) 
 	}
 	n, err = headerLength(headers, beforeBlank)
 	return r, settings, n, err
+}
+
+// Optional metadata is still schema-checked when audit logging is disabled.
+// Do this before opening an S3 upload, as in the reference's AssetSettings decoder.
+func validateUploadSettings(raw []byte, settings *uploadSettings) error {
+	var fields map[string]json.RawMessage
+	if err := json.Unmarshal(raw, &fields); err != nil {
+		return err
+	}
+	if value := fields["retention"]; len(value) != 0 && string(value) != "null" {
+		switch settings.Retention {
+		case "eternal", "persistent", "volatile", "eternal-infrequent_access", "expiring":
+		default:
+			return errors.New("Error in $.retention: Unexpected value for enum AssetRetention_LTU4Mjc4NDIz")
+		}
+	}
+	if value := settings.ConvID; len(value) != 0 && string(value) != "null" {
+		var conv struct {
+			Domain string `json:"domain"`
+			ID     string `json:"id"`
+		}
+		if err := json.Unmarshal(value, &conv); err != nil {
+			return fmt.Errorf("Error in $.convId: %s", err)
+		}
+		if !validUUID(conv.ID) {
+			return errors.New("Error in $.convId.id: Invalid UUID")
+		}
+		if !validDomain(conv.Domain) {
+			return errors.New("Error in $.convId.domain: Invalid domain name")
+		}
+		conv.Domain = strings.ToLower(conv.Domain)
+		conv.ID = strings.ToLower(conv.ID)
+		settings.ConvID, _ = json.Marshal(conv)
+	}
+	if settings.Filetype != nil {
+		mediaType, _, err := mime.ParseMediaType(*settings.Filetype)
+		if err != nil || !strings.Contains(mediaType, "/") {
+			return errors.New("Error in $.filetype: Invalid MIME type")
+		}
+	}
+	return nil
 }
 
 func partHeaders(r *bufio.Reader, p *parserPosition, payload bool) (map[string]string, parserPosition, error) {
