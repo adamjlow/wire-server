@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "id": "cargohold-reference",
+  "title": "Characterize cargohold authorization and parser/storage edge contracts on the pinned reference",
+  "service": "framework",
+  "kind": "framework",
+  "status": "queued",
+  "owner": null,
+  "branch": null,
+  "depends_on": [
+    "e2e-environment"
+  ],
+  "write_paths": [
+    ".migration/tasks/cargohold-reference.json",
+    "docs/go-migration/plans/cargohold-reference.md",
+    "tools/parity/cargohold",
+    "changelog.d/5-internal/cargohold-reference"
+  ],
+  "plan": "docs/go-migration/plans/cargohold-reference.md",
+  "acceptance_criteria": [
+    {
+      "id": "capture",
+      "description": "Real pinned Haskell observations characterize federation UUID/domain and legacy OTR requester handling, plus multipart quirks needed for the Go parser.",
+      "required_evidence": "Actual isolated reference requests, seeded S3 metadata/bytes, positive/negative controls and immutable image/config/tool identities; no candidate or security disposition invented."
+    },
+    {
+      "id": "checks",
+      "description": "Reference characterization remains isolated and preserves original assertions, sources and defaults.",
+      "required_evidence": "Bounded request/artifact handling and owned cleanup, focused tool and migration checks, source-derived case expectations reviewed separately from candidate work."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": "Characterize exact reference behavior before resolving the existing cargohold contract findings."
+}
