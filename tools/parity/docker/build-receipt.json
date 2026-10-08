@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "result": "built",
+  "image_id": "sha256:3fc7271a686bb92bebb0666231d6b6b52fe801ed9c6bc00c3589231668734628",
+  "source_revision": "abc423639c7f7d5bcd0e136a1d88be072ec7738f",
+  "base_image": "quay.io/wire/integration@sha256:f5db439022d1c0ccf071c25f9c0d132ed21a9e5e3647db59c593d33614bc4f27",
+  "files_sha256": {
+    "harness.py": "9db7777c222428557f784d3c905aa00bb68bcdf566deaa5249392d8f12ebadae",
+    "e2e-tests.json": "3dc3a3466039525a49305cad6ee23b3e8ede9c499cf603e161ea63e773de786c",
+    "Dockerfile": "c0200e35ac369e1f470540f188122446c03330bb0450db0f4d7ee102ad948cf0",
+    "runner.py": "4c712811e1277efd5fc36dde7873b03394f01b068985e9a95d2ea54b79602e85",
+    "entrypoint.sh": "0a353437072764f537d9d1568868104c55e8e9080d06c32c31d6f1162ad0eb2f"
+  },
+  "e2e_executed": false
+}

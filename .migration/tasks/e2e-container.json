@@ -4,7 +4,7 @@
   "title": "Build isolated upstream e2e runner container",
   "service": "framework",
   "kind": "framework",
-  "status": "active",
+  "status": "done",
   "owner": "codex",
   "branch": "go-migration",
   "depends_on": [
@@ -31,7 +31,25 @@
       "required_evidence": "Focused boundary tests, migration/scope/diff checks and unchanged Haskell source/defaults."
     }
   ],
-  "evidence": [],
-  "review": null,
-  "handoff": ""
+  "evidence": [
+    {
+      "criterion": "runner",
+      "result": "pass",
+      "command": "Actual pinned Docker build and restricted non-root no-network preflight: original compiled integration/service binaries present, five proxy and 27 cargohold functions discovered. This is discovery, not executed e2e assertions; backend stack remains unprovisioned.",
+      "revision": "abc423639c7f7d5bcd0e136a1d88be072ec7738f",
+      "artifact": "tools/parity/docker/preflight-receipt.json"
+    },
+    {
+      "criterion": "checks",
+      "result": "pass",
+      "command": "42 parity/container unit tests, migration checker/32 tests, scoped diff/whitespace checks; original Haskell code/default charts/build inputs unchanged. Empty/failed/skipped reports and missing environment cannot pass.",
+      "revision": "abc423639c7f7d5bcd0e136a1d88be072ec7738f",
+      "artifact": "docs/go-migration/plans/e2e-container.md"
+    }
+  ],
+  "review": {
+    "by": "codex (self-review delegated by user)",
+    "artifact": "docs/go-migration/plans/e2e-container.md"
+  },
+  "handoff": "Container runner built and actual original compiled-suite discovery succeeded without installing host Haskell/backend packages. Immutable local image/binary/input receipts retained. Complete e2e environment still requires task-owned dependency and static-peer containers/fixtures; no full e2e success or service promotion claimed. All commits remain local on go-migration."
 }

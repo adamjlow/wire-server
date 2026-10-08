@@ -26,3 +26,45 @@ preflight works, original proxy/cargohold test names can be discovered, selectio
 keeps Haskell peers and requires complete reports, default Haskell inputs unchanged.
 Meaningful orchestration negatives, migration/scope/whitespace checks. Document
 missing dependency qualification honestly. No service migration/production change.
+
+## Outcome, 2026-10-08
+
+Actual runner image built successfully at
+`abc423639c7f7d5bcd0e136a1d88be072ec7738f`, image
+`sha256:3fc7271a686bb92bebb0666231d6b6b52fe801ed9c6bc00c3589231668734628`.
+[Build receipt](../../../tools/parity/docker/build-receipt.json) retains immutable
+base/image/source and input-file hashes.
+[Actual preflight](../../../tools/parity/docker/preflight-receipt.json) records
+UID 65534, integration/service executable hashes and all five original proxy plus
+27 core cargohold test functions discovered from the compiled suite. It ran with
+networking disabled, read-only rootfs, capability drops and bounded resources;
+only its actual created container ID was removed. No host Haskell toolchain or
+backend package was installed. The base bundle is approximately 3.9 GB unpacked;
+tiny runner layers reuse that image rather than duplicating its Nix runtime.
+
+42 parity/container boundary tests pass (six new container checks), including
+receipt/destination rejection, non-root image enforcement before execution,
+compiled-test coverage checking, missing-environment rejection and rejecting an
+empty XML report from a zero-exit process. Migration validation/tests (32), scope
+and whitespace pass; original Haskell code/fixtures/charts/Nix/Cabal inputs are
+unchanged. Runner documentation names exact build/preflight commands and per-service
+substitution, without suggesting manual user validation.
+
+The publisher bundle contains the original integration executable and Haskell
+service binaries but not a standalone `run-services` executable. The container
+uses the existing suite's PATH-launch mode with configs outside `services/`,
+mounting synthetic service configs under `/etc/wire`; static Haskell peers must
+be provided by the disposable environment orchestrator. Full-suite mode validates
+process exit and all required XML cases, and records a separate run receipt.
+It is not executed by preflight and is not qualified by mock boundary tests.
+
+Remaining environment work: task-owned backend/peer containers, private networks,
+fixture/config initialization and one Haskell baseline run, followed by candidate
+selection. The upstream dev Compose file cannot be launched unchanged because it
+has fixed global container names/subnets and host port bindings. No full e2e test
+success, storage switchback, source attestation or production deployment is claimed.
+
+Review: **codex (self-review delegated by user)** under the user's Docker setup
+request and existing explicit self-review delegation. Approve the bounded image
+build/discovery outcome and absence of host toolchain installs. This does not
+approve unprovisioned e2e execution or advance any service compatibility gate.
