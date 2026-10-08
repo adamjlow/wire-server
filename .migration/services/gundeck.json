@@ -2,7 +2,7 @@
   "schema_version": 1,
   "service": "gundeck",
   "reference_path": "services/gundeck",
-  "stage": "implementing",
+  "stage": "verified",
   "oracle_paths": [
     "services/gundeck",
     "docs/go-migration/services/gundeck/contract.md",
@@ -17,7 +17,24 @@
     ],
     "plan": [
       "gundeck-inventory"
+    ],
+    "parity": [
+      "gundeck-verification"
+    ],
+    "security": [
+      "gundeck-verification"
+    ],
+    "operations": [
+      "gundeck-verification"
+    ],
+    "rollback": [
+      "gundeck-verification"
     ]
   },
-  "compatibility": null
+  "compatibility": {
+    "upstream_revision": "f6636ed53315fa7b0fc4c8aa39c0bb30c98b6d5e",
+    "reference_revision": "f6636ed53315fa7b0fc4c8aa39c0bb30c98b6d5e",
+    "candidate_revision": "6b532d03cf2bb9e31a55b9108fa52abb79f05aea",
+    "verification_task": "gundeck-verification"
+  }
 }
