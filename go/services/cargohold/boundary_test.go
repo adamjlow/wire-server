@@ -14,6 +14,7 @@ import (
 func TestFederationReferenceAuthorizationAndTokenPresence(t *testing.T) {
 	owner := "11111111-1111-4111-8111-111111111111"
 	other := "22222222-2222-4222-8222-222222222222"
+	// Malformed legacy audit metadata is omitted by the typed reference copy.
 	store := &fixtureStore{meta: map[string]string{"user": owner, "token": "private"}, stored: []byte("fixture")}
 	s := NewServer(Config{}, store)
 	for _, test := range []struct {
@@ -106,7 +107,7 @@ func TestVersionAndTokenMutationBoundaries(t *testing.T) {
 		r.Header.Set("Z-User", owner)
 		w := httptest.NewRecorder()
 		s.ServeHTTP(w, r)
-		if w.Code != 200 || store.meta["wire-metadata"] != "audit" {
+		if w.Code != 200 || store.meta["wire-metadata"] != "" {
 			t.Fatalf("%s token copy: %d %s", method, w.Code, w.Body.String())
 		}
 		if method == "POST" && (store.meta["token"] == "" || store.meta["token"] == "old") {

@@ -73,6 +73,18 @@ func (s *Server) changeToken(w http.ResponseWriter, r *http.Request, asset, owne
 		assetError(w, 403, "unauthorised", "Unauthorised operation")
 		return
 	}
+	// Reconstruct typed metadata exactly as the reference copy operation does.
+	// Old raw JSON audit metadata is canonicalized and unknown fields are dropped.
+	copyMeta := map[string]string{kind: id}
+	if audit := parseAuditMetadata(meta["wire-metadata"]); audit != nil {
+		encoded, err := json.Marshal(audit)
+		if err != nil {
+			serverError(w)
+			return
+		}
+		copyMeta["wire-metadata"] = percentEncode(encoded)
+	}
+	meta = copyMeta
 	var token string
 	if r.Method == "POST" {
 		token, err = randToken()

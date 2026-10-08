@@ -5,6 +5,7 @@ import (
 	"context"
 	"crypto/tls"
 	"encoding/json"
+	"errors"
 	"io"
 	"net"
 	"net/http"
@@ -69,7 +70,7 @@ func (s *Server) federation(w http.ResponseWriter, r *http.Request, route string
 		return
 	}
 	defer body.Close()
-	s.audit(r, "file-download", "user", request.User, r.Header.Get("Wire-Origin-Domain"), meta, "download.path", key, r.Header.Get("Wire-Origin-Remote-IP"))
+	s.audit(r, "file-download", "user", request.User, r.Header.Get("Wire-Origin-Domain"), meta, "download.path", key, r.Header.Get("Wire-Origin-IP"))
 	w.Header().Set("Content-Type", "application/octet-stream")
 	_, _ = io.Copy(w, body)
 }
@@ -92,13 +93,19 @@ func (s *Server) remoteDownload(w http.ResponseWriter, r *http.Request, domain, 
 	}
 	body, _ := json.Marshal(assetRequest{User: user, Key: asset, Token: requestToken(r)})
 	request := func(route string) (*http.Response, error) {
+		version, err := s.negotiateFederation(r, domain)
+		if err != nil {
+			return nil, err
+		}
 		ep := "http://" + net.JoinHostPort(s.Config.Federator.Host, strconv.Itoa(s.Config.Federator.Port)) + "/rpc/" + url.PathEscape(domain) + "/cargohold/" + route
 		req, err := http.NewRequestWithContext(r.Context(), "POST", ep, bytes.NewReader(body))
 		if err != nil {
 			return nil, err
 		}
-		req.Header.Set("Content-Type", "application/json")
-		req.Header.Set("Accept", "application/json")
+		req.Header.Set("Accept", "application/json;charset=utf-8,application/json")
+		if route == "get-asset" {
+			req.Header.Set("X-Wire-API-Version", strconv.Itoa(version))
+		}
 		if route == "stream-asset" {
 			req.Header.Set("Accept", "application/octet-stream")
 		}
@@ -108,7 +115,7 @@ func (s *Server) remoteDownload(w http.ResponseWriter, r *http.Request, domain, 
 	}
 	response, err := request("get-asset")
 	if err != nil {
-		assetError(w, 500, "federation-not-available", "Local federator not available")
+		s.federationRequestError(w, err)
 		return
 	}
 	if response.StatusCode != 200 {
@@ -130,7 +137,7 @@ func (s *Server) remoteDownload(w http.ResponseWriter, r *http.Request, domain, 
 	}
 	response, err = request("stream-asset")
 	if err != nil {
-		assetError(w, 500, "federation-not-available", "Local federator not available")
+		s.federationRequestError(w, err)
 		return
 	}
 	if response.StatusCode != 200 {
@@ -173,4 +180,67 @@ func validDomain(domain string) bool {
 		}
 	}
 	return true
+}
+
+// Federation version negotiation is performed independently for availability
+// and streaming, matching the reference client and its supported V0..V4 range.
+type federationVersionError string
+
+func (e federationVersionError) Error() string { return string(e) }
+
+type federationStatusError struct{ response *http.Response }
+
+func (e *federationStatusError) Error() string { return "federator response error" }
+
+func (s *Server) negotiateFederation(r *http.Request, domain string) (int, error) {
+	endpoint := "http://" + net.JoinHostPort(s.Config.Federator.Host, strconv.Itoa(s.Config.Federator.Port)) + "/rpc/" + url.PathEscape(domain) + "/brig/api-version"
+	req, err := http.NewRequestWithContext(r.Context(), "POST", endpoint, strings.NewReader("[]"))
+	if err != nil {
+		return 0, err
+	}
+	req.Header.Set("Wire-Origin-Domain", s.Config.Settings.FederationDomain)
+	req.Header.Set("Wire-Origin-Request-Id", r.Header.Get("Request-Id"))
+	req.Header["Accept"] = []string{""}
+	response, err := s.federationClient.Do(req)
+	if err != nil {
+		return 0, err
+	}
+	if response.StatusCode < 200 || response.StatusCode >= 300 {
+		return 0, &federationStatusError{response}
+	}
+	defer response.Body.Close()
+	var info struct {
+		Supported *[]int `json:"supported"`
+		Versions  *[]int `json:"supported_versions"`
+	}
+	if json.NewDecoder(response.Body).Decode(&info) != nil || info.Supported == nil {
+		return 0, federationVersionError("Remote federator returned invalid version information")
+	}
+	versions := []int{0}
+	if info.Versions != nil {
+		versions = *info.Versions
+	}
+	latest := -1
+	for _, v := range versions {
+		if v >= 0 && v <= 4 && v > latest {
+			latest = v
+		}
+	}
+	if latest < 0 {
+		return 0, federationVersionError("Version negotiation failed: the remote backend is too old")
+	}
+	return latest, nil
+}
+
+func (s *Server) federationRequestError(w http.ResponseWriter, err error) {
+	var version federationVersionError
+	var response *federationStatusError
+	switch {
+	case errors.As(err, &version):
+		assetError(w, 533, "federation-version-error", string(version))
+	case errors.As(err, &response):
+		s.federationResponseError(w, response.response)
+	default:
+		assetError(w, 500, "federation-not-available", "Internal Server Error")
+	}
 }
