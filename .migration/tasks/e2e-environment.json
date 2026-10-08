@@ -4,9 +4,9 @@
   "title": "Provision private Docker dependencies and qualify original Haskell e2e baseline",
   "service": "framework",
   "kind": "framework",
-  "status": "queued",
-  "owner": null,
-  "branch": null,
+  "status": "active",
+  "owner": "codex",
+  "branch": "go-migration",
   "depends_on": [
     "e2e-container"
   ],
