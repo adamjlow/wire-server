@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "id": "proxy-cargohold-combined",
+  "title": "Run unchanged original tests with Go proxy and Go cargohold together",
+  "service": "cargohold",
+  "kind": "contract-change",
+  "status": "queued",
+  "owner": null,
+  "branch": null,
+  "depends_on": [
+    "cargohold-selection",
+    "e2e-environment"
+  ],
+  "write_paths": [
+    ".migration/tasks/proxy-cargohold-combined.json",
+    "tools/parity/docker",
+    "changelog.d/5-internal/proxy-cargohold-combined"
+  ],
+  "plan": "docs/go-migration/plans/e2e-environment.md",
+  "acceptance_criteria": [
+    {
+      "id": "combined",
+      "description": "Both Go components run simultaneously with pinned Haskell peers; unchanged original proxy 5 and cargohold 27 assertions all pass.",
+      "required_evidence": "Exact two candidate source/hash pins, all staged peer executable identities, original XML and validated run receipts, successful owned cleanup; no full-backend-suite claim."
+    },
+    {
+      "id": "harness",
+      "description": "Add bounded multi-service selection preserving existing single-service selection and assertions.",
+      "required_evidence": "Focused selection/identity negatives, existing harness/controller checks, scoped state validation and delegated review. Private synthetic Docker only, no defaults or production changes."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": "Authorized by user ok go: extend selection, build pinned runner, reuse identified candidates, run two original suites against one shared two-Go/Haskell environment, retain and review results. No supplemental repeats."
+}
