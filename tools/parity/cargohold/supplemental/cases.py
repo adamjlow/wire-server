@@ -13,6 +13,8 @@ import threading
 import time
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import urlsplit
+from datetime import datetime
+import re
 
 ROOT=Path('/source')
 OWNER='11111111-1111-4111-8111-111111111111'
@@ -20,6 +22,26 @@ OTHER='22222222-2222-4222-8222-222222222222'
 ASSET='33333333-3333-4333-8333-333333333333'
 CONV='44444444-4444-4444-8444-444444444444'
 DATA=b'cargo-fixture'
+
+
+def normalize_signed(ref,location):
+    # The independent helper restricts the destination and fetches signed bytes.
+    result=ref.signed_location(location)
+    if result['read_status']!=200:raise ValueError('signed read did not verify')
+    query=result['query']
+    if query.get('X-Amz-Algorithm')!=['AWS4-HMAC-SHA256']:raise ValueError('invalid signing algorithm')
+    dates=query.get('X-Amz-Date',[])
+    if len(dates)!=1:raise ValueError('missing signing date')
+    datetime.strptime(dates[0],'%Y%m%dT%H%M%SZ')
+    credentials=query.get('X-Amz-Credential',[])
+    if len(credentials)!=1:raise ValueError('missing signing scope')
+    parts=credentials[0].split('/')
+    if len(parts)!=5 or not re.fullmatch(r'[0-9]{8}',parts[1]) or parts[1]!=dates[0][:8] or parts[3:]!=['s3','aws4_request']:
+        raise ValueError('invalid signing scope')
+    if not query.get('X-Amz-SignedHeaders') or not query.get('X-Amz-Expires'):raise ValueError('missing signing headers/expiry')
+    query.pop('X-Amz-Date')
+    query['X-Amz-Credential']=[parts[0]+'/<validated-signing-date>/'+ '/'.join(parts[2:])]
+    return result
 
 
 def execute():
@@ -70,17 +92,11 @@ def execute():
         if h.get('content-type','').startswith('application/json'):
             result['body']=json.loads(data)
             if isinstance(result['body'],str) and path.startswith('/i/assets/'):
-                result['body']=ref.signed_location(result['body'])
-                result['body']['query'].pop('X-Amz-Date',None)
-                # Credentials include signing date: preserve principal and region/service scope.
-                for name,value in result['body']['query'].items():
-                    if name.lower()=='x-amz-credential':result['body']['query'][name]=[v.split('/')[0]+'/<validated-signing-date>/'+ '/'.join(v.split('/')[2:]) for v in value]
+                result['body']=normalize_signed(ref,result['body'])
         if 'location' in h:
             location=h['location']
             if status==302:
-                signed=ref.signed_location(location)
-                result['signed']={k:v for k,v in signed.items() if k!='query'}
-                query=signed['query'];result['signed']['expiry']=query.get('X-Amz-Expires',query.get('x-amz-expires'))
+                result['signed']=normalize_signed(ref,location)
             else:result['location']=location
         return result
     def compare(name,method,path,headers=None,body=None):
