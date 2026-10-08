@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "id": "gundeck-implementation",
+  "title": "Build and qualify whole-service optional Go gundeck",
+  "service": "gundeck",
+  "kind": "implementation",
+  "status": "active",
+  "owner": "codex",
+  "branch": "go-migration",
+  "depends_on": [
+    "gundeck-contract",
+    "gundeck-implementation-gates",
+    "go-toolchain"
+  ],
+  "write_paths": [
+    ".migration/tasks/gundeck-implementation.json",
+    "go/services/gundeck",
+    "docs/go-migration/plans/gundeck.md",
+    "changelog.d/5-internal/gundeck-implementation"
+  ],
+  "plan": "docs/go-migration/plans/gundeck.md",
+  "acceptance_criteria": [
+    {
+      "id": "service",
+      "description": "Runnable whole-service gundeck preserves frozen public/internal APIs and Redis/Cassandra/brig/cannon/queue/native/SQS effects.",
+      "required_evidence": "Early executable health/presence/storage slice compared with real Haskell, then full exact-source/binary original72 four-Go plus remaining Haskell peers and frozen38/13/40 records; serious inherited concerns documented, no original/default/oracle edits."
+    },
+    {
+      "id": "quality",
+      "description": "Pinned Go module format/build/vet/race and security/dependency checks pass with concrete regressions.",
+      "required_evidence": "Actual final pinned Go checks, strict typed input/generation/client isolation/TLS/SQS failure and native sharing/paging regressions; exact module pins and source/binary receipts."
+    },
+    {
+      "id": "selection-rollback",
+      "description": "Optional packaging/default preservation and real cross-runtime storage/provider switchback are validated.",
+      "required_evidence": "Nonroot image smoke, one-service Helm render/default/fail-closed proof, real persisted Redis/Cassandra/token/queue Haskell-to-Go and Go-to-Haskell switchback, bounded in-flight shutdown and operations smoke; no production or remote push."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": "Build runnable core slice immediately, compare stored presence/notification requests against approved real reference, then finish broker/native/feedback and final finite matrix. Whole-service task remains active until every criterion passes."
+}
