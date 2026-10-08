@@ -31,7 +31,7 @@ func main() {
 		log.Fatal("S3 initialization failed")
 	}
 	app := cargo.NewServer(c, store)
-	server := &http.Server{Addr: net.JoinHostPort(c.Cargohold.Host, strconv.Itoa(c.Cargohold.Port)), Handler: app, ReadHeaderTimeout: 10 * time.Second}
+	server := &http.Server{Addr: net.JoinHostPort(c.Cargohold.Host, strconv.Itoa(c.Cargohold.Port)), Handler: app, ReadHeaderTimeout: 10 * time.Second, ConnState: app.ConnectionState}
 	go func() {
 		<-ctx.Done()
 		app.StopAccepting()

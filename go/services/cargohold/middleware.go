@@ -2,10 +2,20 @@ package cargohold
 
 import (
 	"net/http"
+	"time"
 )
 
 func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	w = &responseContext{ResponseWriter: w, method: r.Method}
+	response := &responseContext{ResponseWriter: w, method: r.Method}
+	w = response
+	started := time.Now()
+	defer func() {
+		status := response.status
+		if status == 0 {
+			status = 200
+		}
+		s.observeHTTP(r, status, time.Since(started))
+	}()
 	defer func() {
 		if recovered := recover(); recovered != nil {
 			s.Logger.Event("Error", "request failed")
@@ -31,10 +41,14 @@ func (s *Server) Listening(address string) { s.Logger.Event("Info", "Listening o
 type responseContext struct {
 	http.ResponseWriter
 	method string
+	status int
 }
 
 func (w *responseContext) Unwrap() http.ResponseWriter { return w.ResponseWriter }
 func (w *responseContext) Flush() {
+	if w.status == 0 {
+		w.WriteHeader(http.StatusOK)
+	}
 	if f, ok := w.ResponseWriter.(http.Flusher); ok {
 		f.Flush()
 	}
@@ -43,4 +57,18 @@ func bareError(w http.ResponseWriter, status int, message string) {
 	w.Header()["Content-Type"] = nil
 	w.WriteHeader(status)
 	_, _ = w.Write([]byte(message))
+}
+
+func (w *responseContext) WriteHeader(status int) {
+	if w.status != 0 {
+		return
+	}
+	w.status = status
+	w.ResponseWriter.WriteHeader(status)
+}
+func (w *responseContext) Write(body []byte) (int, error) {
+	if w.status == 0 {
+		w.WriteHeader(http.StatusOK)
+	}
+	return w.ResponseWriter.Write(body)
 }

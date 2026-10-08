@@ -27,6 +27,8 @@ type Server struct {
 	ready            atomic.Bool
 	uploads          atomic.Uint64
 	bytes            atomic.Uint64
+	connections      atomic.Int64
+	metrics          httpMetrics
 }
 
 func NewServer(c Config, s Store) *Server {
@@ -67,8 +69,7 @@ func (s *Server) serveHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if len(segments) == 2 && segments[0] == "i" && segments[1] == "metrics" && r.Method == "GET" {
-		w.Header().Set("Content-Type", "text/plain; version=0.0.4")
-		fmt.Fprintf(w, "net_s3_upload_ok %d\nnet_s3_upload_size %d\n", s.uploads.Load(), s.bytes.Load())
+		s.writeMetrics(w, r)
 		return
 	}
 	if len(segments) == 2 && segments[0] == "federation" {
@@ -269,11 +270,8 @@ func writeJSON(w http.ResponseWriter, status int, value any) {
 func (s *Server) storeError(w http.ResponseWriter, err error) {
 	// Signing/endpoint exceptions use the runtime error serializer, whereas
 	// an absent GET asset uses the API response serializer with a charset.
-	if wrapped, ok := w.(*responseContext); ok {
-		w = wrapped.ResponseWriter
-	}
 	if errors.Is(err, errNotFound) {
-		assetError(w, 404, "not-found", "Asset not found")
+		assetErrorWithType(w, 404, "not-found", "Asset not found", "application/json")
 	} else {
 		serverError(w)
 	}
@@ -417,6 +415,9 @@ func assetError(w http.ResponseWriter, code int, label, message string) {
 	if wrapped, ok := w.(*responseContext); ok && wrapped.method == "GET" && code == 404 && label == "not-found" {
 		ct = "application/json;charset=utf-8"
 	}
+	assetErrorWithType(w, code, label, message, ct)
+}
+func assetErrorWithType(w http.ResponseWriter, code int, label, message, ct string) {
 	w.Header().Set("Content-Type", ct)
 	w.WriteHeader(code)
 	_ = json.NewEncoder(w).Encode(map[string]any{"code": code, "label": label, "message": message})
