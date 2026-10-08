@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "id": "cannon-completion",
+  "title": "Publish qualified optional cannon availability",
+  "service": "framework",
+  "kind": "framework",
+  "status": "active",
+  "owner": "codex",
+  "branch": "go-migration",
+  "depends_on": [
+    "cannon-verification",
+    "cannon-selection"
+  ],
+  "write_paths": [
+    ".migration/tasks/cannon-completion.json",
+    ".migration/services/cannon.json",
+    "go/services/cannon/REVIEW.md"
+  ],
+  "plan": "docs/go-migration/plans/cannon.md",
+  "acceptance_criteria": [
+    {
+      "id": "gates",
+      "description": "Publish completed cannon gates and exact tested compatibility through adjacent legal stages.",
+      "required_evidence": "Done implementation/count correction/verification/selection tasks, final exact source/binary/review, scoped transition and state tests; Haskell defaults preserved."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": "Publish adjacent verified then available stages for exact qualified tuple; close count correction note only. No production code/default edits."
+}
