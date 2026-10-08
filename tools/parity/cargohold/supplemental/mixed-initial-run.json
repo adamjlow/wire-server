@@ -1,0 +1,13 @@
+{
+  "source_revision": "6b51d5192afb84a032d401f685c75104d9ffca0c",
+  "runner_image": "sha256:fc3e23a19bfa10c7db2a73ade0bfc1fad87aa391514577bdc8d4d90843fcbbc8",
+  "store_image": "dxflrs/garage@sha256:9c96caa2612d3411acc5b0e6701fb238dbfba33e533a6d7d3d811a4b12d0d020",
+  "candidate_sha256": "ab1f3f7ccdafdec790753125b20b4b4947ae140ded50ac272df573190c69e677",
+  "exit_code": 0,
+  "internal_network": true,
+  "published_ports": false,
+  "whole_service_parity": false,
+  "group": "mixed",
+  "federator_sha256": "072ddde628aa2a4b4db4ad85f09f35c35dcf1a69ba8e09168e1de515c5758281",
+  "config_sha256": "f96599304b851190692c30470becfe906f77b3e7d9d9031113a6af8a2db06243"
+}

@@ -58,7 +58,7 @@ func main() {
 			w.WriteHeader(400)
 			return
 		}
-		evidence := map[string]any{"protocol": r.ProtoMajor, "route": parts[3], "target_port": port, "origin": r.Header.Get("Wire-Origin-Domain"), "request_id": r.Header.Get("Wire-Origin-Request-Id"), "user": payload["user"], "key": payload["key"], "token_present": payload["token"] != nil, "accept": r.Header.Get("Accept"), "content_type": r.Header.Get("Content-Type")}
+		evidence := map[string]any{"protocol": r.ProtoMajor, "route": parts[3], "target_port": port, "origin": r.Header.Get("Wire-Origin-Domain"), "request_id": r.Header.Get("Wire-Origin-Request-Id"), "user": payload["user"], "key": payload["key"], "token_present": payload["token"] != nil, "accept": r.Header.Get("Accept"), "content_type": r.Header.Get("Content-Type"), "version": r.Header.Get("X-Wire-API-Version")}
 		encoded, _ := json.Marshal(evidence)
 		log.Print(string(encoded))
 		req, err := http.NewRequestWithContext(r.Context(), "POST", "http://127.0.0.1:"+port+"/federation/"+parts[3], strings.NewReader(string(body)))

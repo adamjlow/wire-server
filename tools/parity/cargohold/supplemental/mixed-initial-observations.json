@@ -1,0 +1,307 @@
+{
+  "result": "supplemental-observed",
+  "whole_service_parity": false,
+  "cases": [
+    {
+      "id": "mixed-haskell-to-go-owner",
+      "response": {
+        "status": 200,
+        "content_type": "application/octet-stream",
+        "body": "cargo-fixture"
+      },
+      "equal": true
+    },
+    {
+      "id": "mixed-haskell-to-go-token",
+      "response": {
+        "status": 200,
+        "content_type": "application/octet-stream",
+        "body": "cargo-fixture"
+      },
+      "equal": true
+    },
+    {
+      "id": "mixed-haskell-to-go-private-denial",
+      "response": {
+        "status": 404,
+        "content_type": "application/json;charset=utf-8",
+        "body": {
+          "code": 404,
+          "label": "not-found",
+          "message": "Asset not found"
+        }
+      },
+      "equal": true
+    },
+    {
+      "id": "mixed-go-to-haskell-owner",
+      "response": {
+        "status": 200,
+        "content_type": "application/octet-stream",
+        "body": "cargo-fixture"
+      },
+      "equal": true
+    },
+    {
+      "id": "mixed-go-to-haskell-token",
+      "response": {
+        "status": 200,
+        "content_type": "application/octet-stream",
+        "body": "cargo-fixture"
+      },
+      "equal": true
+    },
+    {
+      "id": "mixed-go-to-haskell-private-denial",
+      "response": {
+        "status": 404,
+        "content_type": "application/json;charset=utf-8",
+        "body": {
+          "code": 404,
+          "label": "not-found",
+          "message": "Asset not found"
+        }
+      },
+      "equal": true
+    },
+    {
+      "id": "audit-switchback-haskell-user",
+      "bytes_token_audit_delete_effects": true,
+      "equal": true
+    },
+    {
+      "id": "audit-switchback-haskell-bot",
+      "bytes_token_audit_delete_effects": true,
+      "equal": true
+    },
+    {
+      "id": "audit-switchback-haskell-provider",
+      "bytes_token_audit_delete_effects": true,
+      "equal": true
+    },
+    {
+      "id": "audit-switchback-go-user",
+      "bytes_token_audit_delete_effects": true,
+      "equal": true
+    },
+    {
+      "id": "audit-switchback-go-bot",
+      "bytes_token_audit_delete_effects": true,
+      "equal": true
+    },
+    {
+      "id": "audit-switchback-go-provider",
+      "bytes_token_audit_delete_effects": true,
+      "equal": true
+    },
+    {
+      "id": "seeded-audit-token-copy",
+      "responses": {
+        "haskell": {
+          "metadata": {
+            "user": "11111111-1111-4111-8111-111111111111",
+            "wire-metadata": "%7B%22convId%22:%7B%22domain%22:%22example.com%22,%22id%22:%2244444444-4444-4444-8444-444444444444%22%7D,%22filename%22:%22synthetic-file.txt%22,%22filetype%22:%22text%2Fplain%22%7D"
+          },
+          "content_type": "application/octet-stream"
+        },
+        "go": {
+          "metadata": {
+            "user": "11111111-1111-4111-8111-111111111111",
+            "wire-metadata": "{\"convId\":{\"domain\":\"example.com\",\"id\":\"44444444-4444-4444-8444-444444444444\"},\"filename\":\"synthetic-file.txt\",\"filetype\":\"text/plain\"}"
+          },
+          "content_type": "application/octet-stream"
+        }
+      },
+      "equal": false
+    },
+    {
+      "id": "remote-transport-failure",
+      "responses": {
+        "haskell": {
+          "status": 500,
+          "content_type": "application/json",
+          "body": {
+            "code": 500,
+            "label": "federation-not-available",
+            "message": "Internal Server Error"
+          }
+        },
+        "go": {
+          "status": 500,
+          "content_type": "application/json",
+          "body": {
+            "code": 500,
+            "label": "federation-not-available",
+            "message": "Local federator not available"
+          }
+        }
+      },
+      "equal": false
+    },
+    {
+      "id": "mixed-outbound-wire",
+      "trace": [
+        {
+          "origin": "example.com",
+          "protocol": 2,
+          "request_id": "mixed-haskell-owner",
+          "route": "api-version",
+          "version": ""
+        },
+        {
+          "accept": "application/json;charset=utf-8,application/json",
+          "content_type": "",
+          "key": "3-2-33333333-3333-4333-8333-333333333333",
+          "origin": "example.com",
+          "protocol": 2,
+          "request_id": "mixed-haskell-owner",
+          "route": "get-asset",
+          "target_port": "8085",
+          "token_present": false,
+          "user": "11111111-1111-4111-8111-111111111111"
+        },
+        {
+          "origin": "example.com",
+          "protocol": 2,
+          "request_id": "mixed-haskell-owner",
+          "route": "api-version",
+          "version": ""
+        },
+        {
+          "accept": "application/octet-stream",
+          "content_type": "",
+          "key": "3-2-33333333-3333-4333-8333-333333333333",
+          "origin": "example.com",
+          "protocol": 2,
+          "request_id": "mixed-haskell-owner",
+          "route": "stream-asset",
+          "target_port": "8085",
+          "token_present": false,
+          "user": "11111111-1111-4111-8111-111111111111"
+        },
+        {
+          "origin": "example.com",
+          "protocol": 2,
+          "request_id": "mixed-haskell-token",
+          "route": "api-version",
+          "version": ""
+        },
+        {
+          "accept": "application/json;charset=utf-8,application/json",
+          "content_type": "",
+          "key": "3-2-33333333-3333-4333-8333-333333333333",
+          "origin": "example.com",
+          "protocol": 2,
+          "request_id": "mixed-haskell-token",
+          "route": "get-asset",
+          "target_port": "8085",
+          "token_present": true,
+          "user": "22222222-2222-4222-8222-222222222222"
+        },
+        {
+          "origin": "example.com",
+          "protocol": 2,
+          "request_id": "mixed-haskell-token",
+          "route": "api-version",
+          "version": ""
+        },
+        {
+          "accept": "application/octet-stream",
+          "content_type": "",
+          "key": "3-2-33333333-3333-4333-8333-333333333333",
+          "origin": "example.com",
+          "protocol": 2,
+          "request_id": "mixed-haskell-token",
+          "route": "stream-asset",
+          "target_port": "8085",
+          "token_present": true,
+          "user": "22222222-2222-4222-8222-222222222222"
+        },
+        {
+          "origin": "example.com",
+          "protocol": 2,
+          "request_id": "mixed-haskell-private-denial",
+          "route": "api-version",
+          "version": ""
+        },
+        {
+          "accept": "application/json;charset=utf-8,application/json",
+          "content_type": "",
+          "key": "3-2-33333333-3333-4333-8333-333333333333",
+          "origin": "example.com",
+          "protocol": 2,
+          "request_id": "mixed-haskell-private-denial",
+          "route": "get-asset",
+          "target_port": "8085",
+          "token_present": false,
+          "user": "22222222-2222-4222-8222-222222222222"
+        },
+        {
+          "accept": "application/json",
+          "content_type": "application/json",
+          "key": "3-2-33333333-3333-4333-8333-333333333333",
+          "origin": "example.com",
+          "protocol": 2,
+          "request_id": "mixed-go-owner",
+          "route": "get-asset",
+          "target_port": "8084",
+          "token_present": false,
+          "user": "11111111-1111-4111-8111-111111111111"
+        },
+        {
+          "accept": "application/octet-stream",
+          "content_type": "application/json",
+          "key": "3-2-33333333-3333-4333-8333-333333333333",
+          "origin": "example.com",
+          "protocol": 2,
+          "request_id": "mixed-go-owner",
+          "route": "stream-asset",
+          "target_port": "8084",
+          "token_present": false,
+          "user": "11111111-1111-4111-8111-111111111111"
+        },
+        {
+          "accept": "application/json",
+          "content_type": "application/json",
+          "key": "3-2-33333333-3333-4333-8333-333333333333",
+          "origin": "example.com",
+          "protocol": 2,
+          "request_id": "mixed-go-token",
+          "route": "get-asset",
+          "target_port": "8084",
+          "token_present": true,
+          "user": "22222222-2222-4222-8222-222222222222"
+        },
+        {
+          "accept": "application/octet-stream",
+          "content_type": "application/json",
+          "key": "3-2-33333333-3333-4333-8333-333333333333",
+          "origin": "example.com",
+          "protocol": 2,
+          "request_id": "mixed-go-token",
+          "route": "stream-asset",
+          "target_port": "8084",
+          "token_present": true,
+          "user": "22222222-2222-4222-8222-222222222222"
+        },
+        {
+          "accept": "application/json",
+          "content_type": "application/json",
+          "key": "3-2-33333333-3333-4333-8333-333333333333",
+          "origin": "example.com",
+          "protocol": 2,
+          "request_id": "mixed-go-private-denial",
+          "route": "get-asset",
+          "target_port": "8084",
+          "token_present": false,
+          "user": "22222222-2222-4222-8222-222222222222"
+        }
+      ],
+      "equal": true
+    }
+  ],
+  "mismatches": [
+    "seeded-audit-token-copy",
+    "remote-transport-failure"
+  ]
+}

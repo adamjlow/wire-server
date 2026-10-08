@@ -83,7 +83,19 @@ def run(ref,ports,start,stop,request,store_effects,hs,go):
         required={'mixed-'+kind+'-'+label for kind in ports for label in ['owner','token','private-denial']}
         if {e['request_id'] for e in traces}!=required:raise ValueError('missing or wrong outbound request IDs')
         if any(e['protocol']!=2 or e['origin']!='example.com' for e in traces):raise ValueError('wrong federation protocol/origin')
-        records.append({'id':'mixed-outbound-wire','trace':traces,'equal':True})
+        normalized={}
+        for kind in ports:
+            rows=[]
+            for e in traces:
+                if e['request_id'].startswith('mixed-'+kind+'-'):
+                    e=dict(e);e['request_id']=e['request_id'].replace('mixed-'+kind+'-','mixed-<caller>-',1)
+                    if 'target_port' in e:
+                        expected=str(ports['go' if kind=='haskell' else 'haskell'])
+                        if e['target_port']!=expected:raise ValueError('wrong peer target')
+                        e['target_port']='<verified-peer-port>'
+                    rows.append(e)
+            normalized[kind]=rows
+        records.append({'id':'mixed-outbound-wire','responses':normalized,'equal':normalized['haskell']==normalized['go']})
     finally:
         fixture.terminate();fixture.wait(timeout=5);log.close()
     return records
