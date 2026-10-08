@@ -116,7 +116,7 @@ func waitContext(ctx context.Context, duration time.Duration) bool {
 	}
 }
 func (s *Server) listenFeedback() {
-	throttle := time.Second
+	throttle := 500 * time.Millisecond
 	if s.Config.Settings.SQSThrottle != nil {
 		throttle = time.Duration(*s.Config.Settings.SQSThrottle) * time.Millisecond
 	}

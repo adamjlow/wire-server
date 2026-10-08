@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"go.yaml.in/yaml/v3"
 	"net"
+	"net/url"
 	"os"
 	"strconv"
 	"strings"
@@ -96,7 +97,10 @@ func LoadConfig(path string) (Config, error) {
 	if err = yaml.Unmarshal(data, &c); err != nil {
 		return c, fmt.Errorf("invalid typed configuration")
 	}
-	required := map[string][]string{"gundeck": {"host", "port"}, "brig": {"host", "port"}, "redis": {"host", "port", "connectionMode"}, "cassandra": {"endpoint", "keyspace"}, "aws": {"account", "region", "arnEnv", "queueName", "snsEndpoint", "sqsEndpoint"}, "rabbitmq": {"host", "port", "vHost"}, "settings": {"httpPoolSize", "notificationTTL", "disabledAPIVersions", "consumableNotifications"}}
+	required := map[string][]string{"gundeck": {"host", "port"}, "brig": {"host", "port"}, "redis": {"host", "port", "connectionMode", "enableTls", "insecureSkipVerifyTls"}, "cassandra": {"endpoint", "keyspace"}, "aws": {"account", "region", "arnEnv", "queueName", "snsEndpoint", "sqsEndpoint"}, "rabbitmq": {"host", "port", "vHost"}, "settings": {"httpPoolSize", "notificationTTL", "disabledAPIVersions", "consumableNotifications"}}
+	if c.Additional != nil {
+		required["redisAdditionalWrite"] = required["redis"]
+	}
 	for section, keys := range required {
 		object, ok := fields[section].(map[string]any)
 		if !ok {
@@ -106,6 +110,12 @@ func LoadConfig(path string) (Config, error) {
 			if value, ok := object[key]; !ok || value == nil {
 				return c, fmt.Errorf("missing configuration field %s.%s", section, key)
 			}
+		}
+	}
+	for _, endpoint := range []string{c.AWS.SNS, c.AWS.SQS} {
+		parsed, err := url.Parse(endpoint)
+		if err != nil || parsed.Hostname() == "" || (parsed.Scheme != "https" && parsed.Scheme != "http") {
+			return c, fmt.Errorf("invalid AWS endpoint")
 		}
 	}
 	if !member(c.LogLevel, logLevels) || (c.LogFormat != "" && !member(c.LogFormat, logFormats)) {
