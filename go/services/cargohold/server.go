@@ -8,6 +8,7 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"strconv"
 	"strings"
 	"sync/atomic"
 	"time"
@@ -17,47 +18,91 @@ var errNotFound = errors.New("asset not found")
 var retentionNames = map[string]string{"1": "eternal", "2": "persistent", "3": "volatile", "4": "eternal-infrequent_access", "5": "expiring"}
 
 type Server struct {
-	Config  Config
-	Store   Store
-	ready   atomic.Bool
-	uploads atomic.Uint64
-	bytes   atomic.Uint64
+	Config           Config
+	Store            Store
+	peerClient       *http.Client
+	federationClient *http.Client
+	ready            atomic.Bool
+	uploads          atomic.Uint64
+	bytes            atomic.Uint64
 }
 
 func NewServer(c Config, s Store) *Server {
-	server := &Server{Config: c, Store: s}
+	server := &Server{Config: c, Store: s, peerClient: &http.Client{Timeout: 10 * time.Second}, federationClient: newFederationClient()}
 	server.ready.Store(true)
 	return server
 }
 func (s *Server) StopAccepting() { s.ready.Store(false) }
 
 func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	if r.URL.Path == "/i/status" && (r.Method == "GET" || r.Method == "HEAD") {
+	segments := strings.Split(strings.Trim(r.URL.Path, "/"), "/")
+	version := 0
+	if len(segments) > 0 && looksLikeVersion(segments[0]) {
+		text := segments[0]
+		if len(segments) > 1 && (segments[1] == "i" || segments[1] == "api-internal") {
+			assetError(w, 404, "unsupported-version", "Internal APIs (`/i/...`) are not under version control")
+			return
+		}
+		var err error
+		version, err = strconv.Atoi(strings.TrimPrefix(text, "v"))
+		if err != nil || text != "v"+strconv.Itoa(version) || version > 19 || s.versionDisabled(version) {
+			assetError(w, 404, "unsupported-version", "Version "+text+" is not supported")
+			return
+		}
+		segments = segments[1:]
+	}
+	r.Header.Del("Z-Api-Version")
+	if len(segments) == 2 && segments[0] == "i" && segments[1] == "status" && (r.Method == "GET" || r.Method == "HEAD") {
 		if !s.ready.Load() {
-			w.WriteHeader(http.StatusServiceUnavailable)
+			w.WriteHeader(503)
 			return
 		}
 		w.WriteHeader(200)
 		return
 	}
 	if !s.ready.Load() {
-		w.WriteHeader(http.StatusServiceUnavailable)
+		w.WriteHeader(503)
 		return
 	}
-	if r.URL.Path == "/i/metrics" && r.Method == "GET" {
+	if len(segments) == 2 && segments[0] == "i" && segments[1] == "metrics" && r.Method == "GET" {
 		w.Header().Set("Content-Type", "text/plain; version=0.0.4")
 		fmt.Fprintf(w, "net_s3_upload_ok %d\nnet_s3_upload_size %d\n", s.uploads.Load(), s.bytes.Load())
 		return
 	}
-	path := strings.Trim(r.URL.Path, "/")
-	segments := strings.Split(path, "/")
-	if len(segments) < 2 || (segments[0] != "bot" && segments[0] != "provider") || segments[1] != "assets" {
+	if len(segments) == 2 && segments[0] == "federation" {
+		s.federation(w, r, segments[1])
+		return
+	}
+	if len(segments) == 3 && segments[0] == "i" && segments[1] == "assets" && r.Method == "GET" {
+		key, err := objectKey(segments[2])
+		if err != nil {
+			w.WriteHeader(400)
+			return
+		}
+		location, err := s.Store.SignedURL(r.Context(), key, "")
+		if err != nil {
+			s.storeError(w, err)
+			return
+		}
+		writeJSON(w, 200, location)
+		return
+	}
+	if len(segments) == 0 {
 		http.NotFound(w, r)
 		return
 	}
-	principal := segments[0]
-	if r.Header.Get("Z-Type") != principal {
-		w.WriteHeader(403)
+	principal := "user"
+	switch segments[0] {
+	case "bot", "provider":
+		principal = segments[0]
+		if r.Header.Get("Z-Type") != principal {
+			w.WriteHeader(403)
+			return
+		}
+		segments = segments[1:]
+	case "assets", "conversations":
+	default:
+		http.NotFound(w, r)
 		return
 	}
 	owner := r.Header.Get("Z-" + principal)
@@ -66,17 +111,78 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	owner = strings.ToLower(owner)
-	if len(segments) == 2 && r.Method == "POST" {
-		s.upload(w, r, principal, owner)
+	if principal == "user" && version < 2 && (segments[0] == "conversations" || (segments[0] == "assets" && len(segments) == 2 && validUUID(segments[1]))) {
+		s.legacy(w, r, segments, owner)
 		return
 	}
-	if len(segments) != 3 {
+	if segments[0] != "assets" {
 		http.NotFound(w, r)
 		return
 	}
-	key, err := objectKey(segments[2])
+	segments = segments[1:]
+	qualified := false
+	if principal == "user" {
+		if version < 2 {
+			if len(segments) < 1 || (segments[0] != "v3" && segments[0] != "v4") {
+				http.NotFound(w, r)
+				return
+			}
+			qualified = segments[0] == "v4"
+			segments = segments[1:]
+		} else {
+			qualified = true
+		}
+	}
+	if len(segments) == 0 && r.Method == "POST" && !(principal == "user" && version < 2 && qualified) {
+		maxBytes := s.Config.Settings.MaxTotalBytes
+		if principal == "user" {
+			var err error
+			maxBytes, err = s.userLimit(r, owner)
+			if err != nil {
+				if errors.Is(err, errUnverified) {
+					assetError(w, 403, "unverified-user", "Unverified user")
+				} else {
+					assetError(w, 403, "not-found", "User not found")
+				}
+				return
+			}
+		}
+		s.upload(w, r, principal, owner, maxBytes)
+		return
+	}
+	// Token paths remain unqualified even in API v2+.
+	if principal == "user" && len(segments) == 2 && segments[1] == "token" {
+		s.changeToken(w, r, segments[0], owner)
+		return
+	}
+	domain := s.Config.Settings.FederationDomain
+	if qualified {
+		if len(segments) != 2 {
+			http.NotFound(w, r)
+			return
+		}
+		domain = segments[0]
+		segments = segments[1:]
+	}
+	if len(segments) != 1 {
+		http.NotFound(w, r)
+		return
+	}
+	if domain != s.Config.Settings.FederationDomain {
+		if r.Method == "DELETE" {
+			assetError(w, 422, "federation-not-implemented", "Federation is not yet implemented for this endpoint")
+			return
+		}
+		if r.Method == "GET" {
+			s.remoteDownload(w, r, domain, segments[0], owner)
+			return
+		}
+		http.NotFound(w, r)
+		return
+	}
+	key, err := objectKey(segments[0])
 	if err != nil {
-		assetError(w, 404, "not-found", "Asset not found")
+		w.WriteHeader(400)
 		return
 	}
 	meta, err := s.Store.Metadata(r.Context(), key)
@@ -92,25 +198,12 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	match := storedKind == principal && storedOwner == owner
 	switch r.Method {
 	case "GET":
-		token := r.Header.Get("Asset-Token")
-		if _, ok := r.Header["Asset-Token"]; !ok {
-			token = r.URL.Query().Get("asset_token")
-		}
-		if !match && token != meta["token"] {
+		token := requestToken(r)
+		if !match && !tokenMatches(meta, token) {
 			assetError(w, 404, "not-found", "Asset not found")
 			return
 		}
-		location, err := s.Store.SignedURL(r.Context(), key, r.Header.Get("Z-Host"))
-		if errors.Is(err, errNotFound) {
-			assetError(w, 404, "not-found", "Asset not found")
-			return
-		}
-		if err != nil {
-			serverError(w)
-			return
-		}
-		w.Header().Set("Location", location)
-		w.WriteHeader(302)
+		s.redirect(w, r, key, r.Header.Get("Z-Host"))
 	case "DELETE":
 		if !match {
 			assetError(w, 403, "unauthorised", "Unauthorised operation")
@@ -126,7 +219,64 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func (s *Server) upload(w http.ResponseWriter, r *http.Request, principal, owner string) {
+func looksLikeVersion(s string) bool {
+	if !strings.HasPrefix(s, "v") {
+		return false
+	}
+	for _, c := range s[1:] {
+		if c < '0' || c > '9' {
+			return false
+		}
+	}
+	return true
+}
+func (s *Server) versionDisabled(v int) bool {
+	for _, expr := range s.Config.Settings.DisabledAPIVersions {
+		if expr == "v"+strconv.Itoa(v) || (expr == "development" && v == 19) {
+			return true
+		}
+	}
+	return false
+}
+func requestToken(r *http.Request) *string {
+	if values, ok := r.Header["Asset-Token"]; ok && len(values) > 0 {
+		return &values[0]
+	}
+	if values, ok := r.URL.Query()["asset_token"]; ok && len(values) > 0 {
+		return &values[0]
+	}
+	return nil
+}
+func tokenMatches(meta map[string]string, token *string) bool {
+	expected, present := meta["token"]
+	if token == nil {
+		return !present
+	}
+	return present && expected == *token
+}
+func writeJSON(w http.ResponseWriter, status int, value any) {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(status)
+	_ = json.NewEncoder(w).Encode(value)
+}
+func (s *Server) storeError(w http.ResponseWriter, err error) {
+	if errors.Is(err, errNotFound) {
+		assetError(w, 404, "not-found", "Asset not found")
+	} else {
+		serverError(w)
+	}
+}
+func (s *Server) redirect(w http.ResponseWriter, r *http.Request, key, host string) {
+	location, err := s.Store.SignedURL(r.Context(), key, host)
+	if err != nil {
+		s.storeError(w, err)
+		return
+	}
+	w.Header().Set("Location", location)
+	w.WriteHeader(302)
+}
+
+func (s *Server) upload(w http.ResponseWriter, r *http.Request, principal, owner string, maxBytes int64) {
 	typ := strings.Split(r.Header.Get("Content-Type"), ";")[0]
 	if strings.TrimSpace(typ) != "multipart/mixed" {
 		w.WriteHeader(415)
@@ -141,7 +291,7 @@ func (s *Server) upload(w http.ResponseWriter, r *http.Request, principal, owner
 		assetError(w, 400, "invalid-length", "Invalid content length")
 		return
 	}
-	if n > s.Config.Settings.MaxTotalBytes {
+	if n > maxBytes {
 		assetError(w, 413, "client-error", "Asset too large")
 		return
 	}
@@ -161,13 +311,16 @@ func (s *Server) upload(w http.ResponseWriter, r *http.Request, principal, owner
 	}
 	meta := map[string]string{principal: owner}
 	if s.Config.Settings.AssetAuditLogEnabled {
-		// Audit serialization/logging is completed in the next full-service slice.
 		if len(settings.ConvID) == 0 || settings.Filename == nil || settings.Filetype == nil {
 			assetError(w, 400, "missing-audit-metadata", "Missing required asset audit metadata")
 			return
 		}
-		serverError(w)
-		return
+		audit, err := json.Marshal(map[string]any{"convId": json.RawMessage(settings.ConvID), "filename": *settings.Filename, "filetype": *settings.Filetype})
+		if err != nil {
+			assetError(w, 400, "client-error", "Invalid asset audit metadata")
+			return
+		}
+		meta["wire-metadata"] = percentEncode(audit)
 	}
 	id, err := newUUID()
 	if err != nil {
@@ -205,7 +358,11 @@ func (s *Server) upload(w http.ResponseWriter, r *http.Request, principal, owner
 	}
 	s.uploads.Add(1)
 	s.bytes.Add(uint64(n))
-	w.Header().Set("Location", principal+"/assets/"+key)
+	location := principal + "/assets/" + key
+	if principal == "user" {
+		location = "assets/v4/" + s.Config.Settings.FederationDomain + "/" + key
+	}
+	w.Header().Set("Location", location)
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(201)
 	_ = json.NewEncoder(w).Encode(response)
@@ -241,3 +398,22 @@ func assetError(w http.ResponseWriter, code int, label, message string) {
 	_ = json.NewEncoder(w).Encode(map[string]any{"code": code, "label": label, "message": message})
 }
 func serverError(w http.ResponseWriter) { assetError(w, 500, "server-error", "Server Error.") }
+
+func randToken() (string, error) {
+	b := make([]byte, 16)
+	if _, err := rand.Read(b); err != nil {
+		return "", err
+	}
+	return base64.URLEncoding.EncodeToString(b), nil
+}
+func percentEncode(data []byte) string {
+	var out strings.Builder
+	for _, b := range data {
+		if (b >= 'A' && b <= 'Z') || (b >= 'a' && b <= 'z') || (b >= '0' && b <= '9') || b == '-' || b == '_' || b == '.' || b == '~' {
+			out.WriteByte(b)
+		} else {
+			fmt.Fprintf(&out, "%%%02X", b)
+		}
+	}
+	return out.String()
+}

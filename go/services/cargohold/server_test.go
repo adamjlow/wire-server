@@ -106,3 +106,12 @@ func TestPrincipalAndPrivateTokenBoundary(t *testing.T) {
 		t.Fatal("unauthorized deletion reached store")
 	}
 }
+
+func (s *fixtureStore) UpdateMetadata(_ context.Context, _ string, meta map[string]string) error {
+	s.calls++
+	s.meta = meta
+	return nil
+}
+func (s *fixtureStore) Open(context.Context, string) (io.ReadCloser, error) {
+	return io.NopCloser(strings.NewReader(string(s.stored))), nil
+}

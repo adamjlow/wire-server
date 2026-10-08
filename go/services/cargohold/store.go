@@ -22,6 +22,8 @@ type Store interface {
 	Metadata(context.Context, string) (map[string]string, error)
 	SignedURL(context.Context, string, string) (string, error)
 	Delete(context.Context, string) error
+	UpdateMetadata(context.Context, string, map[string]string) error
+	Open(context.Context, string) (io.ReadCloser, error)
 }
 
 type S3Store struct {
@@ -142,3 +144,15 @@ func objectKey(key string) (string, error) {
 
 // Kept here for the next token-copy slice; copy sources require URL path escaping.
 func copySource(bucket, key string) string { return url.PathEscape(bucket + "/" + key) }
+
+func (s *S3Store) UpdateMetadata(ctx context.Context, key string, meta map[string]string) error {
+	_, err := s.client.CopyObject(ctx, &s3.CopyObjectInput{Bucket: aws.String(s.settings.AWS.Bucket), Key: aws.String(key), CopySource: aws.String(copySource(s.settings.AWS.Bucket, key)), Metadata: meta, MetadataDirective: types.MetadataDirectiveReplace, ContentType: aws.String("application/octet-stream")})
+	return err
+}
+func (s *S3Store) Open(ctx context.Context, key string) (io.ReadCloser, error) {
+	out, err := s.client.GetObject(ctx, &s3.GetObjectInput{Bucket: aws.String(s.settings.AWS.Bucket), Key: aws.String(key), ResponseContentType: aws.String("application/octet-stream")})
+	if err != nil {
+		return nil, err
+	}
+	return out.Body, nil
+}
