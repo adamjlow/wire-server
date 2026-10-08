@@ -1,0 +1,142 @@
+[
+  {
+    "id": "health",
+    "method": "GET",
+    "path": "/i/status",
+    "headers": {
+      "Request-Id": "cannon-reference-readonly"
+    },
+    "request_body": null,
+    "status": 200,
+    "content_type": null,
+    "allow": null,
+    "response_body": ""
+  },
+  {
+    "id": "missing-principal",
+    "method": "GET",
+    "path": "/await",
+    "headers": {
+      "Request-Id": "cannon-reference-readonly"
+    },
+    "request_body": null,
+    "status": 400,
+    "content_type": null,
+    "allow": null,
+    "response_body": "Header Z-User is required"
+  },
+  {
+    "id": "malformed-principal",
+    "method": "GET",
+    "path": "/await",
+    "headers": {
+      "Z-User": "invalid",
+      "Z-Connection": "fixture",
+      "Request-Id": "cannon-reference-readonly"
+    },
+    "request_body": null,
+    "status": 400,
+    "content_type": null,
+    "allow": null,
+    "response_body": "Error parsing header Z-User failed: invalid UUID"
+  },
+  {
+    "id": "malformed-client",
+    "method": "GET",
+    "path": "/await?client=invalid",
+    "headers": {
+      "Z-User": "11111111-1111-4111-8111-111111111111",
+      "Z-Connection": "fixture",
+      "Request-Id": "cannon-reference-readonly"
+    },
+    "request_body": null,
+    "status": 400,
+    "content_type": null,
+    "allow": null,
+    "response_body": "Error parsing query parameter client failed: Failed reading: takeWhile1"
+  },
+  {
+    "id": "malformed-push-user",
+    "method": "POST",
+    "path": "/i/push/invalid/fixture",
+    "headers": {
+      "Content-Type": "application/json",
+      "Request-Id": "cannon-reference-readonly"
+    },
+    "request_body": "{}",
+    "status": 400,
+    "content_type": null,
+    "allow": null,
+    "response_body": "invalid UUID"
+  },
+  {
+    "id": "malformed-bulk-json",
+    "method": "POST",
+    "path": "/i/bulkpush",
+    "headers": {
+      "Content-Type": "application/json",
+      "Request-Id": "cannon-reference-readonly"
+    },
+    "request_body": "{",
+    "status": 400,
+    "content_type": null,
+    "allow": null,
+    "response_body": "Unexpected end-of-input, expecting record key literal or }"
+  },
+  {
+    "id": "malformed-presence-user",
+    "method": "HEAD",
+    "path": "/i/presences/invalid/fixture",
+    "headers": {
+      "Request-Id": "cannon-reference-readonly"
+    },
+    "request_body": null,
+    "status": 400,
+    "content_type": null,
+    "allow": null,
+    "response_body": ""
+  },
+  {
+    "id": "events-before-v8",
+    "method": "GET",
+    "path": "/v7/events",
+    "headers": {
+      "Z-User": "11111111-1111-4111-8111-111111111111",
+      "Request-Id": "cannon-reference-readonly"
+    },
+    "request_body": null,
+    "status": 404,
+    "content_type": null,
+    "allow": null,
+    "response_body": ""
+  },
+  {
+    "id": "events-malformed-user",
+    "method": "GET",
+    "path": "/v8/events",
+    "headers": {
+      "Z-User": "invalid",
+      "Request-Id": "cannon-reference-readonly"
+    },
+    "request_body": null,
+    "status": 400,
+    "content_type": null,
+    "allow": null,
+    "response_body": "Error parsing header Z-User failed: invalid UUID"
+  },
+  {
+    "id": "non-upgrade-await",
+    "method": "GET",
+    "path": "/await",
+    "headers": {
+      "Z-User": "11111111-1111-4111-8111-111111111111",
+      "Z-Connection": "fixture",
+      "Request-Id": "cannon-reference-readonly"
+    },
+    "request_body": null,
+    "status": 426,
+    "content_type": null,
+    "allow": null,
+    "response_body": ""
+  }
+]

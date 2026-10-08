@@ -1,15 +1,15 @@
 # Cannon delegated self-review
 
-Status: final mixed original-suite validation still running; not approved yet.
+Status: APPROVED for the exact tested tuple and supported configurations below.
 Review by codex, same author, under the user’s explicit self-approval/autonomous
 migration delegation and request to complete cannon. This is not independent review.
 
 Reference/upstream source f6636ed53315fa7b0fc4c8aa39c0bb30c98b6d5e;
 qualified publisher runtime and Haskell executable identities are in the protected
-oracle. Candidate production source 0ff476fea348b13c22df2e985bdbc6ef2ef7e3b4,
+oracle. Candidate production source 411f525e421d15e673870ace345462c4c4f80372,
 Go1.26.8, CGO0, clean VCS receipt; binary
-ed2dd57d6e63dc21ffe95b0e29992195ac1843a763b877c3626e3c5cf1148164.
-Local optional image sha256:49f7b2cde43acab6a75c352416e993bbc57bb063aea4b00ff2f8fdc45b7cd442
+d9b31f435b19e43e8b8bd596311ffe03994f7027f23cfc63cfcad8fddeed4232.
+Local optional image sha256:3e3fb5782d0054fe1788f0c6c6dc9895fd9c40c8092651b45ff4f130fe4e49cc
 contains that exact binary. No remote push or production rollout.
 
 Implementation review covers classic presence/await/raw push and ordered bulk,
@@ -25,7 +25,7 @@ Cassandra schemas and gundeck routes remain unchanged.
 Security: trusted TLS/hostnames, strict typed input, serialized socket writes,
 bounded pool/fan-out, context/deadlines, generic backend errors and synthetic
 fixtures. Go format/tidy/module verification/vet/race/build/module vulnerability
-and license checks pass in [quality output](evidence/subscription-quality.log).
+and license checks pass in [quality output](evidence/final-quality.log).
 Concrete tests cover old-socket cleanup, binary/app/control frames, atomic bulk
 validation with large integers, ack types/range, and rejection of untrusted TLS.
 Established pinned dependency proof is retained in the protected oracle. Source
@@ -47,16 +47,30 @@ passes proxy5/cargohold27 but fails two setup-notification cases in cannon; reta
 focused Haskell control passes both. [Subscription diagnosis](evidence/focus-2-review.md)
 identifies Haskell basic.consume nowait=True versus GoFalse. Matching that source
 command sequence makes both original focused Go cases pass without sleeps, event
-filtering, exclusive consumers or changed timeout/assertions. Final combined run
-is required for the revised candidate; earlier binary evidence is historical. Final same-binary
-full selection must pass before approval. Ten HTTP records, seven config outcomes
+filtering, exclusive consumers or changed timeout/assertions. The subscription-corrected candidate passed all original67
+([retained previous tuple](evidence/triple-3-review.md)); subsequent review found
+reference-confirmed JSON compatibility corrections. Earlier binary evidence is
+historical. [Final exact candidate](evidence/triple-4-review.md) passes all
+original67: proxy5/cargohold27/cannon35, no failures/errors/skips; all three Go
+services with remaining pinned Haskell peers, unchanged assertions/timeouts,
+process0 and owned cleanup0. Ten HTTP records, seven config outcomes
 and 28 actual frozen boundary records are the finite supplement; the reference
 metadata’s29 count is a narrative typo, to be corrected in a separate contract task.
 Generated debug/startup diagnostic prefixes are incidental per frozen rules;
 statuses, content types, frame opcodes/close reasons, provider effects and ordered
 bulk values remain exact. Performance/drain use only predeclared bounds.
 
-[Real switchback](evidence/switchback.json) used synthetic persistent queue/Cassandra
+[Final supplemental comparison](evidence/supplements-qualified-review.json) passes
+all 10 HTTP, 7 configuration and 28 frozen boundaries for the final binary.
+[Direct JSON comparison](evidence/json-compatibility.json) confirms six actual
+Haskell/Go outcome pairs: optional transient:null defaults false; zero in decimal
+and scientific notation is accepted; exact maximum uint64 scientific notation
+parses before the broker rejects its unknown tag; fractional tags retain the
+failed-to-parse close. Exact decimal parsing avoids float rounding and bounds
+resource use. Unit security negatives cover overflow, non-integral values, huge
+exponents and wrong types.
+
+[Real switchback](evidence/switchback-qualified.json) used synthetic persistent queue/Cassandra
 state: Haskell-unacked1 redelivers in Go, Go-unacked2 redelivers in Haskell without
 replaying acked1; abandoned full-sync survives both replacements and either
 runtime’s ack removes the same row. All owned processes exit0; synthetic queue and
@@ -66,7 +80,7 @@ row removed. This is a real storage/broker test, not an in-memory mock.
 upstream chart copies with synthetic values: only cannon StatefulSet’s cannon
 image changes; nginz/configurator/config/secrets/args/original test image remain.
 Omitted selection is byte-identical; malformed/ambiguous targets fail closed.
-[Image smoke](evidence/image-smoke.json) used actual image, existing default config
+[Image smoke](evidence/image-smoke-qualified.json) used actual image, existing default config
 path, UID65534, read-only root, dropped capabilities, private owned runner network
 namespace/no host ports: health200 and SIGTERM exit0. Loaded shutdown and bounded
 40-request smoke are separately in protected differential captures.
@@ -77,5 +91,5 @@ whole Haskell build/unit/format checks were not run or fabricated. Existing CI i
 preserved. The actual unchanged original executable ran inside the authorized
 private Docker setup. Qualification binds the retained source/runtime/fixture
 identities and tested configurations; it does not prove every production load,
-invalid config permutation or future upstream revision. Stop at the finite matrix
-once it passes; future upstream changes follow the existing sync procedure.
+invalid config permutation or future upstream revision. The finite matrix is complete; no additional speculative tests are required.
+Future upstream changes follow the existing sync procedure.

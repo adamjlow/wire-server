@@ -1,6 +1,6 @@
 # Optional Go cannon
 
-Candidate on `go-migration`; final original-suite validation is pending.
+Qualified optional implementation on `go-migration`, approved by delegated self-review.
 Haskell remains supported and default. This replaces the whole cannon process;
 Cassandra schemas, RabbitMQ queue names/effects and gundeck contracts stay shared.
 The finite plan and protected contract are under `docs/go-migration/services/cannon`

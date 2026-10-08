@@ -1,0 +1,102 @@
+{
+  "schema_version": 1,
+  "result": "pass",
+  "reference_sha256": "cbc200caf92757bb7909b82c73d942072eac557c0eab1ce755aedeb8bf5c705d",
+  "candidate_sha256": "d9b31f435b19e43e8b8bd596311ffe03994f7027f23cfc63cfcad8fddeed4232",
+  "fixture_sha256": "0d2b0fa3b054000ccb0b1c24b14fcc25119b8fa1c0166d010646db7b9ed1c875",
+  "records": [
+    {
+      "name": "event",
+      "implementation": "haskell",
+      "sequence": 1,
+      "delivery_tag": 1
+    },
+    {
+      "name": "stop",
+      "implementation": "haskell",
+      "exit_code": 0,
+      "seconds": 0.5140560558065772
+    },
+    {
+      "name": "event",
+      "implementation": "go",
+      "sequence": 1,
+      "delivery_tag": 1
+    },
+    {
+      "name": "event",
+      "implementation": "go",
+      "sequence": 2,
+      "delivery_tag": 2
+    },
+    {
+      "name": "stop",
+      "implementation": "go",
+      "exit_code": 0,
+      "seconds": 0.5141289783641696
+    },
+    {
+      "name": "event",
+      "implementation": "haskell",
+      "sequence": 2,
+      "delivery_tag": 1
+    },
+    {
+      "name": "stop",
+      "implementation": "haskell",
+      "exit_code": 0,
+      "seconds": 0.5143128605559468
+    },
+    {
+      "name": "full-sync",
+      "implementation": "go"
+    },
+    {
+      "name": "stop",
+      "implementation": "go",
+      "exit_code": 0,
+      "seconds": 0.5142173115164042
+    },
+    {
+      "name": "full-sync",
+      "implementation": "haskell"
+    },
+    {
+      "name": "full-sync-delete",
+      "implementation": "haskell",
+      "missed": false
+    },
+    {
+      "name": "stop",
+      "implementation": "haskell",
+      "exit_code": 0,
+      "seconds": 0.5142000364139676
+    },
+    {
+      "name": "full-sync",
+      "implementation": "haskell"
+    },
+    {
+      "name": "stop",
+      "implementation": "haskell",
+      "exit_code": 0,
+      "seconds": 0.5143056446686387
+    },
+    {
+      "name": "full-sync",
+      "implementation": "go"
+    },
+    {
+      "name": "full-sync-delete",
+      "implementation": "go",
+      "missed": false
+    },
+    {
+      "name": "stop",
+      "implementation": "go",
+      "exit_code": 0,
+      "seconds": 0.5155060850083828
+    }
+  ],
+  "cleanup": "owned processes reaped; synthetic client queue and missed row deleted"
+}

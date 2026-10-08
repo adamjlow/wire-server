@@ -4,7 +4,7 @@
   "title": "Build and validate the optional whole-service Go cannon candidate",
   "service": "cannon",
   "kind": "implementation",
-  "status": "active",
+  "status": "done",
   "owner": "codex",
   "branch": "go-migration",
   "depends_on": [
@@ -30,7 +30,25 @@
       "required_evidence": "Actual pinned Go check output; meaningful generation/typed ack/input/TLS/concurrency regressions; no protected-oracle or Haskell-default changes."
     }
   ],
-  "evidence": [],
-  "review": null,
-  "handoff": "Start runnable classic await/push/presence slice immediately using approved dependency pins; compare frozen HTTP/classic reference, then add RabbitMQ events and Cassandra recovery. Keep oracle immutable and preserve supported Haskell defaults."
+  "evidence": [
+    {
+      "criterion": "service",
+      "result": "pass",
+      "command": "Review final original67 pass/no skips/errors with all three Go processes and Haskell peers; exact same binary 10 HTTP/7 config/28 boundary plus six JSON comparisons, real switchback and optional image/render proof.",
+      "revision": "411f525e421d15e673870ace345462c4c4f80372",
+      "artifact": "go/services/cannon/REVIEW.md"
+    },
+    {
+      "criterion": "quality",
+      "result": "pass",
+      "command": "Pinned Go1.26.8 format/tidy/module verify/vet/race/build/govuln/license checks pass; concrete security/typed JSON/generation/TLS regressions pass. No Haskell or protected-oracle edits.",
+      "revision": "411f525e421d15e673870ace345462c4c4f80372",
+      "artifact": "go/services/cannon/REVIEW.md"
+    }
+  ],
+  "review": {
+    "by": "codex (self-review delegated by user)",
+    "artifact": "go/services/cannon/REVIEW.md"
+  },
+  "handoff": "Whole service and finite final exact-binary matrix complete and delegated self-review approved. Retain previous failures and unsupported insecure TLS mode explicitly; separate count-metadata correction and service gate publication remain. No remote push/production switch."
 }

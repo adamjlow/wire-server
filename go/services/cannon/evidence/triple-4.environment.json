@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "project": "wire-e2e-6d5a17c9252448969910b0518210f097",
+  "source_revision": "411f525e421d15e673870ace345462c4c4f80372",
+  "runner_image_id": "sha256:f88496cd7850c4a32563e2085d41d2647e1038682a61fe0ffb5540c07f88ad7b",
+  "runner_revision": "0575d90e83caa1cfcb80774ae8b83f7d3b152de6",
+  "candidate": null,
+  "peer_candidates": {
+    "proxy": {
+      "path": "/home/operator/.cache/wire-migration/e2e-selected-proxy",
+      "sha256": "7868aa4b6b914daeb65a8033506dc03963af4ba34b37f0ef0bf4e2b2e7001238",
+      "source_revision": "0fae335b5cb5df7b7794bde68aea8177e327d3ef"
+    },
+    "cargohold": {
+      "path": "/home/operator/.cache/wire-migration/cargohold-supplemental-20261008-10",
+      "sha256": "d3591c8f7cbbb5ecbbf9c1425feb29c2b1867e270156337a0cf639eee43f7467",
+      "source_revision": "68a36b9137ce26566b2db91902469e8159885656"
+    },
+    "cannon": {
+      "path": "/home/operator/.cache/wire-migration/cannon-qualified-20261008-3",
+      "sha256": "d9b31f435b19e43e8b8bd596311ffe03994f7027f23cfc63cfcad8fddeed4232",
+      "source_revision": "411f525e421d15e673870ace345462c4c4f80372"
+    }
+  },
+  "result": "pass",
+  "e2e_executed": true,
+  "compose_sha256": "436a5229c4254fec74a03e23e4fb5ee4ec75015adfd714ac577a87f579e03c43",
+  "files_sha256": {
+    "fixtures/configs.json": "8cc34c41cc248ae804d822a60fb610b0adead84c3e79663eb33243ef70c99876",
+    "fixtures/integration.json": "d8834dad54e1f851e689ac00691cd527aac69e0e9ce00baf149835433812c73c",
+    "fixtures/peers.json": "ca8438ea9464138dc0c75868b62eb8b12113343dada8336524c3ea467dd3a490"
+  },
+  "dependencies": {
+    "fake_dynamodb": "quay.io/wire/dynamodb_local@sha256:e092d4b32889277f9dc0954bf99caaa216bdb621e399d460ac396e41c8c1a9f1",
+    "fake_sqs": "softwaremill/elasticmq-native@sha256:32d4b42a1f1fd5d311d2f46e388587c87b297364df3d25cc807f1dd361df1153",
+    "fake_localstack": "quay.io/wire/localstack@sha256:544be04ed93def3e636cc96550f262c1c8ac7f4d40e17b7c76583590a26e78d3",
+    "fake_s3": "dxflrs/garage@sha256:9c96caa2612d3411acc5b0e6701fb238dbfba33e533a6d7d3d811a4b12d0d020",
+    "redis-master": "redis@sha256:29e8589c3f9ba699b5f7aa4b3c7733c58852a3626439e619aa0ee78de08c6ca0",
+    "elasticsearch": "elasticsearch@sha256:deda76957c8cacc5dbf0d535fd14fe365f37d839813099bc32f26390a5e232dc",
+    "postgres": "postgres@sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24",
+    "cassandra": "cassandra@sha256:dad4cd7ee4281df4e96944a1faebfebd2e50ee19a9f0a1d42ac0bb17c820dd74",
+    "rabbitmq": "rabbitmq@sha256:5cbd7145b0306399ad68422c3350b6cbd1bb95704b39f5896480e5b6d4238a04",
+    "coredns": "coredns/coredns@sha256:6e5a02c21641597998b4be7cb5eb1e7b02c0d8d23cce4dd09f4682d463798890",
+    "redis-cluster": "redis@sha256:29e8589c3f9ba699b5f7aa4b3c7733c58852a3626439e619aa0ee78de08c6ca0",
+    "redis-node-1": "redis@sha256:29e8589c3f9ba699b5f7aa4b3c7733c58852a3626439e619aa0ee78de08c6ca0",
+    "redis-node-2": "redis@sha256:29e8589c3f9ba699b5f7aa4b3c7733c58852a3626439e619aa0ee78de08c6ca0",
+    "redis-node-3": "redis@sha256:29e8589c3f9ba699b5f7aa4b3c7733c58852a3626439e619aa0ee78de08c6ca0",
+    "redis-node-4": "redis@sha256:29e8589c3f9ba699b5f7aa4b3c7733c58852a3626439e619aa0ee78de08c6ca0",
+    "redis-node-5": "redis@sha256:29e8589c3f9ba699b5f7aa4b3c7733c58852a3626439e619aa0ee78de08c6ca0",
+    "redis-node-6": "redis@sha256:29e8589c3f9ba699b5f7aa4b3c7733c58852a3626439e619aa0ee78de08c6ca0"
+  },
+  "process_exit_code": 0,
+  "service": "proxy-cargohold-cannon",
+  "cleanup_exit_code": 0
+}

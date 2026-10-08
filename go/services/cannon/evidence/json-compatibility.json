@@ -1,0 +1,114 @@
+{
+  "result": "pass",
+  "reference_sha256": "cbc200caf92757bb7909b82c73d942072eac557c0eab1ce755aedeb8bf5c705d",
+  "candidate_sha256": "d9b31f435b19e43e8b8bd596311ffe03994f7027f23cfc63cfcad8fddeed4232",
+  "records": [
+    {
+      "implementation": "haskell",
+      "name": "optional-transient-null",
+      "observed": {
+        "status": 200,
+        "content_type": "application/json;charset=utf-8",
+        "body": {
+          "bulkpush_resp": []
+        }
+      }
+    },
+    {
+      "implementation": "haskell",
+      "name": "ack-0.0",
+      "observed": {
+        "opcode": 10,
+        "payload": "synthetic-integral-ack"
+      }
+    },
+    {
+      "implementation": "haskell",
+      "name": "ack-0e2",
+      "observed": {
+        "opcode": 10,
+        "payload": "synthetic-integral-ack"
+      }
+    },
+    {
+      "implementation": "haskell",
+      "name": "ack--0.0",
+      "observed": {
+        "opcode": 10,
+        "payload": "synthetic-integral-ack"
+      }
+    },
+    {
+      "implementation": "haskell",
+      "name": "ack-1.8446744073709551615e19",
+      "observed": {
+        "opcode": 8,
+        "code": 1001,
+        "reason": ""
+      }
+    },
+    {
+      "implementation": "haskell",
+      "name": "ack-1.5",
+      "observed": {
+        "opcode": 8,
+        "code": 1003,
+        "reason": "failed-to-parse"
+      }
+    },
+    {
+      "implementation": "go",
+      "name": "optional-transient-null",
+      "observed": {
+        "status": 200,
+        "content_type": "application/json;charset=utf-8",
+        "body": {
+          "bulkpush_resp": []
+        }
+      }
+    },
+    {
+      "implementation": "go",
+      "name": "ack-0.0",
+      "observed": {
+        "opcode": 10,
+        "payload": "synthetic-integral-ack"
+      }
+    },
+    {
+      "implementation": "go",
+      "name": "ack-0e2",
+      "observed": {
+        "opcode": 10,
+        "payload": "synthetic-integral-ack"
+      }
+    },
+    {
+      "implementation": "go",
+      "name": "ack--0.0",
+      "observed": {
+        "opcode": 10,
+        "payload": "synthetic-integral-ack"
+      }
+    },
+    {
+      "implementation": "go",
+      "name": "ack-1.8446744073709551615e19",
+      "observed": {
+        "opcode": 8,
+        "code": 1001,
+        "reason": ""
+      }
+    },
+    {
+      "implementation": "go",
+      "name": "ack-1.5",
+      "observed": {
+        "opcode": 8,
+        "code": 1003,
+        "reason": "failed-to-parse"
+      }
+    }
+  ],
+  "cleanup": "owned reference exit0; synthetic temporary sockets/queues closed; no persistent rows or client queues"
+}

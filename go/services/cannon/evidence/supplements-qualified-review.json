@@ -1,0 +1,39 @@
+{
+  "result": "pass",
+  "source_revision": "411f525e421d15e673870ace345462c4c4f80372",
+  "binary_sha256": "d9b31f435b19e43e8b8bd596311ffe03994f7027f23cfc63cfcad8fddeed4232",
+  "counts": {
+    "http": 10,
+    "config": 7,
+    "boundaries": 28
+  },
+  "json_comparisons": 6,
+  "normalization": "Exact unique name sets and semantic values; only config diagnostic text incidental under frozen rule; smoke requests40/concurrency2/RSS<=192MiB/p95<=2*reference+100ms; drain exit0<=4s",
+  "scripts": {
+    "capture_boundaries.py": "b132e1570d1c283b1fbbe9f3cfebc18201dd6e861acfe4c1c1a39f92d5873a48",
+    "capture_http.py": "cf036b0bafd80959da2b2ffad35da44f1a0cbc71fa18b1213cadf38d80f03366",
+    "capture_boundaries_reference_run.py": "199662249a78680fa2402ff1b04fe51c1bccec17f73e1985a28f9a1729a6e065",
+    "capture_config.py": "fb727cf479cd6056bf9c4453210a33adee07ae9a9643344a9d8d51f354320c2b",
+    "capture_queue_flags.py": "c7363bcdd259e1c7dd9e069c6de719387b71dfa1250025391f9355a6a0c73ceb"
+  },
+  "go_source_sha256": {
+    "events_test.go": "c27546950c70e035e18b76597d63472a7d12869cf0f3d8673e3bd1d67137b957",
+    "reference_test.go": "9ea4b61d9fa9b94c437305c6e5f7c277860b4c5b5a58b83bf6cff4044888ffd9",
+    "bulk.go": "420cc240a171c2f94abcbde7aa0899674826142d271ddf314165902a7bee94b6",
+    "metrics.go": "112aebea6540dd4ff4a2870118962fc869c94a298e74cd911564cdbe44d4b8a4",
+    "word64.go": "d6932257ea650693d8d98f93b837ee3a7ee746776ee3a394cc7804dd452a3966",
+    "pool.go": "5b0cb84d9c507b572ebe5c69901db35883041ad7fcc18a95f2acc728cf31621a",
+    "backends.go": "9ec3b00b62a393b632cd441eeb281a2f3b90022c74f096e44173660ca7e7b82f",
+    "logging.go": "575f8ae4d1f01f160f6d14b0e2f0011e7bdf584f82456590ba9c0cedfcf62e8a",
+    "config.go": "e00a244014f36d7f27d18af9b4e02e51e19d6c764040195f0a1a17f00b91954d",
+    "events.go": "b7597e09453d22301dc26550ec4c223b9905a0984e21f8d5385bf3cf2e67b4f8",
+    "server.go": "41f7194cfb29dff6290d3eeb536debaac42430b715034014e2bf2a6dde3a360b",
+    "cmd/parity-fixture/main.go": "c8719cde834d2b9c1ece4371b9047df0eebf6af9419b46ec5fc608a79be44859",
+    "cmd/cannon/main.go": "21fdf16c57e633edf3ed31e65a976895f9127e271dc7a0941edfb83c39a74f8f"
+  },
+  "module_sha256": {
+    "go.mod": "7409ed57eeca278c6f15fd2dce76afe212c93a4a95574f396f8d5ebe001d6ccf",
+    "go.sum": "4d1b293c3ad83f4bfda47974aa1fc551f20df15f2f642c441aa7f36594187c7c"
+  },
+  "cleanup": "Side processes reaped; real switchback synthetic queue/row deleted; final whole-stack process0/cleanup0"
+}
