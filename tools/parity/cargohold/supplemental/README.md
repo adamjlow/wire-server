@@ -145,3 +145,9 @@ The cancellation effects include the same single unfinished 6 MiB part, with
 owned cleanup after observation. During SIGTERM, both reject new requests, stay
 alive while the peer stream is held, drain the complete 2 MiB download, and exit
 zero within the fixed 30-second limit. CLI help/config rejection also match.
+
+The final [review](REVIEW.md) and [case inventory](final-report.json) supersede the
+historical outstanding-work descriptions above. All 112 supplemental records
+pass the same candidate 68a36b9137ce26566b2db91902469e8159885656, including
+the three malformed metadata gaps. Original 27 tests and whole-service gates
+remain separate; failed historical captures are preserved.

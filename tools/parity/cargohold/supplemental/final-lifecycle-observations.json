@@ -1,0 +1,105 @@
+{
+  "result": "supplemental-observed",
+  "whole_service_parity": false,
+  "cases": [
+    {
+      "id": "client-cancellation-haskell",
+      "response": {
+        "objects": [],
+        "open_upload_count": 1,
+        "s3_operations": [
+          "create",
+          "part"
+        ],
+        "stored_part_sizes": [
+          6291456
+        ]
+      },
+      "equal": true
+    },
+    {
+      "id": "client-cancellation-go",
+      "response": {
+        "objects": [],
+        "open_upload_count": 1,
+        "s3_operations": [
+          "create",
+          "part"
+        ],
+        "stored_part_sizes": [
+          6291456
+        ]
+      },
+      "equal": true
+    },
+    {
+      "id": "client-cancellation-effects",
+      "responses": {
+        "haskell": {
+          "objects": [],
+          "open_upload_count": 1,
+          "s3_operations": [
+            "create",
+            "part"
+          ],
+          "stored_part_sizes": [
+            6291456
+          ]
+        },
+        "go": {
+          "objects": [],
+          "open_upload_count": 1,
+          "s3_operations": [
+            "create",
+            "part"
+          ],
+          "stored_part_sizes": [
+            6291456
+          ]
+        }
+      },
+      "equal": true
+    },
+    {
+      "id": "active-download-drain-haskell",
+      "new_requests_rejected": true,
+      "alive_while_held": true,
+      "bytes": 2097152,
+      "expected_bytes": 2097152,
+      "sha256_matches": true,
+      "exit_code": 0,
+      "seconds": 0.045393296517431736,
+      "read_error": null,
+      "equal": true
+    },
+    {
+      "id": "active-download-drain-go",
+      "new_requests_rejected": true,
+      "alive_while_held": true,
+      "bytes": 2097152,
+      "expected_bytes": 2097152,
+      "sha256_matches": true,
+      "exit_code": 0,
+      "seconds": 0.0396649781614542,
+      "read_error": null,
+      "equal": true
+    },
+    {
+      "id": "cli-config-startup",
+      "responses": {
+        "haskell": {
+          "help_exit_zero": true,
+          "config_flag_documented": true,
+          "invalid_config_rejected": true
+        },
+        "go": {
+          "help_exit_zero": true,
+          "config_flag_documented": true,
+          "invalid_config_rejected": true
+        }
+      },
+      "equal": true
+    }
+  ],
+  "mismatches": []
+}

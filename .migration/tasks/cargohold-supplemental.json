@@ -4,7 +4,7 @@
   "title": "Freeze bounded supplemental cargohold assertions from real reference behavior",
   "service": "cargohold",
   "kind": "contract-change",
-  "status": "active",
+  "status": "done",
   "owner": "codex",
   "branch": "task/cargohold-supplemental",
   "depends_on": [
@@ -30,7 +30,25 @@
       "required_evidence": "Tool/state/scope validation, immutable runtime/config/fixture identities, owned cleanup and source-reviewed expectations."
     }
   ],
-  "evidence": [],
-  "review": null,
-  "handoff": "Active finite supplement. Retained groups: 38 core at 803ad4; 35 extended at 3c9e31; 11 config at 41226a; 15 real mixed-runtime/audit-switchback/wire controls at e5dcc6d384dbe62da834922ba57e8cba7af57d94; four bounded operational records at 6038dd4bb9a8d5d40583ec847e7f687fae30af88 (40 requests per runtime, concurrency 2, signed 24 MiB bytes, metric definitions/histogram schema/count deltas and fixed p95/RSS). Raw metric text/sample data and all failed initial observations retained. Remaining cancellation/disconnect and loaded SIGTERM drain, controller identity/negative-check review and exact final candidate relevant revalidation required. No whole-service parity claim."
+  "evidence": [
+    {
+      "criterion": "oracle",
+      "result": "pass",
+      "command": "Seven final private Docker groups: 112 actual supplemental records, all equal, no mismatches/skips; source/binary pinned across groups. Review source, protected expectations, exact effects and user-approved inherited security disposition. All failed captures retained.",
+      "revision": "68a36b9137ce26566b2db91902469e8159885656",
+      "artifact": "tools/parity/cargohold/supplemental/REVIEW.md"
+    },
+    {
+      "criterion": "checks",
+      "result": "pass",
+      "command": "Two focused normalization security tests; make migration-check migration-test (32 tests); scoped validation and git diff --check. Final controller processes exited zero with owned cleanup; immutable images and candidate/config/fixture identities retained.",
+      "revision": "68a36b9137ce26566b2db91902469e8159885656",
+      "artifact": "tools/parity/cargohold/supplemental/REVIEW.md"
+    }
+  ],
+  "review": {
+    "by": "codex (self-review delegated by user)",
+    "artifact": "tools/parity/cargohold/supplemental/REVIEW.md"
+  },
+  "handoff": "Finite protected supplemental outcome complete: 112 records pass the same 68a36b9137ce26566b2db91902469e8159885656 candidate, with exact observed responses, storage effects, mixed-runtime switchback, operations, lifecycle and three concrete metadata repairs. Original 27/candidate packaging reviewed separately; no production cutover or blanket upstream compatibility claim."
 }

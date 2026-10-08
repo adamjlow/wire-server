@@ -1,0 +1,99 @@
+# HELP net_s3_upload_size Number of bytes uploaded successfully uploaded to S3
+# TYPE net_s3_upload_size counter
+net_s3_upload_size 2.5165824e7
+# HELP net_s3_upload_ok Number of successful S3 Uploads
+# TYPE net_s3_upload_ok counter
+net_s3_upload_ok 1.0
+# HELP http_request_duration_seconds The HTTP request latencies in seconds.
+# TYPE http_request_duration_seconds histogram
+http_request_duration_seconds_bucket{handler="/bot/assets",method="POST",status_code="201",le="0.005"} 0
+http_request_duration_seconds_bucket{handler="/bot/assets",method="POST",status_code="201",le="0.01"} 0
+http_request_duration_seconds_bucket{handler="/bot/assets",method="POST",status_code="201",le="0.025"} 0
+http_request_duration_seconds_bucket{handler="/bot/assets",method="POST",status_code="201",le="0.05"} 0
+http_request_duration_seconds_bucket{handler="/bot/assets",method="POST",status_code="201",le="0.1"} 0
+http_request_duration_seconds_bucket{handler="/bot/assets",method="POST",status_code="201",le="0.25"} 1
+http_request_duration_seconds_bucket{handler="/bot/assets",method="POST",status_code="201",le="0.5"} 1
+http_request_duration_seconds_bucket{handler="/bot/assets",method="POST",status_code="201",le="1.0"} 1
+http_request_duration_seconds_bucket{handler="/bot/assets",method="POST",status_code="201",le="2.5"} 1
+http_request_duration_seconds_bucket{handler="/bot/assets",method="POST",status_code="201",le="5.0"} 1
+http_request_duration_seconds_bucket{handler="/bot/assets",method="POST",status_code="201",le="10.0"} 1
+http_request_duration_seconds_bucket{handler="/bot/assets",method="POST",status_code="201",le="+Inf"} 1
+http_request_duration_seconds_sum{handler="/bot/assets",method="POST",status_code="201"} 0.150563249
+http_request_duration_seconds_count{handler="/bot/assets",method="POST",status_code="201"} 1
+http_request_duration_seconds_bucket{handler="/bot/assets/:key",method="GET",status_code="302",le="0.005"} 20
+http_request_duration_seconds_bucket{handler="/bot/assets/:key",method="GET",status_code="302",le="0.01"} 20
+http_request_duration_seconds_bucket{handler="/bot/assets/:key",method="GET",status_code="302",le="0.025"} 20
+http_request_duration_seconds_bucket{handler="/bot/assets/:key",method="GET",status_code="302",le="0.05"} 20
+http_request_duration_seconds_bucket{handler="/bot/assets/:key",method="GET",status_code="302",le="0.1"} 20
+http_request_duration_seconds_bucket{handler="/bot/assets/:key",method="GET",status_code="302",le="0.25"} 20
+http_request_duration_seconds_bucket{handler="/bot/assets/:key",method="GET",status_code="302",le="0.5"} 20
+http_request_duration_seconds_bucket{handler="/bot/assets/:key",method="GET",status_code="302",le="1.0"} 20
+http_request_duration_seconds_bucket{handler="/bot/assets/:key",method="GET",status_code="302",le="2.5"} 20
+http_request_duration_seconds_bucket{handler="/bot/assets/:key",method="GET",status_code="302",le="5.0"} 20
+http_request_duration_seconds_bucket{handler="/bot/assets/:key",method="GET",status_code="302",le="10.0"} 20
+http_request_duration_seconds_bucket{handler="/bot/assets/:key",method="GET",status_code="302",le="+Inf"} 20
+http_request_duration_seconds_sum{handler="/bot/assets/:key",method="GET",status_code="302"} 1.6339753e-2
+http_request_duration_seconds_count{handler="/bot/assets/:key",method="GET",status_code="302"} 20
+http_request_duration_seconds_bucket{handler="/i/status",method="GET",status_code="200",le="0.005"} 1
+http_request_duration_seconds_bucket{handler="/i/status",method="GET",status_code="200",le="0.01"} 1
+http_request_duration_seconds_bucket{handler="/i/status",method="GET",status_code="200",le="0.025"} 1
+http_request_duration_seconds_bucket{handler="/i/status",method="GET",status_code="200",le="0.05"} 1
+http_request_duration_seconds_bucket{handler="/i/status",method="GET",status_code="200",le="0.1"} 1
+http_request_duration_seconds_bucket{handler="/i/status",method="GET",status_code="200",le="0.25"} 1
+http_request_duration_seconds_bucket{handler="/i/status",method="GET",status_code="200",le="0.5"} 1
+http_request_duration_seconds_bucket{handler="/i/status",method="GET",status_code="200",le="1.0"} 1
+http_request_duration_seconds_bucket{handler="/i/status",method="GET",status_code="200",le="2.5"} 1
+http_request_duration_seconds_bucket{handler="/i/status",method="GET",status_code="200",le="5.0"} 1
+http_request_duration_seconds_bucket{handler="/i/status",method="GET",status_code="200",le="10.0"} 1
+http_request_duration_seconds_bucket{handler="/i/status",method="GET",status_code="200",le="+Inf"} 1
+http_request_duration_seconds_sum{handler="/i/status",method="GET",status_code="200"} 9.4659e-5
+http_request_duration_seconds_count{handler="/i/status",method="GET",status_code="200"} 1
+http_request_duration_seconds_bucket{handler="/i/status",method="HEAD",status_code="200",le="0.005"} 20
+http_request_duration_seconds_bucket{handler="/i/status",method="HEAD",status_code="200",le="0.01"} 20
+http_request_duration_seconds_bucket{handler="/i/status",method="HEAD",status_code="200",le="0.025"} 20
+http_request_duration_seconds_bucket{handler="/i/status",method="HEAD",status_code="200",le="0.05"} 20
+http_request_duration_seconds_bucket{handler="/i/status",method="HEAD",status_code="200",le="0.1"} 20
+http_request_duration_seconds_bucket{handler="/i/status",method="HEAD",status_code="200",le="0.25"} 20
+http_request_duration_seconds_bucket{handler="/i/status",method="HEAD",status_code="200",le="0.5"} 20
+http_request_duration_seconds_bucket{handler="/i/status",method="HEAD",status_code="200",le="1.0"} 20
+http_request_duration_seconds_bucket{handler="/i/status",method="HEAD",status_code="200",le="2.5"} 20
+http_request_duration_seconds_bucket{handler="/i/status",method="HEAD",status_code="200",le="5.0"} 20
+http_request_duration_seconds_bucket{handler="/i/status",method="HEAD",status_code="200",le="10.0"} 20
+http_request_duration_seconds_bucket{handler="/i/status",method="HEAD",status_code="200",le="+Inf"} 20
+http_request_duration_seconds_sum{handler="/i/status",method="HEAD",status_code="200"} 3.028279999999999e-4
+http_request_duration_seconds_count{handler="/i/status",method="HEAD",status_code="200"} 20
+http_request_duration_seconds_bucket{handler="prometheus",method="GET",status_code="200",le="0.005"} 1
+http_request_duration_seconds_bucket{handler="prometheus",method="GET",status_code="200",le="0.01"} 1
+http_request_duration_seconds_bucket{handler="prometheus",method="GET",status_code="200",le="0.025"} 1
+http_request_duration_seconds_bucket{handler="prometheus",method="GET",status_code="200",le="0.05"} 1
+http_request_duration_seconds_bucket{handler="prometheus",method="GET",status_code="200",le="0.1"} 1
+http_request_duration_seconds_bucket{handler="prometheus",method="GET",status_code="200",le="0.25"} 1
+http_request_duration_seconds_bucket{handler="prometheus",method="GET",status_code="200",le="0.5"} 1
+http_request_duration_seconds_bucket{handler="prometheus",method="GET",status_code="200",le="1.0"} 1
+http_request_duration_seconds_bucket{handler="prometheus",method="GET",status_code="200",le="2.5"} 1
+http_request_duration_seconds_bucket{handler="prometheus",method="GET",status_code="200",le="5.0"} 1
+http_request_duration_seconds_bucket{handler="prometheus",method="GET",status_code="200",le="10.0"} 1
+http_request_duration_seconds_bucket{handler="prometheus",method="GET",status_code="200",le="+Inf"} 1
+http_request_duration_seconds_sum{handler="prometheus",method="GET",status_code="200"} 8.371e-6
+http_request_duration_seconds_count{handler="prometheus",method="GET",status_code="200"} 1
+# HELP net_connections Number of active connections
+# TYPE net_connections gauge
+net_connections 1.0
+# HELP aws_auth_token_secs_remaining Number of seconds left before AWS Auth expires
+# TYPE aws_auth_token_secs_remaining gauge
+aws_auth_token_secs_remaining 0.0
+# HELP gc_seconds_wall Wall clock time spent on last GC
+# TYPE gc_seconds_wall gauge
+gc_seconds_wall 0.0
+# HELP gc_seconds_cpu CPU time spent on last GC
+# TYPE gc_seconds_cpu gauge
+gc_seconds_cpu 0.0
+# HELP gc_bytes_used_current Number of bytes in active use as of the last GC
+# TYPE gc_bytes_used_current gauge
+gc_bytes_used_current 0.0
+# HELP gc_bytes_used_max Maximum amount of memory living on the heap after the last major GC
+# TYPE gc_bytes_used_max gauge
+gc_bytes_used_max 0.0
+# HELP gc_bytes_allocated_total Bytes allocated since the start of the server
+# TYPE gc_bytes_allocated_total gauge
+gc_bytes_allocated_total 0.0

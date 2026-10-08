@@ -1,0 +1,416 @@
+{
+  "samples": {
+    "haskell": [
+      {
+        "operation": "24MiB-upload",
+        "status": 201,
+        "seconds": 0.17196474969387054
+      },
+      {
+        "operation": "health",
+        "status": 200,
+        "seconds": 0.0013974709436297417
+      },
+      {
+        "operation": "health",
+        "status": 200,
+        "seconds": 0.0012050066143274307
+      },
+      {
+        "operation": "health",
+        "status": 200,
+        "seconds": 0.00037818029522895813
+      },
+      {
+        "operation": "health",
+        "status": 200,
+        "seconds": 0.0005403924733400345
+      },
+      {
+        "operation": "health",
+        "status": 200,
+        "seconds": 0.0005552526563405991
+      },
+      {
+        "operation": "health",
+        "status": 200,
+        "seconds": 0.0002752179279923439
+      },
+      {
+        "operation": "health",
+        "status": 200,
+        "seconds": 0.00021820887923240662
+      },
+      {
+        "operation": "health",
+        "status": 200,
+        "seconds": 0.00028598494827747345
+      },
+      {
+        "operation": "health",
+        "status": 200,
+        "seconds": 0.00028812699019908905
+      },
+      {
+        "operation": "health",
+        "status": 200,
+        "seconds": 0.0002341531217098236
+      },
+      {
+        "operation": "health",
+        "status": 200,
+        "seconds": 0.0002930322661995888
+      },
+      {
+        "operation": "health",
+        "status": 200,
+        "seconds": 0.00019086245447397232
+      },
+      {
+        "operation": "health",
+        "status": 200,
+        "seconds": 0.0002718949690461159
+      },
+      {
+        "operation": "health",
+        "status": 200,
+        "seconds": 0.0001873774453997612
+      },
+      {
+        "operation": "health",
+        "status": 200,
+        "seconds": 0.00023164786398410797
+      },
+      {
+        "operation": "health",
+        "status": 200,
+        "seconds": 0.0003025764599442482
+      },
+      {
+        "operation": "health",
+        "status": 200,
+        "seconds": 0.0002612285315990448
+      },
+      {
+        "operation": "health",
+        "status": 200,
+        "seconds": 0.0002569025382399559
+      },
+      {
+        "operation": "health",
+        "status": 200,
+        "seconds": 0.00025157630443573
+      },
+      {
+        "operation": "health",
+        "status": 200,
+        "seconds": 0.00024474598467350006
+      },
+      {
+        "operation": "asset-read",
+        "status": 302,
+        "seconds": 0.001634969376027584
+      },
+      {
+        "operation": "asset-read",
+        "status": 302,
+        "seconds": 0.0022783437743782997
+      },
+      {
+        "operation": "asset-read",
+        "status": 302,
+        "seconds": 0.0009815888479351997
+      },
+      {
+        "operation": "asset-read",
+        "status": 302,
+        "seconds": 0.0011613769456744194
+      },
+      {
+        "operation": "asset-read",
+        "status": 302,
+        "seconds": 0.0010750191286206245
+      },
+      {
+        "operation": "asset-read",
+        "status": 302,
+        "seconds": 0.001280641183257103
+      },
+      {
+        "operation": "asset-read",
+        "status": 302,
+        "seconds": 0.0013121347874403
+      },
+      {
+        "operation": "asset-read",
+        "status": 302,
+        "seconds": 0.001666502095758915
+      },
+      {
+        "operation": "asset-read",
+        "status": 302,
+        "seconds": 0.0015607858076691628
+      },
+      {
+        "operation": "asset-read",
+        "status": 302,
+        "seconds": 0.0011163745075464249
+      },
+      {
+        "operation": "asset-read",
+        "status": 302,
+        "seconds": 0.0012545548379421234
+      },
+      {
+        "operation": "asset-read",
+        "status": 302,
+        "seconds": 0.0009904922917485237
+      },
+      {
+        "operation": "asset-read",
+        "status": 302,
+        "seconds": 0.0009990539401769638
+      },
+      {
+        "operation": "asset-read",
+        "status": 302,
+        "seconds": 0.0009761722758412361
+      },
+      {
+        "operation": "asset-read",
+        "status": 302,
+        "seconds": 0.0010018376633524895
+      },
+      {
+        "operation": "asset-read",
+        "status": 302,
+        "seconds": 0.0012217797338962555
+      },
+      {
+        "operation": "asset-read",
+        "status": 302,
+        "seconds": 0.001238272525370121
+      },
+      {
+        "operation": "asset-read",
+        "status": 302,
+        "seconds": 0.0009633246809244156
+      },
+      {
+        "operation": "asset-read",
+        "status": 302,
+        "seconds": 0.0009275553748011589
+      }
+    ],
+    "go": [
+      {
+        "operation": "24MiB-upload",
+        "status": 201,
+        "seconds": 0.10422318894416094
+      },
+      {
+        "operation": "health",
+        "status": 200,
+        "seconds": 0.0007378850132226944
+      },
+      {
+        "operation": "health",
+        "status": 200,
+        "seconds": 0.0007427316159009933
+      },
+      {
+        "operation": "health",
+        "status": 200,
+        "seconds": 0.00045884959399700165
+      },
+      {
+        "operation": "health",
+        "status": 200,
+        "seconds": 0.0002522561699151993
+      },
+      {
+        "operation": "health",
+        "status": 200,
+        "seconds": 0.00032298266887664795
+      },
+      {
+        "operation": "health",
+        "status": 200,
+        "seconds": 0.00022510811686515808
+      },
+      {
+        "operation": "health",
+        "status": 200,
+        "seconds": 0.0003058500587940216
+      },
+      {
+        "operation": "health",
+        "status": 200,
+        "seconds": 0.0002134544774889946
+      },
+      {
+        "operation": "health",
+        "status": 200,
+        "seconds": 0.00034374184906482697
+      },
+      {
+        "operation": "health",
+        "status": 200,
+        "seconds": 0.0002583758905529976
+      },
+      {
+        "operation": "health",
+        "status": 200,
+        "seconds": 0.000340157188475132
+      },
+      {
+        "operation": "health",
+        "status": 200,
+        "seconds": 0.0002487720921635628
+      },
+      {
+        "operation": "health",
+        "status": 200,
+        "seconds": 0.0003300327807664871
+      },
+      {
+        "operation": "health",
+        "status": 200,
+        "seconds": 0.00024010054767131805
+      },
+      {
+        "operation": "health",
+        "status": 200,
+        "seconds": 0.0002962872385978699
+      },
+      {
+        "operation": "health",
+        "status": 200,
+        "seconds": 0.00020620319992303848
+      },
+      {
+        "operation": "health",
+        "status": 200,
+        "seconds": 0.0002903202548623085
+      },
+      {
+        "operation": "health",
+        "status": 200,
+        "seconds": 0.0002081049606204033
+      },
+      {
+        "operation": "health",
+        "status": 200,
+        "seconds": 0.00029199104756116867
+      },
+      {
+        "operation": "health",
+        "status": 200,
+        "seconds": 0.00020800530910491943
+      },
+      {
+        "operation": "asset-read",
+        "status": 302,
+        "seconds": 0.001176709309220314
+      },
+      {
+        "operation": "asset-read",
+        "status": 302,
+        "seconds": 0.001781269907951355
+      },
+      {
+        "operation": "asset-read",
+        "status": 302,
+        "seconds": 0.0007734838873147964
+      },
+      {
+        "operation": "asset-read",
+        "status": 302,
+        "seconds": 0.0009042834863066673
+      },
+      {
+        "operation": "asset-read",
+        "status": 302,
+        "seconds": 0.0008519310504198074
+      },
+      {
+        "operation": "asset-read",
+        "status": 302,
+        "seconds": 0.0011562900617718697
+      },
+      {
+        "operation": "asset-read",
+        "status": 302,
+        "seconds": 0.001011451706290245
+      },
+      {
+        "operation": "asset-read",
+        "status": 302,
+        "seconds": 0.001168917864561081
+      },
+      {
+        "operation": "asset-read",
+        "status": 302,
+        "seconds": 0.000880170613527298
+      },
+      {
+        "operation": "asset-read",
+        "status": 302,
+        "seconds": 0.000827668234705925
+      },
+      {
+        "operation": "asset-read",
+        "status": 302,
+        "seconds": 0.0007944218814373016
+      },
+      {
+        "operation": "asset-read",
+        "status": 302,
+        "seconds": 0.0009895805269479752
+      },
+      {
+        "operation": "asset-read",
+        "status": 302,
+        "seconds": 0.0008877813816070557
+      },
+      {
+        "operation": "asset-read",
+        "status": 302,
+        "seconds": 0.0009494461119174957
+      },
+      {
+        "operation": "asset-read",
+        "status": 302,
+        "seconds": 0.0008162930607795715
+      },
+      {
+        "operation": "asset-read",
+        "status": 302,
+        "seconds": 0.0009231511503458023
+      },
+      {
+        "operation": "asset-read",
+        "status": 302,
+        "seconds": 0.0007456541061401367
+      },
+      {
+        "operation": "asset-read",
+        "status": 302,
+        "seconds": 0.0008221417665481567
+      },
+      {
+        "operation": "asset-read",
+        "status": 302,
+        "seconds": 0.0008307015523314476
+      }
+    ]
+  },
+  "p95_seconds": {
+    "haskell": 0.001666502095758915,
+    "go": 0.001176709309220314
+  },
+  "peak_rss_bytes": {
+    "haskell": 60461056,
+    "go": 21311488
+  }
+}

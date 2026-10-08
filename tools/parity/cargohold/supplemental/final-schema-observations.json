@@ -1,0 +1,103 @@
+{
+  "result": "supplemental-observed",
+  "whole_service_parity": false,
+  "cases": [
+    {
+      "id": "empty-retention",
+      "responses": {
+        "haskell": {
+          "response": {
+            "status": 400,
+            "content_type": "application/json",
+            "body": {
+              "code": 400,
+              "label": "client-error",
+              "message": "Expected: , Failed reading: Error in $.retention: Unexpected value for enum AssetRetention_LTU4Mjc4NDIz at 5:32 (93)"
+            }
+          },
+          "objects": [],
+          "open_uploads": []
+        },
+        "go": {
+          "response": {
+            "status": 400,
+            "content_type": "application/json",
+            "body": {
+              "code": 400,
+              "label": "client-error",
+              "message": "Expected: , Failed reading: Error in $.retention: Unexpected value for enum AssetRetention_LTU4Mjc4NDIz at 5:32 (93)"
+            }
+          },
+          "objects": [],
+          "open_uploads": []
+        }
+      },
+      "equal": true
+    },
+    {
+      "id": "invalid-conversation-uuid",
+      "responses": {
+        "haskell": {
+          "response": {
+            "status": 400,
+            "content_type": "application/json",
+            "body": {
+              "code": 400,
+              "label": "client-error",
+              "message": "Expected: , Failed reading: Error in $.convId.id: Invalid UUID at 5:66 (127)"
+            }
+          },
+          "objects": [],
+          "open_uploads": []
+        },
+        "go": {
+          "response": {
+            "status": 400,
+            "content_type": "application/json",
+            "body": {
+              "code": 400,
+              "label": "client-error",
+              "message": "Expected: , Failed reading: Error in $.convId.id: Invalid UUID at 5:66 (127)"
+            }
+          },
+          "objects": [],
+          "open_uploads": []
+        }
+      },
+      "equal": true
+    },
+    {
+      "id": "invalid-audit-mime",
+      "responses": {
+        "haskell": {
+          "response": {
+            "status": 400,
+            "content_type": "application/json",
+            "body": {
+              "code": 400,
+              "label": "client-error",
+              "message": "Expected: , Failed reading: Error in $.filetype: Invalid MIME type at 5:38 (99)"
+            }
+          },
+          "objects": [],
+          "open_uploads": []
+        },
+        "go": {
+          "response": {
+            "status": 400,
+            "content_type": "application/json",
+            "body": {
+              "code": 400,
+              "label": "client-error",
+              "message": "Expected: , Failed reading: Error in $.filetype: Invalid MIME type at 5:38 (99)"
+            }
+          },
+          "objects": [],
+          "open_uploads": []
+        }
+      },
+      "equal": true
+    }
+  ],
+  "mismatches": []
+}
