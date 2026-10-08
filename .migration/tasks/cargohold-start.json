@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "id": "cargohold-start",
+  "title": "Advance approved cargohold gates and claim whole-service implementation",
+  "service": "framework",
+  "kind": "framework",
+  "status": "queued",
+  "owner": null,
+  "branch": null,
+  "depends_on": [
+    "cargohold-contract",
+    "cargohold-plan"
+  ],
+  "write_paths": [
+    ".migration/tasks/cargohold-start.json",
+    ".migration/tasks/cargohold-implementation.json",
+    ".migration/services/cargohold.json",
+    "changelog.d/5-internal/cargohold-start"
+  ],
+  "plan": "docs/go-migration/plans/cargohold-implementation.md",
+  "acceptance_criteria": [
+    {
+      "id": "gates",
+      "description": "Approved reference contract and completed plan advance only the contracted and implementing gates; whole-service task has bounded candidate scope.",
+      "required_evidence": "Machine state/transition validation; no candidate compatibility or availability claimed."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": "User exact-parity disposition resolved security blocker; begin runnable candidate work."
+}
