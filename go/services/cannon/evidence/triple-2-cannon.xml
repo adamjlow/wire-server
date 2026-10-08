@@ -1,0 +1,90 @@
+<?xml version='1.0' ?><testsuites name="wire-server"><testsuite name="integration" tests="35" failures="2" time="1728.786177423"><testcase name="Demo.testModifiedCannon" time="2.9706256" /><testcase name="Demo.testWebSockets" time="0.25918599" /><testcase name="Events.testBackendPusherRecoversFromQueueDeletion" time="4.119446904" /><testcase name="Events.testChannelKilled" time="3.449839058" /><testcase name="Events.testChannelLimit" time="5.977768801" /><testcase name="Events.testConsumeEventsAckNewEventWithoutAckingOldOne" time="62.339293653" /><testcase name="Events.testConsumeEventsAcks" time="62.908343614" /><testcase name="Events.testConsumeEventsForDifferentUsers" time="124.036692867" /><testcase name="Events.testConsumeEventsMultipleAcks" time="120.030590278" /><testcase name="Events.testConsumeEventsOneWebSocket" time="121.935144599" /><testcase name="Events.testConsumeEventsWhileHavingLegacyClients" time="62.833431031" /><testcase name="Events.testConsumeTempEvents" time="183.686123775" /><testcase name="Events.testEndOfInitialSync" time="124.47203758" /><testcase name="Events.testEndOfInitialSyncAckMultiple" time="60.890040281" /><testcase name="Events.testEndOfInitialSyncIgnoreExpired" time="6.720882283" /><testcase name="Events.testEndOfInitialSyncMoreEventsAfterSyncMessage" time="7.746763853" /><testcase name="Events.testEventsDeadLettered" time="67.181965331" /><testcase name="Events.testEventsDeadLetteredWithReconnect" time="61.876616683" /><testcase name="Events.testEventsForSpecificClients" time="70.099178766"><failure>assertion failure:
+Did not expect event: 
+{
+    &quot;data&quot;: {
+        &quot;delivery_tag&quot;: 1,
+        &quot;event&quot;: {
+            &quot;id&quot;: &quot;0f8baff3-c337-11f1-8001-02bfa588b4ed&quot;,
+            &quot;payload&quot;: [
+                {
+                    &quot;client&quot;: {
+                        &quot;capabilities&quot;: {
+                            &quot;capabilities&quot;: []
+                        },
+                        &quot;id&quot;: &quot;e628423cea759dd4&quot;,
+                        &quot;label&quot;: &quot;Test Device&quot;,
+                        &quot;mls_public_keys&quot;: {},
+                        &quot;model&quot;: &quot;Test Model&quot;,
+                        &quot;time&quot;: &quot;2026-10-08T16:41:07.444Z&quot;,
+                        &quot;type&quot;: &quot;permanent&quot;
+                    },
+                    &quot;type&quot;: &quot;user.client-add&quot;
+                }
+            ]
+        }
+    },
+    &quot;type&quot;: &quot;event&quot;
+}
+
+call stack: 
+1. assertFailure at test/Test/Events.hs:1152
+
+2. assertNoEventHelper at test/Test/Events.hs:1157
+
+3. assertNoEvent_ at test/Test/Events.hs:275
+
+4. k at test/Testlib/ModService.hs:89
+
+5. withModifiedBackend at test/Test/Events.hs:242
+
+
+
+context:
+temp client should not get any events meant solely for client 1 or 2
+
+Set WIRE_INTEGRATION_TEST_VERBOSITY=1 if you want to see complete trace of the HTTP traffic in curl pseudo-syntax.
+</failure></testcase><testcase name="Events.testPrefetchCount" time="5.357476693" /><testcase name="Events.testSendMessageNoReturnToSenderWithConsumableNotificationsProteus" time="65.095471094" /><testcase name="Events.testSingleConsumer" time="47.125707009"><failure>assertion failure:
+Did not expect event: 
+{
+    &quot;data&quot;: {
+        &quot;delivery_tag&quot;: 1,
+        &quot;event&quot;: {
+            &quot;id&quot;: &quot;2d70078f-c337-11f1-8001-02bfa588b4ed&quot;,
+            &quot;payload&quot;: [
+                {
+                    &quot;client&quot;: {
+                        &quot;capabilities&quot;: {
+                            &quot;capabilities&quot;: [
+                                &quot;legalhold-implicit-consent&quot;
+                            ]
+                        },
+                        &quot;id&quot;: &quot;83733e72eee68a47&quot;,
+                        &quot;label&quot;: &quot;Test Device&quot;,
+                        &quot;mls_public_keys&quot;: {},
+                        &quot;model&quot;: &quot;Test Model&quot;,
+                        &quot;time&quot;: &quot;2026-10-08T16:41:57.622Z&quot;,
+                        &quot;type&quot;: &quot;permanent&quot;
+                    },
+                    &quot;type&quot;: &quot;user.client-add&quot;
+                }
+            ]
+        }
+    },
+    &quot;type&quot;: &quot;event&quot;
+}
+
+call stack: 
+1. assertFailure at test/Test/Events.hs:1152
+
+2. assertNoEventHelper at test/Test/Events.hs:1157
+
+3. assertNoEvent_ at test/Test/Events.hs:666
+
+4. k at test/Testlib/ModService.hs:89
+
+5. withModifiedBackend at test/Test/Events.hs:650
+
+
+
+Set WIRE_INTEGRATION_TEST_VERBOSITY=1 if you want to see complete trace of the HTTP traffic in curl pseudo-syntax.
+</failure></testcase><testcase name="Events.testTemporaryQueuesAreDeletedAfterUse" time="4.312976806" /><testcase name="Events.testTransientEvents" time="64.053817546" /><testcase name="Events.testTransientEventsDoNotTriggerDeadLetters" time="69.382436518" /><testcase name="Events.testTypingIndicatorIsNotSentToOwnClient[federated=false]" time="126.451757105" /><testcase name="Events.testTypingIndicatorIsNotSentToOwnClient[federated=true]" time="183.071880536" /><testcase name="Events.testWebSocketTimeout" time="3.346267368" /><testcase name="Notifications.testAddClientNotification" time="0.358638687" /><testcase name="Notifications.testBulkPushSameMessage" time="4.53627431" /><testcase name="Notifications.testFetchAllNotifications" time="0.049632356" /><testcase name="Notifications.testGetServerTime" time="0.034187799" /><testcase name="Notifications.testInvalidNotification" time="0.012491255" /><testcase name="Notifications.testLastNotification" time="0.020462116" /><testcase name="Notifications.testTargetClientPush" time="2.042729278" /></testsuite></testsuites>
