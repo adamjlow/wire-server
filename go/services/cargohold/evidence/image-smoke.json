@@ -1,0 +1,12 @@
+{
+  "source_revision": "0de78a33c7d6d885333e9e48308c3722f03676da",
+  "image_id": "sha256:c41ab5de21762a1635b92809cd8e80ddac10f1f67ac682bfd6d35bf6a8b4e35f",
+  "health_status": 200,
+  "exit_code": 0,
+  "uid": "65534:65534",
+  "network_mode": "none",
+  "readonly_root": true,
+  "default_config_path": true,
+  "whole_service_parity": false,
+  "scope": "Packaging startup and idle SIGTERM exit only; no load or in-flight drain claim."
+}

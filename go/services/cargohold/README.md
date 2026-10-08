@@ -116,4 +116,11 @@ or deploys. The default config path matches the existing Helm deployment.
 Tag the receipt’s image ID as `wire-cargohold-go:local` to use `helm-values.yaml`
 as an explicit overlay with `charts/wire-server`. The chart already supports
 per-service image selection; its existing Haskell defaults remain unchanged.
-Container and deployment validation remain outstanding.
+The image at source 0de78a33c7d6d885333e9e48308c3722f03676da
+started with the existing default config path, served health HTTP 200 on private
+container loopback, then exited zero on idle SIGTERM. Non-root UID 65534, read-only
+root, dropped capabilities and no network/ports were used. [Build](evidence/image-build.json),
+[CA provenance](evidence/image-ca.json) and [smoke](evidence/image-smoke.json) retain
+identities. This proves packaging startup, not loaded shutdown or whole-service
+parity. Full chart rendering is outstanding: it requires upstream chart version
+preparation plus synthetic deployment values/secrets. No repository chart was changed.
