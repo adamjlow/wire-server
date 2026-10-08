@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"github.com/apache/cassandra-gocql-driver/v2"
 	"github.com/redis/go-redis/v9"
 	"io"
 	"net/http"
@@ -18,6 +19,8 @@ type Server struct {
 	redis      redis.UniversalClient
 	additional redis.UniversalClient
 	logger     *Logger
+	cassandra  *gocql.Session
+	http       *http.Client
 }
 
 func NewServer(c Config) (*Server, error) {
@@ -25,17 +28,27 @@ func NewServer(c Config) (*Server, error) {
 	if err != nil {
 		return nil, err
 	}
-	s := &Server{Config: c, redis: r}
+	s := &Server{Config: c, redis: r, http: &http.Client{Timeout: 10 * time.Second}}
+	s.cassandra, err = openCassandra(c)
+	if err != nil {
+		_ = r.Close()
+		return nil, err
+	}
 	if c.Additional != nil {
 		s.additional, err = openRedis(*c.Additional, true)
 		if err != nil {
 			_ = r.Close()
+			s.cassandra.Close()
 			return nil, err
 		}
 	}
 	return s, nil
 }
 func (s *Server) Close() {
+	if s.cassandra != nil {
+		s.cassandra.Close()
+	}
+	s.http.CloseIdleConnections()
 	_ = s.redis.Close()
 	if s.additional != nil {
 		_ = s.additional.Close()
@@ -102,12 +115,25 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 	switch {
 	case path == "/i/status" && r.Method == "GET":
-		plain(w, 200, "")
+		emptyJSON(w, 200)
+	case (path == "/notifications" || strings.HasPrefix(path, "/notifications/")) && r.Method == "GET":
+		s.notificationHTTP(w, r, path, version)
+	case path == "/i/user" && r.Method == "DELETE":
+		user, ok := principal(w, r)
+		if !ok {
+			return
+		}
+		uid, _ := gocql.ParseUUID(user)
+		if err := s.query(r.Context(), "DELETE FROM notifications WHERE user = ?", uid).RetryPolicy(&gocql.SimpleRetryPolicy{NumRetries: 5}).Exec(); err != nil {
+			failure(w, 500, "server-error", "Server Error")
+			return
+		}
+		emptyJSON(w, 200)
 	case path == "/i/presences" && r.Method == "POST":
 		var p Presence
 		decoder := json.NewDecoder(r.Body)
 		if err := decoder.Decode(&p); err != nil {
-			plain(w, 400, "Invalid presence JSON")
+			plain(w, 400, presenceJSONError(err))
 			return
 		}
 		if !uuidValid(p.User) || p.Device == "" {
@@ -124,9 +150,9 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		w.Header().Set("Location", p.Resource)
-		plain(w, 201, "")
+		emptyJSON(w, 201)
 	case strings.HasPrefix(path, "/i/presences/") && r.Method == "DELETE":
-		plain(w, 200, "")
+		emptyJSON(w, 200)
 	case (path == "/i/presences" || strings.HasPrefix(path, "/i/presences/")) && r.Method == "GET":
 		ids := []string{strings.TrimPrefix(path, "/i/presences/")}
 		if path == "/i/presences" {
@@ -140,7 +166,11 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		all := []Presence{}
 		for _, id := range ids {
 			if !uuidValid(id) {
-				plain(w, 400, "invalid UUID")
+				if path == "/i/presences" {
+					plain(w, 400, "Error parsing query parameter ids failed: Failed reading: [\"hexadecimal digit\"]Failed reading: satisfyWith")
+				} else {
+					plain(w, 400, "invalid UUID")
+				}
 				return
 			}
 			presences, err := s.listPresence(r.Context(), strings.ToLower(id))
@@ -177,4 +207,15 @@ func (s *Server) Ready(ctx context.Context) error {
 		return fmt.Errorf("Redis initialization failed")
 	}
 	return nil
+}
+
+func emptyJSON(w http.ResponseWriter, status int) {
+	w.Header().Set("Content-Type", "application/json;charset=utf-8")
+	w.WriteHeader(status)
+}
+func presenceJSONError(err error) string {
+	if err == io.ErrUnexpectedEOF {
+		return "Unexpected end-of-input, expecting record key literal or }"
+	}
+	return "Invalid presence JSON"
 }
