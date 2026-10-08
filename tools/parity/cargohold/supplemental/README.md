@@ -1,7 +1,7 @@
 # Finite cargohold supplement
 
 Reference-owned assertions implementing the completed service plan's finite
-matrix. Original compiled tests remain untouched. Current runner executes 25
+matrix. Original compiled tests remain untouched. Current runner executes 38
 cases against actual pinned Haskell and the identified candidate in a private
 Docker/Garage environment with a synthetic Brig response and shared test bucket.
 It uses no host backend dependencies, production targets or customer fixtures.
@@ -46,3 +46,9 @@ signing algorithm, date/credential agreement, scope, headers and expiry before
 normalizing the verified clock/signature. Two focused unit checks ensure invalid
 reads/dates/scopes/algorithms fail and fixed fields/verified payloads survive.
 No native runtime counters, broad JSON bodies or authorization fields are stripped.
+
+The first 38-case run adds retention variants, principal precedence and audit
+metadata/log effects. [Observations](audit-initial-observations.json) expose three
+candidate differences: audit metadata encoding, null conversation handling and
+audit event fields. These failures are preserved; 35 matches do not establish
+whole-service parity.
