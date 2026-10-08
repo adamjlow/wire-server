@@ -62,7 +62,8 @@ def observe(case,method,path,headers=None,body=None,expected=None):
     elif len(data)<=4096:
         record['text']=data.decode('utf-8',errors='replace')
     if 'location' in response_headers:
-        record['signed_download']=signed_location(response_headers['location'])
+        if status==302:record['signed_download']=signed_location(response_headers['location'])
+        else:record['location']=response_headers['location']
     record['status_matches_source']=status==expected if expected is not None else None
     return record
 
