@@ -67,6 +67,14 @@ def execute():
     def request(kind,method,path,headers=None,body=None):
         status,h,data=ref.request(method,path,headers,body,port=ports[kind])
         result={'status':status,'content_type':h.get('content-type'),'body':data.decode('utf-8',errors='replace')}
+        if h.get('content-type','').startswith('application/json'):
+            result['body']=json.loads(data)
+            if isinstance(result['body'],str) and path.startswith('/i/assets/'):
+                result['body']=ref.signed_location(result['body'])
+                result['body']['query'].pop('X-Amz-Date',None)
+                # Credentials include signing date: preserve principal and region/service scope.
+                for name,value in result['body']['query'].items():
+                    if name.lower()=='x-amz-credential':result['body']['query'][name]=[v.split('/')[0]+'/<validated-signing-date>/'+ '/'.join(v.split('/')[2:]) for v in value]
         if 'location' in h:
             location=h['location']
             if status==302:
@@ -137,7 +145,7 @@ def execute():
                 if principal=='user':
                     renew=request(reader,'POST','/assets/v3/'+key+'/token',h)
                     if renew['status']!=200:raise ValueError('switchback token copy failed')
-                    new=json.loads(renew['body'])['token']
+                    new=renew['body']['token']
                     reject=request(writer,'GET',location,{'Z-User':OTHER,'Asset-Token':asset['token']})
                     accept=request(writer,'GET',location,{'Z-User':OTHER,'Asset-Token':new})
                     if reject['status']!=404 or accept['status']!=302:raise ValueError('switchback token authorization failed')
