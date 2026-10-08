@@ -4,7 +4,7 @@
   "title": "Publish gundeck inventory gate",
   "service": "framework",
   "kind": "framework",
-  "status": "active",
+  "status": "done",
   "owner": "codex",
   "branch": "go-migration",
   "depends_on": [
@@ -22,7 +22,18 @@
       "required_evidence": "Reviewed done inventory and valid adjacent state/scope transition."
     }
   ],
-  "evidence": [],
-  "review": null,
-  "handoff": "Set inventoried only; Haskell default and compatibility null."
+  "evidence": [
+    {
+      "criterion": "inventory",
+      "result": "pass",
+      "command": "Review done whole-service source inventory and publish adjacent inventoried stage; no compatibility or default changes.",
+      "revision": "9194264fb35444d401c0a48eb2785ea30ac657b2",
+      "artifact": ".migration/services/gundeck.json"
+    }
+  ],
+  "review": {
+    "by": "codex (self-review delegated by user)",
+    "artifact": ".migration/reviews/gundeck-inventory.md"
+  },
+  "handoff": "Inventoried; contract and candidate qualification remain required."
 }

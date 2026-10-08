@@ -2,12 +2,16 @@
   "schema_version": 1,
   "service": "gundeck",
   "reference_path": "services/gundeck",
-  "stage": "registered",
+  "stage": "inventoried",
   "oracle_paths": [
     "services/gundeck",
     "docs/go-migration/services/gundeck/contract.md",
     "docs/go-migration/services/gundeck/oracle"
   ],
-  "gates": {},
+  "gates": {
+    "inventory": [
+      "gundeck-inventory"
+    ]
+  },
   "compatibility": null
 }
