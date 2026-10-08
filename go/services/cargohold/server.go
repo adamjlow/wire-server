@@ -8,6 +8,7 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"os"
 	"strconv"
 	"strings"
 	"sync/atomic"
@@ -20,6 +21,7 @@ var retentionNames = map[string]string{"1": "eternal", "2": "persistent", "3": "
 type Server struct {
 	Config           Config
 	Store            Store
+	Logger           *Logger
 	peerClient       *http.Client
 	federationClient *http.Client
 	ready            atomic.Bool
@@ -28,13 +30,13 @@ type Server struct {
 }
 
 func NewServer(c Config, s Store) *Server {
-	server := &Server{Config: c, Store: s, peerClient: &http.Client{Timeout: 10 * time.Second}, federationClient: newFederationClient()}
+	server := &Server{Config: c, Store: s, Logger: NewLogger(c, os.Stdout), peerClient: &http.Client{Timeout: 10 * time.Second}, federationClient: newFederationClient()}
 	server.ready.Store(true)
 	return server
 }
 func (s *Server) StopAccepting() { s.ready.Store(false) }
 
-func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (s *Server) serveHTTP(w http.ResponseWriter, r *http.Request) {
 	segments := strings.Split(strings.Trim(r.URL.Path, "/"), "/")
 	version := 0
 	if len(segments) > 0 && looksLikeVersion(segments[0]) {
@@ -84,8 +86,10 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			s.storeError(w, err)
 			return
 		}
-		writeJSON(w, 200, location)
-		return
+		meta,_:=s.Store.Metadata(r.Context(),key)
+ s.audit("download-url-creation","","","",meta,"",location,"")
+ writeJSON(w, 200, location)
+ return
 	}
 	if len(segments) == 0 {
 		http.NotFound(w, r)
@@ -203,7 +207,7 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			assetError(w, 404, "not-found", "Asset not found")
 			return
 		}
-		s.redirect(w, r, key, r.Header.Get("Z-Host"))
+		s.redirect(w, r, key, r.Header.Get("Z-Host"),meta)
 	case "DELETE":
 		if !match {
 			assetError(w, 403, "unauthorised", "Unauthorised operation")
@@ -266,12 +270,14 @@ func (s *Server) storeError(w http.ResponseWriter, err error) {
 		serverError(w)
 	}
 }
-func (s *Server) redirect(w http.ResponseWriter, r *http.Request, key, host string) {
+func (s *Server) redirect(w http.ResponseWriter, r *http.Request, key, host string,meta map[string]string) {
 	location, err := s.Store.SignedURL(r.Context(), key, host)
 	if err != nil {
 		s.storeError(w, err)
 		return
 	}
+	kind, owner := requestPrincipal(r)
+	s.audit("download-url-creation", kind, owner, s.Config.Settings.FederationDomain, meta, "", location, "")
 	w.Header().Set("Location", location)
 	w.WriteHeader(302)
 }
@@ -356,6 +362,7 @@ func (s *Server) upload(w http.ResponseWriter, r *http.Request, principal, owner
 		}
 		response["expires"] = time.Now().UTC().Add(time.Duration(days) * 24 * time.Hour).Format("2006-01-02T15:04:05.000Z")
 	}
+	s.audit("file-upload", principal, owner, s.Config.Settings.FederationDomain, meta, "upload.path", "v3/"+ret+"/"+id, "")
 	s.uploads.Add(1)
 	s.bytes.Add(uint64(n))
 	location := principal + "/assets/" + key

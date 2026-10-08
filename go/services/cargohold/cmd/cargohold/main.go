@@ -39,6 +39,7 @@ func main() {
 		defer cancel()
 		_ = server.Shutdown(shutdown)
 	}()
+	app.Listening(server.Addr)
 	if err = server.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
 		log.Fatal(err)
 	}

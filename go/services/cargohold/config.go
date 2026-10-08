@@ -39,8 +39,9 @@ type Config struct {
 		FederationDomain     string `yaml:"federationDomain"`
 		DisabledAPIVersions  []any  `yaml:"disabledAPIVersions"`
 	} `yaml:"settings"`
-	LogLevel      string `yaml:"logLevel"`
-	LogNetStrings bool   `yaml:"logNetStrings"`
+	LogLevel      string  `yaml:"logLevel"`
+	LogNetStrings bool    `yaml:"logNetStrings"`
+	LogFormat     *string `yaml:"logFormat"`
 }
 
 func LoadConfig(path string) (Config, error) {
@@ -128,6 +129,12 @@ func validateConfig(raw []byte, c *Config) error {
 		if !found {
 			return fmt.Errorf("invalid disabled API version")
 		}
+	}
+	if !member(c.LogLevel, logLevels) {
+		return fmt.Errorf("invalid log level")
+	}
+	if c.LogFormat != nil && !member(*c.LogFormat, logFormats) {
+		return fmt.Errorf("invalid log format")
 	}
 	return nil
 }
