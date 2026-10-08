@@ -4,9 +4,9 @@
   "title": "Freeze cannon contract and qualify original-test Haskell baseline",
   "service": "cannon",
   "kind": "contract-change",
-  "status": "queued",
-  "owner": null,
-  "branch": null,
+  "status": "active",
+  "owner": "codex",
+  "branch": "go-migration",
   "depends_on": [
     "cannon-inventory",
     "proxy-cargohold-combined"
