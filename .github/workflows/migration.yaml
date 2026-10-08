@@ -36,12 +36,14 @@ jobs:
           PARITY_BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
         run: |
           python3 - <<'PY'
-          import os, re, subprocess
+          import os, re, subprocess, sys
+          sys.path.insert(0, 'tools/parity')
+          from harness import proxy_runtime_changed
           base = os.environ.get('PARITY_BASE_SHA', '')
           if not re.fullmatch('[0-9a-f]{40}', base) or base == '0' * 40:
               base = subprocess.check_output(['git', 'rev-parse', 'HEAD^'], text=True).strip()
           paths = subprocess.check_output(['git', 'diff', '--name-only', base, 'HEAD'], text=True).splitlines()
-          relevant = any(path.startswith(('go/services/proxy/', 'docs/go-migration/services/proxy/oracle/')) or path == 'tools/parity/harness.py' for path in paths)
+          relevant = proxy_runtime_changed(paths)
           with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
               output.write('run=' + str(relevant).lower() + '\n')
           PY

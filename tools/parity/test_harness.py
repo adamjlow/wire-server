@@ -14,6 +14,11 @@ class HarnessTests(unittest.TestCase):
         self.addCleanup(self.tmp.cleanup)
         self.root = Path(self.tmp.name)
 
+    def test_runtime_checks_are_selected_for_changed_inputs_not_bookkeeping(self):
+        self.assertFalse(harness.proxy_runtime_changed(['AGENTS.md', 'go/services/proxy/README.md', '.migration/services/proxy.json', 'docs/go-migration/services/proxy/oracle/live-final.json', 'go/services/proxy/server_test.go']))
+        for path in ('go/services/proxy/server.go', 'go/services/proxy/go.mod', 'go/services/proxy/build_image.py', 'docs/go-migration/services/proxy/oracle/capture.py', 'docs/go-migration/services/proxy/oracle/provider/main.go', 'tools/parity/harness.py'):
+            with self.subTest(path=path): self.assertTrue(harness.proxy_runtime_changed([path]))
+
     def test_required_original_test_catalogue_matches_source(self):
         self.assertEqual(5,len(harness.required_tests('proxy')))
         self.assertGreater(len(harness.required_tests('cargohold')),15)

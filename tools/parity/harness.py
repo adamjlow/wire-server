@@ -16,6 +16,21 @@ ORACLE = ROOT / 'docs/go-migration/services/proxy/oracle'
 CATALOGUE = Path(__file__).with_name('e2e-tests.json')
 
 
+def proxy_runtime_changed(paths):
+    for path in paths:
+        if path == 'tools/parity/harness.py':
+            return True
+        if path.startswith('go/services/proxy/'):
+            name = Path(path).name
+            if (name.endswith('.go') and not name.endswith('_test.go')) or name in {'go.mod', 'go.sum', 'Dockerfile', 'build_image.py'}:
+                return True
+        if path.startswith('docs/go-migration/services/proxy/oracle/'):
+            name = Path(path).name
+            if name in {'capture.py', 'compare.py', 'check_operations.py'} or (name.endswith('.go') and not name.endswith('_test.go')):
+                return True
+    return False
+
+
 def run(args, *, cwd=ROOT, env=None, timeout=180):
     subprocess.run([str(arg) for arg in args], cwd=cwd, env=env, check=True, timeout=timeout)
 
