@@ -2,7 +2,7 @@
   "schema_version": 1,
   "service": "cargohold",
   "reference_path": "services/cargohold",
-  "stage": "contracted",
+  "stage": "implementing",
   "oracle_paths": [
     "services/cargohold",
     "docs/go-migration/services/cargohold/contract.md",
@@ -15,6 +15,9 @@
     ],
     "contract": [
       "cargohold-contract"
+    ],
+    "plan": [
+      "cargohold-plan"
     ]
   },
   "compatibility": null

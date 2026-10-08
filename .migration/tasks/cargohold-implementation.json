@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "id": "cargohold-implementation",
+  "title": "Build the optional whole-service Go cargohold candidate",
+  "service": "cargohold",
+  "kind": "implementation",
+  "status": "queued",
+  "owner": null,
+  "branch": null,
+  "depends_on": [
+    "cargohold-contract",
+    "cargohold-plan",
+    "go-toolchain"
+  ],
+  "write_paths": [
+    ".migration/tasks/cargohold-implementation.json",
+    "go/services/cargohold",
+    "changelog.d/5-internal/cargohold-implementation"
+  ],
+  "plan": "docs/go-migration/plans/cargohold-implementation.md",
+  "acceptance_criteria": [
+    {
+      "id": "service",
+      "description": "Runnable optional whole-service implementation preserves the approved HTTP, federation, S3, configuration and operational boundaries.",
+      "required_evidence": "Complete implementation against the existing matrix with exact binary/source identities; no Haskell defaults or oracle edits."
+    },
+    {
+      "id": "quality",
+      "description": "Candidate formatting, build, vet, unit/race/security and dependency checks pass.",
+      "required_evidence": "Actual Go check output and retained evidence. Whole-service parity/switchback verification remains separately owned."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": "Start runnable bot/S3 slice, then expand to full approved service. No compatibility claim until separate matrix verification."
+}
