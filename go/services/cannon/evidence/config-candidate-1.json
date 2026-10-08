@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "kind": "reference-config-characterization",
+  "binary_sha256": "e16b501af7e7190f199f1058e291593899736d4176890e8f8d14eec0265b3695",
+  "records": [
+    {
+      "name": "connection-cap",
+      "rejected": true,
+      "exit_code": 1,
+      "diagnostic": "2026/10/08 16:21:57 rabbitMqMaxConnections must be strictly positive"
+    },
+    {
+      "name": "channel-cap",
+      "rejected": true,
+      "exit_code": 1,
+      "diagnostic": "2026/10/08 16:21:57 rabbitMqMaxChannels must be strictly positive"
+    },
+    {
+      "name": "drain-grace",
+      "rejected": true,
+      "exit_code": 1,
+      "diagnostic": "2026/10/08 16:21:57 drainOpts.gracePeriodSeconds must not be set to 0."
+    },
+    {
+      "name": "drain-interval",
+      "rejected": true,
+      "exit_code": 1,
+      "diagnostic": "2026/10/08 16:21:57 drainOpts.millisecondsBetweenBatches must not be set to 0."
+    },
+    {
+      "name": "missing-advertised-host",
+      "rejected": true,
+      "exit_code": 1,
+      "diagnostic": "2026/10/08 16:21:57 One of externalHost or externalHostFile must be defined"
+    },
+    {
+      "name": "missing-notification-ttl",
+      "rejected": true,
+      "exit_code": 1,
+      "diagnostic": "2026/10/08 16:21:57 missing configuration field .notificationTTL"
+    },
+    {
+      "name": "cli-help",
+      "exit_code": 0,
+      "mentions_config": true,
+      "default_path_visible": true
+    }
+  ],
+  "result": "captured"
+}

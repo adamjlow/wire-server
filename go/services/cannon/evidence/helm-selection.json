@@ -1,0 +1,12 @@
+{
+  "result": "pass",
+  "helm_version": "v3.22.0+g144ca65",
+  "helm_sha256": "7a319dee5ea7a1f7d7a0d92d5c223586f3b65abc33163c9de2a85f083aa3df2b",
+  "preparation": "Reuse disposable upstream chart copies version0.0.42 with packaged file:// deps and synthetic values; source chart unchanged",
+  "only_difference": "cannon StatefulSet cannon container image",
+  "nginz_and_configurator_unchanged": true,
+  "original_test_image_unchanged": true,
+  "omitted_selection_byte_identical": true,
+  "default_sha256": "78169e37a8e8acc5c375562503ebca3fbddb7712c44854a3d579a7a5009f0d9d",
+  "selected_sha256": "836c54a37bbbdb5863f5a9c0e942caa10637c7947a96edaf5ec85d47c40f5fae"
+}

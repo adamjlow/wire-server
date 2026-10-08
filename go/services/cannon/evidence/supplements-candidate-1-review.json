@@ -1,0 +1,11 @@
+{
+  "result": "pass",
+  "source_revision": "d5e4adf20defb464f82ca3d13e77f3581e8cf9f6",
+  "binary_sha256": "e16b501af7e7190f199f1058e291593899736d4176890e8f8d14eec0265b3695",
+  "http_records": 10,
+  "config_records": 7,
+  "boundary_records": 28,
+  "comparison": "Exact unique name sets and values; only frozen config diagnostics and bounded smoke/drain measurements treated as incidental. Frozen metadata says29 but actual reference contains28; separate contract followup will correct narrative count without changing any oracle record.",
+  "script_sha256": "b132e1570d1c283b1fbbe9f3cfebc18201dd6e861acfe4c1c1a39f92d5873a48",
+  "cleanup": "side process reaped by capture finally; owned environment cleanup exit0"
+}
