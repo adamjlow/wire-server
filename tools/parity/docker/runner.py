@@ -65,18 +65,21 @@ def suite(service, candidate, config, output):
     tests = discover(service)
     env = dict(os.environ)
     selected = None
-    if candidate is not None and config.parent.name == 'services':
-        raise ValueError('candidate must be selected in the staged dist layout for local launch mode')
+    local_selection = candidate is not None and config.parent.name == 'services'
     if candidate is not None:
         candidate = candidate.resolve(strict=True)
         if not candidate.is_file() or not os.access(candidate,os.X_OK):
             raise ValueError('candidate executable is unavailable')
         # Child service lookup uses PATH when config is outside services/. All
         # other service processes remain the pinned Haskell executables.
-        shim = Path('/tmp/wire-e2e-selected')
-        shim.mkdir(mode=0o700)
-        (shim/service).symlink_to(candidate)
-        env['PATH'] = str(shim)+':'+os.environ.get('PATH','/sbin:/bin')
+        if local_selection:
+            if config.parent.resolve()!=Path('/tmp/wire-e2e/services') or (config.parent.parent/'dist'/service).resolve()!=candidate:
+                raise ValueError('local candidate must match the owned staged service binary')
+        else:
+            shim = Path('/tmp/wire-e2e-selected')
+            shim.mkdir(mode=0o700)
+            (shim/service).symlink_to(candidate)
+            env['PATH'] = str(shim)+':'+os.environ.get('PATH','/sbin:/bin')
         selected = {'path':str(candidate),'sha256':hashlib.sha256(candidate.read_bytes()).hexdigest()}
     report = {'schema_version':1,'service':service,'base_image':BASE,'required_tests':tests,'candidate':selected,
               'config_sha256':hashlib.sha256(config.read_bytes()).hexdigest(),'e2e_executed':False,'result':'running'}
@@ -97,7 +100,7 @@ def suite(service, candidate, config, output):
         report.update(result='failed',error_category=type(error).__name__)
         raise
     finally:
-        if candidate is not None:
+        if candidate is not None and not local_selection:
             (shim/service).unlink();shim.rmdir()
         with output.with_suffix('.run.json').open('x') as stream:
             json.dump(report,stream,indent=2);stream.write('\n')
@@ -107,7 +110,7 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__)
     sub=parser.add_subparsers(dest='command',required=True)
     sub.add_parser('preflight')
-    environment=sub.add_parser('environment');environment.add_argument('--service',choices=('proxy','cargohold'),required=True)
+    environment=sub.add_parser('environment');environment.add_argument('--service',choices=('proxy','cargohold'),required=True);environment.add_argument('--candidate',type=Path)
     listing=sub.add_parser('list');listing.add_argument('--service',choices=('proxy','cargohold'),required=True)
     running=sub.add_parser('suite');running.add_argument('--service',choices=('proxy','cargohold'),required=True)
     running.add_argument('--candidate',type=Path);running.add_argument('--config',type=Path,required=True);running.add_argument('--output',type=Path,required=True)
@@ -117,7 +120,7 @@ def main():
         elif args.command=='list': report,code={'tests':discover(args.service),'e2e_executed':False},0
         elif args.command=='environment':
             import runtime
-            report,code=runtime.run(args.service)
+            report,code=runtime.run(args.service,args.candidate)
         else: report,code=suite(args.service,args.candidate,args.config,args.output)
         print(json.dumps(report,indent=2));return code
     except (OSError,ValueError,subprocess.SubprocessError) as error:

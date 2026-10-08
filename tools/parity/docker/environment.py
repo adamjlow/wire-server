@@ -185,11 +185,11 @@ def validate_isolation(spec):
         for volume in service.get('volumes',[]):
             if volume['type']=='bind' and volume['target']!='/reports' and not volume.get('read_only'):
                 raise ValueError('source and fixtures must be read-only')
-            if volume['type']=='bind' and (not Path(volume['source']).resolve().is_relative_to(ROOT) and volume['target'] not in ('/fixtures','/reports') or volume['source'].endswith('docker.sock') or volume['target']=='/'):
+            if volume['type']=='bind' and (not Path(volume['source']).resolve().is_relative_to(ROOT) and volume['target'] not in ('/fixtures','/reports','/candidate/proxy','/candidate/cargohold') or volume['source'].endswith('docker.sock') or volume['target']=='/'):
                 raise ValueError('unsafe mount')
 
 
-def prepare(output, receipt_path):
+def prepare(output, receipt_path, candidate=None, candidate_receipt=None):
     output=destination(output)
     if command(['git','status','--porcelain']):raise ValueError('commit runner/controller inputs first')
     receipt=json.loads(receipt_path.read_text());image=receipt['image_id']
@@ -204,9 +204,19 @@ def prepare(output, receipt_path):
         'config','--format','json'],env=env,check=True,capture_output=True,text=True,timeout=30).stdout)
     project='wire-e2e-'+uuid.uuid4().hex
     spec=private_compose(upstream,project,output,image)
+    selected=None
+    if candidate is not None:
+        if candidate_receipt is None:raise ValueError('candidate requires an identified build receipt')
+        candidate=candidate.resolve(strict=True)
+        if not candidate.is_file() or not os.access(candidate,os.X_OK):raise ValueError('candidate must be executable')
+        build=json.loads(candidate_receipt.read_text())
+        checksum=hashlib.sha256(candidate.read_bytes()).hexdigest()
+        if build['binary_sha256']!=checksum or not re.fullmatch('[0-9a-f]{40}',build['source_revision']):
+            raise ValueError('candidate build receipt mismatch')
+        selected={'path':str(candidate),'sha256':checksum,'source_revision':build['source_revision']}
     (output/'compose.json').write_text(json.dumps(spec,indent=2)+'\n')
     record={'schema_version':1,'project':project,'source_revision':command(['git','rev-parse','HEAD']),
-            'runner_image_id':image,'result':'prepared','e2e_executed':False,
+            'runner_image_id':image,'runner_revision':receipt['source_revision'],'candidate':selected,'result':'prepared','e2e_executed':False,
             'compose_sha256':hashlib.sha256((output/'compose.json').read_bytes()).hexdigest(),
             'files_sha256':{str(p.relative_to(output)):hashlib.sha256(p.read_bytes()).hexdigest()
                             for p in sorted((output/'fixtures').iterdir())}}
@@ -252,6 +262,13 @@ def run(output,service):
         if shutil.disk_usage(output).free<2*1024**3:raise ValueError('insufficient disk after dependency pull')
     record['dependencies']={name:spec['services'][name]['image'] for name in DEPENDENCIES}
     spec['services']['runner']['command']=['environment','--service',service]
+    if record.get('candidate') is not None:
+        candidate=Path(record['candidate']['path'])
+        if hashlib.sha256(candidate.read_bytes()).hexdigest()!=record['candidate']['sha256']:
+            raise ValueError('candidate binary changed')
+        spec['services']['runner']['command']+=['--candidate','/candidate/'+service]
+        spec['services']['runner']['volumes'].append({'type':'bind','source':str(candidate),'target':'/candidate/'+service,'read_only':True})
+    validate_isolation(spec)
     (output/'compose.json').write_text(json.dumps(spec,indent=2)+'\n')
     record['compose_sha256']=hashlib.sha256((output/'compose.json').read_bytes()).hexdigest()
     compose=['docker','compose','-p',record['project'],'-f',str(output/'compose.json')]
@@ -293,11 +310,11 @@ def run(output,service):
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__);sub=parser.add_subparsers(dest='command',required=True)
-    prep=sub.add_parser('prepare');prep.add_argument('--output',type=Path,required=True);prep.add_argument('--receipt',type=Path,required=True)
+    prep=sub.add_parser('prepare');prep.add_argument('--output',type=Path,required=True);prep.add_argument('--receipt',type=Path,required=True);prep.add_argument('--candidate',type=Path);prep.add_argument('--candidate-receipt',type=Path)
     execute=sub.add_parser('run');execute.add_argument('--output',type=Path,required=True);execute.add_argument('--service',choices=('proxy','cargohold'),required=True)
     args=parser.parse_args()
     try:
-        result=prepare(args.output,args.receipt) if args.command=='prepare' else run(args.output,args.service)
+        result=prepare(args.output,args.receipt,args.candidate,args.candidate_receipt) if args.command=='prepare' else run(args.output,args.service)
         print(json.dumps(result,indent=2));return 0
     except (OSError,ValueError,KeyError,subprocess.SubprocessError) as error:
         print(json.dumps({'result':'failed','error':str(error)[:600],'e2e_executed':False}));return 2

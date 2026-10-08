@@ -161,7 +161,7 @@ def start_peers(processes,logs):
         configs=peers[str(index)]
         for name,config in configs.items():
             path=WORK/(name+'-static-'+str(index)+'.json');path.write_text(json.dumps(config))
-            args=[name,'-c',str(path)]
+            args=[str(WORK/'dist'/name),'-c',str(path)]
             if name=='background-worker':args+=['--galley-config-file',str(WORK/('galley-static-'+str(index)+'.json'))]
             log=open('/reports/'+name+'-'+str(index)+'.log','w');logs.append(log)
             processes.append(subprocess.Popen(args,cwd=WORK/'services'/name,stdout=log,stderr=subprocess.STDOUT))
@@ -184,15 +184,18 @@ def start_peers(processes,logs):
     if pending:raise ValueError('static peer ports unavailable: '+str(sorted(pending)))
 
 
-def run(service):
+def run(service,candidate=None):
     if os.getuid()!=65534 or os.environ.get('WIRE_E2E_DISPOSABLE')!='1':
         raise ValueError('requires isolated non-root environment controller')
     import runner
     processes=[];logs=[];servers=[]
     try:
-        servers=start_forwards();wait_dependencies();config=stage();initialize();start_peers(processes,logs)
+        servers=start_forwards();wait_dependencies();config=stage();initialize()
+        if candidate is not None:
+            link=WORK/'dist'/service;link.unlink();link.symlink_to(candidate.resolve(strict=True))
+        start_peers(processes,logs)
         os.chdir(WORK)
-        return runner.suite(service,None,config,Path('/reports')/(service+'.xml'))
+        return runner.suite(service,candidate,config,Path('/reports')/(service+'.xml'))
     finally:
         for process in processes:
             if process.poll() is None:process.terminate()
