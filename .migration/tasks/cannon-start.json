@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "id": "cannon-start",
+  "title": "Advance approved cannon gates and queue whole-service implementation",
+  "service": "framework",
+  "kind": "framework",
+  "status": "queued",
+  "owner": null,
+  "branch": null,
+  "depends_on": [
+    "cannon-inventory",
+    "cannon-contract",
+    "go-toolchain"
+  ],
+  "write_paths": [
+    ".migration/tasks/cannon-start.json",
+    ".migration/tasks/cannon-implementation.json",
+    ".migration/services/cannon.json",
+    "changelog.d/5-internal/cannon-start"
+  ],
+  "plan": "docs/go-migration/plans/cannon.md",
+  "acceptance_criteria": [
+    {
+      "id": "gates",
+      "description": "Advance adjacent inventory/contract/plan stages using reviewed existing tasks and queue the bounded additive candidate task.",
+      "required_evidence": "State/transition/scope checks; explicit reuse of inventory finite executable plan plus contract dependency proof; no candidate compatibility or default change."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": "Serialized whole-service coordination. Reuse reviewed finite plan rather than duplicate discovery; optional candidate code needs implementing stage first."
+}
