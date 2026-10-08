@@ -1,0 +1,63 @@
+{
+  "result": "supplemental-observed",
+  "whole_service_parity": false,
+  "cases": [
+    {
+      "id": "operations-haskell",
+      "requests": 40,
+      "concurrency": 2,
+      "signed_24MiB_bytes_verified": true,
+      "peak_rss_bytes": 60379136,
+      "equal": true
+    },
+    {
+      "id": "operations-go",
+      "requests": 40,
+      "concurrency": 2,
+      "signed_24MiB_bytes_verified": true,
+      "peak_rss_bytes": 20594688,
+      "equal": true
+    },
+    {
+      "id": "operational-bounds",
+      "p95_seconds": {
+        "haskell": 0.0018507558852434158,
+        "go": 0.0021824827417731285
+      },
+      "go_rss_limit_bytes": 201326592,
+      "equal": true
+    },
+    {
+      "id": "application-metrics-shape",
+      "responses": {
+        "haskell": {
+          "definitions": {
+            "HELP net_s3_upload_size": "Number of bytes uploaded successfully uploaded to S3",
+            "TYPE net_s3_upload_size": "counter",
+            "HELP net_s3_upload_ok": "Number of successful S3 Uploads",
+            "TYPE net_s3_upload_ok": "counter",
+            "HELP http_request_duration_seconds": "The HTTP request latencies in seconds.",
+            "TYPE http_request_duration_seconds": "histogram",
+            "HELP aws_auth_token_secs_remaining": "Number of seconds left before AWS Auth expires",
+            "TYPE aws_auth_token_secs_remaining": "gauge"
+          },
+          "s3_delta": {
+            "net_s3_upload_ok": 1.0,
+            "net_s3_upload_size": 25165824.0
+          }
+        },
+        "go": {
+          "definitions": {},
+          "s3_delta": {
+            "net_s3_upload_ok": 1.0,
+            "net_s3_upload_size": 25165824.0
+          }
+        }
+      },
+      "equal": false
+    }
+  ],
+  "mismatches": [
+    "application-metrics-shape"
+  ]
+}

@@ -97,3 +97,13 @@ storage switchbacks preserve bytes, token/audit copy and deletion. Strict outbou
 trace equality validates h2c, origin/request IDs, negotiation sequence, negotiated
 version and Accept/Content-Type, normalizing only verified caller/peer identity.
 The task-owned fixture uses no production targets, external ports or secrets.
+
+The first bounded operational run passes 40 requests per runtime, concurrency two,
+actual signed 24 MiB byte verification and fixed latency/memory bounds. Go peak
+RSS was 20,594,688 bytes and p95 0.00218 seconds; Haskell p95 0.00185 seconds.
+[Capture](operations-initial-observations.json), [identity](operations-initial-run.json),
+[raw samples](operations-initial-samples.json) and native metric text are retained.
+Candidate application metric definitions are missing; that criterion fails.
+Runtime GC metrics are excluded, but HTTP histogram labels/counts/schema, S3
+counters, connection gauge and AWS credential-expiry gauge remain required.
+Cancellation and loaded shutdown/drain are still outstanding.

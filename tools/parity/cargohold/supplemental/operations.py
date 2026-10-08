@@ -74,9 +74,28 @@ def run(ref,ports,start,stop,request,store_effects,hs,go):
         stable={}
         for line in after.decode().splitlines():
             match=re.match(r'# (HELP|TYPE) ([^ ]+) (.*)',line)
-            if match and (match[2].startswith('http_') or match[2].startswith('net_s3_') or match[2]=='aws_auth_token_secs_remaining'):
+            if match and (match[2].startswith('http_') or match[2].startswith('net_') or match[2]=='aws_auth_token_secs_remaining'):
                 stable[match[1]+' '+match[2]]=match[3]
-        samples[kind]=rows;metrics[kind]={'definitions':stable,'s3_delta':delta};peaks[kind]=peak[0]
+        def histogram(raw):
+            counts={};shape=[];sums={};buckets={}
+            for line in raw.decode().splitlines():
+                m=re.fullmatch(r'http_request_duration_seconds_(count|sum|bucket)(\{[^}]+\}) ([0-9.eE+-]+)',line)
+                if not m:continue
+                part,label,value=m[1],m[2],float(m[3]);shape.append(part+label)
+                if part=='count':counts[label]=value
+                elif part=='sum':sums[label]=value
+                else:
+                    stripped=re.sub(r',le="[^"]+"','',label)
+                    boundary=re.search(r'le="([^"]+)"',label)[1]
+                    buckets.setdefault(stripped,[]).append((float(boundary),value))
+            for label,count in counts.items():
+                ordered=sorted(buckets.get(label,[]))
+                if not ordered or ordered[-1]!=(float('inf'),count) or sums.get(label,-1)<0:raise ValueError('invalid HTTP histogram count/sum/buckets')
+                if any(a[1]>b[1] for a,b in zip(ordered,ordered[1:])):raise ValueError('nonmonotonic HTTP histogram')
+            return counts,sorted(shape)
+        before_counts,_=histogram(before);after_counts,shape=histogram(after)
+        counts_delta={key:value-before_counts.get(key,0) for key,value in after_counts.items() if value-before_counts.get(key,0)!=0}
+        samples[kind]=rows;metrics[kind]={'definitions':stable,'s3_delta':delta,'http_count_delta':counts_delta,'http_histogram_shape':shape};peaks[kind]=peak[0]
         records.append({'id':'operations-'+kind,'requests':40,'concurrency':2,'signed_24MiB_bytes_verified':True,'peak_rss_bytes':peak[0],'equal':True})
     p95={kind:sorted(row['seconds'] for row in rows)[math.ceil(.95*len(rows))-1] for kind,rows in samples.items()}
     records.append({'id':'operational-bounds','p95_seconds':p95,'go_rss_limit_bytes':192*1024*1024,

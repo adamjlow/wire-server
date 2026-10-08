@@ -1,0 +1,2 @@
+net_s3_upload_ok 1
+net_s3_upload_size 25165824
