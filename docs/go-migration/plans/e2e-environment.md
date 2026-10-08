@@ -49,3 +49,11 @@ read-only watermark. Stopped only the owned runner and retained failure/logs;
 controller cleanup removed its project containers/networks/volumes. Use a bounded
 1 GiB tmpfs for disposable search data on retry, retaining the 2 GiB host disk
 reserve for other backend data. No unrelated images, caches or services removed.
+
+The next complete setup at b6673169728cb45d6c2e0319a582044453df73e8
+initialized schemas, AWS fixtures, Postgres migrations and all static Haskell
+peers successfully. The original integration process stopped at federation
+warmup because CoreDNS's upstream SRV target `localhost.` did not resolve through
+Docker's internal-network resolver. Add the exact loopback hostname to the owned
+runner's hosts file; retain original DNS SRV records and federation assertions.
+No selected assertions passed and no compatibility claim follows from this run.
