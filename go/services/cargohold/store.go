@@ -64,7 +64,10 @@ func (s *S3Store) Upload(ctx context.Context, key string, meta map[string]string
 	}
 	complete := false
 	defer func() {
-		if !complete {
+		// The reference leaves multipart state on inbound client cancellation.
+		// Preserve that effect under the explicit mirror-current-behavior decision;
+		// see tools/parity/cargohold/supplemental/security-concerns.md.
+		if !complete && ctx.Err() != context.Canceled {
 			cleanup, cancel := context.WithTimeout(context.WithoutCancel(ctx), 10*time.Second)
 			defer cancel()
 			_, _ = s.client.AbortMultipartUpload(cleanup, &s3.AbortMultipartUploadInput{Bucket: aws.String(s.settings.AWS.Bucket), Key: aws.String(key), UploadId: created.UploadId})
@@ -72,7 +75,7 @@ func (s *S3Store) Upload(ctx context.Context, key string, meta map[string]string
 	}()
 	parts := []types.CompletedPart{}
 	limited := io.LimitReader(r, n)
-	buffer := make([]byte, 5*1024*1024)
+	buffer := make([]byte, 6*1024*1024)
 	var seen int64
 	for {
 		count, readErr := io.ReadFull(limited, buffer)

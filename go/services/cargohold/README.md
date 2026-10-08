@@ -16,7 +16,7 @@ go build -o cargohold ./cmd/cargohold
 ```
 
 Credentials use the standard AWS SDK provider chain. TLS verification is enabled;
-uploads buffer one 5 MiB S3 part at a time. Existing accepted delimiter/MD5/length
+uploads buffer one 6 MiB S3 part at a time. Existing accepted delimiter/MD5/length
 suffix/trailer quirks and completed partial-object effects are preserved.
 Parser error text and all remaining contracts still require direct reference
 comparison. Unit tests prove candidate behavior only. Dependency choices and
@@ -168,3 +168,15 @@ HTTP histogram labels/counts/schema and S3 counter deltas. Incidental native GC
 metrics and histogram latency values are not equality targets. Cancellation and
 loaded shutdown/drain are still incomplete. Full Go quality checks pass this
 revision; raw [quality output](evidence/quality.log) is retained.
+
+## Inherited cancellation concern
+
+The current Haskell reference leaves a multipart upload with one 6 MiB part after
+a client disconnects during a declared 24 MiB body. The candidate mirrors that
+effect under the user’s explicit current-behavior disposition, while retaining
+abort cleanup for S3 part/complete failures. See the protected
+[concern and proposed separate fix](../../../tools/parity/cargohold/supplemental/security-concerns.md).
+No completed object is created. Task-owned tests record the state before cleaning
+it up. Production lifecycle policy and exploitability have not been assessed.
+The Go executable now waits for Shutdown to finish before exiting, so an active
+download can drain during SIGTERM; runtime proof follows in the lifecycle capture.

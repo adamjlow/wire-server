@@ -32,7 +32,9 @@ func main() {
 	}
 	app := cargo.NewServer(c, store)
 	server := &http.Server{Addr: net.JoinHostPort(c.Cargohold.Host, strconv.Itoa(c.Cargohold.Port)), Handler: app, ReadHeaderTimeout: 10 * time.Second, ConnState: app.ConnectionState}
+	shutdownDone := make(chan struct{})
 	go func() {
+		defer close(shutdownDone)
 		<-ctx.Done()
 		app.StopAccepting()
 		shutdown, cancel := context.WithTimeout(context.Background(), 30*time.Second)
@@ -42,5 +44,8 @@ func main() {
 	app.Listening(server.Addr)
 	if err = server.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
 		log.Fatal(err)
+	}
+	if ctx.Err() != nil {
+		<-shutdownDone
 	}
 }
