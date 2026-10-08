@@ -93,3 +93,12 @@ relevant error/retry cases, one operational smoke and switchback. Stop on that
 matrix passing; extend it only for a concrete uncovered risk or regression.
 Reuse previous passing evidence when its relevant inputs are unchanged. Preserve
 normal Haskell CI, and run Haskell package checks when Haskell code changes.
+
+## Docker e2e runner
+
+The [container runner](docker/README.md) now builds from a pinned published Wire
+integration image. Original compiled proxy/cargohold test discovery succeeds
+inside a restricted non-root container; no host Haskell compiler is required.
+This removes the missing compiled-suite dependency from the host. Disposable
+backend dependencies/static peers still need to be wired and qualified before
+actual e2e execution. The preflight reports that distinction explicitly.

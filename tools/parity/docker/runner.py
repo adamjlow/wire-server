@@ -59,6 +59,9 @@ def suite(service, candidate, config, output):
         raise ValueError('report destination must be new without symlink parents')
     if os.environ.get('WIRE_E2E_DISPOSABLE') != '1':
         raise ValueError('suite requires a provisioned disposable dependency environment; preflight is not readiness')
+    sidecar = output.with_suffix('.run.json')
+    if sidecar.exists() or sidecar.is_symlink():
+        raise ValueError('run receipt destination must be new')
     tests = discover(service)
     env = dict(os.environ)
     selected = None
@@ -84,9 +87,13 @@ def suite(service, candidate, config, output):
             return report, 1
         # Full report acceptance stays in the shared harness; never treat an
         # executable's zero exit without required assertions as green.
+        report['e2e_executed'] = True
         report['validated_report'] = harness.check_xml(output, tests)
         report['result']='pass'
         return report, 0
+    except (OSError,ValueError,subprocess.SubprocessError) as error:
+        report.update(result='failed',error_category=type(error).__name__)
+        raise
     finally:
         if candidate is not None:
             (shim/service).unlink();shim.rmdir()

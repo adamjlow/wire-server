@@ -62,18 +62,27 @@ def preflight(receipt_path,output):
     if actual['Id']!=image or actual['Config']['User']!='65534:65534' or actual['Config'].get('Labels',{}).get('org.opencontainers.image.revision')!=receipt['source_revision']:
         raise ValueError('image receipt mismatch')
     name='wire-e2e-preflight-'+uuid.uuid4().hex
+    container=None
     try:
-        raw=command(['docker','run','--name',name,'--network=none','--read-only','--cap-drop=ALL',
+        container=command(['docker','create','--name',name,'--network=none','--read-only','--cap-drop=ALL',
                      '--security-opt=no-new-privileges','--pids-limit=256','--memory=1g','--cpus=2',
-                     '--tmpfs','/tmp:rw,nosuid,nodev,size=128m,mode=1777',image,'preflight'],timeout=90)
+                     '--tmpfs','/tmp:rw,nosuid,nodev,size=128m,mode=1777',image,'preflight'],timeout=30)
+        if not re.fullmatch('[0-9a-f]{64}',container):
+            container=None
+            raise ValueError('invalid created container identity')
+        raw=command(['docker','start','--attach',container],timeout=90)
+        state=json.loads(command(['docker','inspect',container]))[0]['State']
+        if state['ExitCode'] != 0:
+            raise ValueError('runner exited unsuccessfully')
         report=json.loads(raw)
-        if report.get('result')!='preflight-pass' or report.get('uid')!=65534 or report.get('e2e_executed') is not False:
+        if report.get('result')!='preflight-pass' or report.get('uid')!=65534 or report.get('e2e_executed') is not False or report.get('base_image')!=receipt['base_image']:
             raise ValueError('runner preflight failed')
         report['runner_image_id']=image;report['runner_revision']=receipt['source_revision']
         with output.open('x') as stream:json.dump(report,stream,indent=2);stream.write('\n')
         return report
     finally:
-        subprocess.run(['docker','rm','--force',name],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL,timeout=15)
+        if container is not None:
+            subprocess.run(['docker','rm','--force',container],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL,timeout=15)
 
 
 def main():

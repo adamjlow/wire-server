@@ -1,0 +1,1 @@
+Add a pinned non-root Docker e2e runner with original compiled test discovery and per-service binary substitution, avoiding host Haskell/toolchain installation.
