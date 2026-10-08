@@ -67,7 +67,14 @@ def required_tests(service, root=ROOT):
         for name in group['tests']:
             if not re.search(r'^'+re.escape(name)+r'\s*::', text, flags=re.MULTILINE):
                 raise ValueError('upstream test catalogue needs refresh')
-            result.append(group['module'].removeprefix('Test.')+'.'+name)
+            prefix=group['module'].removeprefix('Test.')+'.'+name
+            variants=group.get('variants',{}).get(name)
+            if variants is None:
+                result.append(prefix)
+            else:
+                if not isinstance(variants,list) or not variants or len(set(variants))!=len(variants) or any(not isinstance(v,str) or not re.fullmatch(r'[A-Za-z0-9_=,.-]+',v) for v in variants):
+                    raise ValueError('invalid original test variants')
+                result.extend(prefix+'['+variant+']' for variant in variants)
     if not result or len(set(result)) != len(result):
         raise ValueError('empty/duplicate test catalogue')
     return result

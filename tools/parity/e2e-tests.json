@@ -73,6 +73,66 @@
           "testDownloadAssetMultiIngressS3DownloadUrl"
         ]
       }
+    ],
+    "cannon": [
+      {
+        "source": "integration/test/Test/Events.hs",
+        "module": "Test.Events",
+        "tests": [
+          "testConsumeEventsOneWebSocket",
+          "testWebSocketTimeout",
+          "testConsumeTempEvents",
+          "testTemporaryQueuesAreDeletedAfterUse",
+          "testSendMessageNoReturnToSenderWithConsumableNotificationsProteus",
+          "testEventsForSpecificClients",
+          "testConsumeEventsForDifferentUsers",
+          "testConsumeEventsWhileHavingLegacyClients",
+          "testConsumeEventsAcks",
+          "testConsumeEventsMultipleAcks",
+          "testConsumeEventsAckNewEventWithoutAckingOldOne",
+          "testEventsDeadLettered",
+          "testEventsDeadLetteredWithReconnect",
+          "testTransientEventsDoNotTriggerDeadLetters",
+          "testTransientEvents",
+          "testChannelLimit",
+          "testChannelKilled",
+          "testSingleConsumer",
+          "testPrefetchCount",
+          "testEndOfInitialSync",
+          "testEndOfInitialSyncMoreEventsAfterSyncMessage",
+          "testEndOfInitialSyncIgnoreExpired",
+          "testEndOfInitialSyncAckMultiple",
+          "testTypingIndicatorIsNotSentToOwnClient",
+          "testBackendPusherRecoversFromQueueDeletion"
+        ],
+        "variants": {
+          "testTypingIndicatorIsNotSentToOwnClient": [
+            "federated=false",
+            "federated=true"
+          ]
+        }
+      },
+      {
+        "source": "integration/test/Test/Notifications.hs",
+        "module": "Test.Notifications",
+        "tests": [
+          "testFetchAllNotifications",
+          "testLastNotification",
+          "testInvalidNotification",
+          "testAddClientNotification",
+          "testBulkPushSameMessage",
+          "testGetServerTime",
+          "testTargetClientPush"
+        ]
+      },
+      {
+        "source": "integration/test/Test/Demo.hs",
+        "module": "Test.Demo",
+        "tests": [
+          "testModifiedCannon",
+          "testWebSockets"
+        ]
+      }
     ]
   }
 }

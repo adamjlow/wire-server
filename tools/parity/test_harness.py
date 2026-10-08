@@ -22,6 +22,10 @@ class HarnessTests(unittest.TestCase):
     def test_required_original_test_catalogue_matches_source(self):
         self.assertEqual(5,len(harness.required_tests('proxy')))
         self.assertGreater(len(harness.required_tests('cargohold')),15)
+        cannon=harness.required_tests('cannon')
+        self.assertEqual(35,len(cannon))
+        self.assertIn('Events.testTypingIndicatorIsNotSentToOwnClient[federated=false]',cannon)
+        self.assertIn('Events.testTypingIndicatorIsNotSentToOwnClient[federated=true]',cannon)
         with self.assertRaises(ValueError): harness.required_tests('unknown')
 
     def test_empty_missing_extra_duplicate_failed_skipped_reports_fail(self):
@@ -85,4 +89,3 @@ class HarnessTests(unittest.TestCase):
         with patch.object(harness.subprocess,'check_output',side_effect=['','go version go1.26.8 linux/amd64']),patch.object(harness,'executable',return_value=Path('/synthetic-go')),patch.object(harness,'new_directory',return_value=output),patch.object(harness,'run',side_effect=[None,None,None,harness.subprocess.CalledProcessError(1,['capture'])]):
             with self.assertRaises(harness.subprocess.CalledProcessError): harness.proxy(output,'api')
         self.assertFalse((output/'result.json').exists())
-

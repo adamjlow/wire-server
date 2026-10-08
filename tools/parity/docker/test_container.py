@@ -39,6 +39,13 @@ class ContainerTests(unittest.TestCase):
         executable.chmod(0o644)
         with self.assertRaises(ValueError):runtime.selections('proxy-cargohold',None,pairs)
 
+    def test_three_service_selection_cannot_omit_cannon(self):
+        executable=self.root/'candidate';executable.write_text('synthetic');executable.chmod(0o755)
+        pairs=[(name,str(executable)) for name in ('proxy','cargohold','cannon')]
+        self.assertEqual({'proxy','cargohold','cannon'},set(runtime.selections('proxy-cargohold-cannon',None,pairs)))
+        with self.assertRaises(ValueError):runtime.selections('proxy-cargohold-cannon',None,pairs[:2])
+        self.assertEqual({'cannon'},set(runtime.selections('cannon',executable,[])))
+
     def test_foreign_image_receipt_rejected_before_starting_container(self):
         receipt=self.root/'receipt.json';image='sha256:'+'a'*64
         receipt.write_text(json.dumps({'image_id':image,'source_revision':'b'*40}))
