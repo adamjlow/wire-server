@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "kind": "dependency-build-proof-only",
+  "go_version": "go1.26.8",
+  "module": "module wire-cannon-dependency-proof\n\ngo 1.26.8\n\nrequire (\n\tgithub.com/apache/cassandra-gocql-driver/v2 v2.1.2\n\tgithub.com/gorilla/websocket v1.5.3\n\tgithub.com/rabbitmq/amqp091-go v1.15.0\n\tgo.yaml.in/yaml/v3 v3.0.4\n)\n\nrequire gopkg.in/inf.v0 v0.9.1 // indirect\n",
+  "sha256": {
+    "go.mod": "b717ee667dc9dbf2bf8a7b1704f46d556ed991d37504bf83e9bcf52e1ebb1435",
+    "go.sum": "4d1b293c3ad83f4bfda47974aa1fc551f20df15f2f642c441aa7f36594187c7c",
+    "dependency-proof": "e8275943bc414d1461d38be5e69c43d054900b1219d7f2bb34b6158b45e18067",
+    "vulnerabilities.log": "3016e51e4eac0d421674d2128bbbdefb2924b4646e0c14a1ab034977ad73fae5",
+    "licenses.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "build_result": "pass",
+  "vulnerability_scan": {
+    "command": "govulncheck -scan=module",
+    "result": "pass",
+    "output": "No vulnerabilities found.\n"
+  },
+  "license_scan": {
+    "command": "go-licenses check --include_tests --allowed_licenses=AGPL-3.0,Apache-2.0,BSD-2-Clause,BSD-3-Clause,ISC,MIT ./...",
+    "result": "pass",
+    "output": ""
+  },
+  "candidate_implemented": false
+}

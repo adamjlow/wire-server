@@ -1,0 +1,7 @@
+# Failed Haskell baseline, retained without waivers
+
+The actual original compiled 35 cases executed at controller 705cb60888e7dda9ac7f3116f759d40c109f25af. Thirty passed; five failed. The suite receipt correctly says executed/failed. The outer environment receipt says e2e_executed:false because its successful-run validation was not reached; this does not erase actual execution. Owned cleanup exited 0.
+
+The failures were ConsumeEventsOneWebSocket, ConsumeTempEvents, TypingIndicatorIsNotSentToOwnClient[federated=true], AddClientNotification and GetServerTime. Failed requests received 500 from Haskell brig/galley while querying PostgreSQL; static brig eventually logged "no connection to the server". PostgreSQL itself stayed up with no corresponding server failures. The task-owned TCP forwarder returned after 60 seconds with no readable socket, closing pooled database and persistent HTTP/2 transports underneath peers configured for ten-minute pool idleness. This is a harness defect, not a waived cannon failure.
+
+The corrective increment preserves idle tunnels until EOF or owned process teardown. A real socket regression exercises several idle polls, subsequent two-way traffic and half-close delivery. Rerun the exact original catalogue with the corrected runner before baseline qualification. No Haskell assertion or service source was edited. Full synthetic logs remain in /home/operator/.cache/wire-migration/cannon-haskell-baseline-20261008; XML and immutable receipts are retained here.

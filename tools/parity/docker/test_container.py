@@ -4,6 +4,10 @@ import json
 from pathlib import Path
 import sys
 import tempfile
+import socket
+import socketserver
+import threading
+import time
 import unittest
 from unittest.mock import patch
 
@@ -45,6 +49,35 @@ class ContainerTests(unittest.TestCase):
         self.assertEqual({'proxy','cargohold','cannon'},set(runtime.selections('proxy-cargohold-cannon',None,pairs)))
         with self.assertRaises(ValueError):runtime.selections('proxy-cargohold-cannon',None,pairs[:2])
         self.assertEqual({'cannon'},set(runtime.selections('cannon',executable,[])))
+
+    def test_persistent_tunnel_survives_idle_polls_and_preserves_half_close(self):
+        class Echo(socketserver.BaseRequestHandler):
+            def handle(self):
+                time.sleep(0.12)
+                self.request.sendall(b'ready')
+                data = self.request.recv(1024)
+                self.request.sendall(data)
+                self.assert_eof = self.request.recv(1024)
+                self.request.sendall(b'finished')
+
+        class FastPoll(runtime.Forward):
+            poll_interval = 0.02
+
+        with runtime.TCPServer(('127.0.0.1', 0), Echo) as upstream, runtime.TCPServer(('127.0.0.1', 0), FastPoll) as tunnel:
+            tunnel.destination = upstream.server_address
+            workers = [threading.Thread(target=server.serve_forever, daemon=True) for server in (upstream, tunnel)]
+            for worker in workers:worker.start()
+            try:
+                with socket.create_connection(tunnel.server_address, timeout=2) as client:
+                    self.assertEqual(b'ready', client.recv(1024))
+                    client.sendall(b'query')
+                    self.assertEqual(b'query', client.recv(1024))
+                    client.shutdown(socket.SHUT_WR)
+                    self.assertEqual(b'finished', client.recv(1024))
+                    self.assertEqual(b'', client.recv(1024))
+            finally:
+                for server in (upstream, tunnel):server.shutdown()
+                for worker in workers:worker.join(timeout=2)
 
     def test_foreign_image_receipt_rejected_before_starting_container(self):
         receipt=self.root/'receipt.json';image='sha256:'+'a'*64

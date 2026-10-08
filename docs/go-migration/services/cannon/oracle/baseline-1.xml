@@ -1,0 +1,266 @@
+<?xml version='1.0' ?><testsuites name="wire-server"><testsuite name="integration" tests="35" failures="5" time="1985.894450946"><testcase name="Demo.testModifiedCannon" time="3.115260593" /><testcase name="Demo.testWebSockets" time="1.202676002" /><testcase name="Events.testBackendPusherRecoversFromQueueDeletion" time="6.94635242" /><testcase name="Events.testChannelKilled" time="4.198562928" /><testcase name="Events.testChannelLimit" time="5.290146178" /><testcase name="Events.testConsumeEventsAckNewEventWithoutAckingOldOne" time="65.142612884" /><testcase name="Events.testConsumeEventsAcks" time="65.577931296" /><testcase name="Events.testConsumeEventsForDifferentUsers" time="122.306780984" /><testcase name="Events.testConsumeEventsMultipleAcks" time="123.403521853" /><testcase name="Events.testConsumeEventsOneWebSocket" time="122.860012013"><failure>assertion failure:
+Actual:
+500
+Expected:
+in range (200, 299) (including bounds)
+
+call stack: 
+1. assertFailure at test/Testlib/Assertions.hs:241
+
+2. shouldMatchRange at test/Testlib/HTTP.hs:151
+
+3. assertSuccess at test/Test/Events.hs:83
+
+4. k at test/Testlib/ModService.hs:89
+
+5. withModifiedBackend at test/Test/Events.hs:58
+
+
+
+request as command line: 
+curl -X &#39;PUT&#39; &#39;http://127.0.0.1:11082/v19/self/handle&#39; -H &#39;Request-Id: Events.testConsumeEventsOneWebSocket__PUT_/v19/self/handle__34&#39; -H &#39;Content-Type: application/json&#39; -H &#39;Z-Connection: conn&#39; -H &#39;Z-User: 34b1132d-fa4f-44b2-8c5e-b3bf902d2f1d&#39; --data-binary &#39;{&quot;handle&quot;:&quot;8p3x1ypi5r3rsntaoyzl5y4kvagmoeie-rst3x3r5vgswnqea_lwb18&quot;}&#39;
+request: 
+PUT http://127.0.0.1:11082/v19/self/handle
+request headers: 
+Request-Id: Events.testConsumeEventsOneWebSocket__PUT_/v19/self/handle__34
+Content-Type: application/json
+Z-Connection: conn
+Z-User: 34b1132d-fa4f-44b2-8c5e-b3bf902d2f1d
+request body:
+{
+    &quot;handle&quot;: &quot;8p3x1ypi5r3rsntaoyzl5y4kvagmoeie-rst3x3r5vgswnqea_lwb18&quot;
+}
+response status: 500
+response headers:
+Transfer-Encoding: chunked
+Date: Thu, 08 Oct 2026 15:33:25 GMT
+traceparent: 00-67e6156fc97881061a9a2221fbf80ede-ce2c26cd7d4f56e2-01
+tracestate: 
+Content-Encoding: gzip
+Content-Type: application/json
+Vary: Accept-Encoding
+response body:
+{
+    &quot;code&quot;: 500,
+    &quot;label&quot;: &quot;server-error&quot;,
+    &quot;message&quot;: &quot;Internal Server Error&quot;
+}
+
+Set WIRE_INTEGRATION_TEST_VERBOSITY=1 if you want to see complete trace of the HTTP traffic in curl pseudo-syntax.
+</failure></testcase><testcase name="Events.testConsumeEventsWhileHavingLegacyClients" time="62.131203009" /><testcase name="Events.testConsumeTempEvents" time="64.653199902"><failure>assertion failure:
+Actual:
+500
+Expected:
+201
+
+call stack: 
+1. assertFailure at test/Testlib/Assertions.hs:123
+
+2. shouldMatchWithMsg at test/Testlib/Assertions.hs:92
+
+3. shouldMatch at test/Testlib/HTTP.hs:144
+
+4. getJSON at test/Test/Events.hs:141
+
+5. k at test/Testlib/ModService.hs:89
+
+6. withModifiedBackend at test/Test/Events.hs:123
+
+
+
+request as command line: 
+curl -X &#39;POST&#39; &#39;http://127.0.0.1:10082/v19/clients&#39; -H &#39;Request-Id: Events.testConsumeTempEvents__POST_/v19/clients__36&#39; -H &#39;Content-Type: application/json&#39; -H &#39;Z-Connection: conn&#39; -H &#39;Z-User: 1b456c69-1c08-482b-8500-bcb6b987d072&#39; --data-binary &#39;{&quot;capabilities&quot;:[&quot;consumable-notifications&quot;],&quot;label&quot;:&quot;Test Device&quot;,&quot;lastkey&quot;:{&quot;id&quot;:65535,&quot;key&quot;:&quot;pQABARn//wKhAFggG9SZBtAVGayX5AMOlygZ8AbYyELGgEyS3VHWsIlf72sDoQChAFgg6TGnM49oOAvpIlymN5fQ5mggYcUKw1b6LMUa8TnF4pQE9g==&quot;},&quot;model&quot;:&quot;Test Model&quot;,&quot;password&quot;:&quot;hunter2.&quot;,&quot;prekeys&quot;:[{&quot;id&quot;:1,&quot;key&quot;:&quot;pQABAQECoQBYIDRtimfQCr/BBXVXvzFAMaauzgaLgqwHP7UE8Y/NFVxKA6EAoQBYIF1Z8OhLXe7VR8egFmHk9/AUntFTqxOvYu/FvN/3cesTBPY=&quot;}],&quot;type&quot;:&quot;permanent&quot;}&#39;
+request: 
+POST http://127.0.0.1:10082/v19/clients
+request headers: 
+Request-Id: Events.testConsumeTempEvents__POST_/v19/clients__36
+Content-Type: application/json
+Z-Connection: conn
+Z-User: 1b456c69-1c08-482b-8500-bcb6b987d072
+request body:
+{
+    &quot;capabilities&quot;: [
+        &quot;consumable-notifications&quot;
+    ],
+    &quot;label&quot;: &quot;Test Device&quot;,
+    &quot;lastkey&quot;: {
+        &quot;id&quot;: 65535,
+        &quot;key&quot;: &quot;pQABARn//wKhAFggG9SZBtAVGayX5AMOlygZ8AbYyELGgEyS3VHWsIlf72sDoQChAFgg6TGnM49oOAvpIlymN5fQ5mggYcUKw1b6LMUa8TnF4pQE9g==&quot;
+    },
+    &quot;model&quot;: &quot;Test Model&quot;,
+    &quot;password&quot;: &quot;hunter2.&quot;,
+    &quot;prekeys&quot;: [
+        {
+            &quot;id&quot;: 1,
+            &quot;key&quot;: &quot;pQABAQECoQBYIDRtimfQCr/BBXVXvzFAMaauzgaLgqwHP7UE8Y/NFVxKA6EAoQBYIF1Z8OhLXe7VR8egFmHk9/AUntFTqxOvYu/FvN/3cesTBPY=&quot;
+        }
+    ],
+    &quot;type&quot;: &quot;permanent&quot;
+}
+response status: 500
+response headers:
+Transfer-Encoding: chunked
+Date: Thu, 08 Oct 2026 15:33:27 GMT
+traceparent: 00-388c010d4f16919cbba90ac084af090f-c2f36c0fc37e5344-01
+tracestate: 
+Content-Encoding: gzip
+Content-Type: application/json
+Vary: Accept-Encoding
+response body:
+{
+    &quot;code&quot;: 500,
+    &quot;label&quot;: &quot;server-error&quot;,
+    &quot;message&quot;: &quot;Internal Server Error&quot;
+}
+
+Set WIRE_INTEGRATION_TEST_VERBOSITY=1 if you want to see complete trace of the HTTP traffic in curl pseudo-syntax.
+</failure></testcase><testcase name="Events.testEndOfInitialSync" time="126.738168526" /><testcase name="Events.testEndOfInitialSyncAckMultiple" time="61.083374872" /><testcase name="Events.testEndOfInitialSyncIgnoreExpired" time="6.811260924" /><testcase name="Events.testEndOfInitialSyncMoreEventsAfterSyncMessage" time="3.427711105" /><testcase name="Events.testEventsDeadLettered" time="66.472572551" /><testcase name="Events.testEventsDeadLetteredWithReconnect" time="7.814847471" /><testcase name="Events.testEventsForSpecificClients" time="128.148068759" /><testcase name="Events.testPrefetchCount" time="58.283778851" /><testcase name="Events.testSendMessageNoReturnToSenderWithConsumableNotificationsProteus" time="66.674819114" /><testcase name="Events.testSingleConsumer" time="245.609588266" /><testcase name="Events.testTemporaryQueuesAreDeletedAfterUse" time="62.698290977" /><testcase name="Events.testTransientEvents" time="63.493508313" /><testcase name="Events.testTransientEventsDoNotTriggerDeadLetters" time="61.768930239" /><testcase name="Events.testTypingIndicatorIsNotSentToOwnClient[federated=false]" time="185.095472607" /><testcase name="Events.testTypingIndicatorIsNotSentToOwnClient[federated=true]" time="183.893673736"><failure>assertion failure:
+Actual:
+500
+Expected:
+in range (200, 299) (including bounds)
+
+call stack: 
+1. assertFailure at test/Testlib/Assertions.hs:241
+
+2. shouldMatchRange at test/Testlib/HTTP.hs:151
+
+3. assertSuccess at test/Test/Events.hs:850
+
+
+
+request as command line: 
+curl -X &#39;POST&#39; &#39;http://127.0.0.1:12085/v19/conversations/d1.example.com/18110400-ea93-4ee7-a120-82b94ccea7cb/typing&#39; -H &#39;Request-Id: Events.testTypingIndicatorIsNotSentToOwnClient[federated=true]__POST_/v19/conversations/d1.example.com/18110400-ea93-4ee7-a120-82b94ccea7cb/typing__74&#39; -H &#39;Content-Type: application/json&#39; -H &#39;Z-Connection: conn&#39; -H &#39;Z-User: f6066413-f745-4850-915f-412be8d0f21c&#39; --data-binary &#39;{&quot;status&quot;:&quot;started&quot;}&#39;
+request: 
+POST http://127.0.0.1:12085/v19/conversations/d1.example.com/18110400-ea93-4ee7-a120-82b94ccea7cb/typing
+request headers: 
+Request-Id: Events.testTypingIndicatorIsNotSentToOwnClient[federated=true]__POST_/v19/conversations/d1.example.com/18110400-ea93-4ee7-a120-82b94ccea7cb/typing__74
+Content-Type: application/json
+Z-Connection: conn
+Z-User: f6066413-f745-4850-915f-412be8d0f21c
+request body:
+{
+    &quot;status&quot;: &quot;started&quot;
+}
+response status: 500
+response headers:
+Transfer-Encoding: chunked
+Date: Thu, 08 Oct 2026 15:39:44 GMT
+traceparent: 00-fbe4f2735d06ee58431159db082687fe-f50d354198128411-01
+tracestate: 
+Content-Encoding: gzip
+Content-Type: application/json
+Vary: Accept-Encoding
+response body:
+{
+    &quot;code&quot;: 500,
+    &quot;label&quot;: &quot;server-error&quot;,
+    &quot;message&quot;: &quot;Internal Server Error&quot;
+}
+
+Set WIRE_INTEGRATION_TEST_VERBOSITY=1 if you want to see complete trace of the HTTP traffic in curl pseudo-syntax.
+</failure></testcase><testcase name="Events.testWebSocketTimeout" time="5.036401539" /><testcase name="Notifications.testAddClientNotification" time="0.013659743"><failure>assertion failure:
+Actual:
+500
+Expected:
+201
+
+call stack: 
+1. assertFailure at test/Testlib/Assertions.hs:123
+
+2. shouldMatchWithMsg at test/Testlib/Assertions.hs:92
+
+3. shouldMatch at test/Testlib/HTTP.hs:144
+
+4. getJSON at test/SetupHelpers.hs:72
+
+5. randomUser at test/Test/Notifications.hs:125
+
+
+
+request as command line: 
+curl -X &#39;POST&#39; &#39;http://127.0.0.1:8082/i/users&#39; -H &#39;Request-Id: Notifications.testAddClientNotification__POST_/i/users__1&#39; -H &#39;Content-Type: application/json&#39; -H &#39;Z-Connection: conn&#39; -H &#39;Z-User: example.com&#39; --data-binary &#39;{&quot;email&quot;:&quot;wbAR5U3ds1yBDRo@example.com&quot;,&quot;icon&quot;:&quot;default&quot;,&quot;name&quot;:&quot;wbAR5U3ds1yBDRo@example.com&quot;,&quot;password&quot;:&quot;hunter2.&quot;}&#39;
+request: 
+POST http://127.0.0.1:8082/i/users
+request headers: 
+Request-Id: Notifications.testAddClientNotification__POST_/i/users__1
+Content-Type: application/json
+Z-Connection: conn
+Z-User: example.com
+request body:
+{
+    &quot;email&quot;: &quot;wbAR5U3ds1yBDRo@example.com&quot;,
+    &quot;icon&quot;: &quot;default&quot;,
+    &quot;name&quot;: &quot;wbAR5U3ds1yBDRo@example.com&quot;,
+    &quot;password&quot;: &quot;hunter2.&quot;
+}
+response status: 500
+response headers:
+Transfer-Encoding: chunked
+Date: Thu, 08 Oct 2026 15:36:46 GMT
+traceparent: 00-a7966032a84004ca22d1a8085cfdbbf2-f8db5c350aef5a1d-01
+tracestate: 
+Content-Encoding: gzip
+Content-Type: application/json
+Vary: Accept-Encoding
+response body:
+{
+    &quot;code&quot;: 500,
+    &quot;label&quot;: &quot;server-error&quot;,
+    &quot;message&quot;: &quot;Internal Server Error&quot;
+}
+
+Set WIRE_INTEGRATION_TEST_VERBOSITY=1 if you want to see complete trace of the HTTP traffic in curl pseudo-syntax.
+</failure></testcase><testcase name="Notifications.testBulkPushSameMessage" time="3.855059367" /><testcase name="Notifications.testFetchAllNotifications" time="0.066372054" /><testcase name="Notifications.testGetServerTime" time="0.003008199"><failure>assertion failure:
+Actual:
+500
+Expected:
+201
+
+call stack: 
+1. assertFailure at test/Testlib/Assertions.hs:123
+
+2. shouldMatchWithMsg at test/Testlib/Assertions.hs:92
+
+3. shouldMatch at test/Testlib/HTTP.hs:144
+
+4. getJSON at test/SetupHelpers.hs:72
+
+5. randomUser at test/Test/Notifications.hs:190
+
+
+
+request as command line: 
+curl -X &#39;POST&#39; &#39;http://127.0.0.1:8082/i/users&#39; -H &#39;Request-Id: Notifications.testGetServerTime__POST_/i/users__1&#39; -H &#39;Content-Type: application/json&#39; -H &#39;Z-Connection: conn&#39; -H &#39;Z-User: example.com&#39; --data-binary &#39;{&quot;email&quot;:&quot;NrEiFWchh@example.com&quot;,&quot;icon&quot;:&quot;default&quot;,&quot;name&quot;:&quot;NrEiFWchh@example.com&quot;,&quot;password&quot;:&quot;hunter2.&quot;}&#39;
+request: 
+POST http://127.0.0.1:8082/i/users
+request headers: 
+Request-Id: Notifications.testGetServerTime__POST_/i/users__1
+Content-Type: application/json
+Z-Connection: conn
+Z-User: example.com
+request body:
+{
+    &quot;email&quot;: &quot;NrEiFWchh@example.com&quot;,
+    &quot;icon&quot;: &quot;default&quot;,
+    &quot;name&quot;: &quot;NrEiFWchh@example.com&quot;,
+    &quot;password&quot;: &quot;hunter2.&quot;
+}
+response status: 500
+response headers:
+Transfer-Encoding: chunked
+Date: Thu, 08 Oct 2026 15:36:50 GMT
+traceparent: 00-2efcf7ef8988d5e3b089c4a8ef6b3baf-ffa76f8c365fbb43-01
+tracestate: 
+Content-Encoding: gzip
+Content-Type: application/json
+Vary: Accept-Encoding
+response body:
+{
+    &quot;code&quot;: 500,
+    &quot;label&quot;: &quot;server-error&quot;,
+    &quot;message&quot;: &quot;Internal Server Error&quot;
+}
+
+Set WIRE_INTEGRATION_TEST_VERBOSITY=1 if you want to see complete trace of the HTTP traffic in curl pseudo-syntax.
+</failure></testcase><testcase name="Notifications.testInvalidNotification" time="0.0068842" /><testcase name="Notifications.testLastNotification" time="0.030784042" /><testcase name="Notifications.testTargetClientPush" time="2.039955429" /></testsuite></testsuites>

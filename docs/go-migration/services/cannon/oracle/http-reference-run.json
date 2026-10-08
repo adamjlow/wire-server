@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "kind": "reference-only-readonly-http-characterization",
+  "reference_revision": "f6636ed53315fa7b0fc4c8aa39c0bb30c98b6d5e",
+  "controller_revision": "705cb60888e7dda9ac7f3116f759d40c109f25af",
+  "runner_image_id": "sha256:e15b75de3f7786e7a0031f01d06c693a220f1c5c25106eba6382426d57834ca8",
+  "base_image": "quay.io/wire/integration@sha256:f5db439022d1c0ccf071c25f9c0d132ed21a9e5e3647db59c593d33614bc4f27",
+  "reference_binary": {
+    "path": "/nix/store/h7vy66kc4syr575k8mhnxfsw4ldn7cal-cannon/bin/cannon",
+    "sha256": "cbc200caf92757bb7909b82c73d942072eac557c0eab1ce755aedeb8bf5c705d"
+  },
+  "project": "wire-e2e-1d5b0e53b5154a7f8aebc9946ead9302",
+  "fixtures_sha256": {
+    "fixtures/configs.json": "8cc34c41cc248ae804d822a60fb610b0adead84c3e79663eb33243ef70c99876",
+    "fixtures/integration.json": "d8834dad54e1f851e689ac00691cd527aac69e0e9ce00baf149835433812c73c",
+    "fixtures/peers.json": "ca8438ea9464138dc0c75868b62eb8b12113343dada8336524c3ea467dd3a490"
+  },
+  "capture_script_sha256": "cf036b0bafd80959da2b2ffad35da44f1a0cbc71fa18b1213cadf38d80f03366",
+  "observations_sha256": "40e536868e2bfef0953c75997fe87d07e939ea4f4501acc2de64e929e44ad6ab",
+  "requests": 10,
+  "normalization": "JSON decoded, exact strings/status/Content-Type/Allow preserved; synthetic fixed Request-Id; no generated IDs",
+  "e2e_executed": false,
+  "whole_service_parity": false,
+  "scope": "Static Haskell cannon backend A. Health, rejected malformed inputs and rejected non-upgrade request only; source rejects before presence/queue/storage mutations. Original full suite continues independently."
+}

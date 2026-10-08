@@ -33,14 +33,19 @@ class TCPServer(socketserver.ThreadingTCPServer):
 
 
 class Forward(socketserver.BaseRequestHandler):
+    poll_interval = 60
+
     def handle(self):
         try:
             with socket.create_connection(self.server.destination,timeout=10) as remote:
                 self.request.settimeout(60);remote.settimeout(60)
                 peers={self.request:remote,remote:self.request}
                 while peers:
-                    readable,_,_=select.select(list(peers),[],[],60)
-                    if not readable:return
+                    readable,_,_=select.select(list(peers),[],[],self.poll_interval)
+                    # Database pools and HTTP/2 peers legitimately remain idle
+                    # beyond a minute. Poll for readiness; EOF, not inactivity,
+                    # ends a tunnel. Owned container teardown bounds its life.
+                    if not readable:continue
                     for source in readable:
                         data=source.recv(65536)
                         if data:peers[source].sendall(data)
