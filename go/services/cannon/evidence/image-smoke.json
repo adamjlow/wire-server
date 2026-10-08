@@ -1,0 +1,17 @@
+{
+  "result": "pass",
+  "image_id": "sha256:c192f3a29502f6ea8f4310d5acd6a4b67cf92939a044a3d9f03db0f64924e130",
+  "binary_sha256": "8c79692b44a06ff15ec0b887be0e45fd462e84a24c1df29c319ae27f453c5e67",
+  "default_config_path": true,
+  "health": 200,
+  "user": "65534:65534",
+  "readonly": true,
+  "cap_drop": [
+    "ALL"
+  ],
+  "ports": {},
+  "network": "only owned runner private namespace; no host ports",
+  "sigterm_exit_code": 0,
+  "seconds": 0.042198809795081615,
+  "cleanup": "owned smoke container removed in finally"
+}

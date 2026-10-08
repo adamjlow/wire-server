@@ -1,0 +1,21 @@
+<?xml version='1.0' ?><testsuites name="wire-server"><testsuite name="integration" tests="27" failures="1" time="19.837867954"><testcase name="Cargohold.API.Federation.testGetAssetAvailablePrivate" time="0.385587071"><failure>assertion failure:
+Actual:
+500
+Expected:
+200
+
+call stack: 
+1. assertFailure at test/Testlib/Assertions.hs:123
+
+2. shouldMatchWithMsg at test/Testlib/Assertions.hs:92
+
+3. shouldMatch at test/Testlib/Assertions.hs:219
+
+4. shouldMatchInt at test/Test/Cargohold/API/Federation.hs:53
+
+5. getAssetAvailable at test/Test/Cargohold/API/Federation.hs:33
+
+
+
+Set WIRE_INTEGRATION_TEST_VERBOSITY=1 if you want to see complete trace of the HTTP traffic in curl pseudo-syntax.
+</failure></testcase><testcase name="Cargohold.API.Federation.testGetAssetAvailablePublic" time="0.404837848" /><testcase name="Cargohold.API.Federation.testGetAssetNotAvailable" time="0.19053563" /><testcase name="Cargohold.API.Federation.testGetAssetWrongToken" time="0.335823226" /><testcase name="Cargohold.API.Federation.testLargeAsset" time="0.307249647" /><testcase name="Cargohold.API.Federation.testStreamAsset" time="0.24684708" /><testcase name="Cargohold.API.Federation.testStreamAssetNotAvailable" time="0.118179062" /><testcase name="Cargohold.API.Federation.testStreamAssetWrongToken" time="0.198203698" /><testcase name="Cargohold.API.V3.testSimpleRoundtrip" time="0.895353085" /><testcase name="Cargohold.API.V3.testUploadWrongContentLength" time="0.062773838" /><testcase name="Cargohold.API.testDownloadURLOverride" time="2.843018446" /><testcase name="Cargohold.API.testDownloadWithAcceptHeader" time="0.037703687" /><testcase name="Cargohold.API.testRemoteDownloadLong" time="0.434118851" /><testcase name="Cargohold.API.testRemoteDownloadNoAsset" time="0.141841197" /><testcase name="Cargohold.API.testRemoteDownloadShort" time="0.366352385" /><testcase name="Cargohold.API.testRemoteDownloadWrongDomain" time="0.059164483" /><testcase name="Cargohold.API.testSimpleRoundtrip" time="0.532001497" /><testcase name="Cargohold.API.testSimpleS3ClosedConnectionReuse" time="7.150691177" /><testcase name="Cargohold.API.testSimpleTokens" time="0.064842224" /><testcase name="Cargohold.API.testUploadCompatibility" time="0.030312111" /><testcase name="Cargohold.AssetDownload.testDownloadAsset" time="0.07294703" /><testcase name="Cargohold.AssetDownload.testDownloadAssetMultiIngressS3DownloadUrl" time="1.305242241" /><testcase name="Cargohold.AssetUpload.testAssetUploadUnknownUser" time="0.001575608" /><testcase name="Cargohold.AssetUpload.testAssetUploadVerifiedUser" time="0.121982032" /><testcase name="Cargohold.AssetUpload.testUploadAssetEphemeralUser" time="0.093430874" /><testcase name="Cargohold.AssetUpload.testUploadAssetFileSizeLimit" time="2.290227123" /><testcase name="Cargohold.AssetUpload.testUploadAssetFileSizeLimitStrict" time="1.147026803" /></testsuite></testsuites>
