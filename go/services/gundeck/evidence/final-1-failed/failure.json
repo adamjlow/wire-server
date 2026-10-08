@@ -1,0 +1,7 @@
+{
+  "result": "failed",
+  "original_tests": "proxy5 pass, cargohold26/27 pass; no gundeck40/supplemental/switchback execution in this run",
+  "cause": "Original Haskell federator HTTP2 peer raised KilledByThreadManager/EnhanceYourCalm too many rst_stream; same diagnostics occur in earlier passing four-go-1. Retain failure and retry fresh identical binary/fixtures/assertions.",
+  "cleanup_exit_code": 0,
+  "environment_receipt_note": "Early runner exit before seed left result prepared/e2e_executed false in host receipt; final.json/XML prove actual partial execution. Host diagnostic receipt correction follows separately."
+}

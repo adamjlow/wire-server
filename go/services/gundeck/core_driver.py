@@ -77,6 +77,12 @@ try:
         record.update(e2e_executed=True,result='pass',original_tests=72,supplemental_checks=91,switchback=result['supplemental']['switchback'])
     record.update(process_exit_code=done.returncode,result=('pass' if args.four_go else 'diagnostic-executed') if done.returncode==0 else 'failed')
     if done.returncode:raise RuntimeError('focused diagnostic failed to execute')
+except BaseException:
+    record['result']='failed'
+    if (args.output/'reports/final.json').exists():
+        partial=json.loads((args.output/'reports/final.json').read_text())
+        record.update(e2e_executed=True,process_exit_code=partial['exit_code'])
+    raise
 finally:
     cleanup_cql=(setup.ROOT/'docs/go-migration/services/gundeck/oracle/storage-cleanup.cql').read_bytes()
     subprocess.run([*compose,'exec','-T','cassandra','cqlsh'],input=cleanup_cql,timeout=30)
