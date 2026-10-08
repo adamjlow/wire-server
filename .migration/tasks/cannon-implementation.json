@@ -4,9 +4,9 @@
   "title": "Build and validate the optional whole-service Go cannon candidate",
   "service": "cannon",
   "kind": "implementation",
-  "status": "queued",
-  "owner": null,
-  "branch": null,
+  "status": "active",
+  "owner": "codex",
+  "branch": "go-migration",
   "depends_on": [
     "cannon-inventory",
     "cannon-contract",
