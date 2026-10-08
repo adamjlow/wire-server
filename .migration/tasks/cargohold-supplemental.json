@@ -4,9 +4,9 @@
   "title": "Freeze bounded supplemental cargohold assertions from real reference behavior",
   "service": "cargohold",
   "kind": "contract-change",
-  "status": "queued",
-  "owner": null,
-  "branch": null,
+  "status": "active",
+  "owner": "codex",
+  "branch": "task/cargohold-supplemental",
   "depends_on": [
     "cargohold-contract",
     "cargohold-plan",
