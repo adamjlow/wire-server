@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "id": "cannon-inventory",
+  "title": "Inventory cannon contracts and existing original tests",
+  "service": "cannon",
+  "kind": "discovery",
+  "status": "queued",
+  "owner": null,
+  "branch": null,
+  "depends_on": [
+    "proxy-cargohold-combined"
+  ],
+  "write_paths": [
+    ".migration/tasks/cannon-inventory.json",
+    "docs/go-migration/services/cannon/inventory.md",
+    "docs/go-migration/plans/cannon.md",
+    "changelog.d/5-internal/cannon-inventory"
+  ],
+  "plan": "docs/go-migration/plans/cannon.md",
+  "acceptance_criteria": [
+    {
+      "id": "inventory",
+      "description": "Source-map whole cannon boundaries, dependencies and reusable original tests; identify concrete unknowns and finite acceptance plan.",
+      "required_evidence": "Inventory with pinned sources, compiled test discovery identity, classic and RabbitMQ/Cassandra protocol/effect mapping and operational/security boundaries."
+    },
+    {
+      "id": "checks",
+      "description": "Scoped migration metadata and source/default preservation validate.",
+      "required_evidence": "Migration checker/tests and diff/scope checks; no candidate equivalence or integration pass inferred from discovery."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": "Inventory and compiled original-test discovery first; no candidate code or behavioral claim yet."
+}
