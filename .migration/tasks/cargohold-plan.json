@@ -4,7 +4,7 @@
   "title": "Specify bounded Go cargohold implementation and validation matrix",
   "service": "cargohold",
   "kind": "discovery",
-  "status": "active",
+  "status": "done",
   "owner": "codex",
   "branch": "go-migration",
   "depends_on": [
@@ -29,7 +29,25 @@
       "required_evidence": "Isolated dependency proof and machine/scoped validation; no Go service implementation or security exception claimed."
     }
   ],
-  "evidence": [],
-  "review": null,
-  "handoff": "Plan safe implementation and validate dependencies while the inherited federation security decision is pending."
+  "evidence": [
+    {
+      "criterion": "plan",
+      "result": "pass",
+      "command": "Self-review of executable whole-service slices and finite original/supplemental matrix against the existing contract; exact isolated pinned dependency graph builds and passes module vulnerability/license checks. Pending federation choice explicit; Haskell defaults preserved.",
+      "revision": "070d565a2c5bba18658abb0692af5140de52b4cc",
+      "artifact": "docs/go-migration/plans/cargohold-implementation.md"
+    },
+    {
+      "criterion": "checks",
+      "result": "pass",
+      "command": "make migration-check migration-test: valid state and 32 tests pass; scoped validation against active claim and git diff --check pass. Only additive plan/changelog/task changes; no candidate implementation, contract/oracle mutation or exception.",
+      "revision": "070d565a2c5bba18658abb0692af5140de52b4cc",
+      "artifact": "docs/go-migration/plans/cargohold-implementation.md"
+    }
+  ],
+  "review": {
+    "by": "codex (self-review delegated by user)",
+    "artifact": "docs/go-migration/plans/cargohold-implementation.md"
+  },
+  "handoff": "Finite whole-service plan and checked pinned dependency graph ready. Original 27 tests and 20 reference observations reused, gaps bounded, first runnable slice specified. Implementation waits for user disposition of inherited federation UUID/token bypass; no exception or compatibility claimed."
 }

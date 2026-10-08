@@ -254,3 +254,16 @@ golang.org/x/text v0.42.0/go.mod h1:ojzP1Z+2QtioaF8DTtO8K5q7JWVVYwZKenzujK0Zd0E=
 gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405 h1:yhCVgyC4o1eVCa2tZl7eS0r+SDo693bJlVdllGtEeKM=
 gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405/go.mod h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0=
 ```
+
+## Planning handoff review
+
+Reviewer: codex (self-review delegated by user), citing the user's explicit
+autonomous-development/self-review instruction and the accurately annotated
+authority in .migration/reviews/2026-10-07-self-review.md. Same author, not
+independent review. Reviewed the original contract matrix against the finite
+rows above, actual reference/baseline identities, scratch compiler/scanner exits
+and retained manifests. No contract expectations, sources or guardrails changed.
+This approves planning/dependency preparation only, not the unresolved federation
+exception or candidate compatibility. State/scope/whitespace checks and all 32
+migration tests pass at 070d565a2c5bba18658abb0692af5140de52b4cc. No new runtime
+tests were needed for prose; prior baseline/capture inputs are unchanged.
