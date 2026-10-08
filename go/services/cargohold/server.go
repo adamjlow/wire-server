@@ -86,10 +86,10 @@ func (s *Server) serveHTTP(w http.ResponseWriter, r *http.Request) {
 			s.storeError(w, err)
 			return
 		}
-		meta,_:=s.Store.Metadata(r.Context(),key)
- s.audit("download-url-creation","","","",meta,"",location,"")
- writeJSON(w, 200, location)
- return
+		meta, _ := s.Store.Metadata(r.Context(), key)
+		s.audit("download-url-creation", "", "", "", meta, "", location, "")
+		writeJSON(w, 200, location)
+		return
 	}
 	if len(segments) == 0 {
 		http.NotFound(w, r)
@@ -207,7 +207,7 @@ func (s *Server) serveHTTP(w http.ResponseWriter, r *http.Request) {
 			assetError(w, 404, "not-found", "Asset not found")
 			return
 		}
-		s.redirect(w, r, key, r.Header.Get("Z-Host"),meta)
+		s.redirect(w, r, key, r.Header.Get("Z-Host"), meta)
 	case "DELETE":
 		if !match {
 			assetError(w, 403, "unauthorised", "Unauthorised operation")
@@ -270,7 +270,7 @@ func (s *Server) storeError(w http.ResponseWriter, err error) {
 		serverError(w)
 	}
 }
-func (s *Server) redirect(w http.ResponseWriter, r *http.Request, key, host string,meta map[string]string) {
+func (s *Server) redirect(w http.ResponseWriter, r *http.Request, key, host string, meta map[string]string) {
 	location, err := s.Store.SignedURL(r.Context(), key, host)
 	if err != nil {
 		s.storeError(w, err)

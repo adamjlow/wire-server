@@ -45,5 +45,5 @@ func (s *Server) legacy(w http.ResponseWriter, r *http.Request, segments []strin
 		assetError(w, 404, "not-found", "Asset not found")
 		return
 	}
-	s.redirect(w, r, key, "",nil)
+	s.redirect(w, r, key, "", nil)
 }

@@ -26,4 +26,3 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s *Server) Listening(address string) { s.Logger.Event("Info", "Listening on "+address) }
-func (s *Server) Error(message string)     { s.Logger.Event("Error", fmt.Sprint(message)) }

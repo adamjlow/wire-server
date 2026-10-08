@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 	"net/url"
- "strings"
+	"strings"
 )
 
 type auditMetadata struct {
@@ -32,9 +32,13 @@ func parseAuditMetadata(raw string) *auditMetadata {
 
 func requestPrincipal(r *http.Request) (string, string) {
 	kind := "user"
-segments:=strings.Split(strings.Trim(r.URL.Path,"/"),"/")
- if len(segments)>0 && looksLikeVersion(segments[0]) { segments=segments[1:] }
- if len(segments)>0 && (segments[0]=="bot" || segments[0]=="provider") { kind=segments[0] }
+	segments := strings.Split(strings.Trim(r.URL.Path, "/"), "/")
+	if len(segments) > 0 && looksLikeVersion(segments[0]) {
+		segments = segments[1:]
+	}
+	if len(segments) > 0 && (segments[0] == "bot" || segments[0] == "provider") {
+		kind = segments[0]
+	}
 	return kind, r.Header.Get("Z-" + kind)
 }
 
