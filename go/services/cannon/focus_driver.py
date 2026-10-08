@@ -19,7 +19,7 @@ args=parser.parse_args()
 record=setup.prepare(args.output,args.receipt,args.candidate,args.candidate_receipt)
 spec=json.loads((args.output/'compose.json').read_text())
 spec['services']['runner']['volumes'].append({'type':'bind','source':str(args.candidate.resolve()),'target':'/candidate/cannon','read_only':True})
-spec['services']['runner']['entrypoint']=['/bin/bash','-c','for focus_python in /nix/store/*-python3-*/bin/python3; do if [[ -x "$focus_python" ]]; then exec "$focus_python" /source/go/services/cannon/focus.py; fi; done; exit 2']
+spec['services']['runner']['entrypoint']=['/bin/bash','-c','for focus_python in /nix/store/*-python3-*/bin/python3; do if [[ -x "$$focus_python" ]]; then exec "$$focus_python" /source/go/services/cannon/focus.py; fi; done; exit 2']
 setup.validate_isolation(spec)
 (args.output/'compose.json').write_text(json.dumps(spec,indent=2)+'\n')
 record.update(purpose='diagnostic-only; no full original-suite qualification',compose_sha256=hashlib.sha256((args.output/'compose.json').read_bytes()).hexdigest())
