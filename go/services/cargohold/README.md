@@ -135,3 +135,24 @@ root, dropped capabilities and no network/ports were used. [Build](evidence/imag
 identities. This proves packaging startup, not loaded shutdown or whole-service
 parity. Full chart rendering uses upstream chart version preparation on disposable
 copies and synthetic deployment values/secrets. No repository chart was changed.
+
+## Further finite comparisons
+
+Candidate 3c9e31c160fa86df86bf85c3f9b7c4351153c063 matches all 35 extended
+observations: the 20 captured federation/OTR/multipart cases, gzip/chunked input,
+24 MiB persistence, DELETE token handling, token creation/deletion, disabled API
+version and five injected S3 faults. Failed part/complete calls return the same
+500 message and abort without objects or open multipart uploads. Source
+41226a9ad92b180e4ed9d43961aafbb130f03fc6 then matches all 11 configuration
+observations: actual signed S3 reads for all three addressing modes, download
+override, ingress mapping/errors, Scality read/upload, independent OpenSSL
+CloudFront signature/tamper verification and invalid-key startup rejection.
+Protected reports retain both failing and repaired observations.
+
+[Helm selection](evidence/helm-selection.json) compares full rendered manifests
+with synthetic values after upstream chart version preparation on disposable
+copies. Only the cargohold Deployment image changes; omitted selection and
+original test image are unchanged. Missing/ambiguous/wrong-container inputs fail.
+No upstream chart was edited. Remaining acceptance work includes mixed-runtime
+federation, audit-inclusive switchback/token copy, cancellation, metrics and the
+one declared load/drain smoke, final original 27 tests, quality checks and review.
