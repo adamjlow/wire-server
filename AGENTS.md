@@ -202,3 +202,12 @@ choices and alternatives. Refine underspecified security work into scoped tasks.
 - Test security boundaries and malformed input, integrate those tests into CI,
   and explain the protections. Never weaken auth, crypto or security tests to
   obtain parity; resolve unsafe reference behaviour through reviewed contract work.
+
+## Containerized e2e preparation
+
+The user's 2026-10-08 Docker setup request authorizes building and inspecting the
+pinned task-owned runner in [its plan](docs/go-migration/plans/e2e-container.md).
+Read-only original-suite `--list` discovery inside that non-root, no-network
+container is permitted preparation; it starts no backend and executes no test.
+Full original e2e execution still requires the provisioned disposable dependency
+and Haskell-peer environment. Do not run against shared/production host services.
