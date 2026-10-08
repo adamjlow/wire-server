@@ -36,6 +36,21 @@ def run(port, binary, config, pid):
     if metrics['status']!=200 or not types or set(types.values())!={'counter'}:
         raise ValueError('native metrics surface missing: '+str(metrics['status'])+' '+json.dumps(types))
     record('native-metric-types',types)
+    import base64, ssl, urllib.parse
+    mq=config['rabbitmq'];ca=Path(mq['caCert'])
+    if not ca.is_absolute():ca=Path('/tmp/wire-e2e/services/gundeck')/ca
+    context=ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT);context.load_verify_locations(str(ca))
+    auth='Basic '+base64.b64encode(b'guest:alpaca-grapefruit').decode()
+    vhost=urllib.parse.quote(mq['vHost'],safe='')
+    for name,kind,target in [('user-exchange','exchanges','user-notifications'),('dead-exchange','exchanges','dead-user-notifications'),('dead-queue','queues','dead-user-notifications')]:
+        conn=http.client.HTTPSConnection('localhost',15671,context=context,timeout=5)
+        try:
+            conn.request('GET','/api/'+kind+'/'+vhost+'/'+target,headers={'Authorization':auth});reply=conn.getresponse();raw=reply.read(65537)
+            if reply.status!=200 or len(raw)>65536:raise ValueError('broker reference observation missing')
+            value=json.loads(raw);keys=['name','type','durable','auto_delete','internal'] if kind=='exchanges' else ['name','durable','auto_delete','exclusive','arguments']
+            record(name,{k:value[k] for k in keys})
+        finally:conn.close()
+
     started=time.monotonic()
     def once(_):
         before=time.monotonic();value=req('GET','/i/status')
