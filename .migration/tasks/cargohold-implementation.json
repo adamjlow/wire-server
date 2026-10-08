@@ -4,9 +4,9 @@
   "title": "Build the optional whole-service Go cargohold candidate",
   "service": "cargohold",
   "kind": "implementation",
-  "status": "queued",
-  "owner": null,
-  "branch": null,
+  "status": "active",
+  "owner": "codex",
+  "branch": "go-migration",
   "depends_on": [
     "cargohold-contract",
     "cargohold-plan",
