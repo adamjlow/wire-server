@@ -74,10 +74,9 @@ func (s *Server) bulk(w http.ResponseWriter, r *http.Request) {
 				return
 			}
 		}
-		if v, ok := fields["transient"]; ok && string(v) == "null" {
-			plain(w, r, 400, "Error in $.bulkpush_req: invalid transient")
-			return
-		}
+		// optField in the Haskell schema maps absent or null transient to
+		// Nothing, then defaults it to false. Other non-boolean values still
+		// fail typed decoding above; required fields remain strict.
 		var targets []pushTarget
 		var targetFields []map[string]json.RawMessage
 		if len(item.Targets) == 0 || json.Unmarshal(item.Targets, &targets) != nil || targets == nil || json.Unmarshal(item.Targets, &targetFields) != nil {

@@ -6,10 +6,10 @@ migration delegation and request to complete cannon. This is not independent rev
 
 Reference/upstream source f6636ed53315fa7b0fc4c8aa39c0bb30c98b6d5e;
 qualified publisher runtime and Haskell executable identities are in the protected
-oracle. Candidate production source d094cbd31cdd7795904b5be5eb4eb9358604bbfa,
+oracle. Candidate production source 0ff476fea348b13c22df2e985bdbc6ef2ef7e3b4,
 Go1.26.8, CGO0, clean VCS receipt; binary
-8c79692b44a06ff15ec0b887be0e45fd462e84a24c1df29c319ae27f453c5e67.
-Local optional image sha256:c192f3a29502f6ea8f4310d5acd6a4b67cf92939a044a3d9f03db0f64924e130
+ed2dd57d6e63dc21ffe95b0e29992195ac1843a763b877c3626e3c5cf1148164.
+Local optional image sha256:49f7b2cde43acab6a75c352416e993bbc57bb063aea4b00ff2f8fdc45b7cd442
 contains that exact binary. No remote push or production rollout.
 
 Implementation review covers classic presence/await/raw push and ordered bulk,
@@ -25,7 +25,7 @@ Cassandra schemas and gundeck routes remain unchanged.
 Security: trusted TLS/hostnames, strict typed input, serialized socket writes,
 bounded pool/fan-out, context/deadlines, generic backend errors and synthetic
 fixtures. Go format/tidy/module verification/vet/race/build/module vulnerability
-and license checks pass in [quality output](evidence/packaging-quality.log).
+and license checks pass in [quality output](evidence/subscription-quality.log).
 Concrete tests cover old-socket cleanup, binary/app/control frames, atomic bulk
 validation with large integers, ack types/range, and rejection of untrusted TLS.
 Established pinned dependency proof is retained in the protected oracle. Source
@@ -42,7 +42,13 @@ Finite evidence: all-Haskell original35 pass; first Go candidate34/35 fails on a
 setup user.client-add event at a temporary socket ([retained review](evidence/candidate-1-review.md)).
 First triple run fails in unchanged Haskell federator HTTP/2 connection handling
 ([retained review](evidence/triple-1-review.md)); it does not qualify cannon.
-Neither failure was waived or used to change protected tests. Final same-binary
+Neither failure was waived or used to change protected tests. Second triple run
+passes proxy5/cargohold27 but fails two setup-notification cases in cannon; retained
+focused Haskell control passes both. [Subscription diagnosis](evidence/focus-2-review.md)
+identifies Haskell basic.consume nowait=True versus GoFalse. Matching that source
+command sequence makes both original focused Go cases pass without sleeps, event
+filtering, exclusive consumers or changed timeout/assertions. Final combined run
+is required for the revised candidate; earlier binary evidence is historical. Final same-binary
 full selection must pass before approval. Ten HTTP records, seven config outcomes
 and 28 actual frozen boundary records are the finite supplement; the reference
 metadata’s29 count is a narrative typo, to be corrected in a separate contract task.

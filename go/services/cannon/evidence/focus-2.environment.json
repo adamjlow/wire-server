@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "project": "wire-e2e-02c42b5e06774b07910917b50eb09bfc",
+  "source_revision": "0ff476fea348b13c22df2e985bdbc6ef2ef7e3b4",
+  "runner_image_id": "sha256:f88496cd7850c4a32563e2085d41d2647e1038682a61fe0ffb5540c07f88ad7b",
+  "runner_revision": "0575d90e83caa1cfcb80774ae8b83f7d3b152de6",
+  "candidate": {
+    "path": "/home/operator/.cache/wire-migration/cannon-subscription-20261008-2",
+    "sha256": "ed2dd57d6e63dc21ffe95b0e29992195ac1843a763b877c3626e3c5cf1148164",
+    "source_revision": "0ff476fea348b13c22df2e985bdbc6ef2ef7e3b4"
+  },
+  "peer_candidates": {},
+  "result": "diagnostic-executed",
+  "e2e_executed": false,
+  "compose_sha256": "697a562bad62fc0608080578da85686db687f92102c5ae8872234757a9ac3f41",
+  "files_sha256": {
+    "fixtures/configs.json": "8cc34c41cc248ae804d822a60fb610b0adead84c3e79663eb33243ef70c99876",
+    "fixtures/integration.json": "d8834dad54e1f851e689ac00691cd527aac69e0e9ce00baf149835433812c73c",
+    "fixtures/peers.json": "ca8438ea9464138dc0c75868b62eb8b12113343dada8336524c3ea467dd3a490"
+  },
+  "purpose": "diagnostic-only; no full original-suite qualification",
+  "process_exit_code": 0,
+  "cleanup_exit_code": 0
+}

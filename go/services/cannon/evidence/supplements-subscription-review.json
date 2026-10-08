@@ -1,0 +1,35 @@
+{
+  "result": "pass",
+  "source_revision": "0ff476fea348b13c22df2e985bdbc6ef2ef7e3b4",
+  "binary_sha256": "ed2dd57d6e63dc21ffe95b0e29992195ac1843a763b877c3626e3c5cf1148164",
+  "counts": {
+    "http": 10,
+    "config": 7,
+    "boundaries": 28
+  },
+  "normalization": "Exact unique name sets and semantic values; incidental config diagnostic text excluded per frozen rule; only frozen bounded smoke/drain comparisons",
+  "go_source_sha256": {
+    "backends.go": "9ec3b00b62a393b632cd441eeb281a2f3b90022c74f096e44173660ca7e7b82f",
+    "bulk.go": "f480b85204fcbe965f4e51770d7bf5a5fcd0c8764df1005ab0da3667cc01eb20",
+    "cmd/cannon/main.go": "21fdf16c57e633edf3ed31e65a976895f9127e271dc7a0941edfb83c39a74f8f",
+    "cmd/parity-fixture/main.go": "c8719cde834d2b9c1ece4371b9047df0eebf6af9419b46ec5fc608a79be44859",
+    "config.go": "e00a244014f36d7f27d18af9b4e02e51e19d6c764040195f0a1a17f00b91954d",
+    "events.go": "9a5cf0b7160c855208b7178a5795a9706fcf85afd2315baf4fbd143f796af05f",
+    "events_test.go": "00f37ce4372e8f888585f6df58e6988850cbe72946b1e72aa6471e8763a7f45d",
+    "logging.go": "575f8ae4d1f01f160f6d14b0e2f0011e7bdf584f82456590ba9c0cedfcf62e8a",
+    "metrics.go": "112aebea6540dd4ff4a2870118962fc869c94a298e74cd911564cdbe44d4b8a4",
+    "pool.go": "5b0cb84d9c507b572ebe5c69901db35883041ad7fcc18a95f2acc728cf31621a",
+    "reference_test.go": "a4c528b09d8d39fb518fbd5b74ff819c50bebb0c0153606b47dd4ba2d3c21862",
+    "server.go": "41f7194cfb29dff6290d3eeb536debaac42430b715034014e2bf2a6dde3a360b"
+  },
+  "module_sha256": {
+    "go.mod": "7409ed57eeca278c6f15fd2dce76afe212c93a4a95574f396f8d5ebe001d6ccf",
+    "go.sum": "4d1b293c3ad83f4bfda47974aa1fc551f20df15f2f642c441aa7f36594187c7c"
+  },
+  "scripts": {
+    "capture_boundaries.py": "b132e1570d1c283b1fbbe9f3cfebc18201dd6e861acfe4c1c1a39f92d5873a48",
+    "capture_config.py": "fb727cf479cd6056bf9c4453210a33adee07ae9a9643344a9d8d51f354320c2b",
+    "capture_http.py": "cf036b0bafd80959da2b2ffad35da44f1a0cbc71fa18b1213cadf38d80f03366"
+  },
+  "cleanup": "capture and switchback owned processes reaped, fake endpoint stopped, synthetic queue/row deleted; image-smoke container removed; whole environment cleanup pending final report"
+}

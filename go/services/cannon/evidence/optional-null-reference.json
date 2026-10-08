@@ -1,0 +1,20 @@
+{
+  "reference_sha256": "cbc200caf92757bb7909b82c73d942072eac557c0eab1ce755aedeb8bf5c705d",
+  "candidate_sha256": "ed2dd57d6e63dc21ffe95b0e29992195ac1843a763b877c3626e3c5cf1148164",
+  "request_body": "{\"bulkpush_req\": [{\"notification\": {\"id\": \"11111111-1111-4111-8111-111111111111\", \"payload\": [{}], \"transient\": null}, \"targets\": []}]}",
+  "reference": {
+    "status": 200,
+    "content_type": "application/json;charset=utf-8",
+    "body": "{\"bulkpush_resp\":[]}"
+  },
+  "old_candidate": {
+    "status": 400,
+    "content_type": null,
+    "body": "Error in $.bulkpush_req: invalid transient"
+  },
+  "source": "Internal/Notification.hs fromMaybe False <$> optField transient; Data/Schema.hs optField uses explicitParseFieldMaybe (null becomes Nothing)",
+  "cleanup": {
+    "owned_reference_exit_code": 0,
+    "no_targets": "no pushes/queue/storage mutations"
+  }
+}

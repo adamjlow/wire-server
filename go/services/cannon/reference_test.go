@@ -185,3 +185,25 @@ func TestBulkValidatesEntireRequestBeforeEffectsAndKeepsNumbers(t *testing.T) {
 		t.Fatalf("invalid request caused push: %s", raw)
 	}
 }
+
+func TestBulkOptionalTransientMatchesHaskellNullDefault(t *testing.T) {
+	for _, value := range []string{"null", "false", "true", `"false"`, "0", "[]", "{}"} {
+		t.Run(value, func(t *testing.T) {
+			body := `{"bulkpush_req":[{"notification":{"id":"11111111-1111-4111-8111-111111111111","payload":[{}],"transient":` + value + `},"targets":[]}]}`
+			request := httptest.NewRequest("POST", "/i/bulkpush", bytes.NewBufferString(body))
+			request.Header.Set("Content-Type", "application/json")
+			response := httptest.NewRecorder()
+			NewServer(Config{}).ServeHTTP(response, request)
+			want := 400
+			if value == "null" || value == "false" || value == "true" {
+				want = 200
+			}
+			if response.Code != want {
+				t.Fatalf("optional transient %s: status %d want %d", value, response.Code, want)
+			}
+			if want == 200 && string(bytes.TrimSpace(response.Body.Bytes())) != `{"bulkpush_resp":[]}` {
+				t.Fatalf("unexpected response: %s", response.Body.String())
+			}
+		})
+	}
+}

@@ -33,13 +33,17 @@ func parseAck(raw []byte) (clientAck, error) {
 		return clientAck{FullSync: true}, nil
 	case "ack":
 		var data struct {
-			Tag      *uint64 `json:"delivery_tag"`
-			Multiple *bool   `json:"multiple"`
+			Tag      json.RawMessage `json:"delivery_tag"`
+			Multiple *bool           `json:"multiple"`
 		}
-		if json.Unmarshal(frame.Data, &data) != nil || data.Tag == nil || data.Multiple == nil {
+		if json.Unmarshal(frame.Data, &data) != nil || len(data.Tag) == 0 || data.Multiple == nil {
 			return clientAck{}, errors.New("failed-to-parse")
 		}
-		return clientAck{Tag: *data.Tag, Multiple: *data.Multiple}, nil
+		tag, err := decodeWord64(data.Tag)
+		if err != nil {
+			return clientAck{}, errors.New("failed-to-parse")
+		}
+		return clientAck{Tag: tag, Multiple: *data.Multiple}, nil
 	default:
 		return clientAck{}, errors.New("failed-to-parse")
 	}
