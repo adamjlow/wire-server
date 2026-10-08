@@ -4,7 +4,7 @@
   "title": "Gundeck completion",
   "service": "framework",
   "kind": "framework",
-  "status": "active",
+  "status": "done",
   "owner": "codex",
   "branch": "go-migration",
   "depends_on": [
@@ -23,7 +23,18 @@
       "required_evidence": "Final exact source6b532d03/binarya9d41982 original72 intended four-Go with Haskell peers, frozen91, typed security/quality, real persisted switchback/generation and bounded operations, identical-binary nonroot image/ten-second Helm hook/default/fail-closed render, retained failures and delegated review; scoped legal gate transitions for publication."
     }
   ],
-  "evidence": [],
-  "review": null,
-  "handoff": "Reuse completed implementation evidence; no new speculative tests, default change, remote push or production switch."
+  "evidence": [
+    {
+      "criterion": "gates",
+      "result": "pass",
+      "command": "Review completed implementation/verification/selection and exact final72/frozen91/switchback/generation/image/Helm-hook/default evidence; publish adjacent verified then available stages with exact qualified service source6b532d03 and referencef6636ed5. Scoped transitions and framework tests validate; no Haskell default/schema change, production switch or remote push.",
+      "revision": "6b532d03cf2bb9e31a55b9108fa52abb79f05aea",
+      "artifact": ".migration/services/gundeck.json"
+    }
+  ],
+  "review": {
+    "by": "codex (self-review delegated by user)",
+    "artifact": "go/services/gundeck/REVIEW.md"
+  },
+  "handoff": "Optional whole-service gundeck available for exact supported tuple after delegated self-review. Final original72 with intended four Go plus Haskell peers, frozen91, actual persisted switchback/generation/loaded shutdown, nonroot image/existing Helm hook and optional selection all pass. Haskell remains supported/default; no additional speculative validation, production switch or remote push."
 }

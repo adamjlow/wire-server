@@ -2,7 +2,7 @@
   "schema_version": 1,
   "service": "gundeck",
   "reference_path": "services/gundeck",
-  "stage": "verified",
+  "stage": "available",
   "oracle_paths": [
     "services/gundeck",
     "docs/go-migration/services/gundeck/contract.md",
@@ -29,6 +29,9 @@
     ],
     "rollback": [
       "gundeck-verification"
+    ],
+    "selection": [
+      "gundeck-selection"
     ]
   },
   "compatibility": {
