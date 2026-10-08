@@ -91,6 +91,7 @@ def run(ref,ports,start,stop,request,store_effects,hs,go):
                     while chunk:=response.read(65536):
                         length+=len(chunk);digest.update(chunk)
                 except (OSError,http.client.HTTPException) as e:error=type(e).__name__
+                client.close()
                 proc.wait(timeout=30)
                 elapsed=time.monotonic()-started
                 complete=length==len(payload) and digest.hexdigest()==hashlib.sha256(payload).hexdigest()

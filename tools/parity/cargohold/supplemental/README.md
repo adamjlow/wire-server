@@ -127,3 +127,14 @@ and [identity](lifecycle-precondition-run.json) are retained. The fixture now se
 7 MiB of the declared 24 MiB body before waiting for a real S3 part and disconnecting.
 No service success/failure is inferred from that invalid initial precondition.
 Source: [streaming uploader](https://github.com/Axman6/amazonka-s3-streaming/blob/master/src/Amazonka/S3/StreamingUpload.hs).
+
+The first complete lifecycle capture exposes an inherited cancellation leak and
+a real candidate drain bug. [Observations](lifecycle-initial-observations.json),
+[identity](lifecycle-initial-run.json) and [security concern](security-concerns.md)
+are retained. Haskell leaves one 6 MiB part; Go initially aborts. The user’s explicit
+mirror-current-behavior disposition covers this inherited resource concern.
+The first reference shutdown observation kept the client’s idle keepalive open
+while waiting for process exit, adding the full 30-second grace period after the
+bytes had drained. The controller now closes that client before waiting; the
+predeclared 30-second bound is unchanged. Go truncates the active response, a
+candidate bug requiring code repair. No failed report is relabelled as passing.
