@@ -4,7 +4,7 @@
   "title": "Build the optional whole-service Go cargohold candidate",
   "service": "cargohold",
   "kind": "implementation",
-  "status": "active",
+  "status": "done",
   "owner": "codex",
   "branch": "go-migration",
   "depends_on": [
@@ -32,13 +32,23 @@
   ],
   "evidence": [
     {
+      "criterion": "service",
+      "result": "pass",
+      "command": "Whole candidate finite validation: unchanged original 27 pass with Haskell peers; all 112 protected supplemental records pass exact same binary; final image contains matching binary; optional default-preserving Helm render selection validated. Review linked identities and all criteria.",
+      "revision": "68a36b9137ce26566b2db91902469e8159885656",
+      "artifact": "go/services/cargohold/REVIEW.md"
+    },
+    {
       "criterion": "quality",
       "result": "pass",
-      "command": "PATH includes pinned Go 1.26.8; python3 go/check.py cargohold. Actual formatting/tidy/verify/vet/race/build/module-vulnerability/license checks passed; raw output retained. Whole-service compatibility still incomplete pending cancellation/drain and final original-suite/whole-matrix review.",
-      "revision": "6038dd4bb9a8d5d40583ec847e7f687fae30af88",
-      "artifact": "go/services/cargohold/evidence/quality.log"
+      "command": "Full Go quality passed ffb5ccda with identical final production sources/dependencies; entire race suite passed after stdlib-only malformed metadata regression test added. Migration scope/state, normalizer negative tests and diff checks pass. Unavailable Haskell tools explicitly recorded.",
+      "revision": "68a36b9137ce26566b2db91902469e8159885656",
+      "artifact": "go/services/cargohold/REVIEW.md"
     }
   ],
-  "review": null,
-  "handoff": "Active whole-service candidate. Core/extended/configuration groups pass exact recorded revisions; mixed 15 cases pass e5dcc6d384dbe62da834922ba57e8cba7af57d94 and four operational comparison records pass 6038dd4bb9a8d5d40583ec847e7f687fae30af88 (40 requests each, concurrency 2, 24 MiB signed bytes, RSS/p95 and metrics schema/counts). Full Go quality checks pass 6038. Optional container and full Helm rendering validated older exact sources. Remaining cancellation/disconnect and loaded SIGTERM drain (inspect main waiting for Shutdown), final exact candidate original 27, relevant supplemental revalidation, current optional image and whole-matrix review/gates. Original 27 report remains historical, not latest candidate proof. No compatibility claim, push or cutover."
+  "review": {
+    "by": "codex (self-review delegated by user)",
+    "artifact": "go/services/cargohold/REVIEW.md"
+  },
+  "handoff": "Whole candidate implemented and bounded validation complete at 68a36b9137ce26566b2db91902469e8159885656. Original 27 plus supplemental 112 pass; image exact tested binary and optional Helm selection verified. Haskell remains default. Exact compatibility lifecycle publication separately coordinated; no push/cutover."
 }

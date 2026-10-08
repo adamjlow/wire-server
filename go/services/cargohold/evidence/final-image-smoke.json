@@ -1,0 +1,13 @@
+{
+  "source_revision": "68a36b9137ce26566b2db91902469e8159885656",
+  "binary_sha256": "d3591c8f7cbbb5ecbbf9c1425feb29c2b1867e270156337a0cf639eee43f7467",
+  "image_id": "sha256:faf572ebf69f080d9b4c02618952b33a465ca767ad4fb0741e221aa74fcbb54b",
+  "health_status": 200,
+  "exit_code": 0,
+  "uid": "65534:65534",
+  "network_mode": "none",
+  "readonly_root": true,
+  "default_config_path": true,
+  "whole_service_parity": false,
+  "scope": "Packaging startup and idle SIGTERM only; active drain tested separately."
+}
