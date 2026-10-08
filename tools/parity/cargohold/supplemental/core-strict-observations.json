@@ -1,0 +1,655 @@
+{
+  "result": "supplemental-observed",
+  "whole_service_parity": false,
+  "cases": [
+    {
+      "id": "missing-first-length",
+      "responses": {
+        "haskell": {
+          "response": {
+            "status": 400,
+            "content_type": "application/json",
+            "body": {
+              "code": 400,
+              "label": "client-error",
+              "message": "Expected: , Failed reading: Missing Content-Type at 3:1 (40)"
+            }
+          },
+          "objects": [],
+          "open_uploads": []
+        },
+        "go": {
+          "response": {
+            "status": 400,
+            "content_type": "application/json",
+            "body": {
+              "code": 400,
+              "label": "client-error",
+              "message": "Expected: , Failed reading: Missing Content-Type at 3:1 (40)"
+            }
+          },
+          "objects": [],
+          "open_uploads": []
+        }
+      },
+      "equal": true
+    },
+    {
+      "id": "duplicate-payload-length",
+      "responses": {
+        "haskell": {
+          "response": {
+            "status": 400,
+            "content_type": "application/json",
+            "body": {
+              "code": 400,
+              "label": "client-error",
+              "message": "Expected: , Failed reading: Unexpected header: \"Content-Length\" at 5:15 (70)"
+            }
+          },
+          "objects": [],
+          "open_uploads": []
+        },
+        "go": {
+          "response": {
+            "status": 400,
+            "content_type": "application/json",
+            "body": {
+              "code": 400,
+              "label": "client-error",
+              "message": "Expected: , Failed reading: Unexpected header: \"Content-Length\" at 5:15 (70)"
+            }
+          },
+          "objects": [],
+          "open_uploads": []
+        }
+      },
+      "equal": true
+    },
+    {
+      "id": "malformed-payload-length",
+      "responses": {
+        "haskell": {
+          "response": {
+            "status": 400,
+            "content_type": "application/json",
+            "body": {
+              "code": 400,
+              "label": "client-error",
+              "message": "Expected: , Failed reading: Failed reading: takeWhile1 at 5:1 (61)"
+            }
+          },
+          "objects": [],
+          "open_uploads": []
+        },
+        "go": {
+          "response": {
+            "status": 400,
+            "content_type": "application/json",
+            "body": {
+              "code": 400,
+              "label": "client-error",
+              "message": "Expected: , Failed reading: Failed reading: takeWhile1 at 5:1 (61)"
+            }
+          },
+          "objects": [],
+          "open_uploads": []
+        }
+      },
+      "equal": true
+    },
+    {
+      "id": "malformed-settings-json",
+      "responses": {
+        "haskell": {
+          "response": {
+            "status": 400,
+            "content_type": "application/json",
+            "body": {
+              "code": 400,
+              "label": "client-error",
+              "message": "Expected: , Failed reading: Unexpected \"falsX,\\\"retention\\\":\\\"persistent\\\"\", expecting JSON value at 5:42 (103)"
+            }
+          },
+          "objects": [],
+          "open_uploads": []
+        },
+        "go": {
+          "response": {
+            "status": 400,
+            "content_type": "application/json",
+            "body": {
+              "code": 400,
+              "label": "client-error",
+              "message": "Expected: , Failed reading: Unexpected \"falsX,\\\"retention\\\":\\\"persistent\\\"\", expecting JSON value at 5:42 (103)"
+            }
+          },
+          "objects": [],
+          "open_uploads": []
+        }
+      },
+      "equal": true
+    },
+    {
+      "id": "missing-payload-header-terminator",
+      "responses": {
+        "haskell": {
+          "response": {
+            "status": 400,
+            "content_type": "application/json",
+            "body": {
+              "code": 400,
+              "label": "client-error",
+              "message": "Expected: , Failed reading: Unexpected header: \"cargo-fixture\" at 5:14 (69)"
+            }
+          },
+          "objects": [],
+          "open_uploads": []
+        },
+        "go": {
+          "response": {
+            "status": 400,
+            "content_type": "application/json",
+            "body": {
+              "code": 400,
+              "label": "client-error",
+              "message": "Expected: , Failed reading: Unexpected header: \"cargo-fixture\" at 5:14 (69)"
+            }
+          },
+          "objects": [],
+          "open_uploads": []
+        }
+      },
+      "equal": true
+    },
+    {
+      "id": "missing-payload-length",
+      "responses": {
+        "haskell": {
+          "response": {
+            "status": 400,
+            "content_type": "application/json",
+            "body": {
+              "code": 400,
+              "label": "client-error",
+              "message": "Expected: , Failed reading: Missing Content-Type at 4:1 (36)"
+            }
+          },
+          "objects": [],
+          "open_uploads": []
+        },
+        "go": {
+          "response": {
+            "status": 400,
+            "content_type": "application/json",
+            "body": {
+              "code": 400,
+              "label": "client-error",
+              "message": "Expected: , Failed reading: Missing Content-Type at 4:1 (36)"
+            }
+          },
+          "objects": [],
+          "open_uploads": []
+        }
+      },
+      "equal": true
+    },
+    {
+      "id": "duplicate-content-type",
+      "responses": {
+        "haskell": {
+          "response": {
+            "status": 400,
+            "content_type": "application/json",
+            "body": {
+              "code": 400,
+              "label": "client-error",
+              "message": "Expected: , Failed reading: Unexpected header: \"Content-Type\" at 4:13 (48)"
+            }
+          },
+          "objects": [],
+          "open_uploads": []
+        },
+        "go": {
+          "response": {
+            "status": 400,
+            "content_type": "application/json",
+            "body": {
+              "code": 400,
+              "label": "client-error",
+              "message": "Expected: , Failed reading: Unexpected header: \"Content-Type\" at 4:13 (48)"
+            }
+          },
+          "objects": [],
+          "open_uploads": []
+        }
+      },
+      "equal": true
+    },
+    {
+      "id": "missing-metadata-part",
+      "responses": {
+        "haskell": {
+          "response": {
+            "status": 400,
+            "content_type": "application/json",
+            "body": {
+              "code": 400,
+              "label": "client-error",
+              "message": "Expected: , Failed reading: Invalid metadata Content-Type. Expected 'application/json'. at 5:1 (56)"
+            }
+          },
+          "objects": [],
+          "open_uploads": []
+        },
+        "go": {
+          "response": {
+            "status": 400,
+            "content_type": "application/json",
+            "body": {
+              "code": 400,
+              "label": "client-error",
+              "message": "Expected: , Failed reading: Invalid metadata Content-Type. Expected 'application/json'. at 5:1 (56)"
+            }
+          },
+          "objects": [],
+          "open_uploads": []
+        }
+      },
+      "equal": true
+    },
+    {
+      "id": "metadata-wrong-order",
+      "responses": {
+        "haskell": {
+          "response": {
+            "status": 400,
+            "content_type": "application/json",
+            "body": {
+              "code": 400,
+              "label": "client-error",
+              "message": "Expected: , Failed reading: Invalid metadata Content-Type. Expected 'application/json'. at 5:1 (64)"
+            }
+          },
+          "objects": [],
+          "open_uploads": []
+        },
+        "go": {
+          "response": {
+            "status": 400,
+            "content_type": "application/json",
+            "body": {
+              "code": 400,
+              "label": "client-error",
+              "message": "Expected: , Failed reading: Invalid metadata Content-Type. Expected 'application/json'. at 5:1 (64)"
+            }
+          },
+          "objects": [],
+          "open_uploads": []
+        }
+      },
+      "equal": true
+    },
+    {
+      "id": "token-header-over-query",
+      "responses": {
+        "haskell": {
+          "status": 404,
+          "content_type": "application/json;charset=utf-8",
+          "body": {
+            "code": 404,
+            "label": "not-found",
+            "message": "Asset not found"
+          }
+        },
+        "go": {
+          "status": 404,
+          "content_type": "application/json;charset=utf-8",
+          "body": {
+            "code": 404,
+            "label": "not-found",
+            "message": "Asset not found"
+          }
+        }
+      },
+      "equal": true
+    },
+    {
+      "id": "non-owner-mutation",
+      "responses": {
+        "haskell": {
+          "status": 403,
+          "content_type": "application/json",
+          "body": {
+            "code": 403,
+            "label": "unauthorised",
+            "message": "Unauthorised operation"
+          }
+        },
+        "go": {
+          "status": 403,
+          "content_type": "application/json",
+          "body": {
+            "code": 403,
+            "label": "unauthorised",
+            "message": "Unauthorised operation"
+          }
+        }
+      },
+      "equal": true
+    },
+    {
+      "id": "malformed-uuid",
+      "responses": {
+        "haskell": {
+          "status": 400,
+          "content_type": null,
+          "body": "Failed reading: takeWhile1"
+        },
+        "go": {
+          "status": 400,
+          "content_type": null,
+          "body": "Failed reading: takeWhile1"
+        }
+      },
+      "equal": true
+    },
+    {
+      "id": "malformed-token",
+      "responses": {
+        "haskell": {
+          "status": 400,
+          "content_type": null,
+          "body": "Error parsing header Asset-Token failed: Failed reading: Invalid url-safe base-64 characters: !!!"
+        },
+        "go": {
+          "status": 400,
+          "content_type": null,
+          "body": "Error parsing header Asset-Token failed: Failed reading: Invalid url-safe base-64 characters: !!!"
+        }
+      },
+      "equal": true
+    },
+    {
+      "id": "internal-signed-url",
+      "responses": {
+        "haskell": {
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": {
+            "scheme": "http",
+            "host": "localhost:4570",
+            "path": "/dummy-bucket/v3/persistent/33333333-3333-4333-8333-333333333333",
+            "query": {
+              "X-Amz-Algorithm": [
+                "AWS4-HMAC-SHA256"
+              ],
+              "X-Amz-Credential": [
+                "GKdeadbeefcafebabe0000000000000000/<validated-signing-date>/eu-west-1/s3/aws4_request"
+              ],
+              "X-Amz-Expires": [
+                "300"
+              ],
+              "X-Amz-SignedHeaders": [
+                "host"
+              ]
+            },
+            "read_status": 200,
+            "body_sha256": "fb9403aa45ae8dca85a17201022faba905e70891b601d0f260666ecf6ea9aa94",
+            "body_length": 13
+          }
+        },
+        "go": {
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": {
+            "scheme": "http",
+            "host": "localhost:4570",
+            "path": "/dummy-bucket/v3/persistent/33333333-3333-4333-8333-333333333333",
+            "query": {
+              "X-Amz-Algorithm": [
+                "AWS4-HMAC-SHA256"
+              ],
+              "X-Amz-Credential": [
+                "GKdeadbeefcafebabe0000000000000000/<validated-signing-date>/eu-west-1/s3/aws4_request"
+              ],
+              "X-Amz-Expires": [
+                "300"
+              ],
+              "X-Amz-SignedHeaders": [
+                "host"
+              ]
+            },
+            "read_status": 200,
+            "body_sha256": "fb9403aa45ae8dca85a17201022faba905e70891b601d0f260666ecf6ea9aa94",
+            "body_length": 13
+          }
+        }
+      },
+      "equal": true
+    },
+    {
+      "id": "remote-delete",
+      "responses": {
+        "haskell": {
+          "status": 422,
+          "content_type": "application/json",
+          "body": {
+            "code": 422,
+            "label": "federation-not-implemented",
+            "message": "Federation is not yet implemented for this endpoint"
+          }
+        },
+        "go": {
+          "status": 422,
+          "content_type": "application/json",
+          "body": {
+            "code": 422,
+            "label": "federation-not-implemented",
+            "message": "Federation is not yet implemented for this endpoint"
+          }
+        }
+      },
+      "equal": true
+    },
+    {
+      "id": "legacy-plain",
+      "responses": {
+        "haskell": {
+          "status": 302,
+          "content_type": null,
+          "body": "",
+          "signed": {
+            "scheme": "http",
+            "host": "localhost:4570",
+            "path": "/dummy-bucket/33333333-3333-4333-8333-333333333333",
+            "query": {
+              "X-Amz-Algorithm": [
+                "AWS4-HMAC-SHA256"
+              ],
+              "X-Amz-Credential": [
+                "GKdeadbeefcafebabe0000000000000000/<validated-signing-date>/eu-west-1/s3/aws4_request"
+              ],
+              "X-Amz-Expires": [
+                "300"
+              ],
+              "X-Amz-SignedHeaders": [
+                "host"
+              ]
+            },
+            "read_status": 200,
+            "body_sha256": "fb9403aa45ae8dca85a17201022faba905e70891b601d0f260666ecf6ea9aa94",
+            "body_length": 13
+          }
+        },
+        "go": {
+          "status": 302,
+          "content_type": null,
+          "body": "",
+          "signed": {
+            "scheme": "http",
+            "host": "localhost:4570",
+            "path": "/dummy-bucket/33333333-3333-4333-8333-333333333333",
+            "query": {
+              "X-Amz-Algorithm": [
+                "AWS4-HMAC-SHA256"
+              ],
+              "X-Amz-Credential": [
+                "GKdeadbeefcafebabe0000000000000000/<validated-signing-date>/eu-west-1/s3/aws4_request"
+              ],
+              "X-Amz-Expires": [
+                "300"
+              ],
+              "X-Amz-SignedHeaders": [
+                "host"
+              ]
+            },
+            "read_status": 200,
+            "body_sha256": "fb9403aa45ae8dca85a17201022faba905e70891b601d0f260666ecf6ea9aa94",
+            "body_length": 13
+          }
+        }
+      },
+      "equal": true
+    },
+    {
+      "id": "legacy-conversation-plain",
+      "responses": {
+        "haskell": {
+          "status": 302,
+          "content_type": null,
+          "body": "",
+          "signed": {
+            "scheme": "http",
+            "host": "localhost:4570",
+            "path": "/dummy-bucket/33333333-3333-4333-8333-333333333333",
+            "query": {
+              "X-Amz-Algorithm": [
+                "AWS4-HMAC-SHA256"
+              ],
+              "X-Amz-Credential": [
+                "GKdeadbeefcafebabe0000000000000000/<validated-signing-date>/eu-west-1/s3/aws4_request"
+              ],
+              "X-Amz-Expires": [
+                "300"
+              ],
+              "X-Amz-SignedHeaders": [
+                "host"
+              ]
+            },
+            "read_status": 200,
+            "body_sha256": "fb9403aa45ae8dca85a17201022faba905e70891b601d0f260666ecf6ea9aa94",
+            "body_length": 13
+          }
+        },
+        "go": {
+          "status": 302,
+          "content_type": null,
+          "body": "",
+          "signed": {
+            "scheme": "http",
+            "host": "localhost:4570",
+            "path": "/dummy-bucket/33333333-3333-4333-8333-333333333333",
+            "query": {
+              "X-Amz-Algorithm": [
+                "AWS4-HMAC-SHA256"
+              ],
+              "X-Amz-Credential": [
+                "GKdeadbeefcafebabe0000000000000000/<validated-signing-date>/eu-west-1/s3/aws4_request"
+              ],
+              "X-Amz-Expires": [
+                "300"
+              ],
+              "X-Amz-SignedHeaders": [
+                "host"
+              ]
+            },
+            "read_status": 200,
+            "body_sha256": "fb9403aa45ae8dca85a17201022faba905e70891b601d0f260666ecf6ea9aa94",
+            "body_length": 13
+          }
+        }
+      },
+      "equal": true
+    },
+    {
+      "id": "missing-legacy",
+      "responses": {
+        "haskell": {
+          "status": 404,
+          "content_type": "application/json;charset=utf-8",
+          "body": {
+            "code": 404,
+            "label": "not-found",
+            "message": "Asset not found"
+          }
+        },
+        "go": {
+          "status": 404,
+          "content_type": "application/json;charset=utf-8",
+          "body": {
+            "code": 404,
+            "label": "not-found",
+            "message": "Asset not found"
+          }
+        }
+      },
+      "equal": true
+    },
+    {
+      "id": "switchback-haskell-user",
+      "equal": true,
+      "bytes_token_delete_effects": true
+    },
+    {
+      "id": "switchback-haskell-bot",
+      "equal": true,
+      "bytes_token_delete_effects": true
+    },
+    {
+      "id": "switchback-haskell-provider",
+      "equal": true,
+      "bytes_token_delete_effects": true
+    },
+    {
+      "id": "switchback-go-user",
+      "equal": true,
+      "bytes_token_delete_effects": true
+    },
+    {
+      "id": "switchback-go-bot",
+      "equal": true,
+      "bytes_token_delete_effects": true
+    },
+    {
+      "id": "switchback-go-provider",
+      "equal": true,
+      "bytes_token_delete_effects": true
+    },
+    {
+      "id": "audit-missing",
+      "responses": {
+        "haskell": {
+          "status": 400,
+          "content_type": "application/json",
+          "body": {
+            "code": 400,
+            "label": "missing-audit-metadata",
+            "message": "Missing required asset audit metadata"
+          }
+        },
+        "go": {
+          "status": 400,
+          "content_type": "application/json",
+          "body": {
+            "code": 400,
+            "label": "missing-audit-metadata",
+            "message": "Missing required asset audit metadata"
+          }
+        }
+      },
+      "equal": true
+    }
+  ],
+  "mismatches": []
+}

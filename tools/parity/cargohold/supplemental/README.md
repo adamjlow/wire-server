@@ -38,3 +38,11 @@ token handling now match; JSON content types and presigned fixed query parameter
 were corrected in candidate code. Signed internal URLs were actually fetched
 before narrow clock/signature normalization. This remains a partial matrix,
 explicitly whole_service_parity false. Owned controller cleanup succeeded.
+
+[Strict signed-field rerun](core-strict-observations.json), with
+[identity](core-strict-run.json), again has all 25 cases matching. Both redirect
+and internal URL comparisons now retain every fixed query field and validate
+signing algorithm, date/credential agreement, scope, headers and expiry before
+normalizing the verified clock/signature. Two focused unit checks ensure invalid
+reads/dates/scopes/algorithms fail and fixed fields/verified payloads survive.
+No native runtime counters, broad JSON bodies or authorization fields are stripped.
