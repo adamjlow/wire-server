@@ -4,7 +4,7 @@
   "title": "Cargohold selection",
   "service": "cargohold",
   "kind": "operations",
-  "status": "active",
+  "status": "done",
   "owner": "codex",
   "branch": "go-migration",
   "depends_on": [
@@ -21,7 +21,18 @@
       "required_evidence": "Actual unchanged original 27, finite 112 supplemental records, exact runtime/source identities, preserved defaults, image/render selection and delegated review; reuse valid evidence without repeating unchanged inputs."
     }
   ],
-  "evidence": [],
-  "review": null,
-  "handoff": "Bounded publication of existing completed validation; no new tests, behavior changes or production rollout."
+  "evidence": [
+    {
+      "criterion": "selection",
+      "result": "pass",
+      "command": "Review final non-root image identity/binary and startup/idle SIGTERM smoke; full original Helm renders differ only in cargohold Deployment image, preserve Haskell default/test hook, fail closed on invalid targets; actual mixed Haskell/Go peers and bidirectional persisted-data switchback pass. Packaging inputs unchanged since render proof.",
+      "revision": "68a36b9137ce26566b2db91902469e8159885656",
+      "artifact": "go/services/cargohold/REVIEW.md"
+    }
+  ],
+  "review": {
+    "by": "codex (self-review delegated by user)",
+    "artifact": "go/services/cargohold/REVIEW.md"
+  },
+  "handoff": "Optional local image and documented Helm post-renderer selection validated. Original Haskell defaults remain; no pushed image, production install or traffic switch."
 }
