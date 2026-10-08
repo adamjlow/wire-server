@@ -4,7 +4,7 @@
   "title": "Characterize cargohold authorization and parser/storage edge contracts on the pinned reference",
   "service": "framework",
   "kind": "framework",
-  "status": "active",
+  "status": "done",
   "owner": "codex",
   "branch": "go-migration",
   "depends_on": [
@@ -29,7 +29,25 @@
       "required_evidence": "Bounded request/artifact handling and owned cleanup, focused tool and migration checks, source-derived case expectations reviewed separately from candidate work."
     }
   ],
-  "evidence": [],
-  "review": null,
-  "handoff": "Characterize exact reference behavior before resolving the existing cargohold contract findings."
+  "evidence": [
+    {
+      "criterion": "capture",
+      "result": "pass",
+      "command": "Real pinned Haskell authorization/multipart characterization: 20 source-derived positive/negative controls, actual S3 metadata/bytes, valid signed Host downloads and partial-object effects. Reference-only, candidate null/parity_verified false. Exact captured code/image/config/binary identities retained; cargo binary equals prior compiled-suite preflight.",
+      "revision": "14d93fd039ef56e1a309f7668623c59690411afb",
+      "artifact": "tools/parity/cargohold/reference.json"
+    },
+    {
+      "criterion": "checks",
+      "result": "pass",
+      "command": "51 parity/reference boundary tests, state/scope/whitespace checks pass; 32 migration unit tests reused for unchanged validator inputs. Docker inspection confirms no owned reference containers/networks remain. Original Haskell sources/fixtures/defaults/e2e assertions unchanged; reserved contract not edited.",
+      "revision": "3e2088e11fe6e19b8254f872320b3484d1286826",
+      "artifact": "docs/go-migration/plans/cargohold-reference.md"
+    }
+  ],
+  "review": {
+    "by": "codex (self-review delegated by user)",
+    "artifact": "docs/go-migration/plans/cargohold-reference.md"
+  },
+  "handoff": "20 real reference observations retained. Confirmed federation matching UUID bypasses token irrespective of foreign origin; different UUID controls enforce token. Legacy OTR redirects/downloads for either requester when valid stored user exists. Parser accepts unequal delimiters, wrong MD5, length suffix/missing trailer; incomplete data returns 400 after persisting a completed partial object. User contract/security disposition requested for federation behavior under existing guardrails; no exception, full contract approval or candidate parity claimed. Goal remains active; other safe preparation may proceed."
 }
