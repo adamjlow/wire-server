@@ -4,7 +4,7 @@
   "title": "Inventory whole-service gundeck and finite validation plan",
   "service": "gundeck",
   "kind": "discovery",
-  "status": "active",
+  "status": "done",
   "owner": "codex",
   "branch": "go-migration",
   "depends_on": [
@@ -30,7 +30,25 @@
       "required_evidence": "Actual migration-check/test output and scoped changes with no Haskell/default/oracle edits."
     }
   ],
-  "evidence": [],
-  "review": null,
-  "handoff": "Inventory source and original coverage; immediately proceed to protected finite contract then runnable health/presence/notification slice."
+  "evidence": [
+    {
+      "criterion": "inventory",
+      "result": "pass",
+      "command": "Source review at f6636ed53315fa7b0fc4c8aa39c0bb30c98b6d5e plus actual pinned read-only/no-network compiled test discovery. Native/token/SQS and all legacy storage effects included; unavailable gundeck-integration not claimed passing.",
+      "revision": "ea766a0de477e45fae2958b7632b5c4666aa67f5",
+      "artifact": "docs/go-migration/services/gundeck/inventory.md"
+    },
+    {
+      "criterion": "validation",
+      "result": "pass",
+      "command": "make migration-check migration-test: valid9services/34tasks,32 tests pass; scope and git diff checks; no Haskell/default/oracle changes.",
+      "revision": "ea766a0de477e45fae2958b7632b5c4666aa67f5",
+      "artifact": ".migration/reviews/gundeck-inventory.md"
+    }
+  ],
+  "review": {
+    "by": "codex (self-review delegated by user)",
+    "artifact": ".migration/reviews/gundeck-inventory.md"
+  },
+  "handoff": "Discovery complete; freeze current original PushToken plus existing relevant event/notification assertions, characterize synthetic native feedback and uncovered storage boundaries, then runnable presence/notification slice."
 }
