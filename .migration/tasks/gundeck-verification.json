@@ -4,9 +4,9 @@
   "title": "Gundeck verification",
   "service": "gundeck",
   "kind": "verification",
-  "status": "queued",
-  "owner": null,
-  "branch": null,
+  "status": "active",
+  "owner": "codex",
+  "branch": "go-migration",
   "depends_on": [
     "gundeck-implementation"
   ],
