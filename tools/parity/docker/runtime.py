@@ -9,6 +9,7 @@ import shutil
 import socket
 import socketserver
 import subprocess
+import sys
 import threading
 import time
 import urllib.request
@@ -206,6 +207,8 @@ def selections(service, candidate, peers):
         raise ValueError('combined run requires all three Go components')
     if service == 'proxy-cargohold-cannon-gundeck' and set(selected) != {'proxy','cargohold','cannon','gundeck'}:
         raise ValueError('combined run requires all four Go components')
+    if service == 'gundeck-reference' and selected:
+        raise ValueError('reference capture requires all Haskell processes')
     for path in selected.values():
         if not path.is_file() or not os.access(path,os.X_OK):
             raise ValueError('selected candidate is not executable')
@@ -228,6 +231,18 @@ def run(service,candidate=None,peer_candidates=()):
                            for link in (WORK/'dist').iterdir() if link.name not in ('integration','nginx')}
         start_peers(processes,logs)
         os.chdir(WORK)
+        if service == 'gundeck-reference':
+            capture=SOURCE/'docs/go-migration/services/gundeck/oracle/capture_native.py'
+            result=subprocess.run([sys.executable,str(capture)],check=True,capture_output=True,text=True,timeout=120)
+            observed=json.loads(result.stdout)
+            if observed.get('kind')!='finite-native-feedback-characterization' or not observed.get('records'):
+                raise ValueError('reference capture missing observations')
+            output=Path('/reports/native-reference.json');output.write_text(result.stdout)
+            report={'schema_version':1,'result':'pass','e2e_executed':False,'reference_executed':True,
+                    'implementations':implementations,'captures':{'native':{'records':len(observed['records']),
+                    'sha256':hashlib.sha256(output.read_bytes()).hexdigest(),'script_sha256':hashlib.sha256(capture.read_bytes()).hexdigest()}}}
+            Path('/reports/gundeck-reference.run.json').write_text(json.dumps(report,indent=2)+'\n')
+            return report,0
         suites = ('proxy','cargohold','gundeck') if service == 'proxy-cargohold-cannon-gundeck' else ('proxy','cargohold','cannon') if service == 'proxy-cargohold-cannon' else ('proxy','cargohold') if service == 'proxy-cargohold' else (service,)
         reports = {}
         for name in suites:

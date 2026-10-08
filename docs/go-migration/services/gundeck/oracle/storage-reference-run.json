@@ -13,6 +13,6 @@
     "storage-cleanup.cql": "8211b22c3772afd7e93204defe1ef34abbf60225209437398379472396796d28"
   },
   "normalization": "Exact semantic status/content-type/JSON/ordering/has_more. Current UTC seconds validated within10s then normalized. SIGTERM timing is bounded<=4s; inherited Haskell exit1/MVar deadlock is recorded, not a successful clean exit or an API comparison target. Candidate must terminate cleanly with exit0 within4s.",
-  "cleanup": "side process reaped; own seeded notification rows removed by Haskell user cleanup; own payload reference deleted by outer owned Cassandra cqlsh cleanup. Final whole-stack cleanup pending.",
+  "cleanup": "side process reaped; own seeded notification rows removed by Haskell user cleanup; own payload reference deleted by outer owned Cassandra cqlsh cleanup. Final whole-stack cleanup completed with process0/ownedcleanup0.",
   "historical_failure": "First seeded reference queries completed but capture assumed clean SIGTERM; actual Haskell exits1 with thread blocked indefinitely in an MVar. Revised reference capture preserves real exit and diagnostic instead of fabricating success; contract separates API/effects from inherited shutdown concern."
 }

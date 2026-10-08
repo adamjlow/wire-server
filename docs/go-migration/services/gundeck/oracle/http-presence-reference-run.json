@@ -7,7 +7,7 @@
   "script_sha256": "f407d0bc802e22bd23f52804a61b4895b1930ccf0217ea79a683b42a65946794",
   "observations_sha256": "75ee202c0039f64f3497c0943714374e069bd4b31ed1b6be079e1288eb9c20f9",
   "normalization": "Exact semantic status/content-type/Allow/Location/body; generated time validated within10seconds then normalized, seven-day TTL validates604790..604800; unordered presence hash list sorted by device_id only for legacy case",
-  "cleanup": "synthetic user Redis hash deleted; overall owned-stack cleanup pending",
+  "cleanup": "synthetic user Redis hash deleted; overall owned-stack cleanup completed with process0/ownedcleanup0",
   "candidate_parity": false,
   "scope": "static Haskell gundeck at owned fixture port8086; reserved synthetic user44444444-4444-4444-8444-444444444444; TLS chain/hostname verified for Redis fixture; original users/assertions untouched",
   "historical_capture": "First34-record capture preceded Redis state effects and mistitled a missing Content-Type case as missing connection. Extended final38 corrects that stimulus before candidate use. Initial Redis access failed due missing AUTH, no reference success claimed for that attempt."

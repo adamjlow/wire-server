@@ -278,6 +278,8 @@ def run(output,service):
         raise ValueError('combined run requires three unambiguous identified candidates')
     if service=='proxy-cargohold-cannon-gundeck' and (set(peers)!={'proxy','cargohold','cannon','gundeck'} or record.get('candidate') is not None):
         raise ValueError('combined run requires four unambiguous identified candidates')
+    if service=='gundeck-reference' and (peers or record.get('candidate') is not None):
+        raise ValueError('reference profile requires all Haskell processes')
     for name,selection in peers.items():
         if name not in ('proxy','cargohold','cannon','gundeck'):raise ValueError('unsupported candidate selection')
         candidate=Path(selection['path'])
@@ -312,6 +314,15 @@ def run(output,service):
             result=subprocess.run([*compose,'run','--rm','--no-deps','runner'],stdout=log,stderr=subprocess.STDOUT,timeout=1800)
         record.update(result='pass' if result.returncode==0 else 'failed',process_exit_code=result.returncode)
         if result.returncode!=0:raise ValueError('baseline failed; inspect retained baseline log')
+        if service=='gundeck-reference':
+            reference=json.loads((output/'reports/gundeck-reference.run.json').read_text())
+            observed=output/'reports/native-reference.json'
+            if reference.get('result')!='pass' or reference.get('e2e_executed') is not False or reference.get('reference_executed') is not True:
+                raise ValueError('reference-only receipt invalid')
+            if hashlib.sha256(observed.read_bytes()).hexdigest()!=reference['captures']['native']['sha256']:
+                raise ValueError('reference-only observations changed')
+            record.update(e2e_executed=False,reference_executed=True,service=service)
+            return record
         suites=('proxy','cargohold','gundeck') if service=='proxy-cargohold-cannon-gundeck' else ('proxy','cargohold','cannon') if service=='proxy-cargohold-cannon' else ('proxy','cargohold') if service=='proxy-cargohold' else (service,)
         for name in suites:
             suite=json.loads((output/'reports'/(name+'.run.json')).read_text())
@@ -344,7 +355,7 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__);sub=parser.add_subparsers(dest='command',required=True)
     prep=sub.add_parser('prepare');prep.add_argument('--output',type=Path,required=True);prep.add_argument('--receipt',type=Path,required=True);prep.add_argument('--candidate',type=Path);prep.add_argument('--candidate-receipt',type=Path)
     prep.add_argument('--select',nargs=3,action='append',default=[],metavar=('SERVICE','BINARY','RECEIPT'))
-    execute=sub.add_parser('run');execute.add_argument('--output',type=Path,required=True);execute.add_argument('--service',choices=('proxy','cargohold','cannon','gundeck','proxy-cargohold','proxy-cargohold-cannon','proxy-cargohold-cannon-gundeck'),required=True)
+    execute=sub.add_parser('run');execute.add_argument('--output',type=Path,required=True);execute.add_argument('--service',choices=('proxy','cargohold','cannon','gundeck','proxy-cargohold','proxy-cargohold-cannon','proxy-cargohold-cannon-gundeck','gundeck-reference'),required=True)
     args=parser.parse_args()
     try:
         result=prepare(args.output,args.receipt,args.candidate,args.candidate_receipt,args.select) if args.command=='prepare' else run(args.output,args.service)

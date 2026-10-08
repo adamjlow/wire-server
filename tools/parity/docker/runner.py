@@ -115,7 +115,7 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__)
     sub=parser.add_subparsers(dest='command',required=True)
     sub.add_parser('preflight')
-    environment=sub.add_parser('environment');environment.add_argument('--service',choices=('proxy','cargohold','cannon','gundeck','proxy-cargohold','proxy-cargohold-cannon','proxy-cargohold-cannon-gundeck'),required=True);environment.add_argument('--candidate',type=Path)
+    environment=sub.add_parser('environment');environment.add_argument('--service',choices=('proxy','cargohold','cannon','gundeck','proxy-cargohold','proxy-cargohold-cannon','proxy-cargohold-cannon-gundeck','gundeck-reference'),required=True);environment.add_argument('--candidate',type=Path)
     environment.add_argument('--peer-candidate', nargs=2, action='append', default=[], metavar=('SERVICE','BINARY'))
     listing=sub.add_parser('list');listing.add_argument('--service',choices=('proxy','cargohold','cannon','gundeck'),required=True)
     running=sub.add_parser('suite');running.add_argument('--service',choices=('proxy','cargohold','cannon','gundeck'),required=True)
