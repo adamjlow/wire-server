@@ -2,7 +2,7 @@
   "schema_version": 1,
   "service": "cargohold",
   "reference_path": "services/cargohold",
-  "stage": "verified",
+  "stage": "available",
   "oracle_paths": [
     "services/cargohold",
     "docs/go-migration/services/cargohold/contract.md",
@@ -30,6 +30,9 @@
     ],
     "rollback": [
       "cargohold-verification"
+    ],
+    "selection": [
+      "cargohold-selection"
     ]
   },
   "compatibility": {

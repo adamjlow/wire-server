@@ -4,7 +4,7 @@
   "title": "Cargohold completion",
   "service": "framework",
   "kind": "framework",
-  "status": "active",
+  "status": "done",
   "owner": "codex",
   "branch": "go-migration",
   "depends_on": [
@@ -23,7 +23,18 @@
       "required_evidence": "Actual unchanged original 27, finite 112 supplemental records, exact runtime/source identities, preserved defaults, image/render selection and delegated review; reuse valid evidence without repeating unchanged inputs."
     }
   ],
-  "evidence": [],
-  "review": null,
-  "handoff": "Bounded publication of existing completed validation; no new tests, behavior changes or production rollout."
+  "evidence": [
+    {
+      "criterion": "gates",
+      "result": "pass",
+      "command": "Review completed implementation, protected supplemental, verification and selection tasks; publish adjacent verified then available stages with exact tested compatibility pins. Scoped transition/state checks pass; no Haskell/source/chart defaults or candidate code edits.",
+      "revision": "68a36b9137ce26566b2db91902469e8159885656",
+      "artifact": ".migration/services/cargohold.json"
+    }
+  ],
+  "review": {
+    "by": "codex (self-review delegated by user)",
+    "artifact": "go/services/cargohold/REVIEW.md"
+  },
+  "handoff": "Optional cargohold available for exact pinned tuple only. Finite whole-service validation and packaging complete; Haskell default/upstream preservation, documented serious inherited security concerns. No production switch, push or removal."
 }
