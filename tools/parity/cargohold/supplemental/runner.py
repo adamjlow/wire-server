@@ -93,7 +93,7 @@ def host(binary, output, group, federator=None):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--inside', action='store_true')
-    parser.add_argument('--group', choices=['core','extended','configuration','mixed'], default='core')
+    parser.add_argument('--group', choices=['core','extended','configuration','mixed','operations'], default='core')
     parser.add_argument('--binary', type=Path)
     parser.add_argument('--federator', type=Path)
     parser.add_argument('--output', type=Path)

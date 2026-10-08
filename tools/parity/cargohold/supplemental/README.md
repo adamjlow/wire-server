@@ -84,3 +84,16 @@ The repaired [11-case configuration run](configuration-observations.json) and
 41226a9ad92b180e4ed9d43961aafbb130f03fc6. The missing/unmapped ingress error
 Content-Type was corrected in code; exact assertions are unchanged. Whole-service
 parity remains unproven pending the remaining finite matrix and final revalidation.
+
+`--group mixed --federator /absolute/compiled-fixture` uses the synthetic h2c
+forwarder in federator/main.go (compiled with the existing pinned tooling module)
+to actual Haskell/Go peers. [Initial observations](mixed-initial-observations.json)
+and [identity](mixed-initial-run.json) expose raw audit copy and transport message
+differences; source review also identified missing candidate version negotiation.
+[Repaired 15-case capture](mixed-observations.json) and [identity](mixed-run.json)
+match at candidate e5dcc6d384dbe62da834922ba57e8cba7af57d94. Both runtime
+directions pass owner/token downloads and private denial; all six audit-inclusive
+storage switchbacks preserve bytes, token/audit copy and deletion. Strict outbound
+trace equality validates h2c, origin/request IDs, negotiation sequence, negotiated
+version and Accept/Content-Type, normalizing only verified caller/peer identity.
+The task-owned fixture uses no production targets, external ports or secrets.
