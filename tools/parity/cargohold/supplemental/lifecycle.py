@@ -12,7 +12,7 @@ from extended import FaultStore
 
 
 def run(ref,ports,start,stop,request,store_effects,hs,go):
-    records=[];store=FaultStore()
+    records=[];cancellations={};store=FaultStore()
     import threading
     threading.Thread(target=store.serve_forever,daemon=True).start()
     fixture=None;fixture_log=None
@@ -40,12 +40,19 @@ def run(ref,ports,start,stop,request,store_effects,hs,go):
             while True:
                 uploads=ref.aws('list-multipart-uploads','--bucket','dummy-bucket').get('Uploads',[])
                 if not uploads and ('abort' in store.trace or 'complete' in store.trace):break
-                if time.monotonic()>deadline:raise ValueError('cancelled multipart did not settle')
+                if time.monotonic()>deadline:break
                 time.sleep(.1)
             effects=store_effects(before)
-            records.append({'id':'client-cancellation-'+kind,'objects':effects,'open_uploads':uploads,'s3_operations':list(store.trace),
-                            'equal':not effects and not uploads and 'abort' in store.trace and 'complete' not in store.trace})
+            cancellations[kind]={'objects':effects,'open_upload_count':len(uploads),'s3_operations':list(store.trace)}
+            for upload in uploads:
+                parts=ref.aws('list-parts','--bucket','dummy-bucket','--key',upload['Key'],'--upload-id',upload['UploadId']).get('Parts',[])
+                cancellations[kind]['stored_part_sizes']=[part['Size'] for part in parts]
+                # The owned reference leak is observed before task-only cleanup.
+                ref.aws('abort-multipart-upload','--bucket','dummy-bucket','--key',upload['Key'],'--upload-id',upload['UploadId'])
+            records.append({'id':'client-cancellation-'+kind,'response':cancellations[kind],'equal':not effects})
             persist()
+        records.append({'id':'client-cancellation-effects','responses':cancellations,'equal':cancellations['haskell']==cancellations['go']})
+        persist()
         # Share real peers through h2c; hold the stream after one flushed chunk.
         store.shutdown();store.server_close();store=None
         fixture_log=open('/reports/lifecycle-federator.log','w')
