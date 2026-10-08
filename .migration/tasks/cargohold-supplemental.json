@@ -32,5 +32,5 @@
   ],
   "evidence": [],
   "review": null,
-  "handoff": "Active finite supplement. All 38 observed comparisons match Haskell and candidate 803ad4e59de9d48348af1902f1f0c41458937f81, including exact audit metadata/log fields and null rejection, five retention variants, principal precedence, previous parser/token/signing/legacy cases and six storage switchbacks. Failed audit observations preserved. Remaining declared configuration/failure/mixed-runtime/operational cases and final review required; no whole-service compatibility claim."
+  "handoff": "Active finite supplement. Retained passing groups: 38 core at 803ad4e59de9d48348af1902f1f0c41458937f81; 35 extended at 3c9e31c160fa86df86bf85c3f9b7c4351153c063; 11 configuration at 41226a9ad92b180e4ed9d43961aafbb130f03fc6. Exact responses/effects/signing fields compared, actual S3 byte reads/abort effects and CloudFront independent signature/tamper verification executed; all earlier mismatches retained. Remaining audit-inclusive switchback, mixed-runtime federation, cancellation and bounded operation/metrics/drain matrix, controller identity/negative checks and review required. No whole-service parity claim."
 }

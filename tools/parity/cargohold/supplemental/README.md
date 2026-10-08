@@ -78,3 +78,9 @@ and [identity](configuration-initial-run.json) match actual signed path/auto/vir
 reads, override/mapped ingress, Scality read/upload and independently verified
 CloudFront signatures/invalid-key startup. Missing/unmapped ingress reveal only
 a candidate error Content-Type mismatch. No signatures or private keys are retained.
+
+The repaired [11-case configuration run](configuration-observations.json) and
+[identity](configuration-run.json) match all cases at candidate
+41226a9ad92b180e4ed9d43961aafbb130f03fc6. The missing/unmapped ingress error
+Content-Type was corrected in code; exact assertions are unchanged. Whole-service
+parity remains unproven pending the remaining finite matrix and final revalidation.
