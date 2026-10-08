@@ -34,11 +34,11 @@
     {
       "criterion": "quality",
       "result": "pass",
-      "command": "Full go/check.py cargohold passes formatting/tidy/verify/vet/race/build/module-vulnerability/license checks at this revision; raw output retained. Original 27 selected tests passed at f410fca816fdca360720ca3565143a88a49185a7; 25 strict supplemental comparisons/switchback cases pass current bcbcd code with source 7044e09e43f0716400ffd5bb046a5d9ac6196f06 controller. Remaining full-service matrix explicitly incomplete.",
-      "revision": "7044e09e43f0716400ffd5bb046a5d9ac6196f06",
-      "artifact": "go/services/cargohold/README.md"
+      "command": "PATH includes pinned Go 1.26.8; python3 go/check.py cargohold. Actual formatting/tidy/verify/vet/race/build/module-vulnerability/license checks passed; raw output retained. Whole-service compatibility still incomplete pending cancellation/drain and final original-suite/whole-matrix review.",
+      "revision": "6038dd4bb9a8d5d40583ec847e7f687fae30af88",
+      "artifact": "go/services/cargohold/evidence/quality.log"
     }
   ],
   "review": null,
-  "handoff": "Active whole-service candidate. Retained original 27 pass older binary; 38 core, 35 extended and 11 configuration comparisons pass their exact recorded candidate revisions. Current source 41226a9ad92b180e4ed9d43961aafbb130f03fc6 fixes the last ingress error Content-Type difference. Actual signed path/auto/virtual/override/ingress/Scality reads, CloudFront independent verification/invalid-key rejection, 24 MiB S3 upload, five S3 faults/abort effects and original auth/parser replay verified. Optional non-root scratch image startup and full Helm render selection verified; post-renderer preserves original test hook and omitted default. Still require mixed-runtime federation, audit-inclusive switchback/token metadata copy, cancellation, metrics and bounded load/drain, final original suite and full quality/review. No whole-service compatibility claim."
+  "handoff": "Active whole-service candidate. Core/extended/configuration groups pass exact recorded revisions; mixed 15 cases pass e5dcc6d384dbe62da834922ba57e8cba7af57d94 and four operational comparison records pass 6038dd4bb9a8d5d40583ec847e7f687fae30af88 (40 requests each, concurrency 2, 24 MiB signed bytes, RSS/p95 and metrics schema/counts). Full Go quality checks pass 6038. Optional container and full Helm rendering validated older exact sources. Remaining cancellation/disconnect and loaded SIGTERM drain (inspect main waiting for Shutdown), final exact candidate original 27, relevant supplemental revalidation, current optional image and whole-matrix review/gates. Original 27 report remains historical, not latest candidate proof. No compatibility claim, push or cutover."
 }

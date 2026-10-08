@@ -156,3 +156,15 @@ original test image are unchanged. Missing/ambiguous/wrong-container inputs fail
 No upstream chart was edited. Remaining acceptance work includes mixed-runtime
 federation, audit-inclusive switchback/token copy, cancellation, metrics and the
 one declared load/drain smoke, final original 27 tests, quality checks and review.
+
+At candidate e5dcc6d384dbe62da834922ba57e8cba7af57d94, all 15 mixed-runtime
+comparisons pass: real Haskell↔Go federation owner/token/private controls, exact
+outbound negotiation/header trace, six audit-inclusive storage switchbacks,
+seeded raw-audit token-copy canonicalization and transport failure response.
+Candidate 6038dd4bb9a8d5d40583ec847e7f687fae30af88 then passes the bounded
+40-request/concurrency-two smoke on both runtimes, including verified signed
+24 MiB bytes, fixed RSS/p95 bounds and actual application metric definitions,
+HTTP histogram labels/counts/schema and S3 counter deltas. Incidental native GC
+metrics and histogram latency values are not equality targets. Cancellation and
+loaded shutdown/drain are still incomplete. Full Go quality checks pass this
+revision; raw [quality output](evidence/quality.log) is retained.

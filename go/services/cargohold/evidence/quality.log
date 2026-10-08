@@ -1,9 +1,9 @@
 all modules verified
-ok  	github.com/adamjlow/wire-server/go/services/cargohold	1.106s
+ok  	github.com/adamjlow/wire-server/go/services/cargohold	1.107s
 ?   	github.com/adamjlow/wire-server/go/services/cargohold/cmd/cargohold	[no test files]
 all modules verified
 No vulnerabilities found.
-W1008 11:15:23.218943 2219850 library.go:394] module github.com/adamjlow/wire-server/go/services/cargohold has empty version, defaults to HEAD. The license URL may be incorrect. Please verify!
+W1008 12:01:51.375215 2256753 library.go:394] module github.com/adamjlow/wire-server/go/services/cargohold has empty version, defaults to HEAD. The license URL may be incorrect. Please verify!
 github.com/adamjlow/wire-server/go/services/cargohold,https://github.com/adamjlow/wire-server/blob/HEAD/go/services/cargohold/LICENSE,AGPL-3.0
 github.com/aws/aws-sdk-go-v2,https://github.com/aws/aws-sdk-go-v2/blob/v1.47.1/LICENSE.txt,Apache-2.0
 github.com/aws/aws-sdk-go-v2/aws/protocol/eventstream,https://github.com/aws/aws-sdk-go-v2/blob/aws/protocol/eventstream/v1.7.20/aws/protocol/eventstream/LICENSE.txt,Apache-2.0
