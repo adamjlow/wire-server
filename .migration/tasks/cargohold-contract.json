@@ -4,7 +4,7 @@
   "title": "Establish cargohold HTTP, storage and switchback compatibility expectations",
   "service": "cargohold",
   "kind": "contract-change",
-  "status": "review",
+  "status": "done",
   "owner": "codex",
   "branch": "task/cargohold-contract",
   "depends_on": [],
@@ -30,19 +30,22 @@
   "evidence": [
     {
       "criterion": "contract",
-      "result": "fail",
-      "command": "User-authorized Codex self-review: full approval withheld for source/security conflict (federation domain discarded; legacy OTR owner not compared) and missing baseline fixtures",
-      "revision": "20853a7dd52ea73b1e68dbc8760cb12c8e08dd6e",
+      "result": "pass",
+      "command": "User explicitly chose mirroring current backend behavior with serious security concerns recorded (2026-10-08); delegated same-author review resolves prior federation finding using 20 real reference captures and qualified original 27-case Haskell baseline. Complete contract/finite plan retained; no Go equivalence or rollout claimed.",
+      "revision": "f69334c23c6bd2321eff2e20a79ca726932e5369",
       "artifact": "docs/go-migration/services/cargohold/contract.md"
     },
     {
       "criterion": "validation",
       "result": "pass",
-      "command": "make migration-check migration-test; git diff --check; scoped --base/--task checks in isolated temporary worktrees",
-      "revision": "20853a7dd52ea73b1e68dbc8760cb12c8e08dd6e",
+      "command": "make migration-check migration-test: state valid, all 32 tests pass; scoped check against dcc920767df26b4d051d0dcde1ddaa4787d16adf and git diff --check pass.",
+      "revision": "f69334c23c6bd2321eff2e20a79ca726932e5369",
       "artifact": "docs/go-migration/services/cargohold/contract.md"
     }
   ],
-  "review": null,
-  "handoff": "Whole-service scope and storage/switchback requirements approved; corrected source/security findings require characterization and an explicit contract disposition. Full contract approval and runtime parity are not claimed."
+  "review": {
+    "by": "codex (self-review delegated by user; security disposition explicitly approved by user)",
+    "artifact": "docs/go-migration/services/cargohold/contract.md"
+  },
+  "handoff": "Approved reference-exact whole-service contract. User 2026-10-08 explicitly directs mirroring current backend behavior and recording serious security improvements separately. Federation UUID/token bypass preserved; separate fix proposed. Real reference captures and original Haskell baseline retained; candidate verification remains required."
 }
