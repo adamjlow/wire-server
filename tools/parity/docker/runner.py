@@ -53,8 +53,8 @@ def preflight():
 
 
 def suite(service, candidate, config, output):
-    if not config.is_file() or config.is_symlink() or config.parent.name == 'services':
-        raise ValueError('mount a regular config outside services/ for the published image layout')
+    if not config.is_file() or config.is_symlink():
+        raise ValueError('mount a regular integration config')
     if output.exists() or output.is_symlink() or any(parent.is_symlink() for parent in output.parents):
         raise ValueError('report destination must be new without symlink parents')
     if os.environ.get('WIRE_E2E_DISPOSABLE') != '1':
@@ -65,6 +65,8 @@ def suite(service, candidate, config, output):
     tests = discover(service)
     env = dict(os.environ)
     selected = None
+    if candidate is not None and config.parent.name == 'services':
+        raise ValueError('candidate must be selected in the staged dist layout for local launch mode')
     if candidate is not None:
         candidate = candidate.resolve(strict=True)
         if not candidate.is_file() or not os.access(candidate,os.X_OK):
@@ -105,6 +107,7 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__)
     sub=parser.add_subparsers(dest='command',required=True)
     sub.add_parser('preflight')
+    environment=sub.add_parser('environment');environment.add_argument('--service',choices=('proxy','cargohold'),required=True)
     listing=sub.add_parser('list');listing.add_argument('--service',choices=('proxy','cargohold'),required=True)
     running=sub.add_parser('suite');running.add_argument('--service',choices=('proxy','cargohold'),required=True)
     running.add_argument('--candidate',type=Path);running.add_argument('--config',type=Path,required=True);running.add_argument('--output',type=Path,required=True)
@@ -112,6 +115,9 @@ def main():
     try:
         if args.command=='preflight': report,code=preflight(),0
         elif args.command=='list': report,code={'tests':discover(args.service),'e2e_executed':False},0
+        elif args.command=='environment':
+            import runtime
+            report,code=runtime.run(args.service)
         else: report,code=suite(args.service,args.candidate,args.config,args.output)
         print(json.dumps(report,indent=2));return code
     except (OSError,ValueError,subprocess.SubprocessError) as error:

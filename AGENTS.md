@@ -211,3 +211,11 @@ Read-only original-suite `--list` discovery inside that non-root, no-network
 container is permitted preparation; it starts no backend and executes no test.
 Full original e2e execution still requires the provisioned disposable dependency
 and Haskell-peer environment. Do not run against shared/production host services.
+
+The user's request to complete that Docker setup and run automated original tests
+authorizes full original proxy/cargohold e2e execution only in the task-owned
+[private environment](docs/go-migration/plans/e2e-environment.md): internal Docker
+networks, no host ports, synthetic fixtures, owned dependency volumes and pinned
+Haskell peers. This narrowly scoped exception overrides the general integration
+execution prohibition for this environment; shared/production targets remain
+prohibited. Missing baseline reports cannot qualify the setup or a Go candidate.
