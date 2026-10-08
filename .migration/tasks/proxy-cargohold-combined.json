@@ -4,9 +4,9 @@
   "title": "Run unchanged original tests with Go proxy and Go cargohold together",
   "service": "cargohold",
   "kind": "contract-change",
-  "status": "queued",
-  "owner": null,
-  "branch": null,
+  "status": "active",
+  "owner": "codex",
+  "branch": "go-migration",
   "depends_on": [
     "cargohold-selection",
     "e2e-environment"
