@@ -4,7 +4,7 @@
   "title": "Gundeck verification",
   "service": "gundeck",
   "kind": "verification",
-  "status": "active",
+  "status": "done",
   "owner": "codex",
   "branch": "go-migration",
   "depends_on": [
@@ -36,7 +36,39 @@
       "required_evidence": "Final exact source6b532d03/binarya9d41982 original72 intended four-Go with Haskell peers, frozen91, typed security/quality, real persisted switchback/generation and bounded operations, identical-binary nonroot image/ten-second Helm hook/default/fail-closed render, retained failures and delegated review; scoped legal gate transitions for publication."
     }
   ],
-  "evidence": [],
-  "review": null,
-  "handoff": "Reuse completed implementation evidence; no new speculative tests, default change, remote push or production switch."
+  "evidence": [
+    {
+      "criterion": "parity",
+      "result": "pass",
+      "command": "Review retained final4 exact service source6b532d03/binarya9d41982: original72 intended four Go with pinned Haskell peers, frozen91 all pass/no skips, typed security and pinned quality checks, real Redis generation and persisted Haskell\u2194Go storage/token/queue switchback, loaded shutdown0/0.514s. Image3c931165 contains identical service binary, nonroot/read-only/health200/shutdown0, existing ten-second Helm hook works; unchanged actual Helm render/default/fail-closed proof reused. Same-author delegated review; no insecure TLS exception, default/schema/production/remote changes.",
+      "revision": "6b532d03cf2bb9e31a55b9108fa52abb79f05aea",
+      "artifact": "go/services/gundeck/REVIEW.md"
+    },
+    {
+      "criterion": "security",
+      "result": "pass",
+      "command": "Review retained final4 exact service source6b532d03/binarya9d41982: original72 intended four Go with pinned Haskell peers, frozen91 all pass/no skips, typed security and pinned quality checks, real Redis generation and persisted Haskell\u2194Go storage/token/queue switchback, loaded shutdown0/0.514s. Image3c931165 contains identical service binary, nonroot/read-only/health200/shutdown0, existing ten-second Helm hook works; unchanged actual Helm render/default/fail-closed proof reused. Same-author delegated review; no insecure TLS exception, default/schema/production/remote changes.",
+      "revision": "6b532d03cf2bb9e31a55b9108fa52abb79f05aea",
+      "artifact": "go/services/gundeck/REVIEW.md"
+    },
+    {
+      "criterion": "operations",
+      "result": "pass",
+      "command": "Review retained final4 exact service source6b532d03/binarya9d41982: original72 intended four Go with pinned Haskell peers, frozen91 all pass/no skips, typed security and pinned quality checks, real Redis generation and persisted Haskell\u2194Go storage/token/queue switchback, loaded shutdown0/0.514s. Image3c931165 contains identical service binary, nonroot/read-only/health200/shutdown0, existing ten-second Helm hook works; unchanged actual Helm render/default/fail-closed proof reused. Same-author delegated review; no insecure TLS exception, default/schema/production/remote changes.",
+      "revision": "6b532d03cf2bb9e31a55b9108fa52abb79f05aea",
+      "artifact": "go/services/gundeck/REVIEW.md"
+    },
+    {
+      "criterion": "rollback",
+      "result": "pass",
+      "command": "Review retained final4 exact service source6b532d03/binarya9d41982: original72 intended four Go with pinned Haskell peers, frozen91 all pass/no skips, typed security and pinned quality checks, real Redis generation and persisted Haskell\u2194Go storage/token/queue switchback, loaded shutdown0/0.514s. Image3c931165 contains identical service binary, nonroot/read-only/health200/shutdown0, existing ten-second Helm hook works; unchanged actual Helm render/default/fail-closed proof reused. Same-author delegated review; no insecure TLS exception, default/schema/production/remote changes.",
+      "revision": "6b532d03cf2bb9e31a55b9108fa52abb79f05aea",
+      "artifact": "go/services/gundeck/REVIEW.md"
+    }
+  ],
+  "review": {
+    "by": "codex (self-review delegated by user)",
+    "artifact": "go/services/gundeck/REVIEW.md"
+  },
+  "handoff": "Finite supported matrix complete for exact tested tuple; original and frozen assertions unchanged, failures/aborts retained, native Haskell tools unavailable/unrun. Reuse actual passing evidence; no extra speculative checks or production/remote action."
 }
