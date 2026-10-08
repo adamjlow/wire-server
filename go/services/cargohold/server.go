@@ -186,7 +186,15 @@ func (s *Server) serveHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 	key, err := objectKey(segments[0])
 	if err != nil {
-		w.WriteHeader(400)
+		bareError(w, 400, "Failed reading: takeWhile1")
+		return
+	}
+	if token := requestToken(r); token != nil && !validToken(*token) {
+		field := "header Asset-Token"
+		if _, present := r.Header["Asset-Token"]; !present {
+			field = "query parameter asset_token"
+		}
+		bareError(w, 400, "Error parsing "+field+" failed: Failed reading: Invalid url-safe base-64 characters: "+*token)
 		return
 	}
 	meta, err := s.Store.Metadata(r.Context(), key)
@@ -259,7 +267,7 @@ func tokenMatches(meta map[string]string, token *string) bool {
 	return present && expected == *token
 }
 func writeJSON(w http.ResponseWriter, status int, value any) {
-	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Content-Type", "application/json;charset=utf-8")
 	w.WriteHeader(status)
 	_ = json.NewEncoder(w).Encode(value)
 }
@@ -370,7 +378,7 @@ func (s *Server) upload(w http.ResponseWriter, r *http.Request, principal, owner
 		location = "assets/v4/" + s.Config.Settings.FederationDomain + "/" + key
 	}
 	w.Header().Set("Location", location)
-	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Content-Type", "application/json;charset=utf-8")
 	w.WriteHeader(201)
 	_ = json.NewEncoder(w).Encode(response)
 }
@@ -400,7 +408,11 @@ func metadataOwner(meta map[string]string) (string, string) {
 	return "", ""
 }
 func assetError(w http.ResponseWriter, code int, label, message string) {
-	w.Header().Set("Content-Type", "application/json")
+	ct := "application/json"
+	if wrapped, ok := w.(*responseContext); ok && wrapped.method == "GET" && code == 404 && label == "not-found" {
+		ct = "application/json;charset=utf-8"
+	}
+	w.Header().Set("Content-Type", ct)
 	w.WriteHeader(code)
 	_ = json.NewEncoder(w).Encode(map[string]any{"code": code, "label": label, "message": message})
 }
@@ -423,4 +435,14 @@ func percentEncode(data []byte) string {
 		}
 	}
 	return out.String()
+}
+
+func validToken(token string) bool {
+	for _, c := range token {
+		if (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || (c >= '0' && c <= '9') || c == '-' || c == '_' || c == '=' {
+			continue
+		}
+		return false
+	}
+	return true
 }

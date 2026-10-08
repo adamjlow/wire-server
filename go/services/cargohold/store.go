@@ -13,6 +13,8 @@ import (
 	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/service/s3"
 	"github.com/aws/aws-sdk-go-v2/service/s3/types"
+	"github.com/aws/smithy-go/middleware"
+	smithyhttp "github.com/aws/smithy-go/transport/http"
 )
 
 type Store interface {
@@ -121,6 +123,18 @@ func (s *S3Store) SignedURL(ctx context.Context, key, host string) (string, erro
 	}
 	out, err := s3.NewPresignClient(s.clientFor(ep)).PresignGetObject(ctx, &s3.GetObjectInput{Bucket: aws.String(s.settings.AWS.Bucket), Key: aws.String(key)}, func(o *s3.PresignOptions) {
 		o.Expires = time.Duration(s.settings.Settings.DownloadLinkTTL) * time.Second
+		o.ClientOptions = append(o.ClientOptions, func(client *s3.Options) {
+			client.APIOptions = append(client.APIOptions, func(stack *middleware.Stack) error {
+				return stack.Build.Add(middleware.BuildMiddlewareFunc("ReferencePresignQuery", func(ctx context.Context, in middleware.BuildInput, next middleware.BuildHandler) (middleware.BuildOutput, middleware.Metadata, error) {
+					if request, ok := in.Request.(*smithyhttp.Request); ok {
+						query := request.URL.Query()
+						query.Del("x-id")
+						request.URL.RawQuery = query.Encode()
+					}
+					return next.HandleBuild(ctx, in)
+				}), middleware.After)
+			})
+		})
 	})
 	if err != nil {
 		return "", err

@@ -3,6 +3,7 @@ package cargohold
 import (
 	"bufio"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"mime"
@@ -18,95 +19,168 @@ type uploadSettings struct {
 	Filetype  *string         `json:"filetype"`
 }
 
-// The reference accepts independent delimiter lines and a numeric length prefix.
-// MIME's generic multipart parser would change these externally visible rules.
+// Positions restart between the reference's metadata and payload parsers.
+// Keep its diagnostic positions without adopting a generic MIME parser, whose
+// delimiter/checksum/trailer rules differ from the observed service contract.
+type parserPosition struct{ line, column, offset int }
+
+func newPosition() parserPosition { return parserPosition{line: 1, column: 1} }
+func (p *parserPosition) advance(data string) {
+	for _, c := range []byte(data) {
+		p.offset++
+		if c == '\n' {
+			p.line++
+			p.column = 1
+		} else {
+			p.column++
+		}
+	}
+}
+func (p parserPosition) failure(message string) error {
+	return fmt.Errorf("Expected: , Failed reading: %s at %d:%d (%d)", message, p.line, p.column, p.offset)
+}
+func (p *parserPosition) lineFrom(r *bufio.Reader) (string, error) {
+	line, err := r.ReadString('\n')
+	p.advance(line)
+	if err != nil {
+		return "", p.failure("not enough input")
+	}
+	return strings.TrimSuffix(strings.TrimSuffix(line, "\n"), "\r"), nil
+}
+
 func parseUpload(input io.Reader) (*bufio.Reader, uploadSettings, int64, error) {
 	r := bufio.NewReader(input)
 	var settings uploadSettings
-	if b, _ := r.Peek(1); len(b) == 1 && (b[0] == '\r' || b[0] == '\n') {
-		if _, err := readLine(r); err != nil {
+	p := newPosition()
+	if first, _ := r.Peek(1); len(first) == 1 && (first[0] == '\r' || first[0] == '\n') {
+		if _, err := p.lineFrom(r); err != nil {
 			return r, settings, 0, err
 		}
 	}
-	meta, err := partHeaders(r, false)
+	meta, beforeBlank, err := partHeaders(r, &p, false)
 	if err != nil {
 		return r, settings, 0, err
 	}
 	typ, _, err := mime.ParseMediaType(meta["content-type"])
-	if err != nil || typ != "application/json" {
-		return r, settings, 0, fmt.Errorf("invalid metadata Content-Type")
+	if _, present := meta["content-type"]; !present {
+		return r, settings, 0, beforeBlank.failure("Missing Content-Type")
 	}
-	n, err := lengthPrefix(meta["content-length"])
+	if err != nil {
+		return r, settings, 0, beforeBlank.failure("Invalid MIME type")
+	}
+	n, err := headerLength(meta, beforeBlank)
 	if err != nil {
 		return r, settings, 0, err
 	}
-	// Decode through a limited stream rather than allocating the declared length.
-	limited := &io.LimitedReader{R: r, N: n}
-	decoder := json.NewDecoder(limited)
-	if err = decoder.Decode(&settings); err != nil {
-		return r, settings, 0, err
+	if typ != "application/json" {
+		return r, settings, 0, p.failure("Invalid metadata Content-Type. Expected 'application/json'.")
 	}
-	var extra any
-	if err = decoder.Decode(&extra); err != io.EOF {
-		return r, settings, 0, fmt.Errorf("invalid metadata JSON")
+	raw, err := io.ReadAll(io.LimitReader(r, n))
+	p.advance(string(raw))
+	if err != nil || int64(len(raw)) != n {
+		return r, settings, 0, p.failure("not enough input")
 	}
-	if limited.N != 0 {
-		return r, settings, 0, io.ErrUnexpectedEOF
+	if err = json.Unmarshal(raw, &settings); err != nil {
+		message := err.Error()
+		var syntax *json.SyntaxError
+		if errors.As(err, &syntax) {
+			start := int(syntax.Offset) - 1
+			if start < 0 {
+				start = 0
+			}
+			if start > len(raw) {
+				start = len(raw)
+			}
+			for start > 0 && ((raw[start-1] >= 'a' && raw[start-1] <= 'z') || (raw[start-1] >= 'A' && raw[start-1] <= 'Z')) {
+				start--
+			}
+			tail := string(raw[start:])
+			tail = strings.TrimSuffix(tail, "}")
+			message = "Unexpected " + strconv.Quote(tail) + ", expecting JSON value"
+		}
+		return r, settings, 0, p.failure(message)
 	}
-	line, err := readLine(r)
-	if err != nil || line != "" {
-		return r, settings, 0, fmt.Errorf("missing payload separator")
-	}
-	headers, err := partHeaders(r, true)
+	p = newPosition()
+	line, err := p.lineFrom(r)
 	if err != nil {
 		return r, settings, 0, err
+	}
+	if line != "" {
+		return r, settings, 0, p.failure("endOfLine")
+	}
+	headers, beforeBlank, err := partHeaders(r, &p, true)
+	if err != nil {
+		return r, settings, 0, err
+	}
+	if _, present := headers["content-type"]; !present {
+		return r, settings, 0, beforeBlank.failure("Missing Content-Type")
 	}
 	if _, _, err = mime.ParseMediaType(headers["content-type"]); err != nil {
-		return r, settings, 0, fmt.Errorf("invalid payload Content-Type")
+		return r, settings, 0, beforeBlank.failure("Invalid MIME type")
 	}
-	n, err = lengthPrefix(headers["content-length"])
+	n, err = headerLength(headers, beforeBlank)
 	return r, settings, n, err
 }
 
-func readLine(r *bufio.Reader) (string, error) {
-	s, err := r.ReadString('\n')
+func partHeaders(r *bufio.Reader, p *parserPosition, payload bool) (map[string]string, parserPosition, error) {
+	line, err := p.lineFrom(r)
 	if err != nil {
-		return "", err
+		return nil, *p, err
 	}
-	return strings.TrimSuffix(strings.TrimSuffix(s, "\n"), "\r"), nil
-}
-
-func partHeaders(r *bufio.Reader, payload bool) (map[string]string, error) {
-	line, err := readLine(r)
-	if err != nil || !strings.HasPrefix(line, "--") {
-		return nil, fmt.Errorf("invalid MIME boundary")
+	if !strings.HasPrefix(line, "--") {
+		return nil, *p, p.failure("satisfy")
 	}
-	h := map[string]string{}
+	headers := map[string]string{}
 	for {
-		line, err = readLine(r)
+		before := *p
+		line, err = p.lineFrom(r)
 		if err != nil {
-			return nil, err
+			return nil, before, err
 		}
 		if line == "" {
-			return h, nil
+			return headers, before, nil
 		}
-		name, value, ok := strings.Cut(line, ":")
-		name = strings.ToLower(name)
-		_, duplicate := h[name]
-		if !ok || duplicate || (name != "content-type" && name != "content-length" && !(payload && name == "content-md5")) {
-			return nil, fmt.Errorf("unexpected MIME header")
+		end := 0
+		for end < len(line) {
+			c := line[end]
+			if (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || (c >= '0' && c <= '9') || c == '-' {
+				end++
+				continue
+			}
+			break
 		}
-		h[name] = strings.TrimLeft(value, " \t")
+		original := line[:end]
+		name := strings.ToLower(original)
+		_, duplicate := headers[name]
+		if duplicate || (name != "content-type" && name != "content-length" && !(payload && name == "content-md5")) {
+			before.advance(original)
+			return nil, before, before.failure("Unexpected header: " + strconv.Quote(original))
+		}
+		if end >= len(line) || line[end] != ':' {
+			before.advance(original)
+			return nil, before, before.failure("satisfy")
+		}
+		headers[name] = strings.TrimLeft(line[end+1:], " \t")
 	}
 }
-
-func lengthPrefix(value string) (int64, error) {
-	i := 0
-	for i < len(value) && value[i] >= '0' && value[i] <= '9' {
-		i++
+func headerLength(headers map[string]string, p parserPosition) (int64, error) {
+	value, present := headers["content-length"]
+	if !present {
+		return 0, p.failure("Missing Content-Type")
 	}
-	if i == 0 {
+	n, err := lengthPrefix(value)
+	if err != nil {
+		return 0, p.failure("Failed reading: takeWhile1")
+	}
+	return n, nil
+}
+func lengthPrefix(value string) (int64, error) {
+	end := 0
+	for end < len(value) && value[end] >= '0' && value[end] <= '9' {
+		end++
+	}
+	if end == 0 {
 		return 0, fmt.Errorf("invalid content length")
 	}
-	return strconv.ParseInt(value[:i], 10, 64)
+	return strconv.ParseInt(value[:end], 10, 64)
 }
