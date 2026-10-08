@@ -34,11 +34,11 @@
     {
       "criterion": "quality",
       "result": "pass",
-      "command": "Initial candidate Go module passes go/check.py cargohold (format/tidy/verify/vet/race/build/module vulnerability and license checks). Real private S3 smoke passes 6 existing multipart captures plus signed read/delete effects; exact binary source and identity retained. This is initial-slice evidence, not completion or full-service parity.",
-      "revision": "ef75a86972653684f3e1a00ece26f9fad5746f83",
+      "command": "Full go/check.py cargohold passes formatting/tidy/verify/vet/race/build/module-vulnerability/license checks at this revision; raw output retained. Original 27 selected tests passed at f410fca816fdca360720ca3565143a88a49185a7; 25 strict supplemental comparisons/switchback cases pass current bcbcd code with source 7044e09e43f0716400ffd5bb046a5d9ac6196f06 controller. Remaining full-service matrix explicitly incomplete.",
+      "revision": "7044e09e43f0716400ffd5bb046a5d9ac6196f06",
       "artifact": "go/services/cargohold/README.md"
     }
   ],
   "review": null,
-  "handoff": "Active whole-service candidate: original 27 compiled Haskell cargo tests pass at f410fca816fdca360720ca3565143a88a49185a7 with Go selected for cargo static/dynamic domains and all other services Haskell; same baseline fixtures, exit/cleanup zero. User/Brig/token/version/legacy/federation/audit metadata routes implemented; subsequent CloudFront/config/domain/HEAD source alignment has focused checks. Audit logs, exact parser/failure semantics, operational/config variants, packaging and finite supplemental/mixed-cargo/switchback validation remain. Full compatibility not claimed."
+  "handoff": "Active full-service candidate. Original 27 passed at retained older binary; current code passes full Go checks and 25 real supplemental comparisons including exact parser messages, token/syntax/JSON/signing fields, legacy and six bidirectional user/bot/provider storage switchbacks. Audit logging/request middleware implemented. Finish declared audit/config/failure/mixed federation/operational supplement, optional packaging/selection, final original-suite revalidation and whole-matrix review. No full compatibility claim."
 }

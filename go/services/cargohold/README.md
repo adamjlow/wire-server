@@ -75,3 +75,32 @@ behavior with source. They have focused security/crypto/config tests; the origin
 Next finish audit logging/parser/error/operational parity, packaging, and the
 already bounded supplemental/mixed-runtime/switchback matrix. Revalidate the
 final binary through the original suite once those relevant changes settle.
+
+## Supplemental comparison milestone
+
+At candidate code bcbcd03b01f22a9f2e751b4c7385467a5912d1e3, 25 reference-owned
+supplemental comparisons match the actual Haskell process and the Go binary in
+the same disposable S3 environment. These include nine exact multipart error
+messages/positions and residual effects, token header precedence, non-owner token
+mutation, malformed token/asset syntax, legacy reads, internal signed URL reads,
+audit-required metadata failure and six bidirectional user/bot/provider storage
+switchbacks. User token renewal through the other runtime rejects the old token
+and accepts the new token on the original writer. The protected supplemental
+report explicitly excludes a whole-service parity claim.
+
+A stricter signed-URL normalization check was then run at controller source
+7044e09e43f0716400ffd5bb046a5d9ac6196f06 against the same unchanged candidate
+binary: all 25 cases still match. It retains every fixed signing query field,
+verifies actual signed bytes, validates signing algorithm/date/credential scope
+and only normalizes verified date/signature values. No owned Docker resources
+remain after either run. The original 27 report applies to its older recorded
+binary; the final binary still needs original-suite revalidation.
+
+Audit logging and request ID middleware now emit the reference uploader/downloader,
+conversation/file/URL fields and supported configured log formats. Candidate
+parser/JSON content types and malformed-token behavior were corrected against
+real reference observations. [Current Go quality output](evidence/quality.log)
+records successful gofmt/tidy/verify/vet/race/build/vulnerability/license checks
+at source 7044e09e43f0716400ffd5bb046a5d9ac6196f06 (unchanged Go code since bcbcd).
+Remaining work is the declared audit/config/failure/mixed-federation/operational
+supplement, packaging/selection and the final original-suite run and review.
