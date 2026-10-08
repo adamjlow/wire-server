@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "id": "gundeck-implementation-gates",
+  "title": "Publish gundeck contract and implementation-plan gates",
+  "service": "framework",
+  "kind": "framework",
+  "status": "active",
+  "owner": "codex",
+  "branch": "go-migration",
+  "depends_on": [
+    "gundeck-inventory",
+    "gundeck-contract"
+  ],
+  "write_paths": [
+    ".migration/tasks/gundeck-implementation-gates.json",
+    ".migration/services/gundeck.json"
+  ],
+  "plan": "docs/go-migration/plans/gundeck.md",
+  "acceptance_criteria": [
+    {
+      "id": "gates",
+      "description": "Publish adjacent contracted and implementing stages from completed source/contract plan evidence.",
+      "required_evidence": "Done reference contract and executable finite inventory/plan, pinned Go tooling; legal scoped state transitions without compatibility claim."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": "Publish contracted then implementing only; actual Go qualification remains unsatisfied."
+}
