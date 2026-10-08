@@ -30,7 +30,7 @@ def run(ref,ports,start,stop,request,store_effects,hs,go):
             client=socket.create_connection(('127.0.0.1',ports[kind]),timeout=15)
             try:
                 headers=('POST /bot/assets HTTP/1.1\r\nHost: localhost\r\nZ-Bot: '+OWNER+'\r\nZ-Type: bot\r\nRequest-Id: cancellation-'+kind+'\r\nContent-Type: multipart/mixed; boundary=wire\r\nContent-Length: '+str(len(full))+'\r\n\r\n').encode()
-                client.sendall(headers+full[:6*1024*1024])
+                client.sendall(headers+full[:7*1024*1024])
                 deadline=time.monotonic()+10
                 while 'part' not in store.trace:
                     if time.monotonic()>deadline:raise ValueError('client cancellation did not reach real upload part')

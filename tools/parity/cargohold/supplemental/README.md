@@ -118,3 +118,12 @@ match the uploaded byte total. GC/heap identity and latency bucket values remain
 incidental, while measured external p95/RSS must satisfy the predeclared limits.
 Cancellation and loaded shutdown/drain remain required; this is not a whole-service
 parity claim. Failed initial metric evidence is preserved.
+
+`--group lifecycle --federator /absolute/fixture` checks client cancellation,
+active SIGTERM drain and CLI/config startup. The first controller attempt sent
+less than the reference uploader’s 6 MiB payload buffer once multipart headers
+were counted; its real-part precondition failed. [Failure log](lifecycle-precondition-failure.log)
+and [identity](lifecycle-precondition-run.json) are retained. The fixture now sends
+7 MiB of the declared 24 MiB body before waiting for a real S3 part and disconnecting.
+No service success/failure is inferred from that invalid initial precondition.
+Source: [streaming uploader](https://github.com/Axman6/amazonka-s3-streaming/blob/master/src/Amazonka/S3/StreamingUpload.hs).

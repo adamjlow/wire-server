@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "/probe/runner.py", line 110, in <module>
+    main()
+    ~~~~^^
+  File "/probe/runner.py", line 102, in main
+    inside()
+    ~~~~~~^^
+  File "/probe/runner.py", line 27, in inside
+    execute()
+    ~~~~~~~^^
+  File "/source/tools/parity/cargohold/supplemental/cases.py", line 134, in execute
+    records=run(ref,ports,start,stop,request,store_effects,hs,go)
+  File "/source/tools/parity/cargohold/supplemental/lifecycle.py", line 36, in run
+    if time.monotonic()>deadline:raise ValueError('client cancellation did not reach real upload part')
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: client cancellation did not reach real upload part
