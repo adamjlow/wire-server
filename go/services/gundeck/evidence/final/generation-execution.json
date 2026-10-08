@@ -1,0 +1,5 @@
+{
+  "exit_code": 0,
+  "stdout": "{\"result\": \"pass\", \"candidate_sha256\": \"a9d419826e320e9055c0cf87022a10338d07cacc60e70bbe494be4651b988f6a\", \"script_sha256\": \"46f52e2ccb7ac725267669651edd41a2db9956ba278cad1ed84c42a7e876b023\", \"checks\": [\"old gone response cannot delete replacement resource/client/generation\", \"unchanged control presence is deleted, proving cleanup completed\", \"owned Cassandra/Redis user cleanup\", \"clean bounded shutdown\"], \"shutdown_exit_code\": 0}\n",
+  "stderr": ""
+}

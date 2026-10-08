@@ -1,1 +1,1 @@
-Start the optional whole-service Go gundeck implementation with a runnable Redis presence/API core; Haskell remains default while complete parity qualification is in progress.
+Add a qualified optional whole-service Go gundeck with reused original mixed-service e2e tests, frozen contract comparisons, persisted-data switchback and nonroot packaging; Haskell remains supported and default.

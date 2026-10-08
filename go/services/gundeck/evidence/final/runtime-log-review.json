@@ -1,0 +1,6 @@
+{
+  "result": "pass",
+  "procedure": "Inspect final gundeck static logs for SQS receive failures and unexpected operational errors; real ElasticMQ QueueUrl behavior exercised throughout original72.",
+  "source_revision": "6b532d03cf2bb9e31a55b9108fa52abb79f05aea",
+  "gundeck_sqs_errors": 0
+}

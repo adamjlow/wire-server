@@ -4,7 +4,7 @@
   "title": "Build and qualify whole-service optional Go gundeck",
   "service": "gundeck",
   "kind": "implementation",
-  "status": "active",
+  "status": "done",
   "owner": "codex",
   "branch": "go-migration",
   "depends_on": [
@@ -36,7 +36,32 @@
       "required_evidence": "Nonroot image smoke, one-service Helm render/default/fail-closed proof, real persisted Redis/Cassandra/token/queue Haskell-to-Go and Go-to-Haskell switchback, bounded in-flight shutdown and operations smoke; no production or remote push."
     }
   ],
-  "evidence": [],
-  "review": null,
-  "handoff": "Original four-Go72 previously passed; candidate6 final2 original72/frozen91/real switchback is running. Same binary actual nonroot read-only image startup/health/shutdown passed and real stale-delivery Redis generation regression passed. Final source review corrected omitted SQS throttle to source500ms and required Redis TLS flags/valid AWS endpoint URLs; typed config negatives and full pinned Go checks pass. Build finalcandidate7 and rerun exact finite matrix after final2 cleanup; then delegated review and service gates. Haskell defaults/oracles unchanged; not yet available."
+  "evidence": [
+    {
+      "criterion": "service",
+      "result": "pass",
+      "command": "Review final4 original72/no skips/failures/errors with intended four Go binaries and Haskell peers, frozen HTTP38/storage13/native40 all pass; protected assertions unchanged and inherited concerns documented.",
+      "revision": "6b532d03cf2bb9e31a55b9108fa52abb79f05aea",
+      "artifact": "go/services/gundeck/REVIEW.md"
+    },
+    {
+      "criterion": "quality",
+      "result": "pass",
+      "command": "Pinned Go1.26.8 format/tidy/verify/vet/race/unit/build/module vulnerability/strict license checks pass; typed input/TLS/client isolation/SQS failure/native sharing/paging plus real Redis generation regression pass. Packaging helper checks pass separately on4d72e206.",
+      "revision": "6b532d03cf2bb9e31a55b9108fa52abb79f05aea",
+      "artifact": "go/services/gundeck/REVIEW.md"
+    },
+    {
+      "criterion": "selection-rollback",
+      "result": "pass",
+      "command": "Exact unchanged service binary in final nonroot/read-only/capDropALL image health200/SIGTERM0; actual existing ten-second Helm hook passes/fails closed for other commands, unchanged actual render proof preserved. Real persisted Haskell\u2194Go Redis/Cassandra/token/queue switchback and loaded drain0 in0.514s pass; owned cleanup0.",
+      "revision": "6b532d03cf2bb9e31a55b9108fa52abb79f05aea",
+      "artifact": "go/services/gundeck/REVIEW.md"
+    }
+  ],
+  "review": {
+    "by": "codex (self-review delegated by user)",
+    "artifact": "go/services/gundeck/REVIEW.md"
+  },
+  "handoff": "Whole service and finite exact-binary matrix complete; delegated same-author self-review approved. Source6b532d03/binarya9d41982, final4 original72+frozen91+real switchback/generation/shutdown pass with intended final cannon/cargo/proxy and Haskell peers, cleanup0. Packaging4d72e206/image3c931165 preserves exact qualified service binary and existing ten-second Helm hook. Historical failures/aborts and unavailable native Haskell checks retained. Serialized gate publication remains; no more speculative tests, remote push or production switch."
 }

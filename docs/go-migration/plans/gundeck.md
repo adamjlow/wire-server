@@ -77,3 +77,19 @@ git diff --check. Native Haskell tools currently unavailable: preserve upstream 
 and record unrun checks honestly. Same-author review cites explicit user delegation.
 Rollback selects the whole original Haskell image/process against unchanged stores;
 no rollout performed. Inventory records concrete unknowns before implementation.
+
+## Completed execution, 2026-10-08
+
+Whole-service source6b532d03cf2bb9e31a55b9108fa52abb79f05aea/binarya9d41982
+passes original72 with final Go cannon411f525e, cargo68a36b91, proxy0fae335b
+and remaining pinned Haskell peers. Frozen HTTP38/storage13/native40 all pass;
+actual Redis/Cassandra/native token/durable queue switchback and one in-flight
+shutdown pass, as does real stale-delivery generation cleanup. Module checks and
+local nonroot read-only image/default path/health/SIGTERM/Helm hook pass.
+Packaging4d72e206 copies the identical service binary and adds a bounded helper
+for the source Helm ten-second preStop command; original renders still change
+only the explicitly selected image. Full receipts/failures and delegated review
+are in go/services/gundeck/REVIEW.md. No protected/Haskell/default/schema changes,
+remote push or production switch. Native Haskell tools/legacy integration binary
+remain unavailable/unrun; existing upstream CI is preserved. Finite matrix done;
+serialized verification/selection/state publication follow without new test gates.

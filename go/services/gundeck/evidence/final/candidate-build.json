@@ -1,0 +1,171 @@
+{
+  "source_revision": "6b532d03cf2bb9e31a55b9108fa52abb79f05aea",
+  "binary_sha256": "a9d419826e320e9055c0cf87022a10338d07cacc60e70bbe494be4651b988f6a",
+  "build_info": {
+    "GoVersion": "go1.26.8",
+    "Path": "github.com/adamjlow/wire-server/go/services/gundeck/cmd/gundeck",
+    "Main": {
+      "Path": "github.com/adamjlow/wire-server/go/services/gundeck",
+      "Version": "(devel)"
+    },
+    "Deps": [
+      {
+        "Path": "github.com/apache/cassandra-gocql-driver/v2",
+        "Version": "v2.1.2",
+        "Sum": "h1:lu/p0Db2av18enHJvWJQoChLssI0P+AR06STq4VdvCc="
+      },
+      {
+        "Path": "github.com/aws/aws-sdk-go-v2",
+        "Version": "v1.47.2",
+        "Sum": "h1:4vrR4S7MUdvPiv/fxlYI/FaZCgwKuir2LpXxwCUtwWY="
+      },
+      {
+        "Path": "github.com/aws/aws-sdk-go-v2/config",
+        "Version": "v1.33.8",
+        "Sum": "h1:I9S23gMufs97T0CE0ZUzvdl/i2TDnxOJzgxw18d1RBo="
+      },
+      {
+        "Path": "github.com/aws/aws-sdk-go-v2/credentials",
+        "Version": "v1.20.8",
+        "Sum": "h1:ibO101be+3jJOMBCJphBXzXm9UzIq+zxr8plM2V3FHw="
+      },
+      {
+        "Path": "github.com/aws/aws-sdk-go-v2/feature/ec2/imds",
+        "Version": "v1.20.2",
+        "Sum": "h1:b4FhKL3xhR6BVxUTU+h1K8gK2XYhb+pU/sRiwJwLuCs="
+      },
+      {
+        "Path": "github.com/aws/aws-sdk-go-v2/internal/configsources",
+        "Version": "v1.5.5",
+        "Sum": "h1:JwchTNw8oqkFWMYrmFmdoS4sYgE6JJcnO+ElvME+uH4="
+      },
+      {
+        "Path": "github.com/aws/aws-sdk-go-v2/internal/endpoints/v2",
+        "Version": "v2.8.5",
+        "Sum": "h1:CNgkOhhgJ1anuboBDmjRLCpVlBKFV9cEvT16d4QNl/w="
+      },
+      {
+        "Path": "github.com/aws/aws-sdk-go-v2/internal/v4a",
+        "Version": "v1.5.5",
+        "Sum": "h1:rkxirozlOuMs3QuaGsDV3ll5suBdeeH6iSLFPyA5zNk="
+      },
+      {
+        "Path": "github.com/aws/aws-sdk-go-v2/service/internal/accept-encoding",
+        "Version": "v1.13.20",
+        "Sum": "h1:XBYeuBbMY5LRAKOdZgzUQO1BVj3B07uYAROSapq/IWg="
+      },
+      {
+        "Path": "github.com/aws/aws-sdk-go-v2/service/internal/presigned-url",
+        "Version": "v1.14.5",
+        "Sum": "h1:Q2MWL+9cTKHHiXWcsPobHiOD+wx8tTc8sWZaFvFSk9Q="
+      },
+      {
+        "Path": "github.com/aws/aws-sdk-go-v2/service/signin",
+        "Version": "v1.10.3",
+        "Sum": "h1:lRyGlN6mXianMWMQdvTFCnJE5DkmD54N9PC3m+U/GgA="
+      },
+      {
+        "Path": "github.com/aws/aws-sdk-go-v2/service/sns",
+        "Version": "v1.47.4",
+        "Sum": "h1:t+7qf21lV62rOx2UJNIFmj4lW+v6KEyH4o4vN1Xs114="
+      },
+      {
+        "Path": "github.com/aws/aws-sdk-go-v2/service/sso",
+        "Version": "v1.38.3",
+        "Sum": "h1:NYlE1/vPhIhdPTLUnmvz/PSXS3klsToqQY6KVtsynhs="
+      },
+      {
+        "Path": "github.com/aws/aws-sdk-go-v2/service/ssooidc",
+        "Version": "v1.43.3",
+        "Sum": "h1:Glo50xPemPwHaioR66Rl5BTEq62Ohet0dyxzt6L0H1M="
+      },
+      {
+        "Path": "github.com/aws/aws-sdk-go-v2/service/sts",
+        "Version": "v1.51.3",
+        "Sum": "h1:L5w+LXVzMaacz3iotdx2fWtU/O+TIrplsK2JVMNbXeA="
+      },
+      {
+        "Path": "github.com/aws/smithy-go",
+        "Version": "v1.28.4",
+        "Sum": "h1:vzBmFpcRUtotqGPfmnro2W2Pgg3mk103n9sZhNJY9YU="
+      },
+      {
+        "Path": "github.com/cespare/xxhash/v2",
+        "Version": "v2.3.0",
+        "Sum": "h1:UL815xU9SqsFlibzuggzjXhog7bL6oX9BbNZnL2UFvs="
+      },
+      {
+        "Path": "github.com/rabbitmq/amqp091-go",
+        "Version": "v1.15.0",
+        "Sum": "h1:LEQL4/yp48/Wigt6A6XOu18RQRo8ZHtB5I/KZJn+gkw="
+      },
+      {
+        "Path": "github.com/redis/go-redis/v9",
+        "Version": "v9.23.0",
+        "Sum": "h1:/TTVdJa8BRNsybwwGGnmiYktHNlUXtbOQxlWpHBPL3s="
+      },
+      {
+        "Path": "go.uber.org/atomic",
+        "Version": "v1.12.0",
+        "Sum": "h1:BvcXdFKuviU4fTL/f+SxdQ5qJX/Jix8pAkgdUcb3XOE="
+      },
+      {
+        "Path": "go.yaml.in/yaml/v3",
+        "Version": "v3.0.5",
+        "Sum": "h1:N6y/pJk8buWs9NY5ERU2HSMfm+IuD/OtfdAnq6kESPw="
+      },
+      {
+        "Path": "golang.org/x/sys",
+        "Version": "v0.48.0",
+        "Sum": "h1:bbX/i/6MgT9BVLM9RT1thmxL04yeTAhbEz4SyadbXoo="
+      },
+      {
+        "Path": "gopkg.in/inf.v0",
+        "Version": "v0.9.1",
+        "Sum": "h1:73M5CoZyi3ZLMOyDlQh031Cx6N9NDJ2Vvfl76EDAgDc="
+      }
+    ],
+    "Settings": [
+      {
+        "Key": "-buildmode",
+        "Value": "exe"
+      },
+      {
+        "Key": "-compiler",
+        "Value": "gc"
+      },
+      {
+        "Key": "CGO_ENABLED",
+        "Value": "0"
+      },
+      {
+        "Key": "GOARCH",
+        "Value": "amd64"
+      },
+      {
+        "Key": "GOOS",
+        "Value": "linux"
+      },
+      {
+        "Key": "GOAMD64",
+        "Value": "v1"
+      },
+      {
+        "Key": "vcs",
+        "Value": "git"
+      },
+      {
+        "Key": "vcs.revision",
+        "Value": "6b532d03cf2bb9e31a55b9108fa52abb79f05aea"
+      },
+      {
+        "Key": "vcs.time",
+        "Value": "2026-10-08T20:40:42Z"
+      },
+      {
+        "Key": "vcs.modified",
+        "Value": "false"
+      }
+    ]
+  }
+}

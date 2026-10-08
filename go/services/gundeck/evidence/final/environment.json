@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "project": "wire-e2e-6a451fc536134cfa9dfceb9d8eea87c9",
+  "source_revision": "6b532d03cf2bb9e31a55b9108fa52abb79f05aea",
+  "runner_image_id": "sha256:a21a2edacf0f3a48a68079b3450de4badd6a75623e2224d602e33669f5470ba0",
+  "runner_revision": "ecad4ffad7d14626c3b5cea96067564bb69db181",
+  "candidate": null,
+  "peer_candidates": {
+    "proxy": {
+      "path": "/home/operator/.cache/wire-migration/e2e-selected-proxy",
+      "sha256": "7868aa4b6b914daeb65a8033506dc03963af4ba34b37f0ef0bf4e2b2e7001238",
+      "source_revision": "0fae335b5cb5df7b7794bde68aea8177e327d3ef"
+    },
+    "cargohold": {
+      "path": "/home/operator/.cache/wire-migration/cargohold-supplemental-20261008-10",
+      "sha256": "d3591c8f7cbbb5ecbbf9c1425feb29c2b1867e270156337a0cf639eee43f7467",
+      "source_revision": "68a36b9137ce26566b2db91902469e8159885656"
+    },
+    "cannon": {
+      "path": "/home/operator/.cache/wire-migration/cannon-qualified-20261008-3",
+      "sha256": "d9b31f435b19e43e8b8bd596311ffe03994f7027f23cfc63cfcad8fddeed4232",
+      "source_revision": "411f525e421d15e673870ace345462c4c4f80372"
+    },
+    "gundeck": {
+      "path": "/home/operator/.cache/wire-migration/gundeck-core-20261008/gundeck-7",
+      "sha256": "a9d419826e320e9055c0cf87022a10338d07cacc60e70bbe494be4651b988f6a",
+      "source_revision": "6b532d03cf2bb9e31a55b9108fa52abb79f05aea"
+    }
+  },
+  "result": "pass",
+  "e2e_executed": true,
+  "compose_sha256": "cea4f81470d335784f448863ba2dde7ae1d134ff476d564c510870e3ee94f6cb",
+  "files_sha256": {
+    "fixtures/configs.json": "8cc34c41cc248ae804d822a60fb610b0adead84c3e79663eb33243ef70c99876",
+    "fixtures/integration.json": "d8834dad54e1f851e689ac00691cd527aac69e0e9ce00baf149835433812c73c",
+    "fixtures/peers.json": "ca8438ea9464138dc0c75868b62eb8b12113343dada8336524c3ea467dd3a490"
+  },
+  "side_candidate": {
+    "path": "/home/operator/.cache/wire-migration/gundeck-core-20261008/gundeck-7",
+    "sha256": "a9d419826e320e9055c0cf87022a10338d07cacc60e70bbe494be4651b988f6a",
+    "source_revision": "6b532d03cf2bb9e31a55b9108fa52abb79f05aea"
+  },
+  "purpose": "original72 with four Go services and Haskell peers, frozen91 and real switchback",
+  "original_tests": 72,
+  "supplemental_checks": 91,
+  "switchback": "pass",
+  "process_exit_code": 0,
+  "cleanup_exit_code": 0
+}

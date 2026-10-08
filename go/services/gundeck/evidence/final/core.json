@@ -1,0 +1,376 @@
+{
+  "result": "pass",
+  "purpose": "frozen91 supplemental comparison plus real persisted switchback/loaded shutdown; original72 still required",
+  "e2e_executed": false,
+  "binary_sha256": "a9d419826e320e9055c0cf87022a10338d07cacc60e70bbe494be4651b988f6a",
+  "oracle_script_sha256": "e03bc589760a474c09d7ec6ccf4783237daf85991a246ea883618451ce6fd1e0",
+  "http_script_sha256": "f407d0bc802e22bd23f52804a61b4895b1930ccf0217ea79a683b42a65946794",
+  "native_script_sha256": "dd5e9dd390d4f6ab567acee73c70cc737f80ba18679431c8574bd64c80def64f",
+  "comparisons": [
+    {
+      "name": "page-byte-limit",
+      "pass": true
+    },
+    {
+      "name": "page-byte-limit-client",
+      "pass": true
+    },
+    {
+      "name": "last-all",
+      "pass": true
+    },
+    {
+      "name": "last-client-scans-skipped-rows",
+      "pass": true
+    },
+    {
+      "name": "referenced-payload",
+      "pass": true
+    },
+    {
+      "name": "missing-referenced-payload",
+      "pass": true
+    },
+    {
+      "name": "malformed-inline-payload",
+      "pass": true
+    },
+    {
+      "name": "null-payload",
+      "pass": true
+    },
+    {
+      "name": "wrong-client-notification",
+      "pass": true
+    },
+    {
+      "name": "since-filtered-client",
+      "pass": true
+    },
+    {
+      "name": "user-cleanup",
+      "pass": true
+    },
+    {
+      "name": "after-user-cleanup",
+      "pass": true
+    },
+    {
+      "name": "idle-shutdown",
+      "pass": true
+    },
+    {
+      "name": "health",
+      "pass": true
+    },
+    {
+      "name": "missing-principal",
+      "pass": true
+    },
+    {
+      "name": "invalid-principal",
+      "pass": true
+    },
+    {
+      "name": "empty-page",
+      "pass": true
+    },
+    {
+      "name": "missing-last",
+      "pass": true
+    },
+    {
+      "name": "missing-id",
+      "pass": true
+    },
+    {
+      "name": "invalid-id",
+      "pass": true
+    },
+    {
+      "name": "invalid-since-v2",
+      "pass": true
+    },
+    {
+      "name": "invalid-since-v3",
+      "pass": true
+    },
+    {
+      "name": "non-v1-since",
+      "pass": true
+    },
+    {
+      "name": "missing-since-v2",
+      "pass": true
+    },
+    {
+      "name": "missing-since-v3",
+      "pass": true
+    },
+    {
+      "name": "invalid-client",
+      "pass": true
+    },
+    {
+      "name": "size-too-small",
+      "pass": true
+    },
+    {
+      "name": "size-too-large",
+      "pass": true
+    },
+    {
+      "name": "size-minimum",
+      "pass": true
+    },
+    {
+      "name": "time-before-v9",
+      "pass": true
+    },
+    {
+      "name": "time-v9",
+      "pass": true
+    },
+    {
+      "name": "empty-tokens",
+      "pass": true
+    },
+    {
+      "name": "delete-absent-token",
+      "pass": true
+    },
+    {
+      "name": "token-missing-connection",
+      "pass": true
+    },
+    {
+      "name": "invalid-push-json",
+      "pass": true
+    },
+    {
+      "name": "invalid-push-object",
+      "pass": true
+    },
+    {
+      "name": "empty-push-list",
+      "pass": true
+    },
+    {
+      "name": "empty-presence",
+      "pass": true
+    },
+    {
+      "name": "invalid-presence-user",
+      "pass": true
+    },
+    {
+      "name": "presence-missing-ids",
+      "pass": true
+    },
+    {
+      "name": "presence-invalid-ids",
+      "pass": true
+    },
+    {
+      "name": "invalid-presence-json",
+      "pass": true
+    },
+    {
+      "name": "presence-no-content-type",
+      "pass": true
+    },
+    {
+      "name": "presence-list",
+      "pass": true
+    },
+    {
+      "name": "presence-multiple-users",
+      "pass": true
+    },
+    {
+      "name": "presence-delete-noop",
+      "pass": true
+    },
+    {
+      "name": "presence-after-delete",
+      "pass": true
+    },
+    {
+      "name": "presence-stored-shape",
+      "pass": true
+    },
+    {
+      "name": "presence-ttl",
+      "pass": true
+    },
+    {
+      "name": "legacy-and-malformed-presence",
+      "pass": true
+    },
+    {
+      "name": "presence-cleaned",
+      "pass": true
+    },
+    {
+      "name": "native/invalid-token",
+      "pass": true
+    },
+    {
+      "name": "native/long-token",
+      "pass": true
+    },
+    {
+      "name": "native/unknown-app",
+      "pass": true
+    },
+    {
+      "name": "native/voip-rejected",
+      "pass": true
+    },
+    {
+      "name": "native/register-gcm",
+      "pass": true
+    },
+    {
+      "name": "native/register-shared-gcm",
+      "pass": true
+    },
+    {
+      "name": "native/list-shared-gcm",
+      "pass": true
+    },
+    {
+      "name": "native/replace-shared-gcm",
+      "pass": true
+    },
+    {
+      "name": "native/shared-replacement-migrates-other",
+      "pass": true
+    },
+    {
+      "name": "native/shared-old-endpoint-deleted",
+      "pass": true
+    },
+    {
+      "name": "native/shared-owner-metadata",
+      "pass": true
+    },
+    {
+      "name": "native/native-push-accepted",
+      "pass": true
+    },
+    {
+      "name": "native/gcm-publish",
+      "pass": true
+    },
+    {
+      "name": "native/low-priority-push-accepted",
+      "pass": true
+    },
+    {
+      "name": "native/gcm-low-priority-publish",
+      "pass": true
+    },
+    {
+      "name": "native/ttl-feedback-keeps-token",
+      "pass": true
+    },
+    {
+      "name": "native/invalid-feedback-removes-token",
+      "pass": true
+    },
+    {
+      "name": "native/shared-invalid-feedback-removes-token",
+      "pass": true
+    },
+    {
+      "name": "native/feedback-deleted-receipts",
+      "pass": true
+    },
+    {
+      "name": "native/feedback-endpoint-removed",
+      "pass": true
+    },
+    {
+      "name": "native/register-apns",
+      "pass": true
+    },
+    {
+      "name": "native/apns-push-accepted",
+      "pass": true
+    },
+    {
+      "name": "native/apns-publish",
+      "pass": true
+    },
+    {
+      "name": "native/disabled-push-accepted",
+      "pass": true
+    },
+    {
+      "name": "native/disabled-push-removes-token",
+      "pass": true
+    },
+    {
+      "name": "native/disabled-push-token-delete-is-absent",
+      "pass": true
+    },
+    {
+      "name": "native/native-endpoints-cleaned",
+      "pass": true
+    },
+    {
+      "name": "native/user-cleanup",
+      "pass": true
+    },
+    {
+      "name": "native/other-user-cleanup",
+      "pass": true
+    },
+    {
+      "name": "native/signed-provider-requests",
+      "pass": true
+    },
+    {
+      "name": "native/gzip-request",
+      "pass": true
+    },
+    {
+      "name": "native/native-metric-types",
+      "pass": true
+    },
+    {
+      "name": "native/smoke",
+      "pass": true
+    },
+    {
+      "name": "native/missing-bind",
+      "pass": true
+    },
+    {
+      "name": "native/missing-redis",
+      "pass": true
+    },
+    {
+      "name": "native/missing-aws",
+      "pass": true
+    },
+    {
+      "name": "native/missing-rabbit",
+      "pass": true
+    },
+    {
+      "name": "native/missing-ttl",
+      "pass": true
+    },
+    {
+      "name": "native/cli-help",
+      "pass": true
+    },
+    {
+      "name": "native/idle-shutdown",
+      "pass": true
+    }
+  ],
+  "switchback": "pass"
+}

@@ -29,3 +29,16 @@ change Haskell defaults or approve a production switch.
 Pinned dependencies and module vulnerability/license checks are retained in the
 service evidence. Assembly inspection warnings for xxhash/x/sys are limitations
 of the license scanner, not waived findings or a claim that assembly was audited.
+
+- Shared native-token replacement retains the source behavior of assigning the
+  initiating connection/client to migrated owner addresses. The service trusts
+  caller-supplied client/token association and has no separate provider device
+  ownership proof. Further ownership checks require a separately reviewed backend
+  contract change; the shared-owner/replacement fixtures preserve current behavior.
+- Existing oversized notification behavior is retained. Internal callers and
+  ingress controls remain important for memory pressure; the smoke test is not
+  evidence of arbitrary payload or traffic capacity.
+- The image's lifecycle helper accepts exactly the existing ten-second Helm hook;
+  it does not evaluate shell input. A future chart hook change requires packaging
+  revalidation. Earlier optional cannon/cargohold scratch images also lack a
+  general shell; their hook compatibility should be reviewed separately.

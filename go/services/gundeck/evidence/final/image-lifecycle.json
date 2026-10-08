@@ -1,0 +1,31 @@
+{
+  "result": "pass",
+  "image_id": "sha256:3c9311651c57c8a2b63976667f01183366a757b023c1546eee24a47dd1d02c42",
+  "source_revision": "6b532d03cf2bb9e31a55b9108fa52abb79f05aea",
+  "packaging_revision": "4d72e2061d7bffadb6f8ee79599c9371af41c3a4",
+  "lifecycle_sha256": "e284da13571a162ae4e52c2b6b6b9b13209f068cf968116d22a812843b80a532",
+  "checks": [
+    {
+      "arguments": [
+        "-c",
+        "sleep 10"
+      ],
+      "exit_code": 0,
+      "seconds": 10.12755294982344,
+      "stdout": "",
+      "stderr": "",
+      "pass": true
+    },
+    {
+      "arguments": [
+        "-c",
+        "sleep 10; echo synthetic"
+      ],
+      "exit_code": 2,
+      "seconds": 0.16596967168152332,
+      "stdout": "",
+      "stderr": "unsupported lifecycle command\n",
+      "pass": true
+    }
+  ]
+}

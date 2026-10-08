@@ -1,0 +1,139 @@
+{
+  "result": "pass",
+  "candidate_sha256": "2d76ec662d45a4b86476175526896c56ac02c56f2271f5b7d114a75f22d9bb10",
+  "reference_sha256": "ad4fa17a672fde3dbdb53bc029333b467cfdece669e24c1343dc30db7a7c4942",
+  "records": [
+    {
+      "name": "haskell-presence-write",
+      "pass": true
+    },
+    {
+      "name": "haskell-token-write",
+      "pass": true
+    },
+    {
+      "name": "haskell-notification-write",
+      "pass": true
+    },
+    {
+      "name": "haskell-notification-persisted",
+      "pass": true
+    },
+    {
+      "name": "haskell-queue-register",
+      "pass": true
+    },
+    {
+      "name": "haskell-queue-publish",
+      "pass": true
+    },
+    {
+      "name": "haskell-queue-body-properties",
+      "pass": true
+    },
+    {
+      "name": "haskell-before-go-shutdown",
+      "exit_code": 0,
+      "seconds": 0.007349005900323391
+    },
+    {
+      "name": "go-reads-haskell-notifications",
+      "pass": true
+    },
+    {
+      "name": "go-reads-haskell-presence",
+      "pass": true
+    },
+    {
+      "name": "go-reads-haskell-token",
+      "pass": true
+    },
+    {
+      "name": "go-notification-write",
+      "pass": true
+    },
+    {
+      "name": "go-token-upsert",
+      "pass": true
+    },
+    {
+      "name": "go-presence-upsert",
+      "pass": true
+    },
+    {
+      "name": "go-notifications-preserved",
+      "pass": true
+    },
+    {
+      "name": "go-register-existing-queue",
+      "pass": true
+    },
+    {
+      "name": "go-queue-publish",
+      "pass": true
+    },
+    {
+      "name": "go-queue-body-properties",
+      "pass": true
+    },
+    {
+      "name": "loaded-presence-write",
+      "pass": true
+    },
+    {
+      "name": "loaded-push-accepted",
+      "pass": true
+    },
+    {
+      "name": "loaded-delivery-entered",
+      "pass": true
+    },
+    {
+      "name": "go-loaded-shutdown",
+      "pass": true
+    },
+    {
+      "name": "go-loaded-shutdown-measurement",
+      "seconds": 0.5148904519155622,
+      "exit_code": 0
+    },
+    {
+      "name": "haskell-reads-go-notifications",
+      "pass": true
+    },
+    {
+      "name": "haskell-reads-go-token",
+      "pass": true
+    },
+    {
+      "name": "haskell-reads-go-presence",
+      "pass": true
+    },
+    {
+      "name": "haskell-reads-loaded-notification",
+      "pass": true
+    },
+    {
+      "name": "broker-queue-survives-runtimes",
+      "pass": true
+    },
+    {
+      "name": "cleanup-aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+      "pass": true
+    },
+    {
+      "name": "cleanup-bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb",
+      "pass": true
+    },
+    {
+      "name": "endpoints-cleaned",
+      "pass": true
+    },
+    {
+      "name": "haskell-after-go-shutdown",
+      "exit_code": 0,
+      "seconds": 0.007357076741755009
+    }
+  ],
+  "cleanup": "owned users/endpoints/Redis keys/queue removed; owned volume cleanup remains fallback"
+}
