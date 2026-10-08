@@ -37,7 +37,7 @@ production targets, deployment switching and additional pushes are excluded.
 | Consumable events | v8/v9 routing, temporary/client queues, binary event and delivery-tag shapes, single/multiple acknowledgements, prefetch, single-consumer behavior, malformed/invalid ack close codes |
 | Recovery/effects | unacked redelivery after reconnect, temporary queue deletion, expired/transient events, missed-notifications full-sync ack and Cassandra deletion, synchronization marker ordering |
 | Errors/security | malformed/missing headers/client/JSON, wrong user/client isolation, unavailable gundeck, RabbitMQ channel limits/failure, disabled versions; exact observed statuses/close codes and relevant provider effects |
-| Operations | one bounded 40-request/socket smoke, concurrency 2, Go RSS <=192 MiB, p95 <=2*Haskell+100 ms; health, config/CLI, metric/log shape, inactivity and loaded SIGTERM drain under fixture grace+2 seconds |
+| Operations | one bounded 40-request/socket smoke, concurrency 2, Go RSS <=192 MiB, p95 <=2*Haskell+100 ms; health, config/CLI, metric/log shape, inactivity and loaded SIGTERM drain under 2*fixture grace+2 seconds |
 | Selection/switchback | omitted selection Haskell, explicit Go image, invalid selection fails; Haskell-to-Go and Go-to-Haskell queue/Cassandra state recovery, all three Go services with Haskell peers |
 
 Original tests supply these assertions wherever available; do not duplicate them

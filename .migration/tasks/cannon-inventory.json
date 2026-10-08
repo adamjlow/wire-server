@@ -4,7 +4,7 @@
   "title": "Inventory cannon contracts and existing original tests",
   "service": "cannon",
   "kind": "discovery",
-  "status": "active",
+  "status": "done",
   "owner": "codex",
   "branch": "go-migration",
   "depends_on": [
@@ -29,7 +29,25 @@
       "required_evidence": "Migration checker/tests and diff/scope checks; no candidate equivalence or integration pass inferred from discovery."
     }
   ],
-  "evidence": [],
-  "review": null,
-  "handoff": "Inventory and compiled original-test discovery first; no candidate code or behavioral claim yet."
+  "evidence": [
+    {
+      "criterion": "inventory",
+      "result": "pass",
+      "command": "Primary pinned Haskell sources reviewed across classic WebSocket, event protocol, AMQP pool/queue, Cassandra missed-notifications, gundeck presence, routes/config/operations. Original publisher integration --list in owned non-root/read-only/no-network container confirms 34 source functions and 35 compiled required cases; no original tests executed yet.",
+      "revision": "e76ccf9a7c6e4b3e98b9983b5240742c1ec5068b",
+      "artifact": "docs/go-migration/services/cannon/inventory.md"
+    },
+    {
+      "criterion": "checks",
+      "result": "pass",
+      "command": "make migration-check migration-test: valid state, all 32 tests pass. Scoped validation and git diff --check pass; service/reference/default/build inputs untouched. Inventory and finite plan independently described from source before candidate consumption.",
+      "revision": "e76ccf9a7c6e4b3e98b9983b5240742c1ec5068b",
+      "artifact": "docs/go-migration/services/cannon/inventory.md"
+    }
+  ],
+  "review": {
+    "by": "codex (self-review delegated by user)",
+    "artifact": "docs/go-migration/services/cannon/inventory.md"
+  },
+  "handoff": "Complete source boundary inventory and original compiled catalogue discovery (35 cases), finite plan including sequential two-phase drain bound fixed before measurements. Next: separately claimed contract/oracle work freezes exact catalogue and bounded uncovered stimuli, qualifies all-Haskell private baseline, then runnable classic Go slice followed by events. No service/candidate compatibility claim."
 }
