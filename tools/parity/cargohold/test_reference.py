@@ -23,9 +23,9 @@ class ReferenceTests(unittest.TestCase):
 
     def test_raw_signatures_are_not_retained_in_observed_download(self):
         url='http://localhost:4570/dummy-bucket/object?X-Amz-Expires=300&X-Amz-Signature=synthetic-signature'
-        with patch.object(reference,'request',return_value=(200,{},reference.DATA)):
+        with patch.object(reference,'request',return_value=(200,{},reference.DATA)) as request:
             result=reference.signed_location(url)
-        self.assertNotIn('X-Amz-Signature',result['query']);self.assertEqual(['300'],result['query']['X-Amz-Expires'])
+        self.assertEqual({'Host':'localhost:4570'},request.call_args.args[2]);self.assertNotIn('X-Amz-Signature',result['query']);self.assertEqual(['300'],result['query']['X-Amz-Expires'])
 
     def test_incomplete_upload_fixture_contains_only_short_declared_body(self):
         body=reference.multipart(payload=reference.DATA[:-3],declared=str(len(reference.DATA)),trailer=False)

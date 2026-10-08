@@ -44,7 +44,7 @@ def signed_location(location):
     if parsed.scheme!='http' or parsed.hostname!='localhost' or parsed.port!=4570:
         raise ValueError('signed fixture URL escapes isolated store')
     path=parsed.path+('?' +parsed.query if parsed.query else '')
-    status,_,data=request('GET',path,port=4570)
+    status,_,data=request('GET',path,{'Host':parsed.netloc},port=4570)
     # Keep signing scope/TTL/target, excluding raw reusable signature values.
     query=parse_qs(parsed.query)
     return {'scheme':parsed.scheme,'host':parsed.netloc,'path':parsed.path,
@@ -62,7 +62,9 @@ def observe(case,method,path,headers=None,body=None,expected=None):
     elif len(data)<=4096:
         record['text']=data.decode('utf-8',errors='replace')
     if 'location' in response_headers:
-        if status==302:record['signed_download']=signed_location(response_headers['location'])
+        if status==302:
+            record['signed_download']=signed_location(response_headers['location'])
+            record['authorized_bytes_match']=record['signed_download']['read_status']==200 and record['signed_download']['body_sha256']==hashlib.sha256(DATA).hexdigest()
         else:record['location']=response_headers['location']
     record['status_matches_source']=status==expected if expected is not None else None
     return record
