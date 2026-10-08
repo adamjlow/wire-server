@@ -4,9 +4,9 @@
   "title": "Automate bounded parity checks and prepare original e2e test reuse",
   "service": "framework",
   "kind": "framework",
-  "status": "queued",
-  "owner": null,
-  "branch": null,
+  "status": "active",
+  "owner": "codex",
+  "branch": "go-migration",
   "depends_on": [
     "proxy-implementation",
     "proxy-live-comparison"
