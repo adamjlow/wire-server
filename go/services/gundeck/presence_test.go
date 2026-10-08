@@ -28,3 +28,16 @@ func TestIdentifiersRejectMalformedValues(t *testing.T) {
 		t.Fatal("valid fixture principals rejected")
 	}
 }
+
+func TestClientIDsRespectWord64AndCanonicalRendering(t *testing.T) {
+	for _, client := range []string{"10000000000000000", "fffffffffffffffff", "-1", ""} {
+		if clientValid(client) {
+			t.Fatalf("accepted invalid client %q", client)
+		}
+	}
+	for input, expected := range map[string]string{"000ABCD": "abcd", "000": "0", "FFFFFFFFFFFFFFFF": "ffffffffffffffff"} {
+		if !clientValid(input) || canonicalClient(input) != expected {
+			t.Fatalf("client %q changed canonical representation", input)
+		}
+	}
+}

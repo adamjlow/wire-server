@@ -57,6 +57,13 @@ func decodePresence(user, field, raw string) (Presence, bool) {
 	} else if json.Unmarshal([]byte(raw), &data) != nil {
 		return Presence{}, false
 	}
+	if data.Client != nil {
+		if !clientValid(*data.Client) {
+			return Presence{}, false
+		}
+		value := canonicalClient(*data.Client)
+		data.Client = &value
+	}
 	parsed, err := url.Parse(data.Resource)
 	if err != nil || parsed.Scheme == "" {
 		return Presence{}, false

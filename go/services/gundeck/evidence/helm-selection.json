@@ -1,0 +1,11 @@
+{
+  "result": "pass",
+  "helm_version": "v3.22.0+g144ca65",
+  "helm_sha256": "7a319dee5ea7a1f7d7a0d92d5c223586f3b65abc33163c9de2a85f083aa3df2b",
+  "preparation": "Reuse owned disposable upstream charts version0.0.42 and synthetic values; no source chart changes",
+  "only_difference": "gundeck Deployment gundeck container image",
+  "omitted_selection_byte_identical": true,
+  "default_sha256": "78169e37a8e8acc5c375562503ebca3fbddb7712c44854a3d579a7a5009f0d9d",
+  "selected_sha256": "ef72de2f75845d27b5f7649061f74b7cb4b195ebd31ecf6ba475594d986ab87c",
+  "shape_negative_checks": "missing/ambiguous/wrong-kind/wrong-container/wrong-image fail closed"
+}

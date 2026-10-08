@@ -19,7 +19,7 @@ func TestFeedbackAcknowledgesOnlySuccessfulValidCallbacks(t *testing.T) {
 		if err := r.ParseForm(); err != nil {
 			t.Error(err)
 		}
-		if r.Form.Get("Action") != "DeleteMessage" || r.Form.Get("ReceiptHandle") != "owned-receipt" {
+		if r.Form.Get("Action") != "DeleteMessage" || r.Form.Get("ReceiptHandle") != "owned-receipt" || r.Form.Get("QueueUrl") == "" {
 			t.Error("unexpected SQS operation")
 		}
 		deleted++

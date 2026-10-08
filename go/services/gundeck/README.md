@@ -17,3 +17,6 @@ The whole-service acceptance matrix must pass before selecting this in deploymen
 
 Retained core-2 evidence passes the unchanged frozen HTTP38 and storage13 captures.
 Native40 and original72 mixed-service e2e, switchback and packaging remain required.
+
+Response compression follows the [wai-extra default GzipSettings](https://github.com/yesodweb/wai/blob/master/wai-extra/Network/Wai/Middleware/Gzip.hs): MIME/negotiation, partial/existing encoding and explicit small-length guards.
+Client IDs use the source-defined Word64 range and canonical lowercase/no-leading-zero encoding.

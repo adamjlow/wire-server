@@ -54,3 +54,13 @@ func TestPushRejectsMalformedRecipientsAndPayload(t *testing.T) {
 		t.Fatal("empty recipient set is valid", err)
 	}
 }
+
+func TestPayloadStorageRemovesWhitespaceWithoutRoundingLargeIntegers(t *testing.T) {
+	pushes, err := validatePushes([]byte(`[{"recipients":[],"payload":[ { "seq":9007199254740993, "text":"<owned>" } ]}]`))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if string(pushes[0].Payload) != `[{"seq":9007199254740993,"text":"<owned>"}]` {
+		t.Fatal("payload precision/byte normalization changed", string(pushes[0].Payload))
+	}
+}

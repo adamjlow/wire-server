@@ -55,6 +55,9 @@ func (s *Server) sqsQuery(ctx context.Context, endpoint, action string, params u
 	var result sqsResponse
 	params.Set("Action", action)
 	params.Set("Version", "2012-11-05")
+	if action != "GetQueueUrl" {
+		params.Set("QueueUrl", endpoint)
+	}
 	body := params.Encode()
 	request, err := http.NewRequestWithContext(ctx, http.MethodPost, endpoint, strings.NewReader(body))
 	if err != nil {
@@ -79,7 +82,7 @@ func (s *Server) sqsQuery(ctx context.Context, endpoint, action string, params u
 		return result, fmt.Errorf("SQS response exceeds bound")
 	}
 	if response.StatusCode < 200 || response.StatusCode >= 300 {
-		return result, fmt.Errorf("SQS request rejected")
+		return result, fmt.Errorf("SQS request rejected (%d)", response.StatusCode)
 	}
 	if err = xml.Unmarshal(raw, &result); err != nil {
 		return result, fmt.Errorf("invalid SQS response")
@@ -120,7 +123,10 @@ func (s *Server) listenFeedback() {
 	for s.background.Err() == nil {
 		result, err := s.sqsQuery(s.background, s.queueURL, "ReceiveMessage", url.Values{"MaxNumberOfMessages": {"10"}, "WaitTimeSeconds": {"20"}})
 		if err != nil {
-			s.logger.Event("Error", "SQS receive failed")
+			if s.background.Err() != nil {
+				return
+			}
+			s.logger.Event("Error", "SQS receive failed", logField{"cause", err.Error()})
 			if !waitContext(s.background, 3*time.Second) {
 				return
 			}

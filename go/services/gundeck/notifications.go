@@ -10,6 +10,7 @@ import (
 	"strconv"
 	"strings"
 	"time"
+	"unicode/utf8"
 
 	"github.com/apache/cassandra-gocql-driver/v2"
 )
@@ -77,6 +78,9 @@ func (row notificationRow) size() int32 {
 	return 0
 }
 func validPayload(payload []byte) bool {
+	if !utf8.Valid(payload) {
+		return false
+	}
 	var values []json.RawMessage
 	if json.Unmarshal(payload, &values) != nil || len(values) == 0 {
 		return false
@@ -108,7 +112,10 @@ func (s *Server) loadNotification(ctx context.Context, row notificationRow, clie
 	if client != nil && len(row.clients) > 0 {
 		found := false
 		for _, c := range row.clients {
-			if c == *client {
+			if !clientValid(c) {
+				return nil, fmt.Errorf("invalid stored notification client")
+			}
+			if canonicalClient(c) == *client {
 				found = true
 				break
 			}
@@ -242,7 +249,7 @@ func queryClient(w http.ResponseWriter, r *http.Request) (*string, bool) {
 		plain(w, 400, "Error parsing query parameter client failed: Failed reading: takeWhile1")
 		return nil, false
 	}
-	client := strings.ToLower(value[0])
+	client := canonicalClient(value[0])
 	return &client, true
 }
 func (s *Server) notificationHTTP(w http.ResponseWriter, r *http.Request, path string, version int) {

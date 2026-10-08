@@ -15,6 +15,7 @@ sys.path.insert(0,'/source/docs/go-migration/services/gundeck/oracle')
 import capture_storage
 import capture_http_presence
 import capture_native
+import switchback
 
 if os.getuid()!=65534 or os.environ.get('WIRE_E2E_DISPOSABLE')!='1':
     raise ValueError('private owned runner required')
@@ -78,10 +79,12 @@ def core(service,candidate,config,output,implementations=None):
             elif name=='native-metric-types':passed=all(value.get(k)==v for k,v in control.items()) and set(value.values())=={'counter'}
             else:passed=value==control
             comparisons.append({'name':'native/'+name,'pass':passed})
-        report={'result' :'pass' if all(c['pass'] for c in comparisons) else 'failed',
-                'purpose':'frozen91 supplemental comparison; original72 and switchback still required',
+        rollback=switchback.run(binary)
+        Path('/reports/switchback.json').write_text(json.dumps(rollback,indent=2)+'\n')
+        report={'result' :'pass' if all(c['pass'] for c in comparisons) and rollback['result']=='pass' else 'failed',
+                'purpose':'frozen91 supplemental comparison plus real persisted switchback/loaded shutdown; original72 still required',
                 'e2e_executed':False,'binary_sha256':hashlib.sha256(binary.read_bytes()).hexdigest(),
-                'oracle_script_sha256':actual['script_sha256'],'http_script_sha256':http_actual['script_sha256'],'native_script_sha256':native_actual['script_sha256'],'comparisons':comparisons}
+                'oracle_script_sha256':actual['script_sha256'],'http_script_sha256':http_actual['script_sha256'],'native_script_sha256':native_actual['script_sha256'],'comparisons':comparisons,'switchback':rollback['result']}
         Path('/reports/core.json').write_text(json.dumps(report,indent=2)+'\n')
         return report,0 if report['result']=='pass' else 1
     finally:Path('/reports/capture-complete').touch()

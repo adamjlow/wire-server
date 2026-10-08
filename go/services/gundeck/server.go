@@ -52,7 +52,10 @@ func NewServer(c Config) (*Server, error) {
 	if err != nil {
 		return nil, err
 	}
-	s := &Server{Config: c, redis: r, http: &http.Client{Timeout: 10 * time.Second}}
+	transport := http.DefaultTransport.(*http.Transport).Clone()
+	transport.MaxIdleConns = max(c.Settings.HTTPPool, 1)
+	transport.MaxIdleConnsPerHost = max(c.Settings.HTTPPool, 1)
+	s := &Server{Config: c, redis: r, http: &http.Client{Timeout: 10 * time.Second, Transport: transport}}
 	s.cassandra, err = openCassandra(c)
 	if err != nil {
 		_ = r.Close()
@@ -70,10 +73,10 @@ func NewServer(c Config) (*Server, error) {
 	s.background, s.cancelBackground = context.WithCancel(context.Background())
 	s.deliverySlots = make(chan struct{}, 1024)
 	s.counters = map[string]uint64{}
-	s.awsHTTP = &http.Client{Timeout: 30 * time.Second, CheckRedirect: func(*http.Request, []*http.Request) error { return http.ErrUseLastResponse }}
+	s.awsHTTP = &http.Client{Transport: transport, Timeout: 30 * time.Second, CheckRedirect: func(*http.Request, []*http.Request) error { return http.ErrUseLastResponse }}
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
-	s.aws, s.sns, err = openAWS(ctx, c)
+	s.aws, s.sns, err = openAWS(ctx, c, s.awsHTTP)
 	if err != nil {
 		s.Close()
 		return nil, err
@@ -93,6 +96,9 @@ func (s *Server) Close() {
 		s.cassandra.Close()
 	}
 	s.http.CloseIdleConnections()
+	if s.awsHTTP != nil {
+		s.awsHTTP.CloseIdleConnections()
+	}
 	_ = s.redis.Close()
 	if s.additional != nil {
 		_ = s.additional.Close()
@@ -116,7 +122,7 @@ func uuidValid(v string) bool {
 	return true
 }
 func clientValid(v string) bool {
-	if v == "" {
+	if v == "" || len(strings.TrimLeft(v, "0")) > 16 {
 		return false
 	}
 	for _, c := range v {
@@ -170,6 +176,9 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
+	response := &gzipResponse{ResponseWriter: w, accepted: gzipAccepted(r)}
+	defer response.Close()
+	w = response
 	switch {
 	case path == "/i/metrics" && r.Method == "GET":
 		w.Header().Set("Content-Type", "text/plain; version=0.0.4")
@@ -194,7 +203,7 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			plain(w, 400, "Failed reading: takeWhile1")
 			return
 		}
-		if err := s.registerConsumable(r.Context(), strings.ToLower(parts[0]), strings.ToLower(parts[2])); err != nil {
+		if err := s.registerConsumable(r.Context(), strings.ToLower(parts[0]), canonicalClient(parts[2])); err != nil {
 			failure(w, 500, "server-error", "Server Error")
 			return
 		}
@@ -216,7 +225,7 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		}
 		selected := []pushAddress{}
 		for _, address := range addresses {
-			if address.Client == strings.ToLower(client) {
+			if address.Client == canonicalClient(client) {
 				selected = append(selected, address)
 			}
 		}
@@ -265,8 +274,7 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		emptyJSON(w, 200)
 	case path == "/i/presences" && r.Method == "POST":
 		var p Presence
-		decoder := json.NewDecoder(r.Body)
-		if err := decoder.Decode(&p); err != nil {
+		if err := decodeJSON(r.Body, &p); err != nil {
 			plain(w, 400, presenceJSONError(err))
 			return
 		}
@@ -278,6 +286,11 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		if err != nil || resource.Scheme == "" || (p.Client != nil && !clientValid(*p.Client)) {
 			plain(w, 400, "Invalid presence")
 			return
+		}
+		p.User = strings.ToLower(p.User)
+		if p.Client != nil {
+			value := canonicalClient(*p.Client)
+			p.Client = &value
 		}
 		if err = s.addPresence(r.Context(), p); err != nil {
 			failure(w, 500, "server-error", "Server Error")
@@ -437,4 +450,12 @@ func (s *Server) disabled(version int) bool {
 		}
 	}
 	return false
+}
+
+func canonicalClient(v string) string {
+	v = strings.TrimLeft(strings.ToLower(v), "0")
+	if v == "" {
+		return "0"
+	}
+	return v
 }

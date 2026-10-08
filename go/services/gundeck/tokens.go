@@ -2,7 +2,6 @@ package gundeck
 
 import (
 	"context"
-	"encoding/json"
 	"errors"
 	"fmt"
 	"net/http"
@@ -45,8 +44,8 @@ func transportCode(t string) int {
 	}
 	return -1
 }
-func openAWS(ctx context.Context, c Config) (aws.Config, *sns.Client, error) {
-	cfg, err := awsconfig.LoadDefaultConfig(ctx, awsconfig.WithRegion(c.AWS.Region), awsconfig.WithHTTPClient(&http.Client{Timeout: 30_000_000_000}))
+func openAWS(ctx context.Context, c Config, clientHTTP *http.Client) (aws.Config, *sns.Client, error) {
+	cfg, err := awsconfig.LoadDefaultConfig(ctx, awsconfig.WithRegion(c.AWS.Region), awsconfig.WithHTTPClient(clientHTTP))
 	if err != nil {
 		return cfg, nil, fmt.Errorf("AWS initialization failed")
 	}
@@ -96,7 +95,11 @@ func (s *Server) lookupTokens(ctx context.Context, user string, all bool) ([]pus
 			continue
 		}
 		address.ARN = *arn
-		address.Client = *client
+		if !clientValid(*client) {
+			_ = iter.Close()
+			return nil, fmt.Errorf("invalid stored token client")
+		}
+		address.Client = canonicalClient(*client)
 		addresses = append(addresses, address)
 	}
 	if err := iter.Close(); err != nil {
@@ -360,7 +363,7 @@ func (s *Server) tokensHTTP(w http.ResponseWriter, r *http.Request, path string)
 			return
 		}
 		var token PushToken
-		if err := json.NewDecoder(r.Body).Decode(&token); err != nil {
+		if err := decodeJSON(r.Body, &token); err != nil {
 			plain(w, 400, "Invalid push token JSON")
 			return
 		}
@@ -368,7 +371,7 @@ func (s *Server) tokensHTTP(w http.ResponseWriter, r *http.Request, path string)
 			plain(w, 400, "Invalid push token")
 			return
 		}
-		token.Client = strings.ToLower(token.Client)
+		token.Client = canonicalClient(token.Client)
 		if token.Transport == "APNS_VOIP" || token.Transport == "APNS_VOIP_SANDBOX" {
 			failure(w, 400, "apns-voip-not-supported", "Adding APNS_VOIP tokens is not supported")
 			return

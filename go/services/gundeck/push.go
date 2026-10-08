@@ -66,6 +66,19 @@ func validatePushes(raw []byte) ([]Push, error) {
 		if p.Recipients == nil || !validPayload(p.Payload) || (p.Origin != nil && !uuidValid(*p.Origin)) || (p.Priority != "" && p.Priority != "high" && p.Priority != "low") {
 			return nil, fmt.Errorf("invalid push")
 		}
+		decoder := json.NewDecoder(bytes.NewReader(p.Payload))
+		decoder.UseNumber()
+		var payload any
+		if err := decoder.Decode(&payload); err != nil {
+			return nil, fmt.Errorf("invalid payload")
+		}
+		var compact bytes.Buffer
+		encoder := json.NewEncoder(&compact)
+		encoder.SetEscapeHTML(false)
+		if err := encoder.Encode(payload); err != nil {
+			return nil, fmt.Errorf("invalid payload")
+		}
+		p.Payload = bytes.TrimSuffix(compact.Bytes(), []byte("\n"))
 		if p.Priority == "" {
 			p.Priority = "high"
 		}
@@ -84,7 +97,7 @@ func validatePushes(raw []byte) ([]Push, error) {
 				if !clientValid(client) {
 					return nil, fmt.Errorf("invalid recipient client")
 				}
-				r.Clients[j] = strings.ToLower(client)
+				r.Clients[j] = canonicalClient(client)
 			}
 			encoded, _ := json.Marshal(r)
 			if !unique[string(encoded)] {
@@ -426,6 +439,11 @@ func (s *Server) deliverLegacy(ctx context.Context, notices []newNotification, c
 					_ = s.removePresence(ctx, presence)
 				}
 			}
+			for key := range presences {
+				if strings.HasPrefix(key, uri+":") {
+					s.count("push_ws_unreachable")
+				}
+			}
 			s.logger.Event("Warn", "Cannon bulk push failed")
 			return nil
 		}
@@ -496,7 +514,7 @@ func (s *Server) deliverNative(ctx context.Context, notice newNotification, excl
 	if notice.push.Transient {
 		return
 	}
-	concurrency := max(len(notice.push.Recipients), 1)
+	concurrency := 32
 	if s.Config.Settings.NativeConcurrency != nil {
 		concurrency = *s.Config.Settings.NativeConcurrency
 	}
