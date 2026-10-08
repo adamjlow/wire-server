@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "id": "gundeck-selection",
+  "title": "Gundeck selection",
+  "service": "gundeck",
+  "kind": "operations",
+  "status": "queued",
+  "owner": null,
+  "branch": null,
+  "depends_on": [
+    "gundeck-verification"
+  ],
+  "write_paths": [
+    ".migration/tasks/gundeck-selection.json"
+  ],
+  "plan": "docs/go-migration/plans/gundeck.md",
+  "acceptance_criteria": [
+    {
+      "id": "selection",
+      "description": "Review completed finite gundeck selection acceptance criteria.",
+      "required_evidence": "Final exact source6b532d03/binarya9d41982 original72 intended four-Go with Haskell peers, frozen91, typed security/quality, real persisted switchback/generation and bounded operations, identical-binary nonroot image/ten-second Helm hook/default/fail-closed render, retained failures and delegated review; scoped legal gate transitions for publication."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": "Reuse completed implementation evidence; no new speculative tests, default change, remote push or production switch."
+}
