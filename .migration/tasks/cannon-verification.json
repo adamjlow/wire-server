@@ -4,7 +4,7 @@
   "title": "Cannon verification",
   "service": "cannon",
   "kind": "verification",
-  "status": "active",
+  "status": "done",
   "owner": "codex",
   "branch": "go-migration",
   "depends_on": [
@@ -37,7 +37,39 @@
       "required_evidence": "Final original67 mixed pass, cannon35/Haskell35 control, 10 HTTP/7 config/28 boundaries/six JSON comparisons, exact tested source/binary identities, security checks, bounded operations, actual persisted queue/Cassandra switchback and delegated review."
     }
   ],
-  "evidence": [],
-  "review": null,
-  "handoff": "Review completed final exact-binary finite matrix and supported scope, reusing valid evidence. No service code edits or additional speculative tests."
+  "evidence": [
+    {
+      "criterion": "parity",
+      "result": "pass",
+      "command": "Review exact source411f525e421d15e673870ace345462c4c4f80372/binaryd9b31f435b19e43e8b8bd596311ffe03994f7027f23cfc63cfcad8fddeed4232: original67 mixed pass/no skips/errors, all finite supplements exact/predeclared bounds, security regressions and pinned checks pass, real queue/Cassandra switchback pass, original Haskell defaults retained. Unsupported insecure TLS mode explicitly excluded; no unsafe exception or production rollout.",
+      "revision": "411f525e421d15e673870ace345462c4c4f80372",
+      "artifact": "go/services/cannon/REVIEW.md"
+    },
+    {
+      "criterion": "security",
+      "result": "pass",
+      "command": "Review exact source411f525e421d15e673870ace345462c4c4f80372/binaryd9b31f435b19e43e8b8bd596311ffe03994f7027f23cfc63cfcad8fddeed4232: original67 mixed pass/no skips/errors, all finite supplements exact/predeclared bounds, security regressions and pinned checks pass, real queue/Cassandra switchback pass, original Haskell defaults retained. Unsupported insecure TLS mode explicitly excluded; no unsafe exception or production rollout.",
+      "revision": "411f525e421d15e673870ace345462c4c4f80372",
+      "artifact": "go/services/cannon/REVIEW.md"
+    },
+    {
+      "criterion": "operations",
+      "result": "pass",
+      "command": "Review exact source411f525e421d15e673870ace345462c4c4f80372/binaryd9b31f435b19e43e8b8bd596311ffe03994f7027f23cfc63cfcad8fddeed4232: original67 mixed pass/no skips/errors, all finite supplements exact/predeclared bounds, security regressions and pinned checks pass, real queue/Cassandra switchback pass, original Haskell defaults retained. Unsupported insecure TLS mode explicitly excluded; no unsafe exception or production rollout.",
+      "revision": "411f525e421d15e673870ace345462c4c4f80372",
+      "artifact": "go/services/cannon/REVIEW.md"
+    },
+    {
+      "criterion": "rollback",
+      "result": "pass",
+      "command": "Review exact source411f525e421d15e673870ace345462c4c4f80372/binaryd9b31f435b19e43e8b8bd596311ffe03994f7027f23cfc63cfcad8fddeed4232: original67 mixed pass/no skips/errors, all finite supplements exact/predeclared bounds, security regressions and pinned checks pass, real queue/Cassandra switchback pass, original Haskell defaults retained. Unsupported insecure TLS mode explicitly excluded; no unsafe exception or production rollout.",
+      "revision": "411f525e421d15e673870ace345462c4c4f80372",
+      "artifact": "go/services/cannon/REVIEW.md"
+    }
+  ],
+  "review": {
+    "by": "codex (self-review delegated by user)",
+    "artifact": "go/services/cannon/REVIEW.md"
+  },
+  "handoff": "Finite supported qualification complete, exact tested tuple only. Historical failures retained; native Haskell checks unavailable/unrun, existing CI unchanged. No further speculative checks required."
 }
