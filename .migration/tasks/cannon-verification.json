@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "id": "cannon-verification",
+  "title": "Cannon verification",
+  "service": "cannon",
+  "kind": "verification",
+  "status": "active",
+  "owner": "codex",
+  "branch": "go-migration",
+  "depends_on": [
+    "cannon-implementation",
+    "cannon-count-correction"
+  ],
+  "write_paths": [
+    ".migration/tasks/cannon-verification.json"
+  ],
+  "plan": "docs/go-migration/plans/cannon.md",
+  "acceptance_criteria": [
+    {
+      "id": "parity",
+      "description": "Review completed finite cannon parity acceptance criteria.",
+      "required_evidence": "Final original67 mixed pass, cannon35/Haskell35 control, 10 HTTP/7 config/28 boundaries/six JSON comparisons, exact tested source/binary identities, security checks, bounded operations, actual persisted queue/Cassandra switchback and delegated review."
+    },
+    {
+      "id": "security",
+      "description": "Review completed finite cannon security acceptance criteria.",
+      "required_evidence": "Final original67 mixed pass, cannon35/Haskell35 control, 10 HTTP/7 config/28 boundaries/six JSON comparisons, exact tested source/binary identities, security checks, bounded operations, actual persisted queue/Cassandra switchback and delegated review."
+    },
+    {
+      "id": "operations",
+      "description": "Review completed finite cannon operations acceptance criteria.",
+      "required_evidence": "Final original67 mixed pass, cannon35/Haskell35 control, 10 HTTP/7 config/28 boundaries/six JSON comparisons, exact tested source/binary identities, security checks, bounded operations, actual persisted queue/Cassandra switchback and delegated review."
+    },
+    {
+      "id": "rollback",
+      "description": "Review completed finite cannon rollback acceptance criteria.",
+      "required_evidence": "Final original67 mixed pass, cannon35/Haskell35 control, 10 HTTP/7 config/28 boundaries/six JSON comparisons, exact tested source/binary identities, security checks, bounded operations, actual persisted queue/Cassandra switchback and delegated review."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": "Review completed final exact-binary finite matrix and supported scope, reusing valid evidence. No service code edits or additional speculative tests."
+}
