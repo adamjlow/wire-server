@@ -4,9 +4,9 @@
   "title": "Gundeck selection",
   "service": "gundeck",
   "kind": "operations",
-  "status": "queued",
-  "owner": null,
-  "branch": null,
+  "status": "active",
+  "owner": "codex",
+  "branch": "go-migration",
   "depends_on": [
     "gundeck-verification"
   ],
