@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "id": "cannon-contract",
+  "title": "Freeze cannon contract and qualify original-test Haskell baseline",
+  "service": "cannon",
+  "kind": "contract-change",
+  "status": "queued",
+  "owner": null,
+  "branch": null,
+  "depends_on": [
+    "cannon-inventory",
+    "proxy-cargohold-combined"
+  ],
+  "write_paths": [
+    ".migration/tasks/cannon-contract.json",
+    "docs/go-migration/services/cannon/contract.md",
+    "docs/go-migration/services/cannon/oracle",
+    "tools/parity/docker",
+    "tools/parity/harness.py",
+    "tools/parity/e2e-tests.json",
+    "tools/parity/test_harness.py",
+    "changelog.d/5-internal/cannon-contract"
+  ],
+  "plan": "docs/go-migration/plans/cannon.md",
+  "acceptance_criteria": [
+    {
+      "id": "contract",
+      "description": "Freeze whole classic/event cannon behavior, finite coverage, security disposition and bounded normalization before candidate consumption.",
+      "required_evidence": "Source-cited complete contract, exact 35 compiled original cases and necessary uncovered reference stimuli/effects; no candidate-compatible assertion weakening."
+    },
+    {
+      "id": "baseline",
+      "description": "Original 35 cannon cases execute unchanged against Haskell in the private qualified Docker environment.",
+      "required_evidence": "Actual all-Haskell XML/receipts with complete coverage, immutable runtime/config/peer identities and owned cleanup; setup failures fixed or explicitly unresolved."
+    },
+    {
+      "id": "checks",
+      "description": "Cannon and three-service selection/catalogue remain bounded and fail closed, preserving existing two-service/single-service workflows.",
+      "required_evidence": "Meaningful exact variant/selection/identity negatives, required harness/state/scope checks and delegated self-review."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": "Extend original catalogue with exact parameter variants and private selector for cannon; run real all-Haskell 35-case baseline before runnable candidate work. Source contract/matrix first, serious inherited concerns recorded separately."
+}
