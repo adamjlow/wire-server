@@ -59,6 +59,8 @@ def observe(case,method,path,headers=None,body=None,expected=None):
             'body_length':len(data),'expected_status':expected}
     if response_headers.get('content-type','').startswith('application/json'):
         record['json']=json.loads(data)
+    elif len(data)<=4096:
+        record['text']=data.decode('utf-8',errors='replace')
     if 'location' in response_headers:
         record['signed_download']=signed_location(response_headers['location'])
     record['status_matches_source']=status==expected if expected is not None else None
@@ -140,7 +142,7 @@ def inside():
         for label,kwargs,status in cases:
             before={obj['Key'] for obj in aws('list-objects-v2','--bucket','dummy-bucket').get('Contents',[])}
             record=observe('multipart-'+label,'POST','/bot/assets',
-                           {'Z-Bot':OWNER,'Content-Type':'multipart/mixed; boundary=wire'},multipart(**kwargs),status)
+                           {'Z-Bot':OWNER,'Z-Type':'bot','Content-Type':'multipart/mixed; boundary=wire'},multipart(**kwargs),status)
             after={obj['Key'] for obj in aws('list-objects-v2','--bucket','dummy-bucket').get('Contents',[])}
             effects=[]
             for key in sorted(after-before):
