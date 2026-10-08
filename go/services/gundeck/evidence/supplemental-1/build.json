@@ -1,0 +1,6 @@
+{
+  "source_revision": "579954770f3ffae990e18dd3646f0ac070dcbce3",
+  "binary_sha256": "893e36f5c1d068defcef017b7c6b6e18312efba663f9c275ba3848d1c6fd31fe",
+  "go_version": "go1.26.8",
+  "purpose": "runnable whole service, supplemental91 comparison pending"
+}

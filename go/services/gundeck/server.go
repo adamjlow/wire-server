@@ -141,12 +141,25 @@ func failure(w http.ResponseWriter, status int, label, message string) {
 }
 func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	r.Header.Del("X-Wire-API-Version")
+	r = r.WithContext(context.WithValue(r.Context(), requestIDKey{}, r.Header.Get("Request-Id")))
+	if r.Header.Get("Content-Encoding") == "gzip" {
+		original := r.Body
+		compressed, err := gzip.NewReader(original)
+		if err != nil {
+			plain(w, 400, "Invalid compressed JSON")
+			return
+		}
+		defer original.Close()
+		defer compressed.Close()
+		r.Body = io.NopCloser(compressed)
+		r.Header.Del("Content-Encoding")
+	}
 	path := r.URL.Path
 	version := 0
 	parts := strings.Split(strings.TrimPrefix(path, "/"), "/")
 	if len(parts) > 1 && strings.HasPrefix(parts[0], "v") {
 		parsed, err := strconv.Atoi(parts[0][1:])
-		if err != nil || parsed < 0 || parsed > 19 {
+		if err != nil || parsed < 0 || parsed > 19 || s.disabled(parsed) {
 			failure(w, 404, "unsupported-version", "Unsupported version")
 			return
 		}
@@ -273,6 +286,15 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Location", p.Resource)
 		emptyJSON(w, 201)
 	case strings.HasPrefix(path, "/i/presences/") && r.Method == "DELETE":
+		parts := strings.Split(strings.TrimPrefix(path, "/i/presences/"), "/")
+		if len(parts) != 5 || parts[1] != "devices" || parts[3] != "cannons" || parts[2] == "" || parts[4] == "" {
+			plain(w, 404, "")
+			return
+		}
+		if !uuidValid(parts[0]) {
+			plain(w, 400, "invalid UUID")
+			return
+		}
 		emptyJSON(w, 200)
 	case (path == "/i/presences" || strings.HasPrefix(path, "/i/presences/")) && r.Method == "GET":
 		ids := []string{strings.TrimPrefix(path, "/i/presences/")}
@@ -404,4 +426,15 @@ func (s *Server) Drain(ctx context.Context) error {
 		s.cancelBackground()
 		return ctx.Err()
 	}
+}
+
+type requestIDKey struct{}
+
+func (s *Server) disabled(version int) bool {
+	for _, v := range s.Config.Settings.Disabled {
+		if v == "v"+strconv.Itoa(version) || v == "development" && version == 19 {
+			return true
+		}
+	}
+	return false
 }

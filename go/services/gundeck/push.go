@@ -314,6 +314,9 @@ func (s *Server) rpcJSON(ctx context.Context, uri string, body []byte, timeout t
 		return nil, err
 	}
 	request.Header.Set("Content-Type", "application/json")
+	if id, ok := ctx.Value(requestIDKey{}).(string); ok && id != "" {
+		request.Header.Set("Request-Id", id)
+	}
 	response, err := s.http.Do(request)
 	if err != nil {
 		return nil, err
@@ -331,7 +334,14 @@ func (s *Server) forkDelivery(ctx context.Context, work func(context.Context)) e
 	case <-ctx.Done():
 		return ctx.Err()
 	}
-	s.deliveryWG.Go(func() { defer func() { <-s.deliverySlots }(); work(s.background) })
+	s.deliveryWG.Go(func() {
+		defer func() { <-s.deliverySlots }()
+		deliveryCtx := s.background
+		if id := ctx.Value(requestIDKey{}); id != nil {
+			deliveryCtx = context.WithValue(deliveryCtx, requestIDKey{}, id)
+		}
+		work(deliveryCtx)
+	})
 	return nil
 }
 

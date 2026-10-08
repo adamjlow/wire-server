@@ -1,0 +1,575 @@
+{
+  "schema_version": 1,
+  "kind": "finite-native-feedback-characterization",
+  "binary_sha256": "893e36f5c1d068defcef017b7c6b6e18312efba663f9c275ba3848d1c6fd31fe",
+  "script_sha256": "dd5e9dd390d4f6ab567acee73c70cc737f80ba18679431c8574bd64c80def64f",
+  "config_sha256": "1137f726eb77838b29682756feeb492cad144f9d026d28df87d8eab5b3dcd7b1",
+  "records": [
+    {
+      "name": "invalid-token",
+      "observed": {
+        "status": 404,
+        "content_type": "application/json;charset=utf-8",
+        "body": {
+          "code": 404,
+          "label": "invalid-token",
+          "message": "Invalid push token"
+        }
+      }
+    },
+    {
+      "name": "long-token",
+      "observed": {
+        "status": 413,
+        "content_type": "application/json;charset=utf-8",
+        "body": {
+          "code": 413,
+          "label": "token-too-long",
+          "message": "Push token length must be < 8192 for GCM or 400 for APNS"
+        }
+      }
+    },
+    {
+      "name": "unknown-app",
+      "observed": {
+        "status": 404,
+        "content_type": "application/json;charset=utf-8",
+        "body": {
+          "code": 404,
+          "label": "app-not-found",
+          "message": "App does not exist"
+        }
+      }
+    },
+    {
+      "name": "voip-rejected",
+      "observed": {
+        "status": 400,
+        "content_type": "application/json;charset=utf-8",
+        "body": {
+          "code": 400,
+          "label": "apns-voip-not-supported",
+          "message": "Adding APNS_VOIP tokens is not supported"
+        }
+      }
+    },
+    {
+      "name": "register-gcm",
+      "observed": {
+        "status": 201,
+        "content_type": "application/json;charset=utf-8",
+        "body": {
+          "transport": "GCM",
+          "app": "test",
+          "token": "synthetic-gcm",
+          "client": "abcd"
+        }
+      }
+    },
+    {
+      "name": "register-shared-gcm",
+      "observed": {
+        "status": 201,
+        "content_type": "application/json;charset=utf-8",
+        "body": {
+          "transport": "GCM",
+          "app": "test",
+          "token": "synthetic-gcm",
+          "client": "abcd"
+        }
+      }
+    },
+    {
+      "name": "list-shared-gcm",
+      "observed": {
+        "status": 200,
+        "content_type": "application/json;charset=utf-8",
+        "body": {
+          "tokens": [
+            {
+              "transport": "GCM",
+              "app": "test",
+              "token": "synthetic-gcm",
+              "client": "abcd"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "replace-shared-gcm",
+      "observed": {
+        "status": 201,
+        "content_type": "application/json;charset=utf-8",
+        "body": {
+          "transport": "GCM",
+          "app": "test",
+          "token": "synthetic-replacement",
+          "client": "abcd"
+        }
+      }
+    },
+    {
+      "name": "shared-replacement-migrates-other",
+      "observed": {
+        "status": 200,
+        "content_type": "application/json;charset=utf-8",
+        "body": {
+          "tokens": [
+            {
+              "transport": "GCM",
+              "app": "test",
+              "token": "synthetic-replacement",
+              "client": "abcd"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "shared-old-endpoint-deleted",
+      "observed": true
+    },
+    {
+      "name": "shared-owner-metadata",
+      "observed": [
+        "88888888-8888-4888-8888-888888888888",
+        "99999999-9999-4999-8999-999999999999"
+      ]
+    },
+    {
+      "name": "native-push-accepted",
+      "observed": {
+        "status": 200,
+        "content_type": "application/json;charset=utf-8",
+        "body": ""
+      }
+    },
+    {
+      "name": "gcm-publish",
+      "observed": {
+        "message": {
+          "data": {
+            "data": {
+              "id": "<validated-v1-notification-id>"
+            },
+            "type": "notice",
+            "user": "88888888-8888-4888-8888-888888888888"
+          },
+          "priority": "high"
+        },
+        "structure": "json",
+        "attribute_keys": []
+      }
+    },
+    {
+      "name": "low-priority-push-accepted",
+      "observed": {
+        "status": 200,
+        "content_type": "application/json;charset=utf-8",
+        "body": ""
+      }
+    },
+    {
+      "name": "gcm-low-priority-publish",
+      "observed": {
+        "data": {
+          "data": {
+            "id": "<validated-v1-notification-id>"
+          },
+          "type": "notice",
+          "user": "88888888-8888-4888-8888-888888888888"
+        },
+        "priority": "normal"
+      }
+    },
+    {
+      "name": "ttl-feedback-keeps-token",
+      "observed": {
+        "status": 200,
+        "content_type": "application/json;charset=utf-8",
+        "body": {
+          "tokens": [
+            {
+              "transport": "GCM",
+              "app": "test",
+              "token": "synthetic-replacement",
+              "client": "abcd"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "invalid-feedback-removes-token",
+      "observed": {
+        "status": 200,
+        "content_type": "application/json;charset=utf-8",
+        "body": {
+          "tokens": []
+        }
+      }
+    },
+    {
+      "name": "shared-invalid-feedback-removes-token",
+      "observed": {
+        "status": 200,
+        "content_type": "application/json;charset=utf-8",
+        "body": {
+          "tokens": []
+        }
+      }
+    },
+    {
+      "name": "feedback-deleted-receipts",
+      "observed": [
+        "invalid-token",
+        "ttl-expired"
+      ]
+    },
+    {
+      "name": "feedback-endpoint-removed",
+      "observed": true
+    },
+    {
+      "name": "register-apns",
+      "observed": {
+        "status": 201,
+        "content_type": "application/json;charset=utf-8",
+        "body": {
+          "transport": "APNS_SANDBOX",
+          "app": "test",
+          "token": "synthetic-apns",
+          "client": "abcd"
+        }
+      }
+    },
+    {
+      "name": "apns-push-accepted",
+      "observed": {
+        "status": 200,
+        "content_type": "application/json;charset=utf-8",
+        "body": ""
+      }
+    },
+    {
+      "name": "apns-publish",
+      "observed": {
+        "aps": {
+          "alert": {
+            "title": "New message"
+          },
+          "mutable-content": "1"
+        },
+        "data": {
+          "data": {
+            "id": "<validated-v1-notification-id>"
+          },
+          "type": "notice",
+          "user": "88888888-8888-4888-8888-888888888888"
+        }
+      }
+    },
+    {
+      "name": "disabled-push-accepted",
+      "observed": {
+        "status": 200,
+        "content_type": "application/json;charset=utf-8",
+        "body": ""
+      }
+    },
+    {
+      "name": "disabled-push-removes-token",
+      "observed": {
+        "status": 200,
+        "content_type": "application/json;charset=utf-8",
+        "body": {
+          "tokens": []
+        }
+      }
+    },
+    {
+      "name": "disabled-push-token-delete-is-absent",
+      "observed": {
+        "status": 404,
+        "content_type": "application/json;charset=utf-8",
+        "body": {
+          "code": 404,
+          "label": "not-found",
+          "message": "Push token not found"
+        }
+      }
+    },
+    {
+      "name": "native-endpoints-cleaned",
+      "observed": true
+    },
+    {
+      "name": "user-cleanup",
+      "observed": {
+        "status": 200,
+        "content_type": "application/json;charset=utf-8",
+        "body": ""
+      }
+    },
+    {
+      "name": "other-user-cleanup",
+      "observed": {
+        "status": 200,
+        "content_type": "application/json;charset=utf-8",
+        "body": ""
+      }
+    },
+    {
+      "name": "signed-provider-requests",
+      "observed": true
+    },
+    {
+      "name": "gzip-request",
+      "observed": {
+        "status": 200,
+        "content_type": "application/json;charset=utf-8",
+        "content_encoding": null,
+        "body": ""
+      }
+    },
+    {
+      "name": "native-metric-types",
+      "observed": {
+        "push_native_success": "counter",
+        "push_native_disabled": "counter"
+      }
+    },
+    {
+      "name": "smoke",
+      "observed": {
+        "requests": 40,
+        "concurrency": 2,
+        "p95_ms": 0.54902583360672,
+        "rss_kib": 20860
+      }
+    },
+    {
+      "name": "missing-bind",
+      "observed": {
+        "exit_code": 1,
+        "rejected": true
+      }
+    },
+    {
+      "name": "missing-redis",
+      "observed": {
+        "exit_code": 1,
+        "rejected": true
+      }
+    },
+    {
+      "name": "missing-aws",
+      "observed": {
+        "exit_code": 1,
+        "rejected": true
+      }
+    },
+    {
+      "name": "missing-rabbit",
+      "observed": {
+        "exit_code": 1,
+        "rejected": true
+      }
+    },
+    {
+      "name": "missing-ttl",
+      "observed": {
+        "exit_code": 1,
+        "rejected": true
+      }
+    },
+    {
+      "name": "cli-help",
+      "observed": {
+        "exit_code": 0,
+        "mentions_config": true,
+        "default_path_visible": true
+      }
+    },
+    {
+      "name": "idle-shutdown",
+      "observed": {
+        "exit_code": 0,
+        "seconds": 0.0033619627356529236,
+        "bound_seconds": 4
+      }
+    }
+  ],
+  "provider_calls": [
+    {
+      "action": "CreatePlatformEndpoint",
+      "params": {
+        "Attributes.entry.1.key": "Enabled",
+        "Attributes.entry.1.value": "true",
+        "CustomUserData": "88888888-8888-4888-8888-888888888888",
+        "PlatformApplicationArn": "arn:aws:sns:eu-west-1:123456789012:app/GCM/integration-test",
+        "Token": "invalid"
+      }
+    },
+    {
+      "action": "CreatePlatformEndpoint",
+      "params": {
+        "Attributes.entry.1.key": "Enabled",
+        "Attributes.entry.1.value": "true",
+        "CustomUserData": "88888888-8888-4888-8888-888888888888",
+        "PlatformApplicationArn": "arn:aws:sns:eu-west-1:123456789012:app/GCM/integration-test",
+        "Token": "too-long"
+      }
+    },
+    {
+      "action": "CreatePlatformEndpoint",
+      "params": {
+        "Attributes.entry.1.key": "Enabled",
+        "Attributes.entry.1.value": "true",
+        "CustomUserData": "88888888-8888-4888-8888-888888888888",
+        "PlatformApplicationArn": "arn:aws:sns:eu-west-1:123456789012:app/GCM/integration-unknown",
+        "Token": "synthetic"
+      }
+    },
+    {
+      "action": "CreatePlatformEndpoint",
+      "params": {
+        "Attributes.entry.1.key": "Enabled",
+        "Attributes.entry.1.value": "true",
+        "CustomUserData": "88888888-8888-4888-8888-888888888888",
+        "PlatformApplicationArn": "arn:aws:sns:eu-west-1:123456789012:app/GCM/integration-test",
+        "Token": "synthetic-gcm"
+      }
+    },
+    {
+      "action": "CreatePlatformEndpoint",
+      "params": {
+        "Attributes.entry.1.key": "Enabled",
+        "Attributes.entry.1.value": "true",
+        "CustomUserData": "99999999-9999-4999-8999-999999999999",
+        "PlatformApplicationArn": "arn:aws:sns:eu-west-1:123456789012:app/GCM/integration-test",
+        "Token": "synthetic-gcm"
+      }
+    },
+    {
+      "action": "GetEndpointAttributes",
+      "params": {
+        "EndpointArn": "arn:aws:sns:eu-west-1:123456789012:endpoint/GCM/integration-test/00000000-0000-0000-0000-000000000001"
+      }
+    },
+    {
+      "action": "SetEndpointAttributes",
+      "params": {
+        "Attributes.entry.1.key": "CustomUserData",
+        "Attributes.entry.1.value": "88888888-8888-4888-8888-888888888888:99999999-9999-4999-8999-999999999999",
+        "Attributes.entry.2.key": "Enabled",
+        "Attributes.entry.2.value": "true",
+        "Attributes.entry.3.key": "Token",
+        "Attributes.entry.3.value": "synthetic-gcm",
+        "EndpointArn": "arn:aws:sns:eu-west-1:123456789012:endpoint/GCM/integration-test/00000000-0000-0000-0000-000000000001"
+      }
+    },
+    {
+      "action": "CreatePlatformEndpoint",
+      "params": {
+        "Attributes.entry.1.key": "Enabled",
+        "Attributes.entry.1.value": "true",
+        "CustomUserData": "88888888-8888-4888-8888-888888888888",
+        "PlatformApplicationArn": "arn:aws:sns:eu-west-1:123456789012:app/GCM/integration-test",
+        "Token": "synthetic-replacement"
+      }
+    },
+    {
+      "action": "GetEndpointAttributes",
+      "params": {
+        "EndpointArn": "arn:aws:sns:eu-west-1:123456789012:endpoint/GCM/integration-test/00000000-0000-0000-0000-000000000001"
+      }
+    },
+    {
+      "action": "SetEndpointAttributes",
+      "params": {
+        "Attributes.entry.1.key": "CustomUserData",
+        "Attributes.entry.1.value": "88888888-8888-4888-8888-888888888888:99999999-9999-4999-8999-999999999999",
+        "Attributes.entry.2.key": "Enabled",
+        "Attributes.entry.2.value": "true",
+        "Attributes.entry.3.key": "Token",
+        "Attributes.entry.3.value": "synthetic-replacement",
+        "EndpointArn": "arn:aws:sns:eu-west-1:123456789012:endpoint/GCM/integration-test/00000000-0000-0000-0000-000000000002"
+      }
+    },
+    {
+      "action": "DeleteEndpoint",
+      "params": {
+        "EndpointArn": "arn:aws:sns:eu-west-1:123456789012:endpoint/GCM/integration-test/00000000-0000-0000-0000-000000000001"
+      }
+    },
+    {
+      "action": "Publish",
+      "params": {
+        "Message": "{\"GCM\":\"{\\\"data\\\":{\\\"data\\\":{\\\"id\\\":\\\"cfa4e9bf-c351-11f1-828e-0a4b0d6df158\\\"},\\\"type\\\":\\\"notice\\\",\\\"user\\\":\\\"88888888-8888-4888-8888-888888888888\\\"},\\\"priority\\\":\\\"high\\\"}\"}",
+        "MessageStructure": "json",
+        "TargetArn": "arn:aws:sns:eu-west-1:123456789012:endpoint/GCM/integration-test/00000000-0000-0000-0000-000000000002"
+      }
+    },
+    {
+      "action": "Publish",
+      "params": {
+        "Message": "{\"GCM\":\"{\\\"data\\\":{\\\"data\\\":{\\\"id\\\":\\\"cfadfde1-c351-11f1-828f-0a4b0d6df158\\\"},\\\"type\\\":\\\"notice\\\",\\\"user\\\":\\\"88888888-8888-4888-8888-888888888888\\\"},\\\"priority\\\":\\\"normal\\\"}\"}",
+        "MessageStructure": "json",
+        "TargetArn": "arn:aws:sns:eu-west-1:123456789012:endpoint/GCM/integration-test/00000000-0000-0000-0000-000000000002"
+      }
+    },
+    {
+      "action": "GetEndpointAttributes",
+      "params": {
+        "EndpointArn": "arn:aws:sns:eu-west-1:123456789012:endpoint/GCM/integration-test/00000000-0000-0000-0000-000000000002"
+      }
+    },
+    {
+      "action": "DeleteEndpoint",
+      "params": {
+        "EndpointArn": "arn:aws:sns:eu-west-1:123456789012:endpoint/GCM/integration-test/00000000-0000-0000-0000-000000000002"
+      }
+    },
+    {
+      "action": "CreatePlatformEndpoint",
+      "params": {
+        "Attributes.entry.1.key": "Enabled",
+        "Attributes.entry.1.value": "true",
+        "CustomUserData": "88888888-8888-4888-8888-888888888888",
+        "PlatformApplicationArn": "arn:aws:sns:eu-west-1:123456789012:app/APNS_SANDBOX/integration-test",
+        "Token": "synthetic-apns"
+      }
+    },
+    {
+      "action": "Publish",
+      "params": {
+        "Message": "{\"APNS_SANDBOX\":\"{\\\"aps\\\":{\\\"alert\\\":{\\\"title\\\":\\\"New message\\\"},\\\"mutable-content\\\":\\\"1\\\"},\\\"data\\\":{\\\"data\\\":{\\\"id\\\":\\\"cfcf6d15-c351-11f1-8292-0a4b0d6df158\\\"},\\\"type\\\":\\\"notice\\\",\\\"user\\\":\\\"88888888-8888-4888-8888-888888888888\\\"}}\"}",
+        "MessageStructure": "json",
+        "TargetArn": "arn:aws:sns:eu-west-1:123456789012:endpoint/APNS_SANDBOX/integration-test/00000000-0000-0000-0000-000000000003"
+      }
+    },
+    {
+      "action": "Publish",
+      "params": {
+        "Message": "{\"APNS_SANDBOX\":\"{\\\"aps\\\":{\\\"alert\\\":{\\\"title\\\":\\\"New message\\\"},\\\"mutable-content\\\":\\\"1\\\"},\\\"data\\\":{\\\"data\\\":{\\\"id\\\":\\\"cfd7eac2-c351-11f1-8293-0a4b0d6df158\\\"},\\\"type\\\":\\\"notice\\\",\\\"user\\\":\\\"88888888-8888-4888-8888-888888888888\\\"}}\"}",
+        "MessageStructure": "json",
+        "TargetArn": "arn:aws:sns:eu-west-1:123456789012:endpoint/APNS_SANDBOX/integration-test/00000000-0000-0000-0000-000000000003"
+      }
+    },
+    {
+      "action": "GetEndpointAttributes",
+      "params": {
+        "EndpointArn": "arn:aws:sns:eu-west-1:123456789012:endpoint/APNS_SANDBOX/integration-test/00000000-0000-0000-0000-000000000003"
+      }
+    },
+    {
+      "action": "DeleteEndpoint",
+      "params": {
+        "EndpointArn": "arn:aws:sns:eu-west-1:123456789012:endpoint/APNS_SANDBOX/integration-test/00000000-0000-0000-0000-000000000003"
+      }
+    }
+  ],
+  "cleanup": "side process reaped; loopback providers stopped; synthetic token/endpoints/own-user notifications cleaned"
+}

@@ -8,6 +8,7 @@ import (
 	"net"
 	"os"
 	"strconv"
+	"strings"
 )
 
 type Endpoint struct {
@@ -94,6 +95,30 @@ func LoadConfig(path string) (Config, error) {
 	}
 	if err = yaml.Unmarshal(data, &c); err != nil {
 		return c, fmt.Errorf("invalid typed configuration")
+	}
+	required := map[string][]string{"gundeck": {"host", "port"}, "brig": {"host", "port"}, "redis": {"host", "port", "connectionMode"}, "cassandra": {"endpoint", "keyspace"}, "aws": {"account", "region", "arnEnv", "queueName", "snsEndpoint", "sqsEndpoint"}, "rabbitmq": {"host", "port", "vHost"}, "settings": {"httpPoolSize", "notificationTTL", "disabledAPIVersions", "consumableNotifications"}}
+	for section, keys := range required {
+		object, ok := fields[section].(map[string]any)
+		if !ok {
+			return c, fmt.Errorf("invalid configuration section %s", section)
+		}
+		for _, key := range keys {
+			if value, ok := object[key]; !ok || value == nil {
+				return c, fmt.Errorf("missing configuration field %s.%s", section, key)
+			}
+		}
+	}
+	if !member(c.LogLevel, logLevels) || (c.LogFormat != "" && !member(c.LogFormat, logFormats)) {
+		return c, fmt.Errorf("invalid logging configuration")
+	}
+	for _, v := range c.Settings.Disabled {
+		if v == "development" {
+			continue
+		}
+		n, err := strconv.Atoi(strings.TrimPrefix(v, "v"))
+		if err != nil || v != "v"+strconv.Itoa(n) || n < 0 || n > 19 {
+			return c, fmt.Errorf("invalid disabled API version")
+		}
 	}
 	if c.Redis.Insecure || c.RabbitMQ.Insecure || (c.Additional != nil && c.Additional.Insecure) {
 		return c, fmt.Errorf("TLS verification is required")
