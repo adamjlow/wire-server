@@ -1,0 +1,459 @@
+{
+  "schema_version": 1,
+  "kind": "finite-http-presence-characterization",
+  "records": [
+    {
+      "name": "health",
+      "observed": {
+        "status": 200,
+        "content_type": "application/json;charset=utf-8",
+        "allow": null,
+        "location": null,
+        "body": ""
+      }
+    },
+    {
+      "name": "missing-principal",
+      "observed": {
+        "status": 400,
+        "content_type": null,
+        "allow": null,
+        "location": null,
+        "body": "Header Z-User is required"
+      }
+    },
+    {
+      "name": "invalid-principal",
+      "observed": {
+        "status": 400,
+        "content_type": null,
+        "allow": null,
+        "location": null,
+        "body": "Error parsing header Z-User failed: invalid UUID"
+      }
+    },
+    {
+      "name": "empty-page",
+      "observed": {
+        "status": 200,
+        "content_type": "application/json;charset=utf-8",
+        "allow": null,
+        "location": null,
+        "body": {
+          "has_more": false,
+          "notifications": [],
+          "time": "<validated-current-UTC-second>"
+        }
+      }
+    },
+    {
+      "name": "missing-last",
+      "observed": {
+        "status": 404,
+        "content_type": "application/json;charset=utf-8",
+        "allow": null,
+        "location": null,
+        "body": {
+          "code": 404,
+          "label": "not-found",
+          "message": "Some notifications not found"
+        }
+      }
+    },
+    {
+      "name": "missing-id",
+      "observed": {
+        "status": 404,
+        "content_type": "application/json;charset=utf-8",
+        "allow": null,
+        "location": null,
+        "body": {
+          "code": 404,
+          "label": "not-found",
+          "message": "Some notifications not found"
+        }
+      }
+    },
+    {
+      "name": "invalid-id",
+      "observed": {
+        "status": 400,
+        "content_type": null,
+        "allow": null,
+        "location": null,
+        "body": "invalid UUID"
+      }
+    },
+    {
+      "name": "invalid-since-v2",
+      "observed": {
+        "status": 404,
+        "content_type": "application/json;charset=utf-8",
+        "allow": null,
+        "location": null,
+        "body": {
+          "has_more": false,
+          "notifications": [],
+          "time": "<validated-current-UTC-second>"
+        }
+      }
+    },
+    {
+      "name": "invalid-since-v3",
+      "observed": {
+        "status": 400,
+        "content_type": null,
+        "allow": null,
+        "location": null,
+        "body": "Error parsing query parameter since failed: invalid UUID"
+      }
+    },
+    {
+      "name": "non-v1-since",
+      "observed": {
+        "status": 400,
+        "content_type": "application/json",
+        "allow": null,
+        "location": null,
+        "body": {
+          "code": 400,
+          "label": "bad-request",
+          "message": "Invalid Notification ID"
+        }
+      }
+    },
+    {
+      "name": "missing-since-v2",
+      "observed": {
+        "status": 404,
+        "content_type": "application/json;charset=utf-8",
+        "allow": null,
+        "location": null,
+        "body": {
+          "has_more": false,
+          "notifications": [],
+          "time": "<validated-current-UTC-second>"
+        }
+      }
+    },
+    {
+      "name": "missing-since-v3",
+      "observed": {
+        "status": 404,
+        "content_type": "application/json;charset=utf-8",
+        "allow": null,
+        "location": null,
+        "body": {
+          "code": 404,
+          "label": "not-found",
+          "message": "Some notifications not found"
+        }
+      }
+    },
+    {
+      "name": "invalid-client",
+      "observed": {
+        "status": 400,
+        "content_type": null,
+        "allow": null,
+        "location": null,
+        "body": "Error parsing query parameter client failed: Failed reading: takeWhile1"
+      }
+    },
+    {
+      "name": "size-too-small",
+      "observed": {
+        "status": 400,
+        "content_type": null,
+        "allow": null,
+        "location": null,
+        "body": "Error parsing query parameter size failed: outside range [100, 10000]"
+      }
+    },
+    {
+      "name": "size-too-large",
+      "observed": {
+        "status": 400,
+        "content_type": null,
+        "allow": null,
+        "location": null,
+        "body": "Error parsing query parameter size failed: outside range [100, 10000]"
+      }
+    },
+    {
+      "name": "size-minimum",
+      "observed": {
+        "status": 200,
+        "content_type": "application/json;charset=utf-8",
+        "allow": null,
+        "location": null,
+        "body": {
+          "has_more": false,
+          "notifications": [],
+          "time": "<validated-current-UTC-second>"
+        }
+      }
+    },
+    {
+      "name": "time-before-v9",
+      "observed": {
+        "status": 404,
+        "content_type": null,
+        "allow": null,
+        "location": null,
+        "body": ""
+      }
+    },
+    {
+      "name": "time-v9",
+      "observed": {
+        "status": 200,
+        "content_type": "application/json;charset=utf-8",
+        "allow": null,
+        "location": null,
+        "body": {
+          "time": "<validated-current-UTC-second>"
+        }
+      }
+    },
+    {
+      "name": "empty-tokens",
+      "observed": {
+        "status": 200,
+        "content_type": "application/json;charset=utf-8",
+        "allow": null,
+        "location": null,
+        "body": {
+          "tokens": []
+        }
+      }
+    },
+    {
+      "name": "delete-absent-token",
+      "observed": {
+        "status": 404,
+        "content_type": "application/json;charset=utf-8",
+        "allow": null,
+        "location": null,
+        "body": {
+          "code": 404,
+          "label": "not-found",
+          "message": "Push token not found"
+        }
+      }
+    },
+    {
+      "name": "token-missing-connection",
+      "observed": {
+        "status": 400,
+        "content_type": null,
+        "allow": null,
+        "location": null,
+        "body": "Header Z-Connection is required"
+      }
+    },
+    {
+      "name": "invalid-push-json",
+      "observed": {
+        "status": 400,
+        "content_type": null,
+        "allow": null,
+        "location": null,
+        "body": "Unexpected end-of-input, expecting record key literal or }"
+      }
+    },
+    {
+      "name": "invalid-push-object",
+      "observed": {
+        "status": 400,
+        "content_type": null,
+        "allow": null,
+        "location": null,
+        "body": "Error in $: parsing [] failed, expected Array, but encountered Object"
+      }
+    },
+    {
+      "name": "empty-push-list",
+      "observed": {
+        "status": 200,
+        "content_type": "application/json;charset=utf-8",
+        "allow": null,
+        "location": null,
+        "body": ""
+      }
+    },
+    {
+      "name": "empty-presence",
+      "observed": {
+        "status": 200,
+        "content_type": "application/json;charset=utf-8",
+        "allow": null,
+        "location": null,
+        "body": []
+      }
+    },
+    {
+      "name": "invalid-presence-user",
+      "observed": {
+        "status": 400,
+        "content_type": null,
+        "allow": null,
+        "location": null,
+        "body": "invalid UUID"
+      }
+    },
+    {
+      "name": "presence-missing-ids",
+      "observed": {
+        "status": 400,
+        "content_type": null,
+        "allow": null,
+        "location": null,
+        "body": "Query parameter ids is required"
+      }
+    },
+    {
+      "name": "presence-invalid-ids",
+      "observed": {
+        "status": 400,
+        "content_type": null,
+        "allow": null,
+        "location": null,
+        "body": "Error parsing query parameter ids failed: Failed reading: [\"hexadecimal digit\"]Failed reading: satisfyWith"
+      }
+    },
+    {
+      "name": "invalid-presence-json",
+      "observed": {
+        "status": 400,
+        "content_type": null,
+        "allow": null,
+        "location": null,
+        "body": "Unexpected end-of-input, expecting record key literal or }"
+      }
+    },
+    {
+      "name": "presence-no-content-type",
+      "observed": {
+        "status": 201,
+        "content_type": "application/json;charset=utf-8",
+        "allow": null,
+        "location": "http://127.0.0.1:16188/i/push/44444444-4444-4444-8444-444444444444/fixture",
+        "body": ""
+      }
+    },
+    {
+      "name": "presence-list",
+      "observed": {
+        "status": 200,
+        "content_type": "application/json;charset=utf-8",
+        "allow": null,
+        "location": null,
+        "body": [
+          {
+            "client_id": "abcd",
+            "created_at": "<validated-current-milliseconds>",
+            "device_id": "fixture",
+            "resource": "http://127.0.0.1:16188/i/push/44444444-4444-4444-8444-444444444444/fixture",
+            "user_id": "44444444-4444-4444-8444-444444444444"
+          }
+        ]
+      }
+    },
+    {
+      "name": "presence-multiple-users",
+      "observed": {
+        "status": 200,
+        "content_type": "application/json;charset=utf-8",
+        "allow": null,
+        "location": null,
+        "body": [
+          {
+            "client_id": "abcd",
+            "created_at": "<validated-current-milliseconds>",
+            "device_id": "fixture",
+            "resource": "http://127.0.0.1:16188/i/push/44444444-4444-4444-8444-444444444444/fixture",
+            "user_id": "44444444-4444-4444-8444-444444444444"
+          }
+        ]
+      }
+    },
+    {
+      "name": "presence-delete-noop",
+      "observed": {
+        "status": 200,
+        "content_type": "application/json;charset=utf-8",
+        "allow": null,
+        "location": null,
+        "body": ""
+      }
+    },
+    {
+      "name": "presence-after-delete",
+      "observed": {
+        "status": 200,
+        "content_type": "application/json;charset=utf-8",
+        "allow": null,
+        "location": null,
+        "body": [
+          {
+            "client_id": "abcd",
+            "created_at": "<validated-current-milliseconds>",
+            "device_id": "fixture",
+            "resource": "http://127.0.0.1:16188/i/push/44444444-4444-4444-8444-444444444444/fixture",
+            "user_id": "44444444-4444-4444-8444-444444444444"
+          }
+        ]
+      }
+    },
+    {
+      "name": "presence-stored-shape",
+      "observed": {
+        "c": "abcd",
+        "r": "http://127.0.0.1:16188/i/push/44444444-4444-4444-8444-444444444444/fixture",
+        "t": "<validated-current-milliseconds>"
+      }
+    },
+    {
+      "name": "presence-ttl",
+      "observed": "<validated-seven-days-minus-execution>"
+    },
+    {
+      "name": "legacy-and-malformed-presence",
+      "observed": {
+        "status": 200,
+        "content_type": "application/json;charset=utf-8",
+        "allow": null,
+        "location": null,
+        "body": [
+          {
+            "client_id": "abcd",
+            "created_at": "<validated-current-milliseconds>",
+            "device_id": "fixture",
+            "resource": "http://127.0.0.1:16188/i/push/44444444-4444-4444-8444-444444444444/fixture",
+            "user_id": "44444444-4444-4444-8444-444444444444"
+          },
+          {
+            "client_id": null,
+            "created_at": 0,
+            "device_id": "legacy",
+            "resource": "http://127.0.0.1:16188/i/push/44444444-4444-4444-8444-444444444444/fixture",
+            "user_id": "44444444-4444-4444-8444-444444444444"
+          }
+        ]
+      }
+    },
+    {
+      "name": "presence-cleaned",
+      "observed": {
+        "status": 200,
+        "content_type": "application/json;charset=utf-8",
+        "allow": null,
+        "location": null,
+        "body": []
+      }
+    }
+  ],
+  "script_sha256": "f407d0bc802e22bd23f52804a61b4895b1930ccf0217ea79a683b42a65946794",
+  "cleanup": "reserved synthetic user Redis key deleted after capture; owned-stack volume cleanup remains final fallback"
+}

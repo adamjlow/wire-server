@@ -1,0 +1,7 @@
+gundeck: thread blocked indefinitely in an MVar operation
+HasCallStack backtrace:
+  collectBacktraces, called at libraries/ghc-internal/src/GHC/Internal/Exception.hs:169:13 in ghc-internal:GHC.Internal.Exception
+  toExceptionWithBacktrace, called at libraries/ghc-internal/src/GHC/Internal/IO.hs:260:11 in ghc-internal:GHC.Internal.IO
+  throwIO, called at src/UnliftIO/Exception.hs:356:7 in unliftio-0.2.25.1-AdVaKH2Ubts3FYohk3WmeN:UnliftIO.Exception
+
+
