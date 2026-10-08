@@ -72,3 +72,9 @@ match all cases at candidate source 3c9e31c160fa86df86bf85c3f9b7c4351153c063.
 Gzip diagnostics, DELETE header parsing and failure messages were corrected in
 candidate code; assertions and failure effects were preserved. Core 38 evidence
 applies to its earlier binary and will be rerun after the remaining relevant work.
+
+`--group configuration` captures 11 real configured cases. [Initial capture](configuration-initial-observations.json)
+and [identity](configuration-initial-run.json) match actual signed path/auto/virtual
+reads, override/mapped ingress, Scality read/upload and independently verified
+CloudFront signatures/invalid-key startup. Missing/unmapped ingress reveal only
+a candidate error Content-Type mismatch. No signatures or private keys are retained.

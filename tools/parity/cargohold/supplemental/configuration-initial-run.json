@@ -1,0 +1,12 @@
+{
+  "source_revision": "05424dfc762706564f7192cf7b6ee8d4810d1046",
+  "runner_image": "sha256:fc3e23a19bfa10c7db2a73ade0bfc1fad87aa391514577bdc8d4d90843fcbbc8",
+  "store_image": "dxflrs/garage@sha256:9c96caa2612d3411acc5b0e6701fb238dbfba33e533a6d7d3d811a4b12d0d020",
+  "candidate_sha256": "27aa0b3a71be3046d7d6b30ff7fb9056fe8ee5cd1e2ca3bd59aba4a134d80077",
+  "exit_code": 0,
+  "internal_network": true,
+  "published_ports": false,
+  "whole_service_parity": false,
+  "group": "configuration",
+  "config_sha256": "f96599304b851190692c30470becfe906f77b3e7d9d9031113a6af8a2db06243"
+}

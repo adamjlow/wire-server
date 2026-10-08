@@ -1,0 +1,510 @@
+{
+  "result": "supplemental-observed",
+  "whole_service_parity": false,
+  "cases": [
+    {
+      "id": "addressing-path",
+      "responses": {
+        "haskell": {
+          "status": 302,
+          "content_type": null,
+          "body": "",
+          "signed": {
+            "scheme": "http",
+            "host": "s3.garage.localhost:3900",
+            "path": "/dummy-bucket/v3/persistent/33333333-3333-4333-8333-333333333333",
+            "query": {
+              "X-Amz-Algorithm": [
+                "AWS4-HMAC-SHA256"
+              ],
+              "X-Amz-Credential": [
+                "GKdeadbeefcafebabe0000000000000000/<validated-signing-date>/eu-west-1/s3/aws4_request"
+              ],
+              "X-Amz-Expires": [
+                "300"
+              ],
+              "X-Amz-SignedHeaders": [
+                "host"
+              ]
+            },
+            "read_status": 200,
+            "body_sha256": "fb9403aa45ae8dca85a17201022faba905e70891b601d0f260666ecf6ea9aa94",
+            "body_length": 13
+          }
+        },
+        "go": {
+          "status": 302,
+          "content_type": null,
+          "body": "",
+          "signed": {
+            "scheme": "http",
+            "host": "s3.garage.localhost:3900",
+            "path": "/dummy-bucket/v3/persistent/33333333-3333-4333-8333-333333333333",
+            "query": {
+              "X-Amz-Algorithm": [
+                "AWS4-HMAC-SHA256"
+              ],
+              "X-Amz-Credential": [
+                "GKdeadbeefcafebabe0000000000000000/<validated-signing-date>/eu-west-1/s3/aws4_request"
+              ],
+              "X-Amz-Expires": [
+                "300"
+              ],
+              "X-Amz-SignedHeaders": [
+                "host"
+              ]
+            },
+            "read_status": 200,
+            "body_sha256": "fb9403aa45ae8dca85a17201022faba905e70891b601d0f260666ecf6ea9aa94",
+            "body_length": 13
+          }
+        }
+      },
+      "equal": true
+    },
+    {
+      "id": "addressing-auto",
+      "responses": {
+        "haskell": {
+          "status": 302,
+          "content_type": null,
+          "body": "",
+          "signed": {
+            "scheme": "http",
+            "host": "dummy-bucket.s3.garage.localhost:3900",
+            "path": "/v3/persistent/33333333-3333-4333-8333-333333333333",
+            "query": {
+              "X-Amz-Algorithm": [
+                "AWS4-HMAC-SHA256"
+              ],
+              "X-Amz-Credential": [
+                "GKdeadbeefcafebabe0000000000000000/<validated-signing-date>/eu-west-1/s3/aws4_request"
+              ],
+              "X-Amz-Expires": [
+                "300"
+              ],
+              "X-Amz-SignedHeaders": [
+                "host"
+              ]
+            },
+            "read_status": 200,
+            "body_sha256": "fb9403aa45ae8dca85a17201022faba905e70891b601d0f260666ecf6ea9aa94",
+            "body_length": 13
+          }
+        },
+        "go": {
+          "status": 302,
+          "content_type": null,
+          "body": "",
+          "signed": {
+            "scheme": "http",
+            "host": "dummy-bucket.s3.garage.localhost:3900",
+            "path": "/v3/persistent/33333333-3333-4333-8333-333333333333",
+            "query": {
+              "X-Amz-Algorithm": [
+                "AWS4-HMAC-SHA256"
+              ],
+              "X-Amz-Credential": [
+                "GKdeadbeefcafebabe0000000000000000/<validated-signing-date>/eu-west-1/s3/aws4_request"
+              ],
+              "X-Amz-Expires": [
+                "300"
+              ],
+              "X-Amz-SignedHeaders": [
+                "host"
+              ]
+            },
+            "read_status": 200,
+            "body_sha256": "fb9403aa45ae8dca85a17201022faba905e70891b601d0f260666ecf6ea9aa94",
+            "body_length": 13
+          }
+        }
+      },
+      "equal": true
+    },
+    {
+      "id": "addressing-virtual",
+      "responses": {
+        "haskell": {
+          "status": 302,
+          "content_type": null,
+          "body": "",
+          "signed": {
+            "scheme": "http",
+            "host": "dummy-bucket.s3.garage.localhost:3900",
+            "path": "/v3/persistent/33333333-3333-4333-8333-333333333333",
+            "query": {
+              "X-Amz-Algorithm": [
+                "AWS4-HMAC-SHA256"
+              ],
+              "X-Amz-Credential": [
+                "GKdeadbeefcafebabe0000000000000000/<validated-signing-date>/eu-west-1/s3/aws4_request"
+              ],
+              "X-Amz-Expires": [
+                "300"
+              ],
+              "X-Amz-SignedHeaders": [
+                "host"
+              ]
+            },
+            "read_status": 200,
+            "body_sha256": "fb9403aa45ae8dca85a17201022faba905e70891b601d0f260666ecf6ea9aa94",
+            "body_length": 13
+          }
+        },
+        "go": {
+          "status": 302,
+          "content_type": null,
+          "body": "",
+          "signed": {
+            "scheme": "http",
+            "host": "dummy-bucket.s3.garage.localhost:3900",
+            "path": "/v3/persistent/33333333-3333-4333-8333-333333333333",
+            "query": {
+              "X-Amz-Algorithm": [
+                "AWS4-HMAC-SHA256"
+              ],
+              "X-Amz-Credential": [
+                "GKdeadbeefcafebabe0000000000000000/<validated-signing-date>/eu-west-1/s3/aws4_request"
+              ],
+              "X-Amz-Expires": [
+                "300"
+              ],
+              "X-Amz-SignedHeaders": [
+                "host"
+              ]
+            },
+            "read_status": 200,
+            "body_sha256": "fb9403aa45ae8dca85a17201022faba905e70891b601d0f260666ecf6ea9aa94",
+            "body_length": 13
+          }
+        }
+      },
+      "equal": true
+    },
+    {
+      "id": "download-endpoint-override",
+      "responses": {
+        "haskell": {
+          "status": 302,
+          "content_type": null,
+          "body": "",
+          "signed": {
+            "scheme": "http",
+            "host": "store:3900",
+            "path": "/dummy-bucket/v3/persistent/33333333-3333-4333-8333-333333333333",
+            "query": {
+              "X-Amz-Algorithm": [
+                "AWS4-HMAC-SHA256"
+              ],
+              "X-Amz-Credential": [
+                "GKdeadbeefcafebabe0000000000000000/<validated-signing-date>/eu-west-1/s3/aws4_request"
+              ],
+              "X-Amz-Expires": [
+                "300"
+              ],
+              "X-Amz-SignedHeaders": [
+                "host"
+              ]
+            },
+            "read_status": 200,
+            "body_sha256": "fb9403aa45ae8dca85a17201022faba905e70891b601d0f260666ecf6ea9aa94",
+            "body_length": 13
+          }
+        },
+        "go": {
+          "status": 302,
+          "content_type": null,
+          "body": "",
+          "signed": {
+            "scheme": "http",
+            "host": "store:3900",
+            "path": "/dummy-bucket/v3/persistent/33333333-3333-4333-8333-333333333333",
+            "query": {
+              "X-Amz-Algorithm": [
+                "AWS4-HMAC-SHA256"
+              ],
+              "X-Amz-Credential": [
+                "GKdeadbeefcafebabe0000000000000000/<validated-signing-date>/eu-west-1/s3/aws4_request"
+              ],
+              "X-Amz-Expires": [
+                "300"
+              ],
+              "X-Amz-SignedHeaders": [
+                "host"
+              ]
+            },
+            "read_status": 200,
+            "body_sha256": "fb9403aa45ae8dca85a17201022faba905e70891b601d0f260666ecf6ea9aa94",
+            "body_length": 13
+          }
+        }
+      },
+      "equal": true
+    },
+    {
+      "id": "multi-ingress-mapped",
+      "responses": {
+        "haskell": {
+          "status": 302,
+          "content_type": null,
+          "body": "",
+          "signed": {
+            "scheme": "http",
+            "host": "store:3900",
+            "path": "/dummy-bucket/v3/persistent/33333333-3333-4333-8333-333333333333",
+            "query": {
+              "X-Amz-Algorithm": [
+                "AWS4-HMAC-SHA256"
+              ],
+              "X-Amz-Credential": [
+                "GKdeadbeefcafebabe0000000000000000/<validated-signing-date>/eu-west-1/s3/aws4_request"
+              ],
+              "X-Amz-Expires": [
+                "300"
+              ],
+              "X-Amz-SignedHeaders": [
+                "host"
+              ]
+            },
+            "read_status": 200,
+            "body_sha256": "fb9403aa45ae8dca85a17201022faba905e70891b601d0f260666ecf6ea9aa94",
+            "body_length": 13
+          }
+        },
+        "go": {
+          "status": 302,
+          "content_type": null,
+          "body": "",
+          "signed": {
+            "scheme": "http",
+            "host": "store:3900",
+            "path": "/dummy-bucket/v3/persistent/33333333-3333-4333-8333-333333333333",
+            "query": {
+              "X-Amz-Algorithm": [
+                "AWS4-HMAC-SHA256"
+              ],
+              "X-Amz-Credential": [
+                "GKdeadbeefcafebabe0000000000000000/<validated-signing-date>/eu-west-1/s3/aws4_request"
+              ],
+              "X-Amz-Expires": [
+                "300"
+              ],
+              "X-Amz-SignedHeaders": [
+                "host"
+              ]
+            },
+            "read_status": 200,
+            "body_sha256": "fb9403aa45ae8dca85a17201022faba905e70891b601d0f260666ecf6ea9aa94",
+            "body_length": 13
+          }
+        }
+      },
+      "equal": true
+    },
+    {
+      "id": "multi-ingress-unmapped",
+      "responses": {
+        "haskell": {
+          "status": 404,
+          "content_type": "application/json",
+          "body": {
+            "code": 404,
+            "label": "not-found",
+            "message": "Asset not found"
+          }
+        },
+        "go": {
+          "status": 404,
+          "content_type": "application/json;charset=utf-8",
+          "body": {
+            "code": 404,
+            "label": "not-found",
+            "message": "Asset not found"
+          }
+        }
+      },
+      "equal": false
+    },
+    {
+      "id": "multi-ingress-missing",
+      "responses": {
+        "haskell": {
+          "status": 404,
+          "content_type": "application/json",
+          "body": {
+            "code": 404,
+            "label": "not-found",
+            "message": "Asset not found"
+          }
+        },
+        "go": {
+          "status": 404,
+          "content_type": "application/json;charset=utf-8",
+          "body": {
+            "code": 404,
+            "label": "not-found",
+            "message": "Asset not found"
+          }
+        }
+      },
+      "equal": false
+    },
+    {
+      "id": "scality-signed-download",
+      "responses": {
+        "haskell": {
+          "status": 302,
+          "content_type": null,
+          "body": "",
+          "signed": {
+            "scheme": "http",
+            "host": "localhost:4570",
+            "path": "/dummy-bucket/v3/persistent/33333333-3333-4333-8333-333333333333",
+            "query": {
+              "X-Amz-Algorithm": [
+                "AWS4-HMAC-SHA256"
+              ],
+              "X-Amz-Credential": [
+                "GKdeadbeefcafebabe0000000000000000/<validated-signing-date>/eu-west-1/s3/aws4_request"
+              ],
+              "X-Amz-Expires": [
+                "300"
+              ],
+              "X-Amz-SignedHeaders": [
+                "host"
+              ]
+            },
+            "read_status": 200,
+            "body_sha256": "fb9403aa45ae8dca85a17201022faba905e70891b601d0f260666ecf6ea9aa94",
+            "body_length": 13
+          }
+        },
+        "go": {
+          "status": 302,
+          "content_type": null,
+          "body": "",
+          "signed": {
+            "scheme": "http",
+            "host": "localhost:4570",
+            "path": "/dummy-bucket/v3/persistent/33333333-3333-4333-8333-333333333333",
+            "query": {
+              "X-Amz-Algorithm": [
+                "AWS4-HMAC-SHA256"
+              ],
+              "X-Amz-Credential": [
+                "GKdeadbeefcafebabe0000000000000000/<validated-signing-date>/eu-west-1/s3/aws4_request"
+              ],
+              "X-Amz-Expires": [
+                "300"
+              ],
+              "X-Amz-SignedHeaders": [
+                "host"
+              ]
+            },
+            "read_status": 200,
+            "body_sha256": "fb9403aa45ae8dca85a17201022faba905e70891b601d0f260666ecf6ea9aa94",
+            "body_length": 13
+          }
+        }
+      },
+      "equal": true
+    },
+    {
+      "id": "scality-upload",
+      "responses": {
+        "haskell": {
+          "response": {
+            "status": 201,
+            "content_type": "application/json;charset=utf-8",
+            "body": {
+              "domain": "example.com",
+              "key": "3-2-<validated-uuidv4>",
+              "token": "<validated-16-byte-token>"
+            },
+            "location": "bot/assets/3-2-<validated-uuidv4>"
+          },
+          "objects": [
+            {
+              "size": 13,
+              "type": "application/octet-stream",
+              "metadata": {
+                "bot": "11111111-1111-4111-8111-111111111111",
+                "token": "<validated-16-byte-token>"
+              },
+              "sha256": "fb9403aa45ae8dca85a17201022faba905e70891b601d0f260666ecf6ea9aa94"
+            }
+          ],
+          "open_uploads": []
+        },
+        "go": {
+          "response": {
+            "status": 201,
+            "content_type": "application/json;charset=utf-8",
+            "body": {
+              "domain": "example.com",
+              "key": "3-2-<validated-uuidv4>",
+              "token": "<validated-16-byte-token>"
+            },
+            "location": "bot/assets/3-2-<validated-uuidv4>"
+          },
+          "objects": [
+            {
+              "size": 13,
+              "type": "application/octet-stream",
+              "metadata": {
+                "bot": "11111111-1111-4111-8111-111111111111",
+                "token": "<validated-16-byte-token>"
+              },
+              "sha256": "fb9403aa45ae8dca85a17201022faba905e70891b601d0f260666ecf6ea9aa94"
+            }
+          ],
+          "open_uploads": []
+        }
+      },
+      "equal": true
+    },
+    {
+      "id": "cloudfront-signature",
+      "responses": {
+        "haskell": {
+          "status": 302,
+          "scheme": "https",
+          "host": "cdn.example.com",
+          "path": "/v3/persistent/33333333-3333-4333-8333-333333333333",
+          "key_pair_id": "SYNTHETIC-KEY-ID",
+          "expiry": "<validated-300-second-clock>",
+          "signature_verified": true,
+          "tamper_rejected": true
+        },
+        "go": {
+          "status": 302,
+          "scheme": "https",
+          "host": "cdn.example.com",
+          "path": "/v3/persistent/33333333-3333-4333-8333-333333333333",
+          "key_pair_id": "SYNTHETIC-KEY-ID",
+          "expiry": "<validated-300-second-clock>",
+          "signature_verified": true,
+          "tamper_rejected": true
+        }
+      },
+      "equal": true
+    },
+    {
+      "id": "cloudfront-invalid-key",
+      "responses": {
+        "haskell": {
+          "startup_rejected": true
+        },
+        "go": {
+          "startup_rejected": true
+        }
+      },
+      "equal": true
+    }
+  ],
+  "mismatches": [
+    "multi-ingress-unmapped",
+    "multi-ingress-missing"
+  ]
+}
