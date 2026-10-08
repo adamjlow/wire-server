@@ -1,0 +1,48 @@
+{
+  "result": "initial-slice-pass",
+  "whole_service_parity": false,
+  "binary_sha256": "c34b62cbd1b14384b38811bc0f6a9a1bf907e8c042ea3aefb49dfb66a014b385",
+  "cases": [
+    {
+      "case": "canonical",
+      "status": 201,
+      "size": 13,
+      "effects_match_reference": true,
+      "signed_download_and_delete": true
+    },
+    {
+      "case": "unequal-delimiters",
+      "status": 201,
+      "size": 13,
+      "effects_match_reference": true,
+      "signed_download_and_delete": true
+    },
+    {
+      "case": "wrong-md5",
+      "status": 201,
+      "size": 13,
+      "effects_match_reference": true,
+      "signed_download_and_delete": true
+    },
+    {
+      "case": "decimal-length-suffix",
+      "status": 201,
+      "size": 13,
+      "effects_match_reference": true,
+      "signed_download_and_delete": true
+    },
+    {
+      "case": "missing-trailer",
+      "status": 201,
+      "size": 13,
+      "effects_match_reference": true,
+      "signed_download_and_delete": true
+    },
+    {
+      "case": "incomplete-data",
+      "status": 400,
+      "size": 10,
+      "effects_match_reference": true
+    }
+  ]
+}

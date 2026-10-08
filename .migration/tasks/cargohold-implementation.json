@@ -30,7 +30,15 @@
       "required_evidence": "Actual Go check output and retained evidence. Whole-service parity/switchback verification remains separately owned."
     }
   ],
-  "evidence": [],
+  "evidence": [
+    {
+      "criterion": "quality",
+      "result": "pass",
+      "command": "Initial candidate Go module passes go/check.py cargohold (format/tidy/verify/vet/race/build/module vulnerability and license checks). Real private S3 smoke passes 6 existing multipart captures plus signed read/delete effects; exact binary source and identity retained. This is initial-slice evidence, not completion or full-service parity.",
+      "revision": "ef75a86972653684f3e1a00ece26f9fad5746f83",
+      "artifact": "go/services/cargohold/README.md"
+    }
+  ],
   "review": null,
-  "handoff": "Start runnable bot/S3 slice, then expand to full approved service. No compatibility claim until separate matrix verification."
+  "handoff": "Active full-service candidate. Runnable bot/provider S3 slice builds; 3 focused unit tests and full Go quality checks pass. Six real S3 cases match retained Haskell status/stored effects; signed byte reads/delete pass; cleanup verified. User/Brig/token/version/legacy/federation/audit/CloudFront/config/middleware/operations and whole-service original-suite/switchback validation remain. Security disposition resolved under approved contract."
 }
