@@ -1,0 +1,12 @@
+{
+  "helm_version": "3.22.0",
+  "helm_binary_sha256": "7a319dee5ea7a1f7d7a0d92d5c223586f3b65abc33163c9de2a85f083aa3df2b",
+  "preparation": "Disposable full chart copies; align version 0.0.42 as upstream set-helm-chart-version does; package file:// dependencies; synthetic values. No chart source mutations.",
+  "only_difference": "cargohold Deployment image",
+  "default_image": "quay.io/wire/cargohold:do-not-use",
+  "selected_image": "wire-cargohold-go:local",
+  "original_test_image_unchanged": true,
+  "omitted_selection_unchanged": true,
+  "ambiguous_missing_wrong_container_rejected": true,
+  "actual_helm_postrenderer_pass": true
+}

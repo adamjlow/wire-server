@@ -113,14 +113,25 @@ from the qualified reference runner. The receipt binds the clean source, binary
 and local image; a separate CA receipt records its provenance. It never pushes
 or deploys. The default config path matches the existing Helm deployment.
 
-Tag the receipt’s image ID as `wire-cargohold-go:local` to use `helm-values.yaml`
-as an explicit overlay with `charts/wire-server`. The chart already supports
-per-service image selection; its existing Haskell defaults remain unchanged.
+Use the validated image ID or your published repository/tag through the optional
+post-renderer. For example, add these arguments to your existing Helm command:
+
+```sh
+--post-renderer ./go/services/cargohold/helm_postrender.py --post-renderer-args wire-cargohold-go:local
+```
+
+The chart derives its original test image from the service image settings, so an
+image values overlay would also change that hook. The post-renderer selects only
+the named cargohold Deployment container; it preserves the original test image,
+all other resources and the omitted-selection Haskell default. It fails closed
+if the expected deployment/container shape is missing or ambiguous. No chart
+source changes or new Haskell build dependency are required.
+
 The image at source 0de78a33c7d6d885333e9e48308c3722f03676da
 started with the existing default config path, served health HTTP 200 on private
 container loopback, then exited zero on idle SIGTERM. Non-root UID 65534, read-only
 root, dropped capabilities and no network/ports were used. [Build](evidence/image-build.json),
 [CA provenance](evidence/image-ca.json) and [smoke](evidence/image-smoke.json) retain
 identities. This proves packaging startup, not loaded shutdown or whole-service
-parity. Full chart rendering is outstanding: it requires upstream chart version
-preparation plus synthetic deployment values/secrets. No repository chart was changed.
+parity. Full chart rendering uses upstream chart version preparation on disposable
+copies and synthetic deployment values/secrets. No repository chart was changed.

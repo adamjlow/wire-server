@@ -1,6 +1,0 @@
-# Optional overlay for the existing charts/wire-server image selector.
-# Tag the validated local image or substitute your published repository/tag.
-cargohold:
-  image:
-    repository: wire-cargohold-go
-    tag: local

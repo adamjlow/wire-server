@@ -1,0 +1,100 @@
+{
+  "tags": {
+    "nginz": false,
+    "cassandra-migrations": false,
+    "elasticsearch-index": false
+  },
+  "cargohold": {
+    "secrets": {
+      "zAuth": {
+        "privateKeys": "SYNTHETIC_PRIVATE_KEY",
+        "publicKeys": "SYNTHETIC_PUBLIC_KEY"
+      },
+      "rabbitmq": {
+        "username": "synthetic",
+        "password": "SYNTHETIC_PASSWORD"
+      },
+      "awsKeyId": "SYNTHETIC_KEY_ID",
+      "awsSecretKey": "SYNTHETIC_SECRET"
+    }
+  },
+  "brig": {
+    "secrets": {
+      "zAuth": {
+        "privateKeys": "SYNTHETIC_PRIVATE_KEY",
+        "publicKeys": "SYNTHETIC_PUBLIC_KEY"
+      },
+      "rabbitmq": {
+        "username": "synthetic",
+        "password": "SYNTHETIC_PASSWORD"
+      },
+      "awsKeyId": "SYNTHETIC_KEY_ID",
+      "awsSecretKey": "SYNTHETIC_SECRET",
+      "turn": {
+        "secret": "SYNTHETIC_SECRET"
+      }
+    },
+    "config": {
+      "aws": {
+        "sesQueue": "synthetic-events"
+      },
+      "turn": {
+        "serversSource": "dns",
+        "baseDomain": "example.com"
+      },
+      "sft": {
+        "sftBaseDomain": "example.com"
+      },
+      "externalUrls": {
+        "nginz": "https://example.com",
+        "teamCreatorWelcome": "https://example.com",
+        "teamMemberWelcome": "https://example.com",
+        "accountPages": "https://example.com"
+      }
+    }
+  },
+  "cannon": {
+    "secrets": {
+      "zAuth": {
+        "privateKeys": "SYNTHETIC_PRIVATE_KEY",
+        "publicKeys": "SYNTHETIC_PUBLIC_KEY"
+      },
+      "rabbitmq": {
+        "username": "synthetic",
+        "password": "SYNTHETIC_PASSWORD"
+      },
+      "awsKeyId": "SYNTHETIC_KEY_ID",
+      "awsSecretKey": "SYNTHETIC_SECRET"
+    }
+  },
+  "background-worker": {
+    "secrets": {
+      "zAuth": {
+        "privateKeys": "SYNTHETIC_PRIVATE_KEY",
+        "publicKeys": "SYNTHETIC_PUBLIC_KEY"
+      },
+      "rabbitmq": {
+        "username": "synthetic",
+        "password": "SYNTHETIC_PASSWORD"
+      },
+      "awsKeyId": "SYNTHETIC_KEY_ID",
+      "awsSecretKey": "SYNTHETIC_SECRET"
+    }
+  },
+  "galley": {
+    "config": {
+      "settings": {
+        "conversationCodeURI": "https://example.com"
+      }
+    }
+  },
+  "spar": {
+    "config": {
+      "appUri": "https://example.com",
+      "ssoUri": "https://example.com/sso",
+      "contacts": [
+        "synthetic@example.com"
+      ]
+    }
+  }
+}

@@ -1,0 +1,2592 @@
+---
+# Source: wire-server/templates/brig/poddisruptionbudget.yaml
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: brig
+  labels:
+    app: brig
+    chart: wire-server-0.0.42
+    release: parity
+    heritage: Helm
+spec:
+  maxUnavailable: 2
+  selector:
+    matchLabels:
+      app: brig
+---
+# Source: wire-server/templates/cannon/poddisruptionbudget.yaml
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: cannon
+  labels:
+    app: cannon
+    chart: wire-server-0.0.42
+    release: parity
+    heritage: Helm
+spec:
+  maxUnavailable: 2
+  selector:
+    matchLabels:
+      app: cannon
+---
+# Source: wire-server/templates/cargohold/poddisruptionbudget.yaml
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: cargohold
+  labels:
+    app: cargohold
+    chart: wire-server-0.0.42
+    release: parity
+    heritage: Helm
+spec:
+  maxUnavailable: 2
+  selector:
+    matchLabels:
+      app: cargohold
+---
+# Source: wire-server/templates/galley/poddisruptionbudget.yaml
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: galley
+  labels:
+    app: galley
+    chart: wire-server-0.0.42
+    release: parity
+    heritage: Helm
+spec:
+  maxUnavailable: 2
+  selector:
+    matchLabels:
+      app: galley
+---
+# Source: wire-server/templates/gundeck/poddisruptionbudget.yaml
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: gundeck
+  labels:
+    app: gundeck
+    chart: wire-server-0.0.42
+    release: parity
+    heritage: Helm
+spec:
+  maxUnavailable: 2
+  selector:
+    matchLabels:
+      app: gundeck
+---
+# Source: wire-server/templates/spar/poddisruptionbudget.yaml
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: spar
+  labels:
+    app: spar
+    chart: wire-server-0.0.42
+    release: parity
+    heritage: Helm
+spec:
+  maxUnavailable: 2
+  selector:
+    matchLabels:
+      app: spar
+---
+# Source: wire-server/templates/brig/serviceaccount.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: brig
+  labels:
+    app: brig
+    chart: wire-server-0.0.42
+    release: parity
+    heritage: Helm
+automountServiceAccountToken: true
+---
+# Source: wire-server/templates/cargohold/serviceaccount.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: cargohold
+  labels:
+    app: cargohold
+    chart: wire-server-0.0.42
+    release: parity
+    heritage: Helm
+automountServiceAccountToken: true
+---
+# Source: wire-server/templates/galley/serviceaccount.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: galley
+  labels:
+    app: galley
+    chart: wire-server-0.0.42
+    release: parity
+    heritage: Helm
+automountServiceAccountToken: true
+---
+# Source: wire-server/templates/gundeck/serviceaccount.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: gundeck
+  labels:
+    app: gundeck
+    chart: wire-server-0.0.42
+    release: parity
+    heritage: Helm
+automountServiceAccountToken: true
+---
+# Source: wire-server/templates/background-worker/secret.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: background-worker
+  labels:
+    app: background-worker
+    chart: wire-server-0.0.42
+    release: "parity"
+    heritage: "Helm"
+type: Opaque
+data:
+  
+  for_helm_linting: "Im1hcFthd3NLZXlJZDpTWU5USEVUSUNfS0VZX0lEIGF3c1NlY3JldEtleTpTWU5USEVUSUNfU0VDUkVUIHJhYmJpdG1xOm1hcFtwYXNzd29yZDpTWU5USEVUSUNfUEFTU1dPUkQgdXNlcm5hbWU6c3ludGhldGljXSB6QXV0aDptYXBbcHJpdmF0ZUtleXM6U1lOVEhFVElDX1BSSVZBVEVfS0VZIHB1YmxpY0tleXM6U1lOVEhFVElDX1BVQkxJQ19LRVldXSI="
+  rabbitmqUsername: "c3ludGhldGlj"
+  rabbitmqPassword: "U1lOVEhFVElDX1BBU1NXT1JE"
+---
+# Source: wire-server/templates/brig/secret.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: brig
+  labels:
+    app: brig
+    chart: wire-server-0.0.42
+    release: "parity"
+    heritage: "Helm"
+type: Opaque
+data:
+  
+  for_helm_linting: "Im1hcFthd3NLZXlJZDpTWU5USEVUSUNfS0VZX0lEIGF3c1NlY3JldEtleTpTWU5USEVUSUNfU0VDUkVUIHJhYmJpdG1xOm1hcFtwYXNzd29yZDpTWU5USEVUSUNfUEFTU1dPUkQgdXNlcm5hbWU6c3ludGhldGljXSB0dXJuOm1hcFtzZWNyZXQ6U1lOVEhFVElDX1NFQ1JFVF0gekF1dGg6bWFwW3ByaXZhdGVLZXlzOlNZTlRIRVRJQ19QUklWQVRFX0tFWSBwdWJsaWNLZXlzOlNZTlRIRVRJQ19QVUJMSUNfS0VZXV0i"
+  secretkey.txt: "U1lOVEhFVElDX1BSSVZBVEVfS0VZ"
+  publickey.txt: "U1lOVEhFVElDX1BVQkxJQ19LRVk="
+  turn-secret.txt: "U1lOVEhFVElDX1NFQ1JFVA=="
+  awsKeyId: "U1lOVEhFVElDX0tFWV9JRA=="
+  awsSecretKey: "U1lOVEhFVElDX1NFQ1JFVA=="
+  rabbitmqUsername: "c3ludGhldGlj"
+  rabbitmqPassword: "U1lOVEhFVElDX1BBU1NXT1JE"
+---
+# Source: wire-server/templates/cannon/secret.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: cannon
+  labels:
+    app: cannon
+    chart: "wire-server-0.0.42"
+    release: "parity"
+    heritage: "Helm"
+type: Opaque
+data:
+  rabbitmqUsername: "c3ludGhldGlj"
+  rabbitmqPassword: "U1lOVEhFVElDX1BBU1NXT1JE"
+---
+# Source: wire-server/templates/cargohold/secret.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: cargohold
+  labels:
+    app: cargohold
+    chart: "wire-server-0.0.42"
+    release: "parity"
+    heritage: "Helm"
+type: Opaque
+data:
+  
+  for_helm_linting: "Im1hcFthd3NLZXlJZDpTWU5USEVUSUNfS0VZX0lEIGF3c1NlY3JldEtleTpTWU5USEVUSUNfU0VDUkVUIHJhYmJpdG1xOm1hcFtwYXNzd29yZDpTWU5USEVUSUNfUEFTU1dPUkQgdXNlcm5hbWU6c3ludGhldGljXSB6QXV0aDptYXBbcHJpdmF0ZUtleXM6U1lOVEhFVElDX1BSSVZBVEVfS0VZIHB1YmxpY0tleXM6U1lOVEhFVElDX1BVQkxJQ19LRVldXSI="
+  
+  awsKeyId: "U1lOVEhFVElDX0tFWV9JRA=="
+  awsSecretKey: "U1lOVEhFVElDX1NFQ1JFVA=="
+---
+# Source: wire-server/templates/cargohold/tests/secret.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: cargohold-integration
+  labels:
+    app: cargohold-integration
+    chart: wire-server-0.0.42
+    release: "parity"
+    heritage: "Helm"
+type: Opaque
+data:
+---
+# Source: wire-server/templates/galley/secret.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: galley
+  labels:
+    app: galley
+    chart: "wire-server-0.0.42"
+    release: "parity"
+    heritage: "Helm"
+type: Opaque
+data:
+---
+# Source: wire-server/templates/spar/tests/secret.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: spar-integration
+  labels:
+    app: spar-integration
+    chart: wire-server-0.0.42
+    release: "parity"
+    heritage: "Helm"
+type: Opaque
+data:
+---
+# Source: wire-server/templates/background-worker/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "background-worker"
+  labels:
+    app: background-worker
+    chart: wire-server-0.0.42
+    release: parity
+    heritage: Helm
+data:
+  background-worker.yaml: |
+    logFormat: StructuredJSON
+    logLevel: Info
+
+    backgroundWorker:
+      host: 0.0.0.0
+      port: 8080
+
+    federatorInternal:
+      host: federator
+      port: 8080
+
+    brig:
+      host: brig
+      port: 8080
+    galley:
+      host: galley
+      port: 8080
+
+    gundeck:
+      host: gundeck
+      port: 8080
+    spar:
+      host: spar
+      port: 8080
+
+    postgresqlPool: 
+      acquisitionTimeout: 10s
+      idlenessTimeout: 10m
+      size: 5
+
+    cassandra:
+      endpoint:
+        host: aws-cassandra
+        port: 9042
+      keyspace: gundeck
+    cassandraBrig:
+      endpoint:
+        host: aws-cassandra
+        port: 9042
+      keyspace: brig
+    rabbitmq:
+      host: rabbitmq
+      port: 5672
+      vHost: /
+      enableTls: false
+      insecureSkipVerifyTls: false
+
+    migrateConversations: false
+    migrateConversationCodes: false
+    migrateTeamFeatures: false
+    migrateDomainRegistration: false
+    migrateUsers: false
+    migrateBlockList: false
+    migratePasswordReset: false
+    migrationOptions:
+      pageSize: 10000
+      parallelism: 2
+      timeout: 5s
+
+    backendNotificationPusher:
+      pushBackoffMaxWait: 300000000
+      pushBackoffMinWait: 10000
+      remotesRefreshInterval: 300000000
+    backgroundJobs:
+      concurrency: 8
+      jobTimeout: 60s
+      maxAttempts: 3
+    jobs:
+      # Arbiter dispatcher poll interval for all jobs.
+      # Lower values reduce discovery latency, but increase DB polling.
+      pollInterval: 5s
+      # Number of worker threads per job queue.
+      workerThreads: 1
+      visibilityTimeout: 60s
+      jobHeartbeatInterval: 30s
+      workerHeartbeatInterval: 10s
+      backoffBase: 2
+      backoffCap: 86400s
+      jitter: equal
+      gracefulShutdownTimeout: 30s
+      reaperInterval: 300s
+      reaperTimeout: 300s
+      workerStaleThreshold: 300s
+    meetingsCleanup:
+      batchSize: 1000
+      cleanOlderThanHours: 48
+      schedule: 0 * * * *
+    postgresMigration:
+      blockList: cassandra
+      conversation: cassandra
+      conversationCodes: cassandra
+      domainRegistration: cassandra
+      passwordReset: cassandra
+      teamFeatures: cassandra
+      user: cassandra
+---
+# Source: wire-server/templates/brig/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "brig"
+  labels:
+    app: brig
+    chart: wire-server-0.0.42
+    release: parity
+    heritage: Helm
+data:
+  brig.yaml: |
+    logNetStrings: false
+    logFormat: StructuredJSON
+    logLevel: Info
+
+    randomPrekeys: true
+
+    brig:
+      host: 0.0.0.0
+      port: 8080
+
+    cassandra:
+      endpoint:
+        host: aws-cassandra
+        port: 9042
+      keyspace: brig
+
+    postgresql: 
+      dbname: wire-server
+      host: postgresql
+      port: "5432"
+      user: wire-server
+    postgresqlPool: 
+      acquisitionTimeout: 10s
+      idlenessTimeout: 10m
+      size: 100
+    postgresMigration:
+      blockList: cassandra
+      conversation: cassandra
+      conversationCodes: cassandra
+      domainRegistration: cassandra
+      passwordReset: cassandra
+      teamFeatures: cassandra
+      user: cassandra
+
+    elasticsearch:
+      url: http://elasticsearch-client:9200
+      index: directory
+      insecureSkipVerifyTls: false
+      additionalInsecureSkipVerifyTls: false
+
+    cargohold:
+      host: cargohold
+      port: 8080
+
+    galley:
+      host: galley
+      port: 8080
+
+    spar:
+      host: spar
+      port: 8080
+
+    gundeck:
+      host: gundeck
+      port: 8080
+    multiSFT: false
+    rabbitmq:
+      host: rabbitmq
+      port: 5672
+      vHost: /
+      enableTls: false
+      insecureSkipVerifyTls: false
+    aws:
+      prekeyTable: 
+      sqsEndpoint: "https://sqs.eu-west-1.amazonaws.com"
+
+    internalEvents:
+      queueType: sqs
+      queueName: 
+
+    emailSMS:
+      email:
+        sesQueue: synthetic-events
+        sesEndpoint: "https://email.eu-west-1.amazonaws.com"
+      general:
+        templateDir: /usr/share/wire/templates
+        emailSender: 
+        smsSender: 
+        templateBranding:
+          brand: Wire
+          brandUrl: https://wire.com
+          brandLabelUrl: wire.com
+          brandLogoUrl: https://wire.com/p/img/email/logo-email-black.png
+          brandService: Wire Service Provider
+          copyright: © WIRE SWISS GmbH
+          misuse: misuse@wire.com
+          legal: https://wire.com/legal/
+          forgot: https://wire.com/forgot/
+          support: https://support.wire.com/
+
+      user:
+        activationUrl: https://example.com/activate?key=${key}&code=${code}
+        smsActivationUrl: https://example.com/v/${code}
+        passwordResetUrl: https://example.com/password-reset/${key}?code=${code}
+        invitationUrl: https://example.com/register?invitation_code=${code}
+        deletionUrl: https://example.com/users/delete?key=${key}&code=${code}
+
+      provider:
+        homeUrl: https://provider.localhost/
+        providerActivationUrl: https://example.com/provider/activate?key=${key}&code=${code}
+        approvalUrl: https://example.com/provider/approve?key=${key}&code=${code}
+        approvalTo: success@simulator.amazonses.com
+        providerPwResetUrl: https://example.com/provider/password-reset?key=\${key}\&code=\${code}
+
+      team:
+        tInvitationUrl: https://example.com/register?team=${team}&team_code=${code}
+        tActivationUrl: https://example.com/register?team=${team}&team_code=${code}
+        tCreatorWelcomeUrl: https://example.com
+        tMemberWelcomeUrl: https://example.com
+        tExistingUserInvitationUrl: https://example.com/accept-invitation/?team-code=${code}
+
+    zauth:
+      privateKeys: /etc/wire/brig/secrets/secretkey.txt
+      publicKeys: /etc/wire/brig/secrets/publickey.txt
+      authSettings:
+        keyIndex: 1
+        userTokenTimeout: 4.8384e+06
+        sessionTokenTimeout: 86400
+        accessTokenTimeout: 900
+        providerTokenTimeout: 900
+        legalHoldUserTokenTimeout: 4.8384e+06
+        legalHoldAccessTokenTimeout: 900
+    turn:
+      serversSource: files
+      servers: /etc/wire/brig/turn/turn-servers.txt
+      serversV2: /etc/wire/brig/turn/turn-servers-v2.txt
+      secret: /etc/wire/brig/secrets/turn-secret.txt
+      configTTL: 3600 # 1 hour
+      tokenTTL: 43200 # 12 hours
+    sft:
+      sftBaseDomain: example.com
+    optSettings:
+      setActivationTimeout: 1.2096e+06
+      setTeamInvitationTimeout: 1.8144e+06
+      setUserMaxConnections: 1000
+      setCookieInsecure: false
+      setUserCookieRenewAge: 1.2096e+06
+      setUserCookieLimit: 32
+      setUserCookieThrottle:
+        stdDev: 3000
+        retryAfter: 86400
+      setRichInfoLimit: 5000
+      setDefaultUserLocale: en
+      setMaxTeamSize: 10000
+      setMaxConvSize: 500
+      setEmailVisibility: visible_to_self
+      setPropertyMaxKeyLen: 1024
+      setPropertyMaxValueLen: 524288
+      setDeleteThrottleMillis: 100
+      setFederationDomain: 
+      setFederationStrategy: allowNone
+      setFederationDomainConfigsUpdateFreq: 10
+      # Customer extensions. If this is not part of your contract with wire, use at your own risk!
+      # Details: https://github.com/wireapp/wire-server/blob/3a21a82a1781f0d128f503df6a705b0b5f733d7b/services/brig/src/Brig/Options.hs#L465-L503
+      set2FACodeGenerationDelaySecs: 300
+      setNonceTtlSecs: 300
+      setDpopMaxSkewSecs: 1
+      setDpopTokenExpirationTimeSecs: 300
+      setOAuthAuthCodeExpirationTimeSecs: 300
+      setOAuthAccessTokenExpirationTimeSecs: 900
+      setOAuthEnabled: true
+      setDisabledAPIVersions: ["development"]
+      setOAuthRefreshTokenExpirationTimeSecs: 1.45152e+07
+      setOAuthMaxActiveRefreshTokens: 10
+      setPasswordHashingOptions: 
+        algorithm: scrypt
+      setPasswordHashingRateLimit: 
+        internalLimit:
+          burst: 10
+          inverseRate: 0
+        ipAddrLimit:
+          burst: 5
+          inverseRate: 300000000
+        ipAddressExceptions: []
+        ipv4CidrBlock: 32
+        ipv6CidrBlock: 64
+        maxRateLimitedKeys: 100000
+        userLimit:
+          burst: 5
+          inverseRate: 60000000
+      setChallengeTTL: 604800
+      setEphemeralUserCreationEnabled: true
+      setConsumableNotifications: false
+      setSsoIdpChangeDetectionInputs:
+        multiIngressDomainConfigs: {}
+        idpCertFingerprintAllowlist: []
+---
+# Source: wire-server/templates/brig/turnconfigmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "turn"
+  labels:
+    app: brig
+    chart: wire-server-0.0.42
+    release: parity
+    heritage: Helm
+data:
+  turn-servers.txt: |2    
+    turn:localhost:3478
+    
+    
+  turn-servers-v2.txt: |2    
+    turn:localhost:3478
+    turn:localhost:3478?transport=tcp
+---
+# Source: wire-server/templates/cannon/configmap.yaml
+apiVersion: v1
+data:
+  cannon.yaml: |
+    logFormat: StructuredJSON
+    logLevel: Info
+    logNetStrings: false
+
+    cannon:
+      host: 0.0.0.0
+      port: 8080
+      externalHostFile: /etc/wire/cannon/externalHost/host.txt
+
+    gundeck:
+      host: gundeck
+      port: 8080
+
+    cassandra:
+      endpoint:
+        host: aws-cassandra
+        port: 9042
+      keyspace: gundeck
+    rabbitmq:
+      host: rabbitmq
+      port: 5672
+      vHost: /
+      enableTls: false
+      insecureSkipVerifyTls: false
+
+    rabbitMqMaxConnections: 1000
+    rabbitMqMaxChannels: 300
+
+    drainOpts:
+      gracePeriodSeconds: 25
+      millisecondsBetweenBatches: 50
+      minBatchSize: 20
+
+    disabledAPIVersions: ["development"]
+    notificationTTL: 2.4192e+06
+
+
+kind: ConfigMap
+metadata:
+  name: cannon
+---
+# Source: wire-server/templates/cargohold/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "cargohold"
+data:
+  cargohold.yaml: |
+    logFormat: StructuredJSON
+    logLevel: Info
+    logNetStrings: false
+
+    cargohold:
+      host: 0.0.0.0
+      port: 8080
+
+    brig:
+      host: brig
+      port: 8080
+
+    aws:
+      s3Bucket: assets
+      s3Endpoint: 
+      
+
+    settings:
+      maxTotalBytes: 1.04857632e+08
+      maxTotalBytesStrict: 2.6214432e+07
+      downloadLinkTTL: 300
+      assetAuditLogEnabled: false
+      federationDomain: 
+      disabledAPIVersions: ["development"]
+---
+# Source: wire-server/templates/galley/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: galley
+data:
+  galley.yaml: |
+    logFormat: StructuredJSON
+    logLevel: Info
+    logNetStrings: false
+
+    galley:
+      host: 0.0.0.0
+      port: 8080
+
+    cassandra:
+      endpoint:
+        host: aws-cassandra
+        port: 9042
+      keyspace: galley
+
+    postgresql: 
+      dbname: wire-server
+      host: postgresql
+      port: "5432"
+      user: wire-server
+    postgresqlPool: 
+      acquisitionTimeout: 10s
+      idlenessTimeout: 10m
+      size: 100
+
+    brig:
+      host: brig
+      port: 8080
+
+    gundeck:
+      host: gundeck
+      port: 8080
+
+    spar:
+      host: spar
+      port: 8080
+
+    postgresMigration:
+      blockList: cassandra
+      conversation: cassandra
+      conversationCodes: cassandra
+      domainRegistration: cassandra
+      passwordReset: cassandra
+      teamFeatures: cassandra
+      user: cassandra
+
+    settings:
+      httpPoolSize: 128
+      intraListing: true
+      maxTeamSize: 10000
+      maxConvSize: 500
+      conversationCodeURI: "https://example.com"
+      federationDomain: 
+      disabledAPIVersions: ["development"]
+      guestLinkTTLSeconds: 3.1536e+07
+      passwordHashingOptions: 
+        algorithm: scrypt
+      passwordHashingRateLimit: 
+        internalLimit:
+          burst: 10
+          inverseRate: 0
+        ipAddrLimit:
+          burst: 5
+          inverseRate: 300000000
+        ipAddressExceptions: []
+        ipv4CidrBlock: 32
+        ipv6CidrBlock: 64
+        maxRateLimitedKeys: 100000
+        userLimit:
+          burst: 5
+          inverseRate: 60000000
+      meetings:
+        validityPeriod: 48h
+        legacyTimeZone: Europe/Berlin
+        pastEditPeriod: 24h
+      featureFlags:
+        sso: disabled-by-default
+        legalhold: disabled-by-default
+        teamSearchVisibility: disabled-by-default
+        classifiedDomains:
+          config:
+            domains: []
+          status: disabled
+        fileSharing:
+          defaults:
+            lockStatus: unlocked
+            status: enabled
+        enforceFileDownloadLocation:
+          defaults:
+            config: {}
+            lockStatus: locked
+            status: disabled
+        sndFactorPasswordChallenge:
+          defaults:
+            lockStatus: locked
+            status: disabled
+        searchVisibilityInbound:
+          defaults:
+            status: disabled
+        validateSAMLemails:
+          defaults:
+            status: enabled
+        appLock:
+          defaults:
+            config:
+              enforceAppLock: false
+              inactivityTimeoutSecs: 60
+            status: enabled
+        conferenceCalling:
+          defaults:
+            lockStatus: locked
+            status: enabled
+        selfDeletingMessages:
+          defaults:
+            config:
+              enforcedTimeoutSeconds: 0
+            lockStatus: unlocked
+            status: enabled
+        conversationGuestLinks:
+          defaults:
+            lockStatus: unlocked
+            status: enabled
+        mls:
+          defaults:
+            config:
+              allowedCipherSuites:
+              - 2
+              defaultCipherSuite: 2
+              defaultProtocol: proteus
+              groupInfoDiagnostics: false
+              protocolToggleUsers: []
+              supportedProtocols:
+              - proteus
+              - mls
+            lockStatus: unlocked
+            status: disabled
+        outlookCalIntegration:
+          defaults:
+            lockStatus: locked
+            status: disabled
+        mlsE2EId:
+          defaults:
+            config:
+              acmeDiscoveryUrl: null
+              verificationExpiration: 86400
+            lockStatus: unlocked
+            status: disabled
+        mlsMigration:
+          defaults:
+            config:
+              allowManualMigration: false
+              clientsThreshold: 100
+              finaliseRegardlessAfter: null
+              startTime: null
+              usersThreshold: 100
+            lockStatus: locked
+            status: disabled
+        limitedEventFanout:
+          defaults:
+            status: disabled
+        domainRegistration:
+          defaults:
+            lockStatus: locked
+            status: disabled
+        channels:
+          defaults:
+            config:
+              allowed_to_create_channels: team-members
+              allowed_to_open_channels: team-members
+            lockStatus: locked
+            status: disabled
+        preventAdminlessGroups:
+          defaults:
+            config:
+              deletionTimeoutDuration: 7d
+              promotionStrategy: alphabetical
+              reminderTimeoutDurations:
+              - 2d
+              - 4d
+              - 6d
+            lockStatus: unlocked
+            status: disabled
+        cells:
+          defaults:
+            config:
+              channels:
+                default: enabled
+                enabled: true
+              collabora:
+                enabled: false
+              groups:
+                default: enabled
+                enabled: true
+              metadata:
+                namespaces:
+                  usermetaTags:
+                    allowFreeValues: true
+                    defaultValues: []
+              one2one:
+                default: enabled
+                enabled: true
+              publicLinks:
+                enableFiles: true
+                enableFolders: true
+                enforceExpirationDefault: 0
+                enforceExpirationMax: 0
+                enforcePassword: false
+              storage:
+                perFileQuotaBytes: "100000000"
+                recycle:
+                  allowSkip: false
+                  autoPurgeDays: 30
+                  disable: false
+              users:
+                externals: true
+                guests: false
+            lockStatus: locked
+            status: disabled
+        cellsInternal:
+          defaults:
+            config:
+              backend:
+                url: https://cells-beta.wire.com
+              collabora:
+                edition: COOL
+              storage:
+                perUserQuotaBytes: "-1"
+                totalLimitBytes: "-1"
+            lockStatus: unlocked
+            status: enabled
+        allowedGlobalOperations:
+          config:
+            mlsConversationReset: false
+          status: enabled
+        assetAuditLog:
+          status: disabled
+        consumableNotifications:
+          defaults:
+            lockStatus: locked
+            status: disabled
+        chatBubbles:
+          defaults:
+            lockStatus: locked
+            status: disabled
+        apps:
+          defaults:
+            lockStatus: locked
+            status: disabled
+        simplifiedUserConnectionRequestQRCode:
+          defaults:
+            lockStatus: unlocked
+            status: enabled
+        stealthUsers:
+          defaults:
+            lockStatus: locked
+            status: disabled
+        meetings:
+          defaults:
+            lockStatus: locked
+            status: disabled
+---
+# Source: wire-server/templates/gundeck/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "gundeck"
+data:
+  gundeck.yaml: |
+    logFormat: StructuredJSON
+    logLevel: Info
+    logNetStrings: false
+
+    gundeck:
+      host: 0.0.0.0
+      port: 8080
+
+    brig:
+      host: brig
+      port: 8080
+
+    cassandra:
+      endpoint:
+        host: aws-cassandra
+        port: 9042
+      keyspace: gundeck
+    rabbitmq:
+      host: rabbitmq
+      port: 5672
+      vHost: /
+      enableTls: false
+      insecureSkipVerifyTls: false
+
+    redis:
+      host: redis-ephemeral
+      port: 6379
+      connectionMode: master
+      enableTls: false
+      insecureSkipVerifyTls: false
+
+    # Gundeck uses discovery for AWS access key / secrets
+    # For more details, check amazonka's documentation at:
+    # https://hackage.haskell.org/package/amazonka-1.4.5/docs/Network-AWS.html#t:Credentials
+    # later we should have a look at https://github.com/jtblin/kube2iam
+    aws:
+      queueName: 
+      region: eu-west-1
+      account: 
+      arnEnv: 
+      sqsEndpoint: 
+      snsEndpoint: 
+
+    settings:
+      httpPoolSize: 1024
+      notificationTTL: 2.4192e+06
+      disabledAPIVersions: ["development"]
+      # disabledAPIVersions: [ 2 ]
+      maxConcurrentNativePushes:
+        soft: 1000
+        # hard: 30  # more than this number of threads will not be allowed
+      maxPayloadLoadSize : 5.24288e+06
+      internalPageSize : 100
+      consumableNotifications: false
+---
+# Source: wire-server/templates/spar/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "spar"
+data:
+  spar.yaml: |
+    logFormat: StructuredJSON
+    logLevel: Info
+    logNetStrings: false
+
+    brig:
+      host: brig
+      port: 8080
+
+    galley:
+      host: galley
+      port: 8080
+
+    cassandra:
+      endpoint:
+        host: aws-cassandra
+        port: 9042
+      keyspace: spar
+
+    maxttlAuthreq: 7200
+    maxttlAuthresp: 7200
+
+    richInfoLimit: 5000
+
+    maxScimTokens: 0
+
+    enableIdPByEmailDiscovery: false
+
+    idpCertFingerprintAllowlist: []
+
+    disabledAPIVersions: ["development"]
+
+    saml:
+      version:     SAML2.0
+      logLevel:    Info
+
+      spHost: 0.0.0.0
+      spPort: 8080
+      spAppUri: https://example.com
+      spSsoUri: https://example.com/sso
+      contacts:
+        - synthetic@example.com
+
+    scimBaseUri: "https://example.com/scim/v2"
+---
+# Source: wire-server/templates/background-worker/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: background-worker
+  labels:
+    app: background-worker
+    chart: wire-server-0.0.42
+    release: parity
+    heritage: Helm
+  annotations:
+    service.kubernetes.io/topology-mode: Auto
+spec:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+  selector:
+    app: background-worker
+    release: parity
+---
+# Source: wire-server/templates/brig/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: brig
+  labels:
+    app: brig
+    chart: wire-server-0.0.42
+    release: parity
+    heritage: Helm
+  annotations:
+    service.kubernetes.io/topology-mode: Auto
+spec:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+  selector:
+    app: brig
+    release: parity
+---
+# Source: wire-server/templates/cannon/headless-service.yaml
+# Note, this is a Headless service https://kubernetes.io/docs/concepts/services-networking/service/#headless-services
+# We use it this way so we can handle routing requests to specific cannons directly rather than distributing requests
+# between pods.
+#
+# Read more about this technique in the StatefulSet guide:
+# https://kubernetes.io/docs/tutorials/stateful-application/basic-stateful-set/
+apiVersion: v1
+kind: Service
+metadata:
+  name: cannon
+  labels:
+    app: cannon
+    chart: wire-server-0.0.42
+    release: parity
+    heritage: Helm
+  annotations:
+    service.kubernetes.io/topology-mode: Auto
+spec:
+  type: ClusterIP
+  # This is what makes it a Headless Service
+  clusterIP: None
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+      protocol: TCP
+  selector:
+    app: cannon
+    release: parity
+---
+# Source: wire-server/templates/cargohold/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: cargohold
+  labels:
+    app: cargohold
+    chart: wire-server-0.0.42
+    release: parity
+    heritage: Helm
+  annotations:
+    service.kubernetes.io/topology-mode: Auto
+spec:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+  selector:
+    app: cargohold
+    release: parity
+---
+# Source: wire-server/templates/galley/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: galley
+  labels:
+    app: galley
+    chart: wire-server-0.0.42
+    release: parity
+    heritage: Helm
+  annotations:
+    service.kubernetes.io/topology-mode: Auto
+spec:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+  selector:
+    app: galley
+    release: parity
+---
+# Source: wire-server/templates/gundeck/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: gundeck
+  labels:
+    app: gundeck
+    chart: wire-server-0.0.42
+    release: parity
+    heritage: Helm
+  annotations:
+    service.kubernetes.io/topology-mode: Auto
+spec:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+  selector:
+    app: gundeck
+    release: parity
+---
+# Source: wire-server/templates/spar/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: spar
+  labels:
+    app: spar
+    chart: wire-server-0.0.42
+    release: parity
+    heritage: Helm
+  annotations:
+    service.kubernetes.io/topology-mode: Auto
+spec:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+  selector:
+    app: spar
+    release: parity
+---
+# Source: wire-server/templates/background-worker/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: background-worker
+  labels:
+    app: background-worker
+    chart: wire-server-0.0.42
+    release: parity
+    heritage: Helm
+spec:
+  replicas: 1
+  strategy:
+    # Ensures only one version of the background worker is running at any given
+    # moment. This means small downtime, but the background workers should be
+    # able to catch up.
+    type: Recreate
+  selector:
+    matchLabels:
+      app: background-worker
+  template:
+    metadata:
+      labels:
+        app: background-worker
+        release: parity
+      annotations:
+        # An annotation of the configmap checksum ensures changes to the configmap cause a redeployment upon `helm upgrade`
+        checksum/configmap: 66bbaa59dc82122a4af3f4e2fbbc7e2a693d33ed83993aa02c623992d7ab00cd
+        checksum/galley-configmap: 330fff8878995b86411e68fac8ca847589c71b0c23a5bbbd3655f5e811370694
+        checksum/secret: 5f7079d4298fd8c32030761e861a9aab7187ca2f7b8384e8fd7f64d80a3592e7
+        checksum/cassandra-secret: 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
+        checksum/galley-secret: e59a8f8ae120bc87a30af68af4003d1eede6d44a4dd4c25141896b8b76da42fa
+        fluentbit.io/parser: json
+    spec:
+      terminationGracePeriodSeconds: 40
+      serviceAccount: null
+      serviceAccountName: null
+      automountServiceAccountToken: false
+      volumes:
+        - name: "background-worker-config"
+          configMap:
+            name: "background-worker"
+        - name: "galley-config"
+          configMap:
+            name: "galley"
+        - name: "background-worker-secrets"
+          secret:
+            secretName: "background-worker"
+        - name: "galley-secrets"
+          secret:
+            secretName: "galley"
+      containers:
+        - name: background-worker
+          image: "quay.io/wire/background-worker:do-not-use"
+          imagePullPolicy: ""
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            runAsNonRoot: true
+            seccompProfile:
+              type: RuntimeDefault
+          volumeMounts:
+          - name: "background-worker-secrets"
+            mountPath: "/etc/wire/background-worker/secrets"
+          - name: "galley-secrets"
+            mountPath: "/etc/wire/galley/secrets"
+          - name: "background-worker-config"
+            mountPath: "/etc/wire/background-worker/conf"
+          - name: "galley-config"
+            mountPath: "/etc/wire/galley/conf"
+          env:
+          - name: RABBITMQ_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: background-worker
+                key: rabbitmqUsername
+          - name: RABBITMQ_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: background-worker
+                key: rabbitmqPassword
+          startupProbe:
+            httpGet:
+              scheme: HTTP
+              path: /i/status
+              port: 8080
+            failureThreshold: 6
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              scheme: HTTP
+              path: /i/status
+              port: 8080
+          readinessProbe:
+            httpGet:
+              scheme: HTTP
+              path: /i/status
+              port: 8080
+          resources:
+            limits:
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 200Mi
+---
+# Source: wire-server/templates/brig/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: brig
+  labels:
+    app: brig
+    chart: wire-server-0.0.42
+    release: parity
+    heritage: Helm
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 3
+  selector:
+    matchLabels:
+      app: brig
+  template:
+    metadata:
+      labels:
+        app: brig
+        release: parity
+      annotations:
+        # An annotation of the configmap checksum ensures changes to the configmap cause a redeployment upon `helm upgrade`
+        checksum/configmap: 6ccf19e1a4e077e01a50a4bcdfcd87bda79b1cb9c127889b407ceb06ab60ab8a
+        checksum/turnconfigmap: cb66b42988bf26e9a48256dec2d50578cfd2c1c8ace6f5da244fff30a8ad18b5
+        checksum/secret: c862e8bb171a14889bdfa0fb0d5f88dcd21b8dda4c7fa17fa4368674c78e53d7
+        fluentbit.io/parser: json
+    spec:
+      serviceAccountName: brig
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: "kubernetes.io/hostname"
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchLabels:
+              app: brig
+      volumes:
+        - name: "brig-config"
+          configMap:
+            name: "brig"
+        - name: "brig-secrets"
+          secret:
+            secretName: "brig"
+        - name: "turn-servers"
+          configMap:
+            name: "turn"
+      containers:
+        - name: brig
+          image: "quay.io/wire/brig:do-not-use"
+          imagePullPolicy: ""
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            runAsNonRoot: true
+            seccompProfile:
+              type: RuntimeDefault
+          volumeMounts:
+          - name: "brig-secrets"
+            mountPath: "/etc/wire/brig/secrets"
+          - name: "brig-config"
+            mountPath: "/etc/wire/brig/conf"
+          - name: "turn-servers"
+            mountPath: "/etc/wire/brig/turn"
+          env:
+          - name: LOG_LEVEL
+            value: Info
+          - name: AWS_ACCESS_KEY_ID
+            valueFrom:
+              secretKeyRef:
+                name: brig
+                key: awsKeyId
+          - name: AWS_SECRET_ACCESS_KEY
+            valueFrom:
+              secretKeyRef:
+                name: brig
+                key: awsSecretKey
+          # TODO: Is this the best way to do this?
+          - name: AWS_REGION
+            value: "eu-west-1"
+          - name: RABBITMQ_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: brig
+                key: rabbitmqUsername
+          - name: RABBITMQ_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: brig
+                key: rabbitmqPassword
+          ports:
+            - containerPort: 8080
+          startupProbe:
+            httpGet:
+              scheme: HTTP
+              path: /i/status
+              port: 8080
+            failureThreshold: 6
+            periodSeconds: 5
+          livenessProbe:
+            exec:
+              command:
+              - bash
+              - -c
+              - |
+                set -e
+                curl -f http://localhost:8080/i/status 2>/dev/null
+                
+                metrics=$(curl -f http://localhost:8080/i/metrics 2>/dev/null)
+                net_connections=$(echo "$metrics" | grep -o "net_connections [0-9]*" | grep -o "[0-9]*")
+                
+                if [ "$net_connections" -gt "500" ]; then
+                    echo "ERROR: net_connections ($net_connections) exceeds MAX_CONNECTIONS (500)"
+                    exit 1
+                fi
+            failureThreshold: 3
+            periodSeconds: 10
+            timeoutSeconds: 5
+          readinessProbe:
+            httpGet:
+              scheme: HTTP
+              path: /i/status
+              port: 8080
+          resources:
+            limits:
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 200Mi
+---
+# Source: wire-server/templates/cargohold/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cargohold
+  labels:
+    app: cargohold
+    chart: wire-server-0.0.42
+    release: parity
+    heritage: Helm
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 3
+  selector:
+    matchLabels:
+      app: cargohold
+  template:
+    metadata:
+      labels:
+        app: cargohold
+        release: parity
+      annotations:
+        # An annotation of the configmap checksum ensures changes to the configmap cause a redeployment upon `helm upgrade`
+        checksum/configmap: baf224638e88ce54dc115419f5e539ba911ffc693487fd365199aafc02edd913
+        checksum/secret: 10205c6cb1a6f50245ecaed13e6c5590f40b0076da99ffafe816ee43757c616c
+    spec:
+      serviceAccountName: cargohold
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: "kubernetes.io/hostname"
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchLabels:
+              app: cargohold
+      volumes:
+        - name: "cargohold-config"
+          configMap:
+            name: "cargohold"
+        - name: "cargohold-secrets"
+          secret:
+            secretName: "cargohold"
+      containers:
+        - name: cargohold
+          image: "wire-cargohold-go:local"
+          imagePullPolicy: ""
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            runAsNonRoot: true
+            seccompProfile:
+              type: RuntimeDefault
+          volumeMounts:
+          - name: "cargohold-secrets"
+            mountPath: "/etc/wire/cargohold/secrets"
+          - name: "cargohold-config"
+            mountPath: "/etc/wire/cargohold/conf"
+          env:
+          - name: AWS_ACCESS_KEY_ID
+            valueFrom:
+              secretKeyRef:
+                name: cargohold
+                key: awsKeyId
+          - name: AWS_SECRET_ACCESS_KEY
+            valueFrom:
+              secretKeyRef:
+                name: cargohold
+                key: awsSecretKey
+          - name: AWS_REGION
+            value: "eu-west-1"
+          ports:
+            - containerPort: 8080
+          livenessProbe:
+            httpGet:
+              scheme: HTTP
+              path: /i/status
+              port: 8080
+          readinessProbe:
+            httpGet:
+              scheme: HTTP
+              path: /i/status
+              port: 8080
+          resources:
+            limits:
+              memory: 200Mi
+            requests:
+              cpu: 100m
+              memory: 80Mi
+---
+# Source: wire-server/templates/galley/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: galley
+  labels:
+    app: galley
+    chart: wire-server-0.0.42
+    release: parity
+    heritage: Helm
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 3
+  selector:
+    matchLabels:
+      app: galley
+  template:
+    metadata:
+      labels:
+        app: galley
+        release: parity
+      annotations:
+        # An annotation of the configmap checksum ensures changes to the configmap cause a redeployment upon `helm upgrade`
+        checksum/configmap: 330fff8878995b86411e68fac8ca847589c71b0c23a5bbbd3655f5e811370694
+        checksum/aws-secret: 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
+        checksum/secret: e59a8f8ae120bc87a30af68af4003d1eede6d44a4dd4c25141896b8b76da42fa
+    spec:
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: "kubernetes.io/hostname"
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchLabels:
+              app: galley
+      serviceAccountName: galley
+      volumes:
+        - name: "galley-config"
+          configMap:
+            name: "galley"
+        - name: "galley-secrets"
+          secret:
+            secretName: "galley"
+      containers:
+        - name: galley
+          image: "quay.io/wire/galley:do-not-use"
+          imagePullPolicy: ""
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            runAsNonRoot: true
+            seccompProfile:
+              type: RuntimeDefault
+          volumeMounts:
+          - name: "galley-config"
+            mountPath: "/etc/wire/galley/conf"
+          - name: "galley-secrets"
+            mountPath: "/etc/wire/galley/secrets"
+          env:
+          - name: AWS_REGION
+            value: "eu-west-1"
+          ports:
+            - containerPort: 8080
+          livenessProbe:
+            httpGet:
+              scheme: HTTP
+              path: /i/status
+              port: 8080
+          readinessProbe:
+            httpGet:
+              scheme: HTTP
+              path: /i/status
+              port: 8080
+          resources:
+            limits:
+              memory: 500Mi
+            requests:
+              cpu: 100m
+              memory: 100Mi
+---
+# Source: wire-server/templates/gundeck/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gundeck
+  labels:
+    app: gundeck
+    chart: wire-server-0.0.42
+    release: parity
+    heritage: Helm
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 3
+  selector:
+    matchLabels:
+      app: gundeck
+  template:
+    metadata:
+      labels:
+        app: gundeck
+        release: parity
+      annotations:
+        # An annotation of the configmap checksum ensures changes to the configmap cause a redeployment upon `helm upgrade`
+        checksum/configmap: cdb2c6dd6412b00d39d4fcd30c22f991d1671e082df55baf097931ab2bbe9e19
+        checksum/secret: 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
+    spec:
+      terminationGracePeriodSeconds: 40
+      serviceAccountName: gundeck
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: "kubernetes.io/hostname"
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchLabels:
+              app: gundeck
+      volumes:
+        - name: "gundeck-config"
+          configMap:
+            name: "gundeck"
+      containers:
+        - name: gundeck
+          image: "quay.io/wire/gundeck:do-not-use"
+          imagePullPolicy: ""
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            runAsNonRoot: true
+            seccompProfile:
+              type: RuntimeDefault
+          volumeMounts:
+          - name: "gundeck-config"
+            mountPath: "/etc/wire/gundeck/conf"
+          env:
+          - name: RABBITMQ_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: gundeck
+                key: rabbitmqUsername
+          - name: RABBITMQ_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: gundeck
+                key: rabbitmqPassword
+          - name: AWS_REGION
+            value: "eu-west-1" 
+          ports:
+            - containerPort: 8080
+          livenessProbe:
+            httpGet:
+              scheme: HTTP
+              path: /i/status
+              port: 8080
+          readinessProbe:
+            httpGet:
+              scheme: HTTP
+              path: /i/status
+              port: 8080
+          lifecycle:
+            preStop:
+              exec:
+                command: ["sh", "-c", "sleep 10"]
+          resources:
+            limits:
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 300Mi
+---
+# Source: wire-server/templates/spar/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spar
+  labels:
+    app: spar
+    chart: wire-server-0.0.42
+    release: parity
+    heritage: Helm
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 3
+  selector:
+    matchLabels:
+      app: spar
+  template:
+    metadata:
+      labels:
+        app: spar
+        release: parity
+      annotations:
+        # An annotation of the configmap checksum ensures changes to the configmap cause a redeployment upon `helm upgrade`
+        checksum/configmap: 412b9dbb9e2d6e6feeac571c38f87fc5e8147a5d0889f7b5af00a0db5733f4a3
+    spec:
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: "kubernetes.io/hostname"
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchLabels:
+              app: spar
+      volumes:
+        - name: "spar-config"
+          configMap:
+            name: "spar"
+      containers:
+        - name: spar
+          image: "quay.io/wire/spar:do-not-use"
+          imagePullPolicy: ""
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            runAsNonRoot: true
+            seccompProfile:
+              type: RuntimeDefault
+          volumeMounts:
+          - name: "spar-config"
+            mountPath: "/etc/wire/spar/conf"
+          env: 
+          ports:
+            - containerPort: 8080
+          livenessProbe:
+            httpGet:
+              scheme: HTTP
+              path: /i/status
+              port: 8080
+          readinessProbe:
+            httpGet:
+              scheme: HTTP
+              path: /i/status
+              port: 8080
+          resources:
+            limits:
+              memory: 200Mi
+            requests:
+              cpu: 50m
+              memory: 100Mi
+---
+# Source: wire-server/templates/cannon/statefulset.yaml
+# Spins up pods with stable names; e.g. cannon-0 ... cannon-<replicaCount>
+# Specific pods can be accessed within the cluster at cannon-<n>.cannon.<namespace>
+# (the second 'cannon' is the name of the headless service)
+# Note: In fact, cannon-<n>.cannon can also be used to access the service but assuming
+# that we can have multiple namespaces accessing the same redis cluster, appending `.<namespace>`
+# makes the service unambiguous
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: cannon
+  labels:
+    app: cannon
+    chart: wire-server-0.0.42
+    release: parity
+    heritage: Helm
+spec:
+  serviceName: cannon
+  selector:
+    matchLabels:
+      app: cannon
+  replicas: 3
+  updateStrategy:
+    type: RollingUpdate
+  podManagementPolicy: Parallel
+  template:
+    metadata:
+      labels:
+        app: cannon
+        release: parity
+      annotations:
+        checksum/configmap: 8d733d7ac3b8fa300c499e33f13149c95a0b5692546aac363f1ba12ffd201949
+        checksum/cassandra-secret: 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
+    spec:
+      terminationGracePeriodSeconds: 30
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: "kubernetes.io/hostname"
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchLabels:
+              app: cannon
+      containers:
+      - name: cannon
+        env:
+          - name: RABBITMQ_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: cannon
+                key: rabbitmqUsername
+          - name: RABBITMQ_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: cannon
+                key: rabbitmqPassword
+        image: "quay.io/wire/cannon:do-not-use"
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          runAsNonRoot: true
+          seccompProfile:
+            type: RuntimeDefault
+        args:
+          []
+        volumeMounts:
+          - name: empty
+            mountPath: /etc/wire/cannon/externalHost
+          - name: cannon-config
+            mountPath: /etc/wire/cannon/conf
+        ports:
+          - name: http
+            containerPort: 8080
+        readinessProbe:
+          httpGet:
+            path: /i/status
+            port: 8080
+            scheme: HTTP
+        livenessProbe:
+          initialDelaySeconds: 30
+          timeoutSeconds: 1
+          httpGet:
+            path: /i/status
+            port: 8080
+            scheme: HTTP
+        resources:
+          limits:
+            memory: 1024Mi
+          requests:
+            cpu: 100m
+            memory: 256Mi
+      initContainers:
+      - name: cannon-configurator
+        image: "alpine:3.24.1"
+        imagePullPolicy: "IfNotPresent"
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          runAsNonRoot: true
+          seccompProfile:
+            type: RuntimeDefault
+          runAsUser: 65534
+        command:
+        - /bin/sh
+        args:
+        - -c
+        # e.g. cannon-0.cannon.production
+        - echo "${HOSTNAME}.cannon.default" > /etc/wire/cannon/externalHost/host.txt
+        volumeMounts:
+        - name: empty
+          mountPath: /etc/wire/cannon/externalHost
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      volumes:
+      - name: cannon-config
+        configMap:
+          name: cannon
+      - name: empty
+        emptyDir: {}
+---
+# Source: wire-server/templates/brig/elasticsearch-ca-secret.yaml
+---
+---
+# Source: wire-server/templates/gundeck/redis-ca-secret.yaml
+---
+---
+# Source: wire-server/templates/brig/tests/secret.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: brig-integration
+  labels:
+    app: brig-integration
+    chart: wire-server-0.0.42
+    release: "parity"
+    heritage: "Helm"
+  annotations:
+    "helm.sh/hook": post-install,post-upgrade
+    "helm.sh/hook-delete-policy": before-hook-creation
+type: Opaque
+data:
+  provider-privatekey.pem: "LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLQpNSUlFcEFJQkFBS0NBUUVBdStLZy9QSEhVM2F0WHJVYktudzBHMDZGbGlYY050M2xNd2wyb3M1dHdFRGNQUEZ3Ci9mZUdpQUt5bXhwKzdKcVpEcnNlUzVEOVRIR3JXK09RUklQSFd2VUJkaUxmR3JacUpPMjIzREI2RDhLMlN1L28KZG1ualpKMnoyM3JoWG9FQXJUcGx1K0RnOUsrYzJMVmVYVEtWVlBPYU96Z3RBQjIxWEtSaVE0ZXJtcWdpMy9uagpyMDNyWHlxL3FOa3VOZDZ0TmNnK0hBZkd4Zkd2dkNTWUJmaVNiVUtyL0JlQXJZUmNqenIvaDVtMUluNmZHL2lmCjlHRUk2bThkeEhUOUpiWTUzd2lrc293eTZhakN1cXNrSUZnODdYODgzSCtMQS9kNlg1Q1RpUHYxVk14WGRCVWkKR1B1QzlJVC82Q05RMS9MRnQwUDM3YXg1OCtMR1lsYUZvN2xhblFJREFRQUJBb0lCQVFDMGRvVnk3emdwTHNCdgpTejBBbmJQZTFwanhFd1JsbnRSYkpTZlNVTHlTQUxxSnZzNXM0YWRTVkdVQkhYM3ovTG91c0FQMVNScENwcHVVCjh3ckxCRmdqUVZsYUF6eVFCODRFRWwrbE50ckc4SnJ2ZDJlczlSLzRzSkRrcXk1MCt5dVBONXdueldQRklqaGcKM2pQNUNIRHUyOXkwTE16c1k1eWprekRlOUIwYnVlWEVaVlUrZ3VSamhwd0hIS09GZUFyOUo5YnVnRlV3Z2VBcgpqRjBUenR6RkFiMGZzVU5QaVFBaG8xSjVQeWpTVmdJdGFQZkFQdi9wMzBST0crcnorUmQ1TlNTdkJDNUYreU9vCmF6Yjg0enp3Q2cva25BZkl6N1NPTVJybUJoMnFoR1pGWjhnWGRxNjVVYVl2K2NwVC9xbzI4bXBBVDJ2T2t5ZUQKYVBacDB5c0JBb0dCQU9RUk9vRGlwZS81QlRIQmNYWXVVRTFxYTRSSWozd2dxbDVJOGlnWHI0SzZwcFlCbWFPZwpETDJycm5xRDg2Y2h2MFA0bC9YT29tS0Z3WWhWR1h0cVJrZVluazZtUVh3TlZrZ3FjR2JZNVBTTnlNZzUrZWtxCmpTT09QSEd6elRXS3pZdVVEVXBCL0xmNmpiVHY4ZnEyR1lXM1pZaXFRL3hpdWdPdmdsWnJURTdOQW9HQkFOTGwKaXJqQnlmeEFXR2h6Q3JEeDB4NU1CcHNldGFkSTl3VUE4dTFCRGR5bXNSZzczRkRuM3o3TmlwVlVBTURYTUdWagpscWJDUmxIRVNPMnlQNEdhUEVBNEZNK01iVFpTdWhBWVYrU1kwN21FUExIRjY0L25KYXM4M1pwOTFyNXJoYXFKCkw5cldDbDNLSjVPVW5yM1lpekNuSElXNzJGeGp3dHBqeEhKTHVwc1JBb0dBR0liaHk4cVVIZUtoOUYvaFc5eFAKTm9RalcrNlJ2Nytqa3RBMWVxcFJiYlcxQkp6WGNRbGRWV2lKTXhQTnVFT2cxaVo5OFNsdnZUaTFQM3duYVdaYwplSWFwUDd3UmZzM1FZYUp1eENDL1BxMmcwaWVxQUxGYXpHQVhrQUxPSnR2dWp2dzFFYTlYQmxJanV6bXl4RXVoCkl3ZytHeHgwZzBmNnlUcXV3YXg0WUdFQ2dZRUFucEFLM3FLRk5PMUVDelFEbzhvTnkwZXA1OU1ORFB0bERoUUsKa2F0SnVzNXhkQ0Q5b3E3VFFLclZPVFR4WkF2bXpUUTFQcWZ1cXVlRFZZT2hEOVpnMm4vUDFjUmxFR1Rlazk5WgpwZnZwcEIveWFrNityM0ZBOXlCS0ZTL3IxenVNUWczbk53ZWF2NjJRVi90ejVwVDdBZGVETUdGdGFQbHd0VFl4CnF5V1k1YUVDZ1lCUHlTYlBjY05qK3h4UXp4Y3RpMnkvVVhqQzA0UmdPQS9IbTFEMGV4YTB2QnFTOXV4bE9kRzgKRjQ3cktlbnBCcnNsdmRmVFZzQ0RCMXh5UDJlYldWenA2RXFNeWN3Nk9MUHhnbzNmQmZaNHBpNlArckJ5aDBDYwpMaGZoK0VUMENQbktDeHRvcDNsVXJuNFp2cWNoUzBqM0orTTBwRHVxb1dGNWhmS3hGaGtFSXc9PQotLS0tLUVORCBSU0EgUFJJVkFURSBLRVktLS0tLQo="
+  provider-publickey.pem: "LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0KTUlJQklqQU5CZ2txaGtpRzl3MEJBUUVGQUFPQ0FROEFNSUlCQ2dLQ0FRRUF1K0tnL1BISFUzYXRYclViS253MApHMDZGbGlYY050M2xNd2wyb3M1dHdFRGNQUEZ3L2ZlR2lBS3lteHArN0pxWkRyc2VTNUQ5VEhHclcrT1FSSVBICld2VUJkaUxmR3JacUpPMjIzREI2RDhLMlN1L29kbW5qWkoyejIzcmhYb0VBclRwbHUrRGc5SytjMkxWZVhUS1YKVlBPYU96Z3RBQjIxWEtSaVE0ZXJtcWdpMy9uanIwM3JYeXEvcU5rdU5kNnROY2crSEFmR3hmR3Z2Q1NZQmZpUwpiVUtyL0JlQXJZUmNqenIvaDVtMUluNmZHL2lmOUdFSTZtOGR4SFQ5SmJZNTN3aWtzb3d5NmFqQ3Vxc2tJRmc4CjdYODgzSCtMQS9kNlg1Q1RpUHYxVk14WGRCVWlHUHVDOUlULzZDTlExL0xGdDBQMzdheDU4K0xHWWxhRm83bGEKblFJREFRQUIKLS0tLS1FTkQgUFVCTElDIEtFWS0tLS0tCg=="
+  provider-publiccert.pem: "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURkakNDQWw0Q0NRQ20wQWl3RVJSL3FqQU5CZ2txaGtpRzl3MEJBUXNGQURCOU1Rc3dDUVlEVlFRR0V3SkUKUlRFUE1BMEdBMVVFQ0F3R1FtVnliR2x1TVE4d0RRWURWUVFIREFaQ1pYSnNhVzR4R0RBV0JnTlZCQW9NRDFkcApjbVVnVTNkcGMzTWdSMjFpU0RFUk1BOEdBMVVFQXd3SWQybHlaUzVqYjIweEh6QWRCZ2txaGtpRzl3MEJDUUVXCkVHSmhZMnRsYm1SQWQybHlaUzVqYjIwd0hoY05NVFl3T0RBME1UTXhORFF5V2hjTk16WXdOek13TVRNeE5EUXkKV2pCOU1Rc3dDUVlEVlFRR0V3SkVSVEVQTUEwR0ExVUVDQXdHUW1WeWJHbHVNUTh3RFFZRFZRUUhEQVpDWlhKcwphVzR4R0RBV0JnTlZCQW9NRDFkcGNtVWdVM2RwYzNNZ1IyMWlTREVSTUE4R0ExVUVBd3dJZDJseVpTNWpiMjB4Ckh6QWRCZ2txaGtpRzl3MEJDUUVXRUdKaFkydGxibVJBZDJseVpTNWpiMjB3Z2dFaU1BMEdDU3FHU0liM0RRRUIKQVFVQUE0SUJEd0F3Z2dFS0FvSUJBUUM3NHFEODhjZFRkcTFldFJzcWZEUWJUb1dXSmR3MjNlVXpDWGFpem0zQQpRTnc4OFhEOTk0YUlBcktiR243c21wa091eDVMa1AxTWNhdGI0NUJFZzhkYTlRRjJJdDhhdG1vazdiYmNNSG9QCndyWks3K2gyYWVOa25iUGJldUZlZ1FDdE9tVzc0T0QwcjV6WXRWNWRNcFZVODVvN09DMEFIYlZjcEdKRGg2dWEKcUNMZitlT3ZUZXRmS3IrbzJTNDEzcTAxeUQ0Y0I4YkY4YSs4SkpnRitKSnRRcXY4RjRDdGhGeVBPditIbWJVaQpmcDhiK0ovMFlRanFieDNFZFAwbHRqbmZDS1N5akRMcHFNSzZxeVFnV0R6dGZ6emNmNHNEOTNwZmtKT0krL1ZVCnpGZDBGU0lZKzRMMGhQL29JMURYOHNXM1EvZnRySG56NHNaaVZvV2p1VnFkQWdNQkFBRXdEUVlKS29aSWh2Y04KQVFFTEJRQURnZ0VCQUV1d2xIRWxJR1I1NktWQzFkSml3MjM4bURHak1mUXpTUDc2V2k0eldTNi96WndKVXVvZwpCa0MrdmFjZmp1OFVBTXZMK3ZkcWtqT1ZVSG9yODQvMnd1cTBxbjkxQWpPSVREN3RSQVpCK1hMWHhzaWtLdi92Ck9YRTNBL2xDaU5pODgyTmVnUHlYQWZGUHAvNzFDSWlUUVpwczFlUWtBdmhENXQ1V2lGWVBFU3hEbHZFSnJIRlkKWFA0K3BwOGZMOFlQUzdpWk5JcSt6K1A4eVZJdytCL0hzMGh0N3dGSVlOMHhBQ2JVOG05K1JzMDhKTW9UMTZjKwpoWk11SzNCV0QzZnprUVZmVzB5TXd6NmZXUlhCNDgzWm1la0drZ25kT1REb0pRTWRKWFp4SHBJM3QyRmN4UVlqClQ0NUdYeFJkMThuZVh0dVlhL09vQXc5VVFGRE41WGZYTjBnPQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg=="
+---
+# Source: wire-server/templates/galley/tests/secret.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: galley-integration
+  labels:
+    app: galley-integration
+    chart: wire-server-0.0.42
+    release: "parity"
+    heritage: "Helm"
+  annotations:
+    "helm.sh/hook": post-install,post-upgrade
+    "helm.sh/hook-delete-policy": before-hook-creation
+type: Opaque
+data:
+  provider-privatekey.pem: "LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLQpNSUlFcEFJQkFBS0NBUUVBdStLZy9QSEhVM2F0WHJVYktudzBHMDZGbGlYY050M2xNd2wyb3M1dHdFRGNQUEZ3Ci9mZUdpQUt5bXhwKzdKcVpEcnNlUzVEOVRIR3JXK09RUklQSFd2VUJkaUxmR3JacUpPMjIzREI2RDhLMlN1L28KZG1ualpKMnoyM3JoWG9FQXJUcGx1K0RnOUsrYzJMVmVYVEtWVlBPYU96Z3RBQjIxWEtSaVE0ZXJtcWdpMy9uagpyMDNyWHlxL3FOa3VOZDZ0TmNnK0hBZkd4Zkd2dkNTWUJmaVNiVUtyL0JlQXJZUmNqenIvaDVtMUluNmZHL2lmCjlHRUk2bThkeEhUOUpiWTUzd2lrc293eTZhakN1cXNrSUZnODdYODgzSCtMQS9kNlg1Q1RpUHYxVk14WGRCVWkKR1B1QzlJVC82Q05RMS9MRnQwUDM3YXg1OCtMR1lsYUZvN2xhblFJREFRQUJBb0lCQVFDMGRvVnk3emdwTHNCdgpTejBBbmJQZTFwanhFd1JsbnRSYkpTZlNVTHlTQUxxSnZzNXM0YWRTVkdVQkhYM3ovTG91c0FQMVNScENwcHVVCjh3ckxCRmdqUVZsYUF6eVFCODRFRWwrbE50ckc4SnJ2ZDJlczlSLzRzSkRrcXk1MCt5dVBONXdueldQRklqaGcKM2pQNUNIRHUyOXkwTE16c1k1eWprekRlOUIwYnVlWEVaVlUrZ3VSamhwd0hIS09GZUFyOUo5YnVnRlV3Z2VBcgpqRjBUenR6RkFiMGZzVU5QaVFBaG8xSjVQeWpTVmdJdGFQZkFQdi9wMzBST0crcnorUmQ1TlNTdkJDNUYreU9vCmF6Yjg0enp3Q2cva25BZkl6N1NPTVJybUJoMnFoR1pGWjhnWGRxNjVVYVl2K2NwVC9xbzI4bXBBVDJ2T2t5ZUQKYVBacDB5c0JBb0dCQU9RUk9vRGlwZS81QlRIQmNYWXVVRTFxYTRSSWozd2dxbDVJOGlnWHI0SzZwcFlCbWFPZwpETDJycm5xRDg2Y2h2MFA0bC9YT29tS0Z3WWhWR1h0cVJrZVluazZtUVh3TlZrZ3FjR2JZNVBTTnlNZzUrZWtxCmpTT09QSEd6elRXS3pZdVVEVXBCL0xmNmpiVHY4ZnEyR1lXM1pZaXFRL3hpdWdPdmdsWnJURTdOQW9HQkFOTGwKaXJqQnlmeEFXR2h6Q3JEeDB4NU1CcHNldGFkSTl3VUE4dTFCRGR5bXNSZzczRkRuM3o3TmlwVlVBTURYTUdWagpscWJDUmxIRVNPMnlQNEdhUEVBNEZNK01iVFpTdWhBWVYrU1kwN21FUExIRjY0L25KYXM4M1pwOTFyNXJoYXFKCkw5cldDbDNLSjVPVW5yM1lpekNuSElXNzJGeGp3dHBqeEhKTHVwc1JBb0dBR0liaHk4cVVIZUtoOUYvaFc5eFAKTm9RalcrNlJ2Nytqa3RBMWVxcFJiYlcxQkp6WGNRbGRWV2lKTXhQTnVFT2cxaVo5OFNsdnZUaTFQM3duYVdaYwplSWFwUDd3UmZzM1FZYUp1eENDL1BxMmcwaWVxQUxGYXpHQVhrQUxPSnR2dWp2dzFFYTlYQmxJanV6bXl4RXVoCkl3ZytHeHgwZzBmNnlUcXV3YXg0WUdFQ2dZRUFucEFLM3FLRk5PMUVDelFEbzhvTnkwZXA1OU1ORFB0bERoUUsKa2F0SnVzNXhkQ0Q5b3E3VFFLclZPVFR4WkF2bXpUUTFQcWZ1cXVlRFZZT2hEOVpnMm4vUDFjUmxFR1Rlazk5WgpwZnZwcEIveWFrNityM0ZBOXlCS0ZTL3IxenVNUWczbk53ZWF2NjJRVi90ejVwVDdBZGVETUdGdGFQbHd0VFl4CnF5V1k1YUVDZ1lCUHlTYlBjY05qK3h4UXp4Y3RpMnkvVVhqQzA0UmdPQS9IbTFEMGV4YTB2QnFTOXV4bE9kRzgKRjQ3cktlbnBCcnNsdmRmVFZzQ0RCMXh5UDJlYldWenA2RXFNeWN3Nk9MUHhnbzNmQmZaNHBpNlArckJ5aDBDYwpMaGZoK0VUMENQbktDeHRvcDNsVXJuNFp2cWNoUzBqM0orTTBwRHVxb1dGNWhmS3hGaGtFSXc9PQotLS0tLUVORCBSU0EgUFJJVkFURSBLRVktLS0tLQo="
+  provider-publickey.pem: "LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0KTUlJQklqQU5CZ2txaGtpRzl3MEJBUUVGQUFPQ0FROEFNSUlCQ2dLQ0FRRUF1K0tnL1BISFUzYXRYclViS253MApHMDZGbGlYY050M2xNd2wyb3M1dHdFRGNQUEZ3L2ZlR2lBS3lteHArN0pxWkRyc2VTNUQ5VEhHclcrT1FSSVBICld2VUJkaUxmR3JacUpPMjIzREI2RDhLMlN1L29kbW5qWkoyejIzcmhYb0VBclRwbHUrRGc5SytjMkxWZVhUS1YKVlBPYU96Z3RBQjIxWEtSaVE0ZXJtcWdpMy9uanIwM3JYeXEvcU5rdU5kNnROY2crSEFmR3hmR3Z2Q1NZQmZpUwpiVUtyL0JlQXJZUmNqenIvaDVtMUluNmZHL2lmOUdFSTZtOGR4SFQ5SmJZNTN3aWtzb3d5NmFqQ3Vxc2tJRmc4CjdYODgzSCtMQS9kNlg1Q1RpUHYxVk14WGRCVWlHUHVDOUlULzZDTlExL0xGdDBQMzdheDU4K0xHWWxhRm83bGEKblFJREFRQUIKLS0tLS1FTkQgUFVCTElDIEtFWS0tLS0tCg=="
+  provider-publiccert.pem: "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURkakNDQWw0Q0NRQ20wQWl3RVJSL3FqQU5CZ2txaGtpRzl3MEJBUXNGQURCOU1Rc3dDUVlEVlFRR0V3SkUKUlRFUE1BMEdBMVVFQ0F3R1FtVnliR2x1TVE4d0RRWURWUVFIREFaQ1pYSnNhVzR4R0RBV0JnTlZCQW9NRDFkcApjbVVnVTNkcGMzTWdSMjFpU0RFUk1BOEdBMVVFQXd3SWQybHlaUzVqYjIweEh6QWRCZ2txaGtpRzl3MEJDUUVXCkVHSmhZMnRsYm1SQWQybHlaUzVqYjIwd0hoY05NVFl3T0RBME1UTXhORFF5V2hjTk16WXdOek13TVRNeE5EUXkKV2pCOU1Rc3dDUVlEVlFRR0V3SkVSVEVQTUEwR0ExVUVDQXdHUW1WeWJHbHVNUTh3RFFZRFZRUUhEQVpDWlhKcwphVzR4R0RBV0JnTlZCQW9NRDFkcGNtVWdVM2RwYzNNZ1IyMWlTREVSTUE4R0ExVUVBd3dJZDJseVpTNWpiMjB4Ckh6QWRCZ2txaGtpRzl3MEJDUUVXRUdKaFkydGxibVJBZDJseVpTNWpiMjB3Z2dFaU1BMEdDU3FHU0liM0RRRUIKQVFVQUE0SUJEd0F3Z2dFS0FvSUJBUUM3NHFEODhjZFRkcTFldFJzcWZEUWJUb1dXSmR3MjNlVXpDWGFpem0zQQpRTnc4OFhEOTk0YUlBcktiR243c21wa091eDVMa1AxTWNhdGI0NUJFZzhkYTlRRjJJdDhhdG1vazdiYmNNSG9QCndyWks3K2gyYWVOa25iUGJldUZlZ1FDdE9tVzc0T0QwcjV6WXRWNWRNcFZVODVvN09DMEFIYlZjcEdKRGg2dWEKcUNMZitlT3ZUZXRmS3IrbzJTNDEzcTAxeUQ0Y0I4YkY4YSs4SkpnRitKSnRRcXY4RjRDdGhGeVBPditIbWJVaQpmcDhiK0ovMFlRanFieDNFZFAwbHRqbmZDS1N5akRMcHFNSzZxeVFnV0R6dGZ6emNmNHNEOTNwZmtKT0krL1ZVCnpGZDBGU0lZKzRMMGhQL29JMURYOHNXM1EvZnRySG56NHNaaVZvV2p1VnFkQWdNQkFBRXdEUVlKS29aSWh2Y04KQVFFTEJRQURnZ0VCQUV1d2xIRWxJR1I1NktWQzFkSml3MjM4bURHak1mUXpTUDc2V2k0eldTNi96WndKVXVvZwpCa0MrdmFjZmp1OFVBTXZMK3ZkcWtqT1ZVSG9yODQvMnd1cTBxbjkxQWpPSVREN3RSQVpCK1hMWHhzaWtLdi92Ck9YRTNBL2xDaU5pODgyTmVnUHlYQWZGUHAvNzFDSWlUUVpwczFlUWtBdmhENXQ1V2lGWVBFU3hEbHZFSnJIRlkKWFA0K3BwOGZMOFlQUzdpWk5JcSt6K1A4eVZJdytCL0hzMGh0N3dGSVlOMHhBQ2JVOG05K1JzMDhKTW9UMTZjKwpoWk11SzNCV0QzZnprUVZmVzB5TXd6NmZXUlhCNDgzWm1la0drZ25kT1REb0pRTWRKWFp4SHBJM3QyRmN4UVlqClQ0NUdYeFJkMThuZVh0dVlhL09vQXc5VVFGRE41WGZYTjBnPQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg=="
+---
+# Source: wire-server/templates/brig/tests/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "brig-integration"
+  annotations:
+    "helm.sh/hook": post-install,post-upgrade
+    "helm.sh/hook-delete-policy": before-hook-creation
+data:
+  integration.yaml: |
+    brig:
+      # Full URL is set so that there can be a common cookiedomain between nginz and brig
+      # needed by some integration tests
+      host: brig.default.svc.cluster.local
+      port: 8080
+
+    cannon:
+      host: cannon
+      port: 8080
+
+    galley:
+      host: galley
+      port: 8080
+
+    cargohold:
+      host: cargohold
+      port: 8080
+
+    gundeck:
+      host: gundeck
+      port: 8080
+
+    spar:
+      host: spar
+      port: 8080
+
+    multiSFT: false
+
+    # TODO remove this
+    federator:
+      host: federator
+      port: 8080
+
+    federatorInternal:
+      host: federator
+      port: 8080
+
+    federatorExternal:
+      host: federator
+      port: 8081
+
+    nginz:
+      # Full URL is set so that there can be a common cookiedomain between nginz and brig
+      # needed by some integration tests
+      host: nginz-integration-http.default.svc.cluster.local
+      port: 8080
+
+    provider:
+      privateKey: /etc/wire/integration-secrets/provider-privatekey.pem
+      publicKey: /etc/wire/integration-secrets/provider-publickey.pem
+      cert: /etc/wire/integration-secrets/provider-publiccert.pem
+      botHost: https://brig-integration
+
+    backendTwo:
+      brig:
+        host: brig.default-fed2.svc.cluster.local
+        port: 8080
+
+      galley:
+        host: galley.default-fed2.svc.cluster.local
+        port: 8080
+
+      cargohold:
+        host: cargohold.default-fed2.svc.cluster.local
+        port: 8080
+
+      cannon:
+        host: cannon.default-fed2.svc.cluster.local
+        port: 8080
+
+      # TODO remove this
+      federator:
+        host: federator.default-fed2.svc.cluster.local
+        port: 8080
+
+      federatorInternal:
+        host: federator.default-fed2.svc.cluster.local
+        port: 8080
+
+      federatorExternal:
+        host: federator.default-fed2.svc.cluster.local
+        port: 8081
+
+    additionalElasticSearch: https://elasticsearch-ephemeral:9200
+---
+# Source: wire-server/templates/cargohold/tests/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "cargohold-integration"
+  annotations:
+    "helm.sh/hook": post-install,post-upgrade
+    "helm.sh/hook-delete-policy": before-hook-creation
+data:
+  integration.yaml: |
+    cargohold:
+      host: cargohold
+      port: 8080
+    brig:
+      host: brig
+      port: 8080
+---
+# Source: wire-server/templates/galley/tests/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "galley-integration"
+  annotations:
+    "helm.sh/hook": post-install,post-upgrade
+    "helm.sh/hook-delete-policy": before-hook-creation
+data:
+  integration.yaml: |
+    galley:
+      host: galley
+      port: 8080
+
+    brig:
+      host: brig
+      port: 8080
+
+    cannon:
+      host: cannon
+      port: 8080
+
+    federator:
+      host: federator
+      port: 8080
+
+    provider:
+      privateKey: /etc/wire/integration-secrets/provider-privatekey.pem
+      publicKey: /etc/wire/integration-secrets/provider-publickey.pem
+      cert: /etc/wire/integration-secrets/provider-publiccert.pem
+      botHost: https://galley-integration
+---
+# Source: wire-server/templates/gundeck/tests/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "gundeck-integration"
+  annotations:
+    "helm.sh/hook": post-install,post-upgrade
+    "helm.sh/hook-delete-policy": before-hook-creation
+data:
+  integration.yaml: |
+    gundeck:
+      host: gundeck
+      port: 8080
+
+    cannon:
+      host: cannon
+      port: 8080
+
+    cannon2:
+      # some gundeck integration tests make use of two different
+      # cannon instances to test the distributed case.  when running
+      # the integration tests locally, the two instances will be spun
+      # up separately (see `wire-server/dist/run-services`).
+      #
+      # here, we spin up two replicas, provide the integration tests
+      # with the same service coordinates, and rely on the k8s load
+      # balancer to give us both replicas in at least some cases.
+      # this would be enough to make the test meaningful.
+      #
+      # alternatively (eg. if we have more involved integration tests
+      # that expect ca and ca2 to deterministically refer to specific
+      # replicas), we could enter the IP addresses of the replicas
+      # here.  those are available from `kubectl get endpoints`, but
+      # how do we inject that info into the config file on time for
+      # the gundeck integration tests to find them there?
+      host: cannon
+      port: 8080
+
+    brig:
+      host: brig
+      port: 8080
+
+    # a "redis migration" test in gundeck makes use of a second (distinct) redis
+    redis2:
+      host: redis-ephemeral-2
+      port: 6379
+      connectionMode: master
+      enableTls: false
+      insecureSkipVerifyTls: false
+---
+# Source: wire-server/templates/spar/tests/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "spar-integration"
+  annotations:
+    "helm.sh/hook": post-install,post-upgrade
+    "helm.sh/hook-delete-policy": before-hook-creation
+data:
+  integration.yaml: |
+    brig:
+      host: brig
+      port: 8080
+
+    galley:
+      host: galley
+      port: 8080
+
+    spar:
+      host: spar
+      port: 8080
+
+    # Keep this in sync with brigs setTeamInvitationTimeout
+    brigSettingsTeamInvitationTimeout: 10
+---
+# Source: wire-server/templates/brig/tests/brig-integration.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: "brig-integration"
+  annotations:
+    "helm.sh/hook": post-install,post-upgrade
+    "helm.sh/hook-delete-policy": before-hook-creation
+  labels:
+    app: brig-integration
+    chart: wire-server-0.0.42
+    release: parity
+    heritage: Helm
+spec:
+  type: ClusterIP
+  clusterIP: None
+  selector:
+    app: brig-integration
+    release: parity
+---
+# Source: wire-server/templates/brig/tests/nginz-service.yaml
+# this service is needed for brig integration tests and allows brig to talk directly to nginz over http
+# (this is not how you should normally configure nginz - use an ingress instead)
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginz-integration-http
+  annotations:
+    "helm.sh/hook": post-install,post-upgrade
+    "helm.sh/hook-delete-policy": before-hook-creation
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: nginz
+---
+# Source: wire-server/templates/galley/tests/galley-integration.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: "galley-integration"
+  annotations:
+    "helm.sh/hook": post-install,post-upgrade
+    "helm.sh/hook-delete-policy": before-hook-creation
+  labels:
+    app: galley-integration
+    chart: wire-server-0.0.42
+    release: parity
+    heritage: Helm
+spec:
+  type: ClusterIP
+  clusterIP: None
+  selector:
+    app: galley-integration
+    release: parity
+---
+# Source: wire-server/templates/brig/tests/brig-integration.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "parity-brig-integration"
+  annotations:
+    "helm.sh/hook": test
+  labels:
+    app: brig-integration
+    release: parity
+spec:
+  volumes:
+    - name: "brig-integration"
+      configMap:
+        name: "brig-integration"
+    # Needed in order to read some values from the brig service
+    - name: "brig-config"
+      configMap:
+        name: "brig"
+    - name: "brig-secrets"
+      secret:
+        secretName: "brig"
+    - name: "turn-servers"
+      configMap:
+        name: "turn"
+    - name: "brig-integration-secrets"
+      secret:
+        secretName: "brig-integration"
+  containers:
+  - name: integration
+    image: "quay.io/wire/brig-integration:do-not-use"
+    securityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+        - ALL
+      runAsNonRoot: true
+      seccompProfile:
+        type: RuntimeDefault
+    # TODO: Add TURN tests once we have an actual way to test it
+    # The brig-integration tests mutate the turn settings files before tests
+    # to get certain behaviour. This doesn't work on kubernetes because brig
+    # is a different pod than brig-integration and they can't both mouht the
+    # same file-system.
+    # The other test, "user.auth.cookies.limit", is skipped as it is flaky.
+    # This is tracked in https://github.com/zinfra/backend-issues/issues/1150.
+    command:
+    - /bin/bash
+    - -c
+    - |
+      set -euo pipefail
+
+      if brig-integration --xml "$TEST_XML" --pattern "!/turn/ && !/user.auth.cookies.limit/"; then
+        exit_code=$?
+      else
+        exit_code=$?
+      fi
+
+      exit $exit_code
+    volumeMounts:
+    - name: "brig-integration"
+      mountPath: "/etc/wire/integration"
+    - name: "brig-config"
+      mountPath: "/etc/wire/brig/conf"
+    - name: "brig-secrets"
+      mountPath: "/etc/wire/brig/secrets"
+    - name: "turn-servers"
+      mountPath: "/etc/wire/brig/turn"
+    - name: "brig-integration-secrets"
+      # TODO: Maybe we should put integration yaml also under
+      #       `/integration/conf` by default? Note that currently
+      #       brig-integration cannot read config files from
+      #       non-default locations
+      #       (see corresp. TODO in galley.)
+      mountPath: "/etc/wire/integration-secrets"
+
+    env:
+    # these dummy values are necessary for Amazonka's "Discover"
+    - name: AWS_ACCESS_KEY_ID
+      value: "dummy"
+    - name: AWS_SECRET_ACCESS_KEY
+      value: "dummy"
+    - name: AWS_REGION
+      value: "eu-west-1"
+    - name: RABBITMQ_USERNAME
+      value: "guest"
+    - name: RABBITMQ_PASSWORD
+      value: "guest"
+    - name: TEST_XML
+      value: /tmp/result.xml
+    resources:
+      requests:
+        memory: "512Mi"
+        cpu: "2"
+  restartPolicy: Never
+---
+# Source: wire-server/templates/cargohold/tests/cargohold-integration.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "parity-cargohold-integration"
+  annotations:
+    "helm.sh/hook": test
+spec:
+  volumes:
+    - name: "cargohold-integration"
+      configMap:
+        name: "cargohold-integration"
+    - name: "cargohold-config"
+      configMap:
+        name: "cargohold"
+  containers:
+    # NOTE: the bucket for these tests must be created.
+    # If using the wire-server/fake-aws-s3 chart, `dummy-bucket` will already be created.
+  - name: integration
+    image: "quay.io/wire/cargohold-integration:do-not-use"
+    securityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+        - ALL
+      runAsNonRoot: true
+      seccompProfile:
+        type: RuntimeDefault
+    command:
+    - /bin/bash
+    - -c
+    - |
+      set -euo pipefail
+
+      if cargohold-integration --xml "$TEST_XML"; then
+        exit_code=$?
+      else
+        exit_code=$?
+      fi
+
+      exit $exit_code
+    volumeMounts:
+    - name: "cargohold-integration"
+      mountPath: "/etc/wire/integration"
+    - name: "cargohold-config"
+      mountPath: "/etc/wire/cargohold/conf"
+    env:
+    # these values are necessary for Amazonka's "Discover"
+    - name: AWS_ACCESS_KEY_ID
+      valueFrom:
+        secretKeyRef:
+          name: cargohold
+          key: awsKeyId
+    - name: AWS_SECRET_ACCESS_KEY
+      valueFrom:
+        secretKeyRef:
+          name: cargohold
+          key: awsSecretKey
+    - name: AWS_REGION
+      value: "eu-west-1"
+    - name: TEST_XML
+      value: /tmp/result.xml
+  restartPolicy: Never
+---
+# Source: wire-server/templates/galley/tests/galley-integration.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "parity-galley-integration"
+  annotations:
+    "helm.sh/hook": test
+  labels:
+    app: galley-integration
+    release: parity
+spec:
+  volumes:
+    - name: "galley-integration"
+      configMap:
+        name: "galley-integration"
+    - name: "galley"
+      configMap:
+        name: "galley"
+    - name: "galley-integration-secrets"
+      secret:
+        secretName: "galley-integration"
+    - name: "galley-secrets"
+      secret:
+        secretName: "galley"
+  containers:
+  - name: integration
+    image: "quay.io/wire/galley-integration:do-not-use"
+    securityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+        - ALL
+      runAsNonRoot: true
+      seccompProfile:
+        type: RuntimeDefault
+    command:
+    - /bin/bash
+    - -c
+    - |
+      set -euo pipefail
+
+      if galley-integration --xml "$TEST_XML"; then
+        exit_code=$?
+      else
+        exit_code=$?
+      fi
+
+      exit $exit_code
+    volumeMounts:
+    - name: "galley-integration"
+      mountPath: "/etc/wire/integration"
+    - name: "galley"
+      mountPath: "/etc/wire/galley/conf"
+    - name: "galley-integration-secrets"
+      # TODO: see corresp. TODO in brig.
+      mountPath: "/etc/wire/integration-secrets"
+    - name: "galley-secrets"
+      mountPath: "/etc/wire/galley/secrets"
+    env:
+    # these dummy values are necessary for Amazonka's "Discover"
+    - name: AWS_ACCESS_KEY_ID
+      value: "dummy"
+    - name: AWS_SECRET_ACCESS_KEY
+      value: "dummy"
+    - name: AWS_REGION
+      value: "eu-west-1"
+    - name: TEST_XML
+      value: /tmp/result.xml
+    resources:
+      requests:
+        memory: "512Mi"
+        cpu: "2"
+  restartPolicy: Never
+---
+# Source: wire-server/templates/gundeck/tests/gundeck-integration.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "parity-gundeck-integration"
+  annotations:
+    "helm.sh/hook": test
+spec:
+  volumes:
+    - name: "gundeck-integration"
+      configMap:
+        name: "gundeck-integration"
+    # Used to read some values from the gundeck service
+    - name: "gundeck-config"
+      configMap:
+        name: "gundeck"
+  containers:
+  - name: integration
+    # TODO: When deployed to staging (or real AWS env), _all_ tests should be run
+    command: ["gundeck-integration", "--pattern", "!/RealAWS/"]
+    command:
+    - /bin/bash
+    - -c
+    - |
+      set -euo pipefail
+
+      if gundeck-integration --xml "$TEST_XML" --pattern "!/RealAWS/"; then
+        exit_code=$?
+      else
+        exit_code=$?
+      fi
+
+      exit $exit_code
+    image: "quay.io/wire/gundeck-integration:do-not-use"
+    securityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+        - ALL
+      runAsNonRoot: true
+      seccompProfile:
+        type: RuntimeDefault
+    volumeMounts:
+    - name: "gundeck-integration"
+      mountPath: "/etc/wire/integration"
+    - name: "gundeck-config"
+      mountPath: "/etc/wire/gundeck/conf"
+    env:
+    # these dummy values are necessary for Amazonka's "Discover"
+    - name: AWS_ACCESS_KEY_ID
+      value: "dummy"
+    - name: AWS_SECRET_ACCESS_KEY
+      value: "dummy"
+    - name: AWS_REGION
+      value: "eu-west-1"
+    - name: TEST_XML
+      value: /tmp/result.xml
+    # RabbitMQ needs dummy credentials for the tests to run
+    - name: RABBITMQ_USERNAME
+      value: "guest"
+    - name: RABBITMQ_PASSWORD
+      value: "guest"
+  restartPolicy: Never
+---
+# Source: wire-server/templates/spar/tests/spar-integration.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "parity-spar-integration"
+  annotations:
+    "helm.sh/hook": test
+  labels:
+    app: spar-integration
+    release: parity
+spec:
+  volumes:
+    - name: "spar-integration"
+      configMap:
+        name: "spar-integration"
+    # Used to read some values from the spar service
+    - name: "spar-config"
+      configMap:
+        name: "spar"
+  containers:
+  - name: integration
+    image: "quay.io/wire/spar-integration:do-not-use"
+    securityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+        - ALL
+      runAsNonRoot: true
+      seccompProfile:
+        type: RuntimeDefault
+    command:
+    - /bin/bash
+    - -c
+    - |
+      set -euo pipefail
+
+      if spar-integration -f junit; then
+        exit_code=$?
+      else
+        exit_code=$?
+      fi
+
+      exit $exit_code
+    volumeMounts:
+    - name: "spar-integration"
+      mountPath: "/etc/wire/integration"
+    - name: "spar-config"
+      mountPath: "/etc/wire/spar/conf"
+    resources:
+      requests:
+        memory: "512Mi"
+        cpu: "2"
+    env:
+    - name: JUNIT_OUTPUT_DIRECTORY
+      value: /tmp/
+    - name: JUNIT_SUITE_NAME
+      value: spar
+  restartPolicy: Never
