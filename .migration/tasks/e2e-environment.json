@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "id": "e2e-environment",
+  "title": "Provision private Docker dependencies and qualify original Haskell e2e baseline",
+  "service": "framework",
+  "kind": "framework",
+  "status": "queued",
+  "owner": null,
+  "branch": null,
+  "depends_on": [
+    "e2e-container"
+  ],
+  "write_paths": [
+    ".migration/tasks/e2e-environment.json",
+    "docs/go-migration/plans/e2e-environment.md",
+    "tools/parity/docker",
+    "AGENTS.md",
+    "changelog.d/5-internal/e2e-environment"
+  ],
+  "plan": "docs/go-migration/plans/e2e-environment.md",
+  "acceptance_criteria": [
+    {
+      "id": "environment",
+      "description": "Private task-owned Docker dependencies and original Haskell peers run the complete selected original proxy and cargohold baseline assertions.",
+      "required_evidence": "Immutable images/config/binary provenance, actual complete successful reports and bounded initialization/cleanup; preparation is not a pass."
+    },
+    {
+      "id": "checks",
+      "description": "Host isolation, complete-report enforcement and additive Haskell defaults are preserved.",
+      "required_evidence": "Focused boundary tests, migration validation/scope, unchanged original tests and source; honestly record unavailable checks."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": "Awaiting claim for private backend baseline qualification."
+}
