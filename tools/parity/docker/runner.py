@@ -52,7 +52,7 @@ def preflight():
             'requirements':['Provision disposable Cassandra/RabbitMQ/S3/search/Redis/federation dependencies and static Haskell peers.','Mount synthetic integration config and service configs; full tests are not run by preflight.']}
 
 
-def suite(service, candidate, config, output):
+def suite(service, candidate, config, output, implementations=None):
     if not config.is_file() or config.is_symlink():
         raise ValueError('mount a regular integration config')
     if output.exists() or output.is_symlink() or any(parent.is_symlink() for parent in output.parents):
@@ -83,6 +83,8 @@ def suite(service, candidate, config, output):
         selected = {'path':str(candidate),'sha256':hashlib.sha256(candidate.read_bytes()).hexdigest()}
     report = {'schema_version':1,'service':service,'base_image':BASE,'required_tests':tests,'candidate':selected,
               'config_sha256':hashlib.sha256(config.read_bytes()).hexdigest(),'e2e_executed':False,'result':'running'}
+    if implementations is not None:
+        report['implementations'] = implementations
     try:
         result = subprocess.run([binary('integration')['path'],'--config',str(config),
                     *[arg for name in tests for arg in ('--include',name)],'--xml',str(output)],env=env,timeout=1200)
@@ -110,7 +112,8 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__)
     sub=parser.add_subparsers(dest='command',required=True)
     sub.add_parser('preflight')
-    environment=sub.add_parser('environment');environment.add_argument('--service',choices=('proxy','cargohold'),required=True);environment.add_argument('--candidate',type=Path)
+    environment=sub.add_parser('environment');environment.add_argument('--service',choices=('proxy','cargohold','proxy-cargohold'),required=True);environment.add_argument('--candidate',type=Path)
+    environment.add_argument('--peer-candidate', nargs=2, action='append', default=[], metavar=('SERVICE','BINARY'))
     listing=sub.add_parser('list');listing.add_argument('--service',choices=('proxy','cargohold'),required=True)
     running=sub.add_parser('suite');running.add_argument('--service',choices=('proxy','cargohold'),required=True)
     running.add_argument('--candidate',type=Path);running.add_argument('--config',type=Path,required=True);running.add_argument('--output',type=Path,required=True)
@@ -120,7 +123,7 @@ def main():
         elif args.command=='list': report,code={'tests':discover(args.service),'e2e_executed':False},0
         elif args.command=='environment':
             import runtime
-            report,code=runtime.run(args.service,args.candidate)
+            report,code=runtime.run(args.service,args.candidate,args.peer_candidate)
         else: report,code=suite(args.service,args.candidate,args.config,args.output)
         print(json.dumps(report,indent=2));return code
     except (OSError,ValueError,subprocess.SubprocessError) as error:

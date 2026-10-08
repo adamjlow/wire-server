@@ -1,5 +1,6 @@
 """Disposable container initialization and original Haskell peer supervision."""
 import concurrent.futures
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -184,18 +185,48 @@ def start_peers(processes,logs):
     if pending:raise ValueError('static peer ports unavailable: '+str(sorted(pending)))
 
 
-def run(service,candidate=None):
+def selections(service, candidate, peers):
+    selected = {}
+    for name, path in peers:
+        if name not in ('proxy','cargohold') or name in selected:
+            raise ValueError('unsupported or duplicate service selection')
+        selected[name] = Path(path).resolve(strict=True)
+    if candidate is not None:
+        if service not in ('proxy','cargohold') or service in selected:
+            raise ValueError('ambiguous primary candidate selection')
+        selected[service] = candidate.resolve(strict=True)
+    if service == 'proxy-cargohold' and set(selected) != {'proxy','cargohold'}:
+        raise ValueError('combined run requires both Go components')
+    for path in selected.values():
+        if not path.is_file() or not os.access(path,os.X_OK):
+            raise ValueError('selected candidate is not executable')
+    return selected
+
+
+def run(service,candidate=None,peer_candidates=()):
     if os.getuid()!=65534 or os.environ.get('WIRE_E2E_DISPOSABLE')!='1':
         raise ValueError('requires isolated non-root environment controller')
     import runner
+    selected = selections(service,candidate,peer_candidates)
     processes=[];logs=[];servers=[]
     try:
         servers=start_forwards();wait_dependencies();config=stage();initialize()
-        if candidate is not None:
-            link=WORK/'dist'/service;link.unlink();link.symlink_to(candidate.resolve(strict=True))
+        for name, path in selected.items():
+            link=WORK/'dist'/name;link.unlink();link.symlink_to(path)
+        implementations = {link.name: {'implementation':'go' if link.name in selected else 'haskell',
+                           'path':str(link.resolve(strict=True)),
+                           'sha256':hashlib.sha256(link.read_bytes()).hexdigest()}
+                           for link in (WORK/'dist').iterdir() if link.name not in ('integration','nginx')}
         start_peers(processes,logs)
         os.chdir(WORK)
-        return runner.suite(service,candidate,config,Path('/reports')/(service+'.xml'))
+        suites = ('proxy','cargohold') if service == 'proxy-cargohold' else (service,)
+        reports = {}
+        for name in suites:
+            report, code = runner.suite(name,selected.get(name),config,Path('/reports')/(name+'.xml'),implementations)
+            reports[name] = report
+            if code: return {'result':'failed','suites':reports}, code
+        if service != 'proxy-cargohold': return report, 0
+        return {'result':'pass','e2e_executed':True,'implementations':implementations,'suites':reports}, 0
     finally:
         for process in processes:
             if process.poll() is None:process.terminate()

@@ -16,6 +16,7 @@ def module(name):
 
 control=module('control')
 runner=module('runner')
+runtime=module('runtime')
 
 
 class ContainerTests(unittest.TestCase):
@@ -27,6 +28,16 @@ class ContainerTests(unittest.TestCase):
         with self.assertRaises(ValueError):control.destination(output)
         link=self.root/'link';link.symlink_to(self.root,target_is_directory=True)
         with self.assertRaises(ValueError):control.destination(link/'new')
+
+    def test_combined_selection_requires_exactly_two_executable_candidates(self):
+        executable=self.root/'candidate';executable.write_text('synthetic');executable.chmod(0o755)
+        pairs=[('proxy',str(executable)),('cargohold',str(executable))]
+        self.assertEqual({'proxy','cargohold'},set(runtime.selections('proxy-cargohold',None,pairs)))
+        for peers in (pairs[:1],pairs+[pairs[0]],pairs+[('brig',str(executable))]):
+            with self.assertRaises(ValueError):runtime.selections('proxy-cargohold',None,peers)
+        with self.assertRaises(ValueError):runtime.selections('proxy-cargohold',executable,pairs)
+        executable.chmod(0o644)
+        with self.assertRaises(ValueError):runtime.selections('proxy-cargohold',None,pairs)
 
     def test_foreign_image_receipt_rejected_before_starting_container(self):
         receipt=self.root/'receipt.json';image='sha256:'+'a'*64

@@ -90,3 +90,14 @@ is in the two environment build receipts. This qualifies original-test reuse and
 service selection. It does not claim Go cargohold compatibility or complete
 coverage of any future service's contract; supplement the selected suite only
 for concrete gaps in that service's finite acceptance matrix.
+# Combined optional services
+
+Use repeated `prepare --select SERVICE BINARY BUILD_RECEIPT` arguments for
+identified Go proxy and cargohold binaries, then `run --service proxy-cargohold`.
+This starts both Go components simultaneously, keeps all other backend service
+executables from the pinned Haskell image, and executes the unchanged original
+5 proxy and 27 cargohold tests in the same disposable environment. Both suite
+receipts record every staged service executable's implementation and SHA256;
+the host checks both selected hashes in both reports before accepting success.
+Missing/duplicate/unsupported selections and changed binaries fail closed.
+This bounded combined run does not claim the full backend suite was executed.

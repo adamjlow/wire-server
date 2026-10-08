@@ -189,7 +189,17 @@ def validate_isolation(spec):
                 raise ValueError('unsafe mount')
 
 
-def prepare(output, receipt_path, candidate=None, candidate_receipt=None):
+def identified_candidate(candidate, receipt):
+    candidate=Path(candidate).resolve(strict=True)
+    if not candidate.is_file() or not os.access(candidate,os.X_OK):raise ValueError('candidate must be executable')
+    build=json.loads(Path(receipt).read_text())
+    checksum=hashlib.sha256(candidate.read_bytes()).hexdigest()
+    if build['binary_sha256']!=checksum or not re.fullmatch('[0-9a-f]{40}',build['source_revision']):
+        raise ValueError('candidate build receipt mismatch')
+    return {'path':str(candidate),'sha256':checksum,'source_revision':build['source_revision']}
+
+
+def prepare(output, receipt_path, candidate=None, candidate_receipt=None, peers=()):
     output=destination(output)
     if command(['git','status','--porcelain']):raise ValueError('commit runner/controller inputs first')
     receipt=json.loads(receipt_path.read_text());image=receipt['image_id']
@@ -207,16 +217,15 @@ def prepare(output, receipt_path, candidate=None, candidate_receipt=None):
     selected=None
     if candidate is not None:
         if candidate_receipt is None:raise ValueError('candidate requires an identified build receipt')
-        candidate=candidate.resolve(strict=True)
-        if not candidate.is_file() or not os.access(candidate,os.X_OK):raise ValueError('candidate must be executable')
-        build=json.loads(candidate_receipt.read_text())
-        checksum=hashlib.sha256(candidate.read_bytes()).hexdigest()
-        if build['binary_sha256']!=checksum or not re.fullmatch('[0-9a-f]{40}',build['source_revision']):
-            raise ValueError('candidate build receipt mismatch')
-        selected={'path':str(candidate),'sha256':checksum,'source_revision':build['source_revision']}
+        selected=identified_candidate(candidate,candidate_receipt)
+    peer_candidates={}
+    for name,path,build_receipt in peers:
+        if name not in ('proxy','cargohold') or name in peer_candidates or candidate is not None:
+            raise ValueError('unsupported, duplicate or ambiguous candidate selection')
+        peer_candidates[name]=identified_candidate(path,build_receipt)
     (output/'compose.json').write_text(json.dumps(spec,indent=2)+'\n')
     record={'schema_version':1,'project':project,'source_revision':command(['git','rev-parse','HEAD']),
-            'runner_image_id':image,'runner_revision':receipt['source_revision'],'candidate':selected,'result':'prepared','e2e_executed':False,
+            'runner_image_id':image,'runner_revision':receipt['source_revision'],'candidate':selected,'peer_candidates':peer_candidates,'result':'prepared','e2e_executed':False,
             'compose_sha256':hashlib.sha256((output/'compose.json').read_bytes()).hexdigest(),
             'files_sha256':{str(p.relative_to(output)):hashlib.sha256(p.read_bytes()).hexdigest()
                             for p in sorted((output/'fixtures').iterdir())}}
@@ -262,6 +271,15 @@ def run(output,service):
         if shutil.disk_usage(output).free<2*1024**3:raise ValueError('insufficient disk after dependency pull')
     record['dependencies']={name:spec['services'][name]['image'] for name in DEPENDENCIES}
     spec['services']['runner']['command']=['environment','--service',service]
+    peers=record.get('peer_candidates',{})
+    if service=='proxy-cargohold' and (set(peers)!= {'proxy','cargohold'} or record.get('candidate') is not None):
+        raise ValueError('combined run requires two unambiguous identified candidates')
+    for name,selection in peers.items():
+        if name not in ('proxy','cargohold'):raise ValueError('unsupported candidate selection')
+        candidate=Path(selection['path'])
+        if hashlib.sha256(candidate.read_bytes()).hexdigest()!=selection['sha256']:raise ValueError('candidate binary changed')
+        spec['services']['runner']['command']+=['--peer-candidate',name,'/candidate/'+name]
+        spec['services']['runner']['volumes'].append({'type':'bind','source':str(candidate),'target':'/candidate/'+name,'read_only':True})
     if record.get('candidate') is not None:
         candidate=Path(record['candidate']['path'])
         if hashlib.sha256(candidate.read_bytes()).hexdigest()!=record['candidate']['sha256']:
@@ -289,10 +307,15 @@ def run(output,service):
         with (output/('baseline-'+service+'.log')).open('x') as log:
             result=subprocess.run([*compose,'run','--rm','--no-deps','runner'],stdout=log,stderr=subprocess.STDOUT,timeout=1800)
         record.update(result='pass' if result.returncode==0 else 'failed',process_exit_code=result.returncode)
-        receipt=output/'reports'/(service+'.run.json')
-        if result.returncode!=0 or not receipt.exists():raise ValueError('baseline failed; inspect retained baseline log')
-        suite=json.loads(receipt.read_text())
-        if suite.get('result')!='pass' or suite.get('e2e_executed') is not True:raise ValueError('original suite did not pass')
+        if result.returncode!=0:raise ValueError('baseline failed; inspect retained baseline log')
+        suites=('proxy','cargohold') if service=='proxy-cargohold' else (service,)
+        for name in suites:
+            suite=json.loads((output/'reports'/(name+'.run.json')).read_text())
+            if suite.get('result')!='pass' or suite.get('e2e_executed') is not True:raise ValueError('original suite did not pass')
+            for peer,selection in peers.items():
+                actual=suite.get('implementations',{}).get(peer,{})
+                if actual.get('implementation')!='go' or actual.get('sha256')!=selection['sha256']:
+                    raise ValueError('suite did not execute selected peer binary')
         record.update(e2e_executed=True,service=service)
         return record
     except (OSError,ValueError,subprocess.SubprocessError) as error:
@@ -316,10 +339,11 @@ def run(output,service):
 def main():
     parser=argparse.ArgumentParser(description=__doc__);sub=parser.add_subparsers(dest='command',required=True)
     prep=sub.add_parser('prepare');prep.add_argument('--output',type=Path,required=True);prep.add_argument('--receipt',type=Path,required=True);prep.add_argument('--candidate',type=Path);prep.add_argument('--candidate-receipt',type=Path)
-    execute=sub.add_parser('run');execute.add_argument('--output',type=Path,required=True);execute.add_argument('--service',choices=('proxy','cargohold'),required=True)
+    prep.add_argument('--select',nargs=3,action='append',default=[],metavar=('SERVICE','BINARY','RECEIPT'))
+    execute=sub.add_parser('run');execute.add_argument('--output',type=Path,required=True);execute.add_argument('--service',choices=('proxy','cargohold','proxy-cargohold'),required=True)
     args=parser.parse_args()
     try:
-        result=prepare(args.output,args.receipt,args.candidate,args.candidate_receipt) if args.command=='prepare' else run(args.output,args.service)
+        result=prepare(args.output,args.receipt,args.candidate,args.candidate_receipt,args.select) if args.command=='prepare' else run(args.output,args.service)
         print(json.dumps(result,indent=2));return 0
     except (OSError,ValueError,KeyError,subprocess.SubprocessError) as error:
         print(json.dumps({'result':'failed','error':str(error)[:600],'e2e_executed':False}));return 2
