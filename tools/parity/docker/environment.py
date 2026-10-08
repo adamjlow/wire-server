@@ -164,7 +164,7 @@ def private_compose(upstream, project, output, image):
                    {'type':'bind','source':str(output/'reports'),'target':'/reports'}]}
     # No original global network/volume names; only Redis needs its upstream
     # private advertised subnet, checked for collisions before starting.
-    networks={'demo_wire':{'driver':'bridge','internal':True},
+    networks={'demo_wire':{'driver':'bridge','internal':True,'ipam':{'config':[{'subnet':'172.20.2.0/24'}]}},
               'redis':{'driver':'bridge','internal':True,'ipam':{'config':[{'subnet':'172.20.0.0/24'}]}},
               'coredns':{'driver':'bridge','internal':True,'ipam':{'config':[{'subnet':'172.20.1.0/24'}]}}}
     spec={'name':project,'services':services,'networks':networks,'volumes':{name:{} for name in upstream.get('volumes',{})}}
@@ -237,7 +237,7 @@ def run(output,service):
         for config in network.get('IPAM',{}).get('Config',[]) or []:
             subnet=config.get('Subnet')
             if subnet and ':' not in subnet and any(ipaddress.ip_network(subnet).overlaps(ipaddress.ip_network(required))
-                                                   for required in ('172.20.0.0/24','172.20.1.0/24')):
+                                                   for required in ('172.20.0.0/24','172.20.1.0/24','172.20.2.0/24')):
                 raise ValueError('fixture subnet overlaps existing Docker network')
     for name in DEPENDENCIES:
         image=spec['services'][name]['image']
@@ -278,6 +278,11 @@ def run(output,service):
         if suite.get('result')!='pass' or suite.get('e2e_executed') is not True:raise ValueError('original suite did not pass')
         record.update(e2e_executed=True,service=service)
         return record
+    except (OSError,ValueError,subprocess.SubprocessError) as error:
+        record.update(result='failed',error_category=type(error).__name__)
+        if isinstance(error,subprocess.CalledProcessError):
+            (output/'setup-error.log').write_text(error.stderr or '')
+        raise
     finally:
         subprocess.run([*compose,'logs','--no-color','--tail','100'],stdout=(output/'dependencies.log').open('w'),
                        stderr=subprocess.STDOUT,timeout=30)
