@@ -4,7 +4,7 @@
   "title": "Correct cannon reference observation count metadata",
   "service": "cannon",
   "kind": "contract-change",
-  "status": "active",
+  "status": "done",
   "owner": "codex",
   "branch": "go-migration",
   "depends_on": [
@@ -25,7 +25,18 @@
       "required_evidence": "Count actual unchanged frozen JSON, confirm unique names and identical golden hash; no stimuli, comparisons, assertions, or acceptance thresholds change. Delegated metadata self-review."
     }
   ],
-  "evidence": [],
-  "review": null,
-  "handoff": "Scoped metadata correction only; preserve all golden/stimulus bytes and previous immutable completed tasks."
+  "evidence": [
+    {
+      "criterion": "count",
+      "result": "pass",
+      "command": "Count frozen observations and unique names: 28; unchanged SHA256 b49d9de42dad7bbaa9e3745aeec69e3d6d394087f038c54c245e6b237344568f matches original receipt; diff changes only 29-to-28 narrative/receipt metadata.",
+      "revision": "411f525e421d15e673870ace345462c4c4f80372",
+      "artifact": ".migration/reviews/cannon-count-correction.md"
+    }
+  ],
+  "review": {
+    "by": "codex (self-review delegated by user)",
+    "artifact": ".migration/reviews/cannon-count-correction.md"
+  },
+  "handoff": "Metadata corrected; all protected golden/stimulus/assertion/normalization bytes unchanged. No new service tests required."
 }

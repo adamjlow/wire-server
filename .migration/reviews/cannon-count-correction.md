@@ -1,0 +1,3 @@
+# Cannon observation count metadata review
+
+Approved by codex (self-review delegated by user), same author, under the explicit autonomous cannon completion/self-review request. Actual protected JSON has 28 records and 28 unique names, SHA256 b49d9de42dad7bbaa9e3745aeec69e3d6d394087f038c54c245e6b237344568f. Receipt and contract prose incorrectly said 29; only these counts change. Golden data, stimuli, normalization, test assertions and thresholds are untouched. Final candidate compared all 28 exact unique names successfully; no test was removed or waived. This is a metadata correction, not a behavioral contract exception.

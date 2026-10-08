@@ -8,7 +8,7 @@
   "reference_binary_sha256": "cbc200caf92757bb7909b82c73d942072eac557c0eab1ce755aedeb8bf5c705d",
   "script_sha256": "199662249a78680fa2402ff1b04fe51c1bccec17f73e1985a28f9a1729a6e065",
   "observations_sha256": "b49d9de42dad7bbaa9e3745aeec69e3d6d394087f038c54c245e6b237344568f",
-  "records": 29,
+  "records": 28,
   "scope": "Owned side Haskell cannon on16083 and synthetic fake presence16086, same initialized private broker/Cassandra, own temporary event queues only. Original assertion users/queues/config untouched. Side process terminated/reaped and fake endpoint stopped in finally.",
   "e2e_executed": false,
   "candidate_parity": false,
