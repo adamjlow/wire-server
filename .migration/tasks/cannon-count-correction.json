@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "id": "cannon-count-correction",
+  "title": "Correct cannon reference observation count metadata",
+  "service": "cannon",
+  "kind": "contract-change",
+  "status": "active",
+  "owner": "codex",
+  "branch": "go-migration",
+  "depends_on": [
+    "cannon-contract",
+    "cannon-implementation"
+  ],
+  "write_paths": [
+    ".migration/tasks/cannon-count-correction.json",
+    "docs/go-migration/services/cannon/contract.md",
+    "docs/go-migration/services/cannon/oracle/boundaries-reference-run.json",
+    ".migration/reviews/cannon-count-correction.md"
+  ],
+  "plan": "docs/go-migration/plans/cannon.md",
+  "acceptance_criteria": [
+    {
+      "id": "count",
+      "description": "Correct only the narrative/receipt count to the actual 28 unique frozen observations.",
+      "required_evidence": "Count actual unchanged frozen JSON, confirm unique names and identical golden hash; no stimuli, comparisons, assertions, or acceptance thresholds change. Delegated metadata self-review."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": "Scoped metadata correction only; preserve all golden/stimulus bytes and previous immutable completed tasks."
+}
