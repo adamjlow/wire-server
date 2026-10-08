@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "id": "gundeck-contract",
+  "title": "Freeze gundeck finite contract and original/synthetic reference evidence",
+  "service": "gundeck",
+  "kind": "contract-change",
+  "status": "active",
+  "owner": "codex",
+  "branch": "go-migration",
+  "depends_on": [
+    "gundeck-inventory",
+    "gundeck-inventory-gate"
+  ],
+  "write_paths": [
+    ".migration/tasks/gundeck-contract.json",
+    "docs/go-migration/services/gundeck/contract.md",
+    "docs/go-migration/services/gundeck/oracle",
+    "docs/go-migration/plans/gundeck.md",
+    ".migration/reviews/gundeck-contract.md",
+    "tools/parity/docker",
+    "tools/parity/test_harness.py",
+    "changelog.d/5-internal/gundeck-contract"
+  ],
+  "plan": "docs/go-migration/plans/gundeck.md",
+  "acceptance_criteria": [
+    {
+      "id": "contract",
+      "description": "Freeze finite whole-service observable contract and uncovered boundary stimuli before Go use.",
+      "required_evidence": "Source/runnable Haskell reference proof for API, Redis/Cassandra, RabbitMQ/Cells/native/SQS effects, security/ops and actual synthetic provider setup; exact source/runtime/script/config identities; no original assertions weakened."
+    },
+    {
+      "id": "baseline",
+      "description": "Original relevant compiled tests execute successfully in private owned environment with usable gundeck selection.",
+      "required_evidence": "Retained original test catalogue/XML/run/environment/no skips/errors and cleanup; actual PushToken baseline plus reused unchanged original35 control, source-pinned supplementary Haskell observations; four-Go selection supported without changing defaults."
+    },
+    {
+      "id": "validation",
+      "description": "Harness and scope checks pass and delegated review accurately records limits.",
+      "required_evidence": "Actual harness/framework tests and bounded self-review, no production/shared targets or unsafe security exception."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": "Extend existing runner catalogue/selection to gundeck and four-Go; validate synthetic SNS platform apps and original PushToken baseline, freeze uncovered finite reference captures. Immediately proceed to executable Go slice when reference ready."
+}
