@@ -171,6 +171,8 @@ def run(binary):
             record('disabled-push-removes-token',req('GET','/v9/push/tokens'))
             record('disabled-push-token-delete-is-absent',req('DELETE','/v9/push/tokens/synthetic-apns'));record('native-endpoints-cleaned',not state.endpoints)
             record('user-cleanup',req('DELETE','/i/user'));record('other-user-cleanup',req('DELETE','/i/user',user=OTHER));record('signed-provider-requests',state.signed)
+            from capture_operations import run as capture_operations
+            records.extend(capture_operations(16186,binary,config,process.pid))
             started=time.monotonic();process.terminate();process.wait(timeout=4);record('idle-shutdown',{'exit_code':process.returncode,'seconds':time.monotonic()-started,'bound_seconds':4})
     finally:
         if process is not None and process.poll() is None:
