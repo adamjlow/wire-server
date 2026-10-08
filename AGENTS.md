@@ -66,6 +66,20 @@ translate Haskell abstractions into Go.
 - Keep metadata commits to the minimum needed for legal claim transitions and
   exact tested-revision evidence. Do not chase a self-referential final SHA or
   create separate tasks for each planning/review/status update.
+- Agents own implementation, test execution, evidence review and ordinary bounded
+  completion. The user is not a manual test runner. Reuse original public e2e
+  assertions against selected binaries; copied request specifications alone are
+  not execution of those tests. Establish dependency/fixture setup before service
+  migration and fail clearly when required setup or cases are absent.
+- Define a finite service acceptance matrix before implementation: public API
+  and effects, security negatives, relevant failure behavior, one operational
+  smoke and switchback. Add tests for concrete uncovered risks or regressions;
+  stop when that matrix passes. Do not pursue exhaustive incidental/runtime
+  identity or add another gate merely because more tests are possible.
+- Use the automated [harness](tools/parity/README.md) and existing upstream CI.
+  Rerun expensive checks only when their relevant inputs change. Unchanged
+  Haskell code retains its existing CI; unavailable local full-repository builds
+  are recorded, never converted to a pass or used to repeat all Go evidence.
 - Honor explicit user review delegation within its stated scope. Record the
   authority once and cite it; label same-author review honestly and never imply
   independence. Delegation does not replace tests or approve security exceptions,

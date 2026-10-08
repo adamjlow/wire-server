@@ -38,3 +38,58 @@ service-specific complete fixtures, transport/gzip comparison decisions, validat
 cargohold key/token/expiry/signature mapping, S3/federation effects and cross-runtime
 storage switchback, operational thresholds, deployment selection and Haskell
 build/default checks. This comparator and its examples cannot satisfy those gates.
+
+## Automated entry point
+
+Agents/CI run the checks and review evidence; the user need not manually test.
+For proxy, one command builds identified candidate/provider images, runs actual
+Haskell and Go processes in the existing internal synthetic Docker environment,
+and requires the strict comparison to pass:
+
+```sh
+python3 tools/parity/harness.py proxy --profile api --output /absolute/new-artifacts
+```
+
+Use a clean committed checkout, Docker and pinned Go 1.26.8 on PATH. `api` runs
+103 live surface-area cases; `full` also runs real reload, operational/load-smoke
+and switchback checks. Use API checks after API changes and full checks for a
+relevant operational change/final handoff; metadata changes do not justify reruns.
+A missing tool, failed capture or comparison exits nonzero and never writes a
+passing result. Artifacts must be new and outside the checkout.
+
+## Reuse original upstream e2e assertions
+
+The original suite already launches `../../dist/<service>` in a service working
+directory derived from the config path. The adapter stages this layout externally,
+keeping every peer on Haskell and swapping only the selected service executable.
+No Haskell test source or original `dist` binary is changed:
+
+```sh
+python3 tools/parity/harness.py prepare-e2e --service proxy --haskell-dist /absolute/haskell-dist --candidate /absolute/go-proxy --output /absolute/new-e2e-layout
+```
+
+`selection.json` contains exact argument vectors, working directories, original
+binary hashes and required test names. Agents/CI execute those vectors in the
+provisioned disposable upstream environment, retain both process exit statuses,
+then run `check-e2e --service proxy --reference reference.xml --candidate candidate.xml`.
+The checker requires every catalogued test on both runtimes, rejecting empty,
+missing, extra, duplicate, failed or skipped results. It validates supplied XML;
+it does not authenticate a run or replace direct differential/storage evidence.
+
+Catalogue: five original proxy test functions (with all assertions inside them)
+and the core cargohold API/version/token/upload/download/federation functions.
+The five functions cover more assertions than five copied requests. Cargohold
+storage switchback still needs a service-specific adapter; proxy cannot validate
+it. The catalogue detects renamed/removed upstream tests before preparation.
+
+**Environment status:** e2e preparation is implemented and boundary-tested;
+original e2e execution is not yet qualified here. No compiled Haskell integration
+binary or full disposable dependency environment is available. Before migrating
+cargohold, establish that environment and run the Haskell baseline. Preparation
+outputs carry `e2e_executed: false`, and no successful e2e run is claimed.
+
+**Stopping rule:** finite public contract/effect matrix, security negatives,
+relevant error/retry cases, one operational smoke and switchback. Stop on that
+matrix passing; extend it only for a concrete uncovered risk or regression.
+Reuse previous passing evidence when its relevant inputs are unchanged. Preserve
+normal Haskell CI, and run Haskell package checks when Haskell code changes.

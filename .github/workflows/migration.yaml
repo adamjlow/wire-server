@@ -11,7 +11,7 @@ permissions:
 jobs:
   validate:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 12
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -25,3 +25,43 @@ jobs:
         env:
           MIGRATION_BASE_SHA: ${{ github.event.pull_request.base.sha }}
         run: python3 tools/migration/check.py --base "$MIGRATION_BASE_SHA"
+
+      - name: Check parity harness and retained proxy evidence
+        run: |
+          python3 -m unittest discover -s tools/parity -p 'test_*.py'
+          python3 -m unittest discover -s docs/go-migration/services/proxy/oracle -p 'test_*.py'
+      - name: Select relevant live proxy validation
+        id: proxy_changes
+        env:
+          PARITY_BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+        run: |
+          python3 - <<'PY'
+          import os, re, subprocess
+          base = os.environ.get('PARITY_BASE_SHA', '')
+          if not re.fullmatch('[0-9a-f]{40}', base) or base == '0' * 40:
+              base = subprocess.check_output(['git', 'rev-parse', 'HEAD^'], text=True).strip()
+          paths = subprocess.check_output(['git', 'diff', '--name-only', base, 'HEAD'], text=True).splitlines()
+          relevant = any(path.startswith(('go/services/proxy/', 'docs/go-migration/services/proxy/oracle/')) or path == 'tools/parity/harness.py' for path in paths)
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
+              output.write('run=' + str(relevant).lower() + '\n')
+          PY
+      - name: Set up pinned Go for live parity
+        if: steps.proxy_changes.outputs.run == 'true'
+        uses: actions/setup-go@924ae3a1cded613372ab5595356fb5720e22ba16
+        with:
+          go-version-file: go/.go-version
+          cache: false
+      - name: Compare actual proxy runtimes
+        if: steps.proxy_changes.outputs.run == 'true'
+        shell: bash
+        run: |
+          set -o pipefail
+          python3 tools/parity/harness.py proxy --profile api --output "$RUNNER_TEMP/proxy-parity" | grep -vE 'Compiling|Linking|Preprocessing|Configuring|Building'
+      - name: Retain proxy runtime evidence
+        if: always() && steps.proxy_changes.outputs.run == 'true'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: proxy-parity
+          path: ${{ runner.temp }}/proxy-parity/**/*.json
+          if-no-files-found: warn
+          retention-days: 30

@@ -1,0 +1,1 @@
+Automate bounded proxy parity checks and prepare unchanged upstream e2e test reuse through isolated per-service binary selection.

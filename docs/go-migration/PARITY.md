@@ -3,7 +3,9 @@
 Reuse `integration/` public-interface tests and existing API serialization goldens
 where suitable. Inspect existing service unit suites and operational configs first.
 Do not duplicate them blindly or import internal Haskell types into a new oracle.
-There is no differential runner in this patch; the following is its design contract.
+The proxy has an executable live runner and an automated entry point in
+[tools/parity](../../tools/parity/README.md). The general design below governs
+other service adapters; it is not evidence that every adapter already exists.
 
 ## Run interface
 
@@ -74,3 +76,31 @@ written data and queued work. Check existing configuration/image overrides and
 ordinary install/upgrade commands. Haskell builds and normal development paths
 must remain usable without Go tooling. No Go-only schema or protocol change is
 permitted merely to make switching possible.
+
+## Automated acceptance and upstream test reuse
+
+The AI owns executing and reviewing the checks; no manual user testing is an
+acceptance dependency. Agree a finite matrix per service before building. Reuse
+original `integration/` assertions against Haskell and an image/binary substitution
+first. Add differential cases for uncovered security, error, version, storage,
+retry or switchback behavior. Further tests require a concrete missing risk,
+regression or upstream change. A small load smoke is sufficient unless service
+risk establishes a need for a larger benchmark. Runtime GC diagnostic values are
+not expected to equal across languages; semantic deviations remain documented
+contract decisions, not hidden exclusions of customer API/effects.
+
+The additive e2e adapter stages real service directories and `dist/` links in an
+external temporary layout. `Testlib.Env` derives that layout from the selected
+`services/integration.yaml`; `Testlib.ModService` and `run-services` then start
+selected executables without changing tests. Required case catalogues and XML
+checks prevent empty, missing, skipped or failed suites from being green. XML
+verification alone is not authenticated execution provenance. Run manifests must
+also retain actual binary identities, environment, process exits and source pins.
+
+Current limitation: the original integration binary and Cassandra/RabbitMQ/S3/
+federation dependency environment are not installed here. E2e preparation and
+negative runner tests are not e2e success. Provision the existing disposable
+upstream environment before using this adapter for cargohold acceptance. Existing
+integration execution restrictions remain; the authorized isolated proxy runner
+continues to be executable. This is an environment gap, not a request for the user
+to manually test or routinely approve tests.

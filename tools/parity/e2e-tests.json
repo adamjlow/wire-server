@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "description": "Reuse original named upstream e2e tests unchanged. Cargohold audit-log rollout variants are outside this initial replacement surface. Reports require every selected test on both runtimes.",
+  "services": {
+    "proxy": [
+      {
+        "source": "integration/test/Test/Proxy.hs",
+        "module": "Test.Proxy",
+        "tests": [
+          "testProxyGiphy",
+          "testProxyYoutube",
+          "testProxyGoogleMaps",
+          "testProxySpotify",
+          "testProxySoundcloud"
+        ]
+      }
+    ],
+    "cargohold": [
+      {
+        "source": "integration/test/Test/Cargohold/API.hs",
+        "module": "Test.Cargohold.API",
+        "tests": [
+          "testSimpleRoundtrip",
+          "testDownloadWithAcceptHeader",
+          "testSimpleTokens",
+          "testSimpleS3ClosedConnectionReuse",
+          "testDownloadURLOverride",
+          "testUploadCompatibility",
+          "testRemoteDownloadWrongDomain",
+          "testRemoteDownloadNoAsset",
+          "testRemoteDownloadShort",
+          "testRemoteDownloadLong"
+        ]
+      },
+      {
+        "source": "integration/test/Test/Cargohold/API/V3.hs",
+        "module": "Test.Cargohold.API.V3",
+        "tests": [
+          "testSimpleRoundtrip",
+          "testUploadWrongContentLength"
+        ]
+      },
+      {
+        "source": "integration/test/Test/Cargohold/API/Federation.hs",
+        "module": "Test.Cargohold.API.Federation",
+        "tests": [
+          "testGetAssetAvailablePublic",
+          "testGetAssetAvailablePrivate",
+          "testGetAssetNotAvailable",
+          "testGetAssetWrongToken",
+          "testLargeAsset",
+          "testStreamAsset",
+          "testStreamAssetNotAvailable",
+          "testStreamAssetWrongToken"
+        ]
+      },
+      {
+        "source": "integration/test/Test/Cargohold/AssetUpload.hs",
+        "module": "Test.Cargohold.AssetUpload",
+        "tests": [
+          "testAssetUploadVerifiedUser",
+          "testAssetUploadUnknownUser",
+          "testUploadAssetEphemeralUser",
+          "testUploadAssetFileSizeLimit",
+          "testUploadAssetFileSizeLimitStrict"
+        ]
+      },
+      {
+        "source": "integration/test/Test/Cargohold/AssetDownload.hs",
+        "module": "Test.Cargohold.AssetDownload",
+        "tests": [
+          "testDownloadAsset",
+          "testDownloadAssetMultiIngressS3DownloadUrl"
+        ]
+      }
+    ]
+  }
+}
