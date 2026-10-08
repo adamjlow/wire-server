@@ -4,9 +4,9 @@
   "title": "Advance approved cargohold gates and claim whole-service implementation",
   "service": "framework",
   "kind": "framework",
-  "status": "queued",
-  "owner": null,
-  "branch": null,
+  "status": "active",
+  "owner": "codex",
+  "branch": "go-migration",
   "depends_on": [
     "cargohold-contract",
     "cargohold-plan"
