@@ -2,7 +2,7 @@
   "schema_version": 1,
   "service": "cannon",
   "reference_path": "services/cannon",
-  "stage": "implementing",
+  "stage": "verified",
   "oracle_paths": [
     "services/cannon",
     "docs/go-migration/services/cannon/contract.md",
@@ -17,7 +17,24 @@
     ],
     "plan": [
       "cannon-inventory"
+    ],
+    "parity": [
+      "cannon-verification"
+    ],
+    "security": [
+      "cannon-verification"
+    ],
+    "operations": [
+      "cannon-verification"
+    ],
+    "rollback": [
+      "cannon-verification"
     ]
   },
-  "compatibility": null
+  "compatibility": {
+    "upstream_revision": "f6636ed53315fa7b0fc4c8aa39c0bb30c98b6d5e",
+    "reference_revision": "f6636ed53315fa7b0fc4c8aa39c0bb30c98b6d5e",
+    "candidate_revision": "411f525e421d15e673870ace345462c4c4f80372",
+    "verification_task": "cannon-verification"
+  }
 }
