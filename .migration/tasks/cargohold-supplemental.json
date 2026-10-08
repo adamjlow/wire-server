@@ -32,5 +32,5 @@
   ],
   "evidence": [],
   "review": null,
-  "handoff": "Active finite supplement. 25 observed comparisons now match real Haskell and Go at bcbcd03b01f22a9f2e751b4c7385467a5912d1e3, including 9 exact multipart error messages/effects, token/auth/legacy/internal URL cases, audit missing metadata and 6 user/bot/provider switchback scenarios with cross-runtime token copy. Captures retained; no whole-service parity claim. Remaining declared audit/config/failure/mixed-runtime/operation cases and focused controller checks still required."
+  "handoff": "Active finite supplement. All 38 observed comparisons match Haskell and candidate 803ad4e59de9d48348af1902f1f0c41458937f81, including exact audit metadata/log fields and null rejection, five retention variants, principal precedence, previous parser/token/signing/legacy cases and six storage switchbacks. Failed audit observations preserved. Remaining declared configuration/failure/mixed-runtime/operational cases and final review required; no whole-service compatibility claim."
 }

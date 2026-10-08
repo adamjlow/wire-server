@@ -52,3 +52,11 @@ metadata/log effects. [Observations](audit-initial-observations.json) expose thr
 candidate differences: audit metadata encoding, null conversation handling and
 audit event fields. These failures are preserved; 35 matches do not establish
 whole-service parity.
+
+The repaired [38-case run](audit-observations.json) now matches all cases at
+candidate source 803ad4e59de9d48348af1902f1f0c41458937f81; [runtime identity](audit-run.json)
+records the binary hash and controller checkout. Changes made during that run
+added optional packaging only; the mounted candidate was unchanged. Audit S3
+metadata bytes, null rejection and request/event log fields now match without
+normalizing away those differences. Retention key/expiry/token relationships and
+principal precedence also match. The finite whole-service matrix remains incomplete.
