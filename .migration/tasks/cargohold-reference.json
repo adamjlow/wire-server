@@ -4,9 +4,9 @@
   "title": "Characterize cargohold authorization and parser/storage edge contracts on the pinned reference",
   "service": "framework",
   "kind": "framework",
-  "status": "queued",
-  "owner": null,
-  "branch": null,
+  "status": "active",
+  "owner": "codex",
+  "branch": "go-migration",
   "depends_on": [
     "e2e-environment"
   ],
