@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "id": "cargohold-supplemental",
+  "title": "Freeze bounded supplemental cargohold assertions from real reference behavior",
+  "service": "cargohold",
+  "kind": "contract-change",
+  "status": "queued",
+  "owner": null,
+  "branch": null,
+  "depends_on": [
+    "cargohold-contract",
+    "cargohold-plan",
+    "e2e-environment"
+  ],
+  "write_paths": [
+    ".migration/tasks/cargohold-supplemental.json",
+    "tools/parity/cargohold/supplemental",
+    "changelog.d/5-internal/cargohold-supplemental"
+  ],
+  "plan": "docs/go-migration/plans/cargohold-implementation.md",
+  "acceptance_criteria": [
+    {
+      "id": "oracle",
+      "description": "Execute and separately review the finite supplemental matrix using pinned Haskell reference and private synthetic dependencies; preserve exact response/error/effect comparisons and approved security disposition.",
+      "required_evidence": "Executable cases, actual reference artifacts and case inventory linking original-suite and supplemental coverage, bounded normalization, real storage/switchback/operation/config variants; no candidate-compatible oracle weakening."
+    },
+    {
+      "id": "checks",
+      "description": "Supplemental runner and assertions remain private, bounded, fail closed and within scope.",
+      "required_evidence": "Tool/state/scope validation, immutable runtime/config/fixture identities, owned cleanup and source-reviewed expectations."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": "Turn the existing finite matrix into executable reference-derived supplemental assertions, without modifying original e2e tests or Haskell behavior."
+}
