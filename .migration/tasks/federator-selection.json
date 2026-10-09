@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "id": "federator-selection",
+  "title": "Federator selection",
+  "service": "federator",
+  "kind": "operations",
+  "status": "queued",
+  "owner": null,
+  "branch": null,
+  "depends_on": [
+    "federator-verification"
+  ],
+  "write_paths": [
+    ".migration/tasks/federator-selection.json"
+  ],
+  "plan": "docs/go-migration/plans/federator.md",
+  "acceptance_criteria": [
+    {
+      "id": "selection",
+      "description": "Review completed finite federator selection acceptance criteria.",
+      "required_evidence": "Final exact source845956f6/binaryfbe1d6d6 original77 five-Go with Haskell peers, frozen35, pinned Go1.26.9 security/quality, real whole-process Haskell/Go/Haskell switchback and loaded drain, identical-binary nonroot image/default/fail-closed actual Helm render. Retain failures/aborts/unrun native checks and old-peer security follow-up; delegated same-author review and scoped adjacent gate publication."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": ""
+}

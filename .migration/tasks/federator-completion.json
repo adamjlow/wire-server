@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "id": "federator-completion",
+  "title": "Federator completion",
+  "service": "framework",
+  "kind": "framework",
+  "status": "queued",
+  "owner": null,
+  "branch": null,
+  "depends_on": [
+    "federator-verification",
+    "federator-selection"
+  ],
+  "write_paths": [
+    ".migration/tasks/federator-completion.json",
+    ".migration/services/federator.json"
+  ],
+  "plan": "docs/go-migration/plans/federator.md",
+  "acceptance_criteria": [
+    {
+      "id": "gates",
+      "description": "Review completed finite federator gates acceptance criteria.",
+      "required_evidence": "Final exact source845956f6/binaryfbe1d6d6 original77 five-Go with Haskell peers, frozen35, pinned Go1.26.9 security/quality, real whole-process Haskell/Go/Haskell switchback and loaded drain, identical-binary nonroot image/default/fail-closed actual Helm render. Retain failures/aborts/unrun native checks and old-peer security follow-up; delegated same-author review and scoped adjacent gate publication."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": ""
+}
