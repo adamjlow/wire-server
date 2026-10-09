@@ -275,7 +275,19 @@ full/partial batches, caught-error run count and cancellation are covered. Full 
 checks and an actual isolated PostgreSQL fixture using9 unchanged readonly native
 migrations pass: [exact evidence](../../../go/services/background-worker/evidence/meetings-cleanup-storage-20261009/).
 This fixture stubs missing conversations; actual unchecked conversation/proposal/
-MLS cleanup, retention config/cutoff and runtime/metrics remain unfinished. Native
+MLS cleanup and runtime/metrics remain unfinished. Native
 cleanup does not send notifications through its unchecked delete path. Next implement
 that concrete deletion adapter and adminless handlers, then full scheduled runtime
 and existing final acceptance. No fresh Haskell cleanup/whole-service proof.
+
+Meetings configuration/cutoff is now connected to cleanup orchestration. Required
+numeric/text settings and canonical source CronSchedule serialization are validated;
+Double-to-Pico before3600 multiplication, SQL microsecond floor and native Int64
+wire conversion avoid Go duration overflow while preserving source behavior.
+[Exact full Go checks and focused evidence](../../../go/services/background-worker/evidence/meetings-config-20261009/)
+pass; a miscalculated candidate test date was corrected and its failure retained.
+No fresh native execution/package-version or new DB claim; reuse unchanged prior
+storage evidence. Serious inherited concern: enormous finite retention may wrap
+native timestamp encoding to a recent cutoff and expire unintended meetings. Keep
+parity now; any new bound/encoding policy needs separate review. Next actual deletion
+adapters/adminless and scheduled runtime, then unchanged full final acceptance.

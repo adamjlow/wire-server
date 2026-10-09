@@ -3,3 +3,4 @@ Connect notification, DLQ and group-sync workers and all seven migrations, prese
 Reuse original Haskell tests: limited notification40 and MLS conversation migration1 pass on identified artifacts; scheduled runtime and final whole-service qualification remain outstanding.
 Construct native scheduled schema/reaper and cron parsing, insertion and scheduler with isolated PostgreSQL evidence; runtime integration and domain handlers remain unfinished.
 Construct native meetings selection, code-mode routing and cleanup orchestration; concrete conversation deletion and scheduled integration remain unfinished.
+Decode required meetings cleanup configuration and preserve canonical cron defaults and native fixed-point retention/SQL timestamp arithmetic.

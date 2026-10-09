@@ -1,0 +1,27 @@
+[
+  {
+    "hours": 0,
+    "pg_microseconds": 844819200123456,
+    "wire_hex": "0003005bcc52a240"
+  },
+  {
+    "hours": 0.0014,
+    "pg_microseconds": 844819195083456,
+    "wire_hex": "0003005bcc05bac0"
+  },
+  {
+    "hours": 0.1,
+    "pg_microseconds": 844818840123456,
+    "wire_hex": "0003005bb6dd7840"
+  },
+  {
+    "hours": 8766000,
+    "pg_microseconds": -30712780799876544,
+    "wire_hex": "ff92e2e37a5be240"
+  },
+  {
+    "hours": 1e+300,
+    "pg_microseconds": 844819200123456,
+    "wire_hex": "0003005bcc52a240"
+  }
+]

@@ -96,6 +96,12 @@ Meetings storage and cleanup orchestration now pass [construction checks](eviden
 including actual PostgreSQL execution with9 readonly original migrations. Native
 expiry ordering/limits, open/boundary retention, full-row validation, code routing,
 batch/error behavior and deletion guards are implemented. Conversation/proposal
-removal adapters, retention configuration/cutoff and service wiring remain
+removal adapters and service wiring remain
 unfinished; this fixture explicitly stubs missing conversations. No full meetings
 handler or original cleanup-test qualification is claimed.
+
+Required meetings configuration and one-run retention cutoff now pass
+[Go construction checks](evidence/meetings-config-20261009/). Source cron
+serialization and fixed-point/SQL timestamp arithmetic are preserved, including
+large finite timestamp wrap as an inherited concern. Concrete deletion and
+runtime/metrics integration remain unfinished; this is not original-suite proof.

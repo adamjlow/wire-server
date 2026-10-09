@@ -1,0 +1,5 @@
+--- FAIL: TestMeetingCutoffNativeFixedPrecisionAndLongRetention (0.00s)
+    meetings_config_test.go:49: hours8.766e+06 cutoff1026-10-02 00:00:00.123456 +0000 UTC error<nil> want1026-09-24T00:00:00.123456Z
+FAIL
+exit status 1
+FAIL	github.com/adamjlow/wire-server/go/services/background-worker	0.011s

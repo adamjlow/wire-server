@@ -1,0 +1,32 @@
+{
+  "primary_sources": {
+    "nominal-diff-time-primary.hs": {
+      "url": "https://raw.githubusercontent.com/haskell/time/master/lib/Data/Time/Clock/Internal/NominalDiffTime.hs",
+      "sha256": "e5ea420ff3c4cd3948bc0dd524131ab3de5521087560241a3bde53c0b3fdc415"
+    },
+    "fixed-primary.hs": {
+      "url": "https://raw.githubusercontent.com/ghc/ghc/ghc-9.10.3-release/libraries/base/src/Data/Fixed.hs",
+      "sha256": "41317f74252fd2decad8a7ef0a7420fd401c01134b5be2f0765d039e62fd7619"
+    },
+    "postgresql-binary-0.15.0.1.tar.gz": {
+      "url": "https://hackage-content.haskell.org/package/postgresql-binary-0.15.0.1/postgresql-binary-0.15.0.1.tar.gz",
+      "sha256": "7736e091b51820526a6417ab9932c083ffd31f0d3ec5baea1d5a07b65d85e34f"
+    },
+    "services/background-worker/src/Wire/BackgroundWorker/Options.hs": {
+      "sha256": "4b7ac21864c060b047cf5f948ae4ad058ce077bb4edb5b25805f847870fd1146"
+    },
+    "services/background-worker/src/Wire/BackgroundWorker/Workers.hs": {
+      "sha256": "835bf199b3fbf370d3dadce73883e710314b0a527251b39457fe174f6cbdfd0c"
+    },
+    "services/background-worker/src/Wire/MeetingsCleanupWorker.hs": {
+      "sha256": "7024cf2ae06ecc650b18eb4cc254ffdcb9044e480d8c64f911050cc15e442367"
+    },
+    "cron-0.7.2/src/System/Cron/Types.hs": {
+      "sha256": "7ecb9703c61c40b156b8f008e7ad6c615a9e43f2e64f3d36cd39acddf3b49851"
+    },
+    "postgresql-binary-0.15.0.1/library/PostgreSQL/Binary/Time.hs": {
+      "sha256": "bc95e8ca329d2e680a4c2eaa6b0dcdfeaf0061882cf4d734cf31597de6da2d54"
+    }
+  },
+  "limitation": "Primary source arithmetic comparison, not fresh native GHC package/version or Haskell execution evidence"
+}

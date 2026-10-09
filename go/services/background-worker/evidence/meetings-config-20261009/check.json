@@ -1,0 +1,10 @@
+{
+  "base_revision": "761f32514784f87597d0f17a882f975afac68ea5",
+  "compiler": "Go1.26.9",
+  "command": "GOTOOLCHAIN=local GOWORK=off python3 go/check.py background-worker",
+  "exit_code": 0,
+  "result": "pass",
+  "inputs_sha256": "8170cc9d675a69b933623dfb1a88e196ce2d5d2e8bdd026539f36f2cf05bd8ad",
+  "storage_rerun": "No new PostgreSQL test: earlier exact meetings store inputs remain unchanged, reuse their limited storage evidence; this checkpoint validates changed configuration/cutoff and ordinary unit/race/build checks",
+  "remaining": "No clean final process/native execution/full e2e/runtime integration proof"
+}

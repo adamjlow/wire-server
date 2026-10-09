@@ -94,3 +94,20 @@ func runMeetingsCleanup(ctx context.Context, store meetingsCleanupStore, convers
 		}
 	}
 }
+
+// Source runCleanupOldMeetings snapshots Now before the first batch. A cutoff
+// subsystem error completes the run with its caught error boundary;
+// malformed configuration and cancellation remain startup/handler errors.
+func runConfiguredMeetingsCleanup(ctx context.Context, config MeetingsCleanupConfig, store meetingsCleanupStore, conversations meetingsConversationEffects, now time.Time, report func(int64, int64, error)) (meetingsCleanupResult, error) {
+	if err := config.validate(); err != nil {
+		return meetingsCleanupResult{}, err
+	}
+	if err := ctx.Err(); err != nil {
+		return meetingsCleanupResult{}, err
+	}
+	cutoff, err := meetingRetentionCutoff(now, config.RetentionHours)
+	if err != nil {
+		return meetingsCleanupResult{Completed: true, BatchError: err}, nil
+	}
+	return runMeetingsCleanup(ctx, store, conversations, cutoff, config.BatchSize, report)
+}
