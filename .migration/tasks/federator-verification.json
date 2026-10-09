@@ -4,7 +4,7 @@
   "title": "Federator verification",
   "service": "federator",
   "kind": "verification",
-  "status": "active",
+  "status": "done",
   "owner": "codex",
   "branch": "go-migration",
   "depends_on": [
@@ -36,7 +36,39 @@
       "required_evidence": "Final exact source845956f6/binaryfbe1d6d6 original77 five-Go with Haskell peers, frozen35, pinned Go1.26.9 security/quality, real whole-process Haskell/Go/Haskell switchback and loaded drain, identical-binary nonroot image/default/fail-closed actual Helm render. Retain failures/aborts/unrun native checks and old-peer security follow-up; delegated same-author review and scoped adjacent gate publication."
     }
   ],
-  "evidence": [],
-  "review": null,
-  "handoff": ""
+  "evidence": [
+    {
+      "criterion": "parity",
+      "result": "pass",
+      "command": "Delegated same-author review of exact source845956f6/binaryfbe1d6d6: original77 all five Go/Haskell peers and frozen35 pass, no skips/errors, process0/cleanup0. Patched Go1.26.9/x/net0.60.0 quality/security/license pass. Actual identical-binary nonroot image/default-preserving one-image Helm selector/fail-closed pass; actual Haskell/Go/Haskell unchanged config and loaded stream drain0/0.564s pass. Failures/aborts/native checks unrun and old-peer security follow-up retained; finite qualified contract, no production/push/default change.",
+      "revision": "845956f630b791645a9c12d23918d8c9c3bc7507",
+      "artifact": "go/services/federator/REVIEW.md"
+    },
+    {
+      "criterion": "security",
+      "result": "pass",
+      "command": "Delegated same-author review of exact source845956f6/binaryfbe1d6d6: original77 all five Go/Haskell peers and frozen35 pass, no skips/errors, process0/cleanup0. Patched Go1.26.9/x/net0.60.0 quality/security/license pass. Actual identical-binary nonroot image/default-preserving one-image Helm selector/fail-closed pass; actual Haskell/Go/Haskell unchanged config and loaded stream drain0/0.564s pass. Failures/aborts/native checks unrun and old-peer security follow-up retained; finite qualified contract, no production/push/default change.",
+      "revision": "845956f630b791645a9c12d23918d8c9c3bc7507",
+      "artifact": "go/services/federator/REVIEW.md"
+    },
+    {
+      "criterion": "operations",
+      "result": "pass",
+      "command": "Delegated same-author review of exact source845956f6/binaryfbe1d6d6: original77 all five Go/Haskell peers and frozen35 pass, no skips/errors, process0/cleanup0. Patched Go1.26.9/x/net0.60.0 quality/security/license pass. Actual identical-binary nonroot image/default-preserving one-image Helm selector/fail-closed pass; actual Haskell/Go/Haskell unchanged config and loaded stream drain0/0.564s pass. Failures/aborts/native checks unrun and old-peer security follow-up retained; finite qualified contract, no production/push/default change.",
+      "revision": "845956f630b791645a9c12d23918d8c9c3bc7507",
+      "artifact": "go/services/federator/REVIEW.md"
+    },
+    {
+      "criterion": "rollback",
+      "result": "pass",
+      "command": "Delegated same-author review of exact source845956f6/binaryfbe1d6d6: original77 all five Go/Haskell peers and frozen35 pass, no skips/errors, process0/cleanup0. Patched Go1.26.9/x/net0.60.0 quality/security/license pass. Actual identical-binary nonroot image/default-preserving one-image Helm selector/fail-closed pass; actual Haskell/Go/Haskell unchanged config and loaded stream drain0/0.564s pass. Failures/aborts/native checks unrun and old-peer security follow-up retained; finite qualified contract, no production/push/default change.",
+      "revision": "845956f630b791645a9c12d23918d8c9c3bc7507",
+      "artifact": "go/services/federator/REVIEW.md"
+    }
+  ],
+  "review": {
+    "by": "codex (self-review delegated by user)",
+    "artifact": "go/services/federator/REVIEW.md"
+  },
+  "handoff": "Finite supported matrix complete for exact tested tuple; reuse retained receipts. Earlier four Go artifacts need patched rebuild before production; original functional run does not renew their security qualification."
 }
