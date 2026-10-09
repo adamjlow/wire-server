@@ -1,0 +1,82 @@
+{
+  "source_revision": "c1120238f8ecd7480742156df6c5dd2d2ec41f56",
+  "binary_sha256": "ced2d1923a1c456a5e4025b10d699707f1e302115bfd17ffea1e092552da39fa",
+  "image_id": "sha256:619daec4c7353ecf8004202ff99ee3592f887dea8c3e3df4e6aee3ee7f67d270",
+  "build_info": {
+    "GoVersion": "go1.26.9",
+    "Path": "github.com/adamjlow/wire-server/go/services/cannon/cmd/cannon",
+    "Main": {
+      "Path": "github.com/adamjlow/wire-server/go/services/cannon",
+      "Version": "(devel)"
+    },
+    "Deps": [
+      {
+        "Path": "github.com/apache/cassandra-gocql-driver/v2",
+        "Version": "v2.1.2",
+        "Sum": "h1:lu/p0Db2av18enHJvWJQoChLssI0P+AR06STq4VdvCc="
+      },
+      {
+        "Path": "github.com/gorilla/websocket",
+        "Version": "v1.5.3",
+        "Sum": "h1:saDtZ6Pbx/0u+bgYQ3q96pZgCzfhKXGPqt7kZ72aNNg="
+      },
+      {
+        "Path": "github.com/rabbitmq/amqp091-go",
+        "Version": "v1.15.0",
+        "Sum": "h1:LEQL4/yp48/Wigt6A6XOu18RQRo8ZHtB5I/KZJn+gkw="
+      },
+      {
+        "Path": "go.yaml.in/yaml/v3",
+        "Version": "v3.0.4",
+        "Sum": "h1:tfq32ie2Jv2UxXFdLJdh3jXuOzWiL1fo0bu/FbuKpbc="
+      },
+      {
+        "Path": "gopkg.in/inf.v0",
+        "Version": "v0.9.1",
+        "Sum": "h1:73M5CoZyi3ZLMOyDlQh031Cx6N9NDJ2Vvfl76EDAgDc="
+      }
+    ],
+    "Settings": [
+      {
+        "Key": "-buildmode",
+        "Value": "exe"
+      },
+      {
+        "Key": "-compiler",
+        "Value": "gc"
+      },
+      {
+        "Key": "CGO_ENABLED",
+        "Value": "0"
+      },
+      {
+        "Key": "GOARCH",
+        "Value": "amd64"
+      },
+      {
+        "Key": "GOOS",
+        "Value": "linux"
+      },
+      {
+        "Key": "GOAMD64",
+        "Value": "v1"
+      },
+      {
+        "Key": "vcs",
+        "Value": "git"
+      },
+      {
+        "Key": "vcs.revision",
+        "Value": "c1120238f8ecd7480742156df6c5dd2d2ec41f56"
+      },
+      {
+        "Key": "vcs.time",
+        "Value": "2026-10-09T16:29:44Z"
+      },
+      {
+        "Key": "vcs.modified",
+        "Value": "false"
+      }
+    ]
+  }
+}

@@ -1,0 +1,34 @@
+all modules verified
+?   	github.com/adamjlow/wire-server/go/tooling	[no test files]
+all modules verified
+No vulnerabilities found.
+W1009 16:31:31.767246 3329981 library.go:141] "golang.org/x/sys/unix" contains non-Go code that can't be inspected for further dependencies:
+/home/operator/go/pkg/mod/golang.org/x/sys@v0.48.0/unix/asm_linux_amd64.s
+W1009 16:31:32.225178 3330012 library.go:141] "golang.org/x/sys/unix" contains non-Go code that can't be inspected for further dependencies:
+/home/operator/go/pkg/mod/golang.org/x/sys@v0.48.0/unix/asm_linux_amd64.s
+W1009 16:31:32.307488 3330012 library.go:394] module github.com/adamjlow/wire-server/go/tooling has empty version, defaults to HEAD. The license URL may be incorrect. Please verify!
+github.com/adamjlow/wire-server/go/tooling,https://github.com/adamjlow/wire-server/blob/HEAD/go/tooling/LICENSE,AGPL-3.0
+github.com/davecgh/go-spew/spew,https://github.com/davecgh/go-spew/blob/v1.1.1/LICENSE,ISC
+github.com/go-logr/logr,https://github.com/go-logr/logr/blob/v1.2.0/LICENSE,Apache-2.0
+github.com/golang/groupcache/lru,https://github.com/golang/groupcache/blob/41bb18bfe9da/LICENSE,Apache-2.0
+github.com/google/go-cmdtest,https://github.com/google/go-cmdtest/blob/55ab3332a786/LICENSE,Apache-2.0
+github.com/google/go-cmp/cmp,https://github.com/google/go-cmp/blob/v0.6.0/LICENSE,BSD-3-Clause
+github.com/google/go-licenses/v2,https://github.com/google/go-licenses/blob/v2.0.1/LICENSE,Apache-2.0
+github.com/google/go-licenses/v2/internal/third_party/pkgsite,https://github.com/google/go-licenses/blob/v2.0.1/internal/third_party/pkgsite/LICENSE,BSD-3-Clause
+github.com/google/licenseclassifier/v2,https://github.com/google/licenseclassifier/blob/v2.0.0/v2/LICENSE,Apache-2.0
+github.com/google/renameio,https://github.com/google/renameio/blob/v0.1.0/LICENSE,Apache-2.0
+github.com/otiai10/copy,https://github.com/otiai10/copy/blob/v1.10.0/LICENSE,MIT
+github.com/sergi/go-diff/diffmatchpatch,https://github.com/sergi/go-diff/blob/v1.2.0/LICENSE,MIT
+github.com/spf13/cobra,https://github.com/spf13/cobra/blob/v1.7.0/LICENSE.txt,Apache-2.0
+github.com/spf13/pflag,https://github.com/spf13/pflag/blob/v1.0.5/LICENSE,BSD-3-Clause
+go.opencensus.io,https://github.com/census-instrumentation/opencensus-go/blob/v0.24.0/LICENSE,Apache-2.0
+golang.org/x/mod/semver,https://cs.opensource.google/go/x/mod/+/v0.41.0:LICENSE,BSD-3-Clause
+golang.org/x/net/context/ctxhttp,https://cs.opensource.google/go/x/net/+/v0.60.0:LICENSE,BSD-3-Clause
+golang.org/x/sync/errgroup,https://cs.opensource.google/go/x/sync/+/v0.23.0:LICENSE,BSD-3-Clause
+golang.org/x/sys/unix,https://cs.opensource.google/go/x/sys/+/v0.48.0:LICENSE,BSD-3-Clause
+golang.org/x/telemetry,https://go.googlesource.com/telemetry/+/4bcc4b2ee518/LICENSE,BSD-3-Clause
+golang.org/x/text,https://cs.opensource.google/go/x/text/+/v0.42.0:LICENSE,BSD-3-Clause
+golang.org/x/tools,https://cs.opensource.google/go/x/tools/+/v0.50.0:LICENSE,BSD-3-Clause
+golang.org/x/vuln,https://go.googlesource.com/vuln/+/v1.8.0/LICENSE,BSD-3-Clause
+k8s.io/klog/v2,https://github.com/kubernetes/klog/blob/v2.90.1/LICENSE,Apache-2.0
+Go module checks passed: tooling; Go 1.26.9

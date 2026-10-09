@@ -1,0 +1,1 @@
+Align optional Go service builds and checking tools with Go 1.26.9, update affected networking dependencies, and rebuild/requalify the earlier Go images while preserving Haskell defaults.

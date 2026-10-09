@@ -40,3 +40,18 @@ Evidence: docs/go-migration/qualifications/go-patched-20261009/ and
 .migration/reviews/go-patched-rebuild-20261009.md. Receipt source identifies actual
 clean service build; metadata completion does not trigger service rebuild.
 Native Haskell checks unavailable/unrun; unchanged upstream CI retained.
+
+Execution progress: clean four-service source
+c1120238f8ecd7480742156df6c5dd2d2ec41f56; existing builders produce four new
+Go1.26.9 images and extracted binaries match receipt/compiler hashes. All four
+services plus tooling pass required checks/no known module vulnerabilities.
+Original77 five-Go run underway, earlier proxy5/cargohold27 passed. Image smoke
+will use the same owned dependencies only after original assertions finish.
+Previous1.26.8 receipts are history; no renewed claims before final results.
+
+Completed finite patch qualification: original77 all five patched Go services
+with Haskell peers pass/no failures/errors/skips, process0/cleanup0. Actual rebuilt
+image default/nonroot/read-only health/shutdown and gundeck helper checks pass.
+Exact extracted image binaries match every suite's selections. Durable artifact
+manifest and receipts retained under qualifications/go-patched-20261009; delegated
+review approved. No failures/aborts in this patch run; no additional tests required.

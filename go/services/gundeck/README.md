@@ -1,5 +1,9 @@
 # Optional Go gundeck
 
+Current security-patched Go1.26.9 artifacts and original-test/container results:
+[patch qualification](../../../docs/go-migration/qualifications/go-patched-20261009/README.md).
+Earlier receipts below remain historical; use the identified patched image for deployment.
+
 Whole-service Go gundeck is qualified for the exact versions and mixed deployment
 in [REVIEW.md](REVIEW.md): 72 original e2e tests, 91 frozen comparisons, actual
 persisted Haskell↔Go switchback, security/quality and optional packaging checks.

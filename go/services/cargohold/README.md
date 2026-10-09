@@ -1,5 +1,9 @@
 # Optional Go cargohold candidate
 
+Current security-patched Go1.26.9 artifacts and original-test/container results:
+[patch qualification](../../../docs/go-migration/qualifications/go-patched-20261009/README.md).
+Earlier receipts below remain historical; use the identified patched image for deployment.
+
 Work in progress against the approved whole-service contract. Haskell is still
 the supported default. The candidate implements user/bot/provider upload,
 S3 multipart persistence, signed download/delete, tokens, versioned routes,

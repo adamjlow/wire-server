@@ -1,5 +1,9 @@
 # Optional Go cannon
 
+Current security-patched Go1.26.9 artifacts and original-test/container results:
+[patch qualification](../../../docs/go-migration/qualifications/go-patched-20261009/README.md).
+Earlier receipts below remain historical; use the identified patched image for deployment.
+
 Qualified optional implementation on `go-migration`, approved by delegated self-review.
 Haskell remains supported and default. This replaces the whole cannon process;
 Cassandra schemas, RabbitMQ queue names/effects and gundeck contracts stay shared.

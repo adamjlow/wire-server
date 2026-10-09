@@ -30,11 +30,12 @@ Mirror the current service boundary; no production/security exception approved.
   pins were patched to1.26.9/x/net0.60.0, official archive SHA256 verified, final
   module scan reports no vulnerabilities. Primary advisory:
   https://pkg.go.dev/vuln/GO-2026-6617 . No scan bypass or security exception.
-- The four previously qualified peer binaries/images were built with Go1.26.8;
-  their historical functional evidence remains, but those old artifacts need
-  patched rebuild/requalification before production. Final mixed-service run
-  uses their identified binaries to establish interoperable functional behavior,
-  not to renew their security qualification. Haskell remains default throughout.
+- At initial federator qualification the four earlier peer artifacts used Go1.26.8;
+  that historical run established functional behavior without renewing security.
+  The subsequent user-requested [patched rebuild](../../../docs/go-migration/qualifications/go-patched-20261009/README.md)
+  rebuilds/requalifies all four on Go1.26.9, passes their module scans and original77
+  with this unchanged patched federator. Use the new identified artifacts; old
+  Go1.26.8 binaries remain historical, not patched. Haskell remains default.
 
 Synthetic fixture certs/provider credentials are existing test artifacts, never
 production identities. Private runner uses owned internal networks/no host ports,

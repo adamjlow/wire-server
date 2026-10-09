@@ -1,0 +1,62 @@
+{
+  "source_revision": "c1120238f8ecd7480742156df6c5dd2d2ec41f56",
+  "binary_sha256": "abf252dbe14cdb44777c994387a3a99df7e0906fbd21c514ee698d3644da7594",
+  "image_id": "sha256:68d057907e7c508ceed545f523537844673fcca5377a3a5d37c57cfe1ae01b2e",
+  "build_info": {
+    "GoVersion": "go1.26.9",
+    "Path": "github.com/adamjlow/wire-server/go/services/proxy/cmd/proxy",
+    "Main": {
+      "Path": "github.com/adamjlow/wire-server/go/services/proxy",
+      "Version": "(devel)"
+    },
+    "Deps": [
+      {
+        "Path": "go.yaml.in/yaml/v3",
+        "Version": "v3.0.4",
+        "Sum": "h1:tfq32ie2Jv2UxXFdLJdh3jXuOzWiL1fo0bu/FbuKpbc="
+      }
+    ],
+    "Settings": [
+      {
+        "Key": "-buildmode",
+        "Value": "exe"
+      },
+      {
+        "Key": "-compiler",
+        "Value": "gc"
+      },
+      {
+        "Key": "CGO_ENABLED",
+        "Value": "0"
+      },
+      {
+        "Key": "GOARCH",
+        "Value": "amd64"
+      },
+      {
+        "Key": "GOOS",
+        "Value": "linux"
+      },
+      {
+        "Key": "GOAMD64",
+        "Value": "v1"
+      },
+      {
+        "Key": "vcs",
+        "Value": "git"
+      },
+      {
+        "Key": "vcs.revision",
+        "Value": "c1120238f8ecd7480742156df6c5dd2d2ec41f56"
+      },
+      {
+        "Key": "vcs.time",
+        "Value": "2026-10-09T16:29:44Z"
+      },
+      {
+        "Key": "vcs.modified",
+        "Value": "false"
+      }
+    ]
+  }
+}

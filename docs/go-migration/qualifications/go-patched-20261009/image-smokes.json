@@ -1,0 +1,101 @@
+{
+  "result": "pass",
+  "checks": [
+    {
+      "service": "proxy",
+      "result": "pass",
+      "image_id": "sha256:68d057907e7c508ceed545f523537844673fcca5377a3a5d37c57cfe1ae01b2e",
+      "binary_sha256": "abf252dbe14cdb44777c994387a3a99df7e0906fbd21c514ee698d3644da7594",
+      "source_revision": "c1120238f8ecd7480742156df6c5dd2d2ec41f56",
+      "GoVersion": "go1.26.9",
+      "health": 200,
+      "default_config_path": true,
+      "user": "65534:65534",
+      "read_only": true,
+      "cap_drop": [
+        "ALL"
+      ],
+      "no_new_privileges": true,
+      "host_ports": {},
+      "network": "owned disposable namespace after original suites finish",
+      "shutdown_exit_code": 0,
+      "shutdown_seconds": 0.051,
+      "lifecycle": []
+    },
+    {
+      "service": "cargohold",
+      "result": "pass",
+      "image_id": "sha256:8366897138986ef54dbec22ed7982a32498c8d995bf96e04be950dab3b7d751a",
+      "binary_sha256": "1838097eef9dba908c76ce893dbecd4224a2e1ac78c9ad126c8a56033dd655e1",
+      "source_revision": "c1120238f8ecd7480742156df6c5dd2d2ec41f56",
+      "GoVersion": "go1.26.9",
+      "health": 200,
+      "default_config_path": true,
+      "user": "65534:65534",
+      "read_only": true,
+      "cap_drop": [
+        "ALL"
+      ],
+      "no_new_privileges": true,
+      "host_ports": {},
+      "network": "owned disposable namespace after original suites finish",
+      "shutdown_exit_code": 0,
+      "shutdown_seconds": 0.047,
+      "lifecycle": []
+    },
+    {
+      "service": "cannon",
+      "result": "pass",
+      "image_id": "sha256:619daec4c7353ecf8004202ff99ee3592f887dea8c3e3df4e6aee3ee7f67d270",
+      "binary_sha256": "ced2d1923a1c456a5e4025b10d699707f1e302115bfd17ffea1e092552da39fa",
+      "source_revision": "c1120238f8ecd7480742156df6c5dd2d2ec41f56",
+      "GoVersion": "go1.26.9",
+      "health": 200,
+      "default_config_path": true,
+      "user": "65534:65534",
+      "read_only": true,
+      "cap_drop": [
+        "ALL"
+      ],
+      "no_new_privileges": true,
+      "host_ports": {},
+      "network": "owned disposable namespace after original suites finish",
+      "shutdown_exit_code": 0,
+      "shutdown_seconds": 0.055,
+      "lifecycle": []
+    },
+    {
+      "service": "gundeck",
+      "result": "pass",
+      "image_id": "sha256:3aea8f0ea0f3c964d4ad42f3554d4b4375972bd0984276223361ff470677007a",
+      "binary_sha256": "a50512ef30d7fa9ddf92c2c1933e69769d6691e08cdfbe9f7c4f2d266071f46c",
+      "source_revision": "c1120238f8ecd7480742156df6c5dd2d2ec41f56",
+      "GoVersion": "go1.26.9",
+      "health": 200,
+      "default_config_path": true,
+      "user": "65534:65534",
+      "read_only": true,
+      "cap_drop": [
+        "ALL"
+      ],
+      "no_new_privileges": true,
+      "host_ports": {},
+      "network": "owned disposable namespace after original suites finish",
+      "shutdown_exit_code": 0,
+      "shutdown_seconds": 0.039,
+      "lifecycle": [
+        {
+          "command": "sleep 10",
+          "exit_code": 0,
+          "seconds": 10.055
+        },
+        {
+          "command": "sleep 10; echo synthetic",
+          "exit_code": 2,
+          "seconds": 0.032
+        }
+      ]
+    }
+  ],
+  "owned_cleanup": true
+}

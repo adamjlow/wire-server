@@ -1,5 +1,9 @@
 # Optional Go proxy
 
+Current security-patched Go1.26.9 artifacts and original-test/container results:
+[patch qualification](../../../docs/go-migration/qualifications/go-patched-20261009/README.md).
+Earlier receipts below remain historical; use the identified patched image for deployment.
+
 This is a separate Go executable implementing the proxy provider routes,
 configuration, ordered queries, secrets reload, API versions, gzip, retries,
 request IDs, application metrics, configured logging and signal shutdown.

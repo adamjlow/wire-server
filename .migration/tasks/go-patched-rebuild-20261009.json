@@ -4,7 +4,7 @@
   "title": "Rebuild and requalify four earlier Go services using patched compiler",
   "service": "framework",
   "kind": "framework",
-  "status": "active",
+  "status": "done",
   "owner": "codex",
   "branch": "go-migration",
   "depends_on": [
@@ -55,7 +55,32 @@
       "required_evidence": "Original77 unchanged assertions/no skips/errors, exact all-five executable hashes, process0/cleanup0; delegated review and historical proofs/limits retained."
     }
   ],
-  "evidence": [],
-  "review": null,
-  "handoff": ""
+  "evidence": [
+    {
+      "criterion": "quality",
+      "result": "pass",
+      "command": "Review actual clean sourcec1120238f four rebuilt Go1.26.9 image/extracted-binary/compiler receipts; four service/tooling format/tidy/verify/vet/race/build/module vulnerability/license checks pass; unchanged patched federator receipts reused. Original77 five patched Go services/Haskell peers pass/no failures/errors/skips, exact all-five selections match each suite, process0/cleanup0. Actual four nonroot/read-only/default-path image health/SIGTERM0 and gundeck lifecycle helper positive/rejection pass. No oracle/logic/default/push changes, historical evidence retained.",
+      "revision": "c1120238f8ecd7480742156df6c5dd2d2ec41f56",
+      "artifact": ".migration/reviews/go-patched-rebuild-20261009.md"
+    },
+    {
+      "criterion": "artifacts",
+      "result": "pass",
+      "command": "Review actual clean sourcec1120238f four rebuilt Go1.26.9 image/extracted-binary/compiler receipts; four service/tooling format/tidy/verify/vet/race/build/module vulnerability/license checks pass; unchanged patched federator receipts reused. Original77 five patched Go services/Haskell peers pass/no failures/errors/skips, exact all-five selections match each suite, process0/cleanup0. Actual four nonroot/read-only/default-path image health/SIGTERM0 and gundeck lifecycle helper positive/rejection pass. No oracle/logic/default/push changes, historical evidence retained.",
+      "revision": "c1120238f8ecd7480742156df6c5dd2d2ec41f56",
+      "artifact": ".migration/reviews/go-patched-rebuild-20261009.md"
+    },
+    {
+      "criterion": "integration",
+      "result": "pass",
+      "command": "Review actual clean sourcec1120238f four rebuilt Go1.26.9 image/extracted-binary/compiler receipts; four service/tooling format/tidy/verify/vet/race/build/module vulnerability/license checks pass; unchanged patched federator receipts reused. Original77 five patched Go services/Haskell peers pass/no failures/errors/skips, exact all-five selections match each suite, process0/cleanup0. Actual four nonroot/read-only/default-path image health/SIGTERM0 and gundeck lifecycle helper positive/rejection pass. No oracle/logic/default/push changes, historical evidence retained.",
+      "revision": "c1120238f8ecd7480742156df6c5dd2d2ec41f56",
+      "artifact": ".migration/reviews/go-patched-rebuild-20261009.md"
+    }
+  ],
+  "review": {
+    "by": "codex (self-review delegated by user)",
+    "artifact": ".migration/reviews/go-patched-rebuild-20261009.md"
+  },
+  "handoff": "Finite patch complete; renew three compatible service claims through new exact-revision verification tasks. Proxy formal stage/GC diagnostic limitation unchanged. All current five Go runtime artifacts use1.26.9; originals/done records retained as history, no extra testing/push/production action."
 }
