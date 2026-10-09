@@ -57,8 +57,15 @@
       "command": "Original unchanged gundeck40 now40/40 pass with only Go worker/Haskell peers, exact clean static binary and owned cleanup0 plus empty post-cleanup labels. This passes limited notification/DLQ/queue lifecycle comparison; whole scheduled worker, seven migrations, final124/ops/switchback/image remain unfinished, so full service criterion is not passed.",
       "revision": "00557161c5218fba7ce290ba57536561298a35e3",
       "artifact": "go/services/background-worker/evidence/jobs-original-20261009/original-result.json"
+    },
+    {
+      "criterion": "service",
+      "result": "blocked",
+      "command": "Unchanged original MLS conversation migration1/1 pass on exact clean static Go worker/Haskell peers after native counter decimal formatting repair; five storage phases, enabled local/remote copy+cleanup, PostgreSQL-only final shared history. Strict XML no skip/error, controller0/runner0/cleanup0 and empty owned labels. Limited conversation qualification; whole scheduled service/final124/operations/switchback/image remain incomplete.",
+      "revision": "309733bb48febdb8708e6b1c5aadb94cb03fe8ab",
+      "artifact": "go/services/background-worker/evidence/conversation-original-20261009/original-result.json"
     }
   ],
   "review": null,
-  "handoff": "All seven migrations connected; local conversation full typed read/PG copy/CQL cleanup implemented. Original MLS on260cb1022 reached enabled phase3; local32/remote2 reported completed, but wait helper requires1.0 while Go emitted1, so case failed and phase4/5/shared-history unrun. Failed exact receipt retained in evidence/conversation-original-initial-20261009. Candidate decimal counters corrected; pinned Go1.26.9 full checks pass in evidence/migration-metric-format-20261009. Next clean static rerun unchanged background-worker-mls. Initial stack cleaned0 with owned labels empty. Users2 phase2 SCIM500 unresolved/not waived; enabled user effects unverified. Scheduled schema/reaper/cron/adminless/meetings runtime, startup/drain, final original47/six-Go124, actual switchback/ops/image/selector/delegated review remain required. Goal/task active; Haskell default; no parity/availability."
+  "handoff": "All seven migration families connected. Original MLS conversation test now1/1 pass on309733bb48febdb8708e6b1c5aadb94cb03fe8ab, exact clean static binary9e21f14e..., only Go worker/Haskell peers; five phases/enabled local+remote migration/final shared history, cleanup0 and empty labels. Passing receipt evidence/conversation-original-20261009; initial formatting failure retained separately. Full Go1.26.9 checks pass in evidence/migration-metric-format-20261009; migration validator32 tests pass. README/plan/changelog current. No live handles/Docker. Next scheduled schema/reaper/cron/adminless/meetings runtime, source startup/drain; users2 phase2 SCIM500 unresolved/not waived and enabled user effects unverified. Final original47/six-Go124, actual switchback/ops/image/selector/delegated review required. Goal/task active; Haskell default; no whole parity/availability."
 }

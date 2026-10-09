@@ -1,4 +1,3 @@
-Begin optional Go background-worker construction under the whole-service reference contract; Haskell remains default and the incomplete candidate is not selectable or qualified.
-Add bounded per-page migration execution with fatal cancellation and caught-error full rescans; user/conversation migrations remain disabled until complete.
-Connect user migration with native SSO canonicalization, claim-aware reads, locked parallel copy and durable cleanup; conversation and scheduled migration construction remains incomplete.
-Construct native remote conversation membership migration and MLS client/history mapping; full conversation migration remains disabled pending local copy and cleanup.
+Construct the optional Go background-worker under the whole-service reference contract; Haskell remains default and the incomplete candidate is not selectable or qualified.
+Connect notification, DLQ and group-sync workers and all seven migrations, preserving bounded execution, typed storage contracts, native locks/transactions and durable cleanup.
+Reuse original Haskell tests: limited notification40 and MLS conversation migration1 pass on identified artifacts; scheduled runtime and final whole-service qualification remain outstanding.

@@ -1,0 +1,21 @@
+{
+  "result": "pass",
+  "source_revision": "309733bb48febdb8708e6b1c5aadb94cb03fe8ab",
+  "binary_sha256": "9e21f14e4f11d203faa98e71bea7490c5c2d172fa879e67da73bf47275035f8f",
+  "executed_cases": 1,
+  "distinct_cases": 1,
+  "passed": 1,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "original_xml_sha256": "dfb4ff61c6430459d803aa00f58734b98b108bbe5008322780d2b88adcda82bf",
+  "controller_exit_code": 0,
+  "runner_process_exit_code": 0,
+  "cleanup_exit_code": 0,
+  "post_cleanup_owned": {
+    "containers": [],
+    "networks": [],
+    "volumes": []
+  },
+  "coverage": "Unchanged original Migration.Conversation.testMigrationToPostgresMLS; only Go worker with Haskell peers. Native five phases: Cassandra, migration routing without migration, enabled local+remote migrations, post-migration routing, PostgreSQL-only; final shared MLS history assertion passes. Limited real conversation-storage proof; no whole-service/six-Go124/operations/scheduled/switchback qualification."
+}

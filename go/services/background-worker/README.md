@@ -13,17 +13,18 @@ or write failures remain unacknowledged through channel reconnect.
 
 Rabbit group-sync consumption is connected with PostgreSQL/Cassandra conversation
 storage, migration-aware routing and local, remote and pinned-TLS bot notification
-adapters. Six migration families are connected: block lists, password reset,
-conversation codes, domain registration, team features and users. User migration
+adapters. All seven migration families are connected: block lists, password reset,
+conversation codes, domain registration, team features, users and conversations. User migration
 includes SSO/value decoding, related Cassandra reads and claim retention,
 Serializable PG copy and pending-delete ledger, sequential CQL cleanup, and the
-bounded parallel scan under exclusive UUID locks. Conversation migration remains
-unfinished and its flag explicitly rejects startup.
+bounded parallel scan under exclusive UUID locks. Conversation migration runs
+native independent local-conversation and remote-membership scans, with complete
+member status/subconversation/MLS-history copy and source cleanup/ledger ordering.
 
 PostgreSQL scheduled adminless/meetings workers remain disconnected. Claim,
 heartbeat, retry and acknowledgement storage components exist; schema bootstrap,
-scheduled runtime and domain handlers remain unfinished. Actual database effects
-for these migration and scheduled components have not been validated. This state
+scheduled runtime and domain handlers remain unfinished. Actual user and other
+migration families and scheduled database effects remain unqualified. This state
 must not be selected for a deployment. Final acceptance remains the whole service
 in the [reference contract](../../../docs/go-migration/services/background-worker/contract.md)
 and [plan](../../../docs/go-migration/plans/background-worker.md): the final six-Go
@@ -54,6 +55,16 @@ queue lifecycle behavior for that artifact; it does not validate later migration
 construction, the original worker47, final six-Go124 or durable switchback.
 Earlier failed38/40 [watcher receipts](evidence/watcher-20261009/) remain historical
 evidence for their earlier artifact.
+
+The unchanged original Haskell MLS migration test passed1/1 on source
+309733bb48febdb8708e6b1c5aadb94cb03fe8ab with only Go worker/Haskell peers.
+[Exact receipts](evidence/conversation-original-20261009/) cover all five storage
+phases, enabled local/remote copying/cleanup, PostgreSQL-only behavior and final
+shared MLS history, with strict XML and owned cleanup. The initial counter-text
+failure remains retained; the candidate was fixed without changing assertions.
+This is limited conversation proof, not full worker or six-Go qualification.
+The users2 run still fails before migration activation on SCIM500; it does not
+validate enabled user migration and must be resolved before final acceptance.
 
 Construction check receipts live under [evidence/](evidence/), including
 [user transaction/cleanup](evidence/user-migration-store-20261009/) and

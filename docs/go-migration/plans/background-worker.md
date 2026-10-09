@@ -181,8 +181,13 @@ The initial original MLS case reached enabled phase3 and reported both migration
 loops completed (local32/remote2), but timed out because the native helper expects
 counter text1.0 while Go emitted1. [Failed proof](../../../go/services/background-worker/evidence/conversation-original-initial-20261009/)
 is retained; phase4/5 and shared-history checks did not run. Candidate counters
-now match native decimal formatting and full Go checks pass. Rerun the unchanged
-original MLS test against the corrected exact static executable, then complete scheduled jobs and consolidate source startup/supervision/logging
+now match native decimal formatting and full Go checks pass. The corrected exact static executable on309733bb48febdb8708e6b1c5aadb94cb03fe8ab
+then passed the unchanged original MLS case1/1 with only Go worker/Haskell peers,
+no errors/skips/failures, owned cleanup0 and empty project labels.
+[Passing proof](../../../go/services/background-worker/evidence/conversation-original-20261009/)
+covers all five storage phases, enabled local/remote migration and final shared
+MLS history. This is limited real DB/interoperability evidence, not the final
+whole-service or six-Go run. Continue with scheduled jobs and consolidate source startup/supervision/logging
 and graceful drain. Final original47/exact six-Go124, actual durable
 Haskell->Go->Haskell switchback, bounded operations, optional image/selector and
 delegated same-author review remain mandatory. Native local Haskell build checks
