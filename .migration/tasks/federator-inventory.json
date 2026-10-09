@@ -4,7 +4,7 @@
   "title": "Inventory optional whole-service federator and finite original-test matrix",
   "service": "federator",
   "kind": "discovery",
-  "status": "active",
+  "status": "done",
   "owner": "codex",
   "branch": "go-migration",
   "depends_on": [
@@ -30,7 +30,25 @@
       "required_evidence": "Actual migration-check/test and scope checks; Haskell/defaults unchanged."
     }
   ],
-  "evidence": [],
-  "review": null,
-  "handoff": ""
+  "evidence": [
+    {
+      "criterion": "inventory",
+      "result": "pass",
+      "command": "Pinned source review and actual no-network compiled discovery; make migration-check migration-test (32 pass); scope and diff checks.",
+      "revision": "60ed48cf17445c97c4354df377656fae89a28bc1",
+      "artifact": "docs/go-migration/services/federator/inventory.md"
+    },
+    {
+      "criterion": "validation",
+      "result": "pass",
+      "command": "Pinned source review and actual no-network compiled discovery; make migration-check migration-test (32 pass); scope and diff checks.",
+      "revision": "60ed48cf17445c97c4354df377656fae89a28bc1",
+      "artifact": ".migration/reviews/federator-inventory.md"
+    }
+  ],
+  "review": {
+    "by": "codex (self-review delegated by user)",
+    "artifact": ".migration/reviews/federator-inventory.md"
+  },
+  "handoff": "Freeze five new original assertions plus existing72, execute Haskell baseline and concrete uncovered TLS/DNS/forwarding stimuli; immediately implement runnable forwarding slice."
 }
