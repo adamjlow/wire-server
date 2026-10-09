@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "id": "docs-reconciliation-20261009",
+  "title": "Reconcile migration entry docs and prepare background-worker goal",
+  "service": "framework",
+  "kind": "framework",
+  "status": "queued",
+  "owner": null,
+  "branch": null,
+  "depends_on": [
+    "go-patched-publication-20261009"
+  ],
+  "write_paths": [
+    ".migration/tasks/docs-reconciliation-20261009.json",
+    "docs/go-migration/plans/docs-reconciliation-20261009.md",
+    ".migration/reviews/docs-reconciliation-20261009.md",
+    "docs/go-migration/README.md",
+    "docs/go-migration/services/README.md",
+    "docs/go-migration/ARCHITECTURE.md",
+    "docs/go-migration/PARITY.md",
+    "docs/go-migration/SERVICE-LIFECYCLE.md",
+    "go/AGENTS.md",
+    "go/README.md",
+    "tools/parity/docker/README.md",
+    "docs/go-migration/plans/background-worker.md",
+    "changelog.d/5-internal/docs-reconciliation-20261009"
+  ],
+  "plan": "docs/go-migration/plans/docs-reconciliation-20261009.md",
+  "acceptance_criteria": [
+    {
+      "id": "docs",
+      "description": "Entry docs reflect actual service/artifact/harness facts and preserve authority/limitations.",
+      "required_evidence": "Reference current records and patched Go1.26.9 original77/image receipts, preserve immutable history and proxy limitation, no broadened permissions; relative links/scope/diff/migration checks."
+    },
+    {
+      "id": "next",
+      "description": "Executable whole-service background-worker plan is ready for the explicitly requested goal.",
+      "required_evidence": "Source-grounded scope including jobs/migrations, original-test reuse and finite contract/security/operations/storage-switchback acceptance; no premature test coverage claim."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": ""
+}
