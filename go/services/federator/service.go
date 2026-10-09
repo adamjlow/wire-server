@@ -231,6 +231,10 @@ func (s *Service) Handler(external bool) http.Handler {
 			return
 		}
 		if external {
+			// validateDomain performs its own live policy read in the reference.
+			if !s.allow(r.Context(), domain, rid, w) {
+				return
+			}
 			targets, err := dnsTargets(r.Context(), s.config.Settings.dnsAddress(), domain)
 			if !discovery(w, domain, targets, err) {
 				return
@@ -335,18 +339,51 @@ func (s *Service) allow(ctx context.Context, domain, rid string, w http.Response
 	}
 	defer resp.Body.Close()
 	var policy struct {
-		Strategy string `json:"strategy"`
-		Remotes  []struct {
-			Domain string `json:"domain"`
+		Strategy *string `json:"strategy"`
+		Remotes  *[]struct {
+			Domain       string `json:"domain"`
+			SearchPolicy string `json:"search_policy"`
+			Restriction  struct {
+				Tag   string          `json:"tag"`
+				Value json.RawMessage `json:"value"`
+			} `json:"restriction"`
 		} `json:"remotes"`
+		Interval *int64 `json:"update_interval"`
 	}
-	if resp.StatusCode != 200 || json.NewDecoder(io.LimitReader(resp.Body, 8*1024*1024)).Decode(&policy) != nil {
+	body, readErr := io.ReadAll(io.LimitReader(resp.Body, 8*1024*1024+1))
+	if resp.StatusCode != 200 || readErr != nil || len(body) > 8*1024*1024 || json.Unmarshal(body, &policy) != nil || policy.Strategy == nil || policy.Remotes == nil || policy.Interval == nil {
 		serverError(w)
 		return false
 	}
-	allowed := policy.Strategy == "allowAll"
-	if policy.Strategy == "allowDynamic" {
-		for _, remote := range policy.Remotes {
+	if !member(*policy.Strategy, []string{"allowAll", "allowNone", "allowDynamic"}) {
+		serverError(w)
+		return false
+	}
+	for _, remote := range *policy.Remotes {
+		if !validDomain(strings.ToLower(remote.Domain)) || !member(remote.SearchPolicy, []string{"no_search", "exact_handle_search", "full_search"}) || len(remote.Restriction.Value) == 0 {
+			serverError(w)
+			return false
+		}
+		switch remote.Restriction.Tag {
+		case "allow_all":
+			if string(remote.Restriction.Value) != "null" {
+				serverError(w)
+				return false
+			}
+		case "restrict_by_team":
+			var teams []string
+			if json.Unmarshal(remote.Restriction.Value, &teams) != nil || string(remote.Restriction.Value) == "null" {
+				serverError(w)
+				return false
+			}
+		default:
+			serverError(w)
+			return false
+		}
+	}
+	allowed := *policy.Strategy == "allowAll"
+	if *policy.Strategy == "allowDynamic" {
+		for _, remote := range *policy.Remotes {
 			if strings.ToLower(remote.Domain) == domain {
 				allowed = true
 			}

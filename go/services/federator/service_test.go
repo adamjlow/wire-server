@@ -203,3 +203,18 @@ func TestMetricLabelsAndStreamingWriter(t *testing.T) {
 		t.Fatal("streaming wrapper dropped status")
 	}
 }
+
+func TestMalformedPolicyFailsClosed(t *testing.T) {
+	for _, body := range []string{`{"strategy":"allowAll"}`, `{"strategy":"unknown","remotes":[],"update_interval":10}`, `{"strategy":"allowAll","remotes":[],"update_interval":10} trailing`, `{"strategy":"allowAll","remotes":[{"domain":"example.com","search_policy":"full_search","restriction":{"tag":"allow_all"}}],"update_interval":10}`} {
+		server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) { fmt.Fprint(w, body) }))
+		host, port, _ := net.SplitHostPort(strings.TrimPrefix(server.URL, "http://"))
+		var p int
+		fmt.Sscan(port, &p)
+		s := &Service{config: Config{Brig: Endpoint{host, uint16(p)}}, local: server.Client()}
+		w := httptest.NewRecorder()
+		if s.allow(t.Context(), "example.com", "synthetic", w) || w.Code != 500 {
+			t.Fatalf("malformed policy permitted: %s", body)
+		}
+		server.Close()
+	}
+}
