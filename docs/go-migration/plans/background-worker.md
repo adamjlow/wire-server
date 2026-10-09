@@ -145,3 +145,18 @@ all migrations. Refine source discovery retry budget, draining and strict dual
 configuration while completing those paths; no unsupported configured path may
 remain at final qualification. Maintain all final original tests and durable
 rehearsal; do not shrink to the functioning notification/health slice.
+
+Dead-user watcher construction: verified Cassandra client using the already
+qualified gocql2.1.2 pin, source missed_notifications INSERT with bound UUID/client
+parameters and LocalQuorum/one retry. Transient mode1 ACKs without storage; default
+or persistent delivery writes canonical lower-case uint64 ClientId before ACK.
+Missing/malformed source last-death header and failed writes leave delivery
+unacknowledged and trigger channel/connection re-establishment. Original permits
+long leading-zero ClientIds; tests preserve that detail and injection rejection.
+Focused tests and required Go checks pass, including malformed federation error
+JSON retry rather than terminal drop. Next original gundeck40 profile runs with
+only Go worker and remaining Haskell peers to validate notification/storage effects;
+it does not qualify unfinished group/scheduled jobs or migrations. Use existing
+private runner and exact static receipt; no changed oracle/profile is required.
+The historical host health-only helper is locked to its original artifact so
+later dependency workers cannot accidentally be run against host services.

@@ -34,6 +34,8 @@ def main():
     receipt = json.loads(args.receipt.read_text())
     if args.output.exists() or receipt['binary_sha256'] != sha(binary):
         raise ValueError('output must be new and executable must match receipt')
+    if receipt['source_revision'] != 'bdfb252dc3e1a87c14eb282ef6982e3d3194548b' or sha(binary) != '670d299e86bdb958252a2a95855d7246184b7fc5027ec6384db4d1a3edeed200':
+        raise ValueError('historical health-only comparison requires its original artifact; later workers must use the owned Docker runtime')
     configs = json.loads(args.fixtures.read_text())
     worker, galley = configs['background-worker'], configs['galley']
     if any(value for key, value in worker.items() if key.startswith('migrate')):

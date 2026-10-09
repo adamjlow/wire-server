@@ -112,8 +112,9 @@ func (s *Service) federationRequest(ctx context.Context, client *http.Client, ta
 		return data, err
 	}
 	var e federationError
-	_ = json.NewDecoder(io.LimitReader(resp.Body, 1<<20)).Decode(&e)
-	return nil, remoteError{badRequest: e.valid() && e.Inner != nil && *e.Inner.Code == 400 && *e.Inner.Label == "bad-request"}
+	data, readErr := io.ReadAll(io.LimitReader(resp.Body, 1<<20))
+	decodeErr := json.Unmarshal(data, &e)
+	return nil, remoteError{badRequest: readErr == nil && decodeErr == nil && e.valid() && e.Inner != nil && *e.Inner.Code == 400 && *e.Inner.Label == "bad-request"}
 }
 
 func (s *Service) deliverNotification(ctx context.Context, client *http.Client, target string, body []byte) (notificationAction, error) {

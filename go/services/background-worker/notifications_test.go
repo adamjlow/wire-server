@@ -141,7 +141,7 @@ func (a *acknowledgements) Reject(_ uint64, requeue bool) error {
 }
 
 func TestConsumerACKRejectRetryAndUnsupportedCounters(t *testing.T) {
-	for _, kind := range []string{"legacy", "compatible-drop", "unsupported-drop", "malformed", "bad-request", "retry"} {
+	for _, kind := range []string{"legacy", "compatible-drop", "unsupported-drop", "malformed", "bad-request", "retry", "invalid-error"} {
 		t.Run(kind, func(t *testing.T) {
 			calls := 0
 			s, client := testFederator(t, func(w http.ResponseWriter, r *http.Request) {
@@ -154,6 +154,11 @@ func TestConsumerACKRejectRetryAndUnsupportedCounters(t *testing.T) {
 					return
 				}
 				calls++
+				if kind == "invalid-error" && calls == 1 {
+					w.WriteHeader(533)
+					_, _ = io.WriteString(w, `{"code":533,"label":"federation-remote-error","message":"remote failure","inner":{"code":400,"label":"bad-request","message":"invalid payload"}} trailing invalid JSON`)
+					return
+				}
 				if kind == "bad-request" {
 					w.WriteHeader(533)
 					_, _ = io.WriteString(w, `{"code":533,"label":"federation-remote-error","message":"remote failure","inner":{"code":400,"label":"bad-request","message":"invalid payload"}}`)
@@ -194,7 +199,7 @@ func TestConsumerACKRejectRetryAndUnsupportedCounters(t *testing.T) {
 			if kind == "compatible-drop" && (m == nil || m.pushed != 1 || m.dropped != 0) {
 				t.Fatal("compatible drop policy did not count delivery")
 			}
-			if kind == "retry" && (calls != 2 || m.errors != 1 || m.pushed != 1 || m.stuck) {
+			if (kind == "retry" || kind == "invalid-error") && (calls != 2 || m.errors != 1 || m.pushed != 1 || m.stuck) {
 				t.Fatal("delivery failure was not retried")
 			}
 			if kind == "bad-request" && (m == nil || m.errors != 1 || m.stuck) {

@@ -110,6 +110,7 @@ func (s *Service) Run(ctx context.Context) error {
 	defer cancel()
 	var wg sync.WaitGroup
 	wg.Go(func() { s.runPusher(runCtx) })
+	wg.Go(func() { s.runDeadWatcher(runCtx) })
 	done := make(chan error, 1)
 	go func() { done <- server.Serve(listener) }()
 	select {

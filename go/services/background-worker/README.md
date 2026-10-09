@@ -7,9 +7,13 @@ implemented with verified RabbitMQ TLS, paginated queue discovery, single-active
 quorum queues, raw-body forwarding over internal HTTP2, version selection,
 ACK/reject/retry and cancellation without acknowledging unsent messages.
 
-The DLQ watcher, Rabbit group-sync jobs, PostgreSQL scheduled adminless/meetings
-workers and all seven migration families are still being implemented. Their
-readiness remains false; enabled migrations fail startup explicitly. This state
+The DLQ watcher now writes the existing Cassandra missed-notification state with
+LocalQuorum before ACK; transient mode1 is ignored/ACKed and malformed headers
+or write failures remain unacknowledged through channel reconnect.
+
+Rabbit group-sync jobs, PostgreSQL scheduled adminless/meetings
+workers and all seven migration families are still being implemented. Those unfinished workers
+remain unready; enabled migrations fail startup explicitly. This state
 must not be selected for a deployment. Final acceptance remains the whole service
 in the frozen reference contract, original six-service tests and real durable
 Haskell-Go-Haskell switchback. There is no final compatibility or image claim.

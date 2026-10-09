@@ -44,16 +44,25 @@ type RabbitConfig struct {
 	Insecure  bool   `yaml:"insecureSkipVerifyTls"`
 }
 
+type CassandraConfig struct {
+	Endpoint   Endpoint `yaml:"endpoint"`
+	Keyspace   string   `yaml:"keyspace"`
+	TLSCA      string   `yaml:"tlsCa"`
+	Datacentre string   `yaml:"filterNodesByDatacentre"`
+}
+
 type Config struct {
-	LogLevel            string       `yaml:"logLevel"`
-	HTTP                Endpoint     `yaml:"backgroundWorker"`
-	Federator           Endpoint     `yaml:"federatorInternal"`
-	Galley              Endpoint     `yaml:"galley"`
-	Brig                Endpoint     `yaml:"brig"`
-	Gundeck             Endpoint     `yaml:"gundeck"`
-	Spar                Endpoint     `yaml:"spar"`
-	Rabbit              RabbitConfig `yaml:"rabbitmq"`
-	DefederationTimeout *int         `yaml:"defederationTimeout"`
+	LogLevel            string          `yaml:"logLevel"`
+	HTTP                Endpoint        `yaml:"backgroundWorker"`
+	Federator           Endpoint        `yaml:"federatorInternal"`
+	Galley              Endpoint        `yaml:"galley"`
+	Brig                Endpoint        `yaml:"brig"`
+	Gundeck             Endpoint        `yaml:"gundeck"`
+	Spar                Endpoint        `yaml:"spar"`
+	Rabbit              RabbitConfig    `yaml:"rabbitmq"`
+	Cassandra           CassandraConfig `yaml:"cassandra"`
+	CassandraBrig       CassandraConfig `yaml:"cassandraBrig"`
+	DefederationTimeout *int            `yaml:"defederationTimeout"`
 	Pusher              struct {
 		Min     int64 `yaml:"pushBackoffMinWait"`
 		Max     int64 `yaml:"pushBackoffMaxWait"`
@@ -89,7 +98,8 @@ type Config struct {
 }
 
 type GalleyConfig struct {
-	Settings struct {
+	Cassandra CassandraConfig `yaml:"cassandra"`
+	Settings  struct {
 		Domain string `yaml:"federationDomain"`
 	} `yaml:"settings"`
 	Raw map[string]any `yaml:",inline"`
@@ -131,6 +141,11 @@ func LoadConfig(workerPath, galleyPath string) (Config, GalleyConfig, error) {
 	}
 	if !c.HTTP.valid() || !c.Federator.valid() || !c.Rabbit.Endpoint.valid() || !validDomain(g.Settings.Domain) || c.Rabbit.Insecure {
 		return c, g, errors.New("invalid endpoint, domain or TLS configuration")
+	}
+	for _, store := range []CassandraConfig{c.Cassandra, c.CassandraBrig, g.Cassandra} {
+		if !store.Endpoint.valid() || store.Keyspace == "" {
+			return c, g, errors.New("invalid Cassandra configuration")
+		}
 	}
 	if c.Rabbit.AdminHost != "" && !(Endpoint{c.Rabbit.AdminHost, c.Rabbit.AdminPort}).valid() {
 		return c, g, errors.New("invalid RabbitMQ admin endpoint")
