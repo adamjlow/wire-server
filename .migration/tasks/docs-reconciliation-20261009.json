@@ -4,9 +4,9 @@
   "title": "Reconcile migration entry docs and prepare background-worker goal",
   "service": "framework",
   "kind": "framework",
-  "status": "queued",
-  "owner": null,
-  "branch": null,
+  "status": "active",
+  "owner": "codex",
+  "branch": "go-migration",
   "depends_on": [
     "go-patched-publication-20261009"
   ],
