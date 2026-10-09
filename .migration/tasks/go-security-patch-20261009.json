@@ -4,7 +4,7 @@
   "title": "Patch optional Go tooling for newly published HTTP vulnerabilities",
   "service": "framework",
   "kind": "framework",
-  "status": "active",
+  "status": "done",
   "owner": "codex",
   "branch": "go-migration",
   "depends_on": [
@@ -27,7 +27,18 @@
       "required_evidence": "Verified official download metadata and actual compiler archive checksum/version, framework/tooling boundary tests; inherited old image risks explicitly recorded, no scanner bypass."
     }
   ],
-  "evidence": [],
-  "review": null,
-  "handoff": ""
+  "evidence": [
+    {
+      "criterion": "patch",
+      "result": "pass",
+      "command": "Official HTTPS archive checksum verified; actual Go1.26.9, boundary8/framework32 and scope review pass; Nix unrun recorded.",
+      "revision": "c25ee24faf5c2fea7a81a09d4ee6b1821b019faf",
+      "artifact": ".migration/reviews/go-security-patch-20261009.md"
+    }
+  ],
+  "review": {
+    "by": "codex (self-review delegated by user)",
+    "artifact": ".migration/reviews/go-security-patch-20261009.md"
+  },
+  "handoff": "Optional toolchain patched; candidate x/net and exact final binary qualification remain."
 }

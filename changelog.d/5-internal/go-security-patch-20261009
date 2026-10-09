@@ -1,0 +1,1 @@
+Patch optional Go toolchain to1.26.9 for newly published HTTP/TLS vulnerabilities; Haskell builds remain unchanged.

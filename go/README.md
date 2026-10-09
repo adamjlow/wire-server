@@ -8,7 +8,7 @@ Start with the [migration guide](../docs/go-migration/README.md) and local
 [policy](AGENTS.md). Future service directories use `go/services/<service>/`.
 Create them only when a contracted service's executable plan needs them.
 
-The optional shell is `nix-shell go/shell.nix`. It pins Go 1.26.8 using official
+The optional shell is `nix-shell go/shell.nix`. It pins Go 1.26.9 using official
 archive checksums and the existing root nixpkgs lock without changing `flake.nix`
 or its default shell. Alternatively use exactly the version in `.go-version`.
 Disable automatic toolchain upgrades with `GOTOOLCHAIN=local`.
