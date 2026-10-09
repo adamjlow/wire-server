@@ -17,7 +17,9 @@ Before the first implementation, a scoped toolchain task must pin a Go version
 in optional Nix outputs/dev shells and Go CI, choose module boundaries, and add
 explicit build/test commands without changing default Haskell targets.
 Prefer one module per service unless a documented decision justifies otherwise.
-No module exists yet; do not pretend `go test ./...` works from this directory.
+Service modules and a separate tooling module now exist. Run checks for one
+module with `python3 go/check.py <service>` from the repository root; there is
+no combined root Go module for `go test ./...` from this directory.
 Each eventual module must run gofmt, go vet, unit tests and race tests, dependency
 vulnerability/license checks and its required compatibility tests. Commands and
 versions belong in its plan and evidence. Preserve the Haskell build alongside it.

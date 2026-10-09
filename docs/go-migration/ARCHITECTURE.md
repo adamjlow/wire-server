@@ -5,17 +5,20 @@ The current source of truth is `services/<name>/`, with behaviour also in
 in `libs/wire-api-federation/`. Trace those dependencies in inventories; directory
 placement alone does not define a service's complete contract.
 
-Candidates will live in `go/services/<name>/` as independent executables/images.
+Candidates live in `go/services/<name>/` as independent executables/images.
 They communicate using existing HTTP, federation, WebSocket and queue protocols,
 and must preserve relevant storage formats and semantics. A Go service can talk
 to Haskell peers indefinitely. No shared runtime or per-Haskell-module migration.
 
-Deployment selection will choose the Haskell or Go image independently per service
+Deployment selection chooses the Haskell or Go image independently per service
 behind its existing identity, ports, routes and discovery. Omitted selection must
 preserve Haskell and the existing config defaults. Existing values files, image
 overrides and install/upgrade commands must retain their meanings. Reject invalid
-or unsupported choices clearly; never silently switch implementations. No selector
-is implemented yet: its exact shape belongs in the first packaging plan.
+or unsupported choices clearly; never silently switch implementations. Existing
+per-service Helm postrenderers change exactly the selected container image and
+leave omitted selection byte-for-byte unchanged. Actual selection proofs and
+local image receipts are linked from the
+[current qualification](qualifications/go-patched-20261009/README.md).
 
 Changes to Helm/Nix, nginz routing and config get scoped operations tasks. Keep
 Haskell sources, builds, images and configuration supported indefinitely; Go
@@ -33,10 +36,11 @@ schema migrations as a prerequisite for choosing an implementation. Demonstrate
 Haskell reading data written by Go after switchback, not just an image rollback.
 Upstream's own schema upgrades retain upstream's documented version constraints.
 
-The first service's toolchain plan must pin Go/Nix/CI versions, module layout,
-image build, health/readiness and graceful shutdown. Expose Go through optional
+The existing [optional toolchain](../../go/README.md) pins Go versions, module
+layout and explicit checks. New service plans must cover image build,
+health/readiness and graceful shutdown. Expose Go through optional
 Nix outputs/dev shells and explicit targets while retaining existing defaults.
-This framework creates no placeholder module or alternative Haskell build.
+The optional tooling keeps the existing Haskell build independent of Go.
 Shared Go libraries need actual reuse and a serialized owner; avoid building a
 speculative replacement for `libs/`.
 

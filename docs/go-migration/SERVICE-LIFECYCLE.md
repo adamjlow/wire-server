@@ -44,7 +44,13 @@ deployments may choose different implementations indefinitely. Neither choice
 changes the repository default or retires Haskell. Do not automatically switch
 live traffic when a compatibility record changes.
 
-The existing prohibition on integration runs remains in force. Preparing a parity
-plan or runner interface does not waive it. Until an environment and policy are
-explicitly authorized, integration parity evidence cannot be produced and the
-`verified` gate cannot pass on that basis.
+The general prohibition on unapproved integration targets remains in force;
+preparing a plan or runner interface does not waive it. Existing user authorization
+and [private environment plan](plans/e2e-environment.md), extended by the service
+plans, cover the selected original suites in owned Docker networks. Actual
+[qualification](qualifications/go-patched-20261009/README.md) retains original
+assertions, exact executables, exit results and cleanup. No authorization for
+shared/production targets follows. Missing or unexecuted cases cannot pass a gate.
+Review delegation must be explicitly applicable to the task, recorded and labeled
+as same-author review; it never substitutes for evidence or grants contract
+exceptions, guardrail changes or production permission.

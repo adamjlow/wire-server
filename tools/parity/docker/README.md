@@ -93,11 +93,27 @@ for concrete gaps in that service's finite acceptance matrix.
 # Combined optional services
 
 Use repeated `prepare --select SERVICE BINARY BUILD_RECEIPT` arguments for
-identified Go proxy and cargohold binaries, then `run --service proxy-cargohold`.
-This starts both Go components simultaneously, keeps all other backend service
+identified binaries. Available combined profiles are `proxy-cargohold`,
+`proxy-cargohold-cannon`, `proxy-cargohold-cannon-gundeck`, and
+`proxy-cargohold-cannon-gundeck-federator`; pass the matching profile to `run --service`.
+Every service in the selected profile requires exactly one identified selection.
+For example, `run --service proxy-cargohold` starts both Go components simultaneously, keeps all other backend service
 executables from the pinned Haskell image, and executes the unchanged original
 5 proxy and 27 cargohold tests in the same disposable environment. Both suite
 receipts record every staged service executable's implementation and SHA256;
 the host checks both selected hashes in both reports before accepting success.
 Missing/duplicate/unsupported selections and changed binaries fail closed.
 This bounded combined run does not claim the full backend suite was executed.
+
+The current [patched five-service run](../../../docs/go-migration/qualifications/go-patched-20261009/README.md)
+passes 5 proxy + 27 cargohold + 40 gundeck (including 35 cannon) + 5 federator = 77
+original Haskell tests with five Go1.26.9 executables and remaining Haskell peers.
+All four suite receipts identify every selected executable; the host verifies
+hashes before accepting success. Exact runner, controller, image and fixture
+identities remain in the retained receipts. No complete backend-suite claim.
+
+Background-worker is currently a Haskell peer. Its next migration requires an
+explicit source inventory, relevant original test catalogue and finite coverage
+for scheduled jobs, migrations, queue effects and switchback; existing event
+coverage alone does not qualify that service. Extend protected selection/catalogue
+tooling through a separately scoped reviewed task before selecting it.

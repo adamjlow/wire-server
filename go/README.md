@@ -5,12 +5,12 @@ Current patched five-service artifacts use **Go1.26.9**. See the
 Historical Go1.26.8 receipts remain history; use the new identified artifacts.
 Haskell remains the supported default.
 
-This directory holds optional Go tooling and future service implementations.
+This directory holds optional Go tooling and isolated service implementations.
 Haskell remains supported and default. Go binaries are explicit per-service
 options; existing Haskell workflows have no Go toolchain requirement.
 
 Start with the [migration guide](../docs/go-migration/README.md) and local
-[policy](AGENTS.md). Future service directories use `go/services/<service>/`.
+[policy](AGENTS.md). Service directories use `go/services/<service>/`.
 Create them only when a contracted service's executable plan needs them.
 
 The optional shell is `nix-shell go/shell.nix`. It pins Go 1.26.9 using official

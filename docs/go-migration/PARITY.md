@@ -62,12 +62,13 @@ Parity also needs agreed service-specific startup/readiness, metrics/log field,
 signal/shutdown, cancellation, resource, load, latency/error-budget and rollback
 checks. Set thresholds in the contract before measuring. Document how to switch
 back without incompatible persisted data. HTTP parity alone cannot satisfy these
-gates. Real integration execution remains blocked by root policy until explicitly
-authorized; this design supplies no deployment or integration-test permission.
-The scoped 2026-10-07 preparation decision now permits the task-owned synthetic
-reference characterization environment described in
-[its plan](plans/delegated-review.md). It does not permit the existing integration
-suites or substitute characterization for real candidate parity evidence.
+gates. Integration execution requires an explicitly authorized environment; this
+design alone supplies no deployment or integration permission. The historical
+2026-10-07 [preparation plan](plans/delegated-review.md) covered synthetic reference
+characterization only. Subsequent user authorization and
+[private Docker environment](plans/e2e-environment.md), extended by individual
+service plans, permit the selected original suites in owned disposable networks.
+This does not authorize shared/production targets or arbitrary integration runs.
 
 Selection evidence must demonstrate omitted selection preserves existing Haskell
 defaults; explicit per-service Go selection works with supported peers; invalid or
@@ -97,10 +98,14 @@ checks prevent empty, missing, skipped or failed suites from being green. XML
 verification alone is not authenticated execution provenance. Run manifests must
 also retain actual binary identities, environment, process exits and source pins.
 
-Current limitation: the original integration binary and Cassandra/RabbitMQ/S3/
-federation dependency environment are not installed here. E2e preparation and
-negative runner tests are not e2e success. Provision the existing disposable
-upstream environment before using this adapter for cargohold acceptance. Existing
-integration execution restrictions remain; the authorized isolated proxy runner
-continues to be executable. This is an environment gap, not a request for the user
-to manually test or routinely approve tests.
+The [Docker harness](../../tools/parity/docker/README.md) provisions pinned
+compiled Haskell tests/peers and disposable Cassandra/RabbitMQ/Redis/S3 and other
+fixtures without installing backend packages on the host. The
+[current patched qualification](qualifications/go-patched-20261009/README.md)
+records77 original tests passing with five Go services and Haskell peers, exact
+executable hashes and cleanup0. This is selected-suite evidence, not the entire
+backend suite or coverage of the next service's unexamined jobs/migrations.
+Preflight/negative runner tests alone still cannot establish e2e success.
+Native local GHC/Cabal/Nix checks remain unavailable/unrun; unchanged Haskell code
+keeps upstream CI. New service scopes require baseline discovery and an explicitly
+recorded finite acceptance matrix in the same authorized disposable environment.
