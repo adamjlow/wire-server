@@ -236,3 +236,13 @@ URL serialization follows the native URI library, whose BSD3 notice is retained
 alongside Arbiter MIT. Native IPv6 serialization removes brackets and may produce
 invalid/ambiguous stored URLs; this inherited data-format concern is documented.
 Native library execution and actual migration DB effects remain unrun.
+
+User migration storage construction now has the native Serializable PG transaction:
+duplicate-handle check, deleted-user vs deleted-bot branches, optional asset
+replacement, live bot-conversation insert and pending-delete ledger. PG commit
+precedes sequential Cassandra cleanup and ledger completion; failures retain
+source data/pending state. Same-session serialization/deadlock retries match
+pinned Hasql1.2.2 transaction semantics. Full Go checks pass for module
+evidence/user-migration-store-20261009 inputs. User decoding, related Cassandra
+reads, bounded parallel locked scan and runtime wiring remain unfinished; the
+user migration flag still rejects startup. Actual database effects remain unrun.
