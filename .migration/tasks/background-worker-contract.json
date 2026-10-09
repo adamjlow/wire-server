@@ -4,9 +4,9 @@
   "title": "Freeze whole background-worker contract and original Haskell baseline",
   "service": "background-worker",
   "kind": "contract-change",
-  "status": "blocked",
-  "owner": "codex",
-  "branch": "go-migration",
+  "status": "queued",
+  "owner": null,
+  "branch": null,
   "depends_on": [
     "background-worker-inventory",
     "background-worker-inventory-gate"
@@ -41,5 +41,5 @@
   ],
   "evidence": [],
   "review": null,
-  "handoff": "Internal dependency requiring repair: original MLS migration passes with all-Haskell peers but fails HTTP533 in both complete mixed runs and the isolated original MLS case with identified five Go peers; targeted cleanup0. Queue scoped existing-Go peer regression diagnosis/correction and requalification before resuming whole-worker contract/implementation. DNS/private-network setup fixed; no assertion weakened. Goal itself remains active, work can proceed on repair."
+  "handoff": "Resume contract review with actual original47 executions and retained failures; isolated five-Go MLS passes twice with unchanged categorized diagnostic executable. No whole-suite baseline or peer repair claimed. Freeze unchanged source/reference matrix, transparently record intermittent existing-peer/environment failures. Whole-service construction can proceed; final exact six-Go original tests must all pass before qualification."
 }

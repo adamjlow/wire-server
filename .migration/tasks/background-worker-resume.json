@@ -4,7 +4,7 @@
   "title": "Resume independent worker contract and queue whole-service construction",
   "service": "framework",
   "kind": "framework",
-  "status": "active",
+  "status": "done",
   "owner": "codex",
   "branch": "go-migration",
   "depends_on": [
@@ -25,7 +25,18 @@
       "required_evidence": "Original isolated MLS two unchanged five-Go passes retained, worker47 original executions inspected; all failures and federator compatibility null preserved. No oracle/assertion/final acceptance reduction; claim transitions/scope and self-review pass."
     }
   ],
-  "evidence": [],
-  "review": null,
-  "handoff": ""
+  "evidence": [
+    {
+      "criterion": "coordination",
+      "result": "pass",
+      "command": "Reviewed actual strict original47 executions, two isolated MLS passes, retained intermittent failure and null federator compatibility; restored source and requeued independent contract, queued whole-service construction with final exact tests unchanged. State/scope/diff checks pass.",
+      "revision": "ed84c61d86940ff6c1c75eeb4872b07161ac2501",
+      "artifact": ".migration/reviews/background-worker-resume.md"
+    }
+  ],
+  "review": {
+    "by": "codex (self-review delegated by user)",
+    "artifact": ".migration/reviews/background-worker-resume.md"
+  },
+  "handoff": "Resume independent contract review, then early runnable whole-worker construction; final peer tests required, no unverified compatibility."
 }
