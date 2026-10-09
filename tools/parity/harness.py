@@ -152,8 +152,9 @@ def proxy(output, profile):
     if subprocess.check_output(['git','status','--porcelain'],cwd=ROOT,text=True).strip():
         raise ValueError('commit checkout changes before creating binary evidence')
     go = executable(shutil.which('go') or '/nonexistent-go')
-    if subprocess.check_output([go,'version'],text=True).split()[2] != 'go1.26.8':
-        raise ValueError('pinned Go 1.26.8 is required')
+    pinned_version = (ROOT/'go/.go-version').read_text().strip()
+    if subprocess.check_output([go,'version'],text=True).split()[2] != 'go' + pinned_version:
+        raise ValueError(f'pinned Go {pinned_version} is required')
     run(['docker','info','--format','{{.ServerVersion}}'], timeout=20)
     output = new_directory(output)
     env = dict(os.environ, CGO_ENABLED='0', GOWORK='off', GOTOOLCHAIN='local')

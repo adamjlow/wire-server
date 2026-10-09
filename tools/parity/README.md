@@ -33,11 +33,15 @@ values. Only synthetic input is permitted; the declaration is not an automatic
 secret detector. Do not use production captures. Store captures separately with
 the same review/privacy rules; no raw observations are published by this CLI.
 
-Still required for the complete goal: authenticated live capture/image provenance,
+Standalone comparator examples do not supply service qualification. Each service
+needs authenticated live capture/image provenance,
 service-specific complete fixtures, transport/gzip comparison decisions, validated
 cargohold key/token/expiry/signature mapping, S3/federation effects and cross-runtime
 storage switchback, operational thresholds, deployment selection and Haskell
-build/default checks. This comparator and its examples cannot satisfy those gates.
+build/default checks. Actual per-service reports and the
+[current patched artifact qualification](../../docs/go-migration/qualifications/go-patched-20261009/README.md)
+record completed evidence and limits; the offline comparator alone cannot satisfy
+those gates.
 
 ## Automated entry point
 
@@ -50,7 +54,9 @@ and requires the strict comparison to pass:
 python3 tools/parity/harness.py proxy --profile api --output /absolute/new-artifacts
 ```
 
-Use a clean committed checkout, Docker and pinned Go 1.26.8 on PATH. `api` runs
+Use a clean committed checkout, Docker and exactly the version in
+[go/.go-version](../../go/.go-version) on PATH (currently Go1.26.9). The harness
+reads that central pin and rejects a different compiler before Docker/artifacts. `api` runs
 103 live surface-area cases; `full` also runs real reload, operational/load-smoke
 and switchback checks. Use API checks after API changes and full checks for a
 relevant operational change/final handoff; metadata changes do not justify reruns.
@@ -79,14 +85,17 @@ it does not authenticate a run or replace direct differential/storage evidence.
 Catalogue: five original proxy test functions (with all assertions inside them)
 and the core cargohold API/version/token/upload/download/federation functions.
 The five functions cover more assertions than five copied requests. Cargohold
-storage switchback still needs a service-specific adapter; proxy cannot validate
-it. The catalogue detects renamed/removed upstream tests before preparation.
+storage switchback uses its service-specific evidence, linked from
+[its review](../../go/services/cargohold/REVIEW.md); proxy cannot validate it.
+The catalogue detects renamed/removed upstream tests before preparation.
 
-**Environment status:** e2e preparation is implemented and boundary-tested;
-original e2e execution is not yet qualified here. No compiled Haskell integration
-binary or full disposable dependency environment is available. Before migrating
-cargohold, establish that environment and run the Haskell baseline. Preparation
-outputs carry `e2e_executed: false`, and no successful e2e run is claimed.
+**Environment status:** the [Docker harness](docker/README.md) now runs pinned
+compiled Haskell assertions and peers with owned disposable dependencies. The
+[current five-Go1.26.9 run](../../docs/go-migration/qualifications/go-patched-20261009/README.md)
+passes 77 selected original tests, records every binary identity and records cleanup exit 0.
+Preparation/preflight outputs still mean `e2e_executed: false`; only actual run
+receipts establish execution. This is selected-suite evidence, not the entire
+backend suite or coverage of background-worker's unexamined jobs/migrations.
 
 **Stopping rule:** finite public contract/effect matrix, security negatives,
 relevant error/retry cases, one operational smoke and switchback. Stop on that
@@ -99,6 +108,11 @@ normal Haskell CI, and run Haskell package checks when Haskell code changes.
 The [container runner](docker/README.md) now builds from a pinned published Wire
 integration image. Original compiled proxy/cargohold test discovery succeeds
 inside a restricted non-root container; no host Haskell compiler is required.
-This removes the missing compiled-suite dependency from the host. Disposable
-backend dependencies/static peers still need to be wired and qualified before
-actual e2e execution. The preflight reports that distinction explicitly.
+The owned environment now provisions and qualifies backend dependencies and
+static/dynamic peers without installing GHC/Cabal/Nix or backend packages on the
+host. Use only the user-authorized internal Docker environment, with synthetic
+data, trusted fixture TLS, no host ports and owned cleanup. Preflight alone still
+cannot qualify e2e execution; shared/production integration targets remain prohibited.
+Background-worker's next [plan](../../docs/go-migration/plans/background-worker.md)
+requires its own source inventory, finite baseline and separately reviewed strict
+selection/catalogue extension before Go substitution.

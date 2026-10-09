@@ -86,6 +86,15 @@ class HarnessTests(unittest.TestCase):
 
     def test_failed_live_comparison_does_not_produce_pass(self):
         output=self.root/'run';output.mkdir()
-        with patch.object(harness.subprocess,'check_output',side_effect=['','go version go1.26.8 linux/amd64']),patch.object(harness,'executable',return_value=Path('/synthetic-go')),patch.object(harness,'new_directory',return_value=output),patch.object(harness,'run',side_effect=[None,None,None,harness.subprocess.CalledProcessError(1,['capture'])]):
+        with patch.object(harness.subprocess,'check_output',side_effect=['','go version go'+(harness.ROOT/'go/.go-version').read_text().strip()+' linux/amd64']),patch.object(harness,'executable',return_value=Path('/synthetic-go')),patch.object(harness,'new_directory',return_value=output),patch.object(harness,'run',side_effect=[None,None,None,harness.subprocess.CalledProcessError(1,['capture'])]):
             with self.assertRaises(harness.subprocess.CalledProcessError): harness.proxy(output,'api')
         self.assertFalse((output/'result.json').exists())
+
+    def test_old_compiler_rejected_before_docker_or_artifacts(self):
+        output=self.root/'not-created'
+        with patch.object(harness.subprocess,'check_output',side_effect=['','go version go1.26.8 linux/amd64']),patch.object(harness,'executable',return_value=Path('/synthetic-go')),patch.object(harness,'run') as run,patch.object(harness,'new_directory') as destination:
+            with self.assertRaisesRegex(ValueError,'pinned Go'):
+                harness.proxy(output,'api')
+            run.assert_not_called()
+            destination.assert_not_called()
+        self.assertFalse(output.exists())
