@@ -50,8 +50,15 @@
       "command": "Owned original gundeck40 with only Go background-worker: strict XML40 cases,38 pass,2 fail; cleanup_exit_code0. Failed federation version-header mismatch corrected in6198c021681272d66c57b32633594a4487847b81; missing background-jobs queue reflects unfinished consumer. Full qualification remains incomplete.",
       "revision": "5d7b3df25546ca9ea7a33d7eab0e4a173e3af2e9",
       "artifact": "go/services/background-worker/evidence/watcher-20261009/original-result.json"
+    },
+    {
+      "criterion": "service",
+      "result": "blocked",
+      "command": "Original unchanged gundeck40 now40/40 pass with only Go worker/Haskell peers, exact clean static binary and owned cleanup0 plus empty post-cleanup labels. This passes limited notification/DLQ/queue lifecycle comparison; whole scheduled worker, seven migrations, final124/ops/switchback/image remain unfinished, so full service criterion is not passed.",
+      "revision": "00557161c5218fba7ce290ba57536561298a35e3",
+      "artifact": "go/services/background-worker/evidence/jobs-original-20261009/original-result.json"
     }
   ],
   "review": null,
-  "handoff": "Progress: runnable group consumer/migration routing committed00557161c5218fba7ce290ba57536561298a35e3; original gundeck40 live on that exact static binary SHA80b1f77974affea10b17d55a795c95126f9e2992d9848280c6af6569c01b7f92. Controller exec session98798 projectwire-e2e-7e4eb9c752a94cbc927f44ab37722dfa; retain CACHE/jobs-original terminal strict XML/receipts and owned cleanup before any pass claim. Queue-deletion recovery test has observed OK in live log; complete result pending. Current new sources add scheduled queue/tag payload validation and native Arbiter no-policy/single-job claim + heartbeat/retry SQL with optimistic attempt guards. MIT source notices retained; full Go checks pass, source hashes evidence/scheduled-store-20261009. Actual scheduled PG methods not yet executed, runtime disconnected. Next complete Arbiter schema bootstrap/worker registration/ACK/archive/reaper/cron/adminless/meetings plus all seven migration loops, startup logging/supervision/drain. Final exact six-Go124, actual durable switchback, bounded ops/image/selector remain required; no final qualification/compatibility claim."
+  "handoff": "Progress: original unchanged gundeck40 passed40/40, only Go worker/Haskell peers, clean source00557161c5218fba7ce290ba57536561298a35e3 static SHA80b1f77974affea10b17d55a795c95126f9e2992d9848280c6af6569c01b7f92. Both prior failed cases pass; prior38/40 receipts retained. Controller terminal exit0, ownedcleanup0 and container/network/volume labels empty; exact evidence/jobs-original-20261009. No live process/session remains. Group business/storage original47 untested. Later current sources add scheduled payload, native claim/heartbeat/retry and worker registration/pause/heartbeat/shutdown/removal storage methods; full Go checks + final format/vet/race pass, source receipts evidence/scheduled-store-20261009. Actual scheduled PG methods unexecuted/runtime disconnected. Next Arbiter schema bootstrap/ACK/archive/reaper/cron/adminless/meetings, seven migrations and startup logging/supervision/drain; final exact six-Go124, real durable switchback and bounded ops/image/selector mandatory. No final qualification/compatibility claim."
 }

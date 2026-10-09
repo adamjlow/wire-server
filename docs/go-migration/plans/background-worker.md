@@ -168,8 +168,10 @@ background-jobs queue from the unfinished consumer. Retained
 [watcher evidence](../../../go/services/background-worker/evidence/watcher-20261009/)
 identifies the exact failed artifact and actual execution. The controller's outer
 false execution flag denotes failed qualification; inner receipts/XML establish
-actual suite execution. Neither failure has a passing rerun yet. Finish real
-consumer adapters before rerunning the unchanged profile.
+actual suite execution. Both cases now pass in the unchanged original40 rerun against clean source
+00557161c5218fba7ce290ba57536561298a35e3, with only Go worker and Haskell peers.
+Strict XML40/40 and owned cleanup0 are retained in module evidence/jobs-original-20261009.
+The original failure history remains valid for its earlier exact artifact.
 
 Partial check/source receipts are retained in module evidence/group-jobs-20261009,
 conversation-adapters-20261009, cassandra-bots-20261009 and migration-routing-20261009. They do not establish
@@ -183,20 +185,22 @@ ledger; cleanup loads native subgroup/group/client data before deletion. Focused
 routing/failure tests and full Go checks/final race tests pass. Actual database
 lock/durable effects are not yet verified in Docker.
 
-The unchanged original gundeck40 rerun is live against clean worker source
+The unchanged original gundeck40 rerun passed40/40 against clean worker source
 00557161c5218fba7ce290ba57536561298a35e3. It includes real job startup and migration
-routing, but no subsequent scheduled construction. Do not infer a passing run
-until strict terminal XML and owned cleanup are recorded.
+routing, but no subsequent scheduled construction. This is notification/DLQ/queue
+lifecycle proof; original group business/storage, worker47 and final six-Go124
+remain outstanding. Actual owned container/network/volume cleanup was verified.
 
 Scheduled construction now has source queue-specific payload decoding and native
 gateless single-job claim, heartbeat and retry SQL with attempt/lease guards.
-Original Arbiter MIT notices are retained. Full Go checks pass; actual PG behavior
+Worker registration/heartbeat with effective worker/queue pause and shutdown/remove
+methods are also constructed. Original Arbiter MIT notices are retained. Full Go
+checks/final format-vet-race pass; actual PG behavior
 and the scheduled runtime are not yet tested/connected. Evidence is in module
 evidence/scheduled-store-20261009. Complete schema bootstrap, worker registration,
 ACK/archive/reaper/cron and domain handlers before enabling scheduled execution.
 
-Next collect the unchanged original gundeck40 terminal result and owned cleanup, then
-consolidate startup/supervision/logging and graceful drain. Implement Arbiter
+Next consolidate startup/supervision/logging and graceful drain. Implement Arbiter
 scheduled adminless/meetings jobs and all seven migration
 families. Final exact six-Go original124 tests, actual durable Haskell->Go->Haskell
 switchback, bounded operations, optional image/selector and delegated review remain

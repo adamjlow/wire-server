@@ -27,8 +27,14 @@ ACK/archive/retry/reaper/cron and actual adminless/meetings handlers are complet
 Protected schema/reference assertion material is unchanged. No final artifact or
 scheduled/full-service qualification claim.
 
-An independent original gundeck40 run is live on earlier exact clean source
+Native worker registration, effective worker/queue pause state, heartbeat with
+missing-row re-registration signal and shutdown/removal methods now also compile
+and pass final format/vet/race checks. final-source-files.json and worker-check.json
+identify those later inputs; unchanged dependency/security/license checks reused.
+They are not yet connected or exercised against PostgreSQL.
+
+The independent original gundeck40 run passed40/40 on earlier exact clean source
 00557161c5218fba7ce290ba57536561298a35e3 and SHA256
 80b1f77974affea10b17d55a795c95126f9e2992d9848280c6af6569c01b7f92.
-These new scheduled construction sources are not in that executable. Preserve
-that distinction when recording its terminal receipt and cleanup.
+These new scheduled construction sources are not in that executable. Terminal
+receipts/XML and actual owned cleanup0 are in ../jobs-original-20261009.

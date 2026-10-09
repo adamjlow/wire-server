@@ -1,0 +1,20 @@
+{
+  "base_revision": "a229bc86692c6d645b9e7cd479b763dbbf7f5721",
+  "source_inputs": "final-source-files.json",
+  "checks": [
+    {
+      "command": "gofmt -w scheduled_workers.go",
+      "exit_code": 0
+    },
+    {
+      "command": "go vet ./...",
+      "exit_code": 0
+    },
+    {
+      "command": "go test -race -count=1 ./...",
+      "exit_code": 0,
+      "output": "ok github.com/adamjlow/wire-server/go/services/background-worker 4.857s; cmd/background-worker [no test files]"
+    }
+  ],
+  "limitations": "After passing full module checks, added native worker registration/heartbeat/pause/shutdown/remove SQL, checked format/vet/race. Unchanged dependencies/vulnerability/license results reused; embedded SQL remains MIT with notice. Actual PG/runtime execution still unrun."
+}
