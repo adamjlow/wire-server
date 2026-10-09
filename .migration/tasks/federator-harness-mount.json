@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "id": "federator-harness-mount",
+  "title": "Complete strict federator candidate mount allowlist",
+  "service": "federator",
+  "kind": "contract-change",
+  "status": "queued",
+  "owner": null,
+  "branch": null,
+  "depends_on": [
+    "federator-contract"
+  ],
+  "write_paths": [
+    ".migration/tasks/federator-harness-mount.json",
+    "tools/parity/docker/environment.py",
+    "tools/parity/docker/test_environment.py",
+    ".migration/reviews/federator-harness-mount.md"
+  ],
+  "plan": "docs/go-migration/plans/federator.md",
+  "acceptance_criteria": [
+    {
+      "id": "mount",
+      "description": "Allow only identified read-only federator candidate alongside existing exact mounts without weakening isolation.",
+      "required_evidence": "Exact allowed path, foreign/writable mount rejection and harness tests; same-author review."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": ""
+}
