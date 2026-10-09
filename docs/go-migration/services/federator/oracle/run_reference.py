@@ -1,7 +1,7 @@
 """Launch and clean only task-owned internal DNS and nonroot reference runner."""
 import argparse, hashlib, json, subprocess, sys
 from pathlib import Path
-sys.path.insert(0,str(Path(__file__).resolve().parents[4]/'tools/parity/docker'))
+sys.path.insert(0,str(Path(__file__).resolve().parents[5]/'tools/parity/docker'))
 import environment as setup
 p=argparse.ArgumentParser();p.add_argument('--output',type=Path,required=True);p.add_argument('--receipt',type=Path,required=True);a=p.parse_args()
 r=setup.prepare(a.output,a.receipt);spec=json.loads((a.output/'compose.json').read_text())
