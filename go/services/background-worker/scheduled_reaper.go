@@ -318,38 +318,11 @@ func reaperSnapshotRollups(ctx context.Context, tx pgx.Tx, queue string, root in
 		return err
 	}
 	for _, id := range ids {
-		rows, err := reaperQuery(ctx, tx, "readChildResultsSQL", queue, id)
-		if err != nil {
+		if err := snapshotScheduledRollup(ctx, tx, queue, id); err != nil {
 			return err
-		}
-		var values []reaperChildResult
-		for rows.Next() {
-			var row reaperChildResult
-			if rows.Scan(&row.Source, &row.ID, &row.Value, &row.Error, &row.DLQID) != nil {
-				rows.Close()
-				return errors.New("invalid scheduled rollup data")
-			}
-			values = append(values, row)
-		}
-		err = rows.Err()
-		rows.Close()
-		if err != nil {
-			return postgresFailure(err, "scheduled rollup data read failed")
-		}
-		merged, err := mergeReaperResults(values)
-		if err != nil {
-			return err
-		}
-		if len(merged) > 0 {
-			blob, err := json.Marshal(merged)
-			if err != nil {
-				return errors.New("scheduled rollup encoding failed")
-			}
-			if _, err := reaperExec(ctx, tx, "persistParentStateSQL", queue, blob, id); err != nil {
-				return err
-			}
 		}
 	}
+
 	return nil
 }
 
@@ -458,4 +431,40 @@ func (s *postgresStore) reapScheduledJobs(ctx context.Context, interval, limit t
 		results = append(results, result)
 	}
 	return results
+}
+
+func snapshotScheduledRollup(ctx context.Context, tx pgx.Tx, queue string, id int64) error {
+
+	rows, err := reaperQuery(ctx, tx, "readChildResultsSQL", queue, id)
+	if err != nil {
+		return err
+	}
+	var values []reaperChildResult
+	for rows.Next() {
+		var row reaperChildResult
+		if rows.Scan(&row.Source, &row.ID, &row.Value, &row.Error, &row.DLQID) != nil {
+			rows.Close()
+			return errors.New("invalid scheduled rollup data")
+		}
+		values = append(values, row)
+	}
+	err = rows.Err()
+	rows.Close()
+	if err != nil {
+		return postgresFailure(err, "scheduled rollup data read failed")
+	}
+	merged, err := mergeReaperResults(values)
+	if err != nil {
+		return err
+	}
+	if len(merged) > 0 {
+		blob, err := json.Marshal(merged)
+		if err != nil {
+			return errors.New("scheduled rollup encoding failed")
+		}
+		if _, err := reaperExec(ctx, tx, "persistParentStateSQL", queue, blob, id); err != nil {
+			return err
+		}
+	}
+	return nil
 }

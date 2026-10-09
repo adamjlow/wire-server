@@ -39,15 +39,9 @@ func (s *postgresStore) AckScheduledJob(ctx context.Context, queue string, job c
 			return postgresFailure(err, "scheduled acknowledgement transaction failed")
 		}
 		defer func() { _ = tx.Rollback(ctx) }()
-		// Native sibling ACKs serialize on the parent, across implementations.
-		// A transaction-scoped lock releases automatically on every exit path.
-		if job.ParentID != nil {
-			if _, err := tx.Exec(ctx, `SELECT pg_advisory_xact_lock(hashtextextended($1::text,$2::bigint))`, "arbiter."+queue, *job.ParentID); err != nil {
-				return postgresFailure(err, "scheduled parent acknowledgement lock failed")
-			}
-		}
-		if err := tx.QueryRow(ctx, sql, job.ID, job.Attempts).Scan(&affected); err != nil {
-			return postgresFailure(err, "scheduled acknowledgement failed")
+		affected, err = ackScheduledOnTx(ctx, tx, queue, job, sql)
+		if err != nil {
+			return err
 		}
 		if err := tx.Commit(ctx); err != nil {
 			return postgresFailure(err, "scheduled acknowledgement commit failed")
@@ -55,4 +49,20 @@ func (s *postgresStore) AckScheduledJob(ctx context.Context, queue string, job c
 		return nil
 	})
 	return
+}
+
+// Handler completion and ordinary control-only ACK share the identical native
+// parent lock and archive/suspend/wake statement.
+func ackScheduledOnTx(ctx context.Context, tx pgx.Tx, queue string, job claimedScheduledJob, sql string) (affected int64, err error) {
+	// Native sibling ACKs serialize on the parent, across implementations.
+	// A transaction-scoped lock releases automatically on every exit path.
+	if job.ParentID != nil {
+		if _, err := tx.Exec(ctx, `SELECT pg_advisory_xact_lock(hashtextextended($1::text,$2::bigint))`, "arbiter."+queue, *job.ParentID); err != nil {
+			return 0, postgresFailure(err, "scheduled parent acknowledgement lock failed")
+		}
+	}
+	if err := tx.QueryRow(ctx, sql, job.ID, job.Attempts).Scan(&affected); err != nil {
+		return 0, postgresFailure(err, "scheduled acknowledgement failed")
+	}
+	return affected, nil
 }

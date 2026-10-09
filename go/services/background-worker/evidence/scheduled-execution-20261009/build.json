@@ -1,0 +1,9 @@
+{
+  "base_revision": "3853f5736c87c9c8b4d0389f296c970bbec7046b",
+  "command": "CGO_ENABLED=0 GOTOOLCHAIN=local GOWORK=off go -C /home/operator/wire-server/go/services/background-worker test -c -tags schemacheck -o /home/operator/.cache/wire-migration/background-worker-20261009/scheduled-execution-check",
+  "compiler": "Go1.26.9",
+  "exit_code": 0,
+  "binary_sha256": "c58595ae21211daabb41b6043d9486dbe68610fd440ff76fc3818356e5fe1351",
+  "inputs_sha256": "7751c5e3fa9233a6799d185a8ee1efdcaa3a4e00164f052eec9762bbf3c15bcb",
+  "limit": "Helper built before executor exhausted-job jitter fix; actual qualifier executes unchanged completion/failure storage, not executor.Run. Final current executor has separate passing full checks."
+}

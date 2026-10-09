@@ -1,0 +1,8 @@
+{
+  "command": "GOTOOLCHAIN=local GOWORK=off python3 go/check.py background-worker",
+  "compiler": "Go1.26.9",
+  "exit_code": 0,
+  "result": "pass",
+  "base_revision": "3853f5736c87c9c8b4d0389f296c970bbec7046b",
+  "inputs_sha256": "5addb6ab3624151aaa4347af026affaec0a23850260cb35f978ff3848769b1d9"
+}

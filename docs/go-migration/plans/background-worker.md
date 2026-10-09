@@ -373,3 +373,17 @@ recorded. [Exact full Go/source-review evidence](../../../go/services/background
 passes; no fresh native or whole-service E2E proof. Retain time BSD notice for
 distribution. Next scheduled runtime/dependency wiring/NOTIFY/metrics/startup/drain,
 then unchanged final qualification, pusher timing and botTLS gaps included.
+
+Scheduled SingleJobMode execution is constructed with held control transaction,
+independent handler effects, unit/no-result completion, exact ACK and separate
+retry/DLQ, lease/reclaim/cancel/shutdown decisions and native fixed-Pico jitter/
+ceiling. Full Go checks and actual isolated native-schema PG control/independent
+effects/archive/stale-guard/cancel/rollup proof pass with owned cleanup:
+[exact construction evidence](../../../go/services/background-worker/evidence/scheduled-execution-20261009/).
+Helper identity predates only an executor jitter correction and its storage
+qualifier never calls that executor; final current code has separate passing
+checks. No full scheduled runtime/native comparison. Native rollup descendant
+cascade precedes guarded root move, an inherited ownership-race concern recorded
+without silently changing behavior. Stored error diagnostic equivalence remains
+for whole-service review. Next dispatcher/registry/pause/NOTIFY and domain startup/
+drain/metrics wiring, then unchanged qualification.

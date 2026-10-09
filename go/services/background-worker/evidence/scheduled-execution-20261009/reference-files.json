@@ -1,0 +1,19 @@
+{
+  "repo_files": {
+    "services/background-worker/src/Wire/BackgroundWorker/Workers.hs": "835bf199b3fbf370d3dadce73883e710314b0a527251b39457fe174f6cbdfd0c",
+    "services/background-worker/src/Wire/BackgroundWorker/Options.hs": "4b7ac21864c060b047cf5f948ae4ad058ce077bb4edb5b25805f847870fd1146"
+  },
+  "arbiter_revision": "b9c57eb1f8277d97616aa449bea471fe9ce14eda",
+  "arbiter_files": {
+    "arbiter-worker/src/Arbiter/Worker.hs": "27380f9f0df977f35f17cc592bb9f49fd64a4b2ccc990b59ca4998ea6104e4a9",
+    "arbiter-worker/src/Arbiter/Worker/Heartbeat.hs": "6530db7609652f31d787a6c0eb912505f1c633863856201e524826280a666cb7",
+    "arbiter-worker/src/Arbiter/Worker/Retry.hs": "6ac7e2b9375cb469e57acc0a57066e54af18c9e6482f002037c0fa9fbddcaeed",
+    "arbiter-worker/src/Arbiter/Worker/BackoffStrategy.hs": "7178ed62398ddb00d6873cd87d32a21e230b7efc8183a7c88a760210cb527d98",
+    "arbiter-worker/src/Arbiter/Worker/Config.hs": "3a5c12cfab7b9f1d50cd03039f40b514ed9ee22905dd8f0a020459d360a4b9c1",
+    "arbiter-core/src/Arbiter/Core/Operations.hs": "32e57dcc0c0d1359cb50ba9d032763135d0e57968cda97b5e4e455256e449459",
+    "arbiter-core/src/Arbiter/Core/HighLevel.hs": "760c84b5e7da8ca9ed742040d3420ba45a69f7b01f5d78309646833886d9a5c7",
+    "arbiter-core/src/Arbiter/Core/JobResult.hs": "0f6184135a421c97aaebbf581082648393979aaaae7995326deb6db7f155d5c6",
+    "arbiter-core/src/Arbiter/Core/Sql/DLQ.hs": "772a08f1c7e95b4562ec296878c4af80c3b7e00551b518ca43bce1dc6d647a7d",
+    "arbiter-core/src/Arbiter/Core/Job/Types.hs": "2fbc8709f85e896966961c7d2752557f7836c4695ef5276afabbbdf772c54445"
+  }
+}
