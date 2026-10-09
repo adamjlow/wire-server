@@ -134,3 +134,14 @@ local license content was classified AGPL and dependencies BSD/MIT. DLQ/group-sy
 Arbiter/adminless/meetings and seven migrations remain unfinished; their readiness
 stays false and enabled migrations explicitly fail startup. No availability,
 whole-service parity, final operations or image/selector claim is made.
+
+The exact static early executable from bdfb252dc3e1a87c14eb282ef6982e3d3194548b
+matched actual retained Haskell health200/empty, explicitly returned500 for
+unstarted workers and SIGTERM exited0 in0.0011s. This is a limited early process
+comparison, not source14 native-suite execution, E2E, an operations smoke or
+switchback. Receipts are module-owned; protected captures unchanged. Next build
+DLQ watcher and Rabbit group-sync/storage paths, then Arbiter/business jobs and
+all migrations. Refine source discovery retry budget, draining and strict dual
+configuration while completing those paths; no unsupported configured path may
+remain at final qualification. Maintain all final original tests and durable
+rehearsal; do not shrink to the functioning notification/health slice.

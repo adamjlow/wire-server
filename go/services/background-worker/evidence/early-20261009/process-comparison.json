@@ -1,0 +1,21 @@
+{
+  "kind": "early-process-health-comparison",
+  "result": "pass",
+  "binary_sha256": "670d299e86bdb958252a2a95855d7246184b7fc5027ec6384db4d1a3edeed200",
+  "source_revision": "bdfb252dc3e1a87c14eb282ef6982e3d3194548b",
+  "reference_sha256": "38e0c176464084a2dd540770656e12bf37281244955b5ec780122b8155de60ce",
+  "fixtures_sha256": "8cc34c41cc248ae804d822a60fb610b0adead84c3e79663eb33243ef70c99876",
+  "observed_health": {
+    "status": 200,
+    "body": ""
+  },
+  "construction_readiness": {
+    "status": 500,
+    "body": "These workers are not working: backend-notification-pusher, dead-user-notification-watcher, background-job-consumer"
+  },
+  "exit_code": 0,
+  "shutdown_seconds": 0.0011116266250610352,
+  "full_service_parity": false,
+  "e2e_executed": false,
+  "limitation": "Health only against actual retained Haskell capture; AMQP-only mode, no dependency jobs or migrations executed. Whole-service final tests and durable switchback remain mandatory."
+}

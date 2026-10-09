@@ -19,3 +19,13 @@ Use pinned Go1.26.9 with `GOTOOLCHAIN=local GOWORK=off`. Build the command at
 Rabbit credentials using the existing `RABBITMQ_USERNAME` and `RABBITMQ_PASSWORD`
 environment variables. Errors and diagnostics do not print credentials or job
 payloads. Inherited queue-blockage/drop behaviours are documented in the contract.
+
+The first compiled process (source bdfb252dc3e1a87c14eb282ef6982e3d3194548b)
+matched retained actual Haskell `/i/status` 200/empty and exited0 on SIGTERM.
+Its unstarted workers correctly reported500. This was a health-only comparison,
+not an E2E or Rabbit/storage switchback. Exact static build/compiler/hash and
+comparison receipts are in evidence/early-20261009. Required Go checks passed
+for the early Go source; final checks must be repeated when the implementation
+is complete. Discovery retry budget, graceful in-flight draining and complete
+configuration/source-gap coverage still need refinement alongside the remaining
+worker families. The existing intermittent peer transport issue stays open.

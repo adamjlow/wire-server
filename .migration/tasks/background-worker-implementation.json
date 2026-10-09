@@ -36,7 +36,15 @@
       "required_evidence": "One predeclared health/jobs/RSS/CPU/latency and loaded shutdown smoke; Haskell-Go-Haskell identical Rabbit/PG/Cass state with queued/scheduled jobs, lease/attempt guards, notifications and migration continuation. Matching nonroot optional container with trusted CA, health and SIGTERM; exact artifacts and delegated self-review. Protected selector work separately scoped."
     }
   ],
-  "evidence": [],
+  "evidence": [
+    {
+      "criterion": "service",
+      "result": "blocked",
+      "command": "Early static process matches actual retained Haskell health200/empty, unstarted readiness500, SIGTERM exit0; real HTTP2/source notification expectation tests and early Go checks pass. Whole service is incomplete: DLQ, group-sync, scheduled jobs, all migrations, final tests/image/selector/operations/switchback not executed. No compatibility claim.",
+      "revision": "bdfb252dc3e1a87c14eb282ef6982e3d3194548b",
+      "artifact": "go/services/background-worker/evidence/early-20261009/process-comparison.json"
+    }
+  ],
   "review": null,
-  "handoff": ""
+  "handoff": "Active whole-service construction: early runnable dual-config health and federation-notification pusher committed; exact static source/binary and limited actual Haskell health comparison pass. Early Go format/tidy/verify/vet/race/build/vulnerability/license checks pass. Implement DLQ/Cassandra watcher, Rabbit group-sync and persistence, Arbiter/adminless/meetings and all seven migrations; refine discovery retry budget, in-flight graceful drain, strict config and uncovered source14 boundaries. Final exact six-Go124 strict original tests, actual durable switchback, operations and optional image/selector remain required. Existing peer transport issue preserved, no availability claim."
 }
