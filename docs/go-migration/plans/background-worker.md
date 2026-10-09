@@ -274,10 +274,10 @@ canonical meeting code key and configured code-mode routing. Deletion guards/ord
 full/partial batches, caught-error run count and cancellation are covered. Full Go
 checks and an actual isolated PostgreSQL fixture using9 unchanged readonly native
 migrations pass: [exact evidence](../../../go/services/background-worker/evidence/meetings-cleanup-storage-20261009/).
-This fixture stubs missing conversations; actual unchecked conversation/proposal/
-MLS cleanup and runtime/metrics remain unfinished. Native
-cleanup does not send notifications through its unchecked delete path. Next implement
-that concrete deletion adapter and adminless handlers, then full scheduled runtime
+This earlier fixture stubs missing conversations; it does not prove conversation/proposal/
+MLS cleanup or runtime/metrics. The later deletion construction checkpoint below
+adds a separate, limited SQL proof. Native
+cleanup does not send notifications through its unchecked delete path. At this checkpoint the next work was the deletion adapter and adminless handlers, then full scheduled runtime
 and existing final acceptance. No fresh Haskell cleanup/whole-service proof.
 
 Meetings configuration/cutoff is now connected to cleanup orchestration. Required
@@ -291,3 +291,18 @@ storage evidence. Serious inherited concern: enormous finite retention may wrap
 native timestamp encoding to a recent cutoff and expire unintended meetings. Keep
 parity now; any new bound/encoding policy needs separate review. Next actual deletion
 adapters/adminless and scheduled runtime, then unchanged full final acceptance.
+
+Unchecked conversation deletion is now constructed, retaining source reread,
+sorted subs, MLS/current-history-proposal order, code revocation and team/nonteam
+conversation removal without notifications. Source per-operation migration locks,
+pending cleanup, existence routing and Cassandra-first dual writes are preserved;
+history stays PG-owned and proposals Cassandra-owned. Full Go checks and actual
+isolated PostgreSQL deletion using four unchanged native schemas pass:
+[exact construction evidence](../../../go/services/background-worker/evidence/conversation-removal-20261009/).
+The SQL qualifier explicitly stubs conversation reads and Cassandra proposals;
+no cross-store/full-service/native execution claim. Same-author construction
+review uses delegated self-approval, not independent review. Next adminless
+handlers and whole scheduled runtime/NOTIFY/metrics/startup/drain; unchanged final
+original47/six-Go124, unresolved users2 SCIM500, operations/durable switchback,
+optional image/selector and whole-service review remain mandatory. Goal/task
+active, Haskell supported/default, no candidate availability or compatibility.

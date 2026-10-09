@@ -1,0 +1,44 @@
+{
+  "base_revision": "9e30fab18b098043bf351c891bc3a923acfceea2",
+  "construction_only": true,
+  "binary_sha256": "a497106940d75daeca755b3a07e87e1db5f49b1273e30eb8111f20829dffca0a",
+  "command": "CGO_ENABLED=0 GOTOOLCHAIN=local GOWORK=off go test -c -tags schemacheck",
+  "build_info": {
+    "GoVersion": "go1.26.9",
+    "Path": "github.com/adamjlow/wire-server/go/services/background-worker.test",
+    "Main": {
+      "Path": "github.com/adamjlow/wire-server/go/services/background-worker",
+      "Version": "(devel)"
+    },
+    "Settings": [
+      {
+        "Key": "-buildmode",
+        "Value": "exe"
+      },
+      {
+        "Key": "-compiler",
+        "Value": "gc"
+      },
+      {
+        "Key": "-tags",
+        "Value": "schemacheck"
+      },
+      {
+        "Key": "CGO_ENABLED",
+        "Value": "0"
+      },
+      {
+        "Key": "GOARCH",
+        "Value": "amd64"
+      },
+      {
+        "Key": "GOOS",
+        "Value": "linux"
+      },
+      {
+        "Key": "GOAMD64",
+        "Value": "v1"
+      }
+    ]
+  }
+}

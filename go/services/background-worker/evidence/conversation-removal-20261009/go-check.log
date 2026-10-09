@@ -1,0 +1,33 @@
+all modules verified
+ok  	github.com/adamjlow/wire-server/go/services/background-worker	5.012s
+?   	github.com/adamjlow/wire-server/go/services/background-worker/cmd/background-worker	[no test files]
+all modules verified
+No vulnerabilities found.
+W1009 23:05:53.999315 3766759 library.go:141] "github.com/zeebo/xxh3" contains non-Go code that can't be inspected for further dependencies:
+/home/operator/go/pkg/mod/github.com/zeebo/xxh3@v1.1.0/accum_vector_avx512_amd64.s
+/home/operator/go/pkg/mod/github.com/zeebo/xxh3@v1.1.0/accum_vector_avx_amd64.s
+/home/operator/go/pkg/mod/github.com/zeebo/xxh3@v1.1.0/accum_vector_sse_amd64.s
+W1009 23:05:53.999347 3766759 library.go:141] "github.com/klauspost/cpuid/v2" contains non-Go code that can't be inspected for further dependencies:
+/home/operator/go/pkg/mod/github.com/klauspost/cpuid/v2@v2.2.10/cpuid_amd64.s
+W1009 23:05:54.414396 3766780 library.go:141] "github.com/zeebo/xxh3" contains non-Go code that can't be inspected for further dependencies:
+/home/operator/go/pkg/mod/github.com/zeebo/xxh3@v1.1.0/accum_vector_avx512_amd64.s
+/home/operator/go/pkg/mod/github.com/zeebo/xxh3@v1.1.0/accum_vector_avx_amd64.s
+/home/operator/go/pkg/mod/github.com/zeebo/xxh3@v1.1.0/accum_vector_sse_amd64.s
+W1009 23:05:54.414431 3766780 library.go:141] "github.com/klauspost/cpuid/v2" contains non-Go code that can't be inspected for further dependencies:
+/home/operator/go/pkg/mod/github.com/klauspost/cpuid/v2@v2.2.10/cpuid_amd64.s
+W1009 23:05:54.459667 3766780 library.go:394] module github.com/adamjlow/wire-server/go/services/background-worker has empty version, defaults to HEAD. The license URL may be incorrect. Please verify!
+github.com/adamjlow/wire-server/go/services/background-worker,https://github.com/adamjlow/wire-server/blob/HEAD/go/services/background-worker/LICENSE,AGPL-3.0
+github.com/apache/cassandra-gocql-driver/v2,https://github.com/apache/cassandra-gocql-driver/blob/v2.1.2/LICENSE,Apache-2.0
+github.com/jackc/pgpassfile,https://github.com/jackc/pgpassfile/blob/v1.0.0/LICENSE,MIT
+github.com/jackc/pgservicefile,https://github.com/jackc/pgservicefile/blob/5a60cdf6a761/LICENSE,MIT
+github.com/jackc/pgx/v5,https://github.com/jackc/pgx/blob/v5.11.0/LICENSE,MIT
+github.com/jackc/puddle/v2,https://github.com/jackc/puddle/blob/v2.2.2/LICENSE,MIT
+github.com/klauspost/cpuid/v2,https://github.com/klauspost/cpuid/blob/v2.2.10/LICENSE,MIT
+github.com/rabbitmq/amqp091-go,https://github.com/rabbitmq/amqp091-go/blob/v1.15.0/LICENSE,BSD-2-Clause
+github.com/zeebo/xxh3,https://github.com/zeebo/xxh3/blob/v1.1.0/LICENSE,BSD-2-Clause
+go.yaml.in/yaml/v3,https://github.com/yaml/go-yaml/blob/v3.0.5/LICENSE,MIT
+golang.org/x/net,https://cs.opensource.google/go/x/net/+/v0.60.0:LICENSE,BSD-3-Clause
+golang.org/x/sync,https://cs.opensource.google/go/x/sync/+/v0.23.0:LICENSE,BSD-3-Clause
+golang.org/x/text,https://cs.opensource.google/go/x/text/+/v0.42.0:LICENSE,BSD-3-Clause
+gopkg.in/inf.v0,https://github.com/go-inf/inf/blob/v0.9.1/LICENSE,BSD-3-Clause
+Go module checks passed: background-worker; Go 1.26.9

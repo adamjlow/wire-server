@@ -1,0 +1,9 @@
+{
+  "base_revision": "9e30fab18b098043bf351c891bc3a923acfceea2",
+  "command": "GOTOOLCHAIN=local GOWORK=off python3 go/check.py background-worker",
+  "compiler": "Go1.26.9",
+  "exit_code": 0,
+  "result": "pass",
+  "inputs_sha256": "4c7bc336b3f924b91053b09840351860ac93c28187e8b7000ebe19b4af7db435",
+  "remaining": "Cassandra effects/native execution/scheduled integration/final whole-service qualification remain outstanding"
+}
