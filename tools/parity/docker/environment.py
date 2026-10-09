@@ -148,6 +148,7 @@ def private_compose(upstream, project, output, image):
         service['cpus']=2
         if name=='elasticsearch':service['tmpfs']=['/usr/share/elasticsearch/data:rw,nosuid,nodev,size=1g,uid=1000,gid=1000']
         if name=='dns-server':
+            service['networks']={'demo_wire':None}
             service['image']='technitium/dns-server@sha256:1045db38fd2f2e4d9578f9168b7eb4862575469ed0ffc79e03f36bdc772a93b5'
             service['volumes']=[{'type':'volume','source':'dns-server-data','target':'/etc/dns'}]
         if name=='rabbitmq':service['environment']={'RABBITMQ_USERNAME':'guest','RABBITMQ_PASSWORD':'alpaca-grapefruit'}
@@ -183,6 +184,9 @@ def validate_isolation(spec):
     for volume in spec.get('volumes',{}).values():
         if volume.get('external') or 'name' in volume:raise ValueError('volumes must be project-owned')
     for service in spec['services'].values():
+        networks=service.get('networks')
+        if not isinstance(networks,(dict,list)) or not networks or not all(isinstance(n,str) for n in networks) or not set(networks).issubset(spec['networks']):
+            raise ValueError('services must use explicitly declared private networks')
         if any(service.get(key) for key in ('ports','container_name','privileged','network_mode','pid','devices')):
             raise ValueError('host exposure or global identity is forbidden')
         for volume in service.get('volumes',[]):

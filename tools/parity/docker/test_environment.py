@@ -14,7 +14,7 @@ import environment
 class EnvironmentTests(unittest.TestCase):
     def spec(self):
         return {'name':'wire-e2e-'+'a'*32,'networks':{'private':{'internal':True}},
-                'volumes':{'owned':{}},'services':{'test':{'image':'sha256:'+'b'*64}}}
+                'volumes':{'owned':{}},'services':{'test':{'image':'sha256:'+'b'*64,'networks':{'private':None}}}}
 
     def test_federator_mount_is_exact_and_read_only(self):
         spec=self.spec();spec['services']['test']['volumes']=[{'type':'bind','source':'/tmp/identified-federator','target':'/candidate/federator','read_only':True}]
@@ -40,6 +40,23 @@ class EnvironmentTests(unittest.TestCase):
             with self.subTest(section=section),self.assertRaises(ValueError):environment.validate_isolation(spec)
         spec=self.spec();spec['services']['test']['volumes']=[{'type':'bind','source':'/var/run/docker.sock','target':'/docker.sock'}]
         with self.assertRaises(ValueError):environment.validate_isolation(spec)
+
+    def test_implicit_or_foreign_networks_are_rejected(self):
+        for networks in (None,{}, {'default':None}, {'private':None,'foreign':None}):
+            spec=self.spec();spec['services']['test']['networks']=networks
+            with self.subTest(networks=networks),self.assertRaises(ValueError):environment.validate_isolation(spec)
+
+    def test_dns_fixture_uses_owned_storage_and_explicit_private_network(self):
+        upstream={'services':{name:{'image':'synthetic:test','networks':{'demo_wire':None}} for name in environment.DEPENDENCIES}}
+        upstream['services']['dns-server']['networks']={'default':None}
+        with tempfile.TemporaryDirectory() as tmp:
+            spec=environment.private_compose(upstream,'wire-e2e-'+'a'*32,Path(tmp),'sha256:'+'b'*64)
+        dns=spec['services']['dns-server']
+        self.assertEqual({'demo_wire':None},dns['networks'])
+        self.assertEqual([{'type':'volume','source':'dns-server-data','target':'/etc/dns'}],dns['volumes'])
+        self.assertEqual({},spec['volumes']['dns-server-data'])
+        self.assertNotIn('ports',dns)
+        self.assertTrue(all(n['internal'] for n in spec['networks'].values()))
 
     def test_peer_b_storage_queues_and_ports_are_isolated_from_a(self):
         original={'brig':{'port':8082},'cassandra':{'keyspace':'brig_test'}}
@@ -71,8 +88,8 @@ class EnvironmentTests(unittest.TestCase):
         from unittest.mock import patch
         with tempfile.TemporaryDirectory() as tmp:
             output=Path(tmp);(output/'reports').mkdir()
-            spec=self.spec();spec['services']={name:{'image':'synthetic:test'} for name in environment.DEPENDENCIES}
-            spec['services']['runner']={'image':'sha256:'+'b'*64}
+            spec=self.spec();spec['services']={name:{'image':'synthetic:test','networks':{'private':None}} for name in environment.DEPENDENCIES}
+            spec['services']['runner']={'image':'sha256:'+'b'*64,'networks':{'private':None}}
             raw=json.dumps(spec);(output/'compose.json').write_text(raw)
             record={'project':spec['name'],'source_revision':'c'*40,'files_sha256':{},
                     'compose_sha256':environment.hashlib.sha256(raw.encode()).hexdigest()}
