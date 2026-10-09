@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "id": "federator-mls-coordination",
+  "title": "Coordinate MLS peer regression repair before worker qualification",
+  "service": "framework",
+  "kind": "framework",
+  "status": "queued",
+  "owner": null,
+  "branch": null,
+  "depends_on": [
+    "background-worker-inventory-gate"
+  ],
+  "write_paths": [
+    ".migration/tasks/federator-mls-coordination.json",
+    ".migration/services/federator.json",
+    ".migration/tasks/federator-mls-regression.json",
+    "docs/go-migration/plans/federator-mls-regression.md",
+    ".migration/reviews/federator-mls-coordination.md"
+  ],
+  "plan": "docs/go-migration/plans/background-worker.md",
+  "acceptance_criteria": [
+    {
+      "id": "coordination",
+      "description": "Record repeatable mixed-peer MLS regression, clear suspected federator compatibility pending attribution/repair and queue narrowly scoped regression work.",
+      "required_evidence": "Actual failing original single case and successful Haskell counterpart; historical gates preserved, no source/default change, no invented attribution or compatibility."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": ""
+}
