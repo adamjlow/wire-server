@@ -48,7 +48,7 @@ func TestConversationRemovalDockerStorage(t *testing.T) {
 			t.Fatal(err)
 		}
 	}
-	for _, name := range []string{"20250908142515-create-conversation-tables.sql", "20260507162106-history_client.sql", "20260115150600-conversation-codes.sql", "20260619120000-conversation-codes-target.sql"} {
+	for _, name := range []string{"20250908142515-create-conversation-tables.sql", "20260123124917-team-features.sql", "20260507162106-history_client.sql", "20260115150600-conversation-codes.sql", "20260619120000-conversation-codes-target.sql"} {
 		b, err := os.ReadFile(filepath.Join("/reference/migrations", name))
 		if err != nil {
 			t.Fatal(err)
@@ -60,6 +60,35 @@ func TestConversationRemovalDockerStorage(t *testing.T) {
 	exec(`INSERT INTO conversation(id,type,protocol) VALUES($1::uuid,0,1),($2::uuid,0,1)`, id, untouched)
 	exec(`INSERT INTO conversation_member(conv,"user") VALUES($1::uuid,$2::uuid)`, id, untouched)
 	exec(`INSERT INTO local_conversation_remote_member(conv,user_remote_domain,user_remote_id) VALUES($1::uuid,'synthetic.example',$2::uuid)`, id, untouched)
+	features := adminlessFeatureStore{Postgres: store, Location: storagePostgres, Defaults: defaultAdminlessFeature()}
+	feature, err := features.Feature(ctx, id)
+	if err != nil || feature.Enabled {
+		t.Fatal("missing PG feature did not use disabled defaults")
+	}
+	exec(`INSERT INTO team_features(team,feature,status,lock_status,config) VALUES($1::uuid,$2,1,1,'{"promotionStrategy":"all","deletionTimeoutDuration":"1s","reminderTimeoutDurations":[]}'::jsonb)`, id, adminlessFeatureName)
+	features.Location = storageMigrating // Found PG patch must not access missing Cassandra.
+	feature, err = features.Feature(ctx, id)
+	if err != nil || !feature.Enabled || feature.Strategy != "all" || feature.DeletionPico.String() != "1000000000000" {
+		t.Fatalf("PG migrated feature: %v %v", feature, err)
+	}
+	exec(`UPDATE team_features SET lock_status=0 WHERE team=$1::uuid`, id)
+	feature, err = features.Feature(ctx, id)
+	if err != nil || feature.Enabled || feature.Strategy != "alphabetical" {
+		t.Fatal("locked PG feature ignored server defaults")
+	}
+	exec(`UPDATE team_features SET config='null'::jsonb WHERE team=$1::uuid`, id)
+	if _, err := features.Feature(ctx, id); err == nil {
+		t.Fatal("JSON null patch hidden by lock")
+	}
+	exec(`UPDATE team_features SET status=NULL,lock_status=NULL,config=NULL WHERE team=$1::uuid`, id)
+	if _, err := features.Feature(ctx, id); err != nil {
+		t.Fatal("SQL NULL patch incorrectly fell back to missing Cassandra")
+	}
+	exec(`UPDATE team_features SET status=3 WHERE team=$1::uuid`, id)
+	if _, err := features.Feature(ctx, id); err == nil {
+		t.Fatal("invalid PG feature status accepted")
+	}
+	exec(`UPDATE team_features SET status=NULL WHERE team=$1::uuid`, id)
 	// Adminless conversation adapters use these same native tables.
 	exec(`UPDATE conversation SET team=$1::uuid WHERE id=$1::uuid`, id)
 	admin := adminlessConversationStore{Data: scheduledRemovalStore{Postgres: store, Location: storagePostgres}, Domain: "wire.com"}
@@ -124,5 +153,5 @@ func TestConversationRemovalDockerStorage(t *testing.T) {
 	if err := state.DeleteConversationState(ctx, id, nil); err != nil {
 		t.Fatal(err)
 	}
-	t.Log("readonly native DDL: adminless team scan/local promotion and guards, typed sub-row rejection, sorted MLS/history deletion, code isolation, conversation FK cascade and idempotent state deletion pass; read and Cassandra proposal callbacks stubbed, no service/cross-store claim")
+	t.Log("readonly native DDL: adminless feature defaults/patch/lock/NULL guards, team scan/local promotion and guards, typed sub-row rejection, sorted MLS/history deletion, code isolation, conversation FK cascade and idempotent state deletion pass; read and Cassandra proposal callbacks stubbed, no service/cross-store claim")
 }

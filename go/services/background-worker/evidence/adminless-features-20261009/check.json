@@ -1,0 +1,10 @@
+{
+  "base_revision": "3d455edf2d35f00928ff9e821b1cc07183ad2c79",
+  "command": "GOTOOLCHAIN=local GOWORK=off python3 go/check.py background-worker",
+  "compiler": "Go1.26.9",
+  "exit_code": 0,
+  "result": "pass",
+  "inputs_sha256": "755cbc04d7c02a8a29e5e0e342b1da0e1211c0856508583b23eea435ee504b68",
+  "previous_goal_turn": "progress: committed adminless decisions and actual PG team/promotion proof",
+  "remaining": "Account/notification/durable scheduling adapters; actual Cassandra reads/native execution/scheduled runtime/final whole-service qualification remain outstanding"
+}

@@ -320,3 +320,17 @@ scheduled service integration remain unfinished. Inherited role-write-before-
 notification retry can skip remaining notifications/promotions after an error;
 preserve source behavior and record a separate outbox/transaction improvement.
 Next complete those adapters and runtime, then unchanged whole-service acceptance.
+
+Adminless feature defaults and concrete storage lookup are implemented, preserving
+server lock/defaults, partial DB patches, ignored stored legacy-day fields, duration
+precedence/fixed-Pico arithmetic and native Word64-day bounds. Migration reads under
+the source500ms shared team/feature lock, prefers any PG row, then CQL fallback.
+[Exact construction evidence](../../../go/services/background-worker/evidence/adminless-features-20261009/)
+retains full Go checks and original-schema PG defaults/patch/lock/type/NULL proof;
+actual Cassandra/fallback/native execution and whole-service runtime are unproven.
+Attoparsec BSD3 source notice must join other notices in eventual distribution.
+Next account/notification/scheduling adapters. Native malformed full Brig User
+response becomes an empty chunk; this can trigger the no-eligible cleanup branch.
+Preserve full decoder behavior and record this inherited concern. Only this Galley
+feature is validated here; no full unrelated configuration claim. Final acceptance
+remains unchanged and incomplete.

@@ -1,0 +1,25 @@
+{
+  "files": {
+    "libs/wire-api/src/Wire/API/Team/Feature.hs": "4816fcd2e956984982636f0449dd4e3f7dba9ecaef1a6516dbfd506e0cf079c7",
+    "libs/wire-api/src/Wire/API/Team/FeatureFlags.hs": "eaa96f16b24429e7cb96fe5e232feb17611cd348d7eef7d39e1827a92274e9ad",
+    "libs/types-common/src/Data/Misc.hs": "f74dc6b94b5a68185709e4f9c6d73525caaa47e56f2444e39f31590882e1cced",
+    "libs/wire-subsystems/src/Wire/FeaturesConfigSubsystem/Interpreter.hs": "d2db7477be78887a2fa25389a5cf0bcc90367827f4d0bbf8c9a40722e645fd3e",
+    "libs/wire-subsystems/src/Wire/FeaturesConfigSubsystem/Types.hs": "109fce6faccecd554855973602bd52e9a73998ae4e7b296b6ef0d61ed2da089a",
+    "libs/wire-subsystems/src/Wire/TeamFeatureStore/Cassandra.hs": "47393a3e1f9f74fd1537e80a3f840ca3adc2064ac61cf676b6f76a44aad74ec3",
+    "libs/wire-subsystems/src/Wire/TeamFeatureStore/Cassandra/Queries.hs": "c7d1b25bfeaac536ea87ac485eab74395dcfc640ed066bac9679fd302cf75c78",
+    "libs/wire-subsystems/src/Wire/TeamFeatureStore/Postgres/Queries.hs": "618db8e3cef748ad7ba4995949a3df931b39a89eb65b8920249c96a82bfdda50",
+    "libs/wire-subsystems/src/Wire/TeamFeatureStore/Migrating.hs": "701a3fbb80e21f44f5f9c53dec0aeb84fd4be09a35dfcb4806e02943e8ad1ea8",
+    "libs/wire-subsystems/src/Wire/BrigAPIAccess/Rpc.hs": "37df94a4402176938dd8cb363c9727107f6acbab3ff12d86c465455777b47121",
+    "libs/wire-api/src/Wire/API/User.hs": "0c373c9a0a17c7c61d211bd76e413d16a8ded8a78a7321cbe5c5f12a87d32a3d",
+    "libs/wire-subsystems/postgres-migrations/20250908142515-create-conversation-tables.sql": "6b8e9c3c1dad70bdc73dcad50faf8a4c7f9d27693db76a8d7e7e66cd11491db5",
+    "libs/wire-subsystems/postgres-migrations/20260507162106-history_client.sql": "57b04d1f1f231a4899005a6bbedbea259ea5eeb7d972119eaaee450a4b4b2acf",
+    "libs/wire-subsystems/postgres-migrations/20260115150600-conversation-codes.sql": "aa7ca22fb3121ecf14677db1787c1870fb4865f0e4dbda124f6e106da35e6f47",
+    "libs/wire-subsystems/postgres-migrations/20260619120000-conversation-codes-target.sql": "909e7db41180f2f5f74f40d054005078e2bc65ee8f77767cd0962d4d256206d3",
+    "libs/wire-subsystems/postgres-migrations/20260123124917-team-features.sql": "3a05e1c7e29b268843ef25ab6ac249d8346dd667576dc12bac43a1799b6ceb24"
+  },
+  "external_primary_comparison": {
+    "url": "https://raw.githubusercontent.com/bos/attoparsec/0.14.4/Data/Attoparsec/Text.hs",
+    "sha256": "dfb83310645eaa48306fe3303880b7966278d3574a9a3a8c41b1d798609ec278",
+    "limit": "Reviewed source, not freshly identified native package version or execution"
+  }
+}

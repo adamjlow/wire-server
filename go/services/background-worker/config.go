@@ -112,7 +112,8 @@ type GalleyConfig struct {
 	Postgres         map[string]string `yaml:"postgresql"`
 	PostgresPassword *string           `yaml:"postgresqlPassword"`
 	Settings         struct {
-		Domain string `yaml:"federationDomain"`
+		Domain       string         `yaml:"federationDomain"`
+		FeatureFlags map[string]any `yaml:"featureFlags"`
 	} `yaml:"settings"`
 	Raw map[string]any `yaml:",inline"`
 }
@@ -161,6 +162,9 @@ func LoadConfig(workerPath, galleyPath string) (Config, GalleyConfig, error) {
 		return c, g, errors.New("invalid migration options")
 	}
 	if err := c.Storage.validate(); err != nil {
+		return c, g, err
+	}
+	if _, err := g.adminlessDefaults(); err != nil {
 		return c, g, err
 	}
 	g.Settings.Domain = strings.ToLower(g.Settings.Domain)
