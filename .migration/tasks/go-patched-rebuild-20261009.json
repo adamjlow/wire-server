@@ -4,9 +4,9 @@
   "title": "Rebuild and requalify four earlier Go services using patched compiler",
   "service": "framework",
   "kind": "framework",
-  "status": "queued",
-  "owner": null,
-  "branch": null,
+  "status": "active",
+  "owner": "codex",
+  "branch": "go-migration",
   "depends_on": [
     "go-security-patch-20261009",
     "go-image-pin-followup",
