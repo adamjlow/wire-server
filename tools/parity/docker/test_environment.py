@@ -16,6 +16,13 @@ class EnvironmentTests(unittest.TestCase):
         return {'name':'wire-e2e-'+'a'*32,'networks':{'private':{'internal':True}},
                 'volumes':{'owned':{}},'services':{'test':{'image':'sha256:'+'b'*64}}}
 
+    def test_federator_mount_is_exact_and_read_only(self):
+        spec=self.spec();spec['services']['test']['volumes']=[{'type':'bind','source':'/tmp/identified-federator','target':'/candidate/federator','read_only':True}]
+        environment.validate_isolation(spec)
+        for field,value in (('target','/candidate/brig'),('target','/candidate/federator-extra'),('read_only',False)):
+            wrong=copy.deepcopy(spec);wrong['services']['test']['volumes'][0][field]=value
+            with self.subTest(field=field,value=value),self.assertRaises(ValueError):environment.validate_isolation(wrong)
+
     def test_host_exposure_global_names_and_shared_resources_are_rejected(self):
         for field,value in (('ports',['9042:9042']),('privileged',True),('container_name','shared'),
                             ('network_mode','host'),('pid','host'),('devices',['/dev/vda'])):

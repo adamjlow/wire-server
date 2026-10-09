@@ -4,7 +4,7 @@
   "title": "Complete strict federator candidate mount allowlist",
   "service": "federator",
   "kind": "contract-change",
-  "status": "active",
+  "status": "done",
   "owner": "codex",
   "branch": "go-migration",
   "depends_on": [
@@ -24,7 +24,18 @@
       "required_evidence": "Exact allowed path, foreign/writable mount rejection and harness tests; same-author review."
     }
   ],
-  "evidence": [],
-  "review": null,
-  "handoff": ""
+  "evidence": [
+    {
+      "criterion": "mount",
+      "result": "pass",
+      "command": "Exact read-only allowlist and foreign/writable regression; private harness17 pass; scope review.",
+      "revision": "256173c61848a90cb61a8cde7fb39a70b96a747c",
+      "artifact": ".migration/reviews/federator-harness-mount.md"
+    }
+  ],
+  "review": {
+    "by": "codex (self-review delegated by user)",
+    "artifact": ".migration/reviews/federator-harness-mount.md"
+  },
+  "handoff": "Candidate identified cache mount supported; assertions unchanged."
 }

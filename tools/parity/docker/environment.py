@@ -185,7 +185,7 @@ def validate_isolation(spec):
         for volume in service.get('volumes',[]):
             if volume['type']=='bind' and volume['target']!='/reports' and not volume.get('read_only'):
                 raise ValueError('source and fixtures must be read-only')
-            if volume['type']=='bind' and (not Path(volume['source']).resolve().is_relative_to(ROOT) and volume['target'] not in ('/fixtures','/reports','/candidate/proxy','/candidate/cargohold','/candidate/cannon','/candidate/gundeck') or volume['source'].endswith('docker.sock') or volume['target']=='/'):
+            if volume['type']=='bind' and (not Path(volume['source']).resolve().is_relative_to(ROOT) and volume['target'] not in ('/fixtures','/reports','/candidate/proxy','/candidate/cargohold','/candidate/cannon','/candidate/gundeck','/candidate/federator') or volume['source'].endswith('docker.sock') or volume['target']=='/'):
                 raise ValueError('unsafe mount')
 
 
