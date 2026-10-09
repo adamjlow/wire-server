@@ -4,9 +4,9 @@
   "title": "Reconcile legacy parity guide and central compiler pin",
   "service": "framework",
   "kind": "framework",
-  "status": "queued",
-  "owner": null,
-  "branch": null,
+  "status": "active",
+  "owner": "codex",
+  "branch": "go-migration",
   "depends_on": [
     "docs-reconciliation-20261009"
   ],
