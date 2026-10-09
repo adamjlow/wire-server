@@ -11,7 +11,8 @@ Go 1.26.9, GOTOOLCHAIN=local/GOWORK=off. Existing five Go peers and their exact
 [patched artifact tuple](../qualifications/go-patched-20261009/README.md) are the
 starting mixed-deployment baseline. The service is inventoried and its finite
 reference contract is frozen with explicit baseline limitations. Go construction
-now includes a runnable notification pusher and Cassandra dead-user watcher.
+now includes a runnable notification pusher and Cassandra dead-user watcher, plus
+background-job, conversation-storage and notification adapters under construction.
 Whole-service parity is not yet claimed; the task record owns current status.
 
 ## Whole-service boundary to inventory
@@ -74,8 +75,11 @@ whole service or treat the existing 77 tests as coverage of unexamined jobs.
 
 ## Security and operating constraints
 
-Use verified TLS with existing trusted fixture CAs; never disable chain/hostname
-checks. Validate job types, payloads and remote domains using source contract,
+Use verified TLS with existing trusted fixture CAs for backend dependencies.
+Registered external bots use the source RSA public-key pin contract: a matching
+pin plus valid CA chain or valid self-signature and dates. Native bot verification
+does not require a hostname match; document that inherited concern and retain
+mandatory authentication rather than exposing an unchecked TLS client. Validate job types, payloads and remote domains using source contract,
 bound parsing/concurrency/retries and preserve cancellation. Use parameterized SQL,
 compatible serialization, transactional claims and source lease/idempotency rules;
 never execute job input as commands or introduce eval. Maintain queue ownership:
@@ -124,89 +128,62 @@ original124 tests must still pass before qualification. Proceed to the early
 runnable worker and whole contracted implementation; do not repeat broad baselines
 without a concrete change. Final switchback remains outstanding.
 
-Early construction: isolated Go module accepts both configs and CLI defaults,
-source health/ordered readiness and federation pusher. Single-active quorum
-consumers preserve raw bytes, V0/bundle version rules and ACK/reject/retry/KeepQueued
-behavior; verified TLS and cancellable bounded AMQP handshake. Actual focused
-HTTP2 transport/source expectation tests plus format/tidy/verify/vet/race/build,
-module vulnerability and license checks pass. The initial missing local module
-LICENSE failure is retained; corrected source includes the original AGPL license.
-The harmless license-report HEAD URL warning is not a compiler warning; actual
-local license content was classified AGPL and dependencies BSD/MIT. DLQ/group-sync,
-Arbiter/adminless/meetings and seven migrations remain unfinished; their readiness
-stays false and enabled migrations explicitly fail startup. No availability,
-whole-service parity, final operations or image/selector claim is made.
+Current implementation and retained validation:
 
-The exact static early executable from bdfb252dc3e1a87c14eb282ef6982e3d3194548b
-matched actual retained Haskell health200/empty, explicitly returned500 for
-unstarted workers and SIGTERM exited0 in0.0011s. This is a limited early process
-comparison, not source14 native-suite execution, E2E, an operations smoke or
-switchback. Receipts are module-owned; protected captures unchanged. Next build
-DLQ watcher and Rabbit group-sync/storage paths, then Arbiter/business jobs and
-all migrations. Refine source discovery retry budget, draining and strict dual
-configuration while completing those paths; no unsupported configured path may
-remain at final qualification. Maintain all final original tests and durable
-rehearsal; do not shrink to the functioning notification/health slice.
+- The notification pusher and dead-user watcher run; other worker readiness stays
+  false. Enabled database migrations explicitly reject startup while unfinished.
+  Source HTTP2 delivery, version rules, retry/ACK behavior, verified AMQP TLS,
+  missed-notification writes and malformed input are covered by focused tests.
+- Rabbit background-job parsing/session/retries/metrics and both group-sync
+  algorithms are implemented. PostgreSQL conversation/member reads and writes,
+  administrative-shutdown retries, local Gundeck pushes and modern/legacy remote
+  notifications are implemented. Consumer startup is not yet connected.
+- Cassandra conversation/member reads, bound logged membership batches, reverse
+  indexes and the source year3000 deletion tombstone are implemented. Nullable
+  decoding explicitly distinguishes NULL from scalar zero; default driver map
+  scans otherwise lose this distinction. Immediate x1 and deterministic x5
+  retry timing follow the source.
+- Bot callbacks use real Cassandra service lookup, independent process lifetime,
+  Bearer-authenticated HTTPS and native RSA fingerprints. The fingerprint test
+  uses the existing public mock-service fixture and an independently computed
+  OpenSSL BN_bn2mpi digest. Real loopback TLS tests cover valid pinned self-signed
+  delivery, wrong pins, expired/tampered certificates, source callback path,
+  attempt cancellation, disabled/missing services and finite HTTP retries.
+  These are construction checks, not actual original group/database E2E proof.
 
-Dead-user watcher construction: verified Cassandra client using the already
-qualified gocql2.1.2 pin, source missed_notifications INSERT with bound UUID/client
-parameters and LocalQuorum/one retry. Transient mode1 ACKs without storage; default
-or persistent delivery writes canonical lower-case uint64 ClientId before ACK.
-Missing/malformed source last-death header and failed writes leave delivery
-unacknowledged and trigger channel/connection re-establishment. Original permits
-long leading-zero ClientIds; tests preserve that detail and injection rejection.
-Focused tests and required Go checks pass, including malformed federation error
-JSON retry rather than terminal drop. Next original gundeck40 profile runs with
-only Go worker and remaining Haskell peers to validate notification/storage effects;
-it does not qualify unfinished group/scheduled jobs or migrations. Use existing
-private runner and exact static receipt; no changed oracle/profile is required.
-The historical host health-only helper is locked to its original artifact so
-later dependency workers cannot accidentally be run against host services.
+The early clean static executable from bdfb252dc3e1a87c14eb282ef6982e3d3194548b
+matched retained Haskell health200/empty, returned500 for unstarted workers and
+SIGTERM exited0 in0.0011s. This limited process comparison is retained in
+[module evidence](../../../go/services/background-worker/evidence/early-20261009/).
+It is not the final loaded operations smoke or durable switchback.
 
-Original notification/storage comparison in progress: the existing owned
-gundeck40 profile selects only Go background-worker, keeping other peers Haskell.
-The dead-letter and watcher reconnect cases passed in that run. The queue-deletion
-case failed before recovery on a concrete federation serialization mismatch:
-`Federation.Client.runRequestAcceptStatus` sends decimal versionInt and defaults
-unversioned requests to0, while the candidate sent v-prefixed values. Correct
-the candidate header and candidate tests from that source; retain the failing
-exact-artifact run and rerun the unchanged original profile. These are partial
-observations until strict terminal XML and actual owned cleanup are recorded,
-and do not qualify scheduled/group jobs or migrations.
+The original owned gundeck40 run with only Go worker and remaining Haskell peers
+is terminal: strict XML40 cases,38 pass,2 fail and cleanup0. The queue-deletion
+case encountered a wrong federation version header before testing recovery;
+6198c021681272d66c57b32633594a4487847b81 corrected the candidate to native decimal
+versionInt, including unversioned0. The other failure was the missing
+background-jobs queue from the unfinished consumer. Retained
+[watcher evidence](../../../go/services/background-worker/evidence/watcher-20261009/)
+identifies the exact failed artifact and actual execution. The controller's outer
+false execution flag denotes failed qualification; inner receipts/XML establish
+actual suite execution. Neither failure has a passing rerun yet. Finish real
+consumer adapters before rerunning the unchanged profile.
 
-The original notification/storage run is terminal: strict XML40 cases,38 pass,
-queue-deletion/version-header and missing background-jobs queue failures; owned
-cleanup0. Module evidence/watcher-20261009 retains exact source/binary, environment,
-inner executed-suite receipt and XML. The outer controller false execution flag
-means failed qualification; the inner receipt/XML prove actual execution. Header
-correction is committed; do not rerun an incomplete consumer with a known missing
-queue merely to observe the same failure. Complete job adapters before next run.
+Partial check/source receipts are retained in module evidence/group-jobs-20261009,
+conversation-adapters-20261009 and cassandra-bots-20261009. They do not establish
+whole-service parity or a final executable. Protected original assertions and
+schemas are unchanged. No availability/image/selector/compatibility claim is made.
 
-Rabbit job construction now implements source envelope parsing, both tagged
-payloads, quorum declaration/publishing metadata, bounded concurrent session,
-finite timeout/retry/ACK/reject behavior and metrics. Source group/channel sync
-algorithms preserve missing-group conversation lookup, nil SCIM actor, additions
-only, wire_member role, bots-inclusive2000 cap and write-before-notification.
-PostgreSQL group queries use bound UUIDs and source metadata validation; source
-pool/password-file configuration is handled with checked pgx5.11.0. These pieces
-pass focused race and full Go checks; consumer startup remains unconnected until
-real conversation storage and local/remote/bot delivery adapters are complete.
-PostgreSQL administrative-shutdown retry, Cass/PG migration routing, supervision
-and graceful drain also remain. Partial source hashes/checks and inherited
-plaintext-fallback/transient-publish/notification-retry concerns are recorded in
-module evidence/group-jobs-20261009. No full job, migration or service qualification.
+Next connect Cassandra/PostgreSQL migration routing with source advisory locks
+and pending-delete cleanup, then job-consumer startup, supervision and graceful
+drain. Implement Arbiter scheduled adminless/meetings jobs and all seven migration
+families. Final exact six-Go original124 tests, actual durable Haskell->Go->Haskell
+switchback, bounded operations, optional image/selector and delegated review remain
+mandatory. Native local Haskell build checks remain unavailable/unrun.
 
-Conversation adapter construction now includes source PostgreSQL18-column
-metadata, read-committed/read-only member reads with parent support and explicit
-child priority; role/UUID guards and bound transactional upserts. Source admin
-shutdown SQLSTATEs reset/retry the pool five times, with a sixth final attempt.
-Local/remote group-join delivery includes source event fields, modern/V0 bundles,
-persistent quorum queues, remote retry/concurrency and source Gundeck128 chunks
-with default2000 fanout. Empty-recipient pushes are retained for Cells routing.
-Actual loopback HTTP tests and full Go checks/final vet/race pass; source hashes
-and limitations are in module evidence/conversation-adapters-20261009. Original
-group E2E/database effects are not yet validated. Next implement real bot delivery
-(source authenticated RSA pins, valid chain or self-signed/date verification,
-record inherited missing hostname verification) and Cassandra/migration routing,
-then connect the consumer and consolidate startup/supervision/drain. Final whole
-worker boundaries and acceptance are unchanged; no deployment qualification.
+Serious inherited concerns include PostgreSQL sslmode=prefer plaintext fallback,
+transient/unconfirmed child-job publication, write-before-notification loss on
+retry, poison-job requeue loops and bot pin authentication without hostname checks.
+Native RSA-only bot TLS also permits finite-DHE AEAD cipher suites that Go's TLS
+library does not implement; legacy providers supporting only those suites may
+need configuration updates. No production security policy change is authorized.

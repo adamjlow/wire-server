@@ -44,7 +44,7 @@ type cassandraMissedStore struct{ session *gocql.Session }
 func (s cassandraMissedStore) MarkMissed(ctx context.Context, user gocql.UUID, client string) error {
 	err := s.session.Query("INSERT INTO missed_notifications (user_id, client_id) VALUES (?, ?)", user, client).
 		WithContext(ctx).Consistency(gocql.LocalQuorum).
-		RetryPolicy(&gocql.ExponentialBackoffRetryPolicy{NumRetries: 1, Min: 100 * time.Millisecond, Max: 1600 * time.Millisecond}).Exec()
+		RetryPolicy(cassandraRetry(1)).Exec()
 	if err != nil {
 		return errors.New("missed notification write failed")
 	}
