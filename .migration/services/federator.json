@@ -2,12 +2,16 @@
   "schema_version": 1,
   "service": "federator",
   "reference_path": "services/federator",
-  "stage": "registered",
+  "stage": "inventoried",
   "oracle_paths": [
     "services/federator",
     "docs/go-migration/services/federator/contract.md",
     "docs/go-migration/services/federator/oracle"
   ],
-  "gates": {},
+  "gates": {
+    "inventory": [
+      "federator-inventory"
+    ]
+  },
   "compatibility": null
 }

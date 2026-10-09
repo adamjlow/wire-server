@@ -4,7 +4,7 @@
   "title": "Publish federator inventory gate",
   "service": "framework",
   "kind": "framework",
-  "status": "active",
+  "status": "done",
   "owner": "codex",
   "branch": "go-migration",
   "depends_on": [
@@ -22,7 +22,18 @@
       "required_evidence": "Reviewed done inventory and valid adjacent state/scope transition."
     }
   ],
-  "evidence": [],
-  "review": null,
-  "handoff": ""
+  "evidence": [
+    {
+      "criterion": "inventory",
+      "result": "pass",
+      "command": "Reviewed completed inventory, actual compiled discovery and adjacent inventoried transition.",
+      "revision": "9e4720e4f6629f7074a1a855081f5e940fe838b9",
+      "artifact": ".migration/services/federator.json"
+    }
+  ],
+  "review": {
+    "by": "codex (self-review delegated by user)",
+    "artifact": ".migration/reviews/federator-inventory.md"
+  },
+  "handoff": "Inventory published; contract and candidate gates remain."
 }
