@@ -1,0 +1,819 @@
+{
+  "source": "https://hackage-content.haskell.org/package/email-validate-2.3.2.21/src/tests/Main.hs",
+  "source_sha256": "38a754cebae668d69bc72367e232b33ed85961d99ab7fa7350566b44f38ecfdb",
+  "source_cases": [
+    {
+      "value": "first.last@example.com",
+      "valid": true
+    },
+    {
+      "value": "first.last@example.com.",
+      "valid": true
+    },
+    {
+      "value": "local@exam_ple.com",
+      "valid": false
+    },
+    {
+      "value": "1234567890123456789012345678901234567890123456789012345678901234@example.com",
+      "valid": true
+    },
+    {
+      "value": "\"first last\"@example.com",
+      "valid": true
+    },
+    {
+      "value": "\"first\\\"last\"@example.com",
+      "valid": true
+    },
+    {
+      "value": "first\\@last@example.com",
+      "valid": false
+    },
+    {
+      "value": "\"first@last\"@example.com",
+      "valid": true
+    },
+    {
+      "value": "\"first\\\\last\"@example.com",
+      "valid": true
+    },
+    {
+      "value": "first.last@[12.34.56.78]",
+      "valid": true
+    },
+    {
+      "value": "first.last@[IPv6:::12.34.56.78]",
+      "valid": true
+    },
+    {
+      "value": "first.last@[IPv6:1111:2222:3333::4444:12.34.56.78]",
+      "valid": true
+    },
+    {
+      "value": "first.last@[IPv6:1111:2222:3333:4444:5555:6666:12.34.56.78]",
+      "valid": true
+    },
+    {
+      "value": "first.last@[IPv6:::1111:2222:3333:4444:5555:6666]",
+      "valid": true
+    },
+    {
+      "value": "first.last@[IPv6:1111:2222:3333::4444:5555:6666]",
+      "valid": true
+    },
+    {
+      "value": "first.last@[IPv6:1111:2222:3333:4444:5555:6666::]",
+      "valid": true
+    },
+    {
+      "value": "first.last@[IPv6:1111:2222:3333:4444:5555:6666:7777:8888]",
+      "valid": true
+    },
+    {
+      "value": "first.last@x23456789012345678901234567890123456789012345678901234567890123.example.com",
+      "valid": true
+    },
+    {
+      "value": "first.last@1xample.com",
+      "valid": true
+    },
+    {
+      "value": "first.last@123.example.com",
+      "valid": true
+    },
+    {
+      "value": "first.last",
+      "valid": false
+    },
+    {
+      "value": ".first.last@example.com",
+      "valid": false
+    },
+    {
+      "value": "first.last.@example.com",
+      "valid": false
+    },
+    {
+      "value": "first..last@example.com",
+      "valid": false
+    },
+    {
+      "value": "\"first\"last\"@example.com",
+      "valid": false
+    },
+    {
+      "value": "\"first\\last\"@example.com",
+      "valid": true
+    },
+    {
+      "value": "\"\"\"@example.com",
+      "valid": false
+    },
+    {
+      "value": "\"\\\"@example.com",
+      "valid": false
+    },
+    {
+      "value": "first\\\\@last@example.com",
+      "valid": false
+    },
+    {
+      "value": "first.last@",
+      "valid": false
+    },
+    {
+      "value": "\"Abc\\@def\"@example.com",
+      "valid": true
+    },
+    {
+      "value": "\"Fred\\ Bloggs\"@example.com",
+      "valid": true
+    },
+    {
+      "value": "\"Joe.\\\\Blow\"@example.com",
+      "valid": true
+    },
+    {
+      "value": "\"Abc@def\"@example.com",
+      "valid": true
+    },
+    {
+      "value": "\"Fred Bloggs\"@example.com",
+      "valid": true
+    },
+    {
+      "value": "user+mailbox@example.com",
+      "valid": true
+    },
+    {
+      "value": "customer/department=shipping@example.com",
+      "valid": true
+    },
+    {
+      "value": "$A12345@example.com",
+      "valid": true
+    },
+    {
+      "value": "!def!xyz%abc@example.com",
+      "valid": true
+    },
+    {
+      "value": "_somename@example.com",
+      "valid": true
+    },
+    {
+      "value": "dclo@us.ibm.com",
+      "valid": true
+    },
+    {
+      "value": "abc\\@def@example.com",
+      "valid": false
+    },
+    {
+      "value": "abc\\\\@example.com",
+      "valid": false
+    },
+    {
+      "value": "peter.piper@example.com",
+      "valid": true
+    },
+    {
+      "value": "Doug\\ \\\"Ace\\\"\\ Lovell@example.com",
+      "valid": false
+    },
+    {
+      "value": "\"Doug \\\"Ace\\\" L.\"@example.com",
+      "valid": true
+    },
+    {
+      "value": "abc@def@example.com",
+      "valid": false
+    },
+    {
+      "value": "abc\\\\@def@example.com",
+      "valid": false
+    },
+    {
+      "value": "abc\\@example.com",
+      "valid": false
+    },
+    {
+      "value": "@example.com",
+      "valid": false
+    },
+    {
+      "value": "doug@",
+      "valid": false
+    },
+    {
+      "value": "\"qu@example.com",
+      "valid": false
+    },
+    {
+      "value": "ote\"@example.com",
+      "valid": false
+    },
+    {
+      "value": ".dot@example.com",
+      "valid": false
+    },
+    {
+      "value": "dot.@example.com",
+      "valid": false
+    },
+    {
+      "value": "two..dot@example.com",
+      "valid": false
+    },
+    {
+      "value": "\"Doug \"Ace\" L.\"@example.com",
+      "valid": false
+    },
+    {
+      "value": "Doug\\ \\\"Ace\\\"\\ L\\.@example.com",
+      "valid": false
+    },
+    {
+      "value": "hello world@example.com",
+      "valid": false
+    },
+    {
+      "value": "gatsby@f.sc.ot.t.f.i.tzg.era.l.d.",
+      "valid": true
+    },
+    {
+      "value": "test@example.com",
+      "valid": true
+    },
+    {
+      "value": "TEST@example.com",
+      "valid": true
+    },
+    {
+      "value": "1234567890@example.com",
+      "valid": true
+    },
+    {
+      "value": "test+test@example.com",
+      "valid": true
+    },
+    {
+      "value": "test-test@example.com",
+      "valid": true
+    },
+    {
+      "value": "t*est@example.com",
+      "valid": true
+    },
+    {
+      "value": "+1~1+@example.com",
+      "valid": true
+    },
+    {
+      "value": "{_test_}@example.com",
+      "valid": true
+    },
+    {
+      "value": "\"[[ test ]]\"@example.com",
+      "valid": true
+    },
+    {
+      "value": "test.test@example.com",
+      "valid": true
+    },
+    {
+      "value": "\"test.test\"@example.com",
+      "valid": true
+    },
+    {
+      "value": "test.\"test\"@example.com",
+      "valid": true
+    },
+    {
+      "value": "\"test@test\"@example.com",
+      "valid": true
+    },
+    {
+      "value": "test@123.123.123.x123",
+      "valid": true
+    },
+    {
+      "value": "test@[123.123.123.123]",
+      "valid": true
+    },
+    {
+      "value": "test@example.example.com",
+      "valid": true
+    },
+    {
+      "value": "test@example.example.example.com",
+      "valid": true
+    },
+    {
+      "value": "test.example.com",
+      "valid": false
+    },
+    {
+      "value": "test.@example.com",
+      "valid": false
+    },
+    {
+      "value": "test..test@example.com",
+      "valid": false
+    },
+    {
+      "value": ".test@example.com",
+      "valid": false
+    },
+    {
+      "value": "test@test@example.com",
+      "valid": false
+    },
+    {
+      "value": "test@@example.com",
+      "valid": false
+    },
+    {
+      "value": "-- test --@example.com",
+      "valid": false
+    },
+    {
+      "value": "[test]@example.com",
+      "valid": false
+    },
+    {
+      "value": "\"test\\test\"@example.com",
+      "valid": true
+    },
+    {
+      "value": "\"test\"test\"@example.com",
+      "valid": false
+    },
+    {
+      "value": "()[]\\;:,><@example.com",
+      "valid": false
+    },
+    {
+      "value": "test@.",
+      "valid": false
+    },
+    {
+      "value": "test@example.",
+      "valid": true
+    },
+    {
+      "value": "test@.org",
+      "valid": false
+    },
+    {
+      "value": "test@[123.123.123.123",
+      "valid": false
+    },
+    {
+      "value": "test@123.123.123.123]",
+      "valid": false
+    },
+    {
+      "value": "NotAnEmail",
+      "valid": false
+    },
+    {
+      "value": "@NotAnEmail",
+      "valid": false
+    },
+    {
+      "value": "\"test\\\\blah\"@example.com",
+      "valid": true
+    },
+    {
+      "value": "\"test\\blah\"@example.com",
+      "valid": true
+    },
+    {
+      "value": "\"test\\\rblah\"@example.com",
+      "valid": true
+    },
+    {
+      "value": "\"test\rblah\"@example.com",
+      "valid": false
+    },
+    {
+      "value": "\"test\\\"blah\"@example.com",
+      "valid": true
+    },
+    {
+      "value": "\"test\"blah\"@example.com",
+      "valid": false
+    },
+    {
+      "value": "customer/department@example.com",
+      "valid": true
+    },
+    {
+      "value": "_Yosemite.Sam@example.com",
+      "valid": true
+    },
+    {
+      "value": "~@example.com",
+      "valid": true
+    },
+    {
+      "value": ".wooly@example.com",
+      "valid": false
+    },
+    {
+      "value": "wo..oly@example.com",
+      "valid": false
+    },
+    {
+      "value": "pootietang.@example.com",
+      "valid": false
+    },
+    {
+      "value": ".@example.com",
+      "valid": false
+    },
+    {
+      "value": "\"Austin@Powers\"@example.com",
+      "valid": true
+    },
+    {
+      "value": "Ima.Fool@example.com",
+      "valid": true
+    },
+    {
+      "value": "\"Ima.Fool\"@example.com",
+      "valid": true
+    },
+    {
+      "value": "\"Ima Fool\"@example.com",
+      "valid": true
+    },
+    {
+      "value": "Ima Fool@example.com",
+      "valid": false
+    },
+    {
+      "value": "phil.h\\@\\@ck@haacked.com",
+      "valid": false
+    },
+    {
+      "value": "\"first\".\"last\"@example.com",
+      "valid": true
+    },
+    {
+      "value": "\"first\".middle.\"last\"@example.com",
+      "valid": true
+    },
+    {
+      "value": "\"first\\\\\"last\"@example.com",
+      "valid": false
+    },
+    {
+      "value": "\"first\".last@example.com",
+      "valid": true
+    },
+    {
+      "value": "first.\"last\"@example.com",
+      "valid": true
+    },
+    {
+      "value": "\"first\".\"middle\".\"last\"@example.com",
+      "valid": true
+    },
+    {
+      "value": "\"first.middle\".\"last\"@example.com",
+      "valid": true
+    },
+    {
+      "value": "\"first.middle.last\"@example.com",
+      "valid": true
+    },
+    {
+      "value": "\"first..last\"@example.com",
+      "valid": true
+    },
+    {
+      "value": "foo@[\\1.2.3.4]",
+      "valid": false
+    },
+    {
+      "value": "\"first\\\\\\\"last\"@example.com",
+      "valid": true
+    },
+    {
+      "value": "first.\"mid\\dle\".\"last\"@example.com",
+      "valid": true
+    },
+    {
+      "value": "Test.\r\n Folding.\r\n Whitespace@example.com",
+      "valid": true
+    },
+    {
+      "value": "first\\last@example.com",
+      "valid": false
+    },
+    {
+      "value": "Abc\\@def@example.com",
+      "valid": false
+    },
+    {
+      "value": "Fred\\ Bloggs@example.com",
+      "valid": false
+    },
+    {
+      "value": "Joe.\\\\Blow@example.com",
+      "valid": false
+    },
+    {
+      "value": "\"test\\\r\n blah\"@example.com",
+      "valid": false
+    },
+    {
+      "value": "\"test\r\n blah\"@example.com",
+      "valid": true
+    },
+    {
+      "value": "{^c\\@**Dog^}@cartoon.com",
+      "valid": false
+    },
+    {
+      "value": "(foo)cal(bar)@(baz)iamcal.com(quux)",
+      "valid": true
+    },
+    {
+      "value": "cal@iamcal(woo).(yay)com",
+      "valid": true
+    },
+    {
+      "value": "cal(woo(yay)hoopla)@iamcal.com",
+      "valid": true
+    },
+    {
+      "value": "cal(foo\\@bar)@iamcal.com",
+      "valid": true
+    },
+    {
+      "value": "cal(foo\\)bar)@iamcal.com",
+      "valid": true
+    },
+    {
+      "value": "cal(foo(bar)@iamcal.com",
+      "valid": false
+    },
+    {
+      "value": "cal(foo)bar)@iamcal.com",
+      "valid": false
+    },
+    {
+      "value": "cal(foo\\)@iamcal.com",
+      "valid": false
+    },
+    {
+      "value": "first().last@example.com",
+      "valid": true
+    },
+    {
+      "value": "first.(\r\n middle\r\n )last@example.com",
+      "valid": true
+    },
+    {
+      "value": "first(12345678901234567890123456789012345678901234567890)last@(1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890)example.com",
+      "valid": false
+    },
+    {
+      "value": "first(Welcome to\r\n the (\"wonderful\" (!)) world\r\n of email)@example.com",
+      "valid": true
+    },
+    {
+      "value": "pete(his account)@silly.test(his host)",
+      "valid": true
+    },
+    {
+      "value": "jdoe@machine(comment).  example",
+      "valid": true
+    },
+    {
+      "value": "1234   @   local(blah)  .machine .example",
+      "valid": true
+    },
+    {
+      "value": "first(middle)last@example.com",
+      "valid": false
+    },
+    {
+      "value": "first(abc.def).last@example.com",
+      "valid": true
+    },
+    {
+      "value": "first(a\"bc.def).last@example.com",
+      "valid": true
+    },
+    {
+      "value": "first.(\")middle.last(\")@example.com",
+      "valid": true
+    },
+    {
+      "value": "first(abc(\"def\".ghi).mno)middle(abc(\"def\".ghi).mno).last@(abc(\"def\".ghi).mno)example(abc(\"def\".ghi).mno).(abc(\"def\".ghi).mno)com(abc(\"def\".ghi).mno)",
+      "valid": false
+    },
+    {
+      "value": "first(abc\\(def)@example.com",
+      "valid": true
+    },
+    {
+      "value": "first.last@x(1234567890123456789012345678901234567890123456789012345678901234567890).com",
+      "valid": true
+    },
+    {
+      "value": "a(a(b(c)d(e(f))g)h(i)j)@example.com",
+      "valid": true
+    },
+    {
+      "value": "a(a(b(c)d(e(f))g)(h(i)j)@example.com",
+      "valid": false
+    },
+    {
+      "value": "name.lastname@domain.com",
+      "valid": true
+    },
+    {
+      "value": ".@",
+      "valid": false
+    },
+    {
+      "value": "@bar.com",
+      "valid": false
+    },
+    {
+      "value": "@@bar.com",
+      "valid": false
+    },
+    {
+      "value": "a@bar.com",
+      "valid": true
+    },
+    {
+      "value": "aaa.com",
+      "valid": false
+    },
+    {
+      "value": "aaa@.com",
+      "valid": false
+    },
+    {
+      "value": "aaa@.123",
+      "valid": false
+    },
+    {
+      "value": "aaa@[123.123.123.123]",
+      "valid": true
+    },
+    {
+      "value": "aaa@[123.123.123.123]a",
+      "valid": false
+    },
+    {
+      "value": "a@bar.com.",
+      "valid": true
+    },
+    {
+      "value": "a-b@bar.com",
+      "valid": true
+    },
+    {
+      "value": "+@b.c",
+      "valid": true
+    },
+    {
+      "value": "+@b.com",
+      "valid": true
+    },
+    {
+      "value": "-@..com",
+      "valid": false
+    },
+    {
+      "value": "-@a..com",
+      "valid": false
+    },
+    {
+      "value": "a@b.co-foo.uk",
+      "valid": true
+    },
+    {
+      "value": "\"hello my name is\"@stutter.com",
+      "valid": true
+    },
+    {
+      "value": "\"Test \\\"Fail\\\" Ing\"@example.com",
+      "valid": true
+    },
+    {
+      "value": "valid@special.museum",
+      "valid": true
+    },
+    {
+      "value": "shaitan@my-domain.thisisminekthx",
+      "valid": true
+    },
+    {
+      "value": "test@...........com",
+      "valid": false
+    },
+    {
+      "value": "\"Joe\\\\Blow\"@example.com",
+      "valid": true
+    },
+    {
+      "value": "Invalid \\\n Folding \\\n Whitespace@example.com",
+      "valid": false
+    },
+    {
+      "value": "HM2Kinsists@(that comments are allowed)this.is.ok",
+      "valid": true
+    },
+    {
+      "value": "user%uucp!path@somehost.edu",
+      "valid": true
+    },
+    {
+      "value": "\"first(last)\"@example.com",
+      "valid": true
+    },
+    {
+      "value": " \r\n (\r\n x \r\n ) \r\n first\r\n ( \r\n x\r\n ) \r\n .\r\n ( \r\n x) \r\n last \r\n (  x \r\n ) \r\n @example.com",
+      "valid": true
+    },
+    {
+      "value": "test.\r\n \r\n obs@syntax.com",
+      "valid": true
+    },
+    {
+      "value": "test. \r\n \r\n obs@syntax.com",
+      "valid": true
+    },
+    {
+      "value": "test.\r\n\r\n obs@syntax.com",
+      "valid": false
+    },
+    {
+      "value": "a@b",
+      "valid": true
+    },
+    {
+      "value": "a@bar",
+      "valid": true
+    },
+    {
+      "value": "invalid@special.museum-",
+      "valid": false
+    },
+    {
+      "value": "a@-b.com",
+      "valid": false
+    },
+    {
+      "value": "a@b-.com",
+      "valid": false
+    },
+    {
+      "value": "x@x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456",
+      "valid": false
+    },
+    {
+      "value": "test@123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012.com",
+      "valid": false
+    },
+    {
+      "value": "123456789012345678901234567890123456789012345678901234567890@12345678901234567890123456789012345678901234567890123456789.12345678901234567890123456789012345678901234567890123456789.12345678901234567890123456789012345678901234567890123456789.1234.example.com",
+      "valid": false
+    },
+    {
+      "value": "123456789012345678901234567890123456789012345678901234567890@12345678901234567890123456789012345678901234567890123456789.12345678901234567890123456789012345678901234567890123456789.12345678901234567890123456789012345678901234567890123456789.123.example.com",
+      "valid": false
+    },
+    {
+      "value": "123456789012345678901234567890123456789012345678901234567890@12345678901234567890123456789012345678901234567890123456789.12345678901234567890123456789012345678901234567890123456789.12345678901234567890123456789012345678901234567890123456789.12.example.com",
+      "valid": false
+    },
+    {
+      "value": "123456789012345678901234567890123456789012345678901234567890@12345678901234567890123456789012345678901234567890123456789.12345678901234567890123456789012345678901234567890123456789.12345678901234567890123456789012345678901234567890123456789.1.example.com",
+      "valid": true
+    },
+    {
+      "value": "first.last@x234567890123456789012345678901234567890123456789012345678901234.example.com",
+      "valid": false
+    },
+    {
+      "value": "first.last@e.-xample.com",
+      "valid": false
+    },
+    {
+      "value": "first.last@exampl-.e.com",
+      "valid": false
+    }
+  ],
+  "unimported_cases": 7
+}

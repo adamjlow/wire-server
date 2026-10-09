@@ -1,0 +1,6 @@
+{
+  "email-validate-2.3.2.21/src/Text/Email/Parser.hs": "e47154bb303df3f85b87bdd6c6795755e397831b3e8bda7ad312b3596342352c",
+  "email-validate-2.3.2.21/tests/Main.hs": "38a754cebae668d69bc72367e232b33ed85961d99ab7fa7350566b44f38ecfdb",
+  "iso3166-country-codes-0.20140203.8/Data/ISO3166_CountryCodes.hs": "65662dd97743cdf7178eecb820a247365f31667059a4bf09b20013836cc36020",
+  "iso639-0.1.0.3/Data/LanguageCodes.hs": "cdcf762d51efc97aa1f310f1c94f36ac7b70286f8225217ced1d7fa4a617176f"
+}

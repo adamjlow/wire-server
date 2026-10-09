@@ -246,3 +246,15 @@ pinned Hasql1.2.2 transaction semantics. Full Go checks pass for module
 evidence/user-migration-store-20261009 inputs. User decoding, related Cassandra
 reads, bounded parallel locked scan and runtime wiring remain unfinished; the
 user migration flag still rejects startup. Actual database effects remain unrun.
+
+User migration decoding construction now preserves scalar defaults/nulls and
+activated microsecond timestamps, nullable asset UDT fields, filtered invalid
+assets, canonical email/password, picture/rich-info JSON and pinned source ISO
+locale enums. The source's203 imported literal email validity cases and idempotence
+expectations pass alongside actual driver CQL wire-decoding checks; seven native
+cases remain unimported and the entire native package suite was not executed.
+Full Go checks pass (module evidence/user-migration-values-20261009). Email BSD3
+notice is retained for eventual binary/image distribution. SSO and related CQL
+reads, handle claims, complete user construction and parallel locked runtime scan
+are unfinished; the user migration flag still rejects startup. Actual DB effects
+and final E2E/operations/switchback remain unrun.
