@@ -4,9 +4,9 @@
   "title": "Federator selection",
   "service": "federator",
   "kind": "operations",
-  "status": "queued",
-  "owner": null,
-  "branch": null,
+  "status": "active",
+  "owner": "codex",
+  "branch": "go-migration",
   "depends_on": [
     "federator-verification"
   ],
