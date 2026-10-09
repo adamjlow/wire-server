@@ -1,0 +1,1 @@
+<?xml version='1.0' ?><testsuites name="wire-server"><testsuite name="integration" tests="1" failures="0" time="34.738216263"><testcase name="Migration.Conversation.testMigrationToPostgresMLS" time="34.738216263" /></testsuite></testsuites>

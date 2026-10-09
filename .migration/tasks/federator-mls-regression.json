@@ -41,7 +41,15 @@
       "required_evidence": "Exact source/binary/image receipts, failures/unrun checks recorded, delegated same-author review and scope/framework checks; no unsupported compatibility restoration."
     }
   ],
-  "evidence": [],
+  "evidence": [
+    {
+      "criterion": "repair",
+      "result": "fail",
+      "command": "Original strict MLS with five Go peers; bounded trace observes get-mls-clients transport error, generic521. Attribution unresolved; no behavioral fix. Sole Go federator run passed; categorized five-Go run also passed intermittently.",
+      "revision": "75c2e8e508ba27cd51aecdb21d6ce50948276fd9",
+      "artifact": "go/services/federator/evidence/mls-regression-20261009"
+    }
+  ],
   "review": null,
-  "handoff": "Diagnose original MLS regression on the existing isolated profile before worker implementation. Primary suspect federator RPC/transport path; attribution not established. If another service is proved responsible, stop and rescope instead of editing outside claim."
+  "handoff": "Active diagnosis: actual get-mls-clients transport error to d1 observed; classified five-Go rerun passed without a fix, so intermittent cause remains unresolved. Static diagnostic only, original tests unchanged. Need failing error category and focused cause before any correction/requalification; whole-worker goal remains active."
 }

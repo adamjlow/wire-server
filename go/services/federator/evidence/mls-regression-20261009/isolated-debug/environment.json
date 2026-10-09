@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "project": "wire-e2e-a1cc9325ee064cbe9da1396b64d3d9fd",
+  "source_revision": "c18972ece9edfd80e0c4f1d2fa12b9f210ea1d70",
+  "runner_image_id": "sha256:cd03212430eef6cfde0324b50885c12980ee211483ab27dde6ee730252966cd2",
+  "runner_revision": "344c9e4cbda09252c1530e4fbffe38c2000f9efd",
+  "candidate": null,
+  "peer_candidates": {
+    "federator": {
+      "path": "/home/operator/.cache/wire-migration/federator-mls-20261009/diagnostic",
+      "sha256": "4e04fb0c2590b8577eb0fe0925fc3fd6cc0e4aa9d390a99a1da1ec1073700d0b",
+      "source_revision": "c18972ece9edfd80e0c4f1d2fa12b9f210ea1d70"
+    }
+  },
+  "result": "failed",
+  "e2e_executed": false,
+  "compose_sha256": "51ce093536d7c8ef573b9673114d2a733ba679ccdd181a61d1ba8621c39737d2",
+  "files_sha256": {
+    "fixtures/configs.json": "07ccb814fcaa855db5ebaea3b970430f20f1ec3bc98ac7f2e0900d67dc706cf8",
+    "fixtures/integration.json": "d8834dad54e1f851e689ac00691cd527aac69e0e9ce00baf149835433812c73c",
+    "fixtures/peers.json": "65842417bd7967bc81968547c2a33aa985f033ce2ec33552d91f74728d0f628d"
+  },
+  "diagnostics": "Only existing federator logLevel Debug, exact fixture hashes retained; original assertions unchanged. Sole Go federator isolates attribution.",
+  "dependencies": {
+    "fake_dynamodb": "quay.io/wire/dynamodb_local@sha256:e092d4b32889277f9dc0954bf99caaa216bdb621e399d460ac396e41c8c1a9f1",
+    "fake_sqs": "softwaremill/elasticmq-native@sha256:32d4b42a1f1fd5d311d2f46e388587c87b297364df3d25cc807f1dd361df1153",
+    "fake_localstack": "quay.io/wire/localstack@sha256:544be04ed93def3e636cc96550f262c1c8ac7f4d40e17b7c76583590a26e78d3",
+    "fake_s3": "dxflrs/garage@sha256:9c96caa2612d3411acc5b0e6701fb238dbfba33e533a6d7d3d811a4b12d0d020",
+    "redis-master": "redis@sha256:29e8589c3f9ba699b5f7aa4b3c7733c58852a3626439e619aa0ee78de08c6ca0",
+    "elasticsearch": "elasticsearch@sha256:deda76957c8cacc5dbf0d535fd14fe365f37d839813099bc32f26390a5e232dc",
+    "postgres": "postgres@sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24",
+    "cassandra": "cassandra@sha256:dad4cd7ee4281df4e96944a1faebfebd2e50ee19a9f0a1d42ac0bb17c820dd74",
+    "rabbitmq": "rabbitmq@sha256:5cbd7145b0306399ad68422c3350b6cbd1bb95704b39f5896480e5b6d4238a04",
+    "coredns": "coredns/coredns@sha256:6e5a02c21641597998b4be7cb5eb1e7b02c0d8d23cce4dd09f4682d463798890",
+    "dns-server": "technitium/dns-server@sha256:1045db38fd2f2e4d9578f9168b7eb4862575469ed0ffc79e03f36bdc772a93b5",
+    "redis-cluster": "redis@sha256:29e8589c3f9ba699b5f7aa4b3c7733c58852a3626439e619aa0ee78de08c6ca0",
+    "redis-node-1": "redis@sha256:29e8589c3f9ba699b5f7aa4b3c7733c58852a3626439e619aa0ee78de08c6ca0",
+    "redis-node-2": "redis@sha256:29e8589c3f9ba699b5f7aa4b3c7733c58852a3626439e619aa0ee78de08c6ca0",
+    "redis-node-3": "redis@sha256:29e8589c3f9ba699b5f7aa4b3c7733c58852a3626439e619aa0ee78de08c6ca0",
+    "redis-node-4": "redis@sha256:29e8589c3f9ba699b5f7aa4b3c7733c58852a3626439e619aa0ee78de08c6ca0",
+    "redis-node-5": "redis@sha256:29e8589c3f9ba699b5f7aa4b3c7733c58852a3626439e619aa0ee78de08c6ca0",
+    "redis-node-6": "redis@sha256:29e8589c3f9ba699b5f7aa4b3c7733c58852a3626439e619aa0ee78de08c6ca0"
+  },
+  "process_exit_code": 2,
+  "error_category": "ValueError",
+  "cleanup_exit_code": 0
+}

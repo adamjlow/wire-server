@@ -42,3 +42,26 @@ One stack at a time because fixture subnets are fixed. No remote push/production
 Build commands retain the mandated output filter and actual build exit status.
 Framework/scope commands use full real SHAs; metadata alone needs no service rerun.
 Evidence: go/services/federator/evidence/mls-regression-20261009 and migration review.
+
+## Executed diagnosis checkpoint (2026-10-09)
+
+Static diagnostic federator c18972ece9edfd80e0c4f1d2fa12b9f210ea1d70 passed
+original isolated MLS with all other services Haskell (33.18s), but failed with
+all five Go peers (12.74s). Bounded metadata located a get-mls-clients transport
+failure to d1.example.com; the public 521 label is generic and does not prove
+TCP refusal. Other adjacent RPCs returned 200. No attribution or behavioral fix
+is established. Original assertions, schemas and TLS verification are unchanged.
+
+The categorized diagnostic binary built from
+75c2e8e508ba27cd51aecdb21d6ce50948276fd9 passed the same original single case with
+all five Go peers, process0/cleanup0. This is an intermittent failure, not a
+correction. The full worker47 baseline and compatibility restoration remain
+unqualified. Diagnostics must be removed before final source/image qualification.
+A bounded local 800-request concurrent single-use HTTP2 probe passed; it did not
+reproduce the fault and its temporary test was removed. Do not add generic retries.
+
+The earlier CGO-enabled diagnostic failed to launch in the Nix container due to
+its absent ELF interpreter; no E2E ran. Its failed receipt is retained alongside
+the correctly static builds. Evidence is in the claimed module evidence directory:
+original strict XML/run/environment, bounded trace and actual source/build identity.
+Native Haskell builds remain unavailable/unrun; no worker implementation is claimed.
