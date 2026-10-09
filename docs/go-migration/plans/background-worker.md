@@ -280,3 +280,12 @@ connected; conversation migration alone still rejects startup. Native package
 execution and actual user DB/original migration validation remain unrun at this
 checkpoint; next use the existing background-worker-users original profile.
 Whole scheduled runtime and final qualification remain required.
+
+The identified static worker from568810e637d656f08d54789b5d9408e83c5c53bc executed
+unchanged original background-worker-users:1/2 pass, no errors/skips, cleanup0 and
+empty owned project labels. Main user test fails SCIM GET500 in runPhase2 (source
+User.hs:138), before its migrateUsers flag enables at phase3. Reindexing passes
+but never enables migration either. Thus neither assertion validates the newly
+connected user DB path; actual effects remain unproved. Module evidence/user-original-20261009
+retains exact receipts/XML and this limitation. Resolve the pre-enable failure;
+final original47 includes further user migration cases and remains mandatory.

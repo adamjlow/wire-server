@@ -1,0 +1,19 @@
+{
+  "result": "fail",
+  "source_revision": "568810e637d656f08d54789b5d9408e83c5c53bc",
+  "binary_sha256": "3740244e3a4a4c06c876948d50d62d05a18fe98ac71f7f0674d0d2c6318a1145",
+  "executed_cases": 2,
+  "distinct_cases": 2,
+  "passed": 1,
+  "failures": 1,
+  "errors": 0,
+  "skipped": 0,
+  "original_xml_sha256": "32db97621126c8f7f9c69d26d1a22aa4969f312354a1c241e7f9fb0945245c19",
+  "controller_exit_code": 2,
+  "runner_process_exit_code": 1,
+  "cleanup_exit_code": 0,
+  "post_cleanup_owned_containers": [],
+  "post_cleanup_owned_networks": [],
+  "post_cleanup_owned_volumes": [],
+  "limitation": "Main user test fails during runPhase2 SCIM GET500 while migrateUsers=false, before phase3. Reindexing test passes but also never enables migrateUsers. Neither assertion executed the candidate user migration; actual new DB effects remain unverified."
+}
