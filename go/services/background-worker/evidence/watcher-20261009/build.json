@@ -1,0 +1,90 @@
+{
+  "source_revision": "5d7b3df25546ca9ea7a33d7eab0e4a173e3af2e9",
+  "binary_sha256": "348aefab849854a20c1e43963f204e5a310d088ab013b21923bfd84979af8c3f",
+  "build_info": {
+    "GoVersion": "go1.26.9",
+    "Path": "github.com/adamjlow/wire-server/go/services/background-worker/cmd/background-worker",
+    "Main": {
+      "Path": "github.com/adamjlow/wire-server/go/services/background-worker",
+      "Version": "(devel)"
+    },
+    "Deps": [
+      {
+        "Path": "github.com/apache/cassandra-gocql-driver/v2",
+        "Version": "v2.1.2",
+        "Sum": "h1:lu/p0Db2av18enHJvWJQoChLssI0P+AR06STq4VdvCc="
+      },
+      {
+        "Path": "github.com/rabbitmq/amqp091-go",
+        "Version": "v1.15.0",
+        "Sum": "h1:LEQL4/yp48/Wigt6A6XOu18RQRo8ZHtB5I/KZJn+gkw="
+      },
+      {
+        "Path": "go.yaml.in/yaml/v3",
+        "Version": "v3.0.5",
+        "Sum": "h1:N6y/pJk8buWs9NY5ERU2HSMfm+IuD/OtfdAnq6kESPw="
+      },
+      {
+        "Path": "golang.org/x/net",
+        "Version": "v0.60.0",
+        "Sum": "h1:79p50tfZlm0J9YfoDsSi639qSXNGVwEzOPLCxM2FsYU="
+      },
+      {
+        "Path": "golang.org/x/text",
+        "Version": "v0.42.0",
+        "Sum": "h1:JbOZXgfeCPU9gacVtYliJqOhD+zhrEqK4LfdpmlUZqI="
+      },
+      {
+        "Path": "gopkg.in/inf.v0",
+        "Version": "v0.9.1",
+        "Sum": "h1:73M5CoZyi3ZLMOyDlQh031Cx6N9NDJ2Vvfl76EDAgDc="
+      }
+    ],
+    "Settings": [
+      {
+        "Key": "-buildmode",
+        "Value": "exe"
+      },
+      {
+        "Key": "-compiler",
+        "Value": "gc"
+      },
+      {
+        "Key": "-trimpath",
+        "Value": "true"
+      },
+      {
+        "Key": "CGO_ENABLED",
+        "Value": "0"
+      },
+      {
+        "Key": "GOARCH",
+        "Value": "amd64"
+      },
+      {
+        "Key": "GOOS",
+        "Value": "linux"
+      },
+      {
+        "Key": "GOAMD64",
+        "Value": "v1"
+      },
+      {
+        "Key": "vcs",
+        "Value": "git"
+      },
+      {
+        "Key": "vcs.revision",
+        "Value": "5d7b3df25546ca9ea7a33d7eab0e4a173e3af2e9"
+      },
+      {
+        "Key": "vcs.time",
+        "Value": "2026-10-09T18:55:46Z"
+      },
+      {
+        "Key": "vcs.modified",
+        "Value": "false"
+      }
+    ]
+  }
+}

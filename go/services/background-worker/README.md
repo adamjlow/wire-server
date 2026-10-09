@@ -33,3 +33,13 @@ for the early Go source; final checks must be repeated when the implementation
 is complete. Discovery retry budget, graceful in-flight draining and complete
 configuration/source-gap coverage still need refinement alongside the remaining
 worker families. The existing intermittent peer transport issue stays open.
+
+Rabbit job delivery and group-sync business logic are now implemented as
+construction components, with source-shaped envelopes, retries/ACK rules,
+metrics, member deltas, actor and recipient propagation. PostgreSQL group queries
+and pool/password-file configuration are added. The consumer is not started until
+conversation storage and local/remote/bot notification adapters are finished.
+Original gundeck40 with the earlier watcher binary ran38/40 pass, cleanup0:
+version-header mismatch (corrected) and missing jobs queue (unfinished startup).
+See evidence/watcher-20261009 and evidence/group-jobs-20261009 for exact limits;
+this is not original worker47, final six-Go124 or durable switchback validation.

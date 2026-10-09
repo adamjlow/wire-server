@@ -1,0 +1,109 @@
+{
+  "schema_version": 1,
+  "service": "gundeck",
+  "base_image": "quay.io/wire/integration@sha256:f5db439022d1c0ccf071c25f9c0d132ed21a9e5e3647db59c593d33614bc4f27",
+  "required_tests": [
+    "Events.testConsumeEventsOneWebSocket",
+    "Events.testWebSocketTimeout",
+    "Events.testConsumeTempEvents",
+    "Events.testTemporaryQueuesAreDeletedAfterUse",
+    "Events.testSendMessageNoReturnToSenderWithConsumableNotificationsProteus",
+    "Events.testEventsForSpecificClients",
+    "Events.testConsumeEventsForDifferentUsers",
+    "Events.testConsumeEventsWhileHavingLegacyClients",
+    "Events.testConsumeEventsAcks",
+    "Events.testConsumeEventsMultipleAcks",
+    "Events.testConsumeEventsAckNewEventWithoutAckingOldOne",
+    "Events.testEventsDeadLettered",
+    "Events.testEventsDeadLetteredWithReconnect",
+    "Events.testTransientEventsDoNotTriggerDeadLetters",
+    "Events.testTransientEvents",
+    "Events.testChannelLimit",
+    "Events.testChannelKilled",
+    "Events.testSingleConsumer",
+    "Events.testPrefetchCount",
+    "Events.testEndOfInitialSync",
+    "Events.testEndOfInitialSyncMoreEventsAfterSyncMessage",
+    "Events.testEndOfInitialSyncIgnoreExpired",
+    "Events.testEndOfInitialSyncAckMultiple",
+    "Events.testTypingIndicatorIsNotSentToOwnClient[federated=false]",
+    "Events.testTypingIndicatorIsNotSentToOwnClient[federated=true]",
+    "Events.testBackendPusherRecoversFromQueueDeletion",
+    "Notifications.testFetchAllNotifications",
+    "Notifications.testLastNotification",
+    "Notifications.testInvalidNotification",
+    "Notifications.testAddClientNotification",
+    "Notifications.testBulkPushSameMessage",
+    "Notifications.testGetServerTime",
+    "Notifications.testTargetClientPush",
+    "Demo.testModifiedCannon",
+    "Demo.testWebSockets",
+    "PushToken.testRegisterPushToken",
+    "PushToken.testVoipTokenRegistrationFails",
+    "MLS.Notifications.testNotificationPagination",
+    "MLS.Notifications.testNotificationPaginationOversizeSince",
+    "Cells.testCellsIgnoredEvents"
+  ],
+  "candidate": null,
+  "config_sha256": "d8834dad54e1f851e689ac00691cd527aac69e0e9ce00baf149835433812c73c",
+  "e2e_executed": true,
+  "result": "failed",
+  "implementations": {
+    "background-worker": {
+      "implementation": "go",
+      "path": "/candidate/background-worker",
+      "sha256": "348aefab849854a20c1e43963f204e5a310d088ab013b21923bfd84979af8c3f"
+    },
+    "wire-server-enterprise": {
+      "implementation": "haskell",
+      "path": "/nix/store/fcm9yzhyyc1p653a36fj1l5mw0znwip4-wire-server-enterprise/bin/wire-server-enterprise",
+      "sha256": "084c532621fd19cb229b884196f3e3ce59e96f3c34c92156499243952bb9fd4c"
+    },
+    "federator": {
+      "implementation": "haskell",
+      "path": "/nix/store/6p1c8hn9mwydnqjvb06kn17xmx8kagsl-federator/bin/federator",
+      "sha256": "51b35d27a2597e78fcd2e5b6107c8655ee686682f1f6361b3ff7f3243ea846a0"
+    },
+    "stern": {
+      "implementation": "haskell",
+      "path": "/nix/store/q34cnzy5f0q5fm2m32hq73gz9da0gy9y-stern/bin/stern",
+      "sha256": "3f2c71bf87baba43bfc9c97dc1f53b29e290b536c395c267f9b76a8ef04be7e7"
+    },
+    "spar": {
+      "implementation": "haskell",
+      "path": "/nix/store/vknmv1ds2q8pq74q06ia1c77mzcn2kg4-spar/bin/spar",
+      "sha256": "9c80adbfd76199ad3ab9bcf14c4eab8352a09ac2e0960078f8cd23615f8e58d1"
+    },
+    "proxy": {
+      "implementation": "haskell",
+      "path": "/nix/store/abg25gzxyp9ni145za827254xcd9jk28-proxy/bin/proxy",
+      "sha256": "bb14b3b9ec6e365c6ba9b0a4a8f915619bd19a228b1a9c737ed5c0d7c3b04ecd"
+    },
+    "gundeck": {
+      "implementation": "haskell",
+      "path": "/nix/store/i387mq9ly376q2ccd9rmmm3z8hl4bgc0-gundeck/bin/gundeck",
+      "sha256": "ad4fa17a672fde3dbdb53bc029333b467cfdece669e24c1343dc30db7a7c4942"
+    },
+    "galley": {
+      "implementation": "haskell",
+      "path": "/nix/store/fbfpq5phd97caxsgjym3x7wpsif7pvx9-galley/bin/galley",
+      "sha256": "b4c0b3e23dee8006aeda611b6a80b6c6fd032176d96c028d3f41a4aa30d0f436"
+    },
+    "cargohold": {
+      "implementation": "haskell",
+      "path": "/nix/store/wwfbpmgsy8rr9jkv8h909hpxn3vp787z-cargohold/bin/cargohold",
+      "sha256": "566403eed45f5632cd5fe628a85003a9f454757c4ac2b836a99c832d9a5faf0b"
+    },
+    "cannon": {
+      "implementation": "haskell",
+      "path": "/nix/store/h7vy66kc4syr575k8mhnxfsw4ldn7cal-cannon/bin/cannon",
+      "sha256": "cbc200caf92757bb7909b82c73d942072eac557c0eab1ce755aedeb8bf5c705d"
+    },
+    "brig": {
+      "implementation": "haskell",
+      "path": "/nix/store/f6l2f0l8l2r6z9jbg937q96k6056iqfn-brig/bin/brig",
+      "sha256": "c45a40da63268712a7cacdbd884287fa3dc93cec179d70323d3f22f7d5cdf1ca"
+    }
+  },
+  "process_exit_code": 1
+}

@@ -51,18 +51,25 @@ type CassandraConfig struct {
 	Datacentre string   `yaml:"filterNodesByDatacentre"`
 }
 
+type PostgresPoolConfig struct {
+	Size        int      `yaml:"size"`
+	Acquisition Duration `yaml:"acquisitionTimeout"`
+	Idleness    Duration `yaml:"idlenessTimeout"`
+}
+
 type Config struct {
-	LogLevel            string          `yaml:"logLevel"`
-	HTTP                Endpoint        `yaml:"backgroundWorker"`
-	Federator           Endpoint        `yaml:"federatorInternal"`
-	Galley              Endpoint        `yaml:"galley"`
-	Brig                Endpoint        `yaml:"brig"`
-	Gundeck             Endpoint        `yaml:"gundeck"`
-	Spar                Endpoint        `yaml:"spar"`
-	Rabbit              RabbitConfig    `yaml:"rabbitmq"`
-	Cassandra           CassandraConfig `yaml:"cassandra"`
-	CassandraBrig       CassandraConfig `yaml:"cassandraBrig"`
-	DefederationTimeout *int            `yaml:"defederationTimeout"`
+	LogLevel            string             `yaml:"logLevel"`
+	HTTP                Endpoint           `yaml:"backgroundWorker"`
+	Federator           Endpoint           `yaml:"federatorInternal"`
+	Galley              Endpoint           `yaml:"galley"`
+	Brig                Endpoint           `yaml:"brig"`
+	Gundeck             Endpoint           `yaml:"gundeck"`
+	Spar                Endpoint           `yaml:"spar"`
+	Rabbit              RabbitConfig       `yaml:"rabbitmq"`
+	Cassandra           CassandraConfig    `yaml:"cassandra"`
+	CassandraBrig       CassandraConfig    `yaml:"cassandraBrig"`
+	PostgresPool        PostgresPoolConfig `yaml:"postgresqlPool"`
+	DefederationTimeout *int               `yaml:"defederationTimeout"`
 	Pusher              struct {
 		Min     int64 `yaml:"pushBackoffMinWait"`
 		Max     int64 `yaml:"pushBackoffMaxWait"`
@@ -98,8 +105,10 @@ type Config struct {
 }
 
 type GalleyConfig struct {
-	Cassandra CassandraConfig `yaml:"cassandra"`
-	Settings  struct {
+	Cassandra        CassandraConfig   `yaml:"cassandra"`
+	Postgres         map[string]string `yaml:"postgresql"`
+	PostgresPassword *string           `yaml:"postgresqlPassword"`
+	Settings         struct {
 		Domain string `yaml:"federationDomain"`
 	} `yaml:"settings"`
 	Raw map[string]any `yaml:",inline"`
@@ -146,6 +155,9 @@ func LoadConfig(workerPath, galleyPath string) (Config, GalleyConfig, error) {
 		if !store.Endpoint.valid() || store.Keyspace == "" {
 			return c, g, errors.New("invalid Cassandra configuration")
 		}
+	}
+	if c.PostgresPool.Size < 1 || c.PostgresPool.Size > math.MaxInt32 || c.PostgresPool.Acquisition <= 0 || c.PostgresPool.Idleness <= 0 || len(g.Postgres) == 0 {
+		return c, g, errors.New("invalid PostgreSQL pool configuration")
 	}
 	if c.Rabbit.AdminHost != "" && !(Endpoint{c.Rabbit.AdminHost, c.Rabbit.AdminPort}).valid() {
 		return c, g, errors.New("invalid RabbitMQ admin endpoint")

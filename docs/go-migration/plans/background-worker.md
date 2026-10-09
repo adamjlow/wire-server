@@ -173,3 +173,25 @@ the candidate header and candidate tests from that source; retain the failing
 exact-artifact run and rerun the unchanged original profile. These are partial
 observations until strict terminal XML and actual owned cleanup are recorded,
 and do not qualify scheduled/group jobs or migrations.
+
+The original notification/storage run is terminal: strict XML40 cases,38 pass,
+queue-deletion/version-header and missing background-jobs queue failures; owned
+cleanup0. Module evidence/watcher-20261009 retains exact source/binary, environment,
+inner executed-suite receipt and XML. The outer controller false execution flag
+means failed qualification; the inner receipt/XML prove actual execution. Header
+correction is committed; do not rerun an incomplete consumer with a known missing
+queue merely to observe the same failure. Complete job adapters before next run.
+
+Rabbit job construction now implements source envelope parsing, both tagged
+payloads, quorum declaration/publishing metadata, bounded concurrent session,
+finite timeout/retry/ACK/reject behavior and metrics. Source group/channel sync
+algorithms preserve missing-group conversation lookup, nil SCIM actor, additions
+only, wire_member role, bots-inclusive2000 cap and write-before-notification.
+PostgreSQL group queries use bound UUIDs and source metadata validation; source
+pool/password-file configuration is handled with checked pgx5.11.0. These pieces
+pass focused race and full Go checks; consumer startup remains unconnected until
+real conversation storage and local/remote/bot delivery adapters are complete.
+PostgreSQL administrative-shutdown retry, Cass/PG migration routing, supervision
+and graceful drain also remain. Partial source hashes/checks and inherited
+plaintext-fallback/transient-publish/notification-retry concerns are recorded in
+module evidence/group-jobs-20261009. No full job, migration or service qualification.

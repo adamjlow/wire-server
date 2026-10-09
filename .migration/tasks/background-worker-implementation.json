@@ -43,8 +43,15 @@
       "command": "Early static process matches actual retained Haskell health200/empty, unstarted readiness500, SIGTERM exit0; real HTTP2/source notification expectation tests and early Go checks pass. Whole service is incomplete: DLQ, group-sync, scheduled jobs, all migrations, final tests/image/selector/operations/switchback not executed. No compatibility claim.",
       "revision": "bdfb252dc3e1a87c14eb282ef6982e3d3194548b",
       "artifact": "go/services/background-worker/evidence/early-20261009/process-comparison.json"
+    },
+    {
+      "criterion": "service",
+      "result": "fail",
+      "command": "Owned original gundeck40 with only Go background-worker: strict XML40 cases,38 pass,2 fail; cleanup_exit_code0. Failed federation version-header mismatch corrected in6198c021681272d66c57b32633594a4487847b81; missing background-jobs queue reflects unfinished consumer. Full qualification remains incomplete.",
+      "revision": "5d7b3df25546ca9ea7a33d7eab0e4a173e3af2e9",
+      "artifact": "go/services/background-worker/evidence/watcher-20261009/original-result.json"
     }
   ],
   "review": null,
-  "handoff": "Active whole-service construction: runnable dual-config health, federation-notification pusher and Cassandra dead-user watcher committed. Original Haskell dead-letter and reconnect cases have passing observations in the current owned gundeck40 run, which has not yet reached a terminal result. Original queue-deletion case failed on malformed federation version headers: native client sends decimal 0/3, candidate sent v0/v3. Candidate correction and focused race tests pass; full module checks underway. Preserve failing exact run and rerun the unchanged original profile after the fix. Rabbit group-sync, Arbiter/adminless/meetings, all seven migrations, graceful draining and final six-Go124 tests, durable switchback, operations and optional image/selector remain required. No availability or compatibility claim."
+  "handoff": "Active whole-service construction: pusher and Cassandra watcher runnable. Original gundeck40 executed38/40 pass with cleanup0, retained XML/identities; version-header mismatch fixed and missing jobs queue remains until consumer startup. Rabbit job schema/publishing, bounded concurrent session, retries/timeouts/ACK/metrics and both group-sync business algorithms now implemented with focused race/full Go checks. Consumer is not wired: complete real conversation storage, local/remote/bot join notification adapters, PostgreSQL source administrative-shutdown retry and store migration-mode routing first. PostgreSQL group queries and pool/password configuration added using checked pgx5.11.0; no host dependency accessed. Native default sslmode prefer, unconfirmed transient child publishing and write-before-notification retry loss are documented inherited concerns. Then implement Arbiter/adminless/meetings, all seven migrations, graceful drain; final exact six-Go124 tests, durable switchback, bounded operations and optional image/selector remain mandatory. No availability or compatibility claim."
 }

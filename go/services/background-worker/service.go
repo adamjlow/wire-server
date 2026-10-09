@@ -20,6 +20,8 @@ type Service struct {
 	mu            sync.Mutex
 	working       [3]bool
 	notifications map[string]*notificationMetrics
+	jobs          map[string]*jobMetrics
+	jobsBusy      int
 }
 type notificationMetrics struct {
 	pushed, dropped, errors uint64
@@ -91,6 +93,25 @@ func (s *Service) Handler() http.Handler {
 				n = 1
 			}
 			_, _ = fmt.Fprintf(w, "wire_backend_notifications_pushed{targetDomain=%q} %d\nwire_backend_notifications_dropped_unsupported_version{targetDomain=%q} %d\nwire_backend_notifications_errors{targetDomain=%q} %d\nwire_backend_notifications_stuck_queues{targetDomain=%q} %d\n", domain, m.pushed, domain, m.dropped, domain, m.errors, domain, n)
+		}
+		_, _ = fmt.Fprintf(w, "wire_background_jobs_workers_busy %d\nwire_background_jobs_concurrency_configured %d\n", s.jobsBusy, s.Config.BackgroundJobs.Concurrency)
+		for _, label := range []string{"sync-user-group", "sync-user-group-and-channel", "invalid"} {
+			m := s.jobs[label]
+			if m == nil {
+				continue
+			}
+			for _, counter := range []struct {
+				name  string
+				value uint64
+			}{{"received", m.received}, {"started", m.started}, {"succeeded", m.succeeded}, {"failed", m.failed}, {"invalid", m.invalid}, {"redelivered", m.redelivered}} {
+				_, _ = fmt.Fprintf(w, "wire_background_jobs_%s_total{job_type=%q} %d\n", counter.name, label, counter.value)
+			}
+			if m.count > 0 {
+				for i, upper := range jobDurationBuckets {
+					_, _ = fmt.Fprintf(w, "wire_background_jobs_duration_seconds_bucket{job_type=%q,le=%q} %d\n", label, fmt.Sprint(upper), m.buckets[i])
+				}
+				_, _ = fmt.Fprintf(w, "wire_background_jobs_duration_seconds_bucket{job_type=%q,le=\"+Inf\"} %d\nwire_background_jobs_duration_seconds_sum{job_type=%q} %g\nwire_background_jobs_duration_seconds_count{job_type=%q} %d\n", label, m.count, label, m.sum, label, m.count)
+			}
 		}
 	})
 }

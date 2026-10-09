@@ -1,0 +1,89 @@
+<?xml version='1.0' ?><testsuites name="wire-server"><testsuite name="integration" tests="40" failures="2" time="2306.20770963"><testcase name="Cells.testCellsIgnoredEvents" time="61.391765915" /><testcase name="Demo.testModifiedCannon" time="2.983141829" /><testcase name="Demo.testWebSockets" time="1.462228746" /><testcase name="Events.testBackendPusherRecoversFromQueueDeletion" time="65.833422924"><failure>assertion failure:
+Expected 1 matching events, but got 0.
+Details:
+AwaitResult
+    success: False
+    matches:
+    
+    non-matches:
+    
+
+
+
+call stack: 
+1. assertFailure at test/Testlib/Cannon.hs:456
+
+2. assertAwaitResult at test/Testlib/Cannon.hs:444
+
+3. awaitNMatches at test/Testlib/Cannon.hs:500
+
+4. awaitMatch at test/Notifications.hs:333
+
+5. assertConvUserDeletedNotif at test/Test/Events.hs:910
+
+
+
+context:
+on websocket for user: 8d69b9e0-4ebb-4007-a6db-667ea310fb0e@example.com
+
+Set WIRE_INTEGRATION_TEST_VERBOSITY=1 if you want to see complete trace of the HTTP traffic in curl pseudo-syntax.
+</failure></testcase><testcase name="Events.testChannelKilled" time="3.056418684" /><testcase name="Events.testChannelLimit" time="2.27924516" /><testcase name="Events.testConsumeEventsAckNewEventWithoutAckingOldOne" time="62.178931472" /><testcase name="Events.testConsumeEventsAcks" time="61.915062739" /><testcase name="Events.testConsumeEventsForDifferentUsers" time="125.350649863" /><testcase name="Events.testConsumeEventsMultipleAcks" time="62.15267105" /><testcase name="Events.testConsumeEventsOneWebSocket" time="121.416148325" /><testcase name="Events.testConsumeEventsWhileHavingLegacyClients" time="62.208090817" /><testcase name="Events.testConsumeTempEvents" time="182.806512983" /><testcase name="Events.testEndOfInitialSync" time="180.259129448" /><testcase name="Events.testEndOfInitialSyncAckMultiple" time="3.234089675" /><testcase name="Events.testEndOfInitialSyncIgnoreExpired" time="4.763086593" /><testcase name="Events.testEndOfInitialSyncMoreEventsAfterSyncMessage" time="5.725892158" /><testcase name="Events.testEventsDeadLettered" time="65.080544384" /><testcase name="Events.testEventsDeadLetteredWithReconnect" time="65.184806113" /><testcase name="Events.testEventsForSpecificClients" time="125.310759857" /><testcase name="Events.testPrefetchCount" time="52.213959733" /><testcase name="Events.testSendMessageNoReturnToSenderWithConsumableNotificationsProteus" time="62.810727337" /><testcase name="Events.testSingleConsumer" time="243.132392869" /><testcase name="Events.testTemporaryQueuesAreDeletedAfterUse" time="121.342052907"><failure>assertion failure:
+Actual:
+[
+    {
+        &quot;name&quot;: &quot;cells_events&quot;,
+        &quot;vhost&quot;: &quot;d3.example.com&quot;
+    },
+    {
+        &quot;name&quot;: &quot;dead-user-notifications&quot;,
+        &quot;vhost&quot;: &quot;d3.example.com&quot;
+    },
+    {
+        &quot;name&quot;: &quot;user-notifications.5544cef7-8b7c-4ddd-90d0-1377b400cacc.e0a042745cc32868&quot;,
+        &quot;vhost&quot;: &quot;d3.example.com&quot;
+    }
+]
+Expected:
+[
+    {
+        &quot;name&quot;: &quot;background-jobs&quot;,
+        &quot;vhost&quot;: &quot;d3.example.com&quot;
+    },
+    {
+        &quot;name&quot;: &quot;cells_events&quot;,
+        &quot;vhost&quot;: &quot;d3.example.com&quot;
+    },
+    {
+        &quot;name&quot;: &quot;dead-user-notifications&quot;,
+        &quot;vhost&quot;: &quot;d3.example.com&quot;
+    },
+    {
+        &quot;name&quot;: &quot;user-notifications.5544cef7-8b7c-4ddd-90d0-1377b400cacc.e0a042745cc32868&quot;,
+        &quot;vhost&quot;: &quot;d3.example.com&quot;
+    }
+]
+Diff:
+[
+    {
+        &quot;op&quot;: &quot;add&quot;,
+        &quot;path&quot;: &quot;/0&quot;,
+        &quot;value&quot;: {
+            &quot;name&quot;: &quot;background-jobs&quot;,
+            &quot;vhost&quot;: &quot;d3.example.com&quot;
+        }
+    }
+]
+
+call stack: 
+1. assertFailure at test/Testlib/Assertions.hs:123
+
+2. shouldMatchWithMsg at test/Testlib/Assertions.hs:92
+
+3. shouldMatch at test/Testlib/Assertions.hs:253
+
+4. shouldMatchSet at test/Test/Events.hs:184
+
+
+
+Set WIRE_INTEGRATION_TEST_VERBOSITY=1 if you want to see complete trace of the HTTP traffic in curl pseudo-syntax.
+</failure></testcase><testcase name="Events.testTransientEvents" time="72.443687623" /><testcase name="Events.testTransientEventsDoNotTriggerDeadLetters" time="112.043218924" /><testcase name="Events.testTypingIndicatorIsNotSentToOwnClient[federated=false]" time="133.388270223" /><testcase name="Events.testTypingIndicatorIsNotSentToOwnClient[federated=true]" time="233.168880356" /><testcase name="Events.testWebSocketTimeout" time="2.754796107" /><testcase name="MLS.Notifications.testNotificationPagination" time="1.153653039" /><testcase name="MLS.Notifications.testNotificationPaginationOversizeSince" time="1.158680739" /><testcase name="Notifications.testAddClientNotification" time="0.559373702" /><testcase name="Notifications.testBulkPushSameMessage" time="3.055724383" /><testcase name="Notifications.testFetchAllNotifications" time="0.03661782" /><testcase name="Notifications.testGetServerTime" time="0.019071398" /><testcase name="Notifications.testInvalidNotification" time="0.004602696" /><testcase name="Notifications.testLastNotification" time="0.015171232" /><testcase name="Notifications.testTargetClientPush" time="2.031770037" /><testcase name="PushToken.testRegisterPushToken" time="0.260189234" /><testcase name="PushToken.testVoipTokenRegistrationFails" time="0.022270536" /></testsuite></testsuites>
