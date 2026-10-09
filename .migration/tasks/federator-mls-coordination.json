@@ -4,9 +4,9 @@
   "title": "Coordinate MLS peer regression repair before worker qualification",
   "service": "framework",
   "kind": "framework",
-  "status": "queued",
-  "owner": null,
-  "branch": null,
+  "status": "active",
+  "owner": "codex",
+  "branch": "go-migration",
   "depends_on": [
     "background-worker-inventory-gate"
   ],
