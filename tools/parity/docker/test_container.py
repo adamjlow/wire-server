@@ -88,6 +88,11 @@ class ContainerTests(unittest.TestCase):
             self.assertIn('PushToken.testVoipTokenRegistrationFails',names)
         finally:runner.CATALOGUE=original
 
+    def test_targeted_profiles_keep_full_worker_catalogue_and_name_original_cases(self):
+        self.assertEqual(['Migration.Conversation.testMigrationToPostgresMLS'],runner.names('background-worker-mls'))
+        self.assertEqual({'Migration.User.testUserMigrationToPostgres','Migration.User.testReindexingUsersDuringMigration'},set(runner.names('background-worker-users')))
+        self.assertEqual(47,len(runner.names('background-worker')))
+
     def test_persistent_tunnel_survives_idle_polls_and_preserves_half_close(self):
         class Echo(socketserver.BaseRequestHandler):
             def handle(self):

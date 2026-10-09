@@ -41,5 +41,5 @@
   ],
   "evidence": [],
   "review": null,
-  "handoff": "Run original Haskell baseline and inspect actual Arbiter queue/schema plus uncovered wire/storage behavior. Keep finite acceptance, then claim an early runnable Go slice; no notification-only completion."
+  "handoff": "Contract active. Initial mixed45/47, corrected all-Haskell45/47, corrected mixed46/47 retained with cleanup0. DNS fixture/private-network gap fixed. MLS only fails with five Go peers so isolate original MLS using new targeted profile; all-Haskell targeted users profile resolves its setup/search failures. Do not publish contract/compatibility until actual required cases are proved; next early Go slice follows protected gate."
 }

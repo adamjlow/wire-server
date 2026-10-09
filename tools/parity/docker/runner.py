@@ -18,6 +18,11 @@ SERVICES = ('brig','brig-index','brig-schema','cannon','cargohold','federator','
 
 
 def names(service):
+    if service in ('background-worker-mls','background-worker-users'):
+        selected = ('Migration.Conversation.testMigrationToPostgresMLS',) if service=='background-worker-mls' else ('Migration.User.testUserMigrationToPostgres','Migration.User.testReindexingUsersDuringMigration')
+        available=set(names('background-worker'))
+        if not set(selected).issubset(available):raise ValueError('targeted original cases absent from catalogue')
+        return list(selected)
     catalogue = Path(__file__).with_name(service+'-tests.json') if service in ('gundeck','federator','background-worker') else CATALOGUE
     groups = json.loads(catalogue.read_text())['services']
     if service not in groups:
@@ -115,7 +120,7 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__)
     sub=parser.add_subparsers(dest='command',required=True)
     sub.add_parser('preflight')
-    environment=sub.add_parser('environment');environment.add_argument('--service',choices=('proxy','cargohold','cannon','gundeck','proxy-cargohold','proxy-cargohold-cannon','proxy-cargohold-cannon-gundeck','gundeck-reference','federator','proxy-cargohold-cannon-gundeck-federator','background-worker','proxy-cargohold-cannon-gundeck-federator-background-worker'),required=True);environment.add_argument('--candidate',type=Path)
+    environment=sub.add_parser('environment');environment.add_argument('--service',choices=('proxy','cargohold','cannon','gundeck','proxy-cargohold','proxy-cargohold-cannon','proxy-cargohold-cannon-gundeck','gundeck-reference','federator','proxy-cargohold-cannon-gundeck-federator','background-worker','background-worker-mls','background-worker-users','proxy-cargohold-cannon-gundeck-federator-background-worker'),required=True);environment.add_argument('--candidate',type=Path)
     environment.add_argument('--peer-candidate', nargs=2, action='append', default=[], metavar=('SERVICE','BINARY'))
     listing=sub.add_parser('list');listing.add_argument('--service',choices=('proxy','cargohold','cannon','gundeck','federator','background-worker'),required=True)
     running=sub.add_parser('suite');running.add_argument('--service',choices=('proxy','cargohold','cannon','gundeck','federator','background-worker'),required=True)
