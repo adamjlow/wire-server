@@ -4,9 +4,9 @@
   "title": "Freeze whole background-worker contract and original Haskell baseline",
   "service": "background-worker",
   "kind": "contract-change",
-  "status": "queued",
-  "owner": null,
-  "branch": null,
+  "status": "active",
+  "owner": "codex",
+  "branch": "go-migration",
   "depends_on": [
     "background-worker-inventory",
     "background-worker-inventory-gate"
