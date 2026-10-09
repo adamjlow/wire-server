@@ -251,3 +251,12 @@ storage/concurrency/rollback effects, with all owned resources removed. No fresh
 Haskell reaper execution or full scheduled claim. Reaper/schema components remain
 unstarted until scheduled runtime exists. Next cron and adminless/meetings domain
 handlers, then runtime/startup/drain and the declared whole-service qualification.
+
+Cron persisted storage now preserves native default/override and queue-healing
+semantics, five-minute manual requests, transactional claims, monotone minute/manual
+watermarks and advisory leadership. [Exact construction receipts](../../../go/services/background-worker/evidence/scheduled-cron-storage-20261009/)
+retain full passing Go checks and actual isolated PostgreSQL effects/rollback/lock
+checks with owned cleanup. Schedule parsing, dedup insertion and runtime remain
+unimplemented; these functions are not started. Next finish cron and domain handlers,
+then the existing full-service acceptance. No original assertion/schema/default
+change or broad parity claim.

@@ -1,0 +1,45 @@
+{
+  "base_revision": "1385c4982b063c18dfbfa804551af16ddab38837",
+  "source_inputs_sha256": "dd897474497db48f142fa9d154dce2fa42281d377af926d10e328148761b89e8",
+  "binary_sha256": "8d5670028fec80535a4470e78c2321673b5d885cafeba68ba91fb3b5b3c418e5",
+  "build_info": {
+    "GoVersion": "go1.26.9",
+    "Path": "github.com/adamjlow/wire-server/go/services/background-worker.test",
+    "Main": {
+      "Path": "github.com/adamjlow/wire-server/go/services/background-worker",
+      "Version": "(devel)"
+    },
+    "Settings": [
+      {
+        "Key": "-buildmode",
+        "Value": "exe"
+      },
+      {
+        "Key": "-compiler",
+        "Value": "gc"
+      },
+      {
+        "Key": "-tags",
+        "Value": "schemacheck"
+      },
+      {
+        "Key": "CGO_ENABLED",
+        "Value": "0"
+      },
+      {
+        "Key": "GOARCH",
+        "Value": "amd64"
+      },
+      {
+        "Key": "GOOS",
+        "Value": "linux"
+      },
+      {
+        "Key": "GOAMD64",
+        "Value": "v1"
+      }
+    ]
+  },
+  "command": "CGO_ENABLED=0 GOTOOLCHAIN=local GOWORK=off go test -c -tags schemacheck -o CACHE/scheduled-cron-check",
+  "identity_scope": "Declared construction inputs, not a clean final service artifact"
+}

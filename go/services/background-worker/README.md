@@ -23,7 +23,7 @@ member status/subconversation/MLS-history copy and source cleanup/ledger orderin
 
 PostgreSQL scheduled adminless/meetings workers remain disconnected. Claim,
 heartbeat, retry, acknowledgement and native schema bootstrap components exist;
-reaper storage exists; scheduled runtime, cron and domain handlers remain
+reaper and cron storage exist; scheduled runtime, cron parsing/insertion and domain handlers remain
 unfinished. Actual user and other
 migration families and scheduled database effects remain unqualified. This state
 must not be selected for a deployment. Final acceptance remains the whole service
@@ -66,6 +66,12 @@ The five scheduled reaper operations passed an isolated Docker PostgreSQL check,
 including lease guards, tree-DLQ snapshots/parent resume, shared gate exclusion and
 timeout rollback. [Exact receipts](evidence/scheduled-reaper-20261009/) cover this
 storage construction. The reaper is not started until scheduled runtime exists.
+
+Cron storage passed an isolated PostgreSQL check for operator override retention,
+queue healing, manual-request expiry/claim rollback, monotone watermarks and
+transaction-scoped leadership. [Exact receipts](evidence/scheduled-cron-storage-20261009/)
+cover these storage rules; schedule parsing, job insertion and scheduler runtime
+remain unfinished.
 
 The unchanged original Haskell MLS migration test passed1/1 on source
 309733bb48febdb8708e6b1c5aadb94cb03fe8ab with only Go worker/Haskell peers.

@@ -1,0 +1,9 @@
+{
+  "arbiter_revision": "b9c57eb1f8277d97616aa449bea471fe9ce14eda",
+  "sha256": {
+    "arbiter-core/src/Arbiter/Core/Sql/Cron.hs": "532da8aebd843f0779cf3e8c4c23a7f236d2f0affc90ab9b7dc75e4fb3e7f98e",
+    "arbiter-core/src/Arbiter/Core/CronSchedule.hs": "5e348bfdcb30a11e7da213fc5c8566f465e0b76030061b63214ea2e569213fa0",
+    "arbiter-core/src/Arbiter/Core/Codec.hs": "edb69180fbe4a6e9ceff317a7d86b318ca8cb49ba6910dcb794ef6433897994e",
+    "arbiter-core/src/Arbiter/Core/Job/Schema.hs": "51ceb20bb52cfb8f584e85b156c46018795a5bff34b756af59a21bb2e12df525"
+  }
+}
