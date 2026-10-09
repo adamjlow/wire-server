@@ -259,3 +259,12 @@ notice is retained for eventual binary/image distribution. SSO and related CQL
 reads, handle claims, complete user construction and parallel locked runtime scan
 are unfinished; the user migration flag still rejects startup. Actual DB effects
 and final E2E/operations/switchback remain unrun.
+
+The migration engine now supports native bounded per-page concurrency for the
+unfinished user and conversation scans. It finishes and joins each page before
+fetching another, cancels and joins siblings on fatal errors, and retains full
+rescans after caught PG/lock errors. The five connected migration families remain
+sequential. Full Go checks and focused concurrency/failure tests pass for module
+evidence/parallel-migrations-20261009 inputs. Neither unfinished migration is
+enabled by this checkpoint; SSO/related user reads and full conversation storage
+migration are still required. Actual DB and final qualification remain unrun.

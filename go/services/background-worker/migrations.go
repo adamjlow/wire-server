@@ -5,7 +5,10 @@ import (
 	"context"
 	"errors"
 	"math"
+	"sync/atomic"
 	"time"
+
+	"golang.org/x/sync/errgroup"
 )
 
 type migrationOptions struct {
@@ -69,6 +72,8 @@ type migrationPhase struct {
 	page  migrationPage
 	write migrationWrite
 	timed bool
+	// Only user and conversation migrations use the native per-page pool.
+	parallel bool
 }
 
 func (s *Service) migrateRows(ctx context.Context, name string, page migrationPage, write migrationWrite) error {
@@ -97,40 +102,11 @@ func (s *Service) migratePhases(ctx context.Context, name string, phases []migra
 				if err != nil {
 					return err
 				}
-				for _, row := range rows {
-					start := time.Now()
-					attempt, cancel := ctx, func() {}
-					if phase.timed {
-						attempt, cancel = context.WithTimeout(ctx, time.Duration(opts.Timeout))
-					}
-					counted, err := phase.write(attempt, row)
-					attemptErr := attempt.Err()
-					cancel()
-					if ctx.Err() != nil {
-						return ctx.Err()
-					}
-					if phase.timed && errors.Is(attemptErr, context.DeadlineExceeded) {
-						s.observeMigration(name, "timeout", time.Since(start))
-						// Native MigrationTimedOut is fatal until process restart.
-						return errors.New("migration row timed out")
-					}
-					if err != nil {
-						if phase.timed {
-							s.observeMigration(name, "error", time.Since(start))
-						}
-						var usage *postgresOperationError
-						var lockTimeout *migrationLockTimeout
-						if !errors.As(err, &usage) && !errors.As(err, &lockTimeout) {
-							return err
-						}
-						rowErrors++
-					} else if counted {
-						if phase.timed {
-							s.observeMigration(name, "success", time.Since(start))
-						}
-						s.migrationMetric(name, func(m *migrationMetrics) { m.migrated++ })
-					}
+				caught, err := s.migratePage(ctx, name, phase, rows, opts)
+				if err != nil {
+					return err
 				}
+				rowErrors += caught
 				if len(next) == 0 {
 					break
 				}
@@ -144,4 +120,87 @@ func (s *Service) migratePhases(ctx context.Context, name string, phases []migra
 		// Native rescans every phase after any caught PG/lock errors. Successful
 		// copies are safe to upsert again; neither phase alone means finished.
 	}
+}
+
+// Finish the entire current page before fetching another. Fatal errors cancel
+// sibling operations and wait for their cleanup; caught PG/lock errors allow
+// the rest of the page to finish before the full scan is repeated.
+func (s *Service) migratePage(ctx context.Context, name string, phase migrationPhase, rows []migrationRow, opts migrationOptions) (int, error) {
+	if !phase.parallel {
+		caught := 0
+		for _, row := range rows {
+			retry, err := s.migrateRow(ctx, name, phase, row, opts)
+			if err != nil {
+				return caught, err
+			}
+			if retry {
+				caught++
+			}
+		}
+		return caught, nil
+	}
+	workers := min(opts.Parallelism, len(rows))
+	group, attempt := errgroup.WithContext(ctx)
+	var next, caught atomic.Int64
+	for range workers {
+		group.Go(func() error {
+			for {
+				if err := attempt.Err(); err != nil {
+					return err
+				}
+				i := next.Add(1) - 1
+				if i >= int64(len(rows)) {
+					return nil
+				}
+				retry, err := s.migrateRow(attempt, name, phase, rows[i], opts)
+				if err != nil {
+					return err
+				}
+				if retry {
+					caught.Add(1)
+				}
+			}
+		})
+	}
+	err := group.Wait()
+	return int(caught.Load()), err
+}
+
+func (s *Service) migrateRow(ctx context.Context, name string, phase migrationPhase, row migrationRow, opts migrationOptions) (caught bool, err error) {
+	if err := ctx.Err(); err != nil {
+		return false, err
+	}
+	start := time.Now()
+	attempt, cancel := ctx, func() {}
+	if phase.timed {
+		attempt, cancel = context.WithTimeout(ctx, time.Duration(opts.Timeout))
+	}
+	counted, err := phase.write(attempt, row)
+	attemptErr := attempt.Err()
+	cancel()
+	if ctx.Err() != nil {
+		return false, ctx.Err()
+	}
+	if phase.timed && errors.Is(attemptErr, context.DeadlineExceeded) {
+		s.observeMigration(name, "timeout", time.Since(start))
+		return false, errors.New("migration row timed out")
+	}
+	if err != nil {
+		if phase.timed {
+			s.observeMigration(name, "error", time.Since(start))
+		}
+		var usage *postgresOperationError
+		var lockTimeout *migrationLockTimeout
+		if errors.As(err, &usage) || errors.As(err, &lockTimeout) {
+			return true, nil
+		}
+		return false, err
+	}
+	if counted {
+		if phase.timed {
+			s.observeMigration(name, "success", time.Since(start))
+		}
+		s.migrationMetric(name, func(m *migrationMetrics) { m.migrated++ })
+	}
+	return false, nil
 }
