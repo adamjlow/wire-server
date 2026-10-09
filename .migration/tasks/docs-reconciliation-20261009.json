@@ -4,7 +4,7 @@
   "title": "Reconcile migration entry docs and prepare background-worker goal",
   "service": "framework",
   "kind": "framework",
-  "status": "active",
+  "status": "done",
   "owner": "codex",
   "branch": "go-migration",
   "depends_on": [
@@ -38,7 +38,25 @@
       "required_evidence": "Source-grounded scope including jobs/migrations, original-test reuse and finite contract/security/operations/storage-switchback acceptance; no premature test coverage claim."
     }
   ],
-  "evidence": [],
-  "review": null,
-  "handoff": ""
+  "evidence": [
+    {
+      "criterion": "docs",
+      "result": "pass",
+      "command": "Review scoped entry docs against current records/Go1.26.9 original77/image evidence, preserve history/proxy limitation/authorization boundaries; source-grounded full background-worker plan.48 relative links, migration32 tests, scope/diff checks pass. Separate legacy root-harness README/compiler-pin follow-up identified and retained before goal creation.",
+      "revision": "b7c4630cd61cf608cb2de42172af83d25d830e58",
+      "artifact": ".migration/reviews/docs-reconciliation-20261009.md"
+    },
+    {
+      "criterion": "next",
+      "result": "pass",
+      "command": "Review scoped entry docs against current records/Go1.26.9 original77/image evidence, preserve history/proxy limitation/authorization boundaries; source-grounded full background-worker plan.48 relative links, migration32 tests, scope/diff checks pass. Separate legacy root-harness README/compiler-pin follow-up identified and retained before goal creation.",
+      "revision": "b7c4630cd61cf608cb2de42172af83d25d830e58",
+      "artifact": ".migration/reviews/docs-reconciliation-20261009.md"
+    }
+  ],
+  "review": {
+    "by": "codex (self-review delegated by user)",
+    "artifact": ".migration/reviews/docs-reconciliation-20261009.md"
+  },
+  "handoff": "Claimed entry-doc reconciliation complete. Finish legacy tools/parity guide/compiler-pin follow-up, then create user-requested whole background-worker goal; no extra service tests, default changes or exceptions."
 }
