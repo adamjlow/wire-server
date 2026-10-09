@@ -2,7 +2,7 @@
   "schema_version": 1,
   "service": "federator",
   "reference_path": "services/federator",
-  "stage": "verified",
+  "stage": "available",
   "oracle_paths": [
     "services/federator",
     "docs/go-migration/services/federator/contract.md",
@@ -29,6 +29,9 @@
     ],
     "rollback": [
       "federator-verification"
+    ],
+    "selection": [
+      "federator-selection"
     ]
   },
   "compatibility": {

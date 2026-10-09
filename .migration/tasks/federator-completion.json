@@ -4,7 +4,7 @@
   "title": "Federator completion",
   "service": "framework",
   "kind": "framework",
-  "status": "active",
+  "status": "done",
   "owner": "codex",
   "branch": "go-migration",
   "depends_on": [
@@ -23,7 +23,18 @@
       "required_evidence": "Final exact source845956f6/binaryfbe1d6d6 original77 five-Go with Haskell peers, frozen35, pinned Go1.26.9 security/quality, real whole-process Haskell/Go/Haskell switchback and loaded drain, identical-binary nonroot image/default/fail-closed actual Helm render. Retain failures/aborts/unrun native checks and old-peer security follow-up; delegated same-author review and scoped adjacent gate publication."
     }
   ],
-  "evidence": [],
-  "review": null,
-  "handoff": ""
+  "evidence": [
+    {
+      "criterion": "gates",
+      "result": "pass",
+      "command": "Publish legal implementing->verified->available adjacent commits after completed exact-candidate verification/selection, full scoped transitions checked. Original77/frozen35/quality/security/nonroot image/Helm/switchback/drain retained in delegated review, no defaults/production/push change.",
+      "revision": "845956f630b791645a9c12d23918d8c9c3bc7507",
+      "artifact": "go/services/federator/REVIEW.md"
+    }
+  ],
+  "review": {
+    "by": "codex (self-review delegated by user)",
+    "artifact": "go/services/federator/REVIEW.md"
+  },
+  "handoff": "Optional federator available for finite qualified contract. Haskell stays supported/default. Earlier four Go artifacts need patched rebuild/requalification before production; no extra speculative tests or remote/production actions."
 }
