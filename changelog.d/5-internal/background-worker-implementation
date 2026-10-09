@@ -5,3 +5,4 @@ Construct native scheduled schema/reaper and cron parsing, insertion and schedul
 Construct native meetings selection, code-mode routing and cleanup orchestration; scheduled integration remains unfinished.
 Decode required meetings cleanup configuration and preserve canonical cron defaults and native fixed-point retention/SQL timestamp arithmetic.
 Construct unchecked conversation deletion with native MLS/history/proposal/code/team routing and limited original-schema PostgreSQL evidence; adminless and whole scheduled runtime remain unfinished.
+Construct source adminless decisions and team-scan/local-promotion stores, reusing original selection vectors; concrete feature/account/notification/scheduling adapters and runtime remain unfinished.

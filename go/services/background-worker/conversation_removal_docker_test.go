@@ -60,6 +60,26 @@ func TestConversationRemovalDockerStorage(t *testing.T) {
 	exec(`INSERT INTO conversation(id,type,protocol) VALUES($1::uuid,0,1),($2::uuid,0,1)`, id, untouched)
 	exec(`INSERT INTO conversation_member(conv,"user") VALUES($1::uuid,$2::uuid)`, id, untouched)
 	exec(`INSERT INTO local_conversation_remote_member(conv,user_remote_domain,user_remote_id) VALUES($1::uuid,'synthetic.example',$2::uuid)`, id, untouched)
+	// Adminless conversation adapters use these same native tables.
+	exec(`UPDATE conversation SET team=$1::uuid WHERE id=$1::uuid`, id)
+	admin := adminlessConversationStore{Data: scheduledRemovalStore{Postgres: store, Location: storagePostgres}, Domain: "wire.com"}
+	ids, err := admin.TeamConversations(ctx, id)
+	if err != nil || !reflect.DeepEqual(ids, []string{id}) {
+		t.Fatalf("team scan %v: %v", ids, err)
+	}
+	if err := admin.Promote(ctx, &storedConversation{ID: id}, qualifiedUser{ID: untouched, Domain: "wire.com"}); err != nil {
+		t.Fatal(err)
+	}
+	var role string
+	if err := conn.QueryRow(ctx, `SELECT conversation_role FROM conversation_member WHERE conv=$1::uuid AND "user"=$2::uuid`, id, untouched).Scan(&role); err != nil || role != "wire_admin" {
+		t.Fatal("promotion not stored")
+	}
+	if err := admin.Promote(ctx, &storedConversation{ID: id}, qualifiedUser{ID: untouched, Domain: "remote.example"}); err == nil {
+		t.Fatal("remote promotion accepted on local adapter")
+	}
+	if err := admin.Promote(ctx, &storedConversation{ID: id}, qualifiedUser{ID: id, Domain: "wire.com"}); err != nil {
+		t.Fatal("missing-member SQL update changed source no-op")
+	}
 	for _, g := range []string{"main", "a", "z", "unrelated"} {
 		exec(`INSERT INTO mls_group_member_client(group_id,user_domain,"user",client,leaf_node_index,removal_pending) VALUES($1,'synthetic.example',$2::uuid,'synthetic',1,false)`, []byte(g), id)
 		exec(`INSERT INTO mls_history_client(group_id,id,leaf_node_index,removal_pending) VALUES($1,$2::uuid,1,false)`, []byte(g), id)
@@ -104,5 +124,5 @@ func TestConversationRemovalDockerStorage(t *testing.T) {
 	if err := state.DeleteConversationState(ctx, id, nil); err != nil {
 		t.Fatal(err)
 	}
-	t.Log("readonly native DDL: typed sub-row rejection, sorted MLS/history deletion, code isolation, conversation FK cascade and idempotent state deletion pass; read and Cassandra proposal callbacks stubbed, no service/cross-store claim")
+	t.Log("readonly native DDL: adminless team scan/local promotion and guards, typed sub-row rejection, sorted MLS/history deletion, code isolation, conversation FK cascade and idempotent state deletion pass; read and Cassandra proposal callbacks stubbed, no service/cross-store claim")
 }

@@ -1,0 +1,18 @@
+{
+  "services/background-worker/src/Wire/AdminlessJobsWorker.hs": "7db8930d4042c0f2a1996faf97b8db9e3c750b218f5fa48550132eda1ab2ebe2",
+  "libs/wire-subsystems/src/Wire/ConversationSubsystem/Update.hs": "e44ed8a2f09c9a48647f506a872ba9d09d7da29283108d4131efdb02a20d2a82",
+  "libs/wire-subsystems/src/Wire/ConversationSubsystem/AdminlessGroups.hs": "9a1f531ba7d441752615253e3dcbf9c33a04afc9a188f5231d51cc053db7d1eb",
+  "libs/wire-subsystems/test/unit/Wire/ConversationSubsystem/AdminlessGroupsSpec.hs": "c7590a309e9fdefdd254ddf1636ecde40723068cbc17fbccebae5fc82f5a2112",
+  "libs/wire-subsystems/src/Wire/FederationAPIAccess.hs": "b80e3a1ae416c17d9830f2b79f10f00ad151e056b60ea45d8d57e42be228edbd",
+  "libs/wire-subsystems/src/Wire/FederationAPIAccess/Interpreter.hs": "a7596d04767e6f195a7c059fb446d4605e9c9ca56bdb415b9944855f61abc736",
+  "libs/wire-subsystems/src/Wire/ConversationStore/Cassandra.hs": "284c0bad445481d1e1ae8562fedb60bbf2263541f7378904ac529ecfbce90170",
+  "libs/wire-subsystems/src/Wire/ConversationStore/Cassandra/Queries.hs": "f07808a480c3e6a6f52a17b940f633f3675145582fff6985fa013bb8f4e50bbd",
+  "libs/wire-subsystems/src/Wire/ConversationStore/Postgres.hs": "3a3ffcb34be152246c9ac47ee9c02a5849318ae1af5d17bef99b375119714be0",
+  "libs/wire-subsystems/src/Wire/BrigAPIAccess/Rpc.hs": "37df94a4402176938dd8cb363c9727107f6acbab3ff12d86c465455777b47121",
+  "libs/wire-api/src/Wire/API/Team/Feature.hs": "4816fcd2e956984982636f0449dd4e3f7dba9ecaef1a6516dbfd506e0cf079c7",
+  "libs/wire-subsystems/src/Wire/JobSubsystem/Interpreter.hs": "550ac08283ce59a36fe445948abfd67b46b17385b521b7ca0bbbdc93f4b6b619",
+  "libs/wire-subsystems/postgres-migrations/20250908142515-create-conversation-tables.sql": "6b8e9c3c1dad70bdc73dcad50faf8a4c7f9d27693db76a8d7e7e66cd11491db5",
+  "libs/wire-subsystems/postgres-migrations/20260507162106-history_client.sql": "57b04d1f1f231a4899005a6bbedbea259ea5eeb7d972119eaaee450a4b4b2acf",
+  "libs/wire-subsystems/postgres-migrations/20260115150600-conversation-codes.sql": "aa7ca22fb3121ecf14677db1787c1870fb4865f0e4dbda124f6e106da35e6f47",
+  "libs/wire-subsystems/postgres-migrations/20260619120000-conversation-codes-target.sql": "909e7db41180f2f5f74f40d054005078e2bc65ee8f77767cd0962d4d256206d3"
+}

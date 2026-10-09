@@ -306,3 +306,17 @@ handlers and whole scheduled runtime/NOTIFY/metrics/startup/drain; unchanged fin
 original47/six-Go124, unresolved users2 SCIM500, operations/durable switchback,
 optional image/selector and whole-service review remain mandatory. Goal/task
 active, Haskell supported/default, no candidate availability or compatibility.
+
+Adminless setup/deletion/reminder domain decisions and concrete team scans/local
+promotion are constructed with source guards, Brig eligibility, original selection
+vectors, native role-write/notification order and per-job remote capability cache.
+Direct system deletion checks eight backends concurrently and treats federation
+failures as unsupported; user deletion/reminders retain their distinct gates.
+[Exact construction evidence](../../../go/services/background-worker/evidence/adminless-core-20261009/)
+retains full Go checks and actual native-schema PostgreSQL team/promotion/deletion
+proof. Pure original selection vectors are reused in candidate tests, not freshly
+executed Haskell tests. Real feature/account/notification/scheduling adapters and
+scheduled service integration remain unfinished. Inherited role-write-before-
+notification retry can skip remaining notifications/promotions after an error;
+preserve source behavior and record a separate outbox/transaction improvement.
+Next complete those adapters and runtime, then unchanged whole-service acceptance.

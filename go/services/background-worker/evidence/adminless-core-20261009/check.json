@@ -1,0 +1,10 @@
+{
+  "base_revision": "4be2bda67ab00c5f1ff767a3440ec6966c4fc940",
+  "command": "GOTOOLCHAIN=local GOWORK=off python3 go/check.py background-worker",
+  "compiler": "Go1.26.9",
+  "exit_code": 0,
+  "result": "pass",
+  "inputs_sha256": "4214339772578896f0f92d6c13be89956f6e47bd962908b914a1b23339deb03a",
+  "previous_goal_turn": "progress: committed unchecked removal and actual PostgreSQL evidence",
+  "remaining": "Real feature/account/notification/scheduling adapters; Cassandra effects/native execution/scheduled integration/final whole-service qualification remain outstanding"
+}

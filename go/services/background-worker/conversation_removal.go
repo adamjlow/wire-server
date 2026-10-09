@@ -46,6 +46,14 @@ func (s scheduledConversationRemoval) DeleteLocalConversationUnchecked(ctx conte
 	if conv == nil {
 		return errors.New("conversation not found during removal")
 	}
+	return s.removeSnapshot(ctx, conv)
+}
+
+// Adminless deletion already read its snapshot and removes that same value.
+func (s scheduledConversationRemoval) removeSnapshot(ctx context.Context, conv *storedConversation) error {
+	if s.State == nil || conv == nil {
+		return errors.New("conversation removal snapshot unavailable")
+	}
 	// Every supported protocol allows ConversationDelete. No authorization or
 	// notifications occur on this source unchecked path.
 	group, ok := conv.Metadata["group_id"].([]byte)
