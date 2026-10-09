@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "id": "go-patched-publication-20261009",
+  "title": "Publish exact current patched Go artifact compatibility",
+  "service": "framework",
+  "kind": "framework",
+  "status": "queued",
+  "owner": null,
+  "branch": null,
+  "depends_on": [
+    "proxy-patch-verification-20261009",
+    "cargohold-patch-verification-20261009",
+    "cannon-patch-verification-20261009",
+    "gundeck-patch-verification-20261009"
+  ],
+  "write_paths": [
+    ".migration/tasks/go-patched-publication-20261009.json",
+    "go/README.md",
+    ".migration/services/cargohold.json",
+    ".migration/services/cannon.json",
+    ".migration/services/gundeck.json"
+  ],
+  "plan": "docs/go-migration/plans/go-patched-rebuild-20261009.md",
+  "acceptance_criteria": [
+    {
+      "id": "records",
+      "description": "Renew cleared compatibility with exact patched candidates and preserve immutable historical gates/defaults.",
+      "required_evidence": "New done matching service verification tasks/candidatec1120238f; preserve historical gates and federator845 unchanged, proxy stage/GC limitation unchanged. Static migration/scope/test checks and clean worktree; central current artifact link."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": ""
+}

@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "id": "cargohold-patch-verification-20261009",
+  "title": "cargohold patched artifact verification",
+  "service": "cargohold",
+  "kind": "verification",
+  "status": "queued",
+  "owner": null,
+  "branch": null,
+  "depends_on": [
+    "go-patched-rebuild-20261009"
+  ],
+  "write_paths": [
+    ".migration/tasks/cargohold-patch-verification-20261009.json"
+  ],
+  "plan": "docs/go-migration/plans/go-patched-rebuild-20261009.md",
+  "acceptance_criteria": [
+    {
+      "id": "patch",
+      "description": "Verify exact security-patched image and finite functional interoperability without changing original service scope.",
+      "required_evidence": "Go1.26.9 quality/security/license/race checks, clean sourcec1120238f exact image/extracted-binary receipt, actual image lifecycle/default health, original77 five patched services/Haskell peers with exact selections/no skips/errors/process0/cleanup0. Historical unchanged contracts/storage/selector proofs reused; proxy formal GC diagnostic limitation remains."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": ""
+}
