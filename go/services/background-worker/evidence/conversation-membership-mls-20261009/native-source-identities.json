@@ -1,0 +1,11 @@
+{
+  "libs/wire-subsystems/src/Wire/ConversationStore/Migration.hs": "2e0196de2a7d81683286e920b167bd4958cb1b8193ded832afd61fadff04714f",
+  "libs/wire-subsystems/src/Wire/ConversationStore/Migration/Cleanup.hs": "222a0934eafac5816397473a530b28b10af083f544ab931a76b5b73c33f3cfa0",
+  "libs/wire-subsystems/src/Wire/ConversationStore/Cassandra.hs": "284c0bad445481d1e1ae8562fedb60bbf2263541f7378904ac529ecfbce90170",
+  "libs/wire-subsystems/src/Wire/ConversationStore/Cassandra/Queries.hs": "f07808a480c3e6a6f52a17b940f633f3675145582fff6985fa013bb8f4e50bbd",
+  "libs/wire-subsystems/src/Wire/ConversationStore/MLS/Types.hs": "fbb9238aa2dec5ccbe86080f95a0f73c2e624952594fcc7c2421f2164446f42a",
+  "libs/wire-subsystems/src/Wire/ConversationStore/Postgres.hs": "3a3ffcb34be152246c9ac47ee9c02a5849318ae1af5d17bef99b375119714be0",
+  "libs/types-common/src/Data/Id.hs": "5232b5fd31871fd408912e769393e52dd7caccb5504edcc2fc3f876a46fd20e8",
+  "libs/types-common/src/Data/Domain.hs": "491b52e25c929850336915f4e3884b71289c81b5c5c22c66eec2eeaf2b223219",
+  "libs/types-common/src/Data/Qualified.hs": "598b8daa0395e3a41230519e0951a55984bf51b65a3439cf1aa3feaa586a22ef"
+}

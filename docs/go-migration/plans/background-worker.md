@@ -289,3 +289,15 @@ but never enables migration either. Thus neither assertion validates the newly
 connected user DB path; actual effects remain unproved. Module evidence/user-original-20261009
 retains exact receipts/XML and this limitation. Resolve the pre-enable failure;
 final original47 includes further user migration cases and remains mandatory.
+
+Conversation migration construction now includes the independent remote-member
+loop: native1001/1000 cursor scan/current status rereads/domain pool8, typed nullable
+status defaults and folded domains, ReadCommitted PG copy plus pending-delete
+ledger, exclusive UUID lock/row timeout, x5 CQL deletion and ledger completion after
+lock release. MLS client/history lookup and source ClientMap/IndexMap filtering
+are constructed, including native history precedence and active-identity pending
+state. Full Go checks/focused cursor/lock/failure/SQL/MLS tests pass for module
+evidence/conversation-membership-mls-20261009 inputs. Actual effects remain unrun;
+these components are not started until the complete local conversation/member/
+subconversation/group-state copy and cleanup are connected. Conversation flag
+still rejects startup; scheduled runtime and final qualification remain required.
