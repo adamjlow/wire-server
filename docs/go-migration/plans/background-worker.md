@@ -348,3 +348,14 @@ ID separately from the conversation team used for feature lookup. Next notificat
 durable scheduling and scheduled runtime/NOTIFY/metrics/startup/drain, then the
 unchanged full-service acceptance. Haskell remains supported/default and this
 whole-service goal remains active and unqualified.
+
+Adminless durable deletion/reminder insertion is constructed with source single-Now,
+strictly earlier reminders, insertion order, independent commits, grouped payloads,
+IgnoreDuplicate and default fields. Fixed Pico arithmetic preserves unwrapped
+millisecond JSON separately from PostgreSQL microsecond/Int64 encoding. Full Go
+checks and actual isolated native-schema PostgreSQL durability/dedup/group tests
+pass with cleanup: [exact construction evidence](../../../go/services/background-worker/evidence/adminless-scheduling-20261009/).
+No fresh native scheduling execution or full runtime/switchback claim. The existing
+reminder decoder/notification time.Time representation must carry extended accepted
+timestamps before qualification. Next notification adapters and scheduled service
+integration; existing final acceptance remains unchanged and incomplete.

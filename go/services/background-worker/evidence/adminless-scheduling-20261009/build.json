@@ -1,0 +1,9 @@
+{
+  "base_revision": "46348d60b032999a8f679a2a0cc421cd558537c2",
+  "compiler": "Go1.26.9",
+  "command": "CGO_ENABLED=0 GOTOOLCHAIN=local GOWORK=off go -C /home/operator/wire-server/go/services/background-worker test -c -tags schemacheck -o /home/operator/.cache/wire-migration/background-worker-20261009/adminless-scheduling-check",
+  "exit_code": 0,
+  "helper_sha256": "c498301876dc0b54a3766e101f0a4bb19f3682a44e6d2d9155688a5fddfee1cb",
+  "inputs_sha256": "424c69977b848956f6d2e0afea233aeb49c754de68cf3aa84eab7570a2f2ae1f",
+  "superseded_preparation": "Initial helper compile failed1 because fixture passed adminlessDefaults instead of its Feature; corrected candidate fixture only, no oracle change."
+}

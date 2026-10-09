@@ -1,0 +1,213 @@
+[
+  {
+    "command": [
+      "docker",
+      "network",
+      "create",
+      "--internal",
+      "--label",
+      "wire.migration.owner=wire-worker-adminless-scheduling-fca19336133c4ffa9f3a603b4cdc7c9b",
+      "wire-worker-adminless-scheduling-fca19336133c4ffa9f3a603b4cdc7c9b-net"
+    ],
+    "exit_code": 0,
+    "output": "024f338016931b126331025a777f63e7b81acb094ac31ed2fdbf53e57e726df7\n"
+  },
+  {
+    "command": [
+      "docker",
+      "volume",
+      "create",
+      "--label",
+      "wire.migration.owner=wire-worker-adminless-scheduling-fca19336133c4ffa9f3a603b4cdc7c9b",
+      "wire-worker-adminless-scheduling-fca19336133c4ffa9f3a603b4cdc7c9b-pg"
+    ],
+    "exit_code": 0,
+    "output": "wire-worker-adminless-scheduling-fca19336133c4ffa9f3a603b4cdc7c9b-pg\n"
+  },
+  {
+    "command": [
+      "docker",
+      "run",
+      "-d",
+      "--name",
+      "wire-worker-adminless-scheduling-fca19336133c4ffa9f3a603b4cdc7c9b-postgres",
+      "--label",
+      "wire.migration.owner=wire-worker-adminless-scheduling-fca19336133c4ffa9f3a603b4cdc7c9b",
+      "--network",
+      "wire-worker-adminless-scheduling-fca19336133c4ffa9f3a603b4cdc7c9b-net",
+      "--network-alias",
+      "postgres",
+      "--memory",
+      "512m",
+      "-e",
+      "POSTGRES_PASSWORD=synthetic-schema-only",
+      "-e",
+      "POSTGRES_DB=backendA",
+      "--mount",
+      "type=volume,src=wire-worker-adminless-scheduling-fca19336133c4ffa9f3a603b4cdc7c9b-pg,dst=/var/lib/postgresql/data",
+      "postgres@sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24"
+    ],
+    "exit_code": 0,
+    "output": "ee63d47780b40c1cdd5ef309d3def4c6dbffd270e918c446eac8548091fe390e\n"
+  },
+  {
+    "command": [
+      "docker",
+      "exec",
+      "wire-worker-adminless-scheduling-fca19336133c4ffa9f3a603b4cdc7c9b-postgres",
+      "pg_isready",
+      "-h",
+      "127.0.0.1",
+      "-U",
+      "postgres",
+      "-d",
+      "backendA"
+    ],
+    "exit_code": 2,
+    "output": "127.0.0.1:5432 - no response\n"
+  },
+  {
+    "command": [
+      "docker",
+      "exec",
+      "wire-worker-adminless-scheduling-fca19336133c4ffa9f3a603b4cdc7c9b-postgres",
+      "pg_isready",
+      "-h",
+      "127.0.0.1",
+      "-U",
+      "postgres",
+      "-d",
+      "backendA"
+    ],
+    "exit_code": 2,
+    "output": "127.0.0.1:5432 - no response\n"
+  },
+  {
+    "command": [
+      "docker",
+      "exec",
+      "wire-worker-adminless-scheduling-fca19336133c4ffa9f3a603b4cdc7c9b-postgres",
+      "pg_isready",
+      "-h",
+      "127.0.0.1",
+      "-U",
+      "postgres",
+      "-d",
+      "backendA"
+    ],
+    "exit_code": 0,
+    "output": "127.0.0.1:5432 - accepting connections\n"
+  },
+  {
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "--name",
+      "wire-worker-adminless-scheduling-fca19336133c4ffa9f3a603b4cdc7c9b-check",
+      "--label",
+      "wire.migration.owner=wire-worker-adminless-scheduling-fca19336133c4ffa9f3a603b4cdc7c9b",
+      "--network",
+      "wire-worker-adminless-scheduling-fca19336133c4ffa9f3a603b4cdc7c9b-net",
+      "--user",
+      "65532:65532",
+      "--cap-drop",
+      "ALL",
+      "--security-opt",
+      "no-new-privileges",
+      "--read-only",
+      "--tmpfs",
+      "/tmp:rw,size=16m",
+      "-e",
+      "WIRE_SCHEMA_CHECK_SYNTHETIC=1",
+      "--mount",
+      "type=bind,src=/home/operator/.cache/wire-migration/background-worker-20261009/adminless-scheduling-check,dst=/qualifier/schema-check,readonly",
+      "--mount",
+      "type=bind,src=/home/operator/wire-server/libs/wire-subsystems/postgres-migrations,dst=/reference/migrations,readonly",
+      "--entrypoint",
+      "/qualifier/schema-check",
+      "sha256:cd03212430eef6cfde0324b50885c12980ee211483ab27dde6ee730252966cd2",
+      "-test.run",
+      "^TestAdminlessSchedulingDockerStorage$",
+      "-test.v"
+    ],
+    "exit_code": 0,
+    "output": "=== RUN   TestAdminlessSchedulingDockerStorage\n--- PASS: TestAdminlessSchedulingDockerStorage (0.10s)\nPASS\n"
+  },
+  {
+    "command": [
+      "docker",
+      "rm",
+      "-f",
+      "wire-worker-adminless-scheduling-fca19336133c4ffa9f3a603b4cdc7c9b-check"
+    ],
+    "exit_code": 0,
+    "output": ""
+  },
+  {
+    "command": [
+      "docker",
+      "rm",
+      "-f",
+      "wire-worker-adminless-scheduling-fca19336133c4ffa9f3a603b4cdc7c9b-postgres"
+    ],
+    "exit_code": 0,
+    "output": "wire-worker-adminless-scheduling-fca19336133c4ffa9f3a603b4cdc7c9b-postgres\n"
+  },
+  {
+    "command": [
+      "docker",
+      "volume",
+      "rm",
+      "wire-worker-adminless-scheduling-fca19336133c4ffa9f3a603b4cdc7c9b-pg"
+    ],
+    "exit_code": 0,
+    "output": "wire-worker-adminless-scheduling-fca19336133c4ffa9f3a603b4cdc7c9b-pg\n"
+  },
+  {
+    "command": [
+      "docker",
+      "network",
+      "rm",
+      "wire-worker-adminless-scheduling-fca19336133c4ffa9f3a603b4cdc7c9b-net"
+    ],
+    "exit_code": 0,
+    "output": "wire-worker-adminless-scheduling-fca19336133c4ffa9f3a603b4cdc7c9b-net\n"
+  },
+  {
+    "command": [
+      "docker",
+      "container",
+      "ls",
+      "-q",
+      "--filter",
+      "label=wire.migration.owner=wire-worker-adminless-scheduling-fca19336133c4ffa9f3a603b4cdc7c9b"
+    ],
+    "exit_code": 0,
+    "output": ""
+  },
+  {
+    "command": [
+      "docker",
+      "network",
+      "ls",
+      "-q",
+      "--filter",
+      "label=wire.migration.owner=wire-worker-adminless-scheduling-fca19336133c4ffa9f3a603b4cdc7c9b"
+    ],
+    "exit_code": 0,
+    "output": ""
+  },
+  {
+    "command": [
+      "docker",
+      "volume",
+      "ls",
+      "-q",
+      "--filter",
+      "label=wire.migration.owner=wire-worker-adminless-scheduling-fca19336133c4ffa9f3a603b4cdc7c9b"
+    ],
+    "exit_code": 0,
+    "output": ""
+  }
+]

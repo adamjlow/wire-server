@@ -1,0 +1,15 @@
+{
+  "repo_files": {
+    "libs/wire-subsystems/src/Wire/JobSubsystem/Interpreter.hs": "550ac08283ce59a36fe445948abfd67b46b17385b521b7ca0bbbdc93f4b6b619",
+    "libs/wire-subsystems/src/Wire/ConversationSubsystem/Update.hs": "e44ed8a2f09c9a48647f506a872ba9d09d7da29283108d4131efdb02a20d2a82",
+    "libs/wire-api/src/Wire/API/Jobs.hs": "65499a55eee90a377e6608b6efbdfebf8522fdaede413c78c509479fa43c1918",
+    "libs/types-common/src/Data/Json/Util.hs": "f4f71c2a25e5fea5b8b31360106d48810e092e33825d7c1c52424cc05b5a0892"
+  },
+  "arbiter_revision": "b9c57eb1f8277d97616aa449bea471fe9ce14eda",
+  "arbiter_files": {
+    "arbiter-core/src/Arbiter/Core/Sql/Jobs.hs": "cb6259f38abf9d7af6105dbbc9cc835c9e13196e68a4e6302d50b0c31c6894fa",
+    "arbiter-core/src/Arbiter/Core/Job/Types.hs": "2fbc8709f85e896966961c7d2752557f7836c4695ef5276afabbbdf772c54445"
+  },
+  "NominalDiffTime_show_primary_comparison": "https://raw.githubusercontent.com/haskell/time/master/lib/Data/Time/Clock/Internal/NominalDiffTime.hs",
+  "comparison_limit": "Source comparison of showFixed True plus s; not newly identified native time package or execution."
+}
