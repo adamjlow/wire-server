@@ -1,0 +1,415 @@
+{
+  "kind": "finite-federator-forwarding",
+  "binary_sha256": "b8926973d577cd54cb58ebaa7807e0dd4393b8c517fec2b63d52a9479c8bfa05",
+  "script_sha256": "e5512796e9e9f5e459e2f8a9f2847d91ea0e9edbe3c181ca56f7284055db40e6",
+  "records": [
+    {
+      "name": "internal-health",
+      "observed": {
+        "status": 200,
+        "content_type": "text/plain;charset=utf-8",
+        "body": "",
+        "unwanted": null,
+        "remote_ip": null
+      }
+    },
+    {
+      "name": "external-health",
+      "observed": {
+        "status": 200,
+        "content_type": "text/plain;charset=utf-8",
+        "body": "",
+        "unwanted": null,
+        "remote_ip": null
+      }
+    },
+    {
+      "name": "standalone",
+      "observed": {
+        "status": 200,
+        "content_type": "text/plain;charset=utf-8",
+        "body": "",
+        "unwanted": null,
+        "remote_ip": null
+      }
+    },
+    {
+      "name": "missing",
+      "observed": {
+        "status": 404,
+        "content_type": null,
+        "body": "",
+        "unwanted": null,
+        "remote_ip": null
+      }
+    },
+    {
+      "name": "component",
+      "observed": {
+        "status": 400,
+        "content_type": null,
+        "body": "SW52YWxpZCBjb21wb25lbnQ6IHVua25vd24=",
+        "unwanted": null,
+        "remote_ip": null
+      }
+    },
+    {
+      "name": "empty-rpc",
+      "observed": {
+        "status": 404,
+        "content_type": null,
+        "body": "",
+        "unwanted": null,
+        "remote_ip": null
+      }
+    },
+    {
+      "name": "bad-rpc",
+      "observed": {
+        "status": 400,
+        "content_type": null,
+        "body": "aW52YWxpZC1lbmRwb2ludA==",
+        "unwanted": null,
+        "remote_ip": null
+      }
+    },
+    {
+      "name": "extra-segment",
+      "observed": {
+        "status": 404,
+        "content_type": null,
+        "body": "",
+        "unwanted": null,
+        "remote_ip": null
+      }
+    },
+    {
+      "name": "query",
+      "observed": {
+        "status": 403,
+        "content_type": "application/json",
+        "unwanted": null,
+        "remote_ip": null,
+        "json": {
+          "code": 403,
+          "label": "invalid-endpoint",
+          "message": "The requested endpoint does not exist"
+        }
+      }
+    },
+    {
+      "name": "method",
+      "observed": {
+        "status": 403,
+        "content_type": "application/json",
+        "unwanted": null,
+        "remote_ip": null,
+        "json": {
+          "code": 403,
+          "label": "invalid-endpoint",
+          "message": "The requested endpoint does not exist"
+        }
+      }
+    },
+    {
+      "name": "remote-success",
+      "observed": {
+        "status": 200,
+        "content_type": "application/octet-stream",
+        "body": "cmVtb3RlLWJvZHk=",
+        "unwanted": "keep",
+        "remote_ip": "127.0.0.1"
+      }
+    },
+    {
+      "name": "remote-error",
+      "observed": {
+        "status": 533,
+        "content_type": "application/json",
+        "unwanted": null,
+        "remote_ip": null,
+        "json": {
+          "code": 533,
+          "inner": {
+            "code": 400,
+            "label": "example",
+            "message": "synthetic remote failure"
+          },
+          "label": "federation-remote-error",
+          "message": "A remote federator failed with status code: 400"
+        }
+      }
+    },
+    {
+      "name": "remote-text",
+      "observed": {
+        "status": 533,
+        "content_type": "application/json",
+        "unwanted": null,
+        "remote_ip": null,
+        "json": {
+          "code": 533,
+          "inner": {
+            "code": 418,
+            "label": "unknown-error",
+            "message": "synthetic teapot"
+          },
+          "label": "federation-remote-error",
+          "message": "A remote federator failed with status code: 418"
+        }
+      }
+    },
+    {
+      "name": "dns-missing",
+      "observed": {
+        "status": 422,
+        "content_type": "application/json",
+        "unwanted": null,
+        "remote_ip": null,
+        "json": {
+          "code": 422,
+          "label": "invalid-domain",
+          "message": "srv record not found: _wire-server-federator._tcp.missing.example.com"
+        }
+      }
+    },
+    {
+      "name": "missing-origin",
+      "observed": {
+        "status": 400,
+        "content_type": null,
+        "body": "SGVhZGVyIFdpcmUtT3JpZ2luLURvbWFpbiBpcyByZXF1aXJlZA==",
+        "unwanted": null,
+        "remote_ip": null
+      }
+    },
+    {
+      "name": "missing-cert",
+      "observed": {
+        "status": 400,
+        "content_type": null,
+        "body": "SGVhZGVyIFgtU1NMLUNlcnRpZmljYXRlIGlzIHJlcXVpcmVk",
+        "unwanted": null,
+        "remote_ip": null
+      }
+    },
+    {
+      "name": "invalid-cert",
+      "observed": {
+        "status": 400,
+        "content_type": null,
+        "body": "RXJyb3IgcGFyc2luZyBoZWFkZXIgWC1TU0wtQ2VydGlmaWNhdGUgZmFpbGVkOiBubyBjZXJ0aWZpY2F0ZSBmb3VuZA==",
+        "unwanted": null,
+        "remote_ip": null
+      }
+    },
+    {
+      "name": "multiple-cert",
+      "observed": {
+        "status": 400,
+        "content_type": null,
+        "body": "RXJyb3IgcGFyc2luZyBoZWFkZXIgWC1TU0wtQ2VydGlmaWNhdGUgZmFpbGVkOiBmb3VuZCBtdWx0aXBsZSBjZXJ0aWZpY2F0ZXM=",
+        "unwanted": null,
+        "remote_ip": null
+      }
+    },
+    {
+      "name": "mismatch-cert",
+      "observed": {
+        "status": 403,
+        "content_type": "application/json",
+        "unwanted": null,
+        "remote_ip": null,
+        "json": {
+          "code": 403,
+          "label": "authentication-failure",
+          "message": "none of the domain names match the certificate, errors: [[NameMismatch \"localhost\"]]"
+        }
+      }
+    },
+    {
+      "name": "inward-brig",
+      "observed": {
+        "status": 200,
+        "content_type": "application/octet-stream",
+        "body": "AP9iaW5hcnktcmVzcG9uc2U=",
+        "unwanted": null,
+        "remote_ip": null
+      }
+    },
+    {
+      "name": "forward-brig",
+      "observed": {
+        "path": "/federation/echo",
+        "body": "AP9yZXF1ZXN0",
+        "headers": {
+          "content-type": "application/json",
+          "request-id": "synthetic-request",
+          "wire-origin-domain": "example.com",
+          "wire-origin-ip": "2001:db8::1",
+          "x-wire-api-version": "1"
+        }
+      }
+    },
+    {
+      "name": "inward-cargohold",
+      "observed": {
+        "status": 200,
+        "content_type": "application/octet-stream",
+        "body": "AP9iaW5hcnktcmVzcG9uc2U=",
+        "unwanted": null,
+        "remote_ip": null
+      }
+    },
+    {
+      "name": "forward-cargohold",
+      "observed": {
+        "path": "/federation/echo",
+        "body": "AP9yZXF1ZXN0",
+        "headers": {
+          "content-type": "application/json",
+          "request-id": "synthetic-request",
+          "wire-origin-domain": "example.com",
+          "wire-origin-ip": "2001:db8::1",
+          "x-wire-api-version": "1"
+        }
+      }
+    },
+    {
+      "name": "inward-galley",
+      "observed": {
+        "status": 200,
+        "content_type": "application/octet-stream",
+        "body": "AP9iaW5hcnktcmVzcG9uc2U=",
+        "unwanted": null,
+        "remote_ip": null
+      }
+    },
+    {
+      "name": "forward-galley",
+      "observed": {
+        "path": "/federation/echo",
+        "body": "AP9yZXF1ZXN0",
+        "headers": {
+          "content-type": "application/json",
+          "request-id": "synthetic-request",
+          "wire-origin-domain": "example.com",
+          "wire-origin-ip": "2001:db8::1",
+          "x-wire-api-version": "1"
+        }
+      }
+    },
+    {
+      "name": "denied-incoming",
+      "observed": {
+        "status": 400,
+        "content_type": "application/json",
+        "unwanted": null,
+        "remote_ip": null,
+        "json": {
+          "code": 400,
+          "label": "federation-denied",
+          "message": "origin domain [example.com] not in the federation allow list"
+        }
+      }
+    },
+    {
+      "name": "denied-outgoing",
+      "observed": {
+        "status": 400,
+        "content_type": "application/json",
+        "unwanted": null,
+        "remote_ip": null,
+        "json": {
+          "code": 400,
+          "label": "federation-denied",
+          "message": "origin domain [example.com] not in the federation allow list"
+        }
+      }
+    },
+    {
+      "name": "dynamic-denied",
+      "observed": {
+        "status": 400,
+        "content_type": "application/json",
+        "unwanted": null,
+        "remote_ip": null,
+        "json": {
+          "code": 400,
+          "label": "federation-denied",
+          "message": "origin domain [example.com] not in the federation allow list"
+        }
+      }
+    },
+    {
+      "name": "dynamic-allowed",
+      "observed": {
+        "status": 200,
+        "content_type": "application/octet-stream",
+        "body": "AP9iaW5hcnktcmVzcG9uc2U=",
+        "unwanted": null,
+        "remote_ip": null
+      }
+    },
+    {
+      "name": "inward-error",
+      "observed": {
+        "status": 418,
+        "content_type": "application/octet-stream",
+        "body": "AP9iaW5hcnktcmVzcG9uc2U=",
+        "unwanted": null,
+        "remote_ip": null
+      }
+    },
+    {
+      "name": "untrusted-tls",
+      "observed": {
+        "status": 525,
+        "content_type": "application/json",
+        "unwanted": null,
+        "remote_ip": null,
+        "json": {
+          "code": 525,
+          "label": "federation-tls-error",
+          "message": "<verified TLS failure>"
+        }
+      }
+    },
+    {
+      "name": "restored-tls",
+      "observed": {
+        "status": 200,
+        "content_type": "application/octet-stream",
+        "body": "cmVtb3RlLWJvZHk=",
+        "unwanted": "keep",
+        "remote_ip": "127.0.0.1"
+      }
+    },
+    {
+      "name": "invalid-reload-retains-context",
+      "observed": {
+        "status": 200,
+        "content_type": "application/octet-stream",
+        "body": "cmVtb3RlLWJvZHk=",
+        "unwanted": "keep",
+        "remote_ip": "127.0.0.1"
+      }
+    },
+    {
+      "name": "smoke",
+      "observed": {
+        "requests": 40,
+        "concurrency": 2,
+        "rss_kib": 12300,
+        "p95_ms": 0.479
+      }
+    },
+    {
+      "name": "shutdown",
+      "observed": {
+        "exit_code": 0,
+        "seconds": 0.001
+      }
+    }
+  ]
+}

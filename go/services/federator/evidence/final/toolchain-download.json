@@ -1,0 +1,10 @@
+{
+  "version": "1.26.9",
+  "metadata_url": "https://go.dev/dl/?mode=json",
+  "archive": {
+    "filename": "go1.26.9.linux-amd64.tar.gz",
+    "sha256": "42d158b4d8f7b61ac0a830567c940a86098fb7aac52e467a5ebec03ef5cc2f8d"
+  },
+  "actual_sha256": "42d158b4d8f7b61ac0a830567c940a86098fb7aac52e467a5ebec03ef5cc2f8d",
+  "checksum_verified": true
+}

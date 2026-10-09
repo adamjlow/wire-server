@@ -221,11 +221,24 @@ func (s *Service) Handler(external bool) http.Handler {
 			writeError(w, 403, "invalid-endpoint", "The requested endpoint does not exist", nil)
 			return
 		}
-		rid := r.Header.Get("Wire-Origin-Request-Id")
-		if rid == "" {
+		ridValues, present := r.Header[http.CanonicalHeaderKey("Wire-Origin-Request-Id")]
+		rid := ""
+		if present {
+			if len(ridValues) > 0 {
+				rid = ridValues[0]
+			}
+		} else {
 			var b [16]byte
-			_, _ = rand.Read(b[:])
-			rid = hex.EncodeToString(b[:])
+			if _, err := rand.Read(b[:]); err != nil {
+				serverError(w)
+				return
+			}
+			b[6] = (b[6] & 0x0f) | 0x40
+			b[8] = (b[8] & 0x3f) | 0x80
+			h := hex.EncodeToString(b[:])
+			rid = h[:8] + "-" + h[8:12] + "-" + h[12:16] + "-" + h[16:20] + "-" + h[20:]
+			r.Header = r.Header.Clone()
+			r.Header.Set("Wire-Origin-Request-Id", rid)
 		}
 		if !s.allow(r.Context(), domain, rid, w) {
 			return

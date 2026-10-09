@@ -1,0 +1,68 @@
+{
+  "source_revision": "2a315a73d92eb954d9724f67486c3ccb1c9124c4",
+  "packaging_revision": "2a315a73d92eb954d9724f67486c3ccb1c9124c4",
+  "binary_sha256": "b8926973d577cd54cb58ebaa7807e0dd4393b8c517fec2b63d52a9479c8bfa05",
+  "image_id": "sha256:dde7335b49fbc8e22d685c12a27305ac0832bb6fb0eccbf27172f31b35c66119",
+  "build_info": {
+    "GoVersion": "go1.26.9",
+    "Path": "github.com/adamjlow/wire-server/go/services/federator/cmd/federator",
+    "Main": {
+      "Path": "github.com/adamjlow/wire-server/go/services/federator",
+      "Version": "(devel)"
+    },
+    "Deps": [
+      {
+        "Path": "go.yaml.in/yaml/v3",
+        "Version": "v3.0.4",
+        "Sum": "h1:tfq32ie2Jv2UxXFdLJdh3jXuOzWiL1fo0bu/FbuKpbc="
+      },
+      {
+        "Path": "golang.org/x/net",
+        "Version": "v0.60.0",
+        "Sum": "h1:79p50tfZlm0J9YfoDsSi639qSXNGVwEzOPLCxM2FsYU="
+      }
+    ],
+    "Settings": [
+      {
+        "Key": "-buildmode",
+        "Value": "exe"
+      },
+      {
+        "Key": "-compiler",
+        "Value": "gc"
+      },
+      {
+        "Key": "CGO_ENABLED",
+        "Value": "0"
+      },
+      {
+        "Key": "GOARCH",
+        "Value": "amd64"
+      },
+      {
+        "Key": "GOOS",
+        "Value": "linux"
+      },
+      {
+        "Key": "GOAMD64",
+        "Value": "v1"
+      },
+      {
+        "Key": "vcs",
+        "Value": "git"
+      },
+      {
+        "Key": "vcs.revision",
+        "Value": "2a315a73d92eb954d9724f67486c3ccb1c9124c4"
+      },
+      {
+        "Key": "vcs.time",
+        "Value": "2026-10-09T12:46:47Z"
+      },
+      {
+        "Key": "vcs.modified",
+        "Value": "false"
+      }
+    ]
+  }
+}

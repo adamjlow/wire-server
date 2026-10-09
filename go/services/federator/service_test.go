@@ -218,3 +218,33 @@ func TestMalformedPolicyFailsClosed(t *testing.T) {
 		server.Close()
 	}
 }
+
+func TestGeneratedOriginRequestIDIsPropagated(t *testing.T) {
+	ids := make(chan string, 2)
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		ids <- r.Header.Get("Request-Id")
+		fmt.Fprint(w, `{"strategy":"allowNone","remotes":[],"update_interval":10}`)
+	}))
+	defer server.Close()
+	host, port, _ := net.SplitHostPort(strings.TrimPrefix(server.URL, "http://"))
+	var p int
+	fmt.Sscan(port, &p)
+	s := &Service{config: Config{Brig: Endpoint{host, uint16(p)}}, local: server.Client(), operational: newMetrics()}
+	for _, empty := range []bool{false, true} {
+		req := httptest.NewRequest("POST", "/rpc/example.com/brig/foo", strings.NewReader("{}"))
+		if empty {
+			req.Header.Set("Wire-Origin-Request-Id", "")
+		}
+		s.Handler(false).ServeHTTP(httptest.NewRecorder(), req)
+		id := <-ids
+		if empty {
+			if id != "" {
+				t.Fatal("present empty ID replaced")
+			}
+		} else {
+			if len(id) != 36 || id[14] != '4' || id != req.Header.Get("Wire-Origin-Request-Id") {
+				t.Fatal("generated UUID or propagation mismatch")
+			}
+		}
+	}
+}

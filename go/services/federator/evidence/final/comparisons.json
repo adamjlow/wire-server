@@ -1,0 +1,241 @@
+{
+  "schema_version": 1,
+  "project": "wire-e2e-de0030dd1cac4140b30d73bc4877d359",
+  "source_revision": "2a315a73d92eb954d9724f67486c3ccb1c9124c4",
+  "runner_image_id": "sha256:ab6f8aef313e322935cf0d6256d9a89b007027a94190ff2f253fc0a8ac94349e",
+  "runner_revision": "107c55bdecf1b53cb203d9f4de4be3c91388b24b",
+  "candidate": {
+    "path": "/home/operator/.cache/wire-migration/federator-20261009-4",
+    "sha256": "b8926973d577cd54cb58ebaa7807e0dd4393b8c517fec2b63d52a9479c8bfa05",
+    "source_revision": "2a315a73d92eb954d9724f67486c3ccb1c9124c4"
+  },
+  "peer_candidates": {},
+  "result": "pass",
+  "e2e_executed": false,
+  "compose_sha256": "692f0c8fcc7a7bac983cabf22e2a78bb1e69d59a20a94528c4a8b67ec48a02cb",
+  "files_sha256": {
+    "fixtures/configs.json": "8cc34c41cc248ae804d822a60fb610b0adead84c3e79663eb33243ef70c99876",
+    "fixtures/integration.json": "d8834dad54e1f851e689ac00691cd527aac69e0e9ce00baf149835433812c73c",
+    "fixtures/peers.json": "ca8438ea9464138dc0c75868b62eb8b12113343dada8336524c3ea467dd3a490"
+  },
+  "process_exit_code": 0,
+  "candidate_executed": true,
+  "comparisons": [
+    {
+      "name": "internal-health",
+      "pass": true
+    },
+    {
+      "name": "external-health",
+      "pass": true
+    },
+    {
+      "name": "standalone",
+      "pass": true
+    },
+    {
+      "name": "missing",
+      "pass": true
+    },
+    {
+      "name": "component",
+      "pass": true
+    },
+    {
+      "name": "empty-rpc",
+      "pass": true
+    },
+    {
+      "name": "bad-rpc",
+      "pass": true
+    },
+    {
+      "name": "extra-segment",
+      "pass": true
+    },
+    {
+      "name": "query",
+      "pass": true
+    },
+    {
+      "name": "method",
+      "pass": true
+    },
+    {
+      "name": "remote-success",
+      "pass": true
+    },
+    {
+      "name": "remote-error",
+      "pass": true
+    },
+    {
+      "name": "remote-text",
+      "pass": true
+    },
+    {
+      "name": "dns-missing",
+      "pass": true
+    },
+    {
+      "name": "missing-origin",
+      "pass": true
+    },
+    {
+      "name": "missing-cert",
+      "pass": true
+    },
+    {
+      "name": "invalid-cert",
+      "pass": true
+    },
+    {
+      "name": "multiple-cert",
+      "pass": true
+    },
+    {
+      "name": "mismatch-cert",
+      "pass": true
+    },
+    {
+      "name": "inward-brig",
+      "pass": true
+    },
+    {
+      "name": "forward-brig",
+      "pass": true
+    },
+    {
+      "name": "inward-cargohold",
+      "pass": true
+    },
+    {
+      "name": "forward-cargohold",
+      "pass": true
+    },
+    {
+      "name": "inward-galley",
+      "pass": true
+    },
+    {
+      "name": "forward-galley",
+      "pass": true
+    },
+    {
+      "name": "denied-incoming",
+      "pass": true
+    },
+    {
+      "name": "denied-outgoing",
+      "pass": true
+    },
+    {
+      "name": "dynamic-denied",
+      "pass": true
+    },
+    {
+      "name": "dynamic-allowed",
+      "pass": true
+    },
+    {
+      "name": "inward-error",
+      "pass": true
+    },
+    {
+      "name": "untrusted-tls",
+      "pass": true
+    },
+    {
+      "name": "restored-tls",
+      "pass": true
+    },
+    {
+      "name": "invalid-reload-retains-context",
+      "pass": true
+    },
+    {
+      "name": "smoke",
+      "pass": true
+    },
+    {
+      "name": "shutdown",
+      "pass": true
+    }
+  ],
+  "switchback": {
+    "result": "pass",
+    "phases": [
+      {
+        "implementation": "haskell",
+        "config_sha256": "08c1f4ec1029a54c481cc7c1049be5769cdf670c623a1f33596ab6494355ecaa",
+        "binary_sha256": "51b35d27a2597e78fcd2e5b6107c8655ee686682f1f6361b3ff7f3243ea846a0",
+        "incoming": {
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body": "AP9iaW5hcnktcmVzcG9uc2U=",
+          "unwanted": null,
+          "remote_ip": null
+        },
+        "outgoing": {
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body": "cmVtb3RlLWJvZHk=",
+          "unwanted": "keep",
+          "remote_ip": "127.0.0.1"
+        },
+        "exit_code": 0
+      },
+      {
+        "implementation": "go",
+        "config_sha256": "08c1f4ec1029a54c481cc7c1049be5769cdf670c623a1f33596ab6494355ecaa",
+        "binary_sha256": "b8926973d577cd54cb58ebaa7807e0dd4393b8c517fec2b63d52a9479c8bfa05",
+        "incoming": {
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body": "AP9iaW5hcnktcmVzcG9uc2U=",
+          "unwanted": null,
+          "remote_ip": null
+        },
+        "outgoing": {
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body": "cmVtb3RlLWJvZHk=",
+          "unwanted": "keep",
+          "remote_ip": "127.0.0.1"
+        },
+        "loaded_shutdown": {
+          "exit_code": 0,
+          "seconds": 0.564,
+          "response": {
+            "status": 200,
+            "content_type": "application/octet-stream",
+            "body": "AP9iaW5hcnktcmVzcG9uc2U=",
+            "unwanted": null,
+            "remote_ip": null
+          }
+        }
+      },
+      {
+        "implementation": "haskell",
+        "config_sha256": "08c1f4ec1029a54c481cc7c1049be5769cdf670c623a1f33596ab6494355ecaa",
+        "binary_sha256": "51b35d27a2597e78fcd2e5b6107c8655ee686682f1f6361b3ff7f3243ea846a0",
+        "incoming": {
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body": "AP9iaW5hcnktcmVzcG9uc2U=",
+          "unwanted": null,
+          "remote_ip": null
+        },
+        "outgoing": {
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body": "cmVtb3RlLWJvZHk=",
+          "unwanted": "keep",
+          "remote_ip": "127.0.0.1"
+        },
+        "exit_code": 0
+      }
+    ]
+  },
+  "cleanup_exit_code": 0
+}

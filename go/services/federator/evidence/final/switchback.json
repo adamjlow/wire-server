@@ -1,0 +1,75 @@
+{
+  "result": "pass",
+  "phases": [
+    {
+      "implementation": "haskell",
+      "config_sha256": "08c1f4ec1029a54c481cc7c1049be5769cdf670c623a1f33596ab6494355ecaa",
+      "binary_sha256": "51b35d27a2597e78fcd2e5b6107c8655ee686682f1f6361b3ff7f3243ea846a0",
+      "incoming": {
+        "status": 200,
+        "content_type": "application/octet-stream",
+        "body": "AP9iaW5hcnktcmVzcG9uc2U=",
+        "unwanted": null,
+        "remote_ip": null
+      },
+      "outgoing": {
+        "status": 200,
+        "content_type": "application/octet-stream",
+        "body": "cmVtb3RlLWJvZHk=",
+        "unwanted": "keep",
+        "remote_ip": "127.0.0.1"
+      },
+      "exit_code": 0
+    },
+    {
+      "implementation": "go",
+      "config_sha256": "08c1f4ec1029a54c481cc7c1049be5769cdf670c623a1f33596ab6494355ecaa",
+      "binary_sha256": "b8926973d577cd54cb58ebaa7807e0dd4393b8c517fec2b63d52a9479c8bfa05",
+      "incoming": {
+        "status": 200,
+        "content_type": "application/octet-stream",
+        "body": "AP9iaW5hcnktcmVzcG9uc2U=",
+        "unwanted": null,
+        "remote_ip": null
+      },
+      "outgoing": {
+        "status": 200,
+        "content_type": "application/octet-stream",
+        "body": "cmVtb3RlLWJvZHk=",
+        "unwanted": "keep",
+        "remote_ip": "127.0.0.1"
+      },
+      "loaded_shutdown": {
+        "exit_code": 0,
+        "seconds": 0.564,
+        "response": {
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body": "AP9iaW5hcnktcmVzcG9uc2U=",
+          "unwanted": null,
+          "remote_ip": null
+        }
+      }
+    },
+    {
+      "implementation": "haskell",
+      "config_sha256": "08c1f4ec1029a54c481cc7c1049be5769cdf670c623a1f33596ab6494355ecaa",
+      "binary_sha256": "51b35d27a2597e78fcd2e5b6107c8655ee686682f1f6361b3ff7f3243ea846a0",
+      "incoming": {
+        "status": 200,
+        "content_type": "application/octet-stream",
+        "body": "AP9iaW5hcnktcmVzcG9uc2U=",
+        "unwanted": null,
+        "remote_ip": null
+      },
+      "outgoing": {
+        "status": 200,
+        "content_type": "application/octet-stream",
+        "body": "cmVtb3RlLWJvZHk=",
+        "unwanted": "keep",
+        "remote_ip": "127.0.0.1"
+      },
+      "exit_code": 0
+    }
+  ]
+}

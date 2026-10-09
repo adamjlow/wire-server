@@ -1,0 +1,10 @@
+all modules verified
+ok  	github.com/adamjlow/wire-server/go/services/federator	1.069s
+?   	github.com/adamjlow/wire-server/go/services/federator/cmd/federator	[no test files]
+all modules verified
+No vulnerabilities found.
+W1009 12:47:33.827470 3192037 library.go:394] module github.com/adamjlow/wire-server/go/services/federator has empty version, defaults to HEAD. The license URL may be incorrect. Please verify!
+github.com/adamjlow/wire-server/go/services/federator,https://github.com/adamjlow/wire-server/blob/HEAD/go/services/federator/LICENSE,AGPL-3.0
+go.yaml.in/yaml/v3,https://github.com/yaml/go-yaml/blob/v3.0.4/LICENSE,MIT
+golang.org/x/net/dns/dnsmessage,https://cs.opensource.google/go/x/net/+/v0.60.0:LICENSE,BSD-3-Clause
+Go module checks passed: federator; Go 1.26.9
