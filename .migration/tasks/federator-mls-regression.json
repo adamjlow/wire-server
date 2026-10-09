@@ -51,5 +51,5 @@
     }
   ],
   "review": null,
-  "handoff": "Active diagnosis: actual get-mls-clients transport error to d1 observed; classified five-Go rerun passed without a fix, so intermittent cause remains unresolved. Static diagnostic only, original tests unchanged. Need failing error category and focused cause before any correction/requalification; whole-worker goal remains active."
+  "handoff": "Actual get-mls-clients transport error to d1 observed in failed five-Go run. Same categorized static executable passed two targeted five-Go runs, with strict original assertions and cleanup0; no failing category captured and no behavioral correction established. Unit suite passes. Stop broad repetition; isolate concrete transport/reference/environment cause. Whole-worker goal remains active, contract internally waiting, no image/compatibility restoration or worker implementation claim."
 }

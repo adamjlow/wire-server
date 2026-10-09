@@ -65,3 +65,12 @@ its absent ELF interpreter; no E2E ran. Its failed receipt is retained alongside
 the correctly static builds. Evidence is in the claimed module evidence directory:
 original strict XML/run/environment, bounded trace and actual source/build identity.
 Native Haskell builds remain unavailable/unrun; no worker implementation is claimed.
+
+The one bounded repeat of the same categorized static executable also passed
+original MLS with five Go peers, process0/cleanup0. Exact same binary hash is in
+both original run receipts. No new transport error was captured; attribution
+remains unresolved. The current diagnostic source passes `go test ./...` with
+Go1.26.9/GOTOOLCHAIN=local/GOWORK=off/CGO_ENABLED=0. Source remains diagnostic only;
+no final image, whole47 clean baseline, corrected compatibility or worker build
+is claimed. Stop broad repetition: the next diagnostic step must isolate the
+observed transport path or reference/environment cause with concrete evidence.
