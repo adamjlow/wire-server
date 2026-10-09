@@ -1,0 +1,75 @@
+<?xml version='1.0' ?><testsuites name="wire-server"><testsuite name="integration" tests="47" failures="2" time="699.861501255"><testcase name="AdminlessGroups.testAdminlessJobCancellationIsTeamScoped" time="21.330871422" /><testcase name="AdminlessGroups.testAdminlessJobsCancelledOnFeatureDisable" time="16.23880931" /><testcase name="AdminlessGroups.testAdminlessJobsRecreatedOnFeatureConfigChange" time="21.293152702" /><testcase name="AdminlessGroups.testAdminlessReplaceMembers" time="1.089198415" /><testcase name="AdminlessGroups.testAdminlessReplaceMembersAddsAdmin" time="0.253069544" /><testcase name="AdminlessGroups.testAdminlessReplaceMembersAddsEligibleMember" time="0.150060017" /><testcase name="AdminlessGroups.testAdminlessSetupAutopromotesWithRemoteMembers" time="2.983603379" /><testcase name="AdminlessGroups.testAdminlessSetupDeletesWithOriginAndRemoteMembers" time="1.703739841" /><testcase name="AdminlessGroups.testAdminlessSetupDeletesWithSystemEventAndRemoteMembers" time="2.051412023" /><testcase name="AdminlessGroups.testAdminlessSetupMemberUpdateAfterAdminLeaves" time="0.94871691" /><testcase name="AdminlessGroups.testAdminlessSetupOnFeatureEnable" time="6.049202651" /><testcase name="AdminlessGroups.testAdminlessSetupSendsReminderWithOriginUserAndRemoteMembers" time="11.30150718" /><testcase name="AdminlessGroups.testAdminlessSetupSendsReminderWithRemoteMembers" time="10.359342429" /><testcase name="AdminlessGroups.testAdminlessSetupSystemMemberUpdate" time="1.018105713" /><testcase name="AdminlessGroups.testOnLastAdminLeaveFeatureDisabled" time="0.505539076" /><testcase name="AdminlessGroups.testOnLastAdminLeaveNoEligibleMembersExist" time="10.872901385" /><testcase name="AdminlessGroups.testOnLastAdminLeaveReturnEligibleMembers" time="1.832916041" /><testcase name="AdminlessGroups.testOnLastAdminLeaveReturnsEligibleMembersForGroupType[channel=false]" time="0.399624479" /><testcase name="AdminlessGroups.testOnLastAdminLeaveReturnsEligibleMembersForGroupType[channel=true]" time="0.44595215" /><testcase name="AdminlessGroups.testOnLastAdminSelfDeletionAutopromotes" time="0.514676669" /><testcase name="AdminlessGroups.testOnLastAdminTeamMemberDeletionAutopromotes[channel=false]" time="0.439542778" /><testcase name="AdminlessGroups.testOnLastAdminTeamMemberDeletionAutopromotes[channel=true]" time="0.532998088" /><testcase name="AdminlessGroups.testPersonalUserLastAdminLeaveReturnsAdminlessConversation" time="1.540545256" /><testcase name="Events.testBackendPusherRecoversFromQueueDeletion" time="4.283608852" /><testcase name="Events.testEventsDeadLettered" time="64.709464019" /><testcase name="Events.testEventsDeadLetteredWithReconnect" time="7.356541863" /><testcase name="Events.testTransientEventsDoNotTriggerDeadLetters" time="63.264158318" /><testcase name="Federation.testNotificationsForOfflineBackends" time="7.451615822" /><testcase name="Meetings.testMeetingCleanup" time="22.141598269" /><testcase name="Migration.BlockList.testBlockListMigration" time="3.164735284" /><testcase name="Migration.Conversation.testMigrationToPostgresMLS" time="28.277026774" /><testcase name="Migration.Conversation.testMigrationToPostgresProteus" time="128.875072245" /><testcase name="Migration.ConversationCodes.testConversationCodesMigrationExpiration" time="34.246930173" /><testcase name="Migration.ConversationCodes.testConversationCodesMigration[has-password=false][with-zhost=false]" time="16.719968151" /><testcase name="Migration.ConversationCodes.testConversationCodesMigration[has-password=false][with-zhost=true]" time="25.482568485" /><testcase name="Migration.ConversationCodes.testConversationCodesMigration[has-password=true][with-zhost=false]" time="18.199791523" /><testcase name="Migration.ConversationCodes.testConversationCodesMigration[has-password=true][with-zhost=true]" time="31.269593" /><testcase name="Migration.DomainRegistration.testDomainRegistrationMigration" time="26.452471888" /><testcase name="Migration.PasswordReset.testPasswordResetMigration" time="25.534247519" /><testcase name="Migration.TeamFeatures.testTeamFeaturesMigration" time="18.422821206" /><testcase name="Migration.User.testMigrationOfInvalidUsers" time="13.586083534" /><testcase name="Migration.User.testMigrationOfUsersWithHandleDisputes" time="17.022668631" /><testcase name="Migration.User.testReindexingUsersDuringMigration" time="13.411365008"><failure>assertion failure:
+Actual:
+500
+Expected:
+200
+
+call stack: 
+1. assertFailure at test/Testlib/Assertions.hs:123
+
+2. shouldMatchWithMsg at test/Testlib/Assertions.hs:92
+
+3. shouldMatch at test/Testlib/Assertions.hs:219
+
+4. shouldMatchInt at test/Test/Search.hs:715
+
+5. assertCanFind at test/Test/Migration/User.hs:611
+
+6. checkSearchWorks at test/Test/Migration/User.hs:589
+
+
+
+request as command line: 
+curl -X &#39;GET&#39; &#39;http://127.0.0.1:11082/v19/search/contacts?q=aFx2zEUAt%40example.com&amp;domain=d2.example.com&#39; -H &#39;Request-Id: Migration.User.testReindexingUsersDuringMigration__GET_/v19/search/contacts__205&#39; -H &#39;Z-Connection: conn&#39; -H &#39;Z-User: 9d9c12ff-887e-4367-a6c1-624ca19595eb&#39;
+request: 
+GET http://127.0.0.1:11082/v19/search/contacts?q=aFx2zEUAt%40example.com&amp;domain=d2.example.com
+request headers: 
+Request-Id: Migration.User.testReindexingUsersDuringMigration__GET_/v19/search/contacts__205
+Z-Connection: conn
+Z-User: 9d9c12ff-887e-4367-a6c1-624ca19595eb
+request body:
+
+response status: 500
+response headers:
+Transfer-Encoding: chunked
+Date: Fri, 09 Oct 2026 17:26:53 GMT
+traceparent: 00-d4b0c917bc72aee38cb5c2f4bf96af0a-1f11b3bc85878e96-01
+tracestate: 
+Content-Encoding: gzip
+Content-Type: application/json
+Vary: Accept-Encoding
+response body:
+{
+    &quot;code&quot;: 500,
+    &quot;label&quot;: &quot;server-error&quot;,
+    &quot;message&quot;: &quot;Internal Server Error&quot;
+}
+
+Set WIRE_INTEGRATION_TEST_VERBOSITY=1 if you want to see complete trace of the HTTP traffic in curl pseudo-syntax.
+</failure></testcase><testcase name="Migration.User.testUserMigrationToPostgres" time="11.450568203"><failure>assertion failure:
+Field &quot;token&quot; is missing from object:
+{
+    &quot;code&quot;: 500,
+    &quot;label&quot;: &quot;server-error&quot;,
+    &quot;message&quot;: &quot;Internal Server Error&quot;
+}
+
+call stack: 
+1. assertFailure at test/Testlib/JSON.hs:351
+
+2. assertFailureWithJSON at test/Testlib/JSON.hs:208
+
+3. assertField at test/Testlib/JSON.hs:174
+
+4. %. at test/Test/Migration/User.hs:298
+
+5. createScimUsers at test/Test/Migration/User.hs:279
+
+6. createTestUsers at test/Test/Migration/User.hs:155
+
+7. seedTestUsers at test/Test/Migration/User.hs:74
+
+
+
+Set WIRE_INTEGRATION_TEST_VERBOSITY=1 if you want to see complete trace of the HTTP traffic in curl pseudo-syntax.
+</failure></testcase><testcase name="UserGroup.testUserGroupAddUsersToGroupWithChannels" time="2.525611247" /><testcase name="UserGroup.testUserGroupSmoke" time="1.747129477" /><testcase name="UserGroup.testUserGroupUpdateChannelsSucceeds" time="0.410374306" /></testsuite></testsuites>

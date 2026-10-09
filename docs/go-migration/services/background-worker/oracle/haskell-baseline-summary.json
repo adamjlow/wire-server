@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "result": "failed",
+  "original_cases": 47,
+  "passed": 45,
+  "failures": [
+    "Migration.User.testReindexingUsersDuringMigration",
+    "Migration.User.testUserMigrationToPostgres"
+  ],
+  "cleanup_exit_code": 0,
+  "reference_implementations": "all-haskell",
+  "findings": [
+    "DNS-dependent domain-registration and MLS migration original assertions passed; initial failures isolated.",
+    "UserMigrationToPostgres failed getting SCIM token before migration; ReindexingUsersDuringMigration failed contact search. Underlying Haskell service HTTP500/Cassandra errors recorded; these are not passes.",
+    "Earlier mixed run passed both failed user cases. Next baseline uses the corrected DNS fixture and identified five Go peers, the intended starting tuple.",
+    "Intermediate DNS attempt stopped before suite execution after detecting implicit default network. Cleanup0; validator now rejects missing/undeclared networks. Restarted actual networks all Internal=true."
+  ]
+}
