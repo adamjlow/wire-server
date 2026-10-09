@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "id": "background-worker-inventory-gate",
+  "title": "Publish background-worker inventory and queue finite contract work",
+  "service": "framework",
+  "kind": "framework",
+  "status": "queued",
+  "owner": null,
+  "branch": null,
+  "depends_on": [
+    "background-worker-inventory"
+  ],
+  "write_paths": [
+    ".migration/tasks/background-worker-inventory-gate.json",
+    ".migration/services/background-worker.json",
+    ".migration/tasks/background-worker-contract.json",
+    "docs/go-migration/plans/background-worker.md"
+  ],
+  "plan": "docs/go-migration/plans/background-worker.md",
+  "acceptance_criteria": [
+    {
+      "id": "inventory",
+      "description": "Publish completed source inventory with adjacent inventoried stage; queue protected finite contract and original Haskell baseline work.",
+      "required_evidence": "Done inventory and actual discovery cited, no compatibility claim, contract acceptance preserves whole-service and original assertions; valid state/scope transition."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": ""
+}
