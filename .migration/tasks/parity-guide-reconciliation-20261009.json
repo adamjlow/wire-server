@@ -4,7 +4,7 @@
   "title": "Reconcile legacy parity guide and central compiler pin",
   "service": "framework",
   "kind": "framework",
-  "status": "active",
+  "status": "done",
   "owner": "codex",
   "branch": "go-migration",
   "depends_on": [
@@ -27,7 +27,18 @@
       "required_evidence": "Current central pin enforced; existing failed-capture regression and old-compiler rejection pass, guide links current Go1.26.9 original77/image receipts, no oracle/default/permission changes; link/scope/diff checks."
     }
   ],
-  "evidence": [],
-  "review": null,
-  "handoff": ""
+  "evidence": [
+    {
+      "criterion": "guide",
+      "result": "pass",
+      "command": "Central compiler pin enforced;9 existing/focused Python harness tests pass including failed-capture-no-pass and old compiler rejected before Docker/artifacts,7 relative guide links resolve, scope/diff checks pass. Guide reflects actual Go1.26.9 original77/image/private environment evidence and background-worker coverage limits; no protected assertion/default/permission changes or expensive service rerun.",
+      "revision": "f8e27a62456ed1372dd9cac6d94e7aa5f9445530",
+      "artifact": ".migration/reviews/parity-guide-reconciliation-20261009.md"
+    }
+  ],
+  "review": {
+    "by": "codex (self-review delegated by user)",
+    "artifact": ".migration/reviews/parity-guide-reconciliation-20261009.md"
+  },
+  "handoff": "Documentation reconciliation and necessary legacy compiler-guard correction complete. Create user-requested whole background-worker goal using ready executable plan; continue finite source inventory/reference/test reuse, no production or remote action."
 }
