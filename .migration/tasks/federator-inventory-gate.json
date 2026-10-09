@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "id": "federator-inventory-gate",
+  "title": "Publish federator inventory gate",
+  "service": "framework",
+  "kind": "framework",
+  "status": "queued",
+  "owner": null,
+  "branch": null,
+  "depends_on": [
+    "federator-inventory"
+  ],
+  "write_paths": [
+    ".migration/tasks/federator-inventory-gate.json",
+    ".migration/services/federator.json"
+  ],
+  "plan": "docs/go-migration/plans/federator.md",
+  "acceptance_criteria": [
+    {
+      "id": "inventory",
+      "description": "Publish inventoried stage from completed source discovery without compatibility claim.",
+      "required_evidence": "Reviewed done inventory and valid adjacent state/scope transition."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": ""
+}
