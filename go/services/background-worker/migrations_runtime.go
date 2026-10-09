@@ -11,7 +11,7 @@ import (
 )
 
 func (s *Service) runMigrations(ctx context.Context) {
-	if !s.Config.MigrateBlockList && !s.Config.MigratePasswordReset && !s.Config.MigrateCodes && !s.Config.MigrateDomains && !s.Config.MigrateTeamFeatures && !s.Config.MigrateUsers {
+	if !s.Config.MigrateBlockList && !s.Config.MigratePasswordReset && !s.Config.MigrateCodes && !s.Config.MigrateDomains && !s.Config.MigrateTeamFeatures && !s.Config.MigrateUsers && !s.Config.MigrateConversations {
 		return
 	}
 	var session, galley *gocql.Session
@@ -38,7 +38,7 @@ func (s *Service) runMigrations(ctx context.Context) {
 				continue
 			}
 		}
-		if galley == nil && (s.Config.MigrateCodes || s.Config.MigrateTeamFeatures) {
+		if galley == nil && (s.Config.MigrateCodes || s.Config.MigrateTeamFeatures || s.Config.MigrateConversations) {
 			var err error
 			galley, err = openCassandra(s.Galley.Cassandra)
 			if err != nil {
@@ -92,6 +92,10 @@ func (s *Service) runMigrations(ctx context.Context) {
 	}
 	if s.Config.MigrateUsers {
 		start("users", session, s.migrateUsers)
+	}
+	if s.Config.MigrateConversations {
+		start("local_convs", galley, s.migrateConversations)
+		start("user_remote_convs", galley, s.migrateRemoteMemberships)
 	}
 	wg.Wait()
 }

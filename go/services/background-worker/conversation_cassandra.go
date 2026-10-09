@@ -5,7 +5,6 @@ import (
 	"context"
 	"errors"
 	"math"
-	"strings"
 	"time"
 
 	"github.com/apache/cassandra-gocql-driver/v2"
@@ -206,75 +205,33 @@ func (s cassandraConversationStore) Conversation(ctx context.Context, id string)
 }
 
 func (s cassandraConversationStore) localMembers(ctx context.Context, cid gocql.UUID) ([]localConversationMember, error) {
-	var parent *gocql.UUID
-	err := s.query(ctx, `SELECT parent_conv FROM conversation WHERE conv=?`, cid).Scan(&parent)
-	if err != nil && !errors.Is(err, gocql.ErrNotFound) {
-		return nil, errors.New("Cassandra conversation parent query failed")
+	rows, err := readConversationMigrationMembers(ctx, cid, conversationMigrationCassandraQuery(s.Session))
+	if err != nil {
+		return nil, err
 	}
-	ids := []gocql.UUID{cid}
-	if parent != nil {
-		ids = append(ids, *parent)
-	}
-	members := []localConversationMember{}
-	seen := make(map[string]bool)
-	for _, id := range ids {
-		iter := s.query(ctx, `SELECT user,service,provider,status,otr_muted_status,otr_muted_ref,otr_archived,otr_archived_ref,hidden,hidden_ref,conversation_role FROM member WHERE conv=?`, id).Iter()
-		values := nullableCassandraRow("user", "service", "provider", "status", "otr_muted_status", "otr_muted_ref", "otr_archived", "otr_archived_ref", "hidden", "hidden_ref", "conversation_role")
-		for iter.MapScan(values) {
-			unwrapCassandraRow(values)
-			status, ok := cqlInteger(values["status"])
-			if ok && status == 0 {
-				user, valid := cqlUUID(values["user"])
-				if !valid || !user.Valid {
-					_ = iter.Close()
-					return nil, errors.New("invalid Cassandra conversation member")
-				}
-				uid := postgresUUIDString(user)
-				if !seen[uid] {
-					member := localConversationMember{ID: uid, Role: "wire_admin"}
-					if values["conversation_role"] != nil {
-						member.Role, valid = values["conversation_role"].(string)
-						if !valid || !validConversationRole(member.Role) {
-							_ = iter.Close()
-							return nil, errors.New("invalid Cassandra member role")
-						}
-					}
-					service, serviceOK := cqlUUID(values["service"])
-					provider, providerOK := cqlUUID(values["provider"])
-					if !serviceOK || !providerOK {
-						_ = iter.Close()
-						return nil, errors.New("invalid Cassandra bot service")
-					}
-					if service.Valid && provider.Valid {
-						member.Service, member.Provider = stringPtr(postgresUUIDString(service)), stringPtr(postgresUUIDString(provider))
-					}
-					members = append(members, member)
-					seen[uid] = true
-				}
-			}
-			values = nullableCassandraRow("user", "service", "provider", "status", "otr_muted_status", "otr_muted_ref", "otr_archived", "otr_archived_ref", "hidden", "hidden_ref", "conversation_role")
+	members := make([]localConversationMember, len(rows))
+	for i, row := range rows {
+		member := localConversationMember{ID: postgresUUIDString(row.User), Role: row.Role}
+		if row.Service.Valid && row.Provider.Valid {
+			member.Service, member.Provider = stringPtr(postgresUUIDString(row.Service)), stringPtr(postgresUUIDString(row.Provider))
 		}
-		if iter.Close() != nil {
-			return nil, errors.New("Cassandra member query failed")
-		}
+		members[i] = member
 	}
 	return members, nil
 }
 
 func (s cassandraConversationStore) remoteMembers(ctx context.Context, cid gocql.UUID) ([]remoteConversationMember, error) {
-	iter := s.query(ctx, `SELECT user_remote_domain,user_remote_id,conversation_role FROM member_remote_user WHERE conv=?`, cid).Iter()
-	members := []remoteConversationMember{}
-	var domain, role string
-	var user gocql.UUID
-	for iter.Scan(&domain, &user, &role) {
-		if !validDomain(domain) || !validConversationRole(role) {
-			_ = iter.Close()
-			return nil, errors.New("invalid Cassandra remote member")
-		}
-		members = append(members, remoteConversationMember{User: qualifiedUser{ID: user.String(), Domain: strings.ToLower(domain)}, Role: role})
+	rows, err := conversationMigrationCassandraQuery(s.Session)(ctx, conversationMigrationRemoteSelect, []string{"user_remote_domain", "user_remote_id", "conversation_role"}, 1, cid)
+	if err != nil {
+		return nil, err
 	}
-	if iter.Close() != nil {
-		return nil, errors.New("Cassandra remote member query failed")
+	members := make([]remoteConversationMember, len(rows))
+	for i, row := range rows {
+		member, err := decodeConversationMigrationRemote(row)
+		if err != nil {
+			return nil, err
+		}
+		members[i] = remoteConversationMember{User: qualifiedUser{ID: postgresUUIDString(member.User), Domain: member.Domain}, Role: member.Role}
 	}
 	return members, nil
 }

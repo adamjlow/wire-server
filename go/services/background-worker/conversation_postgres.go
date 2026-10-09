@@ -6,6 +6,7 @@ import (
 	"errors"
 	"strings"
 	"time"
+	"unicode/utf8"
 
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgtype"
@@ -125,7 +126,7 @@ func (s *postgresStore) conversationOnce(ctx context.Context, id string) (*store
 		var mutedRef, archivedRef, hiddenRef, role *string
 		var archived, hidden *bool
 		err = locals.Scan(&memberConv, &user, &service, &provider, &muted, &mutedRef, &archived, &archivedRef, &hidden, &hiddenRef, &role)
-		if err != nil || !memberConv.Valid || !user.Valid || role != nil && !validConversationRole(*role) {
+		if err != nil || !memberConv.Valid || !user.Valid || role != nil && !utf8.ValidString(*role) {
 			locals.Close()
 			return nil, postgresFailure(err, "invalid stored local conversation member")
 		}
@@ -167,7 +168,7 @@ func (s *postgresStore) conversationOnce(ctx context.Context, id string) (*store
 		var memberConv, user pgtype.UUID
 		var domain, role string
 		err = remotes.Scan(&memberConv, &domain, &user, &role)
-		if err != nil || !memberConv.Valid || !user.Valid || !validDomain(domain) || !validConversationRole(role) {
+		if err != nil || !memberConv.Valid || !user.Valid || !validDomain(domain) || !utf8.ValidString(role) {
 			remotes.Close()
 			return nil, postgresFailure(err, "invalid stored remote conversation member")
 		}

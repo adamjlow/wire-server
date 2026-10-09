@@ -63,7 +63,7 @@ func (s *Service) runJobs(ctx context.Context) {
 				}
 				continue
 			}
-			postgres.CassandraCleanup = cassandraConversationStore{Session: galley}
+			postgres.CassandraCleanup = migratedConversationCleanup{Cassandra: cassandraConversationStore{Session: galley}, Postgres: postgres}
 		}
 		conn, err := s.openRabbit(ctx, "background-job-consumer")
 		if err == nil {

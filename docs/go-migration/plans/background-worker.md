@@ -13,8 +13,7 @@ starting mixed-deployment baseline. The service is inventoried and its finite
 reference contract is frozen with explicit baseline limitations. Go construction
 now includes a runnable notification pusher and Cassandra dead-user watcher, plus
 connected background-job consumption, conversation-storage/notification adapters
-and six migration families. Scheduled jobs and conversation migration are
-under construction.
+and all seven migration families. Scheduled jobs remain under construction.
 Whole-service parity is not yet claimed; the task record owns current status.
 
 ## Whole-service boundary to inventory
@@ -130,174 +129,68 @@ original124 tests must still pass before qualification. Proceed to the early
 runnable worker and whole contracted implementation; do not repeat broad baselines
 without a concrete change. Final switchback remains outstanding.
 
-Current implementation and retained validation:
+## Current implementation and retained validation
 
-- The notification pusher, dead-user watcher and background-job consumer run;
-  readiness tracks all three Rabbit concerns. Six database migration families
-  are connected; unfinished conversation migration rejects startup.
-  Source HTTP2 delivery, version rules, retry/ACK behavior, verified AMQP TLS,
-  missed-notification writes and malformed input are covered by focused tests.
-- Rabbit background-job parsing/session/retries/metrics and both group-sync
-  algorithms are implemented. PostgreSQL conversation/member reads and writes,
-  administrative-shutdown retries, local Gundeck pushes and modern/legacy remote
-  notifications are implemented. The real job consumer is now connected with a
-  separate publisher channel and all three conversation storage modes.
-- Cassandra conversation/member reads, bound logged membership batches, reverse
-  indexes and the source year3000 deletion tombstone are implemented. Nullable
-  decoding explicitly distinguishes NULL from scalar zero; default driver map
-  scans otherwise lose this distinction. Immediate x1 and deterministic x5
-  retry timing follow the source.
-- Bot callbacks use real Cassandra service lookup, independent process lifetime,
-  Bearer-authenticated HTTPS and native RSA fingerprints. The fingerprint test
-  uses the existing public mock-service fixture and an independently computed
-  OpenSSL BN_bn2mpi digest. Real loopback TLS tests cover valid pinned self-signed
-  delivery, wrong pins, expired/tampered certificates, source callback path,
-  attempt cancellation, disabled/missing services and finite HTTP retries.
-  These are construction checks, not actual original group/database E2E proof.
+The runnable notification pusher, dead-user watcher and Rabbit background-job
+consumer implement source delivery, TLS, retry/ACK and group synchronization
+contracts. Conversation storage, notifications, bot callbacks, administrative
+PostgreSQL retries and Cassandra cleanup are connected. Readiness tracks the
+three Rabbit concerns. These are construction claims; final whole-service parity
+and operational qualification have not passed.
 
-The early clean static executable from bdfb252dc3e1a87c14eb282ef6982e3d3194548b
-matched retained Haskell health200/empty, returned500 for unstarted workers and
-SIGTERM exited0 in0.0011s. This limited process comparison is retained in
-[module evidence](../../../go/services/background-worker/evidence/early-20261009/).
-It is not the final loaded operations smoke or durable switchback.
+All seven optional migration families are connected: block lists, password resets,
+conversation codes, domain registration, team features, users and conversations.
+User copy preserves native SSO/scalars/assets, related service/handle/rich-info
+reads, claim validation, Serializable PG transaction and pending deletion, then
+Cassandra cleanup and ledger completion. Conversation migration starts the native
+independent local-conversation and remote-membership scans, with typed paged IDs,
+bounded per-page execution, exclusive locks and source timeout/retry rules.
+Local ReadCommitted copy includes member status, remote members, ordered
+subconversations and native MLS/history client handling. Per-table conflict rules,
+NULL vs empty values, default access/role sets, inactive MLS data and cleanup
+ordering follow the source. Pending cleanup retains the ledger on failures.
 
-The original owned gundeck40 run with only Go worker and remaining Haskell peers
-is terminal: strict XML40 cases,38 pass,2 fail and cleanup0. The queue-deletion
-case encountered a wrong federation version header before testing recovery;
-6198c021681272d66c57b32633594a4487847b81 corrected the candidate to native decimal
-versionInt, including unversioned0. The other failure was the missing
-background-jobs queue from the unfinished consumer. Retained
-[watcher evidence](../../../go/services/background-worker/evidence/watcher-20261009/)
-identifies the exact failed artifact and actual execution. The controller's outer
-false execution flag denotes failed qualification; inner receipts/XML establish
-actual suite execution. Both cases now pass in the unchanged original40 rerun against clean source
-00557161c5218fba7ce290ba57536561298a35e3, with only Go worker and Haskell peers.
-Strict XML40/40 and owned cleanup0 are retained in module evidence/jobs-original-20261009.
-The original failure history remains valid for its earlier exact artifact.
+The latest construction checks are retained in
+[local conversation evidence](../../../go/services/background-worker/evidence/local-conversation-migration-20261009/).
+Pinned Go1.26.9 format/tidy/verify/vet/unit/race/build/security/license checks pass
+for its exact source-file identities. Focused tests cover concrete parsing, TLS,
+transaction/cleanup, timeout, ordering and concurrency risks. Historical checkpoint
+receipts describe their own tested inputs, not current availability or full parity.
+No new dependency, Haskell/oracle/schema change or scanner suppression.
 
-Partial check/source receipts are retained in module evidence/group-jobs-20261009,
-conversation-adapters-20261009, cassandra-bots-20261009 and migration-routing-20261009. They do not establish
-whole-service parity or a final executable. Protected original assertions and
-schemas are unchanged. No availability/image/selector/compatibility claim is made.
+The early static executable matched Haskell health200/empty, unstarted readiness500
+and SIGTERM exit0. This is limited process evidence, not final loaded operations.
+The identified original gundeck40 run with only Go worker/Haskell peers passed40/40
+on00557161c5218fba7ce290ba57536561298a35e3, with owned cleanup0 and empty project
+labels. Earlier38/40 failure evidence remains retained. That passing run predates
+later migrations and validates notification/DLQ/queue lifecycle only; it does not
+qualify the current binary or scheduled worker.
 
-Conversation routing now uses source shared UUID advisory locks, a500ms acquisition
-budget and pending-delete cleanup before reads/writes. Incomplete MLS writes route
-by PG EXISTS rather than read success. Failed Cassandra cleanup retains the PG
-ledger; cleanup loads native subgroup/group/client data before deletion. Focused
-routing/failure tests and full Go checks/final race tests pass. Actual database
-lock/durable effects are not yet verified in Docker.
+The original users2 run on568810e637d656f08d54789b5d9408e83c5c53bc passed1/2.
+Main migration case fails SCIM GET500 in runPhase2 before migrateUsers enables;
+the reindexing case passes but never enables migration. Neither case exercised
+the new user DB path. [Exact evidence](../../../go/services/background-worker/evidence/user-original-20261009/)
+retains XML, build/environment identities, cleanup0 and empty project labels.
+Resolve this failure before qualification; do not waive it or repeat unchanged
+expensive tests without a repair. Actual migration effects remain unverified.
 
-The unchanged original gundeck40 rerun passed40/40 against clean worker source
-00557161c5218fba7ce290ba57536561298a35e3. It includes real job startup and migration
-routing, but no subsequent scheduled construction. This is notification/DLQ/queue
-lifecycle proof; original group business/storage, worker47 and final six-Go124
-remain outstanding. Actual owned container/network/volume cleanup was verified.
-
-Scheduled construction now has source queue-specific payload decoding and native
-gateless single-job claim, heartbeat and retry SQL with attempt/lease guards.
-Worker registration/heartbeat with effective worker/queue pause and shutdown/remove
-methods are also constructed. Original Arbiter MIT notices are retained. Full Go
-checks/final format-vet-race pass; actual PG behavior
-and the scheduled runtime are not yet tested/connected. Evidence is in module
-evidence/scheduled-store-20261009. Complete schema bootstrap, worker registration,
-ACK/archive/reaper/cron and domain handlers before enabling scheduled execution.
-
-Complete user and conversation migrations and Arbiter scheduled adminless/meetings
-jobs, then consolidate startup/supervision/logging and graceful drain.
-Final exact six-Go original124 tests, actual durable Haskell->Go->Haskell
-switchback, bounded operations, optional image/selector and delegated review remain
-mandatory. Native local Haskell build checks remain unavailable/unrun.
+Scheduled payloads, Arbiter claims/heartbeat/retry/ACK/worker registration,
+sibling locking/wakeup and archive retention are constructed. Schema setup,
+reaper/cron, adminless/meetings domain handlers and scheduled runtime are unfinished.
+Next validate the connected conversation path with the existing original MLS test,
+then complete scheduled jobs and consolidate source startup/supervision/logging
+and graceful drain. Final original47/exact six-Go124, actual durable
+Haskell->Go->Haskell switchback, bounded operations, optional image/selector and
+delegated same-author review remain mandatory. Native local Haskell build checks
+remain unavailable/unrun. Service/task/goal remain active; Haskell stays default,
+with no compatibility or availability claim.
 
 Serious inherited concerns include PostgreSQL sslmode=prefer plaintext fallback,
 transient/unconfirmed child-job publication, write-before-notification loss on
 retry, poison-job requeue loops and bot pin authentication without hostname checks.
-Native RSA-only bot TLS also permits finite-DHE AEAD cipher suites that Go's TLS
-library does not implement; legacy providers supporting only those suites may
-need configuration updates. No production security policy change is authorized.
-
-Block-list, password-reset, conversation-code, domain-registration and
-team-feature migration loops are now constructed and connected, with source typed-page decoding, TTL/legacy handling,
-bound upserts, full rescans on PG usage errors, fatal timeout and metric behavior.
-Stored password hashes are canonicalized without KDF work. Native CQL ASCII text
-bypasses API alphabet validation; the candidate now preserves that distinction
-and native code-length ranges. The other two enabled migration flags still
-reject startup explicitly. Scheduled optimistic ACK, parent
-sibling locking/suspension/wakeup and archive retention are also constructed.
-Full Go checks pass for module evidence/domain-feature-migrations-20261009 inputs;
-actual migration DB behavior and scheduled ACK remain untested, and scheduled
-runtime remains disconnected. Final original124/operations/switchback are required.
-
-Domain challenges and registrations follow the source ordered two-phase scan,
-with independent lock acquisition/row timeout budgets and current-row reread
-under an exclusive lock. Team features preserve existing PG rows, nullable patches
-and generic JSON configuration. Both use native hashable1.5.1.0 XXH3 UTF8 lock keys;
-independent C hash vectors are retained with the source citation. Stored HTTPS
-URL serialization follows the native URI library, whose BSD3 notice is retained
-alongside Arbiter MIT. Native IPv6 serialization removes brackets and may produce
-invalid/ambiguous stored URLs; this inherited data-format concern is documented.
-Native library execution and actual migration DB effects remain unrun.
-
-User migration storage construction now has the native Serializable PG transaction:
-duplicate-handle check, deleted-user vs deleted-bot branches, optional asset
-replacement, live bot-conversation insert and pending-delete ledger. PG commit
-precedes sequential Cassandra cleanup and ledger completion; failures retain
-source data/pending state. Same-session serialization/deadlock retries match
-pinned Hasql1.2.2 transaction semantics. Full Go checks pass for module
-evidence/user-migration-store-20261009 inputs. At that checkpoint user decoding,
-related Cassandra reads, bounded parallel locked scan and runtime wiring remained
-unfinished; subsequent decoding progress is recorded below. The
-user migration flag still rejects startup. Actual database effects remain unrun.
-
-User migration decoding construction now preserves scalar defaults/nulls and
-activated microsecond timestamps, nullable asset UDT fields, filtered invalid
-assets, canonical email/password, picture/rich-info JSON and pinned source ISO
-locale enums. The source's203 imported literal email validity cases and idempotence
-expectations pass alongside actual driver CQL wire-decoding checks; seven native
-cases remain unimported and the entire native package suite was not executed.
-Full Go checks pass (module evidence/user-migration-values-20261009). Email BSD3
-notice is retained for eventual binary/image distribution. SSO and related CQL
-reads, handle claims, complete user construction and parallel locked runtime scan
-are unfinished; the user migration flag still rejects startup. Actual DB effects
-and final E2E/operations/switchback remain unrun.
-
-The migration engine now supports native bounded per-page concurrency for the
-unfinished user and conversation scans. It finishes and joins each page before
-fetching another, cancels and joins siblings on fatal errors, and retains full
-rescans after caught PG/lock errors. The five connected migration families remain
-sequential. Full Go checks and focused concurrency/failure tests pass for module
-evidence/parallel-migrations-20261009 inputs. Neither unfinished migration is
-enabled by this checkpoint; SSO/related user reads and full conversation storage
-migration are still required. Actual DB and final qualification remain unrun.
-
-User migration is now connected end to end in construction: typed SSO/scalar/
-asset decoding, related service/handle/rich-info reads, claim-based handle retention,
-validated paged ID scan and bounded per-page pool, ten-second exclusive UUID lock,
-independent row timeout, Serializable PG copy/pending ledger, sequential CQL cleanup
-and ledger completion. Three original UserSSOId JSON goldens are reused directly
-with exact XML strings. Full Go checks and focused read/claim/lock/failure tests
-pass for module evidence/user-migration-runtime-20261009 inputs. Six families are
-connected; conversation migration alone still rejects startup. Native package
-execution and actual user DB/original migration validation remain unrun at this
-checkpoint; next use the existing background-worker-users original profile.
-Whole scheduled runtime and final qualification remain required.
-
-The identified static worker from568810e637d656f08d54789b5d9408e83c5c53bc executed
-unchanged original background-worker-users:1/2 pass, no errors/skips, cleanup0 and
-empty owned project labels. Main user test fails SCIM GET500 in runPhase2 (source
-User.hs:138), before its migrateUsers flag enables at phase3. Reindexing passes
-but never enables migration either. Thus neither assertion validates the newly
-connected user DB path; actual effects remain unproved. Module evidence/user-original-20261009
-retains exact receipts/XML and this limitation. Resolve the pre-enable failure;
-final original47 includes further user migration cases and remains mandatory.
-
-Conversation migration construction now includes the independent remote-member
-loop: native1001/1000 cursor scan/current status rereads/domain pool8, typed nullable
-status defaults and folded domains, ReadCommitted PG copy plus pending-delete
-ledger, exclusive UUID lock/row timeout, x5 CQL deletion and ledger completion after
-lock release. MLS client/history lookup and source ClientMap/IndexMap filtering
-are constructed, including native history precedence and active-identity pending
-state. Full Go checks/focused cursor/lock/failure/SQL/MLS tests pass for module
-evidence/conversation-membership-mls-20261009 inputs. Actual effects remain unrun;
-these components are not started until the complete local conversation/member/
-subconversation/group-state copy and cleanup are connected. Conversation flag
-still rejects startup; scheduled runtime and final qualification remain required.
+Native RSA-only bot TLS permits finite-DHE AEAD suites absent from Go TLS; providers
+supporting only those suites have an unresolved interoperability limitation.
+Native URI IPv6 serialization removes brackets and can produce ambiguous stored
+URLs. Keep these findings separate from the parity implementation; no production
+security policy change is authorized. Eventual distribution must include retained
+email/URI BSD3 and Arbiter MIT notices.
