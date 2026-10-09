@@ -4,7 +4,7 @@
   "title": "Coordinate MLS peer regression repair before worker qualification",
   "service": "framework",
   "kind": "framework",
-  "status": "active",
+  "status": "done",
   "owner": "codex",
   "branch": "go-migration",
   "depends_on": [
@@ -25,7 +25,18 @@
       "required_evidence": "Actual failing original single case and successful Haskell counterpart; historical gates preserved, no source/default change, no invented attribution or compatibility."
     }
   ],
-  "evidence": [],
-  "review": null,
-  "handoff": ""
+  "evidence": [
+    {
+      "criterion": "coordination",
+      "result": "pass",
+      "command": "Inspected actual isolated original MLS failure and successful Haskell counterpart, cleared suspected federator claim without rewriting historical gates, queued bounded diagnostic/correction/qualification task. Scope/diff/state checks pass; no attribution/default/schema/oracle change.",
+      "revision": "35551ce0e089a4930273ab2371b57737a877ed89",
+      "artifact": ".migration/reviews/federator-mls-coordination.md"
+    }
+  ],
+  "review": {
+    "by": "codex (self-review delegated by user)",
+    "artifact": ".migration/reviews/federator-mls-coordination.md"
+  },
+  "handoff": "Diagnose/correct original MLS dependency, qualify exact repaired artifacts, then resume whole-worker contract/implementation. Goal active; no external blocker."
 }
