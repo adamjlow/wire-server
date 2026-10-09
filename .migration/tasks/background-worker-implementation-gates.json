@@ -4,7 +4,7 @@
   "title": "Publish worker finite contract and executable implementation-plan gates",
   "service": "framework",
   "kind": "framework",
-  "status": "active",
+  "status": "done",
   "owner": "codex",
   "branch": "go-migration",
   "depends_on": [
@@ -23,7 +23,18 @@
       "required_evidence": "Exact done source/observed contract, original baseline failure limitations transparent, Go tooling and whole-service plan; no compatibility claim."
     }
   ],
-  "evidence": [],
-  "review": null,
-  "handoff": ""
+  "evidence": [
+    {
+      "criterion": "gates",
+      "result": "pass",
+      "command": "Reviewed completed whole reference contract and source discovery/executable plan; baseline failure limitation and strict final acceptance retained, pinned toolchain; adjacent contracted then implementing state and scope checks pass, no compatibility claim.",
+      "revision": "34b78a1838793d552d622673a4e2869f852d9bb4",
+      "artifact": ".migration/services/background-worker.json"
+    }
+  ],
+  "review": {
+    "by": "codex (self-review delegated by user)",
+    "artifact": ".migration/reviews/background-worker-contract.md"
+  },
+  "handoff": "Implement early runnable whole worker; final exact tests, security, durable switchback and optional selector still unproved."
 }

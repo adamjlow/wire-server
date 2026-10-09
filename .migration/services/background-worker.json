@@ -2,7 +2,7 @@
   "schema_version": 1,
   "service": "background-worker",
   "reference_path": "services/background-worker",
-  "stage": "contracted",
+  "stage": "implementing",
   "oracle_paths": [
     "services/background-worker",
     "docs/go-migration/services/background-worker/contract.md",
@@ -14,6 +14,9 @@
     ],
     "contract": [
       "background-worker-contract"
+    ],
+    "plan": [
+      "background-worker-inventory"
     ]
   },
   "compatibility": null
