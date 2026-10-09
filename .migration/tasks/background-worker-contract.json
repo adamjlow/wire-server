@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "id": "background-worker-contract",
+  "title": "Freeze whole background-worker contract and original Haskell baseline",
+  "service": "background-worker",
+  "kind": "contract-change",
+  "status": "queued",
+  "owner": null,
+  "branch": null,
+  "depends_on": [
+    "background-worker-inventory",
+    "background-worker-inventory-gate"
+  ],
+  "write_paths": [
+    ".migration/tasks/background-worker-contract.json",
+    "docs/go-migration/services/background-worker/contract.md",
+    "docs/go-migration/services/background-worker/oracle",
+    "docs/go-migration/plans/background-worker.md",
+    ".migration/reviews/background-worker-contract.md",
+    "tools/parity/docker",
+    "tools/parity/test_harness.py",
+    "changelog.d/5-internal/background-worker-contract"
+  ],
+  "plan": "docs/go-migration/plans/background-worker.md",
+  "acceptance_criteria": [
+    {
+      "id": "contract",
+      "description": "Freeze finite whole-service matrix and uncovered reference queue/storage/security behavior before candidate implementation.",
+      "required_evidence": "Source and actual Haskell observations resolve dual config/readiness, federation payload/version/ack/retry, DLQ writes, Rabbit group-sync jobs, Arbiter persisted payload/schema/claims, scheduled adminless/meeting effects and seven migration families; preserve existing schemas/assertions. Define bounded operations and Haskell-Go-Haskell switchback before measurement; reuse covered cases instead of duplicating them."
+    },
+    {
+      "id": "baseline",
+      "description": "Reuse relevant original compiled Haskell assertions in owned Docker environment and add strict sixth-service selection.",
+      "required_evidence": "Execute discovered relevant 47 functions against Haskell background-worker with exact peer/runner identities; inspect original XML for failures/errors/skips/missing cases and cleanup status. Reuse unchanged prior Haskell-worker event evidence where appropriate, explicitly record any additional environment setup required. Add background-worker and six-Go profile through existing strict host/runtime/runner selection without weakening earlier profiles or original assertions."
+    },
+    {
+      "id": "validation",
+      "description": "Harness changes receive focused checks and delegated same-author review; no candidate compatibility claimed.",
+      "required_evidence": "Actual focused harness and framework tests, pinned input/build receipt, scope/diff review, protected reference material independent of future implementation, trusted TLS/private synthetic dependencies and owned cleanup. Native Haskell tools absent recorded; defaults/reference sources unchanged."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": "Run original Haskell baseline and inspect actual Arbiter queue/schema plus uncovered wire/storage behavior. Keep finite acceptance, then claim an early runnable Go slice; no notification-only completion."
+}

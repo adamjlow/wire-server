@@ -9,7 +9,7 @@ Haskell removal or contract/security exception is authorized.
 Reference: f6636ed53315fa7b0fc4c8aa39c0bb30c98b6d5e. Current optional compiler:
 Go 1.26.9, GOTOOLCHAIN=local/GOWORK=off. Existing five Go peers and their exact
 [patched artifact tuple](../qualifications/go-patched-20261009/README.md) are the
-starting mixed-deployment baseline. The service remains registered pending publication of the completed inventory gate;
+starting mixed-deployment baseline. The service is inventoried. The protected contract/reference-baseline task is queued;
 no contract, implementation or background-worker parity is yet claimed.
 
 ## Whole-service boundary to inventory
@@ -106,3 +106,9 @@ Rabbit job payloads synchronize user groups/channels; scheduled PostgreSQL jobs
 cover adminless setup/deletion/reminder and meetings. Inventory identifies whole
 source boundary and concrete risks; next step freezes actual original baseline
 and compatible Arbiter schemas before Go qualification.
+
+Inventory publication: the completed [inventory](../services/background-worker/inventory.md)
+and [actual discovery](../services/background-worker/test-discovery.json) are
+recorded by the inventoried service gate. Next task is
+`background-worker-contract`; its finite acceptance covers the original 47
+functions, actual persisted queue/schema behavior and strict six-service selection.
