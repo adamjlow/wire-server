@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "id": "federator-implementation",
+  "title": "Build and qualify optional whole-service Go federator",
+  "service": "federator",
+  "kind": "implementation",
+  "status": "queued",
+  "owner": null,
+  "branch": null,
+  "depends_on": [
+    "federator-contract",
+    "federator-implementation-gates",
+    "go-toolchain"
+  ],
+  "write_paths": [
+    ".migration/tasks/federator-implementation.json",
+    "go/services/federator",
+    "docs/go-migration/plans/federator.md",
+    "changelog.d/5-internal/federator-implementation"
+  ],
+  "plan": "docs/go-migration/plans/federator.md",
+  "acceptance_criteria": [
+    {
+      "id": "service",
+      "description": "Whole-service APIs, per-request policy, DNS wire order, verified mTLS HTTP2 and ingress identity/streaming/errors match reference.",
+      "required_evidence": "Early runnable actual Haskell comparison then final exact-binary original77 with five-Go and frozen35 pass; protected assertions/defaults untouched."
+    },
+    {
+      "id": "quality",
+      "description": "Pinned format/build/vet/race/security and dependency checks pass.",
+      "required_evidence": "Actual final Go1.26.8 checks and meaningful TLS/hostname/domain/DNS/header/cancellation regressions; serious inherited concerns documented."
+    },
+    {
+      "id": "selection-rollback",
+      "description": "Optional nonroot image and default-preserving Helm selection work with whole-process rollback/drain.",
+      "required_evidence": "Actual image health/SIGTERM and chart lifecycle hook, default render/one selected image/fail-closed proof; Haskell->Go->Haskell unchanged configs and bounded loaded shutdown/one operations smoke."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": ""
+}
