@@ -1,7 +1,7 @@
 # Background-worker finite replacement contract
 
-Status: draft; the contract gate is unsatisfied until the running corrected mixed
-baseline and the declared review pass. Reference f6636ed53315fa7b0fc4c8aa39c0bb30c98b6d5e;
+Status: reference contract frozen after source/capture/coverage review. This is
+not candidate qualification or a passing whole-suite baseline. Reference f6636ed53315fa7b0fc4c8aa39c0bb30c98b6d5e;
 actual published executables and fixture identities are in oracle receipts.
 Haskell remains supported/default. This is a whole-service boundary.
 
@@ -23,8 +23,13 @@ DNS and MLS passed, two user tests failed with setup/search 500 and Cassandra
 errors; both passed in the initial mixed run. See the retained failed XML,
 receipts and summaries. None is a passing whole-suite baseline. The corrected mixed run passed 46/47, with only MLS creation returning 533
 again. Targeted original profiles now isolate the MLS case and the two user
-cases; failed reports remain retained. Investigate concrete failures, never skip
-them or widen an expected status.
+cases; failed reports remain retained. Original isolated five-Go MLS then passed
+twice with an unchanged categorized diagnostic executable. Every required case
+has a passing observation across identified runs (original-coverage.json); this
+does not establish one clean whole-suite baseline. The intermittent transport
+issue remains open, federator compatibility null, temporary diagnostics removed.
+Freeze source behavior independently and build the worker; final exact six-Go
+original124 tests must all pass. Never skip a case or widen an expected status.
 
 Final original selection is six Go services and remaining Haskell peers. The
 combined profile runs existing 77 plus worker 47 assertions (124 executions,

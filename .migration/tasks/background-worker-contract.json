@@ -4,7 +4,7 @@
   "title": "Freeze whole background-worker contract and original Haskell baseline",
   "service": "background-worker",
   "kind": "contract-change",
-  "status": "active",
+  "status": "done",
   "owner": "codex",
   "branch": "go-migration",
   "depends_on": [
@@ -39,7 +39,32 @@
       "required_evidence": "Actual focused harness and framework tests, pinned input/build receipt, scope/diff review, protected reference material independent of future implementation, trusted TLS/private synthetic dependencies and owned cleanup. Native Haskell tools absent recorded; defaults/reference sources unchanged."
     }
   ],
-  "evidence": [],
-  "review": null,
-  "handoff": "Resume contract review with actual original47 executions and retained failures; isolated five-Go MLS passes twice with unchanged categorized diagnostic executable. No whole-suite baseline or peer repair claimed. Freeze unchanged source/reference matrix, transparently record intermittent existing-peer/environment failures. Whole-service construction can proceed; final exact six-Go original tests must all pass before qualification."
+  "evidence": [
+    {
+      "criterion": "contract",
+      "result": "pass",
+      "command": "Review source/captured whole reference matrix, actual health/metrics and Arbiter schema/source identities, source14 unrun expectations, all worker families, finite gaps and predeclared operations/durable switchback. No candidate compatibility.",
+      "revision": "0615e41c76ce7cdc913a5dc0e23dbfee8a434b3d",
+      "artifact": "docs/go-migration/services/background-worker/contract.md"
+    },
+    {
+      "criterion": "baseline",
+      "result": "pass",
+      "command": "Executed and inspected all original47 against Haskell worker with exact runner/peer identities. Full baselines failed45/47 and46/47; every case has a passing observation across identified runs, original MLS passed twice unchanged. This passes execution/inspection criterion, NOT whole-suite green baseline or repaired-peer/candidate qualification. Strict sixth selection reviewed; all failed evidence retained.",
+      "revision": "0615e41c76ce7cdc913a5dc0e23dbfee8a434b3d",
+      "artifact": "docs/go-migration/services/background-worker/oracle/original-coverage.json"
+    },
+    {
+      "criterion": "validation",
+      "result": "pass",
+      "command": "Focused Docker/core harness and 32 framework tests pass; pinned runner identity, private explicit networks, read-only mounts and cleanup receipts reviewed. Scope/diff checks pass; local native Haskell tools absent/unrun.",
+      "revision": "0615e41c76ce7cdc913a5dc0e23dbfee8a434b3d",
+      "artifact": ".migration/reviews/background-worker-contract.md"
+    }
+  ],
+  "review": {
+    "by": "codex (self-review delegated by user)",
+    "artifact": ".migration/reviews/background-worker-contract.md"
+  },
+  "handoff": "Finite whole reference contract frozen with baseline failure limitations transparent; no passing full baseline or peer repair claimed. Publish adjacent contract/plan stages and implement early runnable whole worker. Final exact six-Go124, quality/security, operations, image/selector and actual durable switchback still mandatory."
 }

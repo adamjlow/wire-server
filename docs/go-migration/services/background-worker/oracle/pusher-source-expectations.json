@@ -1,0 +1,22 @@
+{
+  "source": "services/background-worker/test/Test/Wire/BackendNotificationPusherSpec.hs",
+  "sha256": "e337a7c2e0dc3e9fef0d5cb92cdded04ac79e80da06e1e9418f9b98241da4bd0",
+  "executed": false,
+  "reason": "Original compiled background-worker-test absent; native local Haskell toolchain absent. Protect source expectations as supplementary final candidate coverage.",
+  "expectations": [
+    "should default to keeping a notification queued when decoding a bundle without a policy",
+    "should use the safe keep-queued policy when combining bundles with different policies",
+    "should push notifications",
+    "bad request should not clog the queue",
+    "should push notification bundles",
+    "should negotiate the best version",
+    "should leave an unsupported notification queued by default",
+    "should drop an unsupported notification when configured",
+    "should deliver a compatible notification with the drop policy",
+    "should retry delivery failures instead of applying the drop policy",
+    "should reject invalid notifications",
+    "should retry failed deliveries",
+    "should parse remoteDomains from queues with name starting with 'backend-notifications.' and ignore the other queues",
+    "should retry fetching domains if a request fails"
+  ]
+}

@@ -9,8 +9,8 @@ Haskell removal or contract/security exception is authorized.
 Reference: f6636ed53315fa7b0fc4c8aa39c0bb30c98b6d5e. Current optional compiler:
 Go 1.26.9, GOTOOLCHAIN=local/GOWORK=off. Existing five Go peers and their exact
 [patched artifact tuple](../qualifications/go-patched-20261009/README.md) are the
-starting mixed-deployment baseline. The service is inventoried. The protected contract/reference-baseline task is queued;
-no contract, implementation or background-worker parity is yet claimed.
+starting mixed-deployment baseline. The service is inventoried. The finite reference contract is frozen with explicit baseline limitations;
+no implementation or background-worker parity is yet claimed.
 
 ## Whole-service boundary to inventory
 
@@ -112,3 +112,13 @@ and [actual discovery](../services/background-worker/test-discovery.json) are
 recorded by the inventoried service gate. Next task is
 `background-worker-contract`; its finite acceptance covers the original 47
 functions, actual persisted queue/schema behavior and strict six-service selection.
+
+Reference work completed: all original47 functions executed; full runs45/47 and
+46/47 failed and are retained. Case-level passing observations cover47/47 across
+identified runs; isolated five-Go MLS passed twice without a proven repair.
+Original-coverage.json explicitly disclaims a whole-suite green baseline. The
+existing-peer intermittent transport issue stays open with compatibility null;
+it does not alter the independently frozen worker contract. Final exact six-Go
+original124 tests must still pass before qualification. Proceed to the early
+runnable worker and whole contracted implementation; do not repeat broad baselines
+without a concrete change. No worker code or final switchback yet exists.
