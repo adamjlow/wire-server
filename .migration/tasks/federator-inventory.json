@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "id": "federator-inventory",
+  "title": "Inventory optional whole-service federator and finite original-test matrix",
+  "service": "federator",
+  "kind": "discovery",
+  "status": "queued",
+  "owner": null,
+  "branch": null,
+  "depends_on": [
+    "gundeck-completion"
+  ],
+  "write_paths": [
+    ".migration/tasks/federator-inventory.json",
+    "docs/go-migration/plans/federator.md",
+    "docs/go-migration/services/federator/inventory.md",
+    ".migration/reviews/federator-inventory.md",
+    "changelog.d/5-internal/federator-inventory"
+  ],
+  "plan": "docs/go-migration/plans/federator.md",
+  "acceptance_criteria": [
+    {
+      "id": "inventory",
+      "description": "Pin source and reusable original cases, forwarding/DNS/certificate/configuration/operations contract and finite uncovered matrix.",
+      "required_evidence": "Source citations and actual no-network compiled test discovery; executable next-slice plan and delegated self-review."
+    },
+    {
+      "id": "validation",
+      "description": "Bounded scope and migration framework remain valid.",
+      "required_evidence": "Actual migration-check/test and scope checks; Haskell/defaults unchanged."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": ""
+}
