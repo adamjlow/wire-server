@@ -35,8 +35,8 @@ def build(output):
     if command(["git", "status", "--porcelain"], cwd=ROOT):
         raise ValueError("image requires a clean committed checkout")
     revision = command(["git", "rev-parse", "HEAD"], cwd=ROOT)
-    if not re.fullmatch(r"[a-f0-9]{40}", revision) or command(["go", "version"]) != "go version go1.26.8 linux/amd64":
-        raise ValueError("image requires pinned Go 1.26.8 on linux/amd64")
+    if not re.fullmatch(r"[a-f0-9]{40}", revision) or command(["go", "version"]) != "go version go1.26.9 linux/amd64":
+        raise ValueError("image requires pinned Go 1.26.9 on linux/amd64")
     container = None
     try:
         with tempfile.TemporaryDirectory(prefix="wire-cargohold-image-") as directory:
@@ -46,7 +46,7 @@ def build(output):
             info = json.loads(command(["go", "version", "-m", "-json", str(files / "cargohold")]))
             settings = {v["Key"]: v["Value"] for v in info["Settings"]}
             if (settings.get("vcs.revision") != revision or settings.get("vcs.modified") != "false" or
-                settings.get("CGO_ENABLED") != "0" or info["GoVersion"] != "go1.26.8"):
+                settings.get("CGO_ENABLED") != "0" or info["GoVersion"] != "go1.26.9"):
                 raise ValueError("compiler receipt does not match clean source")
             container = command(["docker", "create", "--name", "wire-cargohold-ca-" + uuid.uuid4().hex,
                                  "--read-only", "--network=none", "--cap-drop=ALL", REFERENCE])

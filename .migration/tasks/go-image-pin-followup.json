@@ -4,7 +4,7 @@
   "title": "Keep optional image builders consistent with patched compiler pin",
   "service": "framework",
   "kind": "framework",
-  "status": "active",
+  "status": "done",
   "owner": "codex",
   "branch": "go-migration",
   "depends_on": [
@@ -32,7 +32,18 @@
       "required_evidence": "Minimal pin-only changes, existing Python builder/selection tests and syntax/scope checks; existing service artifacts require later patched rebuild, no qualification relabeling."
     }
   ],
-  "evidence": [],
-  "review": null,
-  "handoff": ""
+  "evidence": [
+    {
+      "criterion": "builders",
+      "result": "pass",
+      "command": "Minimal four compiler-string/README updates; tooling8/proxy3/cannon2 tests and four Python syntax checks pass; scope reviewed.",
+      "revision": "4a79cc40ad21cce82f85aa004130ceb8b28dd7a6",
+      "artifact": ".migration/reviews/go-image-pin-followup.md"
+    }
+  ],
+  "review": {
+    "by": "codex (self-review delegated by user)",
+    "artifact": ".migration/reviews/go-image-pin-followup.md"
+  },
+  "handoff": "Optional commands accept patched compiler; old image runtime security evidence is not renewed."
 }

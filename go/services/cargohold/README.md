@@ -8,7 +8,7 @@ and CloudFront signing. It is not yet a verified complete replacement. Audit
 logging, exact parser/failure behavior, full configuration/operation parity,
 packaging and the remaining finite supplemental/switchback checks remain.
 
-Use pinned Go 1.26.8 and the existing upstream cargohold YAML:
+Use pinned Go 1.26.9 and the existing upstream cargohold YAML:
 
 ```sh
 go build -o cargohold ./cmd/cargohold

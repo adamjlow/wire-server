@@ -12,7 +12,7 @@ It preserves existing schemas/configuration and reads legacy Redis fields/URI
 values. Presence API DELETE retains Haskell's no-op; delivery cleanup compares
 stored generations before deleting. See [security notes](SECURITY-NOTES.md).
 
-Use pinned Go1.26.8/GOTOOLCHAIN=local/GOWORK=off. The service entry point is
+Use pinned Go1.26.9/GOTOOLCHAIN=local/GOWORK=off. The service entry point is
 cmd/gundeck; check this module with `python3 go/check.py gundeck` from the repo root.
 Supply the existing config with `-c`/`--config-file`; default path is
 `/etc/wire/gundeck/conf/gundeck.yaml`. Existing environment credentials and verified

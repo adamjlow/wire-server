@@ -7,7 +7,7 @@ Haskell remains the default and behavioral reference. Exact tested identities,
 coverage and limitations are retained in the
 [comparison and approach review](../../../docs/go-migration/services/proxy/oracle/REVIEW.md).
 
-Use pinned Go 1.26.8; the only external module is YAML v3.0.4. From the root,
+Use pinned Go 1.26.9; the only external module is YAML v3.0.4. From the root,
 run `python3 go/check.py proxy` with the pinned toolchain on PATH for formatting,
 tidy/verify, vet, unit/race, executable build, vulnerability and license checks.
 Run `python3 -m unittest discover -s go/services/proxy -p 'test_*.py'` for

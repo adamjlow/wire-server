@@ -7,7 +7,7 @@ The finite plan and protected contract are under `docs/go-migration/services/can
 and `docs/go-migration/plans/cannon.md`. Exact qualification and limits are in
 [delegated review](REVIEW.md).
 
-Use pinned Go1.26.8 and the existing upstream YAML configuration and RabbitMQ
+Use pinned Go1.26.9 and the existing upstream YAML configuration and RabbitMQ
 credential environment. From this module:
 
 ```sh
