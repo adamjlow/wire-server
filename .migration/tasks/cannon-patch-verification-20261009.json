@@ -4,7 +4,7 @@
   "title": "cannon patched artifact verification",
   "service": "cannon",
   "kind": "verification",
-  "status": "active",
+  "status": "done",
   "owner": "codex",
   "branch": "go-migration",
   "depends_on": [
@@ -21,7 +21,18 @@
       "required_evidence": "Go1.26.9 quality/security/license/race checks, clean sourcec1120238f exact image/extracted-binary receipt, actual image lifecycle/default health, original77 five patched services/Haskell peers with exact selections/no skips/errors/process0/cleanup0. Historical unchanged contracts/storage/selector proofs reused; proxy formal GC diagnostic limitation remains."
     }
   ],
-  "evidence": [],
-  "review": null,
-  "handoff": ""
+  "evidence": [
+    {
+      "criterion": "patch",
+      "result": "pass",
+      "command": "Delegated same-author review of sourcec1120238f exact rebuilt image/extracted binary, Go1.26.9 quality/race/security/license clear, actual image health/default/nonroot/read-only/SIGTERM0 (and gundeck fixed lifecycle helper). Original77 with exact five patched selections/Haskell peers passes/no failures/errors/skips, process0/cleanup0. Unchanged historical contracts/storage/supplemental/Helm proofs reused; no full supplemental rerun or proxy formal contract exception claimed.",
+      "revision": "c1120238f8ecd7480742156df6c5dd2d2ec41f56",
+      "artifact": ".migration/reviews/go-patched-rebuild-20261009.md"
+    }
+  ],
+  "review": {
+    "by": "codex (self-review delegated by user)",
+    "artifact": ".migration/reviews/go-patched-rebuild-20261009.md"
+  },
+  "handoff": "Exact patched artifact verified for finite patch requalification. Historical evidence immutable, Haskell default and prior service scope unchanged; no further tests/push/production action."
 }
