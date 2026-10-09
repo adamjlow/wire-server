@@ -4,7 +4,7 @@
   "title": "Publish federator contract and implementation-plan gates",
   "service": "framework",
   "kind": "framework",
-  "status": "active",
+  "status": "done",
   "owner": "codex",
   "branch": "go-migration",
   "depends_on": [
@@ -23,7 +23,18 @@
       "required_evidence": "Done reference contract and executable finite inventory/plan, pinned Go tooling; legal scoped state transitions without compatibility claim."
     }
   ],
-  "evidence": [],
-  "review": null,
-  "handoff": ""
+  "evidence": [
+    {
+      "criterion": "gates",
+      "result": "pass",
+      "command": "Reviewed done finite contract and pinned tooling; adjacent contracted/implementing scope checks.",
+      "revision": "42a910881ed0b957254c2d066bed59fe67486016",
+      "artifact": ".migration/services/federator.json"
+    }
+  ],
+  "review": {
+    "by": "codex (self-review delegated by user)",
+    "artifact": ".migration/reviews/federator-contract.md"
+  },
+  "handoff": "Implementing; exact tested candidate gates required."
 }

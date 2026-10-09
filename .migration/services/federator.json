@@ -2,7 +2,7 @@
   "schema_version": 1,
   "service": "federator",
   "reference_path": "services/federator",
-  "stage": "contracted",
+  "stage": "implementing",
   "oracle_paths": [
     "services/federator",
     "docs/go-migration/services/federator/contract.md",
@@ -14,6 +14,9 @@
     ],
     "contract": [
       "federator-contract"
+    ],
+    "plan": [
+      "federator-inventory"
     ]
   },
   "compatibility": null
