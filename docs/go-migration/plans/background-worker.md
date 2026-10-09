@@ -132,9 +132,9 @@ without a concrete change. Final switchback remains outstanding.
 
 Current implementation and retained validation:
 
-- The notification pusher and dead-user watcher run; other worker readiness stays
-  tracked for all three Rabbit concerns. Enabled database migrations explicitly
-  reject startup while unfinished.
+- The notification pusher, dead-user watcher and background-job consumer run;
+  readiness tracks all three Rabbit concerns. Five database migration families
+  are connected; unfinished user and conversation migrations reject startup.
   Source HTTP2 delivery, version rules, retry/ACK behavior, verified AMQP TLS,
   missed-notification writes and malformed input are covered by focused tests.
 - Rabbit background-job parsing/session/retries/metrics and both group-sync
@@ -202,9 +202,9 @@ and the scheduled runtime are not yet tested/connected. Evidence is in module
 evidence/scheduled-store-20261009. Complete schema bootstrap, worker registration,
 ACK/archive/reaper/cron and domain handlers before enabling scheduled execution.
 
-Next consolidate startup/supervision/logging and graceful drain. Implement Arbiter
-scheduled adminless/meetings jobs and all seven migration
-families. Final exact six-Go original124 tests, actual durable Haskell->Go->Haskell
+Complete user and conversation migrations and Arbiter scheduled adminless/meetings
+jobs, then consolidate startup/supervision/logging and graceful drain.
+Final exact six-Go original124 tests, actual durable Haskell->Go->Haskell
 switchback, bounded operations, optional image/selector and delegated review remain
 mandatory. Native local Haskell build checks remain unavailable/unrun.
 
@@ -243,8 +243,9 @@ replacement, live bot-conversation insert and pending-delete ledger. PG commit
 precedes sequential Cassandra cleanup and ledger completion; failures retain
 source data/pending state. Same-session serialization/deadlock retries match
 pinned Hasql1.2.2 transaction semantics. Full Go checks pass for module
-evidence/user-migration-store-20261009 inputs. User decoding, related Cassandra
-reads, bounded parallel locked scan and runtime wiring remain unfinished; the
+evidence/user-migration-store-20261009 inputs. At that checkpoint user decoding,
+related Cassandra reads, bounded parallel locked scan and runtime wiring remained
+unfinished; subsequent decoding progress is recorded below. The
 user migration flag still rejects startup. Actual database effects remain unrun.
 
 User migration decoding construction now preserves scalar defaults/nulls and

@@ -1,6 +1,6 @@
 # Optional Go background-worker (under construction)
 
-This module is an early runnable slice, not an available service replacement.
+This module is under construction, not an available service replacement.
 Haskell remains the supported default. Both original configuration files and CLI
 paths are accepted. Health/readiness and the federation-notification consumer are
 implemented with verified RabbitMQ TLS, paginated queue discovery, single-active
@@ -11,12 +11,23 @@ The DLQ watcher now writes the existing Cassandra missed-notification state with
 LocalQuorum before ACK; transient mode1 is ignored/ACKed and malformed headers
 or write failures remain unacknowledged through channel reconnect.
 
-Rabbit group-sync jobs, PostgreSQL scheduled adminless/meetings
-workers and all seven migration families are still being implemented. Those unfinished workers
-remain unready; enabled migrations fail startup explicitly. This state
+Rabbit group-sync consumption is connected with PostgreSQL/Cassandra conversation
+storage, migration-aware routing and local, remote and pinned-TLS bot notification
+adapters. Five migration families are connected: block lists, password reset,
+conversation codes, domain registration and team features. User migration
+transaction/cleanup and value decoding are constructed, but its SSO decoding,
+related Cassandra reads and parallel locked scan remain unfinished. User and
+conversation migration flags explicitly reject startup.
+
+PostgreSQL scheduled adminless/meetings workers remain disconnected. Claim,
+heartbeat, retry and acknowledgement storage components exist; schema bootstrap,
+scheduled runtime and domain handlers remain unfinished. Actual database effects
+for these migration and scheduled components have not been validated. This state
 must not be selected for a deployment. Final acceptance remains the whole service
-in the frozen reference contract, original six-service tests and real durable
-Haskell-Go-Haskell switchback. There is no final compatibility or image claim.
+in the [reference contract](../../../docs/go-migration/services/background-worker/contract.md)
+and [plan](../../../docs/go-migration/plans/background-worker.md): the final six-Go
+mixed-stack original tests, bounded operations and durable Haskell-Go-Haskell
+switchback. There is no final compatibility or image claim.
 
 Use pinned Go1.26.9 with `GOTOOLCHAIN=local GOWORK=off`. Build the command at
 `./cmd/background-worker`; use `CGO_ENABLED=0` for the Nix Docker harness. Supply
@@ -34,19 +45,17 @@ is complete. Discovery retry budget, graceful in-flight draining and complete
 configuration/source-gap coverage still need refinement alongside the remaining
 worker families. The existing intermittent peer transport issue stays open.
 
-Rabbit job delivery and group-sync business logic are now implemented as
-construction components, with source-shaped envelopes, retries/ACK rules,
-metrics, member deltas, actor and recipient propagation. PostgreSQL group queries
-and pool/password-file configuration are added. The consumer is not started until
-conversation storage and local/remote/bot notification adapters are finished.
-Original gundeck40 with the earlier watcher binary ran38/40 pass, cleanup0:
-version-header mismatch (corrected) and missing jobs queue (unfinished startup).
-See evidence/watcher-20261009 and evidence/group-jobs-20261009 for exact limits;
-this is not original worker47, final six-Go124 or durable switchback validation.
+The unchanged original gundeck suite passed40/40 with the exact worker executable
+from source00557161c5218fba7ce290ba57536561298a35e3 and remaining Haskell peers.
+[Its receipts](evidence/jobs-original-20261009/) identify the static binary, strict
+XML results and successful owned cleanup. This establishes notification, DLQ and
+queue lifecycle behavior for that artifact; it does not validate later migration
+construction, the original worker47, final six-Go124 or durable switchback.
+Earlier failed38/40 [watcher receipts](evidence/watcher-20261009/) remain historical
+evidence for their earlier artifact.
 
-PostgreSQL conversation reads/upserts and local/remote join notification adapters
-are now implemented. Focused HTTP tests include modern/V0 remote bodies and
-empty-recipient Cells pushes; PostgreSQL administrative-shutdown retry matches
-the source reset budget. Real bot callbacks and Cassandra/migration routing
-remain before consumer startup. See evidence/conversation-adapters-20261009;
-these checks do not qualify actual group-job/database E2E or the whole worker.
+Construction check receipts live under [evidence/](evidence/), including
+[user transaction/cleanup](evidence/user-migration-store-20261009/) and
+[user value decoding](evidence/user-migration-values-20261009/). These checks do
+not establish actual database parity. Current completion status is owned by the
+[active task](../../../.migration/tasks/background-worker-implementation.json).
