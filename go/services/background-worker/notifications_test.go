@@ -60,7 +60,8 @@ func TestLegacyNotificationPreservesRawBodyAndV0(t *testing.T) {
 	})
 	n := sourceNotification(body)
 	n.RequestID = nil
-	action, err := s.deliverNotification(t.Context(), client, "target.example.com", encode(t, n))
+	n.Origin = ptr("Origin.EXAMPLE.com")
+	action, err := s.deliverNotification(t.Context(), client, "Target.EXAMPLE.com", encode(t, n))
 	if err != nil || action != notificationACK {
 		t.Fatalf("%v %v", action, err)
 	}

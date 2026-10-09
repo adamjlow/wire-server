@@ -87,13 +87,13 @@ type remoteError struct{ badRequest bool }
 func (remoteError) Error() string { return "federation notification request failed" }
 
 func (s *Service) federationRequest(ctx context.Context, client *http.Client, target string, n notification, rpc, component string, version *int, body []byte) ([]byte, error) {
-	path := "/rpc/" + url.PathEscape(target) + "/" + url.PathEscape(component) + "/" + url.PathEscape(strings.TrimPrefix(rpc, "/"))
+	path := "/rpc/" + url.PathEscape(strings.ToLower(target)) + "/" + url.PathEscape(component) + "/" + url.PathEscape(strings.TrimPrefix(rpc, "/"))
 	req, err := http.NewRequestWithContext(ctx, "POST", "http://"+s.Config.Federator.Address()+path, bytes.NewReader(body))
 	if err != nil {
 		return nil, errors.New("invalid notification request")
 	}
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Wire-Origin-Domain", *n.Origin)
+	req.Header.Set("Wire-Origin-Domain", strings.ToLower(*n.Origin))
 	id := "N/A"
 	if n.RequestID != nil {
 		id = *n.RequestID
@@ -328,7 +328,7 @@ func (s *Service) remoteDomains(ctx context.Context, client *http.Client) ([]str
 		for _, q := range data.Items {
 			suffix, ok := strings.CutPrefix(q.Name, "backend-notifications.")
 			if ok && validDomain(suffix) {
-				domains = append(domains, suffix)
+				domains = append(domains, strings.ToLower(suffix))
 			}
 		}
 		if page >= data.Pages {

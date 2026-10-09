@@ -112,7 +112,7 @@ func postgresUUIDString(value pgtype.UUID) string {
 	return fmt.Sprintf("%x-%x-%x-%x-%x", id[:4], id[4:6], id[6:8], id[8:10], id[10:])
 }
 
-func (s *postgresStore) GroupChannels(ctx context.Context, team, group string) ([]string, bool, error) {
+func (s *postgresStore) groupChannelsOnce(ctx context.Context, team, group string) ([]string, bool, error) {
 	tid, err := postgresUUID(team)
 	if err != nil {
 		return nil, false, err
@@ -132,7 +132,7 @@ func (s *postgresStore) GroupChannels(ctx context.Context, team, group string) (
 		return nil, false, nil
 	}
 	if err != nil {
-		return nil, false, errors.New("user group channel query failed")
+		return nil, false, postgresFailure(err, "user group channel query failed")
 	}
 	channels := make([]string, 0, len(ids))
 	for _, id := range ids {
@@ -141,7 +141,7 @@ func (s *postgresStore) GroupChannels(ctx context.Context, team, group string) (
 	return channels, true, nil
 }
 
-func (s *postgresStore) GroupMembers(ctx context.Context, team, group string) ([]string, bool, error) {
+func (s *postgresStore) groupMembersOnce(ctx context.Context, team, group string) ([]string, bool, error) {
 	tid, err := postgresUUID(team)
 	if err != nil {
 		return nil, false, err
@@ -163,7 +163,7 @@ func (s *postgresStore) GroupMembers(ctx context.Context, team, group string) ([
 		return nil, false, nil
 	}
 	if err != nil {
-		return nil, false, errors.New("user group metadata query failed")
+		return nil, false, postgresFailure(err, "user group metadata query failed")
 	}
 	// Metadata is decoded even though this job only consumes members. Match
 	// the source name/managed-by validation rather than accepting corrupt rows.
@@ -172,19 +172,20 @@ func (s *postgresStore) GroupMembers(ctx context.Context, team, group string) ([
 	}
 	rows, err := conn.Query(ctx, `SELECT user_id FROM user_group_member WHERE user_group_id=$1::uuid`, gid)
 	if err != nil {
-		return nil, false, errors.New("user group member query failed")
+		return nil, false, postgresFailure(err, "user group member query failed")
 	}
 	defer rows.Close()
 	users := []string{}
 	for rows.Next() {
 		var id pgtype.UUID
-		if rows.Scan(&id) != nil || !id.Valid {
-			return nil, false, errors.New("invalid stored group member")
+		err = rows.Scan(&id)
+		if err != nil || !id.Valid {
+			return nil, false, postgresFailure(err, "invalid stored group member")
 		}
 		users = append(users, postgresUUIDString(id))
 	}
-	if rows.Err() != nil {
-		return nil, false, errors.New("user group member query failed")
+	if err = rows.Err(); err != nil {
+		return nil, false, postgresFailure(err, "user group member query failed")
 	}
 	return users, true, nil
 }

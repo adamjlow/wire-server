@@ -43,3 +43,10 @@ Original gundeck40 with the earlier watcher binary ran38/40 pass, cleanup0:
 version-header mismatch (corrected) and missing jobs queue (unfinished startup).
 See evidence/watcher-20261009 and evidence/group-jobs-20261009 for exact limits;
 this is not original worker47, final six-Go124 or durable switchback validation.
+
+PostgreSQL conversation reads/upserts and local/remote join notification adapters
+are now implemented. Focused HTTP tests include modern/V0 remote bodies and
+empty-recipient Cells pushes; PostgreSQL administrative-shutdown retry matches
+the source reset budget. Real bot callbacks and Cassandra/migration routing
+remain before consumer startup. See evidence/conversation-adapters-20261009;
+these checks do not qualify actual group-job/database E2E or the whole worker.

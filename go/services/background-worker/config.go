@@ -151,6 +151,7 @@ func LoadConfig(workerPath, galleyPath string) (Config, GalleyConfig, error) {
 	if !c.HTTP.valid() || !c.Federator.valid() || !c.Rabbit.Endpoint.valid() || !validDomain(g.Settings.Domain) || c.Rabbit.Insecure {
 		return c, g, errors.New("invalid endpoint, domain or TLS configuration")
 	}
+	g.Settings.Domain = strings.ToLower(g.Settings.Domain)
 	for _, store := range []CassandraConfig{c.Cassandra, c.CassandraBrig, g.Cassandra} {
 		if !store.Endpoint.valid() || store.Keyspace == "" {
 			return c, g, errors.New("invalid Cassandra configuration")
@@ -179,7 +180,7 @@ func validDomain(domain string) bool {
 		return false
 	}
 	labels := strings.Split(domain, ".")
-	if len(labels) < 2 {
+	if len(labels) < 2 && !strings.EqualFold(domain, "localhost") {
 		return false
 	}
 	for _, label := range labels {

@@ -195,3 +195,18 @@ PostgreSQL administrative-shutdown retry, Cass/PG migration routing, supervision
 and graceful drain also remain. Partial source hashes/checks and inherited
 plaintext-fallback/transient-publish/notification-retry concerns are recorded in
 module evidence/group-jobs-20261009. No full job, migration or service qualification.
+
+Conversation adapter construction now includes source PostgreSQL18-column
+metadata, read-committed/read-only member reads with parent support and explicit
+child priority; role/UUID guards and bound transactional upserts. Source admin
+shutdown SQLSTATEs reset/retry the pool five times, with a sixth final attempt.
+Local/remote group-join delivery includes source event fields, modern/V0 bundles,
+persistent quorum queues, remote retry/concurrency and source Gundeck128 chunks
+with default2000 fanout. Empty-recipient pushes are retained for Cells routing.
+Actual loopback HTTP tests and full Go checks/final vet/race pass; source hashes
+and limitations are in module evidence/conversation-adapters-20261009. Original
+group E2E/database effects are not yet validated. Next implement real bot delivery
+(source authenticated RSA pins, valid chain or self-signed/date verification,
+record inherited missing hostname verification) and Cassandra/migration routing,
+then connect the consumer and consolidate startup/supervision/drain. Final whole
+worker boundaries and acceptance are unchanged; no deployment qualification.
