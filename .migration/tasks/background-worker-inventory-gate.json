@@ -4,7 +4,7 @@
   "title": "Publish background-worker inventory and queue finite contract work",
   "service": "framework",
   "kind": "framework",
-  "status": "active",
+  "status": "done",
   "owner": "codex",
   "branch": "go-migration",
   "depends_on": [
@@ -24,7 +24,18 @@
       "required_evidence": "Done inventory and actual discovery cited, no compatibility claim, contract acceptance preserves whole-service and original assertions; valid state/scope transition."
     }
   ],
-  "evidence": [],
-  "review": null,
-  "handoff": ""
+  "evidence": [
+    {
+      "criterion": "inventory",
+      "result": "pass",
+      "command": "Completed discovery with actual original compiled list reviewed; registered-to-inventoried gate published and finite protected contract task queued. Scope/diff validation passed; compatibility remains null and Haskell default/source unchanged.",
+      "revision": "1b623b154cf4d9b51ba979b3ec9e2f84baf1c465",
+      "artifact": ".migration/services/background-worker.json"
+    }
+  ],
+  "review": {
+    "by": "codex (self-review delegated by user)",
+    "artifact": "docs/go-migration/services/background-worker/inventory-review.md"
+  },
+  "handoff": "Inventory published; next queued contract task runs original Haskell baseline and freezes uncovered storage/wire behavior before early runnable Go implementation."
 }
