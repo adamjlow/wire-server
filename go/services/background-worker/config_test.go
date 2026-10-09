@@ -22,6 +22,8 @@ func TestDualSourceConfigurationAndSecurityNegatives(t *testing.T) {
 	}{
 		{"missing-storage-location", func(c *Config) { c.Storage.PasswordReset = "" }},
 		{"invalid-storage-location", func(c *Config) { c.Storage.Conversation = "migration" }},
+		{"zero-migration-page", func(c *Config) { c.MigrationOptions.PageSize = 0 }},
+		{"zero-migration-timeout", func(c *Config) { c.MigrationOptions.Timeout = 0 }},
 		{"tls-bypass", func(c *Config) { c.Rabbit.Insecure = true }},
 		{"negative-backoff", func(c *Config) { c.Pusher.Min = -1 }},
 		{"invalid-port", func(c *Config) { c.HTTP.Port = 65536 }},

@@ -22,6 +22,7 @@ type Service struct {
 	notifications map[string]*notificationMetrics
 	jobs          map[string]*jobMetrics
 	jobsBusy      int
+	migrations    map[string]*migrationMetrics
 }
 type notificationMetrics struct {
 	pushed, dropped, errors uint64
@@ -80,6 +81,7 @@ func (s *Service) Handler() http.Handler {
 			return
 		}
 		w.Header().Set("Content-Type", "text/plain; version=0.0.4; charset=utf-8")
+		s.writeMigrationMetrics(w)
 		for i, name := range workerNames {
 			n := 0
 			if s.working[i] {
@@ -119,7 +121,7 @@ func (s *Service) Handler() http.Handler {
 func (s *Service) Run(ctx context.Context) error {
 	// Construction remains incomplete: migrations and scheduled jobs are unfinished.
 	// Never silently accept enabled data migrations before those paths exist.
-	if s.Config.MigrateConversations || s.Config.MigrateCodes || s.Config.MigrateTeamFeatures || s.Config.MigrateDomains || s.Config.MigrateUsers || s.Config.MigrateBlockList || s.Config.MigratePasswordReset {
+	if s.Config.MigrateConversations || s.Config.MigrateCodes || s.Config.MigrateTeamFeatures || s.Config.MigrateDomains || s.Config.MigrateUsers {
 		return errors.New("candidate construction incomplete: migrations are not implemented")
 	}
 	listener, err := net.Listen("tcp", s.Config.HTTP.Address())
@@ -133,6 +135,7 @@ func (s *Service) Run(ctx context.Context) error {
 	wg.Go(func() { s.runPusher(runCtx) })
 	wg.Go(func() { s.runDeadWatcher(runCtx) })
 	wg.Go(func() { s.runJobs(runCtx) })
+	wg.Go(func() { s.runIdentityMigrations(runCtx) })
 	done := make(chan error, 1)
 	go func() { done <- server.Serve(listener) }()
 	select {

@@ -212,3 +212,12 @@ retry, poison-job requeue loops and bot pin authentication without hostname chec
 Native RSA-only bot TLS also permits finite-DHE AEAD cipher suites that Go's TLS
 library does not implement; legacy providers supporting only those suites may
 need configuration updates. No production security policy change is authorized.
+
+Block-list and password-reset migration loops are now constructed and connected,
+with source typed-page decoding, TTL/legacy handling, bound upserts, full rescans
+on PG usage errors, fatal timeout and metric behavior. The other five enabled
+migration flags still reject startup explicitly. Scheduled optimistic ACK, parent
+sibling locking/suspension/wakeup and archive retention are also constructed.
+Full Go checks pass for module evidence/identity-migrations-20261009 inputs;
+actual migration DB behavior and scheduled ACK remain untested, and scheduled
+runtime remains disconnected. Final original124/operations/switchback are required.

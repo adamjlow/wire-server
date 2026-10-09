@@ -92,7 +92,7 @@ func (s *postgresStore) acquire(ctx context.Context) (*pgxpool.Conn, error) {
 	defer cancel()
 	conn, err := s.Pool.Acquire(acquireCtx)
 	if err != nil {
-		return nil, errors.New("PostgreSQL connection acquisition failed")
+		return nil, postgresFailure(err, "PostgreSQL connection acquisition failed")
 	}
 	return conn, nil
 }

@@ -58,6 +58,7 @@ type PostgresPoolConfig struct {
 }
 
 type Config struct {
+	MigrationOptions    migrationOptions        `yaml:"migrationOptions"`
 	Storage             postgresMigrationConfig `yaml:"postgresMigration"`
 	LogLevel            string                  `yaml:"logLevel"`
 	HTTP                Endpoint                `yaml:"backgroundWorker"`
@@ -151,6 +152,9 @@ func LoadConfig(workerPath, galleyPath string) (Config, GalleyConfig, error) {
 	}
 	if !c.HTTP.valid() || !c.Federator.valid() || !c.Rabbit.Endpoint.valid() || !validDomain(g.Settings.Domain) || c.Rabbit.Insecure {
 		return c, g, errors.New("invalid endpoint, domain or TLS configuration")
+	}
+	if !c.MigrationOptions.valid() {
+		return c, g, errors.New("invalid migration options")
 	}
 	if err := c.Storage.validate(); err != nil {
 		return c, g, err
