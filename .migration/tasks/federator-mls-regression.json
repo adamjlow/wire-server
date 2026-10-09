@@ -47,7 +47,7 @@
       "result": "fail",
       "command": "Original strict MLS with five Go peers; bounded trace observes get-mls-clients transport error, generic521. Attribution unresolved; no behavioral fix. Sole Go federator run passed; categorized five-Go run also passed intermittently.",
       "revision": "75c2e8e508ba27cd51aecdb21d6ce50948276fd9",
-      "artifact": "go/services/federator/evidence/mls-regression-20261009"
+      "artifact": "docs/go-migration/plans/federator-mls-regression.md"
     }
   ],
   "review": null,
