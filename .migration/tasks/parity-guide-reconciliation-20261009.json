@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "id": "parity-guide-reconciliation-20261009",
+  "title": "Reconcile legacy parity guide and central compiler pin",
+  "service": "framework",
+  "kind": "framework",
+  "status": "queued",
+  "owner": null,
+  "branch": null,
+  "depends_on": [
+    "docs-reconciliation-20261009"
+  ],
+  "write_paths": [
+    ".migration/tasks/parity-guide-reconciliation-20261009.json",
+    "docs/go-migration/plans/parity-guide-reconciliation-20261009.md",
+    ".migration/reviews/parity-guide-reconciliation-20261009.md",
+    "tools/parity/README.md",
+    "tools/parity/harness.py",
+    "tools/parity/test_harness.py",
+    "changelog.d/5-internal/parity-guide-reconciliation-20261009"
+  ],
+  "plan": "docs/go-migration/plans/parity-guide-reconciliation-20261009.md",
+  "acceptance_criteria": [
+    {
+      "id": "guide",
+      "description": "Legacy entry guide and compiler guard match current toolchain/environment without weakening assertions.",
+      "required_evidence": "Current central pin enforced; existing failed-capture regression and old-compiler rejection pass, guide links current Go1.26.9 original77/image receipts, no oracle/default/permission changes; link/scope/diff checks."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": ""
+}
