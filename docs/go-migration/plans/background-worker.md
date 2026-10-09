@@ -176,7 +176,8 @@ expensive tests without a repair. Actual user migration effects remain unverifie
 
 Scheduled payloads, Arbiter claims/heartbeat/retry/ACK/worker registration,
 sibling locking/wakeup and archive retention are constructed. Native schema setup is constructed and checked;
-reaper/cron, adminless/meetings domain handlers and scheduled runtime are unfinished.
+Reaper storage is constructed and checked; cron, adminless/meetings domain
+handlers and scheduled runtime are unfinished.
 The initial original MLS case reached enabled phase3 and reported both migration
 loops completed (local32/remote2), but timed out because the native helper expects
 counter text1.0 while Go emitted1. [Failed proof](../../../go/services/background-worker/evidence/conversation-original-initial-20261009/)
@@ -215,3 +216,14 @@ Initial fixture TCP-readiness race is retained and repaired; no candidate/oracle
 assertion change or failure waiver. This function remains unstarted until full
 scheduled runtime exists. Next complete cron/reaper and adminless/meetings handlers,
 then runtime/startup/drain and the previously declared final acceptance.
+
+Scheduled reaper construction now covers the five native schema-gated operations,
+including bounded scans, live-lease/suspension guards, per-row worker thresholds,
+group refresh locks, tree-aware DLQ snapshots and parent resume, cancelled-child
+cleanup, archive expiry, transaction-local timeout and committed watermark rules.
+[Exact receipts](../../../go/services/background-worker/evidence/scheduled-reaper-20261009/)
+retain full passing Go checks and an actual isolated PostgreSQL test of these
+storage/concurrency/rollback effects, with all owned resources removed. No fresh
+Haskell reaper execution or full scheduled claim. Reaper/schema components remain
+unstarted until scheduled runtime exists. Next cron and adminless/meetings domain
+handlers, then runtime/startup/drain and the declared whole-service qualification.

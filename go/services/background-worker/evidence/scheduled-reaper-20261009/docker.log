@@ -1,0 +1,4 @@
+=== RUN   TestScheduledReaperDockerStorage
+    scheduled_schema_docker_test.go:185: five reaper operations: lease/suspension guards, paused stale worker sweep, group repair, parent wake, tree-DLQ snapshots, archive retention, shared gate exclusion/interval and timeout rollback passed
+--- PASS: TestScheduledReaperDockerStorage (0.10s)
+PASS

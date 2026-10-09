@@ -1,0 +1,50 @@
+{
+  "owner": "wire-worker-reaper-f375a77ec1014071b3ee9c26a20e054f",
+  "postgres_image": "postgres@sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24",
+  "runner_image": "sha256:cd03212430eef6cfde0324b50885c12980ee211483ab27dde6ee730252966cd2",
+  "binary_sha256": "833475cc1ba6c7017030e30f349200e1f040a667f3b9037285cfd28000c78200",
+  "test_tag": "schemacheck",
+  "test": "TestScheduledReaperDockerStorage",
+  "result": "pass",
+  "test_exit_code": 0,
+  "post_cleanup_owned": {
+    "container": [],
+    "network": [],
+    "volume": []
+  },
+  "cleanup": [
+    {
+      "command": [
+        "docker",
+        "rm",
+        "-f"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "docker",
+        "rm",
+        "-f"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "docker",
+        "volume",
+        "rm"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "docker",
+        "network",
+        "rm"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "cleanup_passed": true
+}
