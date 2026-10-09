@@ -4,9 +4,9 @@
   "title": "Freeze federator finite forwarding contract and private Haskell baseline",
   "service": "federator",
   "kind": "contract-change",
-  "status": "queued",
-  "owner": null,
-  "branch": null,
+  "status": "active",
+  "owner": "codex",
+  "branch": "go-migration",
   "depends_on": [
     "federator-inventory",
     "federator-inventory-gate"
