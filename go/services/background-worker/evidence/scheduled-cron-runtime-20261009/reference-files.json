@@ -1,0 +1,18 @@
+{
+  "arbiter_revision": "b9c57eb1f8277d97616aa449bea471fe9ce14eda",
+  "cron_source_url": "https://hackage-content.haskell.org/package/cron-0.7.2/cron-0.7.2.tar.gz",
+  "sha256": {
+    "arbiter/arbiter-worker/src/Arbiter/Worker/Cron.hs": "3528a1e9667e13adfd23863047ef6a8f0d4f5abe724b3b4ceaa8a6690fc194a7",
+    "arbiter/arbiter-core/src/Arbiter/Core/Sql/Jobs.hs": "cb6259f38abf9d7af6105dbbc9cc835c9e13196e68a4e6302d50b0c31c6894fa",
+    "arbiter/arbiter-core/src/Arbiter/Core/Job/Types.hs": "2fbc8709f85e896966961c7d2752557f7836c4695ef5276afabbbdf772c54445",
+    "arbiter/arbiter-core/src/Arbiter/Core/Codec.hs": "edb69180fbe4a6e9ceff317a7d86b318ca8cb49ba6910dcb794ef6433897994e",
+    "arbiter/arbiter-core/src/Arbiter/Core/Operations.hs": "32e57dcc0c0d1359cb50ba9d032763135d0e57968cda97b5e4e455256e449459",
+    "cron-0.7.2/src/System/Cron/Parser.hs": "f3e0a241d4722ecd76d9b7b4613aca481e40873892580ebcc9a8bc1a6b19cc38",
+    "cron-0.7.2/src/System/Cron/Types.hs": "7ecb9703c61c40b156b8f008e7ad6c615a9e43f2e64f3d36cd39acddf3b49851",
+    "cron-0.7.2/src/System/Cron/Internal/Check.hs": "fda63d75550888e9249e2352ecc7d0f886d5558cdb9e39f4187826d43b550183",
+    "cron-0.7.2/LICENSE": "1ff3bd353810d0f907c58d891a29477d5598fd2292a9d4a3d57d0f7a374a0d7d",
+    "cron-0.7.2.tar.gz": "23e9d386817b4d59611c857b38b8040bea14e8fba6767d7414d593318f393387",
+    "services/background-worker/src/Wire/BackgroundWorker/Workers.hs": "835bf199b3fbf370d3dadce73883e710314b0a527251b39457fe174f6cbdfd0c"
+  },
+  "limitation": "Primary library source comparison; no fresh native GHC package/version or cron execution capture in this checkpoint"
+}

@@ -31,7 +31,7 @@ background-worker compatibility or deployment availability is advertised.
 | [Original users2](../../../go/services/background-worker/evidence/user-original-20261009/) | 1/2 cases pass; retained SCIM500 failure occurs before migration activation | Enabled user migration remains unverified; failure is not waived |
 | [Scheduled schema](../../../go/services/background-worker/evidence/scheduled-schema-20261009/) and [reaper](../../../go/services/background-worker/evidence/scheduled-reaper-20261009/) | Native schema comparison and isolated PostgreSQL storage/gate checks pass | Components are constructed but scheduled runtime is not started |
 
-Next implement cron, adminless and meetings handlers, then connect scheduled
+Next implement adminless and meetings handlers, then connect cron/reaper and scheduled
 runtime and finish startup/drain behavior. Completion still requires the exact
 final six-Go/Haskell-peer run (124 executions,119 distinct original assertions),
 resolution of retained failures, bounded operations, actual durable
@@ -200,8 +200,8 @@ expensive tests without a repair. Actual user migration effects remain unverifie
 
 Scheduled payloads, Arbiter claims/heartbeat/retry/ACK/worker registration,
 sibling locking/wakeup and archive retention are constructed. Native schema setup is constructed and checked;
-Reaper storage is constructed and checked; cron, adminless/meetings domain
-handlers and scheduled runtime are unfinished.
+Reaper and cron components are constructed and checked; adminless/meetings domain
+handlers and scheduled runtime integration are unfinished.
 The initial original MLS case reached enabled phase3 and reported both migration
 loops completed (local32/remote2), but timed out because the native helper expects
 counter text1.0 while Go emitted1. [Failed proof](../../../go/services/background-worker/evidence/conversation-original-initial-20261009/)
@@ -238,7 +238,7 @@ native captured column records match exactly,76 ledger entries, queued-job
 preservation and checksum mismatch behavior pass, owned cleanup complete.
 Initial fixture TCP-readiness race is retained and repaired; no candidate/oracle
 assertion change or failure waiver. This function remains unstarted until full
-scheduled runtime exists. Next complete cron/reaper and adminless/meetings handlers,
+scheduled runtime exists. Next complete adminless/meetings handlers and integrate cron/reaper,
 then runtime/startup/drain and the previously declared final acceptance.
 
 Scheduled reaper construction now covers the five native schema-gated operations,
@@ -249,14 +249,21 @@ cleanup, archive expiry, transaction-local timeout and committed watermark rules
 retain full passing Go checks and an actual isolated PostgreSQL test of these
 storage/concurrency/rollback effects, with all owned resources removed. No fresh
 Haskell reaper execution or full scheduled claim. Reaper/schema components remain
-unstarted until scheduled runtime exists. Next cron and adminless/meetings domain
-handlers, then runtime/startup/drain and the declared whole-service qualification.
+unstarted until scheduled runtime exists. Next adminless/meetings domain handlers and cron integration, then runtime/startup/drain and the declared whole-service qualification.
 
 Cron persisted storage now preserves native default/override and queue-healing
 semantics, five-minute manual requests, transactional claims, monotone minute/manual
 watermarks and advisory leadership. [Exact construction receipts](../../../go/services/background-worker/evidence/scheduled-cron-storage-20261009/)
 retain full passing Go checks and actual isolated PostgreSQL effects/rollback/lock
-checks with owned cleanup. Schedule parsing, dedup insertion and runtime remain
-unimplemented; these functions are not started. Next finish cron and domain handlers,
-then the existing full-service acceptance. No original assertion/schema/default
-change or broad parity claim.
+checks with owned cleanup. The earlier storage-only receipt remains limited to its inputs. Cron parsing,
+dedup insertion and scheduler construction now pass full Go checks and actual
+isolated PostgreSQL insertion/startup/wake/cancellation checks:
+[exact current construction evidence](../../../go/services/background-worker/evidence/scheduled-cron-runtime-20261009/).
+Native grouped payload/defaults, manual bypass/overlap, DST dedup, invalid-config
+skip and nested failure watermarks are preserved. No fresh Haskell cron execution
+or native package/tzdata version claim. Domain handlers and service integration/
+NOTIFY remain unfinished. Next domain handlers, then the existing full-service
+acceptance. Native failed insert still advances checked watermark, losing that
+NoBackfill tick; record this inherited concern without changing source behavior.
+Retain cron BSD2 notice alongside existing notices in eventual distribution.
+No original assertion/schema/default change or broad parity claim.

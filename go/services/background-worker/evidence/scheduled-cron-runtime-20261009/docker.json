@@ -1,0 +1,58 @@
+{
+  "owner": "wire-worker-cron-runtime-ffc0af8b1c794a35828f1e0ff2b83ebe",
+  "postgres_image": "postgres@sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24",
+  "runner_image": "sha256:cd03212430eef6cfde0324b50885c12980ee211483ab27dde6ee730252966cd2",
+  "binary_sha256": "d595eee42e2c39cd907c1dd27180ea8b743b58481011c12d4b6463812cd113d0",
+  "test_tag": "schemacheck",
+  "test": "TestScheduledCronDockerStorage|TestScheduledCronDockerInsertion",
+  "result": "pass",
+  "test_exit_code": 0,
+  "cleanup": [
+    {
+      "command": [
+        "docker",
+        "rm",
+        "-f",
+        "wire-worker-cron-runtime-ffc0af8b1c794a35828f1e0ff2b83ebe-check"
+      ],
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "command": [
+        "docker",
+        "rm",
+        "-f",
+        "wire-worker-cron-runtime-ffc0af8b1c794a35828f1e0ff2b83ebe-postgres"
+      ],
+      "exit_code": 0,
+      "output": "wire-worker-cron-runtime-ffc0af8b1c794a35828f1e0ff2b83ebe-postgres\n"
+    },
+    {
+      "command": [
+        "docker",
+        "volume",
+        "rm",
+        "wire-worker-cron-runtime-ffc0af8b1c794a35828f1e0ff2b83ebe-pg"
+      ],
+      "exit_code": 0,
+      "output": "wire-worker-cron-runtime-ffc0af8b1c794a35828f1e0ff2b83ebe-pg\n"
+    },
+    {
+      "command": [
+        "docker",
+        "network",
+        "rm",
+        "wire-worker-cron-runtime-ffc0af8b1c794a35828f1e0ff2b83ebe-net"
+      ],
+      "exit_code": 0,
+      "output": "wire-worker-cron-runtime-ffc0af8b1c794a35828f1e0ff2b83ebe-net\n"
+    }
+  ],
+  "post_cleanup_owned": {
+    "container": [],
+    "network": [],
+    "volume": []
+  },
+  "cleanup_passed": true
+}

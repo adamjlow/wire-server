@@ -1,0 +1,7 @@
+=== RUN   TestScheduledCronDockerStorage
+    scheduled_cron_docker_test.go:196: operator overrides, queue healing, request statuses/expiry/rollback, monotone minute/manual watermarks and transaction-scoped leadership pass
+--- PASS: TestScheduledCronDockerStorage (0.12s)
+=== RUN   TestScheduledCronDockerInsertion
+    scheduled_cron_docker_test.go:387: native job fields/group triggers, minute/overlap/manual rules, DST dedup, disabled/invalid config, real insertion failures, startup/run-now and bounded cancellation pass
+--- PASS: TestScheduledCronDockerInsertion (0.08s)
+PASS

@@ -1,4 +1,4 @@
 Construct the optional Go background-worker under the whole-service reference contract; Haskell remains default and the incomplete candidate is not selectable or qualified.
 Connect notification, DLQ and group-sync workers and all seven migrations, preserving bounded execution, typed storage contracts, native locks/transactions and durable cleanup.
 Reuse original Haskell tests: limited notification40 and MLS conversation migration1 pass on identified artifacts; scheduled runtime and final whole-service qualification remain outstanding.
-Construct native scheduled schema, reaper and cron storage with isolated PostgreSQL evidence; scheduled runtime and domain handlers remain unfinished.
+Construct native scheduled schema/reaper and cron parsing, insertion and scheduler with isolated PostgreSQL evidence; runtime integration and domain handlers remain unfinished.
