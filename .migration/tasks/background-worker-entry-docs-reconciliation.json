@@ -4,7 +4,7 @@
   "title": "Reconcile worker entry documentation with frozen contract and implementation status",
   "service": "framework",
   "kind": "framework",
-  "status": "active",
+  "status": "blocked",
   "owner": "codex",
   "branch": "go-migration",
   "depends_on": [
@@ -28,5 +28,5 @@
   ],
   "evidence": [],
   "review": null,
-  "handoff": "Serialized factual documentation reconciliation; implementation task retains disjoint service/plan scope."
+  "handoff": "Initial claim rejected by validator because implementation already reserves go-migration branch. No documentation writes occurred. Requeue onto a separate actual task branch, with solo implementation writer stopped during factual doc reconciliation."
 }
