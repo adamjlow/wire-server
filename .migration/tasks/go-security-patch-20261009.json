@@ -4,9 +4,9 @@
   "title": "Patch optional Go tooling for newly published HTTP vulnerabilities",
   "service": "framework",
   "kind": "framework",
-  "status": "queued",
-  "owner": null,
-  "branch": null,
+  "status": "active",
+  "owner": "codex",
+  "branch": "go-migration",
   "depends_on": [
     "go-toolchain"
   ],
