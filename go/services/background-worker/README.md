@@ -13,11 +13,12 @@ or write failures remain unacknowledged through channel reconnect.
 
 Rabbit group-sync consumption is connected with PostgreSQL/Cassandra conversation
 storage, migration-aware routing and local, remote and pinned-TLS bot notification
-adapters. Five migration families are connected: block lists, password reset,
-conversation codes, domain registration and team features. User migration
-transaction/cleanup and value decoding are constructed, but its SSO decoding,
-related Cassandra reads and parallel locked scan remain unfinished. User and
-conversation migration flags explicitly reject startup.
+adapters. Six migration families are connected: block lists, password reset,
+conversation codes, domain registration, team features and users. User migration
+includes SSO/value decoding, related Cassandra reads and claim retention,
+Serializable PG copy and pending-delete ledger, sequential CQL cleanup, and the
+bounded parallel scan under exclusive UUID locks. Conversation migration remains
+unfinished and its flag explicitly rejects startup.
 
 PostgreSQL scheduled adminless/meetings workers remain disconnected. Claim,
 heartbeat, retry and acknowledgement storage components exist; schema bootstrap,

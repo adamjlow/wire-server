@@ -13,7 +13,7 @@ starting mixed-deployment baseline. The service is inventoried and its finite
 reference contract is frozen with explicit baseline limitations. Go construction
 now includes a runnable notification pusher and Cassandra dead-user watcher, plus
 connected background-job consumption, conversation-storage/notification adapters
-and five migration families. Scheduled jobs and the other two migrations are
+and six migration families. Scheduled jobs and conversation migration are
 under construction.
 Whole-service parity is not yet claimed; the task record owns current status.
 
@@ -133,8 +133,8 @@ without a concrete change. Final switchback remains outstanding.
 Current implementation and retained validation:
 
 - The notification pusher, dead-user watcher and background-job consumer run;
-  readiness tracks all three Rabbit concerns. Five database migration families
-  are connected; unfinished user and conversation migrations reject startup.
+  readiness tracks all three Rabbit concerns. Six database migration families
+  are connected; unfinished conversation migration rejects startup.
   Source HTTP2 delivery, version rules, retry/ACK behavior, verified AMQP TLS,
   missed-notification writes and malformed input are covered by focused tests.
 - Rabbit background-job parsing/session/retries/metrics and both group-sync
@@ -268,3 +268,15 @@ sequential. Full Go checks and focused concurrency/failure tests pass for module
 evidence/parallel-migrations-20261009 inputs. Neither unfinished migration is
 enabled by this checkpoint; SSO/related user reads and full conversation storage
 migration are still required. Actual DB and final qualification remain unrun.
+
+User migration is now connected end to end in construction: typed SSO/scalar/
+asset decoding, related service/handle/rich-info reads, claim-based handle retention,
+validated paged ID scan and bounded per-page pool, ten-second exclusive UUID lock,
+independent row timeout, Serializable PG copy/pending ledger, sequential CQL cleanup
+and ledger completion. Three original UserSSOId JSON goldens are reused directly
+with exact XML strings. Full Go checks and focused read/claim/lock/failure tests
+pass for module evidence/user-migration-runtime-20261009 inputs. Six families are
+connected; conversation migration alone still rejects startup. Native package
+execution and actual user DB/original migration validation remain unrun at this
+checkpoint; next use the existing background-worker-users original profile.
+Whole scheduled runtime and final qualification remain required.

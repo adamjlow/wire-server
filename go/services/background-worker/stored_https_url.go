@@ -14,12 +14,25 @@ import (
 // fragment bytes, canonicalizes query pairs and uses uppercase percent escapes.
 // No network request or credential handling happens in this storage codec.
 func storedHTTPSURL(blob []byte) ([]byte, error) {
-	invalid := errors.New("invalid stored HTTPS URL")
-	value := string(blob)
-	if !strings.HasPrefix(value, "https:") {
+	if !strings.HasPrefix(string(blob), "https:") {
+		return nil, errors.New("invalid stored HTTPS URL")
+	}
+	return storedAbsoluteURI(blob, false, false)
+}
+
+// SAML uses the same pinned URI parser with arbitrary absolute schemes and
+// lax query characters. This codec does not resolve or contact URI targets.
+func storedAbsoluteURI(blob []byte, laxQuery, rootless bool) ([]byte, error) {
+	invalid := errors.New("invalid stored absolute URI")
+	scheme, value, found := strings.Cut(string(blob), ":")
+	if !found || scheme == "" || !(scheme[0] >= 'a' && scheme[0] <= 'z' || scheme[0] >= 'A' && scheme[0] <= 'Z') {
 		return nil, invalid
 	}
-	value = value[6:]
+	for _, c := range scheme[1:] {
+		if !(c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z' || c >= '0' && c <= '9' || strings.ContainsRune("-+.", c)) {
+			return nil, invalid
+		}
+	}
 	fragment := ""
 	if i := strings.IndexByte(value, '#'); i >= 0 {
 		fragment = value[i:]
@@ -32,7 +45,7 @@ func storedHTTPSURL(blob []byte) ([]byte, error) {
 	if i := strings.IndexByte(value, '?'); i >= 0 {
 		raw := value[i+1:]
 		value = value[:i]
-		if !uriCharacters(raw, "!$&'()*+,;=:@%/?") {
+		if !laxQuery && !uriCharacters(raw, "!$&'()*+,;=:@%/?") {
 			return nil, invalid
 		}
 		var pairs []string
@@ -67,7 +80,15 @@ func storedHTTPSURL(blob []byte) ([]byte, error) {
 			authority = "//" + authority
 		}
 	} else if value != "" {
-		return nil, invalid
+		if !rootless {
+			return nil, invalid
+		}
+		// Native rrPathParser's first segment excludes ':'; slash-leading
+		// hierPart paths accept the usual pchar set in every segment.
+		first, _, _ := strings.Cut(value, "/")
+		if !strings.HasPrefix(value, "/") && strings.Contains(first, ":") {
+			return nil, invalid
+		}
 	}
 	if !uriCharacters(value, "!$&'()*+,;=:@%/") {
 		return nil, invalid
@@ -77,7 +98,7 @@ func storedHTTPSURL(blob []byte) ([]byte, error) {
 	for i, segment := range segments {
 		segments[i] = encodeStoredURI(segment, ":@&=+$,")
 	}
-	return []byte("https:" + authority + strings.Join(segments, "/") + query + fragment), nil
+	return []byte(scheme + ":" + authority + strings.Join(segments, "/") + query + fragment), nil
 }
 
 func uriCharacters(value, extra string) bool {

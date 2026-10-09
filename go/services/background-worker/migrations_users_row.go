@@ -8,7 +8,7 @@ import (
 )
 
 // This decodes the scalar/password/picture fields of UserRowCass. The caller
-// must still decode SSO, assets and related service/claim/rich-info rows before
+// must still decode assets and related service/claim/rich-info rows before
 // acting on eligible: source typed decoding precedes invalid-user skipping.
 func decodeUserMigrationRow(id pgtype.UUID, row migrationRow) (record userMigrationRecord, eligible bool, err error) {
 	if !id.Valid {
@@ -132,6 +132,10 @@ func decodeUserMigrationRow(id pgtype.UUID, row migrationRow) (record userMigrat
 		}
 		value := string(encoded)
 		record.Password = &value
+	}
+	record.SSO, err = decodeUserMigrationSSO(row["sso_id"])
+	if err != nil {
+		return record, false, err
 	}
 	record.Picture, err = decodeUserMigrationPicture(row["picture"])
 	if err != nil {

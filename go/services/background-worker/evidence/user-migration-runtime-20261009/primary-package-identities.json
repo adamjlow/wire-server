@@ -1,0 +1,18 @@
+{
+  "hsaml2-0.2.0/SAML2/Core/Assertions.hs": {
+    "sha256": "522f7539f298ac1221a76a1baa7b62a17b067e2d844a19ccbc9ac9cd3cbfbad5",
+    "source_url": "https://hackage-content.haskell.org/package/hsaml2-0.2.0/src/SAML2/Core/Assertions.hs"
+  },
+  "hsaml2-0.2.0/SAML2/Core/Identifiers.hs": {
+    "sha256": "35a088f65f068fb9737e81ad53e955632d7d06e5c5dcb1a25899d6cb521e4576",
+    "source_url": "https://hackage-content.haskell.org/package/hsaml2-0.2.0/src/SAML2/Core/Identifiers.hs"
+  },
+  "xml-conduit-1.10.1.0/src/Text/XML/Stream/Token.hs": {
+    "sha256": "9a233f6a559a863e72051a2cf2171e593dfbfb0e3eeb8b7d181b046dfd0aa720",
+    "source_url": "https://hackage-content.haskell.org/package/xml-conduit-1.10.1.0/src/src/Text/XML/Stream/Token.hs"
+  },
+  "xml-conduit-1.10.1.0/src/Text/XML/Stream/Render/Internal.hs": {
+    "sha256": "e7949b49bed486c49d5ca53a919536596a0f91cad726c558816f2fc8f3a0171b",
+    "source_url": "https://hackage-content.haskell.org/package/xml-conduit-1.10.1.0/src/src/Text/XML/Stream/Render/Internal.hs"
+  }
+}

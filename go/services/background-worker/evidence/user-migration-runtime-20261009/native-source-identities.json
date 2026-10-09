@@ -1,0 +1,11 @@
+{
+  "libs/wire-api/src/Wire/API/User/Identity.hs": "fd6365304230e0c12ef34ff8d61fbcbb7026b9127e1bd2526305e05157cf16ba",
+  "libs/wire-api/src/Wire/API/User/EmailAddress.hs": "f954ff803de8a7309b6fd1c024bdf7afbcb910a9f7a68de03143b6dd86777d33",
+  "libs/saml2-web-sso/src/SAML2/WebSSO/XML.hs": "4c1980eb9317d5b47dc0adfc3b00bf9756f57b558c11ff8aa95dae9ccca969bd",
+  "libs/saml2-web-sso/src/SAML2/WebSSO/Types.hs": "6feee71ab301f987c9146dc1c6b27c37b13614c45862ebeef183a73da2558ffc",
+  "libs/saml2-web-sso/src/SAML2/Util.hs": "433d7df907dd3ba179c33802b73860489bf86ca46d9d2412685b356be7b59ace",
+  "libs/wire-subsystems/src/Wire/UserStore/Migration.hs": "867ed66c1ce049f0269b5071c78c73baf49101a646f37a9e7d3e920a6794ab66",
+  "libs/wire-api/test/golden/testObject_UserSSOId_user_2.json": "68b401f930a2a52e130f7dbab536ac8f7fed1002ad0d47993b900b39f6bddbb0",
+  "libs/wire-api/test/golden/testObject_UserSSOId_user_9.json": "404092f41048329946c069c130bbe97fe7d50177bf3e491c096c5b19667b69e9",
+  "libs/wire-api/test/golden/testObject_UserSSOId_user_13.json": "36e6405fae9984f1b795c627c8c757f23f580b0b54a23cd730c179199060f8b9"
+}
