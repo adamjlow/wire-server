@@ -4,9 +4,9 @@
   "title": "Complete strict federator candidate mount allowlist",
   "service": "federator",
   "kind": "contract-change",
-  "status": "queued",
-  "owner": null,
-  "branch": null,
+  "status": "active",
+  "owner": "codex",
+  "branch": "go-migration",
   "depends_on": [
     "federator-contract"
   ],
