@@ -1,16 +1,16 @@
 # Optional Go background-worker
 
-The user selected background-worker on2026-10-09 after documentation reconciliation.
+The user selected background-worker on 2026-10-09 after documentation reconciliation.
 Objective: complete an optional whole-service Go replacement, validated against
 Haskell through a finite contract and the existing Docker harness. Continuing
 explicit same-author review delegation applies; no production switch, remote push,
 Haskell removal or contract/security exception is authorized.
 
 Reference: f6636ed53315fa7b0fc4c8aa39c0bb30c98b6d5e. Current optional compiler:
-Go1.26.9, GOTOOLCHAIN=local/GOWORK=off. Existing five Go peers and their exact
+Go 1.26.9, GOTOOLCHAIN=local/GOWORK=off. Existing five Go peers and their exact
 [patched artifact tuple](../qualifications/go-patched-20261009/README.md) are the
-starting mixed-deployment baseline. The service remains registered; no inventory,
-contract, implementation or background-worker parity is yet claimed.
+starting mixed-deployment baseline. The service remains registered pending publication of the completed inventory gate;
+no contract, implementation or background-worker parity is yet claimed.
 
 ## Whole-service boundary to inventory
 
@@ -36,7 +36,7 @@ is not evidence that the entire service is small. See
 and the existing service unit tests. Resolve exact job registry, payload/queue
 formats, acknowledgement/error rules, storage effects and migration behavior before
 freezing acceptance. Do not substitute notification-only implementation for the
-whole service or treat the existing77 tests as coverage of unexamined jobs.
+whole service or treat the existing 77 tests as coverage of unexamined jobs.
 
 ## Ordered execution and finite acceptance
 
@@ -97,3 +97,12 @@ Build commands use required output filtering and inspect the actual build exit.
 Evidence belongs in the service dossier/oracle and module review, with full source,
 reference, binary, environment and cleanup identities. Open inventory questions
 must be resolved before the contract is called complete; no guessed test counts.
+
+Inventory progress: actual pinned runner lists 47 candidate relevant original
+functions including 15 migration, 23 adminless, 3 group synchronization,meeting
+cleanup, offline federation/dead-letter/queue recovery. Published worker help
+confirms separate galley config; Haskell worker SHA985aab36... recorded. Two
+Rabbit job payloads synchronize user groups/channels; scheduled PostgreSQL jobs
+cover adminless setup/deletion/reminder and meetings. Inventory identifies whole
+source boundary and concrete risks; next step freezes actual original baseline
+and compatible Arbiter schemas before Go qualification.
