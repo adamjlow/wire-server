@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "id": "background-worker-entry-docs-reconciliation",
+  "title": "Reconcile worker entry documentation with frozen contract and implementation status",
+  "service": "framework",
+  "kind": "framework",
+  "status": "active",
+  "owner": "codex",
+  "branch": "go-migration",
+  "depends_on": [
+    "background-worker-implementation-gates"
+  ],
+  "write_paths": [
+    ".migration/tasks/background-worker-entry-docs-reconciliation.json",
+    ".migration/reviews/background-worker-entry-docs-reconciliation.md",
+    "docs/go-migration/README.md",
+    "docs/go-migration/services/README.md",
+    "tools/parity/README.md",
+    "tools/parity/docker/README.md"
+  ],
+  "plan": "docs/go-migration/plans/docs-reconciliation-20261009.md",
+  "acceptance_criteria": [
+    {
+      "id": "docs",
+      "description": "Entry documentation accurately links completed discovery/contract and unfinished worker implementation.",
+      "required_evidence": "Source records and retained test execution reviewed, stale registered/unexamined coverage wording corrected, no compatibility/default/authorization changes; links/scope/migration checks and delegated same-author review."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": "Serialized factual documentation reconciliation; implementation task retains disjoint service/plan scope."
+}
