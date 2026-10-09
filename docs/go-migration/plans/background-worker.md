@@ -183,7 +183,19 @@ ledger; cleanup loads native subgroup/group/client data before deletion. Focused
 routing/failure tests and full Go checks/final race tests pass. Actual database
 lock/durable effects are not yet verified in Docker.
 
-Next rerun the unchanged original gundeck40 against a clean static worker, then
+The unchanged original gundeck40 rerun is live against clean worker source
+00557161c5218fba7ce290ba57536561298a35e3. It includes real job startup and migration
+routing, but no subsequent scheduled construction. Do not infer a passing run
+until strict terminal XML and owned cleanup are recorded.
+
+Scheduled construction now has source queue-specific payload decoding and native
+gateless single-job claim, heartbeat and retry SQL with attempt/lease guards.
+Original Arbiter MIT notices are retained. Full Go checks pass; actual PG behavior
+and the scheduled runtime are not yet tested/connected. Evidence is in module
+evidence/scheduled-store-20261009. Complete schema bootstrap, worker registration,
+ACK/archive/reaper/cron and domain handlers before enabling scheduled execution.
+
+Next collect the unchanged original gundeck40 terminal result and owned cleanup, then
 consolidate startup/supervision/logging and graceful drain. Implement Arbiter
 scheduled adminless/meetings jobs and all seven migration
 families. Final exact six-Go original124 tests, actual durable Haskell->Go->Haskell
