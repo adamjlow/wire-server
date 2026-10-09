@@ -1,5 +1,5 @@
 """Finite real-process forwarding observations, only in owned nonroot runner."""
-import argparse, base64, hashlib, http.client, http.server, json, os
+import argparse, base64, concurrent.futures, hashlib, http.client, http.server, json, os
 from pathlib import Path
 import shutil, subprocess, tempfile, threading, time, urllib.parse
 
@@ -34,9 +34,14 @@ def run(binary):
         threading.Thread(target=s.serve_forever,daemon=True).start();servers.append(s)
     cfg.update(federatorInternal={'host':'127.0.0.1','port':16197},federatorExternal={'host':'127.0.0.1','port':16198},brig={'host':'127.0.0.1','port':17182},cargohold={'host':'127.0.0.1','port':17184},galley={'host':'127.0.0.1','port':17185})
     def record(name,port,path,method='GET',body=b'',headers=None):records.append({'name':name,'observed':request(port,path,method,body,headers)})
+    def timed_health():
+        start=time.monotonic();v=request(16197,'/i/status?standalone')
+        if v['status']!=200:raise ValueError('smoke failed')
+        return (time.monotonic()-start)*1000
     process=None
     try:
         with tempfile.TemporaryDirectory(prefix='federator-capture-') as tmp:
+            ca=Path(tmp)/'remote-ca.pem';original_ca=Path(cfg['optSettings']['remoteCAStore']).read_bytes();ca.write_bytes(original_ca);cfg['optSettings']['remoteCAStore']=str(ca)
             conf=Path(tmp)/'config.json';conf.write_text(json.dumps(cfg))
             with Path('/reports/federator-side.log').open('w') as log:
                 process=subprocess.Popen([str(binary),'-c',str(conf)],cwd='/tmp/wire-e2e/services/federator',stdout=log,stderr=log)
@@ -69,6 +74,27 @@ def run(binary):
                 servers[0].remotes=[{'domain':'example.com','search_policy':'full_search','restriction':{'tag':'allow_all','value':None}}]
                 record('dynamic-allowed',16198,'/federation/brig/foo','POST',b'{}',headers)
                 servers[0].strategy='allowAll';servers[1].status=418;record('inward-error',16198,'/federation/cargohold/foo','POST',b'{}',headers)
+                ca.write_bytes(Path('/source/services/federator/test/resources/unit/unit-ca.pem').read_bytes())
+                deadline=time.monotonic()+3
+                while True:
+                    value=request(16197,'/rpc/example.com/brig/remote-success','POST',b'{}')
+                    if value['status']==525:break
+                    if time.monotonic()>deadline:raise ValueError('reference did not reload changed CA')
+                    time.sleep(.1)
+                # Native OpenSSL/Go diagnostics differ; freeze status/label and no body
+                # passthrough. Other errors, headers and values stay exact.
+                value['json']['message']='<verified TLS failure>'
+                records.append({'name':'untrusted-tls','observed':value})
+                ca.write_bytes(original_ca);time.sleep(.4)
+                record('restored-tls',16197,'/rpc/example.com/brig/remote-success','POST',b'{}')
+                ca.write_bytes(b'not a CA');time.sleep(.4)
+                record('invalid-reload-retains-context',16197,'/rpc/example.com/brig/remote-success','POST',b'{}')
+                started=time.monotonic()
+                with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:
+                    timings=list(pool.map(lambda _: timed_health(),range(40)))
+                rss=int(next(line.split()[1] for line in Path('/proc/'+str(process.pid)+'/status').read_text().splitlines() if line.startswith('VmRSS:')))
+                records.append({'name':'smoke','observed':{'requests':40,'concurrency':2,'rss_kib':rss,'p95_ms':round(sorted(timings)[37],3)}})
+
                 started=time.monotonic();process.terminate();code=process.wait(timeout=4)
                 records.append({'name':'shutdown','observed':{'exit_code':code,'seconds':round(time.monotonic()-started,3)}})
     finally:
