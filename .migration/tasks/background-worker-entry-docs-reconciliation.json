@@ -4,7 +4,7 @@
   "title": "Reconcile worker entry documentation with frozen contract and implementation status",
   "service": "framework",
   "kind": "framework",
-  "status": "active",
+  "status": "done",
   "owner": "codex",
   "branch": "background-worker-entry-docs-reconciliation",
   "depends_on": [
@@ -26,7 +26,18 @@
       "required_evidence": "Source records and retained test execution reviewed, stale registered/unexamined coverage wording corrected, no compatibility/default/authorization changes; links/scope/migration checks and delegated same-author review."
     }
   ],
-  "evidence": [],
-  "review": null,
-  "handoff": "Factual docs reconciliation on separate actual branch, serialized solo writer; worker implementation writes stopped during this correction."
+  "evidence": [
+    {
+      "criterion": "docs",
+      "result": "pass",
+      "command": "Review entry guides against actual completed inventory/contract, implementing service record and retained failed original receipts;36 links, migration validator/32 tests, scope/whitespace checks pass. No compatibility/default/authorization changes or service build rerun.",
+      "revision": "dc218d07bde69e8dc04504c88db3963fc2fb2a13",
+      "artifact": ".migration/reviews/background-worker-entry-docs-reconciliation.md"
+    }
+  ],
+  "review": {
+    "by": "codex (same-author self-review delegated by user)",
+    "artifact": ".migration/reviews/background-worker-entry-docs-reconciliation.md"
+  },
+  "handoff": "Factual entry docs reconciled. Return solo writer to go-migration; continue active whole-worker implementation. No whole-service qualification claim."
 }
