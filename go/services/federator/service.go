@@ -25,6 +25,7 @@ import (
 )
 
 type Service struct {
+	operational        *Metrics
 	config             Config
 	local              *http.Client
 	remote             atomic.Pointer[http.Transport]
@@ -41,6 +42,7 @@ func New(c Config) (*Service, error) {
 	}
 	s := &Service{config: c, incoming: map[string]uint64{}, outgoing: map[string]uint64{}}
 	s.local = &http.Client{Transport: &http.Transport{Proxy: nil, DialContext: (&net.Dialer{Timeout: time.Duration(*c.Settings.TCPConnectionTimeout) * time.Microsecond}).DialContext, MaxIdleConns: 4096, MaxIdleConnsPerHost: 1024, ResponseHeaderTimeout: 10 * time.Second, DisableCompression: true}, CheckRedirect: noRedirect}
+	s.operational = newMetrics()
 	s.remote.Store(s.transport(tc))
 	return s, nil
 }
@@ -86,6 +88,9 @@ func (s *Service) Run(ctx context.Context) error {
 	monitorCtx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 	go s.monitor(monitorCtx)
+	go s.operational.Collect(monitorCtx)
+	internal.ConnState = s.operational.ConnState
+	external.ConnState = s.operational.ConnState
 	done := make(chan error, 2)
 	go func() { done <- internal.Serve(l1) }()
 	go func() { done <- external.Serve(l2) }()
@@ -114,6 +119,17 @@ func (s *Service) Run(ctx context.Context) error {
 func (s *Service) Handler(external bool) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		started := time.Now()
+		{
+			observed := &observedWriter{ResponseWriter: w}
+			w = observed
+			defer func() {
+				status := observed.status
+				if status == 0 {
+					status = 200
+				}
+				s.operational.observe(r.URL.Path, r.Method, status, time.Since(started))
+			}()
+		}
 		defer func() { s.mu.Lock(); s.requests++; s.duration += time.Since(started).Seconds(); s.mu.Unlock() }()
 		if r.URL.Path == "/i/metrics" {
 			s.metrics(w)
@@ -511,10 +527,10 @@ func writeError(w http.ResponseWriter, status int, label, message string, extra 
 	_, _ = w.Write(data)
 }
 func (s *Service) metrics(w http.ResponseWriter) {
+	s.operational.serve(w)
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	w.Header().Set("Content-Type", "text/plain; version=0.0.4; charset=utf-8")
-	_, _ = fmt.Fprintf(w, "# TYPE http_request_duration_seconds histogram\nhttp_request_duration_seconds_bucket{le=\"+Inf\"} %d\nhttp_request_duration_seconds_count %d\nhttp_request_duration_seconds_sum %g\n", s.requests, s.requests, s.duration)
 	_, _ = io.WriteString(w, "# TYPE com_wire_federator_incoming_requests counter\n")
 	for domain, count := range s.incoming {
 		_, _ = fmt.Fprintf(w, "com_wire_federator_incoming_requests{origin_domain=%q} %d\n", domain, count)
