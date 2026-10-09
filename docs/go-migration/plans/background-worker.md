@@ -267,3 +267,15 @@ acceptance. Native failed insert still advances checked watermark, losing that
 NoBackfill tick; record this inherited concern without changing source behavior.
 Retain cron BSD2 notice alongside existing notices in eventual distribution.
 No original assertion/schema/default change or broad parity claim.
+
+Meetings SQL and cleanup orchestration are constructed with source full-row decoding,
+two indexed expiry queries/stable merge/cap, strict cutoff/open recurrence rules,
+canonical meeting code key and configured code-mode routing. Deletion guards/order,
+full/partial batches, caught-error run count and cancellation are covered. Full Go
+checks and an actual isolated PostgreSQL fixture using9 unchanged readonly native
+migrations pass: [exact evidence](../../../go/services/background-worker/evidence/meetings-cleanup-storage-20261009/).
+This fixture stubs missing conversations; actual unchecked conversation/proposal/
+MLS cleanup, retention config/cutoff and runtime/metrics remain unfinished. Native
+cleanup does not send notifications through its unchecked delete path. Next implement
+that concrete deletion adapter and adminless handlers, then full scheduled runtime
+and existing final acceptance. No fresh Haskell cleanup/whole-service proof.

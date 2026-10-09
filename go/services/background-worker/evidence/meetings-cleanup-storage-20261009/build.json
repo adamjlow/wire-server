@@ -1,0 +1,45 @@
+{
+  "base_revision": "3965f30c0cc06e8dcc4c075c2efc18ca60c5a0eb",
+  "source_inputs_sha256": "9d1b23d52ec82d27902b41293943c3132479a736644d60a65bfbdaf4d2115975",
+  "binary_sha256": "cb388f48c6dcbeef6fbb603756cf8b94c10d748eff3f986b415887c34ecd3b48",
+  "build_info": {
+    "GoVersion": "go1.26.9",
+    "Path": "github.com/adamjlow/wire-server/go/services/background-worker.test",
+    "Main": {
+      "Path": "github.com/adamjlow/wire-server/go/services/background-worker",
+      "Version": "(devel)"
+    },
+    "Settings": [
+      {
+        "Key": "-buildmode",
+        "Value": "exe"
+      },
+      {
+        "Key": "-compiler",
+        "Value": "gc"
+      },
+      {
+        "Key": "-tags",
+        "Value": "schemacheck"
+      },
+      {
+        "Key": "CGO_ENABLED",
+        "Value": "0"
+      },
+      {
+        "Key": "GOARCH",
+        "Value": "amd64"
+      },
+      {
+        "Key": "GOOS",
+        "Value": "linux"
+      },
+      {
+        "Key": "GOAMD64",
+        "Value": "v1"
+      }
+    ]
+  },
+  "command": "CGO_ENABLED=0 GOTOOLCHAIN=local GOWORK=off go -C go/services/background-worker test -c -tags schemacheck -o CACHE/meetings-cleanup-check",
+  "identity_scope": "Declared construction inputs; not a clean final service artifact. Ordinary Go checks exclude tagged fixture; it was separately compiled and executed."
+}

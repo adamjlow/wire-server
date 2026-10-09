@@ -1,0 +1,58 @@
+{
+  "owner": "wire-worker-meetings-780793faa14f4613814eb040e667af07",
+  "postgres_image": "postgres@sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24",
+  "runner_image": "sha256:cd03212430eef6cfde0324b50885c12980ee211483ab27dde6ee730252966cd2",
+  "binary_sha256": "cb388f48c6dcbeef6fbb603756cf8b94c10d748eff3f986b415887c34ecd3b48",
+  "test_tag": "schemacheck",
+  "test": "TestMeetingsCleanupDockerStorage",
+  "result": "pass",
+  "test_exit_code": 0,
+  "cleanup": [
+    {
+      "command": [
+        "docker",
+        "rm",
+        "-f",
+        "wire-worker-meetings-780793faa14f4613814eb040e667af07-check"
+      ],
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "command": [
+        "docker",
+        "rm",
+        "-f",
+        "wire-worker-meetings-780793faa14f4613814eb040e667af07-postgres"
+      ],
+      "exit_code": 0,
+      "output": "wire-worker-meetings-780793faa14f4613814eb040e667af07-postgres\n"
+    },
+    {
+      "command": [
+        "docker",
+        "volume",
+        "rm",
+        "wire-worker-meetings-780793faa14f4613814eb040e667af07-pg"
+      ],
+      "exit_code": 0,
+      "output": "wire-worker-meetings-780793faa14f4613814eb040e667af07-pg\n"
+    },
+    {
+      "command": [
+        "docker",
+        "network",
+        "rm",
+        "wire-worker-meetings-780793faa14f4613814eb040e667af07-net"
+      ],
+      "exit_code": 0,
+      "output": "wire-worker-meetings-780793faa14f4613814eb040e667af07-net\n"
+    }
+  ],
+  "post_cleanup_owned": {
+    "container": [],
+    "network": [],
+    "volume": []
+  },
+  "cleanup_passed": true
+}

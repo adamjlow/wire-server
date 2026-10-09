@@ -91,3 +91,11 @@ Construction check receipts live under [evidence/](evidence/), including
 [user value decoding](evidence/user-migration-values-20261009/). These checks do
 not establish actual database parity. Current completion status is owned by the
 [active task](../../../.migration/tasks/background-worker-implementation.json).
+
+Meetings storage and cleanup orchestration now pass [construction checks](evidence/meetings-cleanup-storage-20261009/),
+including actual PostgreSQL execution with9 readonly original migrations. Native
+expiry ordering/limits, open/boundary retention, full-row validation, code routing,
+batch/error behavior and deletion guards are implemented. Conversation/proposal
+removal adapters, retention configuration/cutoff and service wiring remain
+unfinished; this fixture explicitly stubs missing conversations. No full meetings
+handler or original cleanup-test qualification is claimed.

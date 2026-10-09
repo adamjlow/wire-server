@@ -1,0 +1,4 @@
+=== RUN   TestMeetingsCleanupDockerStorage
+    meetings_store_docker_test.go:120: readonly original meeting/code DDL; two-index merge/cap, full-branch validation, strict expiry/open recurrence, five SQL deletions across batches, code isolation and idempotent rerun pass; conversation effects adapter remains unfinished
+--- PASS: TestMeetingsCleanupDockerStorage (0.04s)
+PASS
