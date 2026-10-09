@@ -1,0 +1,12 @@
+all modules verified
+ok  	github.com/adamjlow/wire-server/go/services/background-worker	1.059s
+?   	github.com/adamjlow/wire-server/go/services/background-worker/cmd/background-worker	[no test files]
+all modules verified
+No vulnerabilities found.
+W1009 18:38:44.684400 3567788 library.go:394] module github.com/adamjlow/wire-server/go/services/background-worker has empty version, defaults to HEAD. The license URL may be incorrect. Please verify!
+github.com/adamjlow/wire-server/go/services/background-worker,https://github.com/adamjlow/wire-server/blob/HEAD/go/services/background-worker/LICENSE,AGPL-3.0
+github.com/rabbitmq/amqp091-go,https://github.com/rabbitmq/amqp091-go/blob/v1.15.0/LICENSE,BSD-2-Clause
+go.yaml.in/yaml/v3,https://github.com/yaml/go-yaml/blob/v3.0.5/LICENSE,MIT
+golang.org/x/net,https://cs.opensource.google/go/x/net/+/v0.60.0:LICENSE,BSD-3-Clause
+golang.org/x/text,https://cs.opensource.google/go/x/text/+/v0.42.0:LICENSE,BSD-3-Clause
+Go module checks passed: background-worker; Go 1.26.9

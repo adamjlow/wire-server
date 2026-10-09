@@ -104,14 +104,13 @@ cleanup, offline federation/dead-letter/queue recovery. Published worker help
 confirms separate galley config; Haskell worker SHA985aab36... recorded. Two
 Rabbit job payloads synchronize user groups/channels; scheduled PostgreSQL jobs
 cover adminless setup/deletion/reminder and meetings. Inventory identifies whole
-source boundary and concrete risks; next step freezes actual original baseline
-and compatible Arbiter schemas before Go qualification.
+source boundary and concrete risks; finite reference contract and actual Arbiter schemas were then frozen before
+Go construction.
 
 Inventory publication: the completed [inventory](../services/background-worker/inventory.md)
 and [actual discovery](../services/background-worker/test-discovery.json) are
-recorded by the inventoried service gate. Next task is
-`background-worker-contract`; its finite acceptance covers the original 47
-functions, actual persisted queue/schema behavior and strict six-service selection.
+recorded by the inventory gate; the completed reference contract covers the
+original47, actual persisted queue/schema behavior and strict six-service selection.
 
 Reference work completed: all original47 functions executed; full runs45/47 and
 46/47 failed and are retained. Case-level passing observations cover47/47 across
@@ -121,4 +120,17 @@ existing-peer intermittent transport issue stays open with compatibility null;
 it does not alter the independently frozen worker contract. Final exact six-Go
 original124 tests must still pass before qualification. Proceed to the early
 runnable worker and whole contracted implementation; do not repeat broad baselines
-without a concrete change. No worker code or final switchback yet exists.
+without a concrete change. Final switchback remains outstanding.
+
+Early construction: isolated Go module accepts both configs and CLI defaults,
+source health/ordered readiness and federation pusher. Single-active quorum
+consumers preserve raw bytes, V0/bundle version rules and ACK/reject/retry/KeepQueued
+behavior; verified TLS and cancellable bounded AMQP handshake. Actual focused
+HTTP2 transport/source expectation tests plus format/tidy/verify/vet/race/build,
+module vulnerability and license checks pass. The initial missing local module
+LICENSE failure is retained; corrected source includes the original AGPL license.
+The harmless license-report HEAD URL warning is not a compiler warning; actual
+local license content was classified AGPL and dependencies BSD/MIT. DLQ/group-sync,
+Arbiter/adminless/meetings and seven migrations remain unfinished; their readiness
+stays false and enabled migrations explicitly fail startup. No availability,
+whole-service parity, final operations or image/selector claim is made.

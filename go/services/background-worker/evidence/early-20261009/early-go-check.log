@@ -1,0 +1,9 @@
+all modules verified
+ok  	github.com/adamjlow/wire-server/go/services/background-worker	1.082s
+?   	github.com/adamjlow/wire-server/go/services/background-worker/cmd/background-worker	[no test files]
+all modules verified
+No vulnerabilities found.
+Did not find license for library 'github.com/adamjlow/wire-server/go/services/background-worker'.
+Did not find license for library 'github.com/adamjlow/wire-server/go/services/background-worker'.
+Did not find license for library 'github.com/adamjlow/wire-server/go/services/background-worker/cmd/background-worker'.
+Candidate checks failed: /tmp/wire-go-check-25fysgly/go-licenses check failed (exit 1)
