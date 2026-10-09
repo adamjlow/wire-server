@@ -1,0 +1,1 @@
+Extend the isolated optional migration harness with original background-worker tests, strict six-service selection and the upstream DNS fixture required for domain-registration migration.

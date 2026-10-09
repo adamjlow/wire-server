@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "result": "failed",
+  "original_cases": 47,
+  "passed": 45,
+  "failures": {
+    "Migration.DomainRegistration.testDomainRegistrationMigration": "Connection refused at localhost:5380 DNS fixture admin endpoint, before data migration. Add original upstream DNS fixture.",
+    "Migration.Conversation.testMigrationToPostgresMLS": "HTTP533 unreachable d3.example.com during MLS creation, before migration. Isolate with Haskell peers before attributing to worker or optional peers."
+  },
+  "worker_implementation": "haskell",
+  "selected_peer_implementations": [
+    "proxy",
+    "cargohold",
+    "cannon",
+    "gundeck",
+    "federator"
+  ],
+  "cleanup_exit_code": 0,
+  "source_revision": "983b84b226425a9ac3ea598af4350ac8baa71e7d",
+  "observations": "Haskell status/status-workers both200 with empty body; metrics200. Observed live Arbiter schema (227 columns) and separate meetings/conversations workers. Read-only captures while baseline ran; no injected jobs or lease/shutdown tests yet.",
+  "sha256": {
+    "arbiter-observed-columns.json": "97c53579b0e9f74b7385258ef41119f8d8a684691942ac32b11eab206d60a676",
+    "mixed-baseline-initial-environment.json": "caf9a42ad27efd5f7511893b418f7a87700a64f95a2a0ec66e3cc3371034f18a",
+    "arbiter-source-identities.json": "b51a46bcfc7ed8cd8e1397d9ef2753dcc0baba8b77740b8efc36268951ba1c85",
+    "preflight-initial.json": "d37559583f53ac7a8f1351f061f6adba61a201a5053d902ff3e48835f53ceed2",
+    "haskell-operations.json": "38e0c176464084a2dd540770656e12bf37281244955b5ec780122b8155de60ce",
+    "arbiter-observed-schema.sql": "f9d7111271e379c1db8602db2aff4345d1c8f1fa7a226265266f641fc011af8d",
+    "mixed-baseline-initial.run.json": "747e0ff07e06c29258adc800fa9463ed2843741fe37f3b6be23344a6ebd2efc1",
+    "runner-build-initial.json": "69dd9fc6c1043ca1d5a15b206f5cfa3fdc0cf0dcaa64da4f25dd2b7707910856",
+    "arbiter-observed-workers.json": "90fb8eaad99c9586914bd127fea5848f31658637893cddcda5d6f4e528b04b96",
+    "mixed-baseline-initial.xml": "473b0eb357c34bde730eb4f9c3f38ee0de3cad2551370863d7e1acb5b74b6043"
+  }
+}

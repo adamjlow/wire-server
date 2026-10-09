@@ -16,7 +16,7 @@ from control import ROOT, FILES, command, destination
 
 DEPENDENCIES = ('fake_dynamodb', 'fake_sqs', 'fake_localstack', 'fake_s3',
                 'redis-master', 'elasticsearch', 'postgres', 'cassandra',
-                'rabbitmq', 'coredns', 'redis-cluster', *('redis-node-'+str(i) for i in range(1,7)))
+                'rabbitmq', 'coredns', 'dns-server', 'redis-cluster', *('redis-node-'+str(i) for i in range(1,7)))
 SERVICES = {'brig':8082, 'cannon':8083, 'cargohold':8084, 'galley':8085,
             'gundeck':8086, 'proxy':8087, 'spar':8088, 'background-worker':8089,
             'stern':8091, 'federator':8097, 'wire-server-enterprise':8079}
@@ -147,6 +147,9 @@ def private_compose(upstream, project, output, image):
         service['pids_limit']=512
         service['cpus']=2
         if name=='elasticsearch':service['tmpfs']=['/usr/share/elasticsearch/data:rw,nosuid,nodev,size=1g,uid=1000,gid=1000']
+        if name=='dns-server':
+            service['image']='technitium/dns-server@sha256:1045db38fd2f2e4d9578f9168b7eb4862575469ed0ffc79e03f36bdc772a93b5'
+            service['volumes']=[{'type':'volume','source':'dns-server-data','target':'/etc/dns'}]
         if name=='rabbitmq':service['environment']={'RABBITMQ_USERNAME':'guest','RABBITMQ_PASSWORD':'alpaca-grapefruit'}
         for volume in service.get('volumes',[]):
             if volume['type']=='bind':volume['read_only']=True
@@ -167,7 +170,7 @@ def private_compose(upstream, project, output, image):
     networks={'demo_wire':{'driver':'bridge','internal':True,'ipam':{'config':[{'subnet':'172.20.2.0/24'}]}},
               'redis':{'driver':'bridge','internal':True,'ipam':{'config':[{'subnet':'172.20.0.0/24'}]}},
               'coredns':{'driver':'bridge','internal':True,'ipam':{'config':[{'subnet':'172.20.1.0/24'}]}}}
-    spec={'name':project,'services':services,'networks':networks,'volumes':{name:{} for name in upstream.get('volumes',{})}}
+    spec={'name':project,'services':services,'networks':networks,'volumes':{name:{} for name in (*upstream.get('volumes',{}),'dns-server-data')}}
     validate_isolation(spec)
     return spec
 

@@ -19,7 +19,8 @@ FORWARDS = {9042:('cassandra',9042),5432:('postgres',5432),
             4567:('fake_dynamodb',8000),4568:('fake_sqs',4568),
             4569:('fake_localstack',4579),4575:('fake_localstack',4575),
             4570:('fake_s3',3900),5671:('rabbitmq',5671),
-            15671:('rabbitmq',15671),15672:('rabbitmq',15672),9053:('coredns',53)}
+            15671:('rabbitmq',15671),15672:('rabbitmq',15672),9053:('coredns',53),
+            5380:('dns-server',5380),5381:('dns-server',80)}
 SOURCE=Path('/source');WORK=Path('/tmp/wire-e2e')
 
 
