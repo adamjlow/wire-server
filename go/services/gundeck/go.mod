@@ -1,6 +1,6 @@
 module github.com/adamjlow/wire-server/go/services/gundeck
 
-go 1.26.8
+go 1.26.9
 
 require (
 	github.com/apache/cassandra-gocql-driver/v2 v2.1.2

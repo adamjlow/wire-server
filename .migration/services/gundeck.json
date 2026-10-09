@@ -34,10 +34,5 @@
       "gundeck-selection"
     ]
   },
-  "compatibility": {
-    "upstream_revision": "f6636ed53315fa7b0fc4c8aa39c0bb30c98b6d5e",
-    "reference_revision": "f6636ed53315fa7b0fc4c8aa39c0bb30c98b6d5e",
-    "candidate_revision": "6b532d03cf2bb9e31a55b9108fa52abb79f05aea",
-    "verification_task": "gundeck-verification"
-  }
+  "compatibility": null
 }

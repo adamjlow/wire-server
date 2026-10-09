@@ -1,6 +1,6 @@
 module github.com/adamjlow/wire-server/go/tooling
 
-go 1.26.8
+go 1.26.9
 
 tool (
 	github.com/google/go-licenses/v2
@@ -20,7 +20,7 @@ require (
 	github.com/spf13/pflag v1.0.5 // indirect
 	go.opencensus.io v0.24.0 // indirect
 	golang.org/x/mod v0.41.0 // indirect
-	golang.org/x/net v0.59.0 // indirect
+	golang.org/x/net v0.60.0 // indirect
 	golang.org/x/sync v0.23.0 // indirect
 	golang.org/x/sys v0.48.0 // indirect
 	golang.org/x/telemetry v0.0.0-20260908163034-4bcc4b2ee518 // indirect
