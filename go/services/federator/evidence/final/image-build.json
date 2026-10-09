@@ -1,8 +1,8 @@
 {
-  "source_revision": "2a315a73d92eb954d9724f67486c3ccb1c9124c4",
-  "packaging_revision": "2a315a73d92eb954d9724f67486c3ccb1c9124c4",
-  "binary_sha256": "b8926973d577cd54cb58ebaa7807e0dd4393b8c517fec2b63d52a9479c8bfa05",
-  "image_id": "sha256:dde7335b49fbc8e22d685c12a27305ac0832bb6fb0eccbf27172f31b35c66119",
+  "source_revision": "845956f630b791645a9c12d23918d8c9c3bc7507",
+  "packaging_revision": "845956f630b791645a9c12d23918d8c9c3bc7507",
+  "binary_sha256": "fbe1d6d62762e79da64a15a6e06af9ce7448ab2ace0ca33530ec261aa46a4595",
+  "image_id": "sha256:9cf75f4fb355c3b3d4c4be4518d16b8732cb3a5ee4f5d1fef7b3cb61b4c3b3c8",
   "build_info": {
     "GoVersion": "go1.26.9",
     "Path": "github.com/adamjlow/wire-server/go/services/federator/cmd/federator",
@@ -53,11 +53,11 @@
       },
       {
         "Key": "vcs.revision",
-        "Value": "2a315a73d92eb954d9724f67486c3ccb1c9124c4"
+        "Value": "845956f630b791645a9c12d23918d8c9c3bc7507"
       },
       {
         "Key": "vcs.time",
-        "Value": "2026-10-09T12:46:47Z"
+        "Value": "2026-10-09T12:58:11Z"
       },
       {
         "Key": "vcs.modified",

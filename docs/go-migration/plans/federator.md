@@ -39,3 +39,16 @@ Build commands end with the required output filter and inspect actual build exit
 Reuse tools/parity/docker environment/control and exact existing peer receipts.
 Evidence stays in service inventory/oracle and module review. Native Haskell tools
 are unavailable locally; retain existing upstream CI and report checks unrun.
+
+Completed execution (2026-10-09): source845956f630b791645a9c12d23918d8c9c3bc7507,
+binaryfbe1d6d62762e79da64a15a6e06af9ce7448ab2ace0ca33530ec261aa46a4595.
+Final original77 with all five Go services/remaining Haskell peers and frozen35
+pass without failures/skips, process0/cleanup0. Pinned Go1.26.9/x/net0.60.0 quality,
+vulnerability/license/race checks pass. Actual identical-binary nonroot image and
+default-preserving/fail-closed Helm selector pass; Haskell->Go->Haskell unchanged
+configuration and loaded stream drain pass. Delegated review/evidence retained
+in go/services/federator/REVIEW.md; intermediate failures/aborts in evidence/HISTORY.md.
+Earlier four Go artifacts need security-patched rebuild/requalification before
+production; mixed-run functional evidence does not renew their security status.
+Finite acceptance complete; native Haskell checks unavailable/unrun, defaults
+and shared assertions untouched, no remote push or production switch.

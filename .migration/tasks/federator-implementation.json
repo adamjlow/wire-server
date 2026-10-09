@@ -4,7 +4,7 @@
   "title": "Build and qualify optional whole-service Go federator",
   "service": "federator",
   "kind": "implementation",
-  "status": "active",
+  "status": "done",
   "owner": "codex",
   "branch": "go-migration",
   "depends_on": [
@@ -37,7 +37,32 @@
       "required_evidence": "Actual image health/SIGTERM and chart lifecycle hook, default render/one selected image/fail-closed proof; Haskell->Go->Haskell unchanged configs and bounded loaded shutdown/one operations smoke."
     }
   ],
-  "evidence": [],
-  "review": null,
-  "handoff": "Patched toolchain ready; x/net update and exact final77/35 qualification proceed."
+  "evidence": [
+    {
+      "criterion": "service",
+      "result": "pass",
+      "command": "Review final source845956f6/binaryfbe1d6d6: original77 five-Go/Haskell-peer tests and frozen35 pass without skips/errors, process0/cleanup0; Go1.26.9/x/net0.60.0 format/tidy/verify/vet/race/build/security/license pass; identical-binary nonroot image and unchanged/default/fail-closed Helm selection pass; actual Haskell/Go/Haskell config switchback and loaded drain exit0/0.564s. Failures, native checks unrun, inherited concerns and older peer security follow-up retained.",
+      "revision": "845956f630b791645a9c12d23918d8c9c3bc7507",
+      "artifact": "go/services/federator/REVIEW.md"
+    },
+    {
+      "criterion": "quality",
+      "result": "pass",
+      "command": "Review final source845956f6/binaryfbe1d6d6: original77 five-Go/Haskell-peer tests and frozen35 pass without skips/errors, process0/cleanup0; Go1.26.9/x/net0.60.0 format/tidy/verify/vet/race/build/security/license pass; identical-binary nonroot image and unchanged/default/fail-closed Helm selection pass; actual Haskell/Go/Haskell config switchback and loaded drain exit0/0.564s. Failures, native checks unrun, inherited concerns and older peer security follow-up retained.",
+      "revision": "845956f630b791645a9c12d23918d8c9c3bc7507",
+      "artifact": "go/services/federator/REVIEW.md"
+    },
+    {
+      "criterion": "selection-rollback",
+      "result": "pass",
+      "command": "Review final source845956f6/binaryfbe1d6d6: original77 five-Go/Haskell-peer tests and frozen35 pass without skips/errors, process0/cleanup0; Go1.26.9/x/net0.60.0 format/tidy/verify/vet/race/build/security/license pass; identical-binary nonroot image and unchanged/default/fail-closed Helm selection pass; actual Haskell/Go/Haskell config switchback and loaded drain exit0/0.564s. Failures, native checks unrun, inherited concerns and older peer security follow-up retained.",
+      "revision": "845956f630b791645a9c12d23918d8c9c3bc7507",
+      "artifact": "go/services/federator/REVIEW.md"
+    }
+  ],
+  "review": {
+    "by": "codex (self-review delegated by user)",
+    "artifact": "go/services/federator/REVIEW.md"
+  },
+  "handoff": "Finite qualification complete for exact candidate. Publish adjacent verification/selection gates using retained evidence; no extra speculative tests, push, production switch or renewed old-peer security claim."
 }

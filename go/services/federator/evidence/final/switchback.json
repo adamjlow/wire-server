@@ -24,7 +24,7 @@
     {
       "implementation": "go",
       "config_sha256": "08c1f4ec1029a54c481cc7c1049be5769cdf670c623a1f33596ab6494355ecaa",
-      "binary_sha256": "b8926973d577cd54cb58ebaa7807e0dd4393b8c517fec2b63d52a9479c8bfa05",
+      "binary_sha256": "fbe1d6d62762e79da64a15a6e06af9ce7448ab2ace0ca33530ec261aa46a4595",
       "incoming": {
         "status": 200,
         "content_type": "application/octet-stream",

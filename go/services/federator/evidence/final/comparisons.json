@@ -1,18 +1,18 @@
 {
   "schema_version": 1,
-  "project": "wire-e2e-de0030dd1cac4140b30d73bc4877d359",
-  "source_revision": "2a315a73d92eb954d9724f67486c3ccb1c9124c4",
+  "project": "wire-e2e-022e661e868040f8ac6e643aa99acf06",
+  "source_revision": "845956f630b791645a9c12d23918d8c9c3bc7507",
   "runner_image_id": "sha256:ab6f8aef313e322935cf0d6256d9a89b007027a94190ff2f253fc0a8ac94349e",
   "runner_revision": "107c55bdecf1b53cb203d9f4de4be3c91388b24b",
   "candidate": {
-    "path": "/home/operator/.cache/wire-migration/federator-20261009-4",
-    "sha256": "b8926973d577cd54cb58ebaa7807e0dd4393b8c517fec2b63d52a9479c8bfa05",
-    "source_revision": "2a315a73d92eb954d9724f67486c3ccb1c9124c4"
+    "path": "/home/operator/.cache/wire-migration/federator-20261009-5",
+    "sha256": "fbe1d6d62762e79da64a15a6e06af9ce7448ab2ace0ca33530ec261aa46a4595",
+    "source_revision": "845956f630b791645a9c12d23918d8c9c3bc7507"
   },
   "peer_candidates": {},
   "result": "pass",
   "e2e_executed": false,
-  "compose_sha256": "692f0c8fcc7a7bac983cabf22e2a78bb1e69d59a20a94528c4a8b67ec48a02cb",
+  "compose_sha256": "9ac0123029e82abed9218c1ec8719d13714b8fb008d98e6b6f858d9362af2b7c",
   "files_sha256": {
     "fixtures/configs.json": "8cc34c41cc248ae804d822a60fb610b0adead84c3e79663eb33243ef70c99876",
     "fixtures/integration.json": "d8834dad54e1f851e689ac00691cd527aac69e0e9ce00baf149835433812c73c",
@@ -188,7 +188,7 @@
       {
         "implementation": "go",
         "config_sha256": "08c1f4ec1029a54c481cc7c1049be5769cdf670c623a1f33596ab6494355ecaa",
-        "binary_sha256": "b8926973d577cd54cb58ebaa7807e0dd4393b8c517fec2b63d52a9479c8bfa05",
+        "binary_sha256": "fbe1d6d62762e79da64a15a6e06af9ce7448ab2ace0ca33530ec261aa46a4595",
         "incoming": {
           "status": 200,
           "content_type": "application/octet-stream",

@@ -1,6 +1,6 @@
 {
   "kind": "finite-federator-forwarding",
-  "binary_sha256": "b8926973d577cd54cb58ebaa7807e0dd4393b8c517fec2b63d52a9479c8bfa05",
+  "binary_sha256": "fbe1d6d62762e79da64a15a6e06af9ce7448ab2ace0ca33530ec261aa46a4595",
   "script_sha256": "e5512796e9e9f5e459e2f8a9f2847d91ea0e9edbe3c181ca56f7284055db40e6",
   "records": [
     {
@@ -400,8 +400,8 @@
       "observed": {
         "requests": 40,
         "concurrency": 2,
-        "rss_kib": 12300,
-        "p95_ms": 0.479
+        "rss_kib": 12440,
+        "p95_ms": 0.445
       }
     },
     {
