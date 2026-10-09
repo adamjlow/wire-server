@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "id": "background-worker-inventory",
+  "title": "Inventory complete background-worker boundary and original tests",
+  "service": "background-worker",
+  "kind": "discovery",
+  "status": "queued",
+  "owner": null,
+  "branch": null,
+  "depends_on": [
+    "parity-guide-reconciliation-20261009"
+  ],
+  "write_paths": [
+    ".migration/tasks/background-worker-inventory.json",
+    "docs/go-migration/plans/background-worker.md",
+    "docs/go-migration/services/background-worker/inventory.md",
+    "docs/go-migration/services/background-worker/test-discovery.json",
+    "docs/go-migration/services/background-worker/inventory-review.md",
+    "changelog.d/5-internal/background-worker-inventory"
+  ],
+  "plan": "docs/go-migration/plans/background-worker.md",
+  "acceptance_criteria": [
+    {
+      "id": "inventory",
+      "description": "Source-cited full worker/config/job/migration/storage/operations boundary and material concerns identified.",
+      "required_evidence": "Actual entrypoint/options/worker/registry/migration dependencies, upstream schemas/wire formats, lifecycle/selection, serious inherited security/data-loss concerns and open questions."
+    },
+    {
+      "id": "tests",
+      "description": "Existing original compiled assertions discovered without claiming unexecuted suites passed.",
+      "required_evidence": "Nonroot network-none pinned runner lists relevant Events/background-job/adminless/meeting/migration cases, records executable identities/absent tools and finite baseline gap decisions; reuse existing actual Haskell-worker event evidence."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": ""
+}
