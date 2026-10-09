@@ -2,7 +2,7 @@
   "schema_version": 1,
   "service": "federator",
   "reference_path": "services/federator",
-  "stage": "implementing",
+  "stage": "verified",
   "oracle_paths": [
     "services/federator",
     "docs/go-migration/services/federator/contract.md",
@@ -17,7 +17,24 @@
     ],
     "plan": [
       "federator-inventory"
+    ],
+    "parity": [
+      "federator-verification"
+    ],
+    "security": [
+      "federator-verification"
+    ],
+    "operations": [
+      "federator-verification"
+    ],
+    "rollback": [
+      "federator-verification"
     ]
   },
-  "compatibility": null
+  "compatibility": {
+    "upstream_revision": "f6636ed53315fa7b0fc4c8aa39c0bb30c98b6d5e",
+    "reference_revision": "f6636ed53315fa7b0fc4c8aa39c0bb30c98b6d5e",
+    "candidate_revision": "845956f630b791645a9c12d23918d8c9c3bc7507",
+    "verification_task": "federator-verification"
+  }
 }
