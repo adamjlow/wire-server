@@ -4,9 +4,9 @@
   "title": "cannon patched artifact verification",
   "service": "cannon",
   "kind": "verification",
-  "status": "queued",
-  "owner": null,
-  "branch": null,
+  "status": "active",
+  "owner": "codex",
+  "branch": "go-migration",
   "depends_on": [
     "go-patched-rebuild-20261009"
   ],
