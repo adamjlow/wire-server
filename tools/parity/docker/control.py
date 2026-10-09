@@ -34,7 +34,7 @@ def build(output):
     if command(['git','status','--porcelain']):
         raise ValueError('commit changes before building identified runner')
     with tempfile.TemporaryDirectory(prefix='wire-e2e-build-') as tmp:
-        for name in ('Dockerfile','entrypoint.sh','runner.py','runtime.py','gundeck-tests.json','federator-tests.json'):
+        for name in ('Dockerfile','entrypoint.sh','runner.py','runtime.py','gundeck-tests.json','federator-tests.json','background-worker-tests.json'):
             shutil.copyfile(FILES/name,Path(tmp)/name)
         for name in ('harness.py','e2e-tests.json'):
             shutil.copyfile(ROOT/'tools/parity'/name,Path(tmp)/name)

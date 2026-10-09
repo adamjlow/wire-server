@@ -194,11 +194,11 @@ def start_peers(processes,logs):
 def selections(service, candidate, peers):
     selected = {}
     for name, path in peers:
-        if name not in ('proxy','cargohold','cannon','gundeck','federator') or name in selected:
+        if name not in ('proxy','cargohold','cannon','gundeck','federator','background-worker') or name in selected:
             raise ValueError('unsupported or duplicate service selection')
         selected[name] = Path(path).resolve(strict=True)
     if candidate is not None:
-        if service not in ('proxy','cargohold','cannon','gundeck','federator') or service in selected:
+        if service not in ('proxy','cargohold','cannon','gundeck','federator','background-worker') or service in selected:
             raise ValueError('ambiguous primary candidate selection')
         selected[service] = candidate.resolve(strict=True)
     if service == 'proxy-cargohold' and set(selected) != {'proxy','cargohold'}:
@@ -209,6 +209,8 @@ def selections(service, candidate, peers):
         raise ValueError('combined run requires all four Go components')
     if service == 'proxy-cargohold-cannon-gundeck-federator' and set(selected) != {'proxy','cargohold','cannon','gundeck','federator'}:
         raise ValueError('combined run requires all five Go components')
+    if service == 'proxy-cargohold-cannon-gundeck-federator-background-worker' and set(selected) != {'proxy','cargohold','cannon','gundeck','federator','background-worker'}:
+        raise ValueError('combined run requires all six Go components')
     if service == 'gundeck-reference' and selected:
         raise ValueError('reference capture requires all Haskell processes')
     for path in selected.values():
@@ -248,13 +250,13 @@ def run(service,candidate=None,peer_candidates=()):
                     'sha256':hashlib.sha256(output.read_bytes()).hexdigest(),'script_sha256':hashlib.sha256(capture.read_bytes()).hexdigest()}}}
             Path('/reports/gundeck-reference.run.json').write_text(json.dumps(report,indent=2)+'\n')
             return report,0
-        suites = ('proxy','cargohold','gundeck','federator') if service == 'proxy-cargohold-cannon-gundeck-federator' else ('proxy','cargohold','gundeck') if service == 'proxy-cargohold-cannon-gundeck' else ('proxy','cargohold','cannon') if service == 'proxy-cargohold-cannon' else ('proxy','cargohold') if service == 'proxy-cargohold' else (service,)
+        suites = ('proxy','cargohold','gundeck','federator','background-worker') if service == 'proxy-cargohold-cannon-gundeck-federator-background-worker' else ('proxy','cargohold','gundeck','federator') if service == 'proxy-cargohold-cannon-gundeck-federator' else ('proxy','cargohold','gundeck') if service == 'proxy-cargohold-cannon-gundeck' else ('proxy','cargohold','cannon') if service == 'proxy-cargohold-cannon' else ('proxy','cargohold') if service == 'proxy-cargohold' else (service,)
         reports = {}
         for name in suites:
             report, code = runner.suite(name,selected.get(name),config,Path('/reports')/(name+'.xml'),implementations)
             reports[name] = report
             if code: return {'result':'failed','suites':reports}, code
-        if service not in ('proxy-cargohold','proxy-cargohold-cannon','proxy-cargohold-cannon-gundeck','proxy-cargohold-cannon-gundeck-federator'): return report, 0
+        if service not in ('proxy-cargohold','proxy-cargohold-cannon','proxy-cargohold-cannon-gundeck','proxy-cargohold-cannon-gundeck-federator','proxy-cargohold-cannon-gundeck-federator-background-worker'): return report, 0
         return {'result':'pass','e2e_executed':True,'implementations':implementations,'suites':reports}, 0
     finally:
         for process in processes:

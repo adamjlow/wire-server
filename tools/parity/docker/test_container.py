@@ -59,6 +59,24 @@ class ContainerTests(unittest.TestCase):
         self.assertEqual({'gundeck'},set(runtime.selections('gundeck',executable,[])))
         with self.assertRaises(ValueError):runtime.selections('proxy-cargohold-cannon-gundeck',executable,pairs)
 
+    def test_six_service_selection_rejects_missing_duplicate_foreign_and_ambiguous(self):
+        executable=self.root/'candidate';executable.write_text('synthetic');executable.chmod(0o755)
+        names=('proxy','cargohold','cannon','gundeck','federator','background-worker')
+        pairs=[(name,str(executable)) for name in names]
+        profile='proxy-cargohold-cannon-gundeck-federator-background-worker'
+        self.assertEqual(set(names),set(runtime.selections(profile,None,pairs)))
+        for invalid in (pairs[:-1],pairs+[pairs[-1]],pairs+[('brig',str(executable))]):
+            with self.assertRaises(ValueError):runtime.selections(profile,None,invalid)
+        with self.assertRaises(ValueError):runtime.selections(profile,executable,pairs)
+        self.assertEqual({'background-worker'},set(runtime.selections('background-worker',executable,[])))
+        self.assertEqual({},runtime.selections('background-worker',None,[]))
+
+    def test_background_worker_catalogue_matches_actual_compiled_discovery(self):
+        discovered=json.loads((FILES.parents[2]/'docs/go-migration/services/background-worker/test-discovery.json').read_text())['worker_cases']
+        names=runner.names('background-worker')
+        self.assertEqual(47,len(names));self.assertEqual(47,len(set(names)))
+        self.assertEqual(set(discovered),set(names))
+
     def test_gundeck_catalogue_keeps_original_cannon_cases_and_adds_provider_cases(self):
         original=runner.CATALOGUE
         try:

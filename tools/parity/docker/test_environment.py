@@ -23,6 +23,13 @@ class EnvironmentTests(unittest.TestCase):
             wrong=copy.deepcopy(spec);wrong['services']['test']['volumes'][0][field]=value
             with self.subTest(field=field,value=value),self.assertRaises(ValueError):environment.validate_isolation(wrong)
 
+    def test_background_worker_mount_is_exact_and_read_only(self):
+        spec=self.spec();spec['services']['test']['volumes']=[{'type':'bind','source':'/tmp/identified-worker','target':'/candidate/background-worker','read_only':True}]
+        environment.validate_isolation(spec)
+        for field,value in (('target','/candidate/background-worker-extra'),('target','/candidate/brig'),('read_only',False)):
+            wrong=copy.deepcopy(spec);wrong['services']['test']['volumes'][0][field]=value
+            with self.subTest(field=field,value=value),self.assertRaises(ValueError):environment.validate_isolation(wrong)
+
     def test_host_exposure_global_names_and_shared_resources_are_rejected(self):
         for field,value in (('ports',['9042:9042']),('privileged',True),('container_name','shared'),
                             ('network_mode','host'),('pid','host'),('devices',['/dev/vda'])):

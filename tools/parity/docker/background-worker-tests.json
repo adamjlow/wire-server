@@ -1,0 +1,127 @@
+{
+  "schema_version": 1,
+  "services": {
+    "background-worker": [
+      {
+        "module": "Test.AdminlessGroups",
+        "tests": [
+          "testAdminlessJobCancellationIsTeamScoped",
+          "testAdminlessJobsCancelledOnFeatureDisable",
+          "testAdminlessJobsRecreatedOnFeatureConfigChange",
+          "testAdminlessReplaceMembers",
+          "testAdminlessReplaceMembersAddsAdmin",
+          "testAdminlessReplaceMembersAddsEligibleMember",
+          "testAdminlessSetupAutopromotesWithRemoteMembers",
+          "testAdminlessSetupDeletesWithOriginAndRemoteMembers",
+          "testAdminlessSetupDeletesWithSystemEventAndRemoteMembers",
+          "testAdminlessSetupMemberUpdateAfterAdminLeaves",
+          "testAdminlessSetupOnFeatureEnable",
+          "testAdminlessSetupSendsReminderWithOriginUserAndRemoteMembers",
+          "testAdminlessSetupSendsReminderWithRemoteMembers",
+          "testAdminlessSetupSystemMemberUpdate",
+          "testOnLastAdminLeaveFeatureDisabled",
+          "testOnLastAdminLeaveNoEligibleMembersExist",
+          "testOnLastAdminLeaveReturnEligibleMembers",
+          "testOnLastAdminLeaveReturnsEligibleMembersForGroupType",
+          "testOnLastAdminSelfDeletionAutopromotes",
+          "testOnLastAdminTeamMemberDeletionAutopromotes",
+          "testPersonalUserLastAdminLeaveReturnsAdminlessConversation"
+        ],
+        "variants": {
+          "testOnLastAdminLeaveReturnsEligibleMembersForGroupType": [
+            "channel=false",
+            "channel=true"
+          ],
+          "testOnLastAdminTeamMemberDeletionAutopromotes": [
+            "channel=false",
+            "channel=true"
+          ]
+        }
+      },
+      {
+        "module": "Test.Events",
+        "tests": [
+          "testBackendPusherRecoversFromQueueDeletion",
+          "testEventsDeadLettered",
+          "testEventsDeadLetteredWithReconnect",
+          "testTransientEventsDoNotTriggerDeadLetters"
+        ]
+      },
+      {
+        "module": "Test.Federation",
+        "tests": [
+          "testNotificationsForOfflineBackends"
+        ]
+      },
+      {
+        "module": "Test.Meetings",
+        "tests": [
+          "testMeetingCleanup"
+        ]
+      },
+      {
+        "module": "Test.Migration.BlockList",
+        "tests": [
+          "testBlockListMigration"
+        ]
+      },
+      {
+        "module": "Test.Migration.Conversation",
+        "tests": [
+          "testMigrationToPostgresMLS",
+          "testMigrationToPostgresProteus"
+        ]
+      },
+      {
+        "module": "Test.Migration.ConversationCodes",
+        "tests": [
+          "testConversationCodesMigrationExpiration",
+          "testConversationCodesMigration"
+        ],
+        "variants": {
+          "testConversationCodesMigration": [
+            "has-password=false][with-zhost=false",
+            "has-password=false][with-zhost=true",
+            "has-password=true][with-zhost=false",
+            "has-password=true][with-zhost=true"
+          ]
+        }
+      },
+      {
+        "module": "Test.Migration.DomainRegistration",
+        "tests": [
+          "testDomainRegistrationMigration"
+        ]
+      },
+      {
+        "module": "Test.Migration.PasswordReset",
+        "tests": [
+          "testPasswordResetMigration"
+        ]
+      },
+      {
+        "module": "Test.Migration.TeamFeatures",
+        "tests": [
+          "testTeamFeaturesMigration"
+        ]
+      },
+      {
+        "module": "Test.Migration.User",
+        "tests": [
+          "testMigrationOfInvalidUsers",
+          "testMigrationOfUsersWithHandleDisputes",
+          "testReindexingUsersDuringMigration",
+          "testUserMigrationToPostgres"
+        ]
+      },
+      {
+        "module": "Test.UserGroup",
+        "tests": [
+          "testUserGroupAddUsersToGroupWithChannels",
+          "testUserGroupSmoke",
+          "testUserGroupUpdateChannelsSucceeds"
+        ]
+      }
+    ]
+  }
+}
