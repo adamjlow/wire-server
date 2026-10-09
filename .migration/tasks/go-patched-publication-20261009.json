@@ -4,9 +4,9 @@
   "title": "Publish exact current patched Go artifact compatibility",
   "service": "framework",
   "kind": "framework",
-  "status": "queued",
-  "owner": null,
-  "branch": null,
+  "status": "active",
+  "owner": "codex",
+  "branch": "go-migration",
   "depends_on": [
     "proxy-patch-verification-20261009",
     "cargohold-patch-verification-20261009",
