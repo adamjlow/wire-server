@@ -8,7 +8,6 @@ import (
 	"errors"
 	"math/big"
 	"sort"
-	"time"
 
 	"golang.org/x/sync/errgroup"
 )
@@ -42,7 +41,7 @@ type adminlessNotifications interface {
 	SupportsSystemDelete(context.Context, string) (bool, error)
 	Promoted(context.Context, *storedConversation, qualifiedUser, *string, string) error
 	Deleted(context.Context, *storedConversation, *string, string) error
-	Reminder(context.Context, *storedConversation, *string, string, time.Time) error
+	Reminder(context.Context, *storedConversation, *string, string, string) error
 }
 type adminlessScheduler interface {
 	Schedule(context.Context, string, *storedConversation, *string, string, adminlessFeature) error
@@ -293,11 +292,16 @@ func (d adminlessDispatcher) Dispatch(ctx context.Context, job scheduledJobPaylo
 			return d.Notify.Deleted(ctx, conv, job.Actor, job.RequestID)
 		})
 	case "adminless_reminder":
-		if job.DeletionScheduledFor == nil {
+		timestamp := job.DeletionScheduledText
+		if timestamp == nil && job.DeletionScheduledFor != nil {
+			text := job.DeletionScheduledFor.UTC().Format("2006-01-02T15:04:05.000Z")
+			timestamp = &text
+		}
+		if timestamp == nil {
 			return errors.New("adminless deletion time unavailable")
 		}
 		return d.tryPromote(ctx, job.Conversation, job.Actor, job.RequestID, func(conv *storedConversation, _ adminlessFeature) error {
-			return d.Notify.Reminder(ctx, conv, job.Actor, job.RequestID, *job.DeletionScheduledFor)
+			return d.Notify.Reminder(ctx, conv, job.Actor, job.RequestID, *timestamp)
 		})
 	default:
 		return errors.New("invalid adminless job type")

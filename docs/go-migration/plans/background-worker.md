@@ -359,3 +359,17 @@ No fresh native scheduling execution or full runtime/switchback claim. The exist
 reminder decoder/notification time.Time representation must carry extended accepted
 timestamps before qualification. Next notification adapters and scheduled service
 integration; existing final acceptance remains unchanged and incomplete.
+
+Adminless promotion/deletion/reminder notifications are constructed, preserving
+system/user event origins, V4 snake_case versus action-update camelCase bundles,
+version/policy, recipient/bot/Cells distinctions and remote-before-local order.
+Capability lookup preserves native negotiation plus explicit API-version call,
+proved with the existing synthetic h2c transport fixture. Scheduled reminders now
+carry extended/signed/offset/leap timestamps through execution and notification
+as exact text; unchanged original reminder golden reused. Native %Y is unpadded.
+Earlier Go federation response caps were removed to match full native response
+acceptance; one above8MiB fixture covers the repair and inherited memory risk is
+recorded. [Exact full Go/source-review evidence](../../../go/services/background-worker/evidence/adminless-notifications-20261009/)
+passes; no fresh native or whole-service E2E proof. Retain time BSD notice for
+distribution. Next scheduled runtime/dependency wiring/NOTIFY/metrics/startup/drain,
+then unchanged final qualification, pusher timing and botTLS gaps included.

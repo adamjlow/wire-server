@@ -1,0 +1,30 @@
+{
+  "files": {
+    "libs/wire-subsystems/src/Wire/ConversationSubsystem/Update.hs": "e44ed8a2f09c9a48647f506a872ba9d09d7da29283108d4131efdb02a20d2a82",
+    "libs/wire-subsystems/src/Wire/ConversationSubsystem/Notify.hs": "aaba5ab70a834504832d5be6262cdcad91590a1c48686a826171a23cdbf95e24",
+    "libs/wire-subsystems/src/Wire/ConversationSubsystem/Util.hs": "b6efc10e0bf4edab2d1ecd35ead09e22543a3a5e147f412c419d08d69e97f62a",
+    "libs/wire-subsystems/src/Wire/FederationAPIAccess.hs": "b80e3a1ae416c17d9830f2b79f10f00ad151e056b60ea45d8d57e42be228edbd",
+    "libs/wire-subsystems/src/Wire/FederationAPIAccess/Interpreter.hs": "a7596d04767e6f195a7c059fb446d4605e9c9ca56bdb415b9944855f61abc736",
+    "libs/wire-subsystems/src/Wire/BackendNotificationQueueAccess/RabbitMq.hs": "87f1b4c3323054c020378ba64b16a25d59f1d0fcabf0fbad659bb7607b49e19d",
+    "libs/wire-api-federation/src/Wire/API/Federation/API/Galley/Notifications.hs": "ca768ea5a58e98c3485a4e3cd03f053ce0b8cf68f217c2ad9780f8a8a5eb4671",
+    "libs/wire-api-federation/src/Wire/API/Federation/API/Util.hs": "03a2ea50a5a25d64ffb3b71777cd84162f5a26825452efe04c1c3c24d11f5fd6",
+    "libs/wire-api-federation/src/Wire/API/Federation/Client.hs": "577007c23eb139105a7a8adf8624a97b599be2c55b59c65b862056f28eedc1a0",
+    "libs/wire-api-federation/src/Wire/API/Federation/Version.hs": "9223855157433dc0e38d5e49f3b45cc0322fae8a5ba5fcbd94651bf534a5b7e8",
+    "libs/wire-api/src/Wire/API/Event/Conversation.hs": "8702b6dfe7b3e93d4e2fbd89bcf61a8e77998d45238b74da27f4a7a54be7b6b1",
+    "libs/wire-api/src/Wire/API/Util/Aeson.hs": "f1c85ae69bb9e4b7e44383536e59d53795a2920a926e6dd3803a1ffc8b5ab51e",
+    "libs/types-common/src/Data/Json/Util.hs": "f4f71c2a25e5fea5b8b31360106d48810e092e33825d7c1c52424cc05b5a0892",
+    "libs/wire-api/test/golden/testObject_ConversationsJobPayload_AdminlessReminder_1.json": "80fd490e40e9aac438b2809cdc197963f9e8fa8907f810285e6e852f141054e2"
+  },
+  "primary_time_source": "https://github.com/haskell/time/tree/1.12.2",
+  "primary_time_files": {
+    "time-1.12.2-format-instances.hs": "fd8a1da8d23d167a4766085b36244f7f94b6932b3795fbce8199973d376b2190",
+    "time-1.12.2-format-class.hs": "a23b5d477f80c4f9b783ab60bd3167963bad5dff492bcd55270ec50007b80d66",
+    "time-1.12.2-time-of-day.hs": "f10bb6efdd571098a0ea32f3f69266d0a9fadfd8b968b69abce21348b11960e3"
+  },
+  "time_limit": "Source comparison, not freshly identified embedded version or native execution.",
+  "primary_unit_json": {
+    "url": "https://raw.githubusercontent.com/haskell/aeson/v2.2.3.0/src/Data/Aeson/Types/ToJSON.hs",
+    "sha256": "cac18f82e7fea04d7c6462ef31eb513596c8e173c3756d710c9ebfa7d73fa9eb",
+    "finding": "ToJSON () encodes emptyArray; source comparison, not fresh native execution"
+  }
+}

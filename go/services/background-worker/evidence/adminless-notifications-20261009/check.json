@@ -1,0 +1,9 @@
+{
+  "command": "GOTOOLCHAIN=local GOWORK=off python3 go/check.py background-worker",
+  "compiler": "Go1.26.9",
+  "exit_code": 0,
+  "base_revision": "5ee445c67cbc84b4c0b65c17115206821811d70a",
+  "inputs_sha256": "1dd7cd006080f9f7c7519e6a8a7401e3d52d9dc8e5d423c00c5ff05f1e642fb2",
+  "result": "pass",
+  "limit": "Synthetic local HTTP and actual h2c fixture transport; no fresh native or whole-service comparison"
+}

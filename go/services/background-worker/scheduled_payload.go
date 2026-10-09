@@ -10,16 +10,20 @@ import (
 // Wire.API.Jobs persists {type,data} in Arbiter, independently of the Rabbit
 // background-job envelope. Queue identity constrains which tags are executable.
 type scheduledJobPayload struct {
-	Type                 string
-	Team                 string
-	Conversation         string
-	Actor                *string
-	RequestID            string
-	DeletionScheduledFor *time.Time
+	Type                  string
+	Team                  string
+	Conversation          string
+	Actor                 *string
+	RequestID             string
+	DeletionScheduledFor  *time.Time
+	DeletionScheduledText *string
 }
 
 func decodeScheduledPayload(queue string, body []byte) (scheduledJobPayload, error) {
 	invalid := errors.New("invalid scheduled job payload")
+	if !validAdminlessAccountJSONText(body) {
+		return scheduledJobPayload{}, invalid
+	}
 	var envelope struct {
 		Type *string         `json:"type"`
 		Data json.RawMessage `json:"data"`
@@ -100,12 +104,16 @@ func decodeScheduledPayload(queue string, body []byte) (scheduledJobPayload, err
 		if err != nil {
 			return result, err
 		}
-		when, err := time.Parse(time.RFC3339Nano, *timeText)
-		if err != nil {
+		canonical, ok := canonicalAdminlessMillis(*timeText)
+		if !ok {
 			return result, invalid
 		}
-		when = when.UTC().Truncate(time.Millisecond)
-		result.DeletionScheduledFor = &when
+		result.DeletionScheduledText = &canonical
+		// Retain finite projection for existing inspection callers; execution
+		// and notifications use exact Text, including extended years/leap seconds.
+		if when, err := time.Parse(time.RFC3339Nano, canonical); err == nil {
+			result.DeletionScheduledFor = &when
+		}
 	}
 	return result, nil
 }

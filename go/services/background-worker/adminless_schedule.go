@@ -130,10 +130,7 @@ func adminlessMillisText(unixPico *big.Int) string {
 		year.Add(year, big.NewInt(1))
 	}
 	ms := new(big.Int).Div(dayPico, big.NewInt(1000000000)).Int64()
-	// Haskell formatTime %Y pads to four digits, with extended years intact.
+	// Native formatTime %Y has no padding (including signed/extended years).
 	yearText := year.String()
-	if year.Sign() >= 0 && len(yearText) < 4 {
-		yearText = strings.Repeat("0", 4-len(yearText)) + yearText
-	}
 	return fmt.Sprintf("%s-%02d-%02dT%02d:%02d:%02d.%03dZ", yearText, month, day, ms/3600000, (ms/60000)%60, (ms/1000)%60, ms%1000)
 }

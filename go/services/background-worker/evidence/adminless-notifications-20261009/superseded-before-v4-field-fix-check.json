@@ -1,0 +1,5 @@
+{
+  "command": "GOTOOLCHAIN=local GOWORK=off python3 go/check.py background-worker",
+  "compiler": "Go1.26.9",
+  "exit_code": 0
+}

@@ -112,11 +112,11 @@ func (s *Service) federationRequest(ctx context.Context, client *http.Client, ta
 	}
 	defer resp.Body.Close()
 	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
-		data, err := io.ReadAll(io.LimitReader(resp.Body, 8<<20))
+		data, err := io.ReadAll(resp.Body)
 		return data, err
 	}
 	var e federationError
-	data, readErr := io.ReadAll(io.LimitReader(resp.Body, 1<<20))
+	data, readErr := io.ReadAll(resp.Body)
 	decodeErr := json.Unmarshal(data, &e)
 	return nil, remoteError{badRequest: readErr == nil && decodeErr == nil && e.valid() && e.Inner != nil && *e.Inner.Code == 400 && *e.Inner.Label == "bad-request"}
 }

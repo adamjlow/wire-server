@@ -84,7 +84,7 @@ func (f *adminlessFixture) Promoted(_ context.Context, _ *storedConversation, u 
 func (f *adminlessFixture) Deleted(_ context.Context, _ *storedConversation, actor *string, _ string) error {
 	return f.step("delete" + actorSuffix(actor))
 }
-func (f *adminlessFixture) Reminder(_ context.Context, _ *storedConversation, actor *string, _ string, _ time.Time) error {
+func (f *adminlessFixture) Reminder(_ context.Context, _ *storedConversation, actor *string, _ string, _ string) error {
 	return f.step("reminder" + actorSuffix(actor))
 }
 func (f *adminlessFixture) Schedule(_ context.Context, team string, _ *storedConversation, _ *string, _ string, _ adminlessFeature) error {
