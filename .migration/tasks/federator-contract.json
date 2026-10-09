@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "id": "federator-contract",
+  "title": "Freeze federator finite forwarding contract and private Haskell baseline",
+  "service": "federator",
+  "kind": "contract-change",
+  "status": "queued",
+  "owner": null,
+  "branch": null,
+  "depends_on": [
+    "federator-inventory",
+    "federator-inventory-gate"
+  ],
+  "write_paths": [
+    ".migration/tasks/federator-contract.json",
+    "docs/go-migration/services/federator/contract.md",
+    "docs/go-migration/services/federator/oracle",
+    "docs/go-migration/plans/federator.md",
+    ".migration/reviews/federator-contract.md",
+    "tools/parity/docker",
+    "tools/parity/test_harness.py",
+    "changelog.d/5-internal/federator-contract"
+  ],
+  "plan": "docs/go-migration/plans/federator.md",
+  "acceptance_criteria": [
+    {
+      "id": "contract",
+      "description": "Finite source/reference matrix covers whole-service DNS/TLS, ingress trust, policy, routing, streaming/errors, reload and operations.",
+      "required_evidence": "Frozen runnable Haskell observations and pinned scripts/fixtures; original assertions unchanged."
+    },
+    {
+      "id": "baseline",
+      "description": "Original five new federator assertions pass in owned private environment; additive five-Go selection supported.",
+      "required_evidence": "Actual original XML and no failures/skips/errors, exact runner identity and owned cleanup; legacy executables unavailable recorded."
+    },
+    {
+      "id": "validation",
+      "description": "Harness/framework tests and delegated same-author scope review pass.",
+      "required_evidence": "Actual tests, checks and source review; defaults preserved, no security exception."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": ""
+}
