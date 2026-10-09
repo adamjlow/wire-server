@@ -53,7 +53,7 @@ func TestLegacyNotificationPreservesRawBodyAndV0(t *testing.T) {
 	const body = " { \"example\" : [1, 2] } "
 	s, client := testFederator(t, func(w http.ResponseWriter, r *http.Request) {
 		got, _ := io.ReadAll(r.Body)
-		if r.ProtoMajor != 2 || r.URL.Path != "/rpc/target.example.com/brig/on-user-deleted-connections" || r.Header.Get("Wire-Origin-Domain") != "origin.example.com" || r.Header.Get("X-Wire-API-Version") != "v0" || r.Header.Get("Request-Id") != "N/A" || string(got) != body {
+		if r.ProtoMajor != 2 || r.URL.Path != "/rpc/target.example.com/brig/on-user-deleted-connections" || r.Header.Get("Wire-Origin-Domain") != "origin.example.com" || r.Header.Get("X-Wire-API-Version") != "0" || r.Header.Get("Request-Id") != "N/A" || string(got) != body {
 			t.Errorf("notification changed: %s %v %q", r.URL.Path, r.Header, got)
 		}
 		_, _ = io.WriteString(w, "{}")
@@ -70,8 +70,8 @@ func TestBundlesChooseLatestVersionAndLastTie(t *testing.T) {
 	var version, body string
 	s, client := testFederator(t, func(w http.ResponseWriter, r *http.Request) {
 		if strings.HasSuffix(r.URL.Path, "api-version") {
-			if r.Header.Get("X-Wire-API-Version") != "" {
-				t.Error("version probe must be unversioned")
+			if r.Header.Get("X-Wire-API-Version") != "0" {
+				t.Error("version probe must use the native client's numeric V0 default")
 			}
 			_, _ = io.WriteString(w, `{"supported":[0,1],"supported_versions":[1,3,2,99]}`)
 			return
@@ -86,7 +86,7 @@ func TestBundlesChooseLatestVersionAndLastTie(t *testing.T) {
 	last := sourceNotification(`{"last":true}`)
 	last.Versions = &versionRange{From: ptr(2), Until: ptr(4)}
 	action, err := s.deliverNotification(t.Context(), client, "target.example.com", encode(t, payloadBundle{Notifications: []notification{first, last}}))
-	if err != nil || action != notificationACK || version != "v3" || body != *last.Body {
+	if err != nil || action != notificationACK || version != "3" || body != *last.Body {
 		t.Fatalf("%v %v %s %s", action, err, version, body)
 	}
 }

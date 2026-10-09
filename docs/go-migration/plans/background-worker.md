@@ -9,8 +9,10 @@ Haskell removal or contract/security exception is authorized.
 Reference: f6636ed53315fa7b0fc4c8aa39c0bb30c98b6d5e. Current optional compiler:
 Go 1.26.9, GOTOOLCHAIN=local/GOWORK=off. Existing five Go peers and their exact
 [patched artifact tuple](../qualifications/go-patched-20261009/README.md) are the
-starting mixed-deployment baseline. The service is inventoried. The finite reference contract is frozen with explicit baseline limitations;
-no implementation or background-worker parity is yet claimed.
+starting mixed-deployment baseline. The service is inventoried and its finite
+reference contract is frozen with explicit baseline limitations. Go construction
+now includes a runnable notification pusher and Cassandra dead-user watcher.
+Whole-service parity is not yet claimed; the task record owns current status.
 
 ## Whole-service boundary to inventory
 
@@ -160,3 +162,14 @@ it does not qualify unfinished group/scheduled jobs or migrations. Use existing
 private runner and exact static receipt; no changed oracle/profile is required.
 The historical host health-only helper is locked to its original artifact so
 later dependency workers cannot accidentally be run against host services.
+
+Original notification/storage comparison in progress: the existing owned
+gundeck40 profile selects only Go background-worker, keeping other peers Haskell.
+The dead-letter and watcher reconnect cases passed in that run. The queue-deletion
+case failed before recovery on a concrete federation serialization mismatch:
+`Federation.Client.runRequestAcceptStatus` sends decimal versionInt and defaults
+unversioned requests to0, while the candidate sent v-prefixed values. Correct
+the candidate header and candidate tests from that source; retain the failing
+exact-artifact run and rerun the unchanged original profile. These are partial
+observations until strict terminal XML and actual owned cleanup are recorded,
+and do not qualify scheduled/group jobs or migrations.

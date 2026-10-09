@@ -99,9 +99,13 @@ func (s *Service) federationRequest(ctx context.Context, client *http.Client, ta
 		id = *n.RequestID
 	}
 	req.Header.Set("Request-Id", id)
+	// The native federation client sends the numeric version header, including
+	// its V0 default for the unversioned version-negotiation request.
+	v := 0
 	if version != nil {
-		req.Header.Set("X-Wire-API-Version", "v"+strconv.Itoa(*version))
+		v = *version
 	}
+	req.Header.Set("X-Wire-API-Version", strconv.Itoa(v))
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, errors.New("federation notification transport failed")
