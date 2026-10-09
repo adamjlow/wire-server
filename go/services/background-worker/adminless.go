@@ -45,7 +45,7 @@ type adminlessNotifications interface {
 	Reminder(context.Context, *storedConversation, *string, string, time.Time) error
 }
 type adminlessScheduler interface {
-	Schedule(context.Context, *storedConversation, *string, string, adminlessFeature) error
+	Schedule(context.Context, string, *storedConversation, *string, string, adminlessFeature) error
 }
 type adminlessDispatcher struct {
 	Store    adminlessStore
@@ -269,7 +269,7 @@ func (d adminlessDispatcher) Dispatch(ctx context.Context, job scheduledJobPaylo
 						return nil
 					}
 				}
-				return d.Schedule.Schedule(ctx, conv, job.Actor, job.RequestID, feature)
+				return d.Schedule.Schedule(ctx, job.Team, conv, job.Actor, job.RequestID, feature)
 			})
 			if err != nil {
 				return err

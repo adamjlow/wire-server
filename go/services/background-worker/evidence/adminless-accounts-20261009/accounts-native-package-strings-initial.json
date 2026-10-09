@@ -1,0 +1,29 @@
+{
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "--name",
+    "wire-worker-account-metadata-7ddd4f183a51423883873d43e06fd84a",
+    "--label",
+    "wire.migration.owner=wire-worker-account-metadata-7ddd4f183a51423883873d43e06fd84a",
+    "--network",
+    "none",
+    "--user",
+    "65532:65532",
+    "--cap-drop",
+    "ALL",
+    "--security-opt",
+    "no-new-privileges",
+    "--read-only",
+    "--entrypoint",
+    "python3",
+    "sha256:cd03212430eef6cfde0324b50885c12980ee211483ab27dde6ee730252966cd2",
+    "-c",
+    "import re,json,os\nresult={}\nfor path in ['/bin/integration','/bin/background-worker']:\n try:\n  matches=set();tail=b''\n  with open(path,'rb') as binary:\n   while True:\n    block=binary.read(1024*1024)\n    if not block:break\n    data=tail+block\n    matches.update(x.decode('ascii') for x in re.findall(rb'attoparsec[_-]iso8601[!-~]{0,90}',data))\n    tail=data[-256:]\n  result[path]={'resolved':os.path.realpath(path),'package_strings':sorted(matches)[:12]}\n except OSError as e:result[path]={'unavailable':type(e).__name__}\nprint(json.dumps(result))\n"
+  ],
+  "exit_code": 127,
+  "output": "docker: Error response from daemon: failed to create task for container: failed to create shim task: OCI runtime create failed: runc create failed: unable to start container process: error during container init: exec: \"python3\": executable file not found in $PATH\n\nRun 'docker run --help' for more information\n",
+  "limit": "Readonly ELF package strings identify embedded version; no native decoder/test execution",
+  "remaining_owned": ""
+}

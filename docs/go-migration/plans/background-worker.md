@@ -334,3 +334,17 @@ response becomes an empty chunk; this can trigger the no-eligible cleanup branch
 Preserve full decoder behavior and record this inherited concern. Only this Galley
 feature is validated here; no full unrelated configuration claim. Final acceptance
 remains unchanged and incomplete.
+
+Adminless Brig account decoding and HTTP lookup are constructed. Five unchanged
+original User goldens and focused complete-row/null/type/retry/chunk/header tests
+pass full Go checks: [exact construction evidence](../../../go/services/background-worker/evidence/adminless-accounts-20261009/).
+Readonly metadata identifies the pinned native worker timestamp parser as
+attoparsec-iso8601 1.1.1.0; superseded 1.1.0 comparison is retained separately.
+No fresh Haskell decoder or live Brig interoperability claim. Source malformed
+successful response becomes an empty chunk; unbounded body and consequent
+no-eligible deletion risks are recorded without changing policy. Runtime transport
+defaults still require integration. Setup scheduling preserves the scanned team
+ID separately from the conversation team used for feature lookup. Next notifications,
+durable scheduling and scheduled runtime/NOTIFY/metrics/startup/drain, then the
+unchanged full-service acceptance. Haskell remains supported/default and this
+whole-service goal remains active and unqualified.

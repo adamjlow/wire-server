@@ -1,0 +1,19 @@
+{
+  "files": {
+    "libs/wire-api/src/Wire/API/User.hs": "0c373c9a0a17c7c61d211bd76e413d16a8ded8a78a7321cbe5c5f12a87d32a3d",
+    "libs/wire-api/src/Wire/API/User/Profile.hs": "2d96a3957b3db9aba32a5df7fb5cc12915107c30e0f6a80ba272c35a96e45719",
+    "libs/wire-api/src/Wire/API/User/Identity.hs": "fd6365304230e0c12ef34ff8d61fbcbb7026b9127e1bd2526305e05157cf16ba",
+    "libs/wire-api/src/Wire/API/Locale.hs": "9c5ac691f1f6f5b5f8e8572d0ea33c6dc2c86b9e7d8dc7b0a5e0ac140ca77e71",
+    "libs/types-common/src/Data/Json/Util.hs": "f4f71c2a25e5fea5b8b31360106d48810e092e33825d7c1c52424cc05b5a0892",
+    "libs/wire-subsystems/src/Wire/BrigAPIAccess/Rpc.hs": "37df94a4402176938dd8cb363c9727107f6acbab3ff12d86c465455777b47121",
+    "libs/wire-subsystems/src/Wire/Rpc.hs": "983267ba7627670e26f063590f1ff5f33f7f59a33cd598f753f3cb91d3ac321d",
+    "libs/bilge/src/Bilge/Retry.hs": "32f29b3946ca41bf2e459a94d863843b86f737ed784cd4fb148e2a8746ba60a7",
+    "libs/bilge/src/Bilge/RPC.hs": "ffab96b519c015d1a811f6a20c694d150cf52e629c3c6f6fe4b07d72ca9c4903",
+    "libs/wire-subsystems/src/Wire/ConversationSubsystem/Update.hs": "e44ed8a2f09c9a48647f506a872ba9d09d7da29283108d4131efdb02a20d2a82",
+    "libs/wire-api/test/golden/testObject_User_user_1.json": "9038816c90d1440bb361f8075a36f55d97aae8119a5d8e8be72d5017848a702c",
+    "libs/wire-api/test/golden/testObject_User_user_2.json": "2b27ef27de8720dd637040ecd4a0c424e60297a2cde74fae67ba5f37b9cbd214",
+    "libs/wire-api/test/golden/testObject_User_user_3.json": "6d722f18331f638e51bc47646eca25461c8c32659e668300d3ccd3ad5062b506",
+    "libs/wire-api/test/golden/testObject_User_user_4.json": "4d49ec5bf62054deb3a935968ec326a4ddbce37ba15de8d9de9155454b38869d",
+    "libs/wire-api/test/golden/testObject_User_user_5.json": "039a8a0b5be4cd3c393821d7ad6b683f670634a9f491c9bea07a2b2941f18973"
+  }
+}

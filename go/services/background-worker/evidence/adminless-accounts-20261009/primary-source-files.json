@@ -1,0 +1,10 @@
+{
+  "files": {
+    "attoparsec-iso8601-1.1.1.0.tar.gz": "34cdd1915581f337cdc36eb46f66d795c36837a9bf25958a643ca89f5ba2c97a",
+    "attoparsec-iso8601-1.1.0.0.tar.gz": "1109a817c448a154ec58047a8f01282530cb40d20fbd5690bc58b1443ecb264a",
+    "aeson-2.2.3.0-Unescape.hs": "9395dc5d9882b698aad2a95cc40691e08630a70fa13066a4df41b63d4b287d3e"
+  },
+  "current_timestamp_version": "1.1.1.0",
+  "superseded_timestamp_version": "1.1.0.0",
+  "aeson_note": "Primary source comparison, no fresh embedded package identity or native decoder execution."
+}

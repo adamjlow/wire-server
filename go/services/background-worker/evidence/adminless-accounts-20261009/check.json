@@ -1,0 +1,11 @@
+{
+  "base_revision": "176f60bf7fa7a20e49ec8d2566793ebc1bce41b6",
+  "command": "GOTOOLCHAIN=local GOWORK=off python3 go/check.py background-worker",
+  "compiler": "Go 1.26.9",
+  "result": "pass",
+  "completion_marker": "Go module checks passed: background-worker; Go 1.26.9",
+  "exit_code": null,
+  "exit_code_note": "Process terminal; checker success marker observed. Original exec exit handle unavailable after context compaction; no invented numeric receipt.",
+  "inputs_sha256": "04617509913ba2ec422f568609fac0091dfd9ccc5d1c190078ea04ee049680d0",
+  "limited_to": "Candidate module checks and synthetic HTTP tests; no full worker or fresh Haskell execution."
+}

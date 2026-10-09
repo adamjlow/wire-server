@@ -34,14 +34,15 @@ func TestAdminlessOriginalSelectionVectors(t *testing.T) {
 }
 
 type adminlessFixture struct {
-	mutex     sync.Mutex
-	conv      *storedConversation
-	feature   adminlessFeature
-	users     []adminlessUser
-	ids       []string
-	calls     []string
-	fail      string
-	supported map[string]bool
+	mutex          sync.Mutex
+	conv           *storedConversation
+	feature        adminlessFeature
+	users          []adminlessUser
+	ids            []string
+	calls          []string
+	fail           string
+	supported      map[string]bool
+	scheduledTeams []string
 	removalFixture
 }
 
@@ -86,7 +87,8 @@ func (f *adminlessFixture) Deleted(_ context.Context, _ *storedConversation, act
 func (f *adminlessFixture) Reminder(_ context.Context, _ *storedConversation, actor *string, _ string, _ time.Time) error {
 	return f.step("reminder" + actorSuffix(actor))
 }
-func (f *adminlessFixture) Schedule(context.Context, *storedConversation, *string, string, adminlessFeature) error {
+func (f *adminlessFixture) Schedule(_ context.Context, team string, _ *storedConversation, _ *string, _ string, _ adminlessFeature) error {
+	f.scheduledTeams = append(f.scheduledTeams, team)
 	return f.step("schedule")
 }
 func actorSuffix(actor *string) string {
@@ -232,5 +234,20 @@ func TestAdminlessCapabilityFailureIsUnsupported(t *testing.T) {
 				t.Fatal("failed capability permitted system delete")
 			}
 		}
+	}
+}
+
+func TestAdminlessSetupRetainsScannedTeamForScheduledJobs(t *testing.T) {
+	f := newAdminlessFixture()
+	f.users = nil
+	f.ids = f.ids[:1]
+	scannedTeam := *f.conv.Team
+	otherTeam := "00000000-0000-0000-0000-000000000002"
+	f.conv.Team = &otherTeam
+	if err := f.dispatcher().Dispatch(t.Context(), scheduledJobPayload{Type: "adminless_setup", Team: scannedTeam}); err != nil {
+		t.Fatal(err)
+	}
+	if !reflect.DeepEqual(f.scheduledTeams, []string{scannedTeam}) {
+		t.Fatal("stale team index changed source schedule payload team")
 	}
 }

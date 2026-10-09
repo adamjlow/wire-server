@@ -1,0 +1,29 @@
+{
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "--name",
+    "wire-worker-account-metadata-e1e70b3aa43043f1a6d2de855b1e760c",
+    "--label",
+    "wire.migration.owner=wire-worker-account-metadata-e1e70b3aa43043f1a6d2de855b1e760c",
+    "--network",
+    "none",
+    "--user",
+    "65532:65532",
+    "--cap-drop",
+    "ALL",
+    "--security-opt",
+    "no-new-privileges",
+    "--read-only",
+    "--entrypoint",
+    "/nix/store/60m4rxhg2fldqaak400c0lry96ijrzqn-python3-3.13.13/bin/python3",
+    "sha256:cd03212430eef6cfde0324b50885c12980ee211483ab27dde6ee730252966cd2",
+    "-c",
+    "import re,json,os\nresult={}\nfor path in ['/bin/integration','/bin/background-worker']:\n try:\n  matches=set();tail=b''\n  with open(path,'rb') as binary:\n   while True:\n    block=binary.read(1024*1024)\n    if not block:break\n    data=tail+block\n    matches.update(x.decode('ascii') for x in re.findall(rb'attoparsec[_-]iso8601[!-~]{0,90}',data))\n    tail=data[-256:]\n  result[path]={'resolved':os.path.realpath(path),'package_strings':sorted(matches)[:12]}\n except OSError as e:result[path]={'unavailable':type(e).__name__}\nprint(json.dumps(result))\n"
+  ],
+  "exit_code": 0,
+  "output": "{\"/bin/integration\": {\"resolved\": \"/nix/store/6ci2j9g28xsp2g35p65a4gk3rjm45vha-integration/bin/integration\", \"package_strings\": []}, \"/bin/background-worker\": {\"resolved\": \"/nix/store/16b8f2naixj573wx924avn2y36mn0yvv-background-worker/bin/background-worker\", \"package_strings\": [\"attoparsec-iso8601-1.1.1.0-8nPfNZCkmrDAXVGWojoF3W:Data.Attoparsec.Time.T\"]}}\n",
+  "remaining_owned": "",
+  "limit": "Readonly ELF package strings only; no native decoder/test execution"
+}
