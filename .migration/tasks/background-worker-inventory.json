@@ -4,7 +4,7 @@
   "title": "Inventory complete background-worker boundary and original tests",
   "service": "background-worker",
   "kind": "discovery",
-  "status": "active",
+  "status": "done",
   "owner": "codex",
   "branch": "go-migration",
   "depends_on": [
@@ -31,7 +31,25 @@
       "required_evidence": "Nonroot network-none pinned runner lists relevant Events/background-job/adminless/meeting/migration cases, records executable identities/absent tools and finite baseline gap decisions; reuse existing actual Haskell-worker event evidence."
     }
   ],
-  "evidence": [],
-  "review": null,
-  "handoff": ""
+  "evidence": [
+    {
+      "criterion": "inventory",
+      "result": "pass",
+      "command": "Review actual entrypoint, options, all workers, group-sync and scheduled job registries, seven migration families and chart lifecycle; source-cited full boundary and material inherited concerns captured. Scope/diff and 32 migration tests pass. No Go compatibility claim.",
+      "revision": "6f2026f3dfea8f890f1c5f6aa8f1e8b751f307ff",
+      "artifact": "docs/go-migration/services/background-worker/inventory.md"
+    },
+    {
+      "criterion": "tests",
+      "result": "pass",
+      "command": "Actual nonroot network-none pinned runner integration --list and background-worker --help: 1001 listed entries, 47 relevant original functions, executable hashes and absent background-worker-test recorded. Existing unchanged Haskell-worker Events evidence reused; discovery is not suite execution.",
+      "revision": "6f2026f3dfea8f890f1c5f6aa8f1e8b751f307ff",
+      "artifact": "docs/go-migration/services/background-worker/test-discovery.json"
+    }
+  ],
+  "review": {
+    "by": "codex (self-review delegated by user)",
+    "artifact": "docs/go-migration/services/background-worker/inventory-review.md"
+  },
+  "handoff": "Inventory complete; publish inventoried gate separately, then freeze actual Haskell baseline and queue/storage contract in protected contract task. Whole-service implementation and compatibility remain outstanding."
 }
