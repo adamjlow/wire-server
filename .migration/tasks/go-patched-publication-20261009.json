@@ -4,7 +4,7 @@
   "title": "Publish exact current patched Go artifact compatibility",
   "service": "framework",
   "kind": "framework",
-  "status": "active",
+  "status": "done",
   "owner": "codex",
   "branch": "go-migration",
   "depends_on": [
@@ -28,7 +28,18 @@
       "required_evidence": "New done matching service verification tasks/candidatec1120238f; preserve historical gates and federator845 unchanged, proxy stage/GC limitation unchanged. Static migration/scope/test checks and clean worktree; central current artifact link."
     }
   ],
-  "evidence": [],
-  "review": null,
-  "handoff": ""
+  "evidence": [
+    {
+      "criterion": "records",
+      "result": "pass",
+      "command": "Restore three cleared available-service compatibility claims to full candidatec1120238f and new done matching patch verification tasks; historical gates untouched. Federator845 unchanged, proxy existing stage/contract limitation retained. Central artifact link updated; migration checker and32 regression tests pass, scoped transition and git diff checks pass; no defaults/push/production action.",
+      "revision": "c1120238f8ecd7480742156df6c5dd2d2ec41f56",
+      "artifact": ".migration/reviews/go-patched-rebuild-20261009.md"
+    }
+  ],
+  "review": {
+    "by": "codex (self-review delegated by user)",
+    "artifact": ".migration/reviews/go-patched-rebuild-20261009.md"
+  },
+  "handoff": "All current five runtime artifacts use Go1.26.9; fresh original77 and four rebuilt-container checks pass, current exact compatibility recorded. Finite patch outcome complete, historical records preserved, no extra tests or production/remote action."
 }
