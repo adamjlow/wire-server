@@ -4,9 +4,9 @@
   "title": "Implement and qualify optional whole-service Go background-worker",
   "service": "background-worker",
   "kind": "implementation",
-  "status": "queued",
-  "owner": null,
-  "branch": null,
+  "status": "active",
+  "owner": "codex",
+  "branch": "go-migration",
   "depends_on": [
     "background-worker-contract",
     "background-worker-implementation-gates",
