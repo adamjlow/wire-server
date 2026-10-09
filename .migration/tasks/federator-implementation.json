@@ -4,9 +4,9 @@
   "title": "Build and qualify optional whole-service Go federator",
   "service": "federator",
   "kind": "implementation",
-  "status": "queued",
-  "owner": null,
-  "branch": null,
+  "status": "active",
+  "owner": "codex",
+  "branch": "go-migration",
   "depends_on": [
     "federator-contract",
     "federator-implementation-gates",
@@ -39,5 +39,5 @@
   ],
   "evidence": [],
   "review": null,
-  "handoff": "Concrete scanner failure: new Go1.26.8 HTTP2 vulnerabilities require1.26.9 and x/net0.60.0; requeue acceptance version and rebuild before final qualification. No oracle weakening."
+  "handoff": "Patched toolchain ready; x/net update and exact final77/35 qualification proceed."
 }
