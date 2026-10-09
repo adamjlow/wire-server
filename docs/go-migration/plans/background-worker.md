@@ -16,6 +16,30 @@ connected background-job consumption, conversation-storage/notification adapters
 and all seven migration families. Scheduled jobs remain under construction.
 Whole-service parity is not yet claimed; the task record owns current status.
 
+## Reconciled checkpoint (2026-10-09)
+
+Reviewed documentation and current records at
+`d65a02082d7753c65d03b603e4e62f6e6c685af0`. The active goal is completion of
+the whole background-worker, with Haskell remaining supported and default.
+The implementation task and service record remain active/implementing; no
+background-worker compatibility or deployment availability is advertised.
+
+| Evidence | What it establishes | Remaining limitation |
+| --- | --- | --- |
+| [Original gundeck40](../../../go/services/background-worker/evidence/jobs-original-20261009/) | 40/40 original assertions pass with Go worker and Haskell peers | Earlier executable; notification/DLQ/queue lifecycle only |
+| [Original MLS migration](../../../go/services/background-worker/evidence/conversation-original-20261009/) | Five storage phases and final shared MLS history pass | One case with Haskell peers; not the final mixed-stack qualification |
+| [Original users2](../../../go/services/background-worker/evidence/user-original-20261009/) | 1/2 cases pass; retained SCIM500 failure occurs before migration activation | Enabled user migration remains unverified; failure is not waived |
+| [Scheduled schema](../../../go/services/background-worker/evidence/scheduled-schema-20261009/) and [reaper](../../../go/services/background-worker/evidence/scheduled-reaper-20261009/) | Native schema comparison and isolated PostgreSQL storage/gate checks pass | Components are constructed but scheduled runtime is not started |
+
+Next implement cron, adminless and meetings handlers, then connect scheduled
+runtime and finish startup/drain behavior. Completion still requires the exact
+final six-Go/Haskell-peer run (124 executions,119 distinct original assertions),
+resolution of retained failures, bounded operations, actual durable
+Haskell->Go->Haskell switchback, optional image/selector and delegated same-author
+review. Reuse existing tests and successful evidence for unchanged inputs; add
+validation only for concrete uncovered contract risks. Historical receipts retain
+their tested revisions and do not qualify later code.
+
 ## Whole-service boundary to inventory
 
 The entrypoint [Main.hs](../../../services/background-worker/exec/Main.hs) accepts
