@@ -1,0 +1,21 @@
+{
+  "result": "fail",
+  "source_revision": "260cb1022da28f3f7c0144dc01c0bc4f449c612f",
+  "binary_sha256": "4f38e3d8eba043206254a140e4e5c66f185d2166fb20333c79a2d3b8177c7d28",
+  "executed_cases": 1,
+  "distinct_cases": 1,
+  "passed": 0,
+  "failures": 1,
+  "errors": 0,
+  "skipped": 0,
+  "original_xml_sha256": "be44fd0f42c5c8511658865f89410a88a797443c98594f89faf73702a1306770",
+  "controller_exit_code": 2,
+  "runner_process_exit_code": 1,
+  "cleanup_exit_code": 0,
+  "post_cleanup_owned": {
+    "containers": [],
+    "networks": [],
+    "volumes": []
+  },
+  "limitation": "Original MLS case reached phase3 with migrations enabled; reported local32/remote2, finished1/failed0. waitForMigration times out because native assertion requires decimal1.0 while Go prints integer1. No phase4/5 or shared-history success; actual contract mismatch must be corrected then unchanged test rerun."
+}

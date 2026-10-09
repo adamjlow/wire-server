@@ -1,0 +1,285 @@
+<?xml version='1.0' ?><testsuites name="wire-server"><testsuite name="integration" tests="1" failures="1" time="52.560410013"><testcase name="Migration.Conversation.testMigrationToPostgresMLS" time="52.560410013"><failure>assertion failure:
+Timed out waiting for postgresql migration
+
+call stack: 
+1. assertFailure at test/Test/Migration/Util.hs:39
+
+2. waitForMigration at test/Test/Migration/Conversation.hs:90
+
+3. runPhase at test/Test/Migration/Conversation.hs:97
+
+
+
+request as command line: 
+curl -X &#39;GET&#39; &#39;http://127.0.0.1:10089/i/metrics&#39; -H &#39;Request-Id: Migration.Conversation.testMigrationToPostgresMLS__GET_/i/metrics__1280&#39;
+request: 
+GET http://127.0.0.1:10089/i/metrics
+request headers: 
+Request-Id: Migration.Conversation.testMigrationToPostgresMLS__GET_/i/metrics__1280
+request body:
+
+response status: 200
+response headers:
+Content-Type: text/plain; version=0.0.4; charset=utf-8
+Date: Fri, 09 Oct 2026 22:07:20 GMT
+Transfer-Encoding: chunked
+response body:
+wire_local_convs_migrated_to_pg 32
+wire_local_convs_migration_finished 1
+wire_local_convs_migration_failed 0
+wire_local_convs_migration_duration_seconds_bucket{outcome=&quot;success&quot;,le=&quot;0.005&quot;} 0
+wire_local_convs_migration_duration_seconds_bucket{outcome=&quot;success&quot;,le=&quot;0.01&quot;} 0
+wire_local_convs_migration_duration_seconds_bucket{outcome=&quot;success&quot;,le=&quot;0.025&quot;} 27
+wire_local_convs_migration_duration_seconds_bucket{outcome=&quot;success&quot;,le=&quot;0.05&quot;} 29
+wire_local_convs_migration_duration_seconds_bucket{outcome=&quot;success&quot;,le=&quot;0.1&quot;} 30
+wire_local_convs_migration_duration_seconds_bucket{outcome=&quot;success&quot;,le=&quot;0.25&quot;} 32
+wire_local_convs_migration_duration_seconds_bucket{outcome=&quot;success&quot;,le=&quot;0.5&quot;} 32
+wire_local_convs_migration_duration_seconds_bucket{outcome=&quot;success&quot;,le=&quot;1&quot;} 32
+wire_local_convs_migration_duration_seconds_bucket{outcome=&quot;success&quot;,le=&quot;2.5&quot;} 32
+wire_local_convs_migration_duration_seconds_bucket{outcome=&quot;success&quot;,le=&quot;5&quot;} 32
+wire_local_convs_migration_duration_seconds_bucket{outcome=&quot;success&quot;,le=&quot;10&quot;} 32
+wire_local_convs_migration_duration_seconds_bucket{outcome=&quot;success&quot;,le=&quot;+Inf&quot;} 32
+wire_local_convs_migration_duration_seconds_sum{outcome=&quot;success&quot;} 0.948069074
+wire_local_convs_migration_duration_seconds_count{outcome=&quot;success&quot;} 32
+wire_user_remote_convs_migrated_to_pg 2
+wire_user_remote_convs_migration_finished 1
+wire_user_remote_convs_migration_failed 0
+wire_user_remote_convs_migration_duration_seconds_bucket{outcome=&quot;success&quot;,le=&quot;0.005&quot;} 0
+wire_user_remote_convs_migration_duration_seconds_bucket{outcome=&quot;success&quot;,le=&quot;0.01&quot;} 0
+wire_user_remote_convs_migration_duration_seconds_bucket{outcome=&quot;success&quot;,le=&quot;0.025&quot;} 0
+wire_user_remote_convs_migration_duration_seconds_bucket{outcome=&quot;success&quot;,le=&quot;0.05&quot;} 0
+wire_user_remote_convs_migration_duration_seconds_bucket{outcome=&quot;success&quot;,le=&quot;0.1&quot;} 0
+wire_user_remote_convs_migration_duration_seconds_bucket{outcome=&quot;success&quot;,le=&quot;0.25&quot;} 2
+wire_user_remote_convs_migration_duration_seconds_bucket{outcome=&quot;success&quot;,le=&quot;0.5&quot;} 2
+wire_user_remote_convs_migration_duration_seconds_bucket{outcome=&quot;success&quot;,le=&quot;1&quot;} 2
+wire_user_remote_convs_migration_duration_seconds_bucket{outcome=&quot;success&quot;,le=&quot;2.5&quot;} 2
+wire_user_remote_convs_migration_duration_seconds_bucket{outcome=&quot;success&quot;,le=&quot;5&quot;} 2
+wire_user_remote_convs_migration_duration_seconds_bucket{outcome=&quot;success&quot;,le=&quot;10&quot;} 2
+wire_user_remote_convs_migration_duration_seconds_bucket{outcome=&quot;success&quot;,le=&quot;+Inf&quot;} 2
+wire_user_remote_convs_migration_duration_seconds_sum{outcome=&quot;success&quot;} 0.239925617
+wire_user_remote_convs_migration_duration_seconds_count{outcome=&quot;success&quot;} 2
+wire_background_worker_running_workers{worker=&quot;backend-notification-pusher&quot;} 1
+wire_background_worker_running_workers{worker=&quot;dead-user-notification-watcher&quot;} 1
+wire_background_worker_running_workers{worker=&quot;background-job-consumer&quot;} 1
+wire_background_jobs_workers_busy 0
+wire_background_jobs_concurrency_configured 4
+
+
+context:
+alice: 29bba0d7-6bb8-4f97-8c73-44005b1c8b5b@example.com
+bob: 0387de93-d2ce-4b4f-b673-f05ee614e1ae@b.example.com
+mel: e76041f9-41b6-4cee-bd09-d5db1d2a8ea0@d1.example.com
+mark: 7e65a592-4c7b-4308-a208-1bee55b3caa7@d1.example.com
+mia: f40ade5b-6481-410b-b550-4e47e4321f01@d1.example.com
+
+convIds:
+  {
+      &quot;addMelConvs&quot;: [
+          [
+              1,
+              [
+                  &quot;8ff46c2c-b6b1-4fdd-9b50-77cd67db7f70@example.com&quot;,
+                  &quot;febdcc10-2d04-4fe4-8f6e-b2e486b7c3b2@b.example.com&quot;,
+                  &quot;cfe4bc8b-07a0-486c-9841-745bbd95db7e@d1.example.com&quot;
+              ]
+          ],
+          [
+              2,
+              [
+                  &quot;753d6b7c-4167-4913-a19d-9c4dac5d458d@example.com&quot;,
+                  &quot;147e3665-ffca-4950-ac9d-c7ce514c5f53@b.example.com&quot;,
+                  &quot;c3e7e7c1-e6d8-4e13-adca-4efba2d6cdb6@d1.example.com&quot;
+              ]
+          ],
+          [
+              3,
+              [
+                  &quot;95385d74-de8b-4062-a499-114c84523172@example.com&quot;,
+                  &quot;868b982d-bf01-4b99-9b1d-c80498d43e5a@b.example.com&quot;,
+                  &quot;20e076b9-af29-46c6-ab8d-ff3589967ef6@d1.example.com&quot;
+              ]
+          ],
+          [
+              4,
+              [
+                  &quot;0cf794f4-0224-423c-83d7-1d1219e48e5e@example.com&quot;,
+                  &quot;0fa35127-9655-4a39-88f6-7571f0e5f19e@b.example.com&quot;,
+                  &quot;a6f371c2-740d-40cb-8c7d-78281b3bae84@d1.example.com&quot;
+              ]
+          ],
+          [
+              5,
+              [
+                  &quot;524fe28e-fb4a-49db-8a98-89ddf6cdc49f@example.com&quot;,
+                  &quot;a4ce3ee8-ef7e-431d-ae41-2ce074553808@b.example.com&quot;,
+                  &quot;0d4e7afe-80e3-4dee-b185-7c48d2f1a9ad@d1.example.com&quot;
+              ]
+          ]
+      ],
+      &quot;delConvs&quot;: [
+          [
+              1,
+              [
+                  &quot;83ba8647-0f07-4fed-a1d6-ea73e9684455@example.com&quot;,
+                  &quot;411ec26f-768f-47ad-8202-5693a53874f4@b.example.com&quot;,
+                  &quot;f024ff15-e749-494e-ab73-c9dd71643e07@d1.example.com&quot;
+              ]
+          ],
+          [
+              2,
+              [
+                  &quot;b4085a7b-cfef-4bbf-aaef-d220ca2d03e0@example.com&quot;,
+                  &quot;fb73c603-189f-4ff2-8925-3a2392920357@b.example.com&quot;,
+                  &quot;b31a3059-4906-4f56-b7ef-2e5a09df4b44@d1.example.com&quot;
+              ]
+          ],
+          [
+              3,
+              [
+                  &quot;97e73613-ee96-491a-bcc7-5b6f33d82b98@example.com&quot;,
+                  &quot;06e864a3-6fb2-4f2b-9835-34ad7bece52b@b.example.com&quot;,
+                  &quot;db9ffc69-7bdd-4c58-80e8-a8e21b36d312@d1.example.com&quot;
+              ]
+          ],
+          [
+              4,
+              [
+                  &quot;50d19902-0e13-41f3-b101-be12efd4d547@example.com&quot;,
+                  &quot;e573d21f-b987-45df-8ac3-e970e10457aa@b.example.com&quot;,
+                  &quot;73674860-2c6b-4678-8997-3702b9f51ff7@d1.example.com&quot;
+              ]
+          ],
+          [
+              5,
+              [
+                  &quot;cdbe475b-a137-418c-9eb5-8b02465211c6@example.com&quot;,
+                  &quot;e30f0d28-516c-454f-9f90-c5fe540ae4a6@b.example.com&quot;,
+                  &quot;a5690a4e-686b-474a-a06e-3a62d8accf46@d1.example.com&quot;
+              ]
+          ]
+      ],
+      &quot;kickMarkConvs&quot;: [
+          [
+              1,
+              [
+                  &quot;e7a1d6a0-7357-49c1-b59f-67f3dc40f4c5@example.com&quot;,
+                  &quot;a9eb9bef-c1af-4619-af80-57893fbc4eef@b.example.com&quot;,
+                  &quot;7d62f05e-a12a-4f89-9b24-b5bdb735f624@d1.example.com&quot;
+              ]
+          ],
+          [
+              2,
+              [
+                  &quot;06e9b2ff-4d9f-40d6-b3c7-6df1d47e851c@example.com&quot;,
+                  &quot;2c4a1e9c-c939-444d-a236-f5dd47823b8e@b.example.com&quot;,
+                  &quot;6492f366-e045-4f23-addf-e2df96df2686@d1.example.com&quot;
+              ]
+          ],
+          [
+              3,
+              [
+                  &quot;4f2cdd6c-27a4-402b-a9f4-39a4bc2a909d@example.com&quot;,
+                  &quot;031aa2a8-7dbc-4b1b-9ef0-b9ff1f9d9719@b.example.com&quot;,
+                  &quot;3ab63746-d9c3-4b5c-9ab4-0526289afc69@d1.example.com&quot;
+              ]
+          ],
+          [
+              4,
+              [
+                  &quot;cdcd8b32-1d0a-4279-a20c-6de60d7ff922@example.com&quot;,
+                  &quot;0085478f-a86a-42cf-aff4-959123de4b0c@b.example.com&quot;,
+                  &quot;f98305d5-0ae9-4846-abad-7aab6891b6ed@d1.example.com&quot;
+              ]
+          ],
+          [
+              5,
+              [
+                  &quot;09293851-d3c1-4fb8-a834-643e88c901a9@example.com&quot;,
+                  &quot;9117d5aa-d70d-4e31-bf1b-83b2a2346425@b.example.com&quot;,
+                  &quot;a0bab328-256d-4c86-b54c-f9e4b34ad439@d1.example.com&quot;
+              ]
+          ]
+      ],
+      &quot;kickMelConvs&quot;: [
+          [
+              1,
+              [
+                  &quot;b03108e4-dec2-47fb-b215-05ea5baa5d3f@example.com&quot;,
+                  &quot;b116374a-130b-4de1-be17-258a7bcd9fcf@b.example.com&quot;,
+                  &quot;fc9d14cb-8b86-4285-9765-9b84e418f916@d1.example.com&quot;
+              ]
+          ],
+          [
+              2,
+              [
+                  &quot;4e8c409f-0feb-48ba-8311-1e3ef195cc7e@example.com&quot;,
+                  &quot;f99b3c71-9b44-4b85-a955-c9049e9810f5@b.example.com&quot;,
+                  &quot;2df2fe93-ad6a-4578-b56a-903e1804472f@d1.example.com&quot;
+              ]
+          ],
+          [
+              3,
+              [
+                  &quot;2be09119-efe0-42bc-be74-190aad25b071@example.com&quot;,
+                  &quot;1f7f7158-9c7d-42bf-bcde-b2ecb84dd083@b.example.com&quot;,
+                  &quot;9a6532d1-88e7-4729-acbc-3781b0425e10@d1.example.com&quot;
+              ]
+          ],
+          [
+              4,
+              [
+                  &quot;39561f83-56e2-48ba-b9dd-24476834e22a@example.com&quot;,
+                  &quot;a284454f-54d4-4c0c-b41a-b817b3e4f5ce@b.example.com&quot;,
+                  &quot;cd6f5547-2ce4-47f0-97df-ccc0e96356a2@d1.example.com&quot;
+              ]
+          ],
+          [
+              5,
+              [
+                  &quot;5c8697ca-4ccd-41ff-a793-0122a45da428@example.com&quot;,
+                  &quot;9880d187-9991-4f69-ae5e-019ca5d47d5f@b.example.com&quot;,
+                  &quot;826d235b-4196-4861-b3a3-d9e086f7eac4@d1.example.com&quot;
+              ]
+          ]
+      ],
+      &quot;unmodifiedConvs&quot;: [
+          &quot;f62afb6f-35d3-4a12-b629-56869bcfb1cd@example.com&quot;,
+          &quot;69c8c90e-be4f-4abb-a43b-45ccb2ab5aa3@b.example.com&quot;,
+          &quot;ab07d864-c083-4a53-8871-7d6b04cdd579@d1.example.com&quot;,
+          &quot;ad982e70-1677-4a3d-bf31-8d81abc531f3@d1.example.com&quot;
+      ]
+  }
+
+
+otherMelConvs:
+  [
+      {
+          &quot;domain&quot;: &quot;d1.example.com&quot;,
+          &quot;id&quot;: &quot;65c5e78b-8e31-4ff6-9f11-f1c972de5947&quot;
+      },
+      {
+          &quot;domain&quot;: &quot;d1.example.com&quot;,
+          &quot;id&quot;: &quot;db6b2054-a637-4df9-b25a-2422015cada1&quot;
+      },
+      {
+          &quot;domain&quot;: &quot;d1.example.com&quot;,
+          &quot;id&quot;: &quot;e76041f9-41b6-4cee-bd09-d5db1d2a8ea0&quot;
+      },
+      {
+          &quot;domain&quot;: &quot;d1.example.com&quot;,
+          &quot;id&quot;: &quot;22d7b3d5-f696-57ca-852c-2e5c6f1344bf&quot;
+      },
+      {
+          &quot;domain&quot;: &quot;d1.example.com&quot;,
+          &quot;id&quot;: &quot;5c5c5cec-67ed-547d-8a04-b461ff5c88ab&quot;
+      },
+      {
+          &quot;domain&quot;: &quot;example.com&quot;,
+          &quot;id&quot;: &quot;e3f7507c-d393-5baa-9aa1-cdfd8039727e&quot;
+      }
+  ]
+
+
+
+Set WIRE_INTEGRATION_TEST_VERBOSITY=1 if you want to see complete trace of the HTTP traffic in curl pseudo-syntax.
+</failure></testcase></testsuite></testsuites>

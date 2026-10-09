@@ -44,7 +44,7 @@ func TestMigrationRescansAfterPGUsageFailureAndKeepsSuccessfulCopies(t *testing.
 	}
 	w := httptest.NewRecorder()
 	s.Handler().ServeHTTP(w, httptest.NewRequest("GET", "/i/metrics", nil))
-	if !strings.Contains(w.Body.String(), "wire_block_list_migrated_to_pg 3\n") || !strings.Contains(w.Body.String(), "wire_block_list_migration_finished 1\n") {
+	if !strings.Contains(w.Body.String(), "wire_block_list_migrated_to_pg 3.0\n") || !strings.Contains(w.Body.String(), "wire_block_list_migration_finished 1.0\n") {
 		t.Fatal("source migration counters missing")
 	}
 }
