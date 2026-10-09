@@ -131,13 +131,15 @@ without a concrete change. Final switchback remains outstanding.
 Current implementation and retained validation:
 
 - The notification pusher and dead-user watcher run; other worker readiness stays
-  false. Enabled database migrations explicitly reject startup while unfinished.
+  tracked for all three Rabbit concerns. Enabled database migrations explicitly
+  reject startup while unfinished.
   Source HTTP2 delivery, version rules, retry/ACK behavior, verified AMQP TLS,
   missed-notification writes and malformed input are covered by focused tests.
 - Rabbit background-job parsing/session/retries/metrics and both group-sync
   algorithms are implemented. PostgreSQL conversation/member reads and writes,
   administrative-shutdown retries, local Gundeck pushes and modern/legacy remote
-  notifications are implemented. Consumer startup is not yet connected.
+  notifications are implemented. The real job consumer is now connected with a
+  separate publisher channel and all three conversation storage modes.
 - Cassandra conversation/member reads, bound logged membership batches, reverse
   indexes and the source year3000 deletion tombstone are implemented. Nullable
   decoding explicitly distinguishes NULL from scalar zero; default driver map
@@ -170,13 +172,20 @@ actual suite execution. Neither failure has a passing rerun yet. Finish real
 consumer adapters before rerunning the unchanged profile.
 
 Partial check/source receipts are retained in module evidence/group-jobs-20261009,
-conversation-adapters-20261009 and cassandra-bots-20261009. They do not establish
+conversation-adapters-20261009, cassandra-bots-20261009 and migration-routing-20261009. They do not establish
 whole-service parity or a final executable. Protected original assertions and
 schemas are unchanged. No availability/image/selector/compatibility claim is made.
 
-Next connect Cassandra/PostgreSQL migration routing with source advisory locks
-and pending-delete cleanup, then job-consumer startup, supervision and graceful
-drain. Implement Arbiter scheduled adminless/meetings jobs and all seven migration
+Conversation routing now uses source shared UUID advisory locks, a500ms acquisition
+budget and pending-delete cleanup before reads/writes. Incomplete MLS writes route
+by PG EXISTS rather than read success. Failed Cassandra cleanup retains the PG
+ledger; cleanup loads native subgroup/group/client data before deletion. Focused
+routing/failure tests and full Go checks/final race tests pass. Actual database
+lock/durable effects are not yet verified in Docker.
+
+Next rerun the unchanged original gundeck40 against a clean static worker, then
+consolidate startup/supervision/logging and graceful drain. Implement Arbiter
+scheduled adminless/meetings jobs and all seven migration
 families. Final exact six-Go original124 tests, actual durable Haskell->Go->Haskell
 switchback, bounded operations, optional image/selector and delegated review remain
 mandatory. Native local Haskell build checks remain unavailable/unrun.

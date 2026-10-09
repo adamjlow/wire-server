@@ -60,8 +60,9 @@ func postgresConfig(c PostgresPoolConfig, g GalleyConfig) (*pgxpool.Config, erro
 }
 
 type postgresStore struct {
-	Pool        *pgxpool.Pool
-	Acquisition time.Duration
+	CassandraCleanup cassandraConversationCleanup
+	Pool             *pgxpool.Pool
+	Acquisition      time.Duration
 }
 
 func openPostgres(ctx context.Context, c PostgresPoolConfig, g GalleyConfig) (*postgresStore, error) {

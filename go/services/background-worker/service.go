@@ -117,7 +117,7 @@ func (s *Service) Handler() http.Handler {
 }
 
 func (s *Service) Run(ctx context.Context) error {
-	// Early construction slice: migration/scheduled/group-sync code is unfinished.
+	// Construction remains incomplete: migrations and scheduled jobs are unfinished.
 	// Never silently accept enabled data migrations before those paths exist.
 	if s.Config.MigrateConversations || s.Config.MigrateCodes || s.Config.MigrateTeamFeatures || s.Config.MigrateDomains || s.Config.MigrateUsers || s.Config.MigrateBlockList || s.Config.MigratePasswordReset {
 		return errors.New("candidate construction incomplete: migrations are not implemented")
@@ -132,6 +132,7 @@ func (s *Service) Run(ctx context.Context) error {
 	var wg sync.WaitGroup
 	wg.Go(func() { s.runPusher(runCtx) })
 	wg.Go(func() { s.runDeadWatcher(runCtx) })
+	wg.Go(func() { s.runJobs(runCtx) })
 	done := make(chan error, 1)
 	go func() { done <- server.Serve(listener) }()
 	select {
