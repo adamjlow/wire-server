@@ -95,7 +95,7 @@ compiled Haskell assertions and peers with owned disposable dependencies. The
 passes 77 selected original tests, records every binary identity and records cleanup exit 0.
 Preparation/preflight outputs still mean `e2e_executed: false`; only actual run
 receipts establish execution. This is selected-suite evidence, not the entire
-backend suite or coverage of background-worker's unexamined jobs/migrations.
+backend suite or qualification of background-worker's jobs/migrations.
 
 **Stopping rule:** finite public contract/effect matrix, security negatives,
 relevant error/retry cases, one operational smoke and switchback. Stop on that
@@ -113,6 +113,9 @@ static/dynamic peers without installing GHC/Cabal/Nix or backend packages on the
 host. Use only the user-authorized internal Docker environment, with synthetic
 data, trusted fixture TLS, no host ports and owned cleanup. Preflight alone still
 cannot qualify e2e execution; shared/production integration targets remain prohibited.
-Background-worker's next [plan](../../docs/go-migration/plans/background-worker.md)
-requires its own source inventory, finite baseline and separately reviewed strict
-selection/catalogue extension before Go substitution.
+Background-worker's [plan](../../docs/go-migration/plans/background-worker.md)
+now links its completed inventory and frozen contract. Strict six-service selection
+and the original worker47 catalogue are implemented. Final qualification requires
+original77+worker47 =124 executions with six identified Go services and remaining
+Haskell peers. Retained native full-suite runs and a partial candidate gundeck40
+run failed; they establish execution, not a passing whole-worker baseline.

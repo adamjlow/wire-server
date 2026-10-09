@@ -4,16 +4,18 @@ The authoritative stage is in [`.migration/services/`](../../../.migration/servi
 The initial registry covers proxy, cannon, cargohold, federator, gundeck,
 background-worker, spar, brig and galley. Current records, rather than this index,
 provide live stages and verified revision tuples. Existing dossiers cover proxy,
-cargohold, cannon, gundeck and federator; their evidence includes real Haskell
-reference captures and original tests.
+cargohold, cannon, gundeck, federator and background-worker; their evidence
+includes real Haskell reference captures and original tests.
 
 Use [current patched artifacts](../qualifications/go-patched-20261009/README.md)
 for the Go1.26.9 tuple; previous compiler receipts remain historical. Proxy's
 [formal operational limitation](proxy/oracle/REVIEW.md) remains unresolved despite
-its implemented/tested API and patched image. Background-worker is selected next;
-[its plan](../plans/background-worker.md) begins with source inventory and baseline
-discovery rather than claiming existing whole-service coverage. Spar, brig and
-galley remain unimplemented.
+its implemented/tested API and patched image. Background-worker has completed
+[inventory](background-worker/inventory.md) and a frozen
+[contract](background-worker/contract.md); construction follows
+[its plan](../plans/background-worker.md). Retained native reference runs and
+partial candidate runs include failures; no whole-service qualification is
+claimed. Spar, brig and galley remain unimplemented.
 
 Haskell remains supported and default; milestones never retire its implementation. Keep the latest verified
 upstream/reference/candidate tuple and its report in the compatibility record,

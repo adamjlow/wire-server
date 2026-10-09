@@ -36,9 +36,10 @@ its formal stage remains implementing with no whole-service compatibility claim:
 their original meaning; the latest mixed run passes77 unchanged original Haskell
 tests with five identified Go executables and remaining Haskell peers.
 
-The next selected service is background-worker, under
-[its executable plan](plans/background-worker.md). It remains registered until
-source inventory and the finite contract/baseline are complete. Choose subsequent
+Background-worker is now implementing under
+[its executable plan](plans/background-worker.md), with completed source inventory
+and a frozen [reference contract](services/background-worker/contract.md).
+Its implementation and validation are incomplete; compatibility remains null. Choose subsequent
 services from actual dependencies, blast radius and testability; no fixed migration
 order is implied. See the [dossier index](services/README.md).
 

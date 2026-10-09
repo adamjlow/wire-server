@@ -112,8 +112,13 @@ All four suite receipts identify every selected executable; the host verifies
 hashes before accepting success. Exact runner, controller, image and fixture
 identities remain in the retained receipts. No complete backend-suite claim.
 
-Background-worker is currently a Haskell peer. Its next migration requires an
-explicit source inventory, relevant original test catalogue and finite coverage
-for scheduled jobs, migrations, queue effects and switchback; existing event
-coverage alone does not qualify that service. Extend protected selection/catalogue
-tooling through a separately scoped reviewed task before selecting it.
+Background-worker was a Haskell peer in that passing five-service run. Its
+[whole-service migration](../../../docs/go-migration/plans/background-worker.md)
+now has completed inventory, a frozen contract, strict six-service selection and
+an original47 worker catalogue. The final combined profile
+`proxy-cargohold-cannon-gundeck-federator-background-worker` requires124 original
+executions with all six Go services and remaining Haskell peers. That final
+qualification has not passed. A partial run selecting only Go worker executed
+gundeck40:38 passed,2 failed, owned cleanup0; exact failure evidence is retained
+in the worker plan. Existing event coverage does not qualify scheduled jobs,
+migrations or durable switchback.
