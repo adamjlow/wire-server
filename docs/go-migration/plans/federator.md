@@ -2,7 +2,7 @@
 
 User's 2026-10-09 request to proceed with the next service extends the existing
 whole-service migration and same-author review delegation to federator. Reference
-f6636ed53315fa7b0fc4c8aa39c0bb30c98b6d5e; pinned Go1.26.8. Haskell stays default.
+f6636ed53315fa7b0fc4c8aa39c0bb30c98b6d5e; pinned Go1.26.9 (security patch after failed scan). Haskell stays default.
 Only owned internal Docker networks, synthetic data, trusted fixture TLS, no host
 ports and guaranteed cleanup are authorized for original test execution. This is
 the same private environment approved for previous service migrations, extended

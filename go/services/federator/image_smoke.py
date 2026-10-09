@@ -4,7 +4,7 @@ from pathlib import Path
 import helm_postrender
 ROOT=Path(__file__).resolve().parents[3]
 REFERENCE='quay.io/wire/integration@sha256:f5db439022d1c0ccf071c25f9c0d132ed21a9e5e3647db59c593d33614bc4f27'
-p=argparse.ArgumentParser();p.add_argument('--image-receipt',type=Path,required=True);p.add_argument('--fixtures',type=Path,required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--helm',type=Path,required=True);a=p.parse_args()
+p=argparse.ArgumentParser();p.add_argument('--image-receipt',type=Path,required=True);p.add_argument('--fixtures',type=Path,required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--helm',type=Path,required=True);p.add_argument('--chart',type=Path,required=True);p.add_argument('--values',type=Path,required=True);a=p.parse_args()
 if a.output.exists():raise ValueError('new evidence output required')
 def command(args):return subprocess.check_output(list(map(str,args)),stderr=subprocess.PIPE,text=True,timeout=90).strip()
 receipt=json.loads(a.image_receipt.read_text());image=receipt['image_id'];network='wire-federator-image-'+uuid.uuid4().hex;container=None;created=False
@@ -25,7 +25,9 @@ try:
         if code!=0 or elapsed>4:raise ValueError('image shutdown failed')
         # Render existing chart without changes: selected result can differ ONLY
         # at its one federator image. The source chart currently has no exec hook.
-        rendered=command([a.helm,'template','wire','charts/wire-server'])+'\n'
+        for source in (ROOT/'charts/wire-server').rglob('*'):
+            if source.is_file() and source.read_bytes()!=(a.chart/source.relative_to(ROOT/'charts/wire-server')).read_bytes():raise ValueError('cached source chart changed')
+        rendered=command([a.helm,'template','wire',a.chart,'--values',a.values,'--set','tags.federation=true','--set','federator.tls.useSharedFederatorSecret=true'])+'\n'
         if helm_postrender.select(rendered,None)!=rendered:raise ValueError('default render changed')
         selected=helm_postrender.select(rendered,image)
         pattern=r'(?m)(^\s+image: )"[^"\n]+"'

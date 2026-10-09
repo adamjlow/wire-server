@@ -35,8 +35,8 @@ def build(output, candidate=None, candidate_receipt=None):
     if command(["git", "status", "--porcelain"], cwd=ROOT):
         raise ValueError("image requires a clean committed checkout")
     revision = command(["git", "rev-parse", "HEAD"], cwd=ROOT)
-    if not re.fullmatch(r"[a-f0-9]{40}", revision) or command(["go", "version"]) != "go version go1.26.8 linux/amd64":
-        raise ValueError("image requires pinned Go 1.26.8 on linux/amd64")
+    if not re.fullmatch(r"[a-f0-9]{40}", revision) or command(["go", "version"]) != "go version go1.26.9 linux/amd64":
+        raise ValueError("image requires pinned Go 1.26.9 on linux/amd64")
     container = None
     try:
         with tempfile.TemporaryDirectory(prefix="wire-federator-image-") as directory:
@@ -57,7 +57,7 @@ def build(output, candidate=None, candidate_receipt=None):
             info = json.loads(command(["go", "version", "-m", "-json", str(files / "federator")]))
             settings = {v["Key"]: v["Value"] for v in info["Settings"]}
             if (settings.get("vcs.revision") != candidate_revision or settings.get("vcs.modified") != "false" or
-                settings.get("CGO_ENABLED") != "0" or info["GoVersion"] != "go1.26.8" or
+                settings.get("CGO_ENABLED") != "0" or info["GoVersion"] != "go1.26.9" or
                 settings.get("GOOS") != "linux" or settings.get("GOARCH") != "amd64" or
                 info["Path"] != "github.com/adamjlow/wire-server/go/services/federator/cmd/federator"):
                 raise ValueError("compiler receipt does not match clean source")

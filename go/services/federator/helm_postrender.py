@@ -14,7 +14,7 @@ def select(rendered, image):
     documents=rendered.split('\n---\n')
     matches=0
     for index,document in enumerate(documents):
-        if '# Source: wire-server/templates/federator/deployment.yaml\n' not in document:
+        if '# Source: wire-server/charts/federator/templates/deployment.yaml\n' not in document:
             continue
         if not re.search(r'^kind: Deployment$',document,re.M) or not re.search(r'^  name: federator$',document,re.M):
             raise ValueError('unexpected federator deployment shape')
