@@ -11,7 +11,7 @@ import (
 )
 
 func (s *Service) runMigrations(ctx context.Context) {
-	if !s.Config.MigrateBlockList && !s.Config.MigratePasswordReset && !s.Config.MigrateCodes {
+	if !s.Config.MigrateBlockList && !s.Config.MigratePasswordReset && !s.Config.MigrateCodes && !s.Config.MigrateDomains && !s.Config.MigrateTeamFeatures {
 		return
 	}
 	var session, galley *gocql.Session
@@ -28,7 +28,7 @@ func (s *Service) runMigrations(ctx context.Context) {
 		}
 	}()
 	for ctx.Err() == nil {
-		if session == nil && (s.Config.MigrateBlockList || s.Config.MigratePasswordReset) {
+		if session == nil && (s.Config.MigrateBlockList || s.Config.MigratePasswordReset || s.Config.MigrateDomains) {
 			var err error
 			session, err = openCassandra(s.Config.CassandraBrig)
 			if err != nil {
@@ -38,7 +38,7 @@ func (s *Service) runMigrations(ctx context.Context) {
 				continue
 			}
 		}
-		if galley == nil && s.Config.MigrateCodes {
+		if galley == nil && (s.Config.MigrateCodes || s.Config.MigrateTeamFeatures) {
 			var err error
 			galley, err = openCassandra(s.Galley.Cassandra)
 			if err != nil {
@@ -83,6 +83,12 @@ func (s *Service) runMigrations(ctx context.Context) {
 	}
 	if s.Config.MigrateCodes {
 		start("conv_codes", galley, s.migrateCodes)
+	}
+	if s.Config.MigrateDomains {
+		start("domain_registration", session, s.migrateDomains)
+	}
+	if s.Config.MigrateTeamFeatures {
+		start("team_features", galley, s.migrateTeamFeatures)
 	}
 	wg.Wait()
 }

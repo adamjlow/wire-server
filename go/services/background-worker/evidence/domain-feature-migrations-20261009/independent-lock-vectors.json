@@ -1,0 +1,17 @@
+{
+  "oracle": "libxxhash.so.0 XXH3_64bits, independently called through Python ctypes",
+  "xxhash_version": 802,
+  "seed": 0,
+  "vectors": {
+    "": 3244421341483603138,
+    "wire-server:arbiter-migrations:arbiter": 14219464709246170394,
+    "example.com": 10044734154400447347,
+    "Stra\u00dfe.example": 2182970386891305697,
+    "mls": 5000805854559750088,
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa": 15375750549016112149
+  },
+  "native_hashable_version": "1.5.1.0",
+  "native_class_source_sha256": "00b27734d2fa5c2b57b67860ca08a38a1c5638510e49f9508277b9c9009af880",
+  "native_class_source": "https://hackage-content.haskell.org/package/hashable-1.5.1.0/src/src/Data/Hashable/Class.hs",
+  "native_version_evidence": "/home/operator/.cache/wire-migration/reference-build/source-6f0neh0q/build-dry-run.log"
+}

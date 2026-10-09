@@ -13,7 +13,7 @@ starting mixed-deployment baseline. The service is inventoried and its finite
 reference contract is frozen with explicit baseline limitations. Go construction
 now includes a runnable notification pusher and Cassandra dead-user watcher, plus
 connected background-job consumption, conversation-storage/notification adapters
-and three migration families. Scheduled jobs and the other four migrations are
+and five migration families. Scheduled jobs and the other two migrations are
 under construction.
 Whole-service parity is not yet claimed; the task record owns current status.
 
@@ -215,14 +215,24 @@ Native RSA-only bot TLS also permits finite-DHE AEAD cipher suites that Go's TLS
 library does not implement; legacy providers supporting only those suites may
 need configuration updates. No production security policy change is authorized.
 
-Block-list, password-reset and conversation-code migration loops are now
-constructed and connected, with source typed-page decoding, TTL/legacy handling,
+Block-list, password-reset, conversation-code, domain-registration and
+team-feature migration loops are now constructed and connected, with source typed-page decoding, TTL/legacy handling,
 bound upserts, full rescans on PG usage errors, fatal timeout and metric behavior.
 Stored password hashes are canonicalized without KDF work. Native CQL ASCII text
 bypasses API alphabet validation; the candidate now preserves that distinction
-and native code-length ranges. The other four enabled migration flags still
+and native code-length ranges. The other two enabled migration flags still
 reject startup explicitly. Scheduled optimistic ACK, parent
 sibling locking/suspension/wakeup and archive retention are also constructed.
-Full Go checks pass for module evidence/code-migration-20261009 inputs;
+Full Go checks pass for module evidence/domain-feature-migrations-20261009 inputs;
 actual migration DB behavior and scheduled ACK remain untested, and scheduled
 runtime remains disconnected. Final original124/operations/switchback are required.
+
+Domain challenges and registrations follow the source ordered two-phase scan,
+with independent lock acquisition/row timeout budgets and current-row reread
+under an exclusive lock. Team features preserve existing PG rows, nullable patches
+and generic JSON configuration. Both use native hashable1.5.1.0 XXH3 UTF8 lock keys;
+independent C hash vectors are retained with the source citation. Stored HTTPS
+URL serialization follows the native URI library, whose BSD3 notice is retained
+alongside Arbiter MIT. Native IPv6 serialization removes brackets and may produce
+invalid/ambiguous stored URLs; this inherited data-format concern is documented.
+Native library execution and actual migration DB effects remain unrun.

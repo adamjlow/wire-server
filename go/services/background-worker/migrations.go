@@ -65,7 +65,17 @@ func (s *Service) observeMigration(name, outcome string, elapsed time.Duration) 
 	})
 }
 
-func (s *Service) migrateRows(ctx context.Context, name string, page migrationPage, write migrationWrite) (err error) {
+type migrationPhase struct {
+	page  migrationPage
+	write migrationWrite
+	timed bool
+}
+
+func (s *Service) migrateRows(ctx context.Context, name string, page migrationPage, write migrationWrite) error {
+	return s.migratePhases(ctx, name, []migrationPhase{{page: page, write: write, timed: true}})
+}
+
+func (s *Service) migratePhases(ctx context.Context, name string, phases []migrationPhase) (err error) {
 	defer func() {
 		if err != nil {
 			s.migrationMetric(name, func(m *migrationMetrics) { m.failed++ })
@@ -76,53 +86,62 @@ func (s *Service) migrateRows(ctx context.Context, name string, page migrationPa
 		return errors.New("invalid migration options")
 	}
 	for {
-		var state []byte
 		rowErrors := 0
-		for {
-			if err := ctx.Err(); err != nil {
-				return err
-			}
-			rows, next, err := page(ctx, state, opts.PageSize)
-			if err != nil {
-				return err
-			}
-			for _, row := range rows {
-				start := time.Now()
-				attempt, cancel := context.WithTimeout(ctx, time.Duration(opts.Timeout))
-				counted, err := write(attempt, row)
-				attemptErr := attempt.Err()
-				cancel()
-				if ctx.Err() != nil {
-					return ctx.Err()
+		for _, phase := range phases {
+			var state []byte
+			for {
+				if err := ctx.Err(); err != nil {
+					return err
 				}
-				if errors.Is(attemptErr, context.DeadlineExceeded) {
-					s.observeMigration(name, "timeout", time.Since(start))
-					// Native MigrationTimedOut is an IO exception, not a caught
-					// Hasql UsageError: terminate this loop until process restart.
-					return errors.New("migration row timed out")
-				}
+				rows, next, err := phase.page(ctx, state, opts.PageSize)
 				if err != nil {
-					s.observeMigration(name, "error", time.Since(start))
-					var usage *postgresOperationError
-					if !errors.As(err, &usage) {
-						return err
-					}
-					rowErrors++
-				} else if counted {
-					s.observeMigration(name, "success", time.Since(start))
-					s.migrationMetric(name, func(m *migrationMetrics) { m.migrated++ })
+					return err
 				}
+				for _, row := range rows {
+					start := time.Now()
+					attempt, cancel := ctx, func() {}
+					if phase.timed {
+						attempt, cancel = context.WithTimeout(ctx, time.Duration(opts.Timeout))
+					}
+					counted, err := phase.write(attempt, row)
+					attemptErr := attempt.Err()
+					cancel()
+					if ctx.Err() != nil {
+						return ctx.Err()
+					}
+					if phase.timed && errors.Is(attemptErr, context.DeadlineExceeded) {
+						s.observeMigration(name, "timeout", time.Since(start))
+						// Native MigrationTimedOut is fatal until process restart.
+						return errors.New("migration row timed out")
+					}
+					if err != nil {
+						if phase.timed {
+							s.observeMigration(name, "error", time.Since(start))
+						}
+						var usage *postgresOperationError
+						var lockTimeout *migrationLockTimeout
+						if !errors.As(err, &usage) && !errors.As(err, &lockTimeout) {
+							return err
+						}
+						rowErrors++
+					} else if counted {
+						if phase.timed {
+							s.observeMigration(name, "success", time.Since(start))
+						}
+						s.migrationMetric(name, func(m *migrationMetrics) { m.migrated++ })
+					}
+				}
+				if len(next) == 0 {
+					break
+				}
+				state = next
 			}
-			if len(next) == 0 {
-				break
-			}
-			state = next
 		}
 		if rowErrors == 0 {
 			s.migrationMetric(name, func(m *migrationMetrics) { m.finished++ })
 			return nil
 		}
-		// Source restarts the full scan immediately when individual PG usage
-		// errors remain. Successful copies are safe to upsert on the next pass.
+		// Native rescans every phase after any caught PG/lock errors. Successful
+		// copies are safe to upsert again; neither phase alone means finished.
 	}
 }

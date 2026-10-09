@@ -4,7 +4,6 @@ package backgroundworker
 import (
 	"context"
 	"encoding/binary"
-	"errors"
 	"time"
 )
 
@@ -26,13 +25,17 @@ func (s *postgresStore) withMigrationLock(ctx context.Context, id string, exclus
 	if err != nil {
 		return err
 	}
+	return s.withMigrationLockKey(ctx, key, exclusive, timeout, action)
+}
+
+func (s *postgresStore) withMigrationLockKey(ctx context.Context, key int64, exclusive bool, timeout time.Duration, action func() error) error {
 	// The source's timeout includes pool acquisition. A separate session holds
 	// the advisory lock throughout cleanup and operations on the normal pool.
 	acquireCtx, cancel := context.WithTimeout(ctx, timeout)
 	defer cancel()
 	conn, err := s.Pool.Acquire(acquireCtx)
 	if err != nil {
-		return errors.New("migration lock acquisition failed")
+		return &migrationLockTimeout{}
 	}
 	lockSQL, unlockSQL := `SELECT pg_advisory_lock_shared($1::bigint)`, `SELECT pg_advisory_unlock_shared($1::bigint)`
 	if exclusive {
@@ -45,7 +48,7 @@ func (s *postgresStore) withMigrationLock(ctx context.Context, id string, exclus
 		_ = conn.Conn().Close(closeCtx)
 		stop()
 		conn.Release()
-		return errors.New("migration lock acquisition failed")
+		return &migrationLockTimeout{}
 	}
 	defer func() {
 		unlockCtx, stop := context.WithTimeout(context.Background(), time.Second)

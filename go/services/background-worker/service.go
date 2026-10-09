@@ -121,7 +121,7 @@ func (s *Service) Handler() http.Handler {
 func (s *Service) Run(ctx context.Context) error {
 	// Construction remains incomplete: migrations and scheduled jobs are unfinished.
 	// Never silently accept enabled data migrations before those paths exist.
-	if s.Config.MigrateConversations || s.Config.MigrateTeamFeatures || s.Config.MigrateDomains || s.Config.MigrateUsers {
+	if s.Config.MigrateConversations || s.Config.MigrateUsers {
 		return errors.New("candidate construction incomplete: migrations are not implemented")
 	}
 	listener, err := net.Listen("tcp", s.Config.HTTP.Address())
