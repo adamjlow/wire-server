@@ -18,7 +18,7 @@ SERVICES = ('brig','brig-index','brig-schema','cannon','cargohold','federator','
 
 
 def names(service):
-    catalogue = Path(__file__).with_name('gundeck-tests.json') if service == 'gundeck' else CATALOGUE
+    catalogue = Path(__file__).with_name(service+'-tests.json') if service in ('gundeck','federator') else CATALOGUE
     groups = json.loads(catalogue.read_text())['services']
     if service not in groups:
         raise ValueError('unsupported service')
@@ -50,7 +50,7 @@ def discover(service):
 def preflight():
     return {'schema_version':1,'result':'preflight-pass','base_image':BASE,'uid':os.getuid(),
             'binaries':{name:binary(name) for name in ('integration',*SERVICES)},
-            'tests':{service:discover(service) for service in ('proxy','cargohold','cannon','gundeck')},
+            'tests':{service:discover(service) for service in ('proxy','cargohold','cannon','gundeck','federator')},
             'e2e_executed':False,'environment_ready':False,
             'requirements':['Provision disposable Cassandra/RabbitMQ/S3/search/Redis/federation dependencies and static Haskell peers.','Mount synthetic integration config and service configs; full tests are not run by preflight.']}
 
@@ -115,10 +115,10 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__)
     sub=parser.add_subparsers(dest='command',required=True)
     sub.add_parser('preflight')
-    environment=sub.add_parser('environment');environment.add_argument('--service',choices=('proxy','cargohold','cannon','gundeck','proxy-cargohold','proxy-cargohold-cannon','proxy-cargohold-cannon-gundeck','gundeck-reference'),required=True);environment.add_argument('--candidate',type=Path)
+    environment=sub.add_parser('environment');environment.add_argument('--service',choices=('proxy','cargohold','cannon','gundeck','proxy-cargohold','proxy-cargohold-cannon','proxy-cargohold-cannon-gundeck','gundeck-reference','federator','proxy-cargohold-cannon-gundeck-federator'),required=True);environment.add_argument('--candidate',type=Path)
     environment.add_argument('--peer-candidate', nargs=2, action='append', default=[], metavar=('SERVICE','BINARY'))
-    listing=sub.add_parser('list');listing.add_argument('--service',choices=('proxy','cargohold','cannon','gundeck'),required=True)
-    running=sub.add_parser('suite');running.add_argument('--service',choices=('proxy','cargohold','cannon','gundeck'),required=True)
+    listing=sub.add_parser('list');listing.add_argument('--service',choices=('proxy','cargohold','cannon','gundeck','federator'),required=True)
+    running=sub.add_parser('suite');running.add_argument('--service',choices=('proxy','cargohold','cannon','gundeck','federator'),required=True)
     running.add_argument('--candidate',type=Path);running.add_argument('--config',type=Path,required=True);running.add_argument('--output',type=Path,required=True)
     args=parser.parse_args()
     try:

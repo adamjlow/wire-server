@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "services": {
+    "federator": [
+      {
+        "module": "Test.Federator",
+        "tests": [
+          "testFederatorMetricsExternal",
+          "testFederatorMetricsInternal",
+          "testFederatorNumRequestsMetrics"
+        ]
+      },
+      {
+        "module": "Test.Errors",
+        "tests": [
+          "testNestedError"
+        ]
+      },
+      {
+        "module": "Test.Demo",
+        "tests": [
+          "testDynamicBackendsFederation"
+        ]
+      }
+    ]
+  }
+}
