@@ -25,3 +25,9 @@ schema bootstrap, reaper, cron and domain handlers remain unfinished.
 Original40 passed on the distinct earlier source00557161c5218fba7ce290ba57536561298a35e3
 in ../jobs-original-20261009. That executable contains none of this checkpoint.
 No final qualification, compatibility or availability claim is made.
+
+Correction at the later code-migration checkpoint: native Cql AsciiText bypasses
+API alphabet validation (Data.Text.Ascii.fromCql uses unsafeFromText). The earlier
+alphabet claim above was incorrect. Later implementation/tests correct this;
+see ../code-migration-20261009. Retained source hashes/checks refer to the older
+implementation and do not establish current parity.

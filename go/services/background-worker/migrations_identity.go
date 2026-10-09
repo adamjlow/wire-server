@@ -52,27 +52,16 @@ type passwordResetMigrationRow struct {
 	TTL       int32
 }
 
-func validBase64URLCharacters(value string) bool {
-	// Native AsciiBase64Url validates only its alphabet, not padding position
-	// or a decodable base64 encoding. Do not impose a stronger encoding rule.
-	for _, c := range value {
-		if !((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') || c == '-' || c == '_' || c == '=') {
-			return false
-		}
-	}
-	return true
-}
-
 func decodePasswordResetMigration(row migrationRow) (passwordResetMigrationRow, error) {
 	var result passwordResetMigrationRow
 	invalid := errors.New("invalid stored password reset row")
 	var ok bool
 	result.Key, ok = row["key"].(string)
-	if !ok || !validBase64URLCharacters(result.Key) {
+	if !ok {
 		return result, invalid
 	}
 	result.Code, ok = row["code"].(string)
-	if !ok || !validBase64URLCharacters(result.Code) {
+	if !ok {
 		return result, invalid
 	}
 	result.User, ok = cqlUUID(row["user"])

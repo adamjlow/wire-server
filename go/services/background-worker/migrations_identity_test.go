@@ -40,11 +40,11 @@ func TestPasswordResetMigrationBindsOriginalTTLAndSkipsExpiredOrLegacyRows(t *te
 	}
 }
 
-func TestPasswordResetMigrationUsesNativeAlphabetAndRejectsMalformedTypedFields(t *testing.T) {
+func TestPasswordResetMigrationUsesNativeCQLTextAndRejectsMalformedTypedFields(t *testing.T) {
 	row := syntheticPasswordResetRow()
-	row["code"] = "a=b" // Native permits alphabet-valid non-decodable text.
+	row["code"] = "synthetic+nonbase64" // Native Cql AsciiText bypasses alphabet validation.
 	if _, err := decodePasswordResetMigration(row); err != nil {
-		t.Fatal("native alphabet strengthened to base64 decoding")
+		t.Fatal("stored CQL text subjected to API alphabet validation")
 	}
 	for _, field := range []string{"user", "code", "ttl(code)"} {
 		bad := syntheticPasswordResetRow()
@@ -52,9 +52,5 @@ func TestPasswordResetMigrationUsesNativeAlphabetAndRejectsMalformedTypedFields(
 		if _, err := decodePasswordResetMigration(bad); err == nil {
 			t.Fatal("required stored field accepted as NULL")
 		}
-	}
-	row["code"] = "synthetic+code"
-	if _, err := decodePasswordResetMigration(row); err == nil {
-		t.Fatal("non-url-safe reset code accepted")
 	}
 }

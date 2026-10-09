@@ -12,7 +12,9 @@ Go 1.26.9, GOTOOLCHAIN=local/GOWORK=off. Existing five Go peers and their exact
 starting mixed-deployment baseline. The service is inventoried and its finite
 reference contract is frozen with explicit baseline limitations. Go construction
 now includes a runnable notification pusher and Cassandra dead-user watcher, plus
-background-job, conversation-storage and notification adapters under construction.
+connected background-job consumption, conversation-storage/notification adapters
+and three migration families. Scheduled jobs and the other four migrations are
+under construction.
 Whole-service parity is not yet claimed; the task record owns current status.
 
 ## Whole-service boundary to inventory
@@ -213,11 +215,14 @@ Native RSA-only bot TLS also permits finite-DHE AEAD cipher suites that Go's TLS
 library does not implement; legacy providers supporting only those suites may
 need configuration updates. No production security policy change is authorized.
 
-Block-list and password-reset migration loops are now constructed and connected,
-with source typed-page decoding, TTL/legacy handling, bound upserts, full rescans
-on PG usage errors, fatal timeout and metric behavior. The other five enabled
-migration flags still reject startup explicitly. Scheduled optimistic ACK, parent
+Block-list, password-reset and conversation-code migration loops are now
+constructed and connected, with source typed-page decoding, TTL/legacy handling,
+bound upserts, full rescans on PG usage errors, fatal timeout and metric behavior.
+Stored password hashes are canonicalized without KDF work. Native CQL ASCII text
+bypasses API alphabet validation; the candidate now preserves that distinction
+and native code-length ranges. The other four enabled migration flags still
+reject startup explicitly. Scheduled optimistic ACK, parent
 sibling locking/suspension/wakeup and archive retention are also constructed.
-Full Go checks pass for module evidence/identity-migrations-20261009 inputs;
+Full Go checks pass for module evidence/code-migration-20261009 inputs;
 actual migration DB behavior and scheduled ACK remain untested, and scheduled
 runtime remains disconnected. Final original124/operations/switchback are required.

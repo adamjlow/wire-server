@@ -10,11 +10,11 @@ import (
 	"github.com/apache/cassandra-gocql-driver/v2"
 )
 
-func (s *Service) runIdentityMigrations(ctx context.Context) {
-	if !s.Config.MigrateBlockList && !s.Config.MigratePasswordReset {
+func (s *Service) runMigrations(ctx context.Context) {
+	if !s.Config.MigrateBlockList && !s.Config.MigratePasswordReset && !s.Config.MigrateCodes {
 		return
 	}
-	var session *gocql.Session
+	var session, galley *gocql.Session
 	var postgres *postgresStore
 	defer func() {
 		if postgres != nil {
@@ -23,9 +23,12 @@ func (s *Service) runIdentityMigrations(ctx context.Context) {
 		if session != nil {
 			session.Close()
 		}
+		if galley != nil {
+			galley.Close()
+		}
 	}()
 	for ctx.Err() == nil {
-		if session == nil {
+		if session == nil && (s.Config.MigrateBlockList || s.Config.MigratePasswordReset) {
 			var err error
 			session, err = openCassandra(s.Config.CassandraBrig)
 			if err != nil {
@@ -35,6 +38,17 @@ func (s *Service) runIdentityMigrations(ctx context.Context) {
 				continue
 			}
 		}
+		if galley == nil && s.Config.MigrateCodes {
+			var err error
+			galley, err = openCassandra(s.Galley.Cassandra)
+			if err != nil {
+				if !wait(ctx, time.Second) {
+					return
+				}
+				continue
+			}
+		}
+
 		if postgres == nil {
 			var err error
 			postgres, err = openPostgres(ctx, s.Config.PostgresPool, s.Galley)
@@ -51,10 +65,10 @@ func (s *Service) runIdentityMigrations(ctx context.Context) {
 		return
 	}
 	var wg sync.WaitGroup
-	start := func(name string, migrate func(context.Context, *gocql.Session, *postgresStore) error) {
+	start := func(name string, cassandra *gocql.Session, migrate func(context.Context, *gocql.Session, *postgresStore) error) {
 		s.migrationMetric(name, func(*migrationMetrics) {})
 		wg.Go(func() {
-			if err := migrate(ctx, session, postgres); err != nil && ctx.Err() == nil {
+			if err := migrate(ctx, cassandra, postgres); err != nil && ctx.Err() == nil {
 				// Native leaves the failed migration stopped until restart. Do
 				// not log row keys, reset codes or raw database diagnostics.
 				slog.Error("migration failed; restart required", "migration", name)
@@ -62,10 +76,13 @@ func (s *Service) runIdentityMigrations(ctx context.Context) {
 		})
 	}
 	if s.Config.MigrateBlockList {
-		start("block_list", s.migrateBlockList)
+		start("block_list", session, s.migrateBlockList)
 	}
 	if s.Config.MigratePasswordReset {
-		start("password_reset", s.migratePasswordReset)
+		start("password_reset", session, s.migratePasswordReset)
+	}
+	if s.Config.MigrateCodes {
+		start("conv_codes", galley, s.migrateCodes)
 	}
 	wg.Wait()
 }
