@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "result": "built",
+  "image_id": "sha256:ab6f8aef313e322935cf0d6256d9a89b007027a94190ff2f253fc0a8ac94349e",
+  "source_revision": "107c55bdecf1b53cb203d9f4de4be3c91388b24b",
+  "base_image": "quay.io/wire/integration@sha256:f5db439022d1c0ccf071c25f9c0d132ed21a9e5e3647db59c593d33614bc4f27",
+  "files_sha256": {
+    "harness.py": "245fa733f3f6b2894345143e0d98536bd835ea5e00689b172b984184215ec991",
+    "e2e-tests.json": "ddaa4bd21e3c3f770aafd1acc099c14e9b471d5717224bad2f474a2b0553586e",
+    "gundeck-tests.json": "dfe89a76672762a478b62a6d8d4365e081c92398f01becb15aa245d0a9865bd0",
+    "Dockerfile": "f1284d419851e56c0391ebab26cbef46180da1b7564e66196d035647ae221e1b",
+    "runtime.py": "33326276bd5d7bd1f8caf37de9b599e1b9b5b0f33fc74627fc3f361d8f49ae44",
+    "runner.py": "1c9d1492b89c35f0c9fe9ab730dd3880b5a8298d1bc0543b436d5cd4b9b5f8e1",
+    "entrypoint.sh": "0a353437072764f537d9d1568868104c55e8e9080d06c32c31d6f1162ad0eb2f",
+    "federator-tests.json": "ade5f4def8e4e4bd50d5d5aa4282bffb3f1fcdaed0b21b7e8dc87482870d2be1"
+  },
+  "e2e_executed": false
+}

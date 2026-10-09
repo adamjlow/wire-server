@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "project": "wire-e2e-046a1f6747c34a5ba1af8dc80299a6fa",
+  "source_revision": "107c55bdecf1b53cb203d9f4de4be3c91388b24b",
+  "runner_image_id": "sha256:ab6f8aef313e322935cf0d6256d9a89b007027a94190ff2f253fc0a8ac94349e",
+  "runner_revision": "107c55bdecf1b53cb203d9f4de4be3c91388b24b",
+  "candidate": null,
+  "peer_candidates": {},
+  "result": "pass",
+  "e2e_executed": true,
+  "compose_sha256": "007246a013004f21a12fe4165a1a41767c73d7e3e4a31ee39a74f7133ce6c611",
+  "files_sha256": {
+    "fixtures/configs.json": "8cc34c41cc248ae804d822a60fb610b0adead84c3e79663eb33243ef70c99876",
+    "fixtures/integration.json": "d8834dad54e1f851e689ac00691cd527aac69e0e9ce00baf149835433812c73c",
+    "fixtures/peers.json": "ca8438ea9464138dc0c75868b62eb8b12113343dada8336524c3ea467dd3a490"
+  },
+  "dependencies": {
+    "fake_dynamodb": "quay.io/wire/dynamodb_local@sha256:e092d4b32889277f9dc0954bf99caaa216bdb621e399d460ac396e41c8c1a9f1",
+    "fake_sqs": "softwaremill/elasticmq-native@sha256:32d4b42a1f1fd5d311d2f46e388587c87b297364df3d25cc807f1dd361df1153",
+    "fake_localstack": "quay.io/wire/localstack@sha256:544be04ed93def3e636cc96550f262c1c8ac7f4d40e17b7c76583590a26e78d3",
+    "fake_s3": "dxflrs/garage@sha256:9c96caa2612d3411acc5b0e6701fb238dbfba33e533a6d7d3d811a4b12d0d020",
+    "redis-master": "redis@sha256:29e8589c3f9ba699b5f7aa4b3c7733c58852a3626439e619aa0ee78de08c6ca0",
+    "elasticsearch": "elasticsearch@sha256:deda76957c8cacc5dbf0d535fd14fe365f37d839813099bc32f26390a5e232dc",
+    "postgres": "postgres@sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24",
+    "cassandra": "cassandra@sha256:dad4cd7ee4281df4e96944a1faebfebd2e50ee19a9f0a1d42ac0bb17c820dd74",
+    "rabbitmq": "rabbitmq@sha256:5cbd7145b0306399ad68422c3350b6cbd1bb95704b39f5896480e5b6d4238a04",
+    "coredns": "coredns/coredns@sha256:6e5a02c21641597998b4be7cb5eb1e7b02c0d8d23cce4dd09f4682d463798890",
+    "redis-cluster": "redis@sha256:29e8589c3f9ba699b5f7aa4b3c7733c58852a3626439e619aa0ee78de08c6ca0",
+    "redis-node-1": "redis@sha256:29e8589c3f9ba699b5f7aa4b3c7733c58852a3626439e619aa0ee78de08c6ca0",
+    "redis-node-2": "redis@sha256:29e8589c3f9ba699b5f7aa4b3c7733c58852a3626439e619aa0ee78de08c6ca0",
+    "redis-node-3": "redis@sha256:29e8589c3f9ba699b5f7aa4b3c7733c58852a3626439e619aa0ee78de08c6ca0",
+    "redis-node-4": "redis@sha256:29e8589c3f9ba699b5f7aa4b3c7733c58852a3626439e619aa0ee78de08c6ca0",
+    "redis-node-5": "redis@sha256:29e8589c3f9ba699b5f7aa4b3c7733c58852a3626439e619aa0ee78de08c6ca0",
+    "redis-node-6": "redis@sha256:29e8589c3f9ba699b5f7aa4b3c7733c58852a3626439e619aa0ee78de08c6ca0"
+  },
+  "process_exit_code": 0,
+  "service": "federator",
+  "cleanup_exit_code": 0
+}

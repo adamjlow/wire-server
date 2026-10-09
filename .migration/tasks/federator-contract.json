@@ -4,7 +4,7 @@
   "title": "Freeze federator finite forwarding contract and private Haskell baseline",
   "service": "federator",
   "kind": "contract-change",
-  "status": "active",
+  "status": "done",
   "owner": "codex",
   "branch": "go-migration",
   "depends_on": [
@@ -39,7 +39,32 @@
       "required_evidence": "Actual tests, checks and source review; defaults preserved, no security exception."
     }
   ],
-  "evidence": [],
-  "review": null,
-  "handoff": ""
+  "evidence": [
+    {
+      "criterion": "contract",
+      "result": "pass",
+      "command": "Actual original Haskell5 and frozen real-process35 with trusted mTLS/DNS; owned cleanup0. Harness16/framework32 and delegated source/scope review pass.",
+      "revision": "c6212410fe6fb538182197cff4224d597c932224",
+      "artifact": ".migration/reviews/federator-contract.md"
+    },
+    {
+      "criterion": "baseline",
+      "result": "pass",
+      "command": "Actual original Haskell5 and frozen real-process35 with trusted mTLS/DNS; owned cleanup0. Harness16/framework32 and delegated source/scope review pass.",
+      "revision": "c6212410fe6fb538182197cff4224d597c932224",
+      "artifact": ".migration/reviews/federator-contract.md"
+    },
+    {
+      "criterion": "validation",
+      "result": "pass",
+      "command": "Actual original Haskell5 and frozen real-process35 with trusted mTLS/DNS; owned cleanup0. Harness16/framework32 and delegated source/scope review pass.",
+      "revision": "c6212410fe6fb538182197cff4224d597c932224",
+      "artifact": ".migration/reviews/federator-contract.md"
+    }
+  ],
+  "review": {
+    "by": "codex (self-review delegated by user)",
+    "artifact": ".migration/reviews/federator-contract.md"
+  },
+  "handoff": "Reference5 and finite35 frozen; claim runnable whole-service Go immediately, final77 five-Go plus35 and bounded packaging/drain/switchback required."
 }
