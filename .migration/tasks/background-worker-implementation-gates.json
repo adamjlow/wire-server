@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "id": "background-worker-implementation-gates",
+  "title": "Publish worker finite contract and executable implementation-plan gates",
+  "service": "framework",
+  "kind": "framework",
+  "status": "queued",
+  "owner": null,
+  "branch": null,
+  "depends_on": [
+    "background-worker-contract",
+    "background-worker-inventory"
+  ],
+  "write_paths": [
+    ".migration/tasks/background-worker-implementation-gates.json",
+    ".migration/services/background-worker.json"
+  ],
+  "plan": "docs/go-migration/plans/background-worker.md",
+  "acceptance_criteria": [
+    {
+      "id": "gates",
+      "description": "Publish adjacent contracted and implementing stages from reviewed completed contract and inventory/plan.",
+      "required_evidence": "Exact done source/observed contract, original baseline failure limitations transparent, Go tooling and whole-service plan; no compatibility claim."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": ""
+}

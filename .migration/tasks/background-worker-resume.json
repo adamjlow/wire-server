@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "id": "background-worker-resume",
+  "title": "Resume independent worker contract and queue whole-service construction",
+  "service": "framework",
+  "kind": "framework",
+  "status": "queued",
+  "owner": null,
+  "branch": null,
+  "depends_on": [
+    "background-worker-inventory-gate"
+  ],
+  "write_paths": [
+    ".migration/tasks/background-worker-resume.json",
+    ".migration/tasks/background-worker-contract.json",
+    ".migration/tasks/background-worker-implementation.json",
+    ".migration/tasks/background-worker-implementation-gates.json",
+    ".migration/reviews/background-worker-resume.md"
+  ],
+  "plan": "docs/go-migration/plans/background-worker.md",
+  "acceptance_criteria": [
+    {
+      "id": "coordination",
+      "description": "Requeue completed discovery contract and queue whole-worker implementation without claiming a repaired peer or green full baseline.",
+      "required_evidence": "Original isolated MLS two unchanged five-Go passes retained, worker47 original executions inspected; all failures and federator compatibility null preserved. No oracle/assertion/final acceptance reduction; claim transitions/scope and self-review pass."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": ""
+}

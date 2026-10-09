@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "id": "background-worker-implementation",
+  "title": "Implement and qualify optional whole-service Go background-worker",
+  "service": "background-worker",
+  "kind": "implementation",
+  "status": "queued",
+  "owner": null,
+  "branch": null,
+  "depends_on": [
+    "background-worker-contract",
+    "background-worker-implementation-gates",
+    "go-security-patch-20261009"
+  ],
+  "write_paths": [
+    ".migration/tasks/background-worker-implementation.json",
+    "go/services/background-worker",
+    "docs/go-migration/plans/background-worker.md",
+    "changelog.d/5-internal/background-worker-implementation"
+  ],
+  "plan": "docs/go-migration/plans/background-worker.md",
+  "acceptance_criteria": [
+    {
+      "id": "service",
+      "description": "Replace whole worker while preserving all configured source contracts.",
+      "required_evidence": "Early runnable dual-config health/notification worker with actual Haskell comparison; federation pusher, DLQ watcher, Rabbit group sync, Arbiter scheduled adminless/meetings, all seven migrations and lifecycle implemented. No supported path silent no-op; original protected assertions and schemas unchanged."
+    },
+    {
+      "id": "quality",
+      "description": "Validate finite source gaps and final exact executable with current pinned Go tooling.",
+      "required_evidence": "Format/tidy/verify/vet/race/unit/build/security/license checks; source14 pusher expectations, strict input/TLS/job/header/lease guards and inherited serious concerns. Final exact original77+worker47 six-Go/Haskell peer tests all pass with strict XML, identity and owned cleanup. No baseline failure silently waived."
+    },
+    {
+      "id": "operations",
+      "description": "Prove bounded operations and actual durable switchback.",
+      "required_evidence": "One predeclared health/jobs/RSS/CPU/latency and loaded shutdown smoke; Haskell-Go-Haskell identical Rabbit/PG/Cass state with queued/scheduled jobs, lease/attempt guards, notifications and migration continuation. Matching nonroot optional container with trusted CA, health and SIGTERM; exact artifacts and delegated self-review. Protected selector work separately scoped."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": ""
+}
