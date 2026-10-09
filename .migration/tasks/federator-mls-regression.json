@@ -4,7 +4,7 @@
   "title": "Diagnose, repair and requalify original MLS interoperability regression",
   "service": "federator",
   "kind": "verification",
-  "status": "active",
+  "status": "blocked",
   "owner": "codex",
   "branch": "go-migration",
   "depends_on": [
@@ -51,5 +51,5 @@
     }
   ],
   "review": null,
-  "handoff": "Actual get-mls-clients transport error to d1 observed in failed five-Go run. Same categorized static executable passed two targeted five-Go runs, with strict original assertions and cleanup0; no failing category captured and no behavioral correction established. Unit suite passes. Stop broad repetition; isolate concrete transport/reference/environment cause. Whole-worker goal remains active, contract internally waiting, no image/compatibility restoration or worker implementation claim."
+  "handoff": "No behavioral repair attributed: single observed get-mls-clients transport error is intermittent; two unchanged categorized five-Go original MLS runs passed. Temporary service.go diagnostics removed, exact claim-base source restored. Keep compatibility null and retain all failed evidence. Await concrete failing transport category/reference attribution; do not repeat broad diagnosis. Independent whole-worker contract/construction may proceed; final exact six-service original interoperability remains mandatory and cannot qualify with an unresolved failure."
 }

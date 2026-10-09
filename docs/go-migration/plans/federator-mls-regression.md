@@ -74,3 +74,16 @@ Go1.26.9/GOTOOLCHAIN=local/GOWORK=off/CGO_ENABLED=0. Source remains diagnostic o
 no final image, whole47 clean baseline, corrected compatibility or worker build
 is claimed. Stop broad repetition: the next diagnostic step must isolate the
 observed transport path or reference/environment cause with concrete evidence.
+
+## Dependency handoff
+
+No behavioral repair is proved. Restore the original service.go bytes from the
+claim base and stop diagnostic repetition. Federator compatibility remains null;
+historical evidence is retained. The peer investigation waits for a concrete
+failing error category or reference/environment attribution. It need not prevent
+building the independently specified whole worker: all original 47 functions
+were executed, every case has a passing observation, and the two isolated MLS
+passes are retained with exact diagnostic identities. This is not a passing
+whole47 run and cannot qualify any candidate. Final six-service original tests,
+peer interoperability and exact final qualification are still mandatory. No
+assertion, final acceptance surface or security requirement is reduced.

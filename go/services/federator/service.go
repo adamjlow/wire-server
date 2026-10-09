@@ -16,7 +16,6 @@ import (
 	"net/http"
 	"net/http/httptrace"
 	"net/url"
-	"os"
 	"strconv"
 	"strings"
 	"sync"
@@ -34,24 +33,6 @@ type Service struct {
 	incoming, outgoing map[string]uint64
 	requests           uint64
 	duration           float64
-}
-
-func (s *Service) diagnostic(stage, domain, rpc string, status int, label string) {
-	if s.config.LogLevel != "Debug" && s.config.LogLevel != "Trace" {
-		return
-	}
-	// Temporary regression trace: no payload, request ID, certificates or raw errors.
-	if len(domain) > 253 {
-		domain = domain[:253]
-	}
-	if len(rpc) > 128 {
-		rpc = rpc[:128]
-	}
-	if len(label) > 64 {
-		label = label[:64]
-	}
-	line, _ := json.Marshal(map[string]any{"event": "federation-diagnostic", "stage": stage, "domain": domain, "rpc": rpc, "status": status, "label": label})
-	_, _ = fmt.Fprintln(os.Stderr, string(line))
 }
 
 func New(c Config) (*Service, error) {
@@ -366,7 +347,6 @@ func (s *Service) allow(ctx context.Context, domain, rid string, w http.Response
 	req.Header.Set("Request-Id", rid)
 	resp, err := s.local.Do(req)
 	if err != nil {
-		s.diagnostic("policy-transport", domain, "", 500, fmt.Sprintf("%T", err))
 		serverError(w)
 		return false
 	}
@@ -385,7 +365,6 @@ func (s *Service) allow(ctx context.Context, domain, rid string, w http.Response
 	}
 	body, readErr := io.ReadAll(io.LimitReader(resp.Body, 8*1024*1024+1))
 	if resp.StatusCode != 200 || readErr != nil || len(body) > 8*1024*1024 || json.Unmarshal(body, &policy) != nil || policy.Strategy == nil || policy.Remotes == nil || policy.Interval == nil {
-		s.diagnostic("policy-response", domain, "", resp.StatusCode, "invalid-policy")
 		serverError(w)
 		return false
 	}
@@ -424,7 +403,6 @@ func (s *Service) allow(ctx context.Context, domain, rid string, w http.Response
 		}
 	}
 	if !allowed {
-		s.diagnostic("policy-denied", domain, "", 400, "federation-denied")
 		writeError(w, 400, "federation-denied", "origin domain ["+domain+"] not in the federation allow list", nil)
 	}
 	return allowed
@@ -466,11 +444,9 @@ func (s *Service) inward(w http.ResponseWriter, r *http.Request, domain, compone
 	}
 	resp, err := s.local.Do(req)
 	if err != nil {
-		s.diagnostic("inward-transport", domain, rpc, 500, fmt.Sprintf("%T", err))
 		serverError(w)
 		return
 	}
-	s.diagnostic("inward-response", domain, rpc, resp.StatusCode, resp.Header.Get("Content-Encoding"))
 	defer resp.Body.Close()
 	if v := resp.Header.Get("Content-Type"); v != "" {
 		w.Header().Set("Content-Type", v)
@@ -530,18 +506,9 @@ func (s *Service) outward(w http.ResponseWriter, r *http.Request, domain, compon
 		if errors.As(err, &certErr) || errors.As(err, &tlsErr) || strings.Contains(err.Error(), "tls:") {
 			status, label = 525, "federation-tls-error"
 		}
-		category := fmt.Sprintf("%T", errors.Unwrap(err))
-		for _, marker := range []string{"client conn not usable", "GOAWAY", "REFUSED_STREAM", "unexpected EOF", "EOF", "connection reset", "connection refused", "context canceled", "deadline exceeded", "timeout"} {
-			if strings.Contains(err.Error(), marker) {
-				category = marker
-				break
-			}
-		}
-		s.diagnostic("outward-transport", domain, rpc, status, category)
 		writeError(w, status, label, "Remote federation transport failed", map[string]any{"data": data})
 		return
 	}
-	s.diagnostic("outward-response", domain, rpc, resp.StatusCode, resp.Header.Get("Content-Encoding"))
 	defer resp.Body.Close()
 	if resp.ProtoMajor != 2 {
 		writeError(w, 533, "federation-http2-error", "Remote federation protocol failed", map[string]any{"data": data})
@@ -557,7 +524,6 @@ func (s *Service) outward(w http.ResponseWriter, r *http.Request, domain, compon
 		if json.Unmarshal(body, &inner) != nil || inner["code"] == nil || inner["label"] == nil || inner["message"] == nil {
 			inner = map[string]any{"code": resp.StatusCode, "label": "unknown-error", "message": strings.ToValidUTF8(string(body), "�")}
 		}
-		s.diagnostic("outward-remote-error", domain, rpc, resp.StatusCode, fmt.Sprint(inner["label"]))
 		writeError(w, 533, "federation-remote-error", "A remote federator failed with status code: "+strconv.Itoa(resp.StatusCode), map[string]any{"data": data, "inner": inner})
 		return
 	}
