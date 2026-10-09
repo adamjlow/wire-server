@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "id": "go-patched-rebuild-20261009",
+  "title": "Rebuild and requalify four earlier Go services using patched compiler",
+  "service": "framework",
+  "kind": "framework",
+  "status": "queued",
+  "owner": null,
+  "branch": null,
+  "depends_on": [
+    "go-security-patch-20261009",
+    "go-image-pin-followup",
+    "federator-completion"
+  ],
+  "write_paths": [
+    ".migration/tasks/go-patched-rebuild-20261009.json",
+    "docs/go-migration/plans/go-patched-rebuild-20261009.md",
+    ".migration/reviews/go-patched-rebuild-20261009.md",
+    "docs/go-migration/qualifications/go-patched-20261009",
+    "changelog.d/5-internal/go-patched-rebuild-20261009",
+    "go/tooling/go.mod",
+    "go/tooling/go.sum",
+    "go/services/federator/SECURITY-NOTES.md",
+    "go/services/proxy/go.mod",
+    "go/services/proxy/go.sum",
+    "go/services/proxy/README.md",
+    "go/services/cargohold/go.mod",
+    "go/services/cargohold/go.sum",
+    "go/services/cargohold/README.md",
+    "go/services/cannon/go.mod",
+    "go/services/cannon/go.sum",
+    "go/services/cannon/README.md",
+    "go/services/gundeck/go.mod",
+    "go/services/gundeck/go.sum",
+    "go/services/gundeck/README.md",
+    ".migration/services/cargohold.json",
+    ".migration/services/cannon.json",
+    ".migration/services/gundeck.json"
+  ],
+  "plan": "docs/go-migration/plans/go-patched-rebuild-20261009.md",
+  "acceptance_criteria": [
+    {
+      "id": "quality",
+      "description": "All affected modules and checking tools use patched versions and pass required quality/security checks.",
+      "required_evidence": "Minimal pins, Go1.26.9 format/tidy/verify/vet/race/build/module vulnerability/license receipts; unchanged federator checks explicitly reused."
+    },
+    {
+      "id": "artifacts",
+      "description": "Four rebuilt images contain exact patched executables and retain tested container lifecycle.",
+      "required_evidence": "Clean source/compiler/image/binary receipts, actual nonroot/read-only health/SIGTERM/helper checks; no push."
+    },
+    {
+      "id": "integration",
+      "description": "Patched five-service tuple passes existing original tests with Haskell peers.",
+      "required_evidence": "Original77 unchanged assertions/no skips/errors, exact all-five executable hashes, process0/cleanup0; delegated review and historical proofs/limits retained."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": ""
+}
