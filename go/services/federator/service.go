@@ -530,7 +530,14 @@ func (s *Service) outward(w http.ResponseWriter, r *http.Request, domain, compon
 		if errors.As(err, &certErr) || errors.As(err, &tlsErr) || strings.Contains(err.Error(), "tls:") {
 			status, label = 525, "federation-tls-error"
 		}
-		s.diagnostic("outward-transport", domain, rpc, status, label)
+		category := fmt.Sprintf("%T", errors.Unwrap(err))
+		for _, marker := range []string{"client conn not usable", "GOAWAY", "REFUSED_STREAM", "unexpected EOF", "EOF", "connection reset", "connection refused", "context canceled", "deadline exceeded", "timeout"} {
+			if strings.Contains(err.Error(), marker) {
+				category = marker
+				break
+			}
+		}
+		s.diagnostic("outward-transport", domain, rpc, status, category)
 		writeError(w, status, label, "Remote federation transport failed", map[string]any{"data": data})
 		return
 	}
