@@ -175,7 +175,7 @@ Resolve this failure before qualification; do not waive it or repeat unchanged
 expensive tests without a repair. Actual user migration effects remain unverified.
 
 Scheduled payloads, Arbiter claims/heartbeat/retry/ACK/worker registration,
-sibling locking/wakeup and archive retention are constructed. Schema setup,
+sibling locking/wakeup and archive retention are constructed. Native schema setup is constructed and checked;
 reaper/cron, adminless/meetings domain handlers and scheduled runtime are unfinished.
 The initial original MLS case reached enabled phase3 and reported both migration
 loops completed (local32/remote2), but timed out because the native helper expects
@@ -203,3 +203,15 @@ Native URI IPv6 serialization removes brackets and can produce ambiguous stored
 URLs. Keep these findings separate from the parity implementation; no production
 security policy change is authorized. Eventual distribution must include retained
 email/URI BSD3 and Arbiter MIT notices.
+
+Scheduled bootstrap now preserves pinned native SQL bodies, registry names/order,
+Base64-MD5 migration checksums, dedicated native advisory lock, native transaction
+commit/rollback distinctions, default durability and adminless partial index.
+[Exact construction receipts](../../../go/services/background-worker/evidence/scheduled-schema-20261009/)
+include passing full Go checks and an actual isolated PostgreSQL qualifier:227
+native captured column records match exactly,76 ledger entries, queued-job
+preservation and checksum mismatch behavior pass, owned cleanup complete.
+Initial fixture TCP-readiness race is retained and repaired; no candidate/oracle
+assertion change or failure waiver. This function remains unstarted until full
+scheduled runtime exists. Next complete cron/reaper and adminless/meetings handlers,
+then runtime/startup/drain and the previously declared final acceptance.

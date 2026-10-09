@@ -22,8 +22,8 @@ native independent local-conversation and remote-membership scans, with complete
 member status/subconversation/MLS-history copy and source cleanup/ledger ordering.
 
 PostgreSQL scheduled adminless/meetings workers remain disconnected. Claim,
-heartbeat, retry and acknowledgement storage components exist; schema bootstrap,
-scheduled runtime and domain handlers remain unfinished. Actual user and other
+heartbeat, retry, acknowledgement and native schema bootstrap components exist;
+scheduled runtime, cron/reaper and domain handlers remain unfinished. Actual user and other
 migration families and scheduled database effects remain unqualified. This state
 must not be selected for a deployment. Final acceptance remains the whole service
 in the [reference contract](../../../docs/go-migration/services/background-worker/contract.md)
@@ -55,6 +55,11 @@ queue lifecycle behavior for that artifact; it does not validate later migration
 construction, the original worker47, final six-Go124 or durable switchback.
 Earlier failed38/40 [watcher receipts](evidence/watcher-20261009/) remain historical
 evidence for their earlier artifact.
+
+Native scheduled schema setup passed an isolated Docker PostgreSQL check:
+227 original Haskell column records match exactly;76 migration records, queued-job
+preservation on rerun and checksum rejection pass. [Its receipts](evidence/scheduled-schema-20261009/)
+cover this limited storage construction, not full scheduled execution or switchback.
 
 The unchanged original Haskell MLS migration test passed1/1 on source
 309733bb48febdb8708e6b1c5aadb94cb03fe8ab with only Go worker/Haskell peers.

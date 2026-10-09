@@ -1,0 +1,51 @@
+{
+  "owner": "wire-worker-schema-72cde6f072074daebb4b1de033eebf70",
+  "postgres_image": "postgres@sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24",
+  "runner_image": "sha256:cd03212430eef6cfde0324b50885c12980ee211483ab27dde6ee730252966cd2",
+  "binary_sha256": "4fbd316dddd4143e2c72c324156e854dcd45a986d675020b8ceccd41dd0e06b7",
+  "native_columns_sha256": "97c53579b0e9f74b7385258ef41119f8d8a684691942ac32b11eab206d60a676",
+  "test_tag": "schemacheck",
+  "readiness": "TCP127.0.0.1 (not temporary initdb unix socket)",
+  "result": "pass",
+  "test_exit_code": 0,
+  "post_cleanup_owned": {
+    "container": [],
+    "network": [],
+    "volume": []
+  },
+  "cleanup": [
+    {
+      "command": [
+        "docker",
+        "rm",
+        "-f"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "docker",
+        "rm",
+        "-f"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "docker",
+        "volume",
+        "rm"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "docker",
+        "network",
+        "rm"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "cleanup_passed": true
+}

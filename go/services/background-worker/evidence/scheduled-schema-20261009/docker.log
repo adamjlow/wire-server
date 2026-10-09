@@ -1,0 +1,4 @@
+=== RUN   TestScheduledSchemaDockerStorage
+    scheduled_schema_docker_test.go:77: native schema columns227; ledger76; queued workload preserved on rerun; mismatch stops with native preceding commit
+--- PASS: TestScheduledSchemaDockerStorage (0.16s)
+PASS

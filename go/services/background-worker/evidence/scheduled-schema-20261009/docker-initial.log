@@ -1,0 +1,4 @@
+=== RUN   TestScheduledSchemaDockerStorage
+    scheduled_schema_docker_test.go:29: scheduled migration lock connection failed
+--- FAIL: TestScheduledSchemaDockerStorage (0.00s)
+FAIL

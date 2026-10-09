@@ -1,0 +1,44 @@
+{
+  "base_revision": "59a8842dfa5f5f943a5bc782df19279ce189e22d",
+  "source_inputs_sha256": "c127eabdc30bbe3f95ba64916fc66de4bc7bb4820a718436c07c5b393b393d06",
+  "binary_sha256": "4fbd316dddd4143e2c72c324156e854dcd45a986d675020b8ceccd41dd0e06b7",
+  "build_info": {
+    "GoVersion": "go1.26.9",
+    "Path": "github.com/adamjlow/wire-server/go/services/background-worker.test",
+    "Main": {
+      "Path": "github.com/adamjlow/wire-server/go/services/background-worker",
+      "Version": "(devel)"
+    },
+    "Settings": [
+      {
+        "Key": "-buildmode",
+        "Value": "exe"
+      },
+      {
+        "Key": "-compiler",
+        "Value": "gc"
+      },
+      {
+        "Key": "-tags",
+        "Value": "schemacheck"
+      },
+      {
+        "Key": "CGO_ENABLED",
+        "Value": "0"
+      },
+      {
+        "Key": "GOARCH",
+        "Value": "amd64"
+      },
+      {
+        "Key": "GOOS",
+        "Value": "linux"
+      },
+      {
+        "Key": "GOAMD64",
+        "Value": "v1"
+      }
+    ]
+  },
+  "construction_receipt": "Tagged test executable built from declared source inputs before checkpoint commit; not a final production service artifact."
+}
