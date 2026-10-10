@@ -4,9 +4,9 @@
   "title": "Inventory full Spar service boundary and reusable original tests",
   "service": "spar",
   "kind": "discovery",
-  "status": "queued",
-  "owner": null,
-  "branch": null,
+  "status": "active",
+  "owner": "codex",
+  "branch": "go-migration",
   "depends_on": [
     "background-worker-completion"
   ],
