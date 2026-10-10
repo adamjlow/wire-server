@@ -168,4 +168,50 @@ func TestOwnedDurableStores(t *testing.T) {
 	if cc, err := sessions.list(ctx, id); err != nil || len(cc) != 0 {
 		t.Fatal("all-cookie revocation failed")
 	}
+	// Client/prekey/MLS reads use Cassandra in every configured user mode.
+	clientOwner := user()
+	created := time.Unix(1700000000, 123000000).UTC()
+	class := int32(2)
+	for _, row := range []struct {
+		id    string
+		typ   int32
+		class *int32
+		caps  []int32
+	}{{"1", 1, &class, []int32{1, 2}}, {"2", 0, nil, nil}} {
+		if err := cassandra.Query(`INSERT INTO clients (user,client,type,tstamp,class,capabilities) VALUES (?,?,?,?,?,?)`, clientOwner, row.id, row.typ, created, row.class, row.caps).WithContext(ctx).Consistency(gocql.LocalQuorum).Exec(); err != nil {
+			t.Fatal(err)
+		}
+	}
+	for _, scheme := range []string{"ed25519", "ecdsa_secp256r1_sha256", "ecdsa_secp384r1_sha384", "ecdsa_secp521r1_sha512"} {
+		if err := cassandra.Query(`INSERT INTO mls_public_keys (user,client,sig_scheme,key) VALUES (?,?,?,?)`, clientOwner, "1", scheme, []byte{0, 255}).WithContext(ctx).Consistency(gocql.LocalQuorum).Exec(); err != nil {
+			t.Fatal(err)
+		}
+	}
+	clients := clientStore{cassandra}
+	got, err := clients.get(ctx, clientOwner, "00001")
+	if err != nil || got == nil || got.ID != "1" || got.Class == nil || *got.Class != 2 || len(got.Capabilities) != 2 || len(got.PublicKeys) != 4 || !got.Created.Equal(created) {
+		t.Fatal("actual native client/MLS fields not preserved", err)
+	}
+	listed, err := clients.list(ctx, clientOwner)
+	if err != nil || len(listed) != 2 || listed[0].ID != "1" || listed[1].ID != "2" || listed[1].Class != nil || len(listed[1].Capabilities) != 0 || len(listed[1].PublicKeys) != 0 {
+		t.Fatal("actual client order/null defaults changed", err)
+	}
+	if absent, err := clients.get(ctx, clientOwner, "ff"); err != nil || absent != nil {
+		t.Fatal("missing client lookup changed", err)
+	}
+	for _, key := range []int32{1, 65535} {
+		if err := cassandra.Query(`INSERT INTO prekeys (user,client,key,data) VALUES (?,?,?,?)`, clientOwner, "1", key, "synthetic-prekey-text").WithContext(ctx).Consistency(gocql.LocalQuorum).Exec(); err != nil {
+			t.Fatal(err)
+		}
+	}
+	ids, err := clients.prekeyIDs(ctx, clientOwner, "0001")
+	if err != nil || len(ids) != 2 || ids[0] != 1 || ids[1] != 65535 {
+		t.Fatal("actual prekey ID order/width changed", err)
+	}
+	if err := cassandra.Query(`INSERT INTO mls_public_keys (user,client,sig_scheme,key) VALUES (?,?,?,?)`, clientOwner, "3", "invalid-synthetic-scheme", []byte{0}).WithContext(ctx).Consistency(gocql.LocalQuorum).Exec(); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := clients.get(ctx, clientOwner, "3"); err == nil {
+		t.Fatal("malformed orphan MLS key hidden by missing client")
+	}
 }

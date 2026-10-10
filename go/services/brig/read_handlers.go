@@ -18,6 +18,7 @@ type brigReadHandlers struct {
 	peers    brigPeers
 	auth     *reauthenticationHandler
 	access   *accessTokenService
+	clients  *clientReadHandlers
 }
 
 func readJSON(w http.ResponseWriter, r *http.Request, body any) {
@@ -54,6 +55,9 @@ func routeParseError(w http.ResponseWriter, message string) {
 }
 
 func (b brigReadHandlers) handle(w http.ResponseWriter, r *http.Request, path string) bool {
+	if b.clients != nil && b.clients.handle(w, r, path) {
+		return true
+	}
 	if path == "/access/logout" && b.access != nil {
 		b.access.logoutHTTP(w, r)
 		return true

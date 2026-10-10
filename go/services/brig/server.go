@@ -162,6 +162,7 @@ func Run(ctx context.Context, c Config) error {
 	transport := http.DefaultTransport.(*http.Transport).Clone()
 	defer transport.CloseIdleConnections()
 	business := brigReadHandlers{config: c, users: userStore{userAuthStore{cassandra: cassandra, postgres: postgres, mode: c.Migration["user"], acquisition: time.Duration(c.PostgresPool.Acquisition)}}, sessions: sessionStore{cassandra}, peers: brigPeers{client: &http.Client{Transport: transport, Timeout: 30 * time.Second}, galley: c.Galley}}
+	business.clients = &clientReadHandlers{store: clientStore{cassandra}}
 	issuer := tokenIssuer{key: private, index: int64(c.ZAuth.Settings.KeyIndex), userTTL: c.ZAuth.Settings.UserTTL, sessionTTL: c.ZAuth.Settings.SessionTTL, accessTTL: c.ZAuth.Settings.AccessTTL, legalUserTTL: c.ZAuth.Settings.LegalHoldUserTTL, legalAccessTTL: c.ZAuth.Settings.LegalHoldAccessTTL}
 	business.access = &accessTokenService{lookup: business.sessions, sessions: sessionManager{store: business.sessions, issuer: issuer}, keys: public, now: time.Now}
 	business.auth = &reauthenticationHandler{
