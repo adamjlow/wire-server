@@ -1,0 +1,5 @@
+{
+  "result": "fail",
+  "kind": "actual-native-Nginx-orphan-and-healthy-worker-probe",
+  "error": "'function' object has no attribute 'client'"
+}

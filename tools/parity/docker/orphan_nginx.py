@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Opt-in PID1 supervision of adopted native Nginx test workers only."""
 import hashlib
-import http.client
+import http.client as http_client
 import json
 import os
 from pathlib import Path
@@ -86,7 +86,7 @@ def supervise(args,probe=False):
 
 
 def http(port):
-    c=http.client.HTTPConnection('127.0.0.1',port,timeout=1)
+    c=http_client.HTTPConnection('127.0.0.1',port,timeout=1)
     try:c.request('GET','/');r=c.getresponse();return r.status,r.read().decode()
     finally:c.close()
 

@@ -27,3 +27,5 @@ Initial queue/claim validation rejected because this required plan file had not
 yet been created; the shell continued committing both metadata steps. Retain
 that failed validation openly. This follow-up supplies the immutable declared
 plan path and revalidates the active claim before any implementation/probe.
+
+Initial owned native probe at8c6bb8d51 stopped before proving orphan behavior: Python helper function http shadowed imported http.client. Runner1/cleanup0/empty and exact source receipts retained in qualifications/initial. Alias the imported client explicitly; no reference/assertion change, corrected actual probe required.
