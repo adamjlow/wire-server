@@ -1,0 +1,1 @@
+{"original_soft_limit": 1024, "scaled_fixture_soft_limit": 128, "caught_errno": [24], "exhausted_connection_closed": true, "normal_echo_pass": true, "original_run_attribution": "not proven; original run did not capture FD high-water", "runtime_code": "pinned image original Forward, observed create_connection exceptions without changing forwarding decisions"}

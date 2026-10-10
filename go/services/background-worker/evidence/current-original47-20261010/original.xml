@@ -1,0 +1,158 @@
+<?xml version='1.0' ?><testsuites name="wire-server"><testsuite name="integration" tests="47" failures="3" time="639.144411875"><testcase name="AdminlessGroups.testAdminlessJobCancellationIsTeamScoped" time="21.564126083" /><testcase name="AdminlessGroups.testAdminlessJobsCancelledOnFeatureDisable" time="16.279493094" /><testcase name="AdminlessGroups.testAdminlessJobsRecreatedOnFeatureConfigChange" time="21.854965407" /><testcase name="AdminlessGroups.testAdminlessReplaceMembers" time="0.948663873" /><testcase name="AdminlessGroups.testAdminlessReplaceMembersAddsAdmin" time="0.372125372" /><testcase name="AdminlessGroups.testAdminlessReplaceMembersAddsEligibleMember" time="0.180794378" /><testcase name="AdminlessGroups.testAdminlessSetupAutopromotesWithRemoteMembers" time="3.034586925" /><testcase name="AdminlessGroups.testAdminlessSetupDeletesWithOriginAndRemoteMembers" time="1.526859621" /><testcase name="AdminlessGroups.testAdminlessSetupDeletesWithSystemEventAndRemoteMembers" time="1.821810762" /><testcase name="AdminlessGroups.testAdminlessSetupMemberUpdateAfterAdminLeaves" time="0.25840679" /><testcase name="AdminlessGroups.testAdminlessSetupOnFeatureEnable" time="5.408528948" /><testcase name="AdminlessGroups.testAdminlessSetupSendsReminderWithOriginUserAndRemoteMembers" time="11.20076541" /><testcase name="AdminlessGroups.testAdminlessSetupSendsReminderWithRemoteMembers" time="10.678940672" /><testcase name="AdminlessGroups.testAdminlessSetupSystemMemberUpdate" time="0.300962489" /><testcase name="AdminlessGroups.testOnLastAdminLeaveFeatureDisabled" time="0.369934657" /><testcase name="AdminlessGroups.testOnLastAdminLeaveNoEligibleMembersExist" time="11.283368093" /><testcase name="AdminlessGroups.testOnLastAdminLeaveReturnEligibleMembers" time="1.204029757" /><testcase name="AdminlessGroups.testOnLastAdminLeaveReturnsEligibleMembersForGroupType[channel=false]" time="0.272256572" /><testcase name="AdminlessGroups.testOnLastAdminLeaveReturnsEligibleMembersForGroupType[channel=true]" time="0.286958396" /><testcase name="AdminlessGroups.testOnLastAdminSelfDeletionAutopromotes" time="0.308143628" /><testcase name="AdminlessGroups.testOnLastAdminTeamMemberDeletionAutopromotes[channel=false]" time="0.312133286" /><testcase name="AdminlessGroups.testOnLastAdminTeamMemberDeletionAutopromotes[channel=true]" time="0.406234751" /><testcase name="AdminlessGroups.testPersonalUserLastAdminLeaveReturnsAdminlessConversation" time="0.635978824" /><testcase name="Events.testBackendPusherRecoversFromQueueDeletion" time="2.794952415" /><testcase name="Events.testEventsDeadLettered" time="63.577141036" /><testcase name="Events.testEventsDeadLetteredWithReconnect" time="4.177199061" /><testcase name="Events.testTransientEventsDoNotTriggerDeadLetters" time="61.052203849" /><testcase name="Federation.testNotificationsForOfflineBackends" time="3.45877066" /><testcase name="Meetings.testMeetingCleanup" time="59.19112888" /><testcase name="Migration.BlockList.testBlockListMigration" time="2.086950515" /><testcase name="Migration.Conversation.testMigrationToPostgresMLS" time="31.961193122" /><testcase name="Migration.Conversation.testMigrationToPostgresProteus" time="107.386456608" /><testcase name="Migration.ConversationCodes.testConversationCodesMigrationExpiration" time="11.912725275" /><testcase name="Migration.ConversationCodes.testConversationCodesMigration[has-password=false][with-zhost=false]" time="15.328577338" /><testcase name="Migration.ConversationCodes.testConversationCodesMigration[has-password=false][with-zhost=true]" time="24.058784423" /><testcase name="Migration.ConversationCodes.testConversationCodesMigration[has-password=true][with-zhost=false]" time="18.375492658" /><testcase name="Migration.ConversationCodes.testConversationCodesMigration[has-password=true][with-zhost=true]" time="20.706562247" /><testcase name="Migration.DomainRegistration.testDomainRegistrationMigration" time="17.179136567" /><testcase name="Migration.PasswordReset.testPasswordResetMigration" time="13.117095986" /><testcase name="Migration.TeamFeatures.testTeamFeaturesMigration" time="18.741501012" /><testcase name="Migration.User.testMigrationOfInvalidUsers" time="7.556200387" /><testcase name="Migration.User.testMigrationOfUsersWithHandleDisputes" time="14.320838586"><failure>assertion failure:
+Actual:
+500
+Expected:
+in range (200, 299) (including bounds)
+
+call stack: 
+1. assertFailure at test/Testlib/Assertions.hs:241
+
+2. shouldMatchRange at test/Testlib/HTTP.hs:151
+
+3. assertSuccess at test/Test/Migration/User.hs:699
+
+
+
+request as command line: 
+curl -X &#39;PUT&#39; &#39;http://127.0.0.1:11082/v19/self/handle&#39; -H &#39;Request-Id: Migration.User.testMigrationOfUsersWithHandleDisputes__PUT_/v19/self/handle__147&#39; -H &#39;Content-Type: application/json&#39; -H &#39;Z-Connection: conn&#39; -H &#39;Z-User: 456fee40-b06d-4c4e-9e6d-c8ccc10c4cf9&#39; --data-binary &#39;{&quot;handle&quot;:&quot;uu.lp5-.yf9vzcz_lmpbwjeftizm.f18fdb-2t4pwi-ioj_zryyiv4n0k_av&quot;}&#39;
+request: 
+PUT http://127.0.0.1:11082/v19/self/handle
+request headers: 
+Request-Id: Migration.User.testMigrationOfUsersWithHandleDisputes__PUT_/v19/self/handle__147
+Content-Type: application/json
+Z-Connection: conn
+Z-User: 456fee40-b06d-4c4e-9e6d-c8ccc10c4cf9
+request body:
+{
+    &quot;handle&quot;: &quot;uu.lp5-.yf9vzcz_lmpbwjeftizm.f18fdb-2t4pwi-ioj_zryyiv4n0k_av&quot;
+}
+response status: 500
+response headers:
+Transfer-Encoding: chunked
+Date: Sat, 10 Oct 2026 01:14:54 GMT
+traceparent: 00-6462ac2d905549fdadfa4774d0a89234-3e0b526605290a95-01
+tracestate: 
+Content-Encoding: gzip
+Content-Type: application/json
+Vary: Accept-Encoding
+response body:
+{
+    &quot;code&quot;: 500,
+    &quot;label&quot;: &quot;server-error&quot;,
+    &quot;message&quot;: &quot;Internal Server Error&quot;
+}
+
+Set WIRE_INTEGRATION_TEST_VERBOSITY=1 if you want to see complete trace of the HTTP traffic in curl pseudo-syntax.
+</failure></testcase><testcase name="Migration.User.testReindexingUsersDuringMigration" time="13.872933451"><failure>assertion failure:
+Actual:
+500
+Expected:
+201
+
+call stack: 
+1. assertFailure at test/Testlib/Assertions.hs:123
+
+2. shouldMatchWithMsg at test/Testlib/Assertions.hs:92
+
+3. shouldMatch at test/Testlib/HTTP.hs:144
+
+4. getJSON at test/SetupHelpers.hs:72
+
+5. randomUser at test/Test/Migration/User.hs:598
+
+6. setupUsers at test/Test/Migration/User.hs:575
+
+
+
+request as command line: 
+curl -X &#39;POST&#39; &#39;http://127.0.0.1:10082/i/users&#39; -H &#39;Request-Id: Migration.User.testReindexingUsersDuringMigration__POST_/i/users__95&#39; -H &#39;Content-Type: application/json&#39; -H &#39;Z-Connection: conn&#39; -H &#39;Z-User: d1.example.com&#39; --data-binary &#39;{&quot;email&quot;:&quot;rX0xQXMvcV@example.com&quot;,&quot;icon&quot;:&quot;default&quot;,&quot;name&quot;:&quot;rX0xQXMvcV@example.com&quot;,&quot;password&quot;:&quot;hunter2.&quot;}&#39;
+request: 
+POST http://127.0.0.1:10082/i/users
+request headers: 
+Request-Id: Migration.User.testReindexingUsersDuringMigration__POST_/i/users__95
+Content-Type: application/json
+Z-Connection: conn
+Z-User: d1.example.com
+request body:
+{
+    &quot;email&quot;: &quot;rX0xQXMvcV@example.com&quot;,
+    &quot;icon&quot;: &quot;default&quot;,
+    &quot;name&quot;: &quot;rX0xQXMvcV@example.com&quot;,
+    &quot;password&quot;: &quot;hunter2.&quot;
+}
+response status: 500
+response headers:
+Transfer-Encoding: chunked
+Date: Sat, 10 Oct 2026 01:15:00 GMT
+traceparent: 00-951fe3eb261eb02a355f4f23321f8d99-634319351a1b73f0-01
+tracestate: 
+Content-Encoding: gzip
+Content-Type: application/json
+Vary: Accept-Encoding
+response body:
+{
+    &quot;code&quot;: 500,
+    &quot;label&quot;: &quot;server-error&quot;,
+    &quot;message&quot;: &quot;Internal Server Error&quot;
+}
+
+Set WIRE_INTEGRATION_TEST_VERBOSITY=1 if you want to see complete trace of the HTTP traffic in curl pseudo-syntax.
+</failure></testcase><testcase name="Migration.User.testUserMigrationToPostgres" time="10.017086114"><failure>assertion failure:
+Actual:
+500
+Expected:
+201
+
+call stack: 
+1. assertFailure at test/Testlib/Assertions.hs:123
+
+2. shouldMatchWithMsg at test/Testlib/Assertions.hs:92
+
+3. shouldMatch at test/Testlib/HTTP.hs:144
+
+4. getJSON at test/SetupHelpers.hs:72
+
+5. randomUser at test/Test/Migration/User.hs:512
+
+6. createPersonalUsers at test/Test/Migration/User.hs:285
+
+7. createTestUsers at test/Test/Migration/User.hs:155
+
+8. seedTestUsers at test/Test/Migration/User.hs:74
+
+
+
+request as command line: 
+curl -X &#39;POST&#39; &#39;http://127.0.0.1:11082/i/users&#39; -H &#39;Request-Id: Migration.User.testUserMigrationToPostgres__POST_/i/users__55&#39; -H &#39;Content-Type: application/json&#39; -H &#39;Z-Connection: conn&#39; -H &#39;Z-User: d2.example.com&#39; --data-binary &#39;{&quot;email&quot;:&quot;u2L5BZzDQq@example.com&quot;,&quot;icon&quot;:&quot;default&quot;,&quot;name&quot;:&quot;u2L5BZzDQq@example.com&quot;,&quot;password&quot;:&quot;hunter2.&quot;}&#39;
+request: 
+POST http://127.0.0.1:11082/i/users
+request headers: 
+Request-Id: Migration.User.testUserMigrationToPostgres__POST_/i/users__55
+Content-Type: application/json
+Z-Connection: conn
+Z-User: d2.example.com
+request body:
+{
+    &quot;email&quot;: &quot;u2L5BZzDQq@example.com&quot;,
+    &quot;icon&quot;: &quot;default&quot;,
+    &quot;name&quot;: &quot;u2L5BZzDQq@example.com&quot;,
+    &quot;password&quot;: &quot;hunter2.&quot;
+}
+response status: 500
+response headers:
+Transfer-Encoding: chunked
+Date: Sat, 10 Oct 2026 01:15:00 GMT
+traceparent: 00-c3fe7e3bf7ae9f4306df2a046398fcdb-b29a28e8f7a3d298-01
+tracestate: 
+Content-Encoding: gzip
+Content-Type: application/json
+Vary: Accept-Encoding
+response body:
+{
+    &quot;code&quot;: 500,
+    &quot;label&quot;: &quot;server-error&quot;,
+    &quot;message&quot;: &quot;Internal Server Error&quot;
+}
+
+Set WIRE_INTEGRATION_TEST_VERBOSITY=1 if you want to see complete trace of the HTTP traffic in curl pseudo-syntax.
+</failure></testcase><testcase name="UserGroup.testUserGroupAddUsersToGroupWithChannels" time="4.358507905" /><testcase name="UserGroup.testUserGroupSmoke" time="2.615453949" /><testcase name="UserGroup.testUserGroupUpdateChannelsSucceeds" time="0.787452043" /></testsuite></testsuites>

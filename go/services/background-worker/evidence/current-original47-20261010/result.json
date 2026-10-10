@@ -1,0 +1,38 @@
+{
+  "source_revision": "12107801eab254cc61c87b88b8f9d2291cbd0558",
+  "candidate_sha256": "ea1e1ef8c5107ccf9a9aaa7cfaa56d7ae5a92d7b494a29db48b6a1d1353c97ab",
+  "cases": 47,
+  "passed": 44,
+  "failures": [
+    "Migration.User.testMigrationOfUsersWithHandleDisputes",
+    "Migration.User.testReindexingUsersDuringMigration",
+    "Migration.User.testUserMigrationToPostgres"
+  ],
+  "errors": 0,
+  "skipped": 0,
+  "runner_exit_code": 1,
+  "controller_exit_code": 2,
+  "cleanup_exit_code": 0,
+  "remaining_owned": {
+    "container": "",
+    "network": "",
+    "volume": ""
+  },
+  "e2e_executed": true,
+  "controller_e2e_flag": false,
+  "controller_flag_note": "failure catch retains false flag; actual original run.json and complete XML prove execution, not a passing controller result",
+  "original_xml_sha256": "28840a779cbff70c952af156bbb7287c359c81f22307d52a9555c9c56f646204",
+  "failure_categories": {
+    "Migration.User.testMigrationOfUsersWithHandleDisputes": "final handle PUT500, source line699; Brig cql-io connection closed",
+    "Migration.User.testReindexingUsersDuringMigration": "seed i/users POST500, source line598; indexing HTTPS unexpected EOF from Elasticsearch",
+    "Migration.User.testUserMigrationToPostgres": "seed i/users POST500, source line512; Brig PostgreSQL connection unexpectedly closed"
+  },
+  "fd_limit_observation": {
+    "soft": 1024,
+    "hard": 524288,
+    "actual_failure_run_high_water": "not captured",
+    "attribution": "unproven; native proxy reproduction below default soft limit proves caught EMFILE closes a stream and normal relay succeeds"
+  },
+  "raw_log_sha256": "1a046faf094c3777a745ab7af3b092fc1cf4047dc4c08d979f001b7d7bb0dbc5",
+  "dependency_log_sha256": "f789a295c2fc36e3cad336a348f08b8cf033ac7459459a744d292854261fdb7e"
+}

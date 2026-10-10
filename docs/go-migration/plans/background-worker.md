@@ -483,3 +483,14 @@ and panic values unformatted. Environment proxy semantics and reused-connection/
 header-parser behavior remain in the ordinary-manager audit. Next execute the
 current whole-worker original47 to expose remaining real startup/domain/storage
 failures, preserving the retained pre-enable SCIM500 as an unresolved failure.
+
+The current clean12107801e whole-worker original47 run finished44/47 with no
+errors/skips and successful owned cleanup. All23 adminless, meetings and the other
+non-user cases pass; three user cases fail with native CQL/Elasticsearch/Postgres
+connection closures. [Exact full-run receipts](../../../go/services/background-worker/evidence/current-original47-20261010/)
+retain failures and distinguish actual suite execution from the outer controller's
+false E2E flag on failure. FD limit1024 is observed; a scaled original proxy probe
+reproduces caught EMFILE/EOF. Actual run high-water was not captured, so attribution
+is unproven. Next correct the known fixture descriptor/selector limitation under a
+separate harness task and monitor a measured rerun without changing original tests.
+This does not supersede unresolved old failures or qualify the complete service.

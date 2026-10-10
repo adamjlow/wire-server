@@ -1,0 +1,124 @@
+{
+  "source": "12107801e current clean static worker built and preserved; no live Go build at authoritative process check",
+  "rule": "regular reproducible GOCACHE -d entries >1MiB, older30min, exact worker module identity in first2MiB; qualified/reference/peer binaries and history untouched",
+  "removed": [
+    {
+      "path": "/home/operator/.cache/go-build/a7/a71dfcc2e584746bbfe687d8d4e328a283acfd843199100c2c79eae8eeb54b16-d",
+      "bytes": 9547056,
+      "sha256": "a71dfcc2e584746bbfe687d8d4e328a283acfd843199100c2c79eae8eeb54b16"
+    },
+    {
+      "path": "/home/operator/.cache/go-build/4e/4ed83416bc2044b32096065f45dd97b02dfd3b5d38de7b1058ecc5e5252db478-d",
+      "bytes": 9482402,
+      "sha256": "4ed83416bc2044b32096065f45dd97b02dfd3b5d38de7b1058ecc5e5252db478"
+    },
+    {
+      "path": "/home/operator/.cache/go-build/19/19ac2fbb640064b63927a5b4b5c64b88b2b256ad4af6d62e4db1236894c242f3-d",
+      "bytes": 6564432,
+      "sha256": "19ac2fbb640064b63927a5b4b5c64b88b2b256ad4af6d62e4db1236894c242f3"
+    },
+    {
+      "path": "/home/operator/.cache/go-build/20/20f94e11aee8176371ab42e2518cc46bd763e9391c534609aecd68cfff12d6dc-d",
+      "bytes": 6541372,
+      "sha256": "20f94e11aee8176371ab42e2518cc46bd763e9391c534609aecd68cfff12d6dc"
+    },
+    {
+      "path": "/home/operator/.cache/go-build/03/039bb45508b0c0554db0b7a3fd41e3eaef74dc5fc1ef26cc1682aeb162f63fdf-d",
+      "bytes": 10045616,
+      "sha256": "039bb45508b0c0554db0b7a3fd41e3eaef74dc5fc1ef26cc1682aeb162f63fdf"
+    },
+    {
+      "path": "/home/operator/.cache/go-build/80/8072a3771384570b6aed3de0abb9b6b7c0a6fb890e4aa47918a9fa21f9260139-d",
+      "bytes": 10042720,
+      "sha256": "8072a3771384570b6aed3de0abb9b6b7c0a6fb890e4aa47918a9fa21f9260139"
+    },
+    {
+      "path": "/home/operator/.cache/go-build/80/8096c3883a713e90e21b2d4a715b8d94a00132af9932e6d8e264eb8ab7962062-d",
+      "bytes": 9610520,
+      "sha256": "8096c3883a713e90e21b2d4a715b8d94a00132af9932e6d8e264eb8ab7962062"
+    },
+    {
+      "path": "/home/operator/.cache/go-build/63/63dd72569468e313d5a696e26bccbd20e66f3253fd4df3c4ff1bc9d2136b0d41-d",
+      "bytes": 7461100,
+      "sha256": "63dd72569468e313d5a696e26bccbd20e66f3253fd4df3c4ff1bc9d2136b0d41"
+    },
+    {
+      "path": "/home/operator/.cache/go-build/3c/3c4f2f8dd008eebc67988375b69e2ec7b4667e916301960f73a870b043d1f2b3-d",
+      "bytes": 9484298,
+      "sha256": "3c4f2f8dd008eebc67988375b69e2ec7b4667e916301960f73a870b043d1f2b3"
+    },
+    {
+      "path": "/home/operator/.cache/go-build/3c/3c9804580f4cb425dfabd0b478b1f326bfd53bbbe971ed7d19a021673b1fea06-d",
+      "bytes": 10084592,
+      "sha256": "3c9804580f4cb425dfabd0b478b1f326bfd53bbbe971ed7d19a021673b1fea06"
+    },
+    {
+      "path": "/home/operator/.cache/go-build/c4/c4b037218fd146853a2b9c3a2e8daf83cadff38458f21718218392d81dbcba37-d",
+      "bytes": 11023364,
+      "sha256": "c4b037218fd146853a2b9c3a2e8daf83cadff38458f21718218392d81dbcba37"
+    },
+    {
+      "path": "/home/operator/.cache/go-build/e5/e51471189765121d42826a6117e2b3449cefa299ee85ff3f39ca4ad49a29629f-d",
+      "bytes": 6532452,
+      "sha256": "e51471189765121d42826a6117e2b3449cefa299ee85ff3f39ca4ad49a29629f"
+    },
+    {
+      "path": "/home/operator/.cache/go-build/4f/4fa26f40de3f763cb0aa5d9e593234c4e947c7b5146b5ea2b6bbe4584b68d3e3-d",
+      "bytes": 7433516,
+      "sha256": "4fa26f40de3f763cb0aa5d9e593234c4e947c7b5146b5ea2b6bbe4584b68d3e3"
+    },
+    {
+      "path": "/home/operator/.cache/go-build/95/9571a3e1015ff40826096c4863436b14967ff1c6a5b86da016f0fe8ed7931092-d",
+      "bytes": 7430492,
+      "sha256": "9571a3e1015ff40826096c4863436b14967ff1c6a5b86da016f0fe8ed7931092"
+    },
+    {
+      "path": "/home/operator/.cache/go-build/61/61abc4b386e6b5bc8d46f10dd0c0c14f673ca40298130d14e5bff395e52053af-d",
+      "bytes": 11026386,
+      "sha256": "61abc4b386e6b5bc8d46f10dd0c0c14f673ca40298130d14e5bff395e52053af"
+    },
+    {
+      "path": "/home/operator/.cache/go-build/c7/c78da36fa44ee386128ab1196bff819f8e0266fcfee66bcdaee24cc592983151-d",
+      "bytes": 6537242,
+      "sha256": "c78da36fa44ee386128ab1196bff819f8e0266fcfee66bcdaee24cc592983151"
+    },
+    {
+      "path": "/home/operator/.cache/go-build/59/5906c194393b2daffd7983e716420541bea117e30859e818f8499b667dbf9b82-d",
+      "bytes": 6534348,
+      "sha256": "5906c194393b2daffd7983e716420541bea117e30859e818f8499b667dbf9b82"
+    },
+    {
+      "path": "/home/operator/.cache/go-build/7b/7b352f6cab85f03db6cce85a960a00fe86a71b6e7083bb6c37cb3212f7c86ea8-d",
+      "bytes": 6564730,
+      "sha256": "7b352f6cab85f03db6cce85a960a00fe86a71b6e7083bb6c37cb3212f7c86ea8"
+    },
+    {
+      "path": "/home/operator/.cache/go-build/4d/4d5eb0f7735a7fe1cdec7681e28e86ede9a92874435d7df713b1e776b15319ed-d",
+      "bytes": 11129418,
+      "sha256": "4d5eb0f7735a7fe1cdec7681e28e86ede9a92874435d7df713b1e776b15319ed"
+    },
+    {
+      "path": "/home/operator/.cache/go-build/55/55e32b75e6b6dd0c7df6a7dd2b1a9a45e6170b47c740a5a35eb7236ad3aaa1ea-d",
+      "bytes": 7461224,
+      "sha256": "55e32b75e6b6dd0c7df6a7dd2b1a9a45e6170b47c740a5a35eb7236ad3aaa1ea"
+    },
+    {
+      "path": "/home/operator/.cache/go-build/55/55abb1a8343ff597c3e6e5e5254fed22f2dbb3910b6c4f7a9f340c0312a43a82-d",
+      "bytes": 10078158,
+      "sha256": "55abb1a8343ff597c3e6e5e5254fed22f2dbb3910b6c4f7a9f340c0312a43a82"
+    },
+    {
+      "path": "/home/operator/.cache/go-build/af/aff2fc3255b530682b56dadadf7c6cb64e1595b3a9598270fe7807e64eddb194-d",
+      "bytes": 11129846,
+      "sha256": "aff2fc3255b530682b56dadadf7c6cb64e1595b3a9598270fe7807e64eddb194"
+    },
+    {
+      "path": "/home/operator/.cache/go-build/77/77f6d42a29a955a74f1028c58a677c32d8494c3e4b885ddf0e658e19fdabfda1-d",
+      "bytes": 10078158,
+      "sha256": "77f6d42a29a955a74f1028c58a677c32d8494c3e4b885ddf0e658e19fdabfda1"
+    }
+  ],
+  "available_before": 2140090368,
+  "available_after": 2341965824,
+  "bytes_removed": 201823442
+}
