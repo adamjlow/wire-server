@@ -46,11 +46,15 @@ cookie. Native matching diagnostics establish the missing-request boundary for
 accepted signatures. This supplements earlier original tests; it does not
 establish whole-service state/operations or final225 qualification.
 
-Native form parsing rejects the initial larger synthetic fixture before SAML,
-with generic500 and maximum-parameter-size diagnostic. This is a concrete
-remaining protocol/resource-limit gap in Go; preserve the source limit and
-error projection before final qualification. The accepted large-assertion
-fixture uses shorter values to isolate the signature node-limit behavior.
+Native form parsing enforces the pinned65336-byte URL/text parameter limits,
+32-byte part names,10 files,32 part header lines and8190-byte header lines.
+The streaming Go parser preserves the native generic500, InvalidRequest400 and
+plain unsupported-content-type400 boundaries. Twenty actual native/Go probes
+and no-authentication-effect/bounded-read regressions pass. Multipart per-part
+limits count incoming chunks/read-ahead before delimiter detection; this is not
+an atomic decoded-size guarantee. Native uploaded-file size is unlimited,
+although count is bounded. Go streams/discards unused files without temporary
+files or authentication effects; a new upload-size policy is separate work.
 The attempted golang.org/x/crypto dependency was rejected by the unchanged
 module vulnerability gate; the standalone ISC RIPEMD module passes that gate.
 No scanner waiver, dependency fork or signature bypass was introduced.

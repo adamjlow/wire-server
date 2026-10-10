@@ -1,0 +1,94 @@
+{
+  "result": "pass",
+  "source_revision": "63d5f53ea2a097c816c3501fdafba5caee83556b",
+  "candidate": {
+    "path": "/dev/shm/wire-migration-spar-20261010/spar-forms-corrected",
+    "sha256": "b3ac571d3a13160c306570ae74a8133ef6139b5244d96a5f54051c2947a1475f",
+    "source_revision": "63d5f53ea2a097c816c3501fdafba5caee83556b"
+  },
+  "build": {
+    "schema_version": 1,
+    "result": "built",
+    "source_revision": "63d5f53ea2a097c816c3501fdafba5caee83556b",
+    "binary_sha256": "b3ac571d3a13160c306570ae74a8133ef6139b5244d96a5f54051c2947a1475f",
+    "binary": "/dev/shm/wire-migration-spar-20261010/spar-forms-corrected",
+    "compiler": "go1.26.9",
+    "target": "linux/amd64",
+    "CGO_ENABLED": "0",
+    "build_flags": [
+      "-trimpath"
+    ],
+    "build_info": "/dev/shm/wire-migration-spar-20261010/spar-forms-corrected: go1.26.9\n\tpath\tgithub.com/adamjlow/wire-server/go/services/spar/cmd/spar\n\tmod\tgithub.com/adamjlow/wire-server/go/services/spar\t(devel)\t\n\tdep\tgithub.com/apache/cassandra-gocql-driver/v2\tv2.1.2\th1:lu/p0Db2av18enHJvWJQoChLssI0P+AR06STq4VdvCc=\n\tdep\tgithub.com/beevik/etree\tv1.7.0\th1:xjBk9O4p4x7D1YajePjfLzdaFC4/uYUENA7P0pv6gXA=\n\tdep\tgithub.com/decred/dcrd/crypto/ripemd160\tv1.0.2\th1:TvGTmUBHDU75OHro9ojPLK+Yv7gDl2hnUvRocRCjsys=\n\tdep\tgithub.com/jonboulle/clockwork\tv0.5.0\th1:Hyh9A8u51kptdkR+cqRpT1EebBwTn1oK9YfGYbdFz6I=\n\tdep\tgithub.com/russellhaering/goxmldsig\tv1.6.1\th1:SB7R5ttvrGIDB2juJAK/i7DQ2Ivr7agG+ohfNJjwyYU=\n\tdep\tgo.yaml.in/yaml/v3\tv3.0.5\th1:N6y/pJk8buWs9NY5ERU2HSMfm+IuD/OtfdAnq6kESPw=\n\tdep\tgolang.org/x/text\tv0.42.0\th1:JbOZXgfeCPU9gacVtYliJqOhD+zhrEqK4LfdpmlUZqI=\n\tdep\tgopkg.in/inf.v0\tv0.9.1\th1:73M5CoZyi3ZLMOyDlQh031Cx6N9NDJ2Vvfl76EDAgDc=\n\tbuild\t-buildmode=exe\n\tbuild\t-compiler=gc\n\tbuild\t-trimpath=true\n\tbuild\tDefaultGODEBUG=rsa1024min=0\n\tbuild\tCGO_ENABLED=0\n\tbuild\tGOARCH=amd64\n\tbuild\tGOOS=linux\n\tbuild\tGOAMD64=v1\n\tbuild\tvcs=git\n\tbuild\tvcs.revision=63d5f53ea2a097c816c3501fdafba5caee83556b\n\tbuild\tvcs.time=2026-10-10T14:52:24Z\n\tbuild\tvcs.modified=false\n",
+    "quality_log": {
+      "path": "/home/operator/.cache/wire-migration/spar-20261010/forms-corrected-go-check.log",
+      "sha256": "ca33f2037646cf737f0251c94955ea8c8b4240dcdb6b60b318a9e98963224160"
+    },
+    "scope": "Native streaming form parser and limits; actual20 comparison pending."
+  },
+  "form_checks": 20,
+  "existing_checks": 33,
+  "form_differences": {},
+  "differences": {},
+  "runner_exit_code": 0,
+  "cleanup_exit_code": 0,
+  "independent_post_cleanup": {
+    "containers": [],
+    "networks": [],
+    "volumes": []
+  },
+  "artifacts": {
+    "/home/operator/.cache/wire-migration/spar-20261010/forms-native-corrected/reports/result.json": {
+      "sha256": "b01d965ec8f30b5cb65d0e44e6dde0e196109cbd1d130a27410b13838462ea3d",
+      "size": 666741
+    },
+    "/home/operator/.cache/wire-migration/spar-20261010/forms-native-corrected/reports/native-form-replies.json": {
+      "sha256": "982936a7adf4f057257c28851e00747f41345b7ad73f707c2080dfe4c1b20cfd",
+      "size": 187287,
+      "retained": {
+        "path": "go/services/spar/qualification/evidence/forms-native-corrected/native-form-replies.json.gz",
+        "sha256": "b22218c3821460e5a134ba15c07346d6147b070f2b847efd53876f2ad393237c",
+        "compression": "gzip",
+        "raw_sha256": "982936a7adf4f057257c28851e00747f41345b7ad73f707c2080dfe4c1b20cfd"
+      }
+    },
+    "/home/operator/.cache/wire-migration/spar-20261010/forms-native-corrected/reports/go-form-replies.json": {
+      "sha256": "77aef3de8f51d35e77728279502b624b4fb68fe3efa9ab3629410b16a281f413",
+      "size": 185603,
+      "retained": {
+        "path": "go/services/spar/qualification/evidence/forms-native-corrected/go-form-replies.json.gz",
+        "sha256": "e8b22d648ec65282a8dc482a2c69813ee0b87db036ed825605679d75afed4091",
+        "compression": "gzip",
+        "raw_sha256": "77aef3de8f51d35e77728279502b624b4fb68fe3efa9ab3629410b16a281f413"
+      }
+    },
+    "/home/operator/.cache/wire-migration/spar-20261010/forms-native-corrected/reports/native.log": {
+      "sha256": "83ccfcdb4ad890a4d3cfec286d72cd0ef4ea9e819b728dbb88fe4f2c88b250c1",
+      "size": 200,
+      "retained": {
+        "path": "go/services/spar/qualification/evidence/forms-native-corrected/native.log.gz",
+        "sha256": "59ca17984d353d011ce7058c52fd89aa6748ceff9a858251a72f66342f5b0442",
+        "compression": "gzip",
+        "raw_sha256": "83ccfcdb4ad890a4d3cfec286d72cd0ef4ea9e819b728dbb88fe4f2c88b250c1"
+      }
+    },
+    "/home/operator/.cache/wire-migration/spar-20261010/forms-native-corrected/reports/go.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    "/home/operator/.cache/wire-migration/spar-20261010/forms-native-corrected/controller.log": {
+      "sha256": "1eb74d65f94a7a4273e4e35ab4b985cf671b348d9a72b5fae3deadd37db8b32e",
+      "size": 173
+    },
+    "/home/operator/.cache/wire-migration/spar-20261010/forms-corrected-go-check.log": {
+      "sha256": "ca33f2037646cf737f0251c94955ea8c8b4240dcdb6b60b318a9e98963224160",
+      "size": 1366
+    }
+  },
+  "scope": "Twenty pinned native form limit/encoding/content-type/order probes plus33 existing HTTP replies. Exact status/header/JSON/plainbody or HTMLtitle, runtime debug retained; no original e2e or state/operations qualification.",
+  "review": {
+    "kind": "delegated-same-author",
+    "scope": "Pinned native form parser increment",
+    "result": "pass",
+    "reason": "Twenty actual native/Go boundary/type/encoding/order cases and33 prior replies match declared projection; raw captures retained, native500 and400 exception boundaries preserved. URL onlylimit+1read, text/header/filecount guards, filecontents streamed/discarded without tempfiles. Full-handler regressions verify no identity/replay/storage/session effects on malformed input; pinned Go quality/security/license passes without newdeps. Native chunk/read-ahead behavior retained, not an atomic decodedsize or exhaustive transportbyte identity claim. Whole-service state/ops/image/final225 remains pending."
+  }
+}

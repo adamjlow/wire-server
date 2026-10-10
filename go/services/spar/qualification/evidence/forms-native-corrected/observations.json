@@ -1,0 +1,610 @@
+{
+  "native": {
+    "binary_sha256": "9c80adbfd76199ad3ab9bcf14c4eab8352a09ac2e0960078f8cd23615f8e58d1",
+    "stop_exit_code": 0,
+    "stop_seconds": 0.0032963529229164124,
+    "existing_checks": 33,
+    "forms": {
+      "url-size-65335": {
+        "status": 400,
+        "headers": {
+          "content-type": "text/html",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "body": {
+          "html_title": "wire:sso:error:bad-response-xml"
+        }
+      },
+      "multipart-size-65335": {
+        "status": 400,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "body": {
+          "code": 400,
+          "label": "client-error",
+          "message": "Invalid Request"
+        }
+      },
+      "url-size-65336": {
+        "status": 400,
+        "headers": {
+          "content-type": "text/html",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "body": {
+          "html_title": "wire:sso:error:bad-response-xml"
+        }
+      },
+      "multipart-size-65336": {
+        "status": 400,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "body": {
+          "code": 400,
+          "label": "client-error",
+          "message": "Invalid Request"
+        }
+      },
+      "url-size-65337": {
+        "status": 500,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "body": {
+          "code": 500,
+          "label": "server-error",
+          "message": "Internal Server Error"
+        }
+      },
+      "multipart-size-65337": {
+        "status": 400,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "body": {
+          "code": 400,
+          "label": "client-error",
+          "message": "Invalid Request"
+        }
+      },
+      "url-encoded-raw-size": {
+        "status": 500,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "body": {
+          "code": 500,
+          "label": "server-error",
+          "message": "Internal Server Error"
+        }
+      },
+      "multipart-name-32": {
+        "status": 400,
+        "headers": {
+          "content-type": "text/html",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "body": {
+          "html_title": "wire:sso:error:bad-response-xml"
+        }
+      },
+      "multipart-name-33": {
+        "status": 500,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "body": {
+          "code": 500,
+          "label": "server-error",
+          "message": "Internal Server Error"
+        }
+      },
+      "multipart-files-10": {
+        "status": 400,
+        "headers": {
+          "content-type": "text/html",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "body": {
+          "html_title": "wire:sso:error:bad-response-xml"
+        }
+      },
+      "multipart-files-11": {
+        "status": 500,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "body": {
+          "code": 500,
+          "label": "server-error",
+          "message": "Internal Server Error"
+        }
+      },
+      "multipart-headers-32": {
+        "status": 400,
+        "headers": {
+          "content-type": "text/html",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "body": {
+          "html_title": "wire:sso:error:bad-response-xml"
+        }
+      },
+      "multipart-headers-33": {
+        "status": 500,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "body": {
+          "code": 500,
+          "label": "server-error",
+          "message": "Internal Server Error"
+        }
+      },
+      "multipart-header-bytes-8190": {
+        "status": 400,
+        "headers": {
+          "content-type": "text/html",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "body": {
+          "html_title": "wire:sso:error:bad-response-xml"
+        }
+      },
+      "multipart-header-bytes-8191": {
+        "status": 400,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "body": {
+          "code": 400,
+          "label": "client-error",
+          "message": "Invalid Request"
+        }
+      },
+      "url-invalid-utf8": {
+        "status": 500,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "body": {
+          "code": 500,
+          "label": "server-error",
+          "message": "Internal Server Error"
+        }
+      },
+      "url-semicolon": {
+        "status": 400,
+        "headers": {
+          "content-type": "text/html",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "body": {
+          "html_title": "wire:sso:error:bad-response-xml"
+        }
+      },
+      "url-duplicate": {
+        "status": 400,
+        "headers": {
+          "content-type": "text/html",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "body": {
+          "html_title": "wire:sso:error:bad-response-xml"
+        }
+      },
+      "unsupported-json": {
+        "status": 400,
+        "headers": {
+          "content-type": null,
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "body": "The content type of the request body is not in application/x-www-form-urlencoded or multipart/form-data"
+      },
+      "missing-multipart-boundary": {
+        "status": 400,
+        "headers": {
+          "content-type": null,
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "body": "The content type of the request body is not in application/x-www-form-urlencoded or multipart/form-data"
+      }
+    }
+  },
+  "go": {
+    "binary_sha256": "b3ac571d3a13160c306570ae74a8133ef6139b5244d96a5f54051c2947a1475f",
+    "stop_exit_code": 0,
+    "stop_seconds": 0.0031815646216273308,
+    "existing_checks": 33,
+    "forms": {
+      "url-size-65335": {
+        "status": 400,
+        "headers": {
+          "content-type": "text/html",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "body": {
+          "html_title": "wire:sso:error:bad-response-xml"
+        }
+      },
+      "multipart-size-65335": {
+        "status": 400,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "body": {
+          "code": 400,
+          "label": "client-error",
+          "message": "Invalid Request"
+        }
+      },
+      "url-size-65336": {
+        "status": 400,
+        "headers": {
+          "content-type": "text/html",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "body": {
+          "html_title": "wire:sso:error:bad-response-xml"
+        }
+      },
+      "multipart-size-65336": {
+        "status": 400,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "body": {
+          "code": 400,
+          "label": "client-error",
+          "message": "Invalid Request"
+        }
+      },
+      "url-size-65337": {
+        "status": 500,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "body": {
+          "code": 500,
+          "label": "server-error",
+          "message": "Internal Server Error"
+        }
+      },
+      "multipart-size-65337": {
+        "status": 400,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "body": {
+          "code": 400,
+          "label": "client-error",
+          "message": "Invalid Request"
+        }
+      },
+      "url-encoded-raw-size": {
+        "status": 500,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "body": {
+          "code": 500,
+          "label": "server-error",
+          "message": "Internal Server Error"
+        }
+      },
+      "multipart-name-32": {
+        "status": 400,
+        "headers": {
+          "content-type": "text/html",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "body": {
+          "html_title": "wire:sso:error:bad-response-xml"
+        }
+      },
+      "multipart-name-33": {
+        "status": 500,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "body": {
+          "code": 500,
+          "label": "server-error",
+          "message": "Internal Server Error"
+        }
+      },
+      "multipart-files-10": {
+        "status": 400,
+        "headers": {
+          "content-type": "text/html",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "body": {
+          "html_title": "wire:sso:error:bad-response-xml"
+        }
+      },
+      "multipart-files-11": {
+        "status": 500,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "body": {
+          "code": 500,
+          "label": "server-error",
+          "message": "Internal Server Error"
+        }
+      },
+      "multipart-headers-32": {
+        "status": 400,
+        "headers": {
+          "content-type": "text/html",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "body": {
+          "html_title": "wire:sso:error:bad-response-xml"
+        }
+      },
+      "multipart-headers-33": {
+        "status": 500,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "body": {
+          "code": 500,
+          "label": "server-error",
+          "message": "Internal Server Error"
+        }
+      },
+      "multipart-header-bytes-8190": {
+        "status": 400,
+        "headers": {
+          "content-type": "text/html",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "body": {
+          "html_title": "wire:sso:error:bad-response-xml"
+        }
+      },
+      "multipart-header-bytes-8191": {
+        "status": 400,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "body": {
+          "code": 400,
+          "label": "client-error",
+          "message": "Invalid Request"
+        }
+      },
+      "url-invalid-utf8": {
+        "status": 500,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "body": {
+          "code": 500,
+          "label": "server-error",
+          "message": "Internal Server Error"
+        }
+      },
+      "url-semicolon": {
+        "status": 400,
+        "headers": {
+          "content-type": "text/html",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "body": {
+          "html_title": "wire:sso:error:bad-response-xml"
+        }
+      },
+      "url-duplicate": {
+        "status": 400,
+        "headers": {
+          "content-type": "text/html",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "body": {
+          "html_title": "wire:sso:error:bad-response-xml"
+        }
+      },
+      "unsupported-json": {
+        "status": 400,
+        "headers": {
+          "content-type": null,
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "body": "The content type of the request body is not in application/x-www-form-urlencoded or multipart/form-data"
+      },
+      "missing-multipart-boundary": {
+        "status": 400,
+        "headers": {
+          "content-type": null,
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "body": "The content type of the request body is not in application/x-www-form-urlencoded or multipart/form-data"
+      }
+    }
+  }
+}
