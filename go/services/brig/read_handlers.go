@@ -17,6 +17,7 @@ type brigReadHandlers struct {
 	sessions sessionStore
 	peers    brigPeers
 	auth     *reauthenticationHandler
+	access   *accessTokenService
 }
 
 func readJSON(w http.ResponseWriter, r *http.Request, body any) {
@@ -53,6 +54,10 @@ func routeParseError(w http.ResponseWriter, message string) {
 }
 
 func (b brigReadHandlers) handle(w http.ResponseWriter, r *http.Request, path string) bool {
+	if path == "/access/logout" && b.access != nil {
+		b.access.logoutHTTP(w, r)
+		return true
+	}
 	segments := strings.Split(strings.Trim(path, "/"), "/")
 	if len(segments) == 4 && segments[0] == "i" && segments[1] == "users" && segments[3] == "reauthenticate" && b.auth != nil {
 		b.auth.handle(w, r, segments[2])
