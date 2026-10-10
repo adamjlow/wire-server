@@ -1,0 +1,10 @@
+{
+  "source_revision": "dabd5f2a087443d47e212379247322b5318a498f",
+  "sdk_image": "sha256:4d5fd3187d47aeed3f13386d6752ea5c307a707cc426ed44cf507de1febc33a6",
+  "go_checks": "pass",
+  "static_build": "failed: missing OpenSSL Zlib/Zstd archive dependencies",
+  "controller_exit_code": 1,
+  "owned_container_remaining": false,
+  "network_cleanup_exit_code": 0,
+  "libraries_security": "OpenSSL3.5.7-1~deb13u3 fixes published tracker open issues; Argon2 tracker has no listed issues; final exact artifact review still required"
+}

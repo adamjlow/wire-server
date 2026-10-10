@@ -1,0 +1,89 @@
+# github.com/adamjlow/wire-server/go/services/brig/cmd/brig
+/tools/go/pkg/tool/linux_amd64/link: running gcc failed: exit status 1
+/usr/bin/gcc -m64 -Wl,--build-id=0xa0cf4571338f9e7f85f08d8e31709750339d5444 -o $WORK/b001/exe/a.out -Wl,--export-dynamic-symbol=_cgo_panic -Wl,--export-dynamic-symbol=_cgo_topofstack -Wl,--export-dynamic-symbol=crosscall2 -Wl,--compress-debug-sections=zlib /tmp/go-link-2424577985/go.o /tmp/go-link-2424577985/000000.o /tmp/go-link-2424577985/000001.o /tmp/go-link-2424577985/000002.o /tmp/go-link-2424577985/000003.o /tmp/go-link-2424577985/000004.o /tmp/go-link-2424577985/000005.o /tmp/go-link-2424577985/000006.o /tmp/go-link-2424577985/000007.o /tmp/go-link-2424577985/000008.o /tmp/go-link-2424577985/000009.o /tmp/go-link-2424577985/000010.o /tmp/go-link-2424577985/000011.o /tmp/go-link-2424577985/000012.o /tmp/go-link-2424577985/000013.o /tmp/go-link-2424577985/000014.o /tmp/go-link-2424577985/000015.o /tmp/go-link-2424577985/000016.o -O2 -g -largon2 -lcrypto -O2 -g -lpthread -no-pie -static
+/usr/bin/ld: /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/libcrypto.a(libcrypto-lib-dso_dlfcn.o): in function `dlfcn_globallookup':
+(.text+0x15): warning: Using 'dlopen' in statically linked applications requires at runtime the shared libraries from the glibc version used for linking
+/usr/bin/ld: /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/libcrypto.a(libcrypto-lib-bio_addr.o): in function `BIO_lookup_ex':
+(.text+0xe37): warning: Using 'getaddrinfo' in statically linked applications requires at runtime the shared libraries from the glibc version used for linking
+/usr/bin/ld: /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/libcrypto.a(libcrypto-lib-bio_sock.o): in function `BIO_gethostbyname':
+(.text+0x85): warning: Using 'gethostbyname' in statically linked applications requires at runtime the shared libraries from the glibc version used for linking
+/usr/bin/ld: /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/libcrypto.a(libcrypto-lib-c_zlib.o): in function `zlib_stateful_expand_block':
+(.text+0x89): undefined reference to `inflate'
+/usr/bin/ld: /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/libcrypto.a(libcrypto-lib-c_zlib.o): in function `zlib_stateful_compress_block':
+(.text+0x12a): undefined reference to `deflate'
+/usr/bin/ld: /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/libcrypto.a(libcrypto-lib-c_zlib.o): in function `zlib_stateful_finish':
+(.text+0x15d): undefined reference to `inflateEnd'
+/usr/bin/ld: (.text+0x166): undefined reference to `deflateEnd'
+/usr/bin/ld: /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/libcrypto.a(libcrypto-lib-c_zlib.o): in function `zlib_stateful_init':
+(.text+0x241): undefined reference to `inflateInit_'
+/usr/bin/ld: (.text+0x2ac): undefined reference to `deflateInit_'
+/usr/bin/ld: /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/libcrypto.a(libcrypto-lib-c_zlib.o): in function `bio_zlib_ctrl':
+(.text+0x4a6): undefined reference to `zError'
+/usr/bin/ld: (.text+0x598): undefined reference to `deflate'
+/usr/bin/ld: /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/libcrypto.a(libcrypto-lib-c_zlib.o): in function `bio_zlib_write':
+(.text+0x858): undefined reference to `deflate'
+/usr/bin/ld: (.text+0x8d6): undefined reference to `zError'
+/usr/bin/ld: (.text+0x975): undefined reference to `deflateInit_'
+/usr/bin/ld: /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/libcrypto.a(libcrypto-lib-c_zlib.o): in function `bio_zlib_read':
+(.text+0xa71): undefined reference to `inflate'
+/usr/bin/ld: (.text+0xaf6): undefined reference to `zError'
+/usr/bin/ld: (.text+0xb61): undefined reference to `inflateInit_'
+/usr/bin/ld: /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/libcrypto.a(libcrypto-lib-c_zlib.o): in function `zlib_oneshot_expand_block':
+(.text+0xbf4): undefined reference to `uncompress'
+/usr/bin/ld: /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/libcrypto.a(libcrypto-lib-c_zlib.o): in function `zlib_oneshot_compress_block':
+(.text+0xc74): undefined reference to `compress'
+/usr/bin/ld: /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/libcrypto.a(libcrypto-lib-c_zlib.o): in function `bio_zlib_free':
+(.text+0xcce): undefined reference to `inflateEnd'
+/usr/bin/ld: (.text+0xcf5): undefined reference to `deflateEnd'
+/usr/bin/ld: /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/libcrypto.a(libcrypto-lib-c_zstd.o): in function `zstd_stateful_expand_block':
+(.text+0xaf): undefined reference to `ZSTD_decompressStream'
+/usr/bin/ld: (.text+0xba): undefined reference to `ZSTD_isError'
+/usr/bin/ld: /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/libcrypto.a(libcrypto-lib-c_zstd.o): in function `zstd_stateful_compress_block':
+(.text+0x188): undefined reference to `ZSTD_compressStream2'
+/usr/bin/ld: (.text+0x190): undefined reference to `ZSTD_isError'
+/usr/bin/ld: (.text+0x1cf): undefined reference to `ZSTD_endStream'
+/usr/bin/ld: (.text+0x1d7): undefined reference to `ZSTD_isError'
+/usr/bin/ld: (.text+0x1ff): undefined reference to `ZSTD_flushStream'
+/usr/bin/ld: (.text+0x207): undefined reference to `ZSTD_isError'
+/usr/bin/ld: /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/libcrypto.a(libcrypto-lib-c_zstd.o): in function `zstd_stateful_finish':
+(.text+0x23b): undefined reference to `ZSTD_freeCStream'
+/usr/bin/ld: (.text+0x244): undefined reference to `ZSTD_freeDStream'
+/usr/bin/ld: /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/libcrypto.a(libcrypto-lib-c_zstd.o): in function `zstd_stateful_init':
+(.text+0x313): undefined reference to `ZSTD_createCStream_advanced'
+/usr/bin/ld: (.text+0x32c): undefined reference to `ZSTD_initCStream'
+/usr/bin/ld: (.text+0x346): undefined reference to `ZSTD_createDStream_advanced'
+/usr/bin/ld: (.text+0x35b): undefined reference to `ZSTD_initDStream'
+/usr/bin/ld: (.text+0x384): undefined reference to `ZSTD_freeCStream'
+/usr/bin/ld: (.text+0x38d): undefined reference to `ZSTD_freeDStream'
+/usr/bin/ld: /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/libcrypto.a(libcrypto-lib-c_zstd.o): in function `bio_zstd_new':
+(.text+0x443): undefined reference to `ZSTD_createDStream_advanced'
+/usr/bin/ld: (.text+0x457): undefined reference to `ZSTD_initDStream'
+/usr/bin/ld: (.text+0x45c): undefined reference to `ZSTD_DStreamInSize'
+/usr/bin/ld: (.text+0x47a): undefined reference to `ZSTD_createCStream_advanced'
+/usr/bin/ld: (.text+0x494): undefined reference to `ZSTD_initCStream'
+/usr/bin/ld: (.text+0x499): undefined reference to `ZSTD_CStreamInSize'
+/usr/bin/ld: (.text+0x500): undefined reference to `ZSTD_freeDStream'
+/usr/bin/ld: (.text+0x509): undefined reference to `ZSTD_freeCStream'
+/usr/bin/ld: /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/libcrypto.a(libcrypto-lib-c_zstd.o): in function `bio_zstd_ctrl':
+(.text+0x6d4): undefined reference to `ZSTD_getErrorName'
+/usr/bin/ld: (.text+0x780): undefined reference to `ZSTD_flushStream'
+/usr/bin/ld: (.text+0x78b): undefined reference to `ZSTD_isError'
+/usr/bin/ld: /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/libcrypto.a(libcrypto-lib-c_zstd.o): in function `bio_zstd_write':
+(.text+0x982): undefined reference to `ZSTD_compressStream2'
+/usr/bin/ld: (.text+0x98d): undefined reference to `ZSTD_isError'
+/usr/bin/ld: (.text+0xa04): undefined reference to `ZSTD_getErrorName'
+/usr/bin/ld: /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/libcrypto.a(libcrypto-lib-c_zstd.o): in function `bio_zstd_read':
+(.text+0xba5): undefined reference to `ZSTD_decompressStream'
+/usr/bin/ld: (.text+0xbb0): undefined reference to `ZSTD_isError'
+/usr/bin/ld: (.text+0xbec): undefined reference to `ZSTD_getErrorName'
+/usr/bin/ld: /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/libcrypto.a(libcrypto-lib-c_zstd.o): in function `zstd_oneshot_expand_block':
+(.text+0xd5e): undefined reference to `ZSTD_decompress'
+/usr/bin/ld: (.text+0xd69): undefined reference to `ZSTD_isError'
+/usr/bin/ld: /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/libcrypto.a(libcrypto-lib-c_zstd.o): in function `zstd_oneshot_compress_block':
+(.text+0xdd4): undefined reference to `ZSTD_compress'
+/usr/bin/ld: (.text+0xddf): undefined reference to `ZSTD_isError'
+/usr/bin/ld: /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/libcrypto.a(libcrypto-lib-c_zstd.o): in function `bio_zstd_free':
+(.text+0xe4c): undefined reference to `ZSTD_freeDStream'
+/usr/bin/ld: (.text+0xe66): undefined reference to `ZSTD_freeCStream'
+collect2: error: ld returned 1 exit status
+
