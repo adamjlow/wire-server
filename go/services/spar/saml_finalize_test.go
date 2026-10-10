@@ -39,7 +39,7 @@ func (b *finalizeBoundary) getVerdict(context.Context, string) (*verdictFormat, 
 }
 
 func TestFinalizeVerifiedSessionAndSecurityDenials(t *testing.T) {
-	for _, kind := range []string{"valid", "wrong-audience", "replay", "unsolicited", "unknown-request", "unknown-idp", "unknown-subject-attribute", "tampered"} {
+	for _, kind := range []string{"valid", "wrong-audience", "replay", "unsolicited", "unknown-request", "unknown-idp", "unknown-subject-attribute", "late-signature", "tampered"} {
 		t.Run(kind, func(t *testing.T) {
 			now := time.Now().UTC()
 			issued := now.Add(-time.Minute).Format(time.RFC3339Nano)
@@ -56,6 +56,12 @@ func TestFinalizeVerifiedSessionAndSecurityDenials(t *testing.T) {
 			}
 			source := `<samlp:Response xmlns:samlp="` + protocolNS + `" xmlns:saml="` + assertionNS + `" ID="_response" Version="2.0" IssueInstant="` + issued + `"><saml:Issuer>` + issuer + `</saml:Issuer><samlp:Status><samlp:StatusCode Value="urn:oasis:names:tc:SAML:2.0:status:Success"/></samlp:Status><saml:Assertion ID="_assertion" Version="2.0" IssueInstant="` + issued + `"><saml:Issuer>` + issuer + `</saml:Issuer><saml:Subject><saml:NameID Format="` + nameID11 + `emailAddress">synthetic@example.test</saml:NameID><saml:SubjectConfirmation Method="` + bearerMethod + `"><saml:SubjectConfirmationData Recipient="` + recipient + `" NotOnOrAfter="` + end + `"` + request + `/></saml:SubjectConfirmation></saml:Subject><saml:Conditions NotOnOrAfter="` + end + `"><saml:AudienceRestriction><saml:Audience>` + audience + `</saml:Audience></saml:AudienceRestriction></saml:Conditions><saml:AuthnStatement AuthnInstant="` + issued + `"><saml:AuthnContext><saml:AuthnContextClassRef>urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport</saml:AuthnContextClassRef></saml:AuthnContext></saml:AuthnStatement></saml:Assertion></samlp:Response>`
 			doc, cert := signedTestResponseXML(t, 1024, source)
+			if kind == "late-signature" {
+				assertion := etreeChildren(doc.Root(), assertionNS, "Assertion")[0]
+				signature := etreeChildren(assertion, signatureNS, "Signature")[0]
+				assertion.RemoveChild(signature)
+				assertion.AddChild(signature)
+			}
 			data := documentBytes(t, doc)
 			if kind == "unknown-subject-attribute" {
 				data = []byte(strings.Replace(string(data), "<saml:Subject>", `<saml:Subject ID="_unexpected">`, 1))
@@ -114,7 +120,7 @@ func TestFinalizeVerifiedSessionAndSecurityDenials(t *testing.T) {
 					if err != nil || !strings.Contains(string(debug), "CustomError (IdpDbError IdpNotFound)") || !strings.Contains(string(debug), form.Get("SAMLResponse")) {
 						t.Fatal("diagnostic lost lookup cause or supplied form")
 					}
-				} else if kind == "unknown-subject-attribute" {
+				} else if kind == "unknown-subject-attribute" || kind == "late-signature" {
 					if w.Code != 400 || !strings.Contains(w.Body.String(), "wire:sso:error:bad-response-xml") {
 						t.Fatal("unexpected Subject attribute did not fail XML preflight", w.Code, w.Body.String())
 					}

@@ -103,7 +103,7 @@ def observe(binary,config,name):
                         Path('/reports/'+name+'-signature-replies.json').write_text(json.dumps(signature_checks,indent=2)+'\n')
                         if reply['headers']['set-cookie'] is not None:raise ValueError('qualification response created a session')
                         if accepted:
-                            if reply['status']!=500 or not isinstance(reply['body'],dict) or reply['body'].get('label')!='server-error':raise ValueError('valid signature did not reach missing-request verdict boundary')
+                            if reply['status']!=500 or not isinstance(reply['body'],dict) or reply['body'].get('label')!='server-error' or 'verdict format' not in reply['body'].get('message',''):raise ValueError('valid signature did not reach missing-request verdict boundary')
                         elif reply['status']!=400 or not isinstance(reply['body'],str) or 'wire:sso:error:bad-response-signature' not in reply['body']:raise ValueError('invalid signature was not rejected at verification')
             begin=time.monotonic();process.send_signal(signal.SIGTERM);code=process.wait(timeout=35)
             if code!=0:raise ValueError(name+' failed clean SIGTERM')

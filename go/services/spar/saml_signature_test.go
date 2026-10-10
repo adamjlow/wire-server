@@ -77,6 +77,13 @@ func signedTestResponseWithKey(t *testing.T, bits int, source string) (*etree.Do
 	if err = normalized.ReadFromBytes(wire); err != nil {
 		t.Fatal(err)
 	}
+	// SAML Assertion schema requires Signature immediately after Issuer; the
+	// SDK appends it last. Moving the enveloped signature preserves its digest.
+	parsedAssertion := etreeChildren(normalized.Root(), assertionNS, "Assertion")[0]
+	signature := etreeChildren(parsedAssertion, signatureNS, "Signature")[0]
+	parsedAssertion.RemoveChild(signature)
+	issuer := etreeChildren(parsedAssertion, assertionNS, "Issuer")[0]
+	parsedAssertion.InsertChildAt(issuer.Index()+1, signature)
 	return normalized, cert, key
 }
 

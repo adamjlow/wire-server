@@ -54,7 +54,7 @@ func samlResponse(ctx context.Context, s samlFinalizeStore, encoded string, team
 	for _, node := range unsigned {
 		a, err := parseSAMLAssertion(node)
 		if err != nil {
-			if errors.Is(err, errSAMLXMLAttribute) {
+			if errors.Is(err, errSAMLXMLStructure) {
 				return nil, nil, false, &apiError{400, "bad-response-xml", "Bad response: unexpected XML attribute"}
 			}
 			return nil, nil, false, &apiError{400, "bad-response-saml", "Bad response: SAML parse error"}

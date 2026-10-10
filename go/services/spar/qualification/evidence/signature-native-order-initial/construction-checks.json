@@ -1,0 +1,17 @@
+{
+  "result": "fail",
+  "source_revision": "564a184f619bd34635016d713eeff0d0678fea14",
+  "candidate": {
+    "path": "/dev/shm/wire-migration-spar-20261010/spar-signature-corrected",
+    "sha256": "402181ea70e430450c9c126d5a8888f67f35e1c85fbbea0201964093f513a1ec",
+    "source_revision": "564a184f619bd34635016d713eeff0d0678fea14"
+  },
+  "runner_exit_code": 1,
+  "cleanup_exit_code": 0,
+  "independent_post_cleanup": {
+    "containers": [],
+    "networks": [],
+    "volumes": []
+  },
+  "analysis": "Native rejects Signature appended after AuthnStatement as invalid Statement (bad-response-xml400). Correct synthetic signing helper to move enveloped Signature immediately after Issuer without changing digest/signed bytes; add Go pre-verification rejection of misplaced signature. No signature acceptance proof from this run; no original assertion/reference/harness changes."
+}

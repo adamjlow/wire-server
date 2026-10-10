@@ -12,7 +12,7 @@ import (
 )
 
 var errSAMLAssertion = errors.New("invalid SAML assertion")
-var errSAMLXMLAttribute = errors.New("unexpected SAML XML attribute")
+var errSAMLXMLStructure = errors.New("invalid SAML XML structure")
 
 const bearerMethod = "urn:oasis:names:tc:SAML:2.0:cm:bearer"
 
@@ -73,6 +73,13 @@ func parseSAMLAssertion(n *xmlNode) (samlAssertion, error) {
 	if n.Name.Space != assertionNS || n.Name.Local != "Assertion" || n.attr("Version") != "2.0" || optionalXMLAttr(n, "ID") == nil || len(n.children(assertionNS, "Advice")) > 0 {
 		return a, errSAMLAssertion
 	}
+	// Native XML schema places an optional signature directly after Issuer.
+	// A late signature is parsed as an invalid Statement, before verification.
+	for index, child := range n.Children {
+		if child.Name.Space == signatureNS && child.Name.Local == "Signature" && index != 1 {
+			return a, errSAMLXMLStructure
+		}
+	}
 	a.ID = n.attr("ID")
 	instant, err := samlTime(n, "IssueInstant", true)
 	if err != nil {
@@ -91,7 +98,7 @@ func parseSAMLAssertion(n *xmlNode) (samlAssertion, error) {
 	// syntax, but unexpected data attributes must fail before identity lookup.
 	for _, attribute := range subject.Attributes {
 		if attribute.Name.Space != "xmlns" && !(attribute.Name.Space == "" && attribute.Name.Local == "xmlns") {
-			return a, errSAMLXMLAttribute
+			return a, errSAMLXMLStructure
 		}
 	}
 	name, err := singleSAMLChild(subject, "NameID")
