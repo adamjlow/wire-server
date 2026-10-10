@@ -4,9 +4,9 @@
   "title": "Spar selection",
   "service": "spar",
   "kind": "operations",
-  "status": "queued",
-  "owner": null,
-  "branch": null,
+  "status": "active",
+  "owner": "codex",
+  "branch": "go-migration",
   "depends_on": [
     "spar-verification",
     "spar-selector-contract"
