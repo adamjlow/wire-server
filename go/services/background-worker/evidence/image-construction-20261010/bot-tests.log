@@ -1,0 +1,32 @@
+=== RUN   TestBotFiniteDHEAuthenticatesActualStream
+=== RUN   TestBotFiniteDHEAuthenticatesActualStream/wrong-pin
+=== RUN   TestBotFiniteDHEAuthenticatesActualStream/expired
+--- PASS: TestBotFiniteDHEAuthenticatesActualStream (0.28s)
+    --- PASS: TestBotFiniteDHEAuthenticatesActualStream/wrong-pin (0.01s)
+    --- PASS: TestBotFiniteDHEAuthenticatesActualStream/expired (0.03s)
+=== RUN   TestBotDHECancellationReapsHelper
+--- PASS: TestBotDHECancellationReapsHelper (0.00s)
+=== RUN   TestBotDHETranscriptRejectsMissingOrOversizedHandshake
+--- PASS: TestBotDHETranscriptRejectsMissingOrOversizedHandshake (0.00s)
+=== RUN   TestBotGoAuthenticationFailureNeverFallsBack
+2026/10/10 02:13:12 http: TLS handshake error from 127.0.0.1:58338: remote error: tls: bad certificate
+--- PASS: TestBotGoAuthenticationFailureNeverFallsBack (0.06s)
+=== RUN   TestBotDHETranscriptBudgetAcceptsLongSubjectLine
+--- PASS: TestBotDHETranscriptBudgetAcceptsLongSubjectLine (0.16s)
+=== RUN   TestBotRSAFingerprintMatchesNativeOpenSSLPrimitive
+--- PASS: TestBotRSAFingerprintMatchesNativeOpenSSLPrimitive (0.00s)
+=== RUN   TestBotTLSRequiresPinSignatureAndDates
+=== RUN   TestBotTLSRequiresPinSignatureAndDates/pinned-self-signed
+=== RUN   TestBotTLSRequiresPinSignatureAndDates/wrong-pin
+=== RUN   TestBotTLSRequiresPinSignatureAndDates/expired
+=== RUN   TestBotTLSRequiresPinSignatureAndDates/tampered-signature
+--- PASS: TestBotTLSRequiresPinSignatureAndDates (0.15s)
+    --- PASS: TestBotTLSRequiresPinSignatureAndDates/pinned-self-signed (0.00s)
+    --- PASS: TestBotTLSRequiresPinSignatureAndDates/wrong-pin (0.00s)
+    --- PASS: TestBotTLSRequiresPinSignatureAndDates/expired (0.00s)
+    --- PASS: TestBotTLSRequiresPinSignatureAndDates/tampered-signature (0.00s)
+=== RUN   TestBotCallbackSurvivesAttemptCancellationAndPreservesRequest
+--- PASS: TestBotCallbackSurvivesAttemptCancellationAndPreservesRequest (0.05s)
+=== RUN   TestBotCallbackRetriesOnlyServerStatusAndSkipsDisabledServices
+--- PASS: TestBotCallbackRetriesOnlyServerStatusAndSkipsDisabledServices (3.07s)
+PASS

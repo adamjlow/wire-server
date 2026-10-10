@@ -76,7 +76,7 @@ Service.Run's complete process startup still require original-test qualification
 Pusher retry/discovery and finite-DHE bot transport are now constructed with
 focused evidence. Next audit ordinary HTTP defaults/stored diagnostics, resolve
 the pre-enable SCIM failure and validate the current whole process in Docker. Completion still requires the exact
-final six-Go/Haskell-peer run (124 executions,119 distinct original assertions),
+final six-Go/Haskell-peer run (124 executions,120 distinct original assertions),
 resolution of retained failures, bounded operations, actual durable
 Haskell->Go->Haskell switchback, optional image/selector and delegated same-author
 review. Reuse existing tests and successful evidence for unchanged inputs; add
@@ -543,3 +543,19 @@ standard bounded parser are explicit, not a claim of arbitrary malformed HTTP or
 whole-library byte identity. The frozen original assertions/service gates remain
 unchanged. Next run the exact current worker with five qualified Go peers through
 all original124 assertions; no speculative helper identity suite is added.
+
+The [current exact six-Go result](../../../go/services/background-worker/evidence/six-go-original124-20261010/)
+passes124/124 original executions including all47 worker cases on clean89f24e7a,
+with matching selected hashes, no errors/skips/failures, controller/runner/cleanup0
+and no owned resources. Actual XML/catalogues contain120 distinct functions (four
+Events overlaps); previous119/five-overlaps metadata was wrong. This corrects
+counting without changing any assertion; protected reference count correction is
+reserved for separately scoped selector/publication work.
+
+[Optional image construction](../../../go/services/background-worker/evidence/image-construction-20261010/)
+packages the same worker with static patched OpenSSL3.5.9, qualified source CA,
+UID65534 and complete helper/runtime license notices. Exact-image bot tests pass
+including DHE/pin/date/cancellation/transcript/reaping. No host dependencies are
+installed. Commit/run the generic packager, then prove real default mounts/health,
+declared operations/loaded SIGTERM and durable Haskell-Go-Haskell switchback;
+image construction alone does not satisfy those gates.

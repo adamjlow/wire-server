@@ -1,0 +1,33 @@
+{
+  "image_id": "sha256:a14d2033f771f8849c604028709c6745e0f8a682c8da60d1a616dba1639dd655",
+  "source_revision": "89f24e7a0045f7176e066daa194144554ac171bd",
+  "test_binary_sha256": "6ce8cb16614cb07efa9c24c7abc53ae9f42a3f1d1b4fe65333eee3e8a28ac431",
+  "args": [
+    "docker",
+    "run",
+    "--rm",
+    "--network=none",
+    "--read-only",
+    "--cap-drop=ALL",
+    "--security-opt=no-new-privileges",
+    "--user=65534:65534",
+    "--pids-limit=256",
+    "--memory=1g",
+    "--cpus=2",
+    "--tmpfs",
+    "/tmp:rw,nosuid,nodev,size=64m,mode=1777",
+    "--label",
+    "wire.migration.owner=background-worker-image-bot-tests",
+    "--mount",
+    "type=bind,source=/home/operator/.cache/wire-migration/background-worker-20261009/bot-image-tests-89f24,target=/tests,readonly",
+    "--entrypoint",
+    "/tests",
+    "sha256:a14d2033f771f8849c604028709c6745e0f8a682c8da60d1a616dba1639dd655",
+    "-test.run",
+    "TestBot",
+    "-test.v",
+    "-test.timeout=90s"
+  ],
+  "exit_code": 0,
+  "production_worker_sha256": "706fed84952a9ee80dc1c9ac7b670d7417114cfe93b835d6d5fe94e58e2628d6"
+}

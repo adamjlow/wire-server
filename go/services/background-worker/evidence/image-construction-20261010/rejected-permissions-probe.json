@@ -1,0 +1,6 @@
+{
+  "image_id": "sha256:732dee7c931c2edef48a1ffbf2aeaeb0966d1c0094752dc50a1e5d49eb34b082",
+  "exit_code": 126,
+  "stdout": "",
+  "stderr": "docker: Error response from daemon: failed to create task for container: failed to create shim task: OCI runtime create failed: runc create failed: unable to start container process: error during container init: exec: \"/bin/openssl\": permission denied\n\nRun 'docker run --help' for more information\n"
+}

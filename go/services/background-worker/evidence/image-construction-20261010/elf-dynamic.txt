@@ -1,0 +1,23 @@
+
+Dynamic section at offset 0x7f6d90 contains 20 entries:
+  Tag        Type                         Name/Value
+ 0x000000000000000c (INIT)               0xc6000
+ 0x000000000000000d (FINI)               0x5cf0a1
+ 0x0000000000000019 (INIT_ARRAY)         0x7600b0
+ 0x000000000000001b (INIT_ARRAYSZ)       8 (bytes)
+ 0x000000000000001a (FINI_ARRAY)         0x7600b8
+ 0x000000000000001c (FINI_ARRAYSZ)       8 (bytes)
+ 0x000000006ffffef5 (GNU_HASH)           0x300
+ 0x0000000000000005 (STRTAB)             0x338
+ 0x0000000000000006 (SYMTAB)             0x320
+ 0x000000000000000a (STRSZ)              1 (bytes)
+ 0x000000000000000b (SYMENT)             24 (bytes)
+ 0x0000000000000015 (DEBUG)              0x0
+ 0x0000000000000003 (PLTGOT)             0x7f6f10
+ 0x0000000000000007 (RELA)               0x340
+ 0x0000000000000008 (RELASZ)             808464 (bytes)
+ 0x0000000000000009 (RELAENT)            24 (bytes)
+ 0x000000000000001e (FLAGS)              BIND_NOW
+ 0x000000006ffffffb (FLAGS_1)            Flags: NOW PIE
+ 0x000000006ffffff9 (RELACOUNT)          33686
+ 0x0000000000000000 (NULL)               0x0

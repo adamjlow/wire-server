@@ -1,16 +1,19 @@
 # Optional Go background-worker (under construction)
 
 This module is under construction, not an available service replacement.
-Haskell remains the supported default. The latest unchanged original worker suite
-passes **46/47** on clean source12107801e with Haskell peers; all adminless,
-meetings, handle-dispute and reindex cases pass. Main user migration still fails
-phase1 SCIM deletion GET500 instead404 before migration activation. It remains
-retained, with no baseline waiver. The subsequent [matched original user pair](evidence/user-reference-pair-20261010/)
-passes2/2 with both the Haskell and unchanged Go workers, including all five
-storage phases. The wider-suite SCIM failure does not reproduce in that pair.
-[Exact monitored results](../../../docs/go-migration/qualifications/background-worker-harness-fd/README.md)
-retain every assertion and owned cleanup. Final six-Go124, operations, durable
-switchback and optional patched-OpenSSL image/selector remain pending.
+Haskell remains the supported default. The exact current six-Go/Haskell-peer
+run passes **124/124 original executions**, including all47 worker cases, with
+no failures/errors/skips and successful owned cleanup. [Exact receipts](evidence/six-go-original124-20261010/)
+identify clean source89f24e7a and every selected executable. Older SCIM failures
+remain historical; none was skipped or waived. The unchanged catalogues contain
+120 distinct functions because four Events cases overlap across suites.
+
+An optional scratch image now includes the same worker, static patched OpenSSL3.5.9,
+reference CA bundle and license notices. Existing bot/DHE/pin/date/cancellation
+tests pass in that exact image. [Construction receipts](evidence/image-construction-20261010/)
+do not qualify real image health/default mounts, loaded operations or actual
+same-state Haskell-Go-Haskell switchback. These, the separately scoped selector,
+and final review remain pending; compatibility remains null.
 
 Both original configuration files and CLI
 paths are accepted. Health/readiness and the federation-notification consumer are
@@ -140,3 +143,13 @@ on reused connections. Fresh, one-shot chunked, invalid-status, timeout and
 cancellation behavior remain guarded. Full pinned Go checks pass. This does not
 qualify later executable/image or final mixed-stack/operations/switchback work;
 remaining ordinary-parser audit is explicit in the plan and task handoff.
+
+Build the optional helper entirely in Docker with
+`python3 go/services/background-worker/build_openssl.py --output /absolute/new/cache-directory`
+(optional `--archive` uses the publisher-checksummed cached source). It installs
+compiler packages only in its disposable builder and retains actual package/source
+identities and license notices. Package identified artifacts using
+`build_image.py --output /absolute/new/receipt.json --candidate WORKER --candidate-receipt BUILD.json --helper OPENSSL --helper-receipt HELPER-build.json`
+with the pinned Go1.26.9 on PATH and a clean checkout. Both commands are opt-in;
+they never publish, deploy or change Haskell tooling/defaults. Image startup uses
+the existing two config mounts and Rabbit credential variables.

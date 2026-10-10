@@ -1,0 +1,18 @@
+{
+  "musl-COPYRIGHT": {
+    "url": "https://git.musl-libc.org/cgit/musl/plain/COPYRIGHT?h=v1.2.6",
+    "sha256": "b870108ec5e7790e9f9919064f1b9421d62d5f9b0e6c230c6adf7ea2da62e97b"
+  },
+  "alpine-main-secdb.json": {
+    "url": "https://secdb.alpinelinux.org/v3.24/main.json",
+    "sha256": "715e2255b2022ce2ed976ede172cf7eb519ba5ce6dcd2dbddaf3049b2473431d"
+  },
+  "gcc-COPYING.RUNTIME": {
+    "url": "https://raw.githubusercontent.com/gcc-mirror/gcc/releases/gcc-15.2.0/COPYING.RUNTIME",
+    "sha256": "9d6b43ce4d8de0c878bf16b54d8e7a10d9bd42b75178153e3af6a815bdc90f74"
+  },
+  "gcc-COPYING3": {
+    "url": "https://raw.githubusercontent.com/gcc-mirror/gcc/releases/gcc-15.2.0/COPYING3",
+    "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "image_id": "sha256:a14d2033f771f8849c604028709c6745e0f8a682c8da60d1a616dba1639dd655",
+  "exit_code": 0,
+  "stdout": "OpenSSL 3.5.9 29 Sep 2026 (Library: OpenSSL 3.5.9 29 Sep 2026)\nbuilt on: Sat Oct 10 02:07:15 2026 UTC\nplatform: linux-x86_64\noptions:  bn(64,64)\ncompiler: gcc -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_BUILDING_OPENSSL -DNDEBUG\nOPENSSLDIR: \"/etc/ssl\"\nENGINESDIR: \"/work/install/lib64/engines-3\"\nMODULESDIR: \"/work/install/lib64/ossl-modules\"\nSeeding source: os-specific\nCPUINFO: OPENSSL_ia32cap=0xfef83203078bffff:0x18415f5ef1bf03a9:0x0000003080000110:0x0000000000000000:0x0000000000000000\n",
+  "stderr": ""
+}

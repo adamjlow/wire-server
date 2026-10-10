@@ -1,0 +1,87 @@
+{
+  "result": "pass",
+  "candidate_revision": "89f24e7a0045f7176e066daa194144554ac171bd",
+  "candidate_sha256": "706fed84952a9ee80dc1c9ac7b670d7417114cfe93b835d6d5fe94e58e2628d6",
+  "suites": {
+    "proxy": {
+      "result": "pass",
+      "cases": 5,
+      "xml_sha256": "3860233513d75435ac31a1e7564f3818fc80943b73cf1c4800587607bff3754c"
+    },
+    "cargohold": {
+      "result": "pass",
+      "cases": 27,
+      "xml_sha256": "b5c38288b083e3942ec0eea77952b1c8cf49dc86877bf2ea4184c956d22b517a"
+    },
+    "gundeck": {
+      "result": "pass",
+      "cases": 40,
+      "xml_sha256": "aec00981914bdb69081e76ad2c368dafd9d7959cb999b339303507863c279a42"
+    },
+    "federator": {
+      "result": "pass",
+      "cases": 5,
+      "xml_sha256": "1ae9a780f93b02507c2e9326854c223ed3ddb9169ddf9aff9fda09536171a030"
+    },
+    "background-worker": {
+      "result": "pass",
+      "cases": 47,
+      "xml_sha256": "e22c641604b071c6f335990803938b11ac50470e579b81a8d009fb60d0a65ec1"
+    }
+  },
+  "executions": 124,
+  "distinct_assertions": 120,
+  "duplicate_functions": {
+    "Events.testBackendPusherRecoversFromQueueDeletion": 2,
+    "Events.testEventsDeadLettered": 2,
+    "Events.testEventsDeadLetteredWithReconnect": 2,
+    "Events.testTransientEventsDoNotTriggerDeadLetters": 2
+  },
+  "documented_count_correction": "Old119/five-overlaps count is a factual metadata error: four named overlaps yield120. Catalogue/assertions/required124 unchanged. Protected contract doc correction is separately scoped with selector work.",
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "controller_exit_code": 0,
+  "runner_exit_code": 0,
+  "cleanup_exit_code": 0,
+  "post_cleanup": {
+    "containers": [],
+    "networks": [],
+    "volumes": []
+  },
+  "monitor": {
+    "samples": 201,
+    "runner_samples": 198,
+    "runner_fd_high_water": 1597,
+    "runner_threads_high_water": 534,
+    "memory_peak_bytes": 1216450560,
+    "pids_high_water": 1143,
+    "last_cgroup": {
+      "memory.current": "978886656",
+      "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0\noom_group_kill 0",
+      "memory.peak": "1216450560",
+      "pids.current": "735",
+      "pids.events": "max 0"
+    },
+    "sample_interval_seconds": 5,
+    "caveat": "Sampled maxima may undercount; readonly observer adds one Python process. This is fixture observation, not the declared operations smoke."
+  },
+  "log_artifacts": {
+    "environment.json": {
+      "path": "/home/operator/.cache/wire-migration/background-worker-20261009/six-go-original124/environment.json",
+      "sha256": "2a2786f04191c59f48e9b714c5a13c76078d3289b20ca9091799f41eb008f3f0",
+      "bytes": 4441
+    },
+    "baseline-proxy-cargohold-cannon-gundeck-federator-background-worker.log": {
+      "path": "/home/operator/.cache/wire-migration/background-worker-20261009/six-go-original124/baseline-proxy-cargohold-cannon-gundeck-federator-background-worker.log",
+      "sha256": "db59fe9587a125e1af8e6bc20423a7dbe01f7517c48456f62226c0fe60cc9b04",
+      "bytes": 1009505
+    },
+    "dependencies.log": {
+      "path": "/home/operator/.cache/wire-migration/background-worker-20261009/six-go-original124/dependencies.log",
+      "sha256": "93a137fea17aa4630d57c89483ff5df559a15d1ef092ba242295c40b029f1c00",
+      "bytes": 176705
+    }
+  },
+  "interpretation": "Exact sixGo/Haskell-peer original124 allpass. All47 worker assertions including full user migration pass oncurrent89f24e7a. Older failures remain historical, not skipped/waived. Operations/durable switchback/final image lifecycle/selector/review remain pending."
+}
