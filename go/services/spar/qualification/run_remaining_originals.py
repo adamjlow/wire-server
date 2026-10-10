@@ -20,6 +20,7 @@ def main():
     parser.add_argument('--select',action='append',nargs=3,required=True,metavar=('SERVICE','BINARY','RECEIPT'))
     args=parser.parse_args()
     if sorted(item[0]for item in args.select)!=sorted(('proxy','cargohold','cannon','gundeck','federator','background-worker','spar')):parser.error('exactly seven distinct service selections required')
+    if shutil.disk_usage(args.output.parent).free<2*1024**3:raise ValueError('need at least 2 GiB free for disposable dependency data')
     record=environment.prepare(args.output,args.runner_receipt,peers=[(name,Path(binary),Path(receipt))for name,binary,receipt in args.select])
     selected=record['peer_candidates']
     output=args.output.resolve();compose_path=output/'compose.json';spec=json.loads(compose_path.read_text())
