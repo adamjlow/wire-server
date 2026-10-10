@@ -1,0 +1,11 @@
+{
+  "scope": "unfinished password primitive draft; no native authentication qualification",
+  "checks_result": "failed",
+  "reason": "GO-2026-5932 module-level advisory; no exception",
+  "files_sha256": {
+    "go/services/brig/password.go": "8aae9abb56e9b3a09eb485b7b082eadd6880bb5d307fb9e9339bfd639427501d",
+    "go/services/brig/password_test.go": "d3ed1e82c99822767eda54ab03815a055598b726df46e3a7da35b558d724a9f2",
+    "go/services/brig/go.mod": "fa9d0b4d116f0f23b807e72b54fdf7405497acf5ea3e8b3b582d8c0835c80cf8",
+    "go/services/brig/go.sum": "2a1aef77569859b7840ba9ba2307d95dd00a470eea351fa4456a020c8e1ebf15"
+  }
+}

@@ -1,0 +1,17 @@
+all modules verified
+ok  	github.com/adamjlow/wire-server/go/services/brig	1.754s
+?   	github.com/adamjlow/wire-server/go/services/brig/cmd/brig	[no test files]
+all modules verified
+=== Module Results ===
+
+Vulnerability #1: GO-2026-5932
+    The golang.org/x/crypto/openpgp package is unmaintained, unsafe by design,
+    and has known security issues
+  More info: https://pkg.go.dev/vuln/GO-2026-5932
+  Module: golang.org/x/crypto
+    Found in: golang.org/x/crypto@v0.57.0
+    Fixed in: N/A
+
+Your code may be affected by 1 vulnerability.
+Use '-scan symbol' for more fine grained vulnerability detection.
+Candidate checks failed: /dev/shm/wire-go-check-arf7qfzf/govulncheck -scan=module failed (exit 3)
