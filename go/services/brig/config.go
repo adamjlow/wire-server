@@ -72,6 +72,7 @@ type Config struct {
 	} `yaml:"zauth"`
 	Settings struct {
 		Domain           string         `yaml:"setFederationDomain"`
+		DefaultLocale    string         `yaml:"setDefaultUserLocale"`
 		DisabledVersions []string       `yaml:"setDisabledAPIVersions"`
 		Other            map[string]any `yaml:",inline"`
 	} `yaml:"optSettings"`

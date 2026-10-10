@@ -159,3 +159,41 @@ func (s userAuthStore) setPassword(ctx context.Context, user gocql.UUID, encoded
 			WithContext(ctx).Consistency(gocql.LocalQuorum).RetryPolicy(&gocql.SimpleRetryPolicy{NumRetries: 5}).Exec())
 	})
 }
+
+func (s userAuthStore) status(ctx context.Context, user gocql.UUID) (*int32, error) {
+	var status *int32
+	err := s.withUserBackend(ctx, user, func(postgres bool) error {
+		if postgres {
+			return s.withPostgres(ctx, func(conn *pgx.Conn) error {
+				err := conn.QueryRow(ctx, `SELECT account_status FROM wire_user WHERE id=$1::uuid`, user.String()).Scan(&status)
+				if err != nil && !errors.Is(err, pgx.ErrNoRows) {
+					return userStorageError(err)
+				}
+				if status != nil && (*status < 0 || *status > 4) {
+					return errors.New("invalid stored account status")
+				}
+				var deleted bool
+				if err := conn.QueryRow(ctx, `SELECT EXISTS(SELECT 1 FROM deleted_user WHERE id=$1::uuid)`, user.String()).Scan(&deleted); err != nil {
+					return userStorageError(err)
+				}
+				if deleted {
+					x := int32(2)
+					status = &x
+				}
+				return nil
+			})
+		}
+		err := s.cassandra.Query(`SELECT status FROM user WHERE id=?`, user).WithContext(ctx).Consistency(gocql.LocalQuorum).RetryPolicy(&gocql.SimpleRetryPolicy{NumRetries: 1}).Scan(&status)
+		if errors.Is(err, gocql.ErrNotFound) {
+			return nil
+		}
+		if err != nil {
+			return userStorageError(err)
+		}
+		if status != nil && (*status < 0 || *status > 4) {
+			return errors.New("invalid stored account status")
+		}
+		return nil
+	})
+	return status, err
+}

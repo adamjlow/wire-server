@@ -4,6 +4,9 @@ This module is an initial runnable slice on existing native-initialized schemas.
 It parses the existing configuration, loads ZAuth keys, checks Cassandra schema94
 and opens PostgreSQL, applies the original PostgreSQL migrations, serves
 liveness/version responses and drains HTTP on TERM.
+The running process now connects self-profile, cookie-list and internal account
+status reads to the native-schema stores. Native HTTP comparison remains pending.
+The existing upstream SelfProfile JSON fixture is reused in module tests.
 Its source-derived ZAuth codec signs/verifies canonical parsed token fields using
 Go's standard Ed25519 implementation. Dependencies use the same pinned versions
 as the existing migrated services; no shared Go framework or dependency fork.

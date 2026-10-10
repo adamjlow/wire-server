@@ -33,6 +33,10 @@ func disabledVersion(c Config, v int) bool {
 // Business API families and documentation are still under construction. No
 // successful fallback response substitutes for a missing business handler.
 func NewHandler(c Config) http.Handler {
+	return newHandler(c, nil)
+}
+
+func newHandler(c Config, business *brigReadHandlers) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		r = r.Clone(r.Context())
 		r.Header.Del("X-Wire-API-Version")
@@ -105,6 +109,9 @@ func NewHandler(c Config) http.Handler {
 			}
 			_ = json.NewEncoder(w).Encode(map[string]any{"supported": supported, "development": development, "federation": c.Federator != nil, "domain": c.Settings.Domain})
 		default:
+			if business != nil && business.handle(w, r, path) {
+				return
+			}
 			w.WriteHeader(404)
 		}
 	})
@@ -138,7 +145,10 @@ func Run(ctx context.Context, c Config) error {
 	if err != nil {
 		return errors.New("Brig listener initialization failed")
 	}
-	server := &http.Server{Handler: NewHandler(c), ReadHeaderTimeout: 10 * time.Second, IdleTimeout: 60 * time.Second}
+	transport := http.DefaultTransport.(*http.Transport).Clone()
+	defer transport.CloseIdleConnections()
+	business := brigReadHandlers{config: c, users: userStore{userAuthStore{cassandra: cassandra, postgres: postgres, mode: c.Migration["user"], acquisition: time.Duration(c.PostgresPool.Acquisition)}}, sessions: sessionStore{cassandra}, peers: brigPeers{client: &http.Client{Transport: transport, Timeout: 30 * time.Second}, galley: c.Galley}}
+	server := &http.Server{Handler: newHandler(c, &business), ReadHeaderTimeout: 10 * time.Second, IdleTimeout: 60 * time.Second}
 	return serve(ctx, server, listener)
 }
 
