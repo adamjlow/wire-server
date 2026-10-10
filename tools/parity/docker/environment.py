@@ -36,7 +36,7 @@ def yaml_json(path):
         wrapper = Path(tmp)/'config.yaml'
         wrapper.write_text('x-wire:\n'+''.join('  '+line+'\n' for line in path.read_text().splitlines())+
                            '\nservices:\n  parser:\n    image: scratch\n')
-        return json.loads(command(['docker','compose','-f',wrapper,'config','--format','json']))['x-wire']
+        return json.loads(command(['docker','compose','-f',wrapper,'config','--no-interpolate','--format','json']))['x-wire']
 
 
 def set_field(config, path, value):
@@ -71,6 +71,9 @@ def peer_config(base, service, index):
     suffix = ('','2')[index]
     for name,port in SERVICES.items():
         key = {'background-worker':'backgroundWorker','wire-server-enterprise':'wireServerEnterprise'}.get(name,name)
+        if name=='wire-server-enterprise' and index==1 and service!=name:
+            config.pop(key,None)
+            continue
         config[key] = {'host':'127.0.0.1','port':port+1000*index}
         if name=='cannon':config[key]['externalHost']='127.0.0.1'
     config['nginz']={'host':'127.0.0.1','port':8080+1000*index}
@@ -134,6 +137,27 @@ def prepare_fixtures(output):
     integration['rabbitmq']['insecureSkipVerifyTls']=False
     integration['rabbitmq']['caCert']='/source/deploy/dockerephemeral/rabbitmq-config/certificates/ca.pem'
     (fixtures/'integration.json').write_text(json.dumps(integration,indent=2)+'\n')
+    prepare_dns_fixtures(fixtures)
+
+
+def prepare_dns_fixtures(fixtures):
+    """Original SFT tests use system DNS for this domain, not Federator's 9053.
+
+    Supply only the required synthetic discovery answer inside the owned stack.
+    Existing federation records are copied verbatim; no public resolver is used.
+    """
+    (fixtures/'coredns-db.example.com').write_bytes(
+        (ROOT/'deploy/dockerephemeral/coredns-config/db.example.com').read_bytes())
+    (fixtures/'coredns-Corefile').write_text(
+        'example.com {\n    file /fixtures/coredns-db.example.com\n    log\n}\n'
+        'integration-tests.zinfra.io {\n    file /fixtures/coredns-db.sft\n    log\n}\n')
+    (fixtures/'coredns-db.sft').write_text(
+        '$ORIGIN integration-tests.zinfra.io.\n$TTL 60\n'
+        '@ IN SOA ns.integration-tests.zinfra.io. hostmaster.integration-tests.zinfra.io. (1 60 60 60 60)\n'
+        '@ IN NS ns.integration-tests.zinfra.io.\n'
+        'ns IN A 127.0.0.1\n'
+        '_sft._tcp IN SRV 0 0 443 sft.integration-tests.zinfra.io.\n'
+        'sft IN A 127.0.0.1\n')
 
 
 def private_compose(upstream, project, output, image):
@@ -151,6 +175,10 @@ def private_compose(upstream, project, output, image):
             service['networks']={'demo_wire':None}
             service['image']='technitium/dns-server@sha256:1045db38fd2f2e4d9578f9168b7eb4862575469ed0ffc79e03f36bdc772a93b5'
             service['volumes']=[{'type':'volume','source':'dns-server-data','target':'/etc/dns'}]
+        if name=='coredns':
+            service['entrypoint']=['/coredns','-conf','/fixtures/coredns-Corefile']
+            service['networks']={'coredns':{'ipv4_address':'172.20.1.2'}}
+            service['volumes']=[{'type':'bind','source':str(output/'fixtures'),'target':'/fixtures','read_only':True}]
         if name=='rabbitmq':service['environment']={'RABBITMQ_USERNAME':'guest','RABBITMQ_PASSWORD':'alpaca-grapefruit'}
         for volume in service.get('volumes',[]):
             if volume['type']=='bind':volume['read_only']=True
@@ -163,7 +191,7 @@ def private_compose(upstream, project, output, image):
         'security_opt':['no-new-privileges:true'],'mem_limit':'12g','cpus':4,'pids_limit':4096,
         'ulimits':{'nofile':{'soft':8192,'hard':8192}},
         'tmpfs':['/tmp:rw,nosuid,nodev,size=2g,mode=1777'],
-        'networks':['demo_wire','redis','coredns'],
+        'networks':['demo_wire','redis','coredns'],'dns':['172.20.1.2'],
         'volumes':[{'type':'bind','source':str(ROOT),'target':'/source','read_only':True},
                    {'type':'bind','source':str(output/'fixtures'),'target':'/fixtures','read_only':True},
                    {'type':'bind','source':str(output/'reports'),'target':'/reports'}]}

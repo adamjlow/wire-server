@@ -1,0 +1,39 @@
+{
+  "result": "failed",
+  "executed": 310,
+  "failures": [
+    {
+      "name": "Brig.testSFTCredentials",
+      "message": "",
+      "detail": "assertion failure:\nsft_servers_all empty\n\ncall stack: \n1. assertFailure at test/Test/Brig.hs:184\n\n2. k at test/Testlib/ModService.hs:89\n\n3. withModifiedBackend at test/Test/Brig.hs:162\n\n\n\nSet WIRE_INTEGRATION_TEST_VERBOSITY=1 if you want to see complete trace of the HTTP traffic in curl pseudo-syntax.\n"
+    },
+    {
+      "name": "Brig.testSFTNoCredentials",
+      "message": "",
+      "detail": "assertion failure:\nsft_servers_all missing\n\ncall stack: \n1. assertFailure at test/Test/Brig.hs:211\n\n2. k at test/Testlib/ModService.hs:89\n\n3. withModifiedBackend at test/Test/Brig.hs:199\n\n\n\nrequest as command line: \ncurl -X 'GET' 'http://127.0.0.1:10082/v19/calls/config/v2' -H 'Request-Id: Brig.testSFTNoCredentials__GET_/v19/calls/config/v2__38' -H 'Z-Connection: conn' -H 'Z-User: d87d814b-b713-4712-ac06-3d46b7374ea4'\nrequest: \nGET http://127.0.0.1:10082/v19/calls/config/v2\nrequest headers: \nRequest-Id: Brig.testSFTNoCredentials__GET_/v19/calls/config/v2__38\nZ-Connection: conn\nZ-User: d87d814b-b713-4712-ac06-3d46b7374ea4\nrequest body:\n\nresponse status: 200\nresponse headers:\nTransfer-Encoding: chunked\nDate: Sat, 10 Oct 2026 21:14:40 GMT\ntraceparent: 00-8957d2ce852c26be3171e7875ef7081e-40ef719cea0019a7-01\ntracestate: \nContent-Encoding: gzip\nContent-Type: application/json;charset=utf-8\nVary: Accept-Encoding\nresponse body:\n{\n    \"ice_servers\": [\n        {\n            \"credential\": \"kFBdsUuKKmpFDKlpPk3GNKkpOWDuX2KigXEnojgxw0DE279WkkBgO4S44mxqUQtgWQXIaNK8l2oxLSg+chvjMw==\",\n            \"urls\": [\n                \"turn:localhost:3478\"\n            ],\n            \"username\": \"d=1791688481.v=1.k=0.t=s.r=exvpzifejyhuqzaracslhsmxjl\"\n        }\n    ],\n    \"is_federating\": false,\n    \"sft_servers_all\": [],\n    \"ttl\": 3600\n}\n\nSet WIRE_INTEGRATION_TEST_VERBOSITY=1 if you want to see complete trace of the HTTP traffic in curl pseudo-syntax.\n"
+    },
+    {
+      "name": "DomainVerification.testDisabledEnterpriseService",
+      "message": "",
+      "detail": "assertion failure:\nActual:\n200\nExpected:\n503\n\ncall stack: \n1. assertFailure at test/Testlib/Assertions.hs:123\n\n2. shouldMatchWithMsg at test/Testlib/Assertions.hs:92\n\n3. shouldMatch at test/Testlib/Assertions.hs:219\n\n4. shouldMatchInt at test/Test/DomainVerification.hs:433\n\n\n\nrequest as command line: \ncurl -X 'POST' 'http://127.0.0.1:9082/v19/domain-verification/ctg7vhfiauico.example/challenges' -H 'Request-Id: DomainVerification.testDisabledEnterpriseService__POST_/v19/domain-verification/ctg7vhfiauico.example/challenges__1' -H 'Z-Connection: conn' -H 'Z-User: b.example.com'\nrequest: \nPOST http://127.0.0.1:9082/v19/domain-verification/ctg7vhfiauico.example/challenges\nrequest headers: \nRequest-Id: DomainVerification.testDisabledEnterpriseService__POST_/v19/domain-verification/ctg7vhfiauico.example/challenges__1\nZ-Connection: conn\nZ-User: b.example.com\nrequest body:\n\nresponse status: 200\nresponse headers:\nTransfer-Encoding: chunked\nDate: Sat, 10 Oct 2026 21:15:00 GMT\ntraceparent: 00-a445d47ae20ac60aa917c92d61b25718-94d39ebdfa2c7ec3-01\ntracestate: \nContent-Encoding: gzip\nContent-Type: application/json;charset=utf-8\nVary: Accept-Encoding\nresponse body:\n{\n    \"dns_verification_token\": \"bUZJIlMv9iyfm6ubdhloDsOpYWWwUlruQCvM9E8OytA\",\n    \"id\": \"17acad0a-77fc-4df4-8632-eeee5ae6679b\",\n    \"token\": \"JUY6egk61T5VdpSz9Cclgbx704Ykb6ddJGJnN2zMbLc\"\n}\n\nSet WIRE_INTEGRATION_TEST_VERBOSITY=1 if you want to see complete trace of the HTTP traffic in curl pseudo-syntax.\n"
+    },
+    {
+      "name": "Teams.testInvitePersonalUserToTeam",
+      "message": "",
+      "detail": "assertion failure:\nActual:\n\"\"\nExpected:\n\"xzLSWgTnvhDAaM3icnbdEgmuYLAdw7VI\"\n\ncall stack: \n1. assertFailure at test/Testlib/Assertions.hs:123\n\n2. shouldMatchWithMsg at test/Testlib/Assertions.hs:92\n\n3. shouldMatch at test/Test/Teams.hs:154\n\n4. assertUrlContainsCode at test/Test/Teams.hs:72\n\n\n\nSet WIRE_INTEGRATION_TEST_VERBOSITY=1 if you want to see complete trace of the HTTP traffic in curl pseudo-syntax.\n"
+    }
+  ],
+  "native_source_unchanged": true,
+  "cleanup_project": "wire-e2e-79f6641029a1401bb89b012b0f0fc10b",
+  "independent_remaining_resources": {
+    "container": [],
+    "network": [],
+    "volume": []
+  },
+  "diagnosis": {
+    "Brig.testSFTCredentials / Brig.testSFTNoCredentials": "Original tests require public-domain SRV discovery through system DNS. Internal networks have no external resolver/owned answer. Supply synthetic authoritative SRV for original domain, without modifying tests.",
+    "DomainVerification.testDisabledEnterpriseService": "Static backendB incorrectly configured wireServerEnterprise endpoint despite RunServices.backendB.berEnableService disabling it. Match original source fixture.",
+    "Teams.testInvitePersonalUserToTeam": "Compose YAML parser interpolated literal ${code} to empty. Preserve native YAML template bytes with --no-interpolate."
+  },
+  "acceptance": "Native baseline has not passed; this failed attempt is retained unfiltered."
+}

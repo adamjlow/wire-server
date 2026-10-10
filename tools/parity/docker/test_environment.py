@@ -16,6 +16,37 @@ class EnvironmentTests(unittest.TestCase):
         return {'name':'wire-e2e-'+'a'*32,'networks':{'private':{'internal':True}},
                 'volumes':{'owned':{}},'services':{'test':{'image':'sha256:'+'b'*64,'networks':{'private':None}}}}
 
+    def test_yaml_parser_preserves_native_email_templates(self):
+        # Exercise the actual parser that corrupted the native invitation URL.
+        with tempfile.TemporaryDirectory() as tmp:
+            path=Path(tmp)/'templates.yaml'
+            path.write_text('url: "https://example.com/join/?team-code=${code}"\nactivation: "${key}:$code:$$"\n')
+            parsed=environment.yaml_json(path)
+        self.assertEqual('https://example.com/join/?team-code=${code}',parsed['url'])
+        self.assertEqual('${key}:$code:$$',parsed['activation'])
+
+    def test_disabled_enterprise_backend_matches_original_fixture(self):
+        base={'wireServerEnterprise':{'host':'wrong','port':1}}
+        self.assertIn('wireServerEnterprise',environment.peer_config(base,'brig',0))
+        self.assertNotIn('wireServerEnterprise',environment.peer_config(base,'brig',1))
+        self.assertEqual(9079,environment.peer_config(base,'wire-server-enterprise',1)['wireServerEnterprise']['port'])
+        self.assertEqual({'host':'wrong','port':1},base['wireServerEnterprise'])
+
+    def test_system_sft_dns_is_private_and_preserves_federation_zone(self):
+        upstream={'services':{name:{'image':'synthetic:test','networks':{'demo_wire':None}} for name in environment.DEPENDENCIES}}
+        with tempfile.TemporaryDirectory() as tmp:
+            fixtures=Path(tmp)/'fixtures';fixtures.mkdir()
+            environment.prepare_dns_fixtures(fixtures)
+            self.assertEqual((environment.ROOT/'deploy/dockerephemeral/coredns-config/db.example.com').read_bytes(),(fixtures/'coredns-db.example.com').read_bytes())
+            zone=(fixtures/'coredns-db.sft').read_text()
+            self.assertIn('$ORIGIN integration-tests.zinfra.io.',zone)
+            self.assertIn('_sft._tcp IN SRV 0 0 443 sft.integration-tests.zinfra.io.',zone)
+            spec=environment.private_compose(upstream,'wire-e2e-'+'a'*32,Path(tmp),'sha256:'+'b'*64)
+            self.assertEqual(['172.20.1.2'],spec['services']['runner']['dns'])
+            self.assertEqual({'coredns':{'ipv4_address':'172.20.1.2'}},spec['services']['coredns']['networks'])
+            self.assertTrue(spec['services']['coredns']['volumes'][0]['read_only'])
+            environment.validate_isolation(spec)
+
     def test_brig_mount_is_exact_and_read_only(self):
         spec=self.spec();spec['services']['test']['volumes']=[{'type':'bind','source':'/tmp/identified-brig','target':'/candidate/brig','read_only':True}]
         environment.validate_isolation(spec)

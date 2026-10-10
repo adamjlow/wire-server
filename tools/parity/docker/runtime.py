@@ -170,6 +170,8 @@ def start_peers(processes,logs):
     for index in range(2):
         configs=peers[str(index)]
         for name,config in configs.items():
+            # RunServices.backendB explicitly disables this optional peer.
+            if index==1 and name=='wire-server-enterprise':continue
             path=WORK/(name+'-static-'+str(index)+'.json');path.write_text(json.dumps(config))
             args=[str(WORK/'dist'/name),'-c',str(path)]
             if name=='background-worker':args+=['--galley-config-file',str(WORK/('galley-static-'+str(index)+'.json'))]
