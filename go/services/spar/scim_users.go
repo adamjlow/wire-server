@@ -497,8 +497,8 @@ func serveSCIMUsers(w http.ResponseWriter, r *http.Request, c Config, s scimUser
 	var body map[string]any
 	status := 200
 	switch r.Method {
-	case "POST":
-		if len(parts) != 3 {
+	case "POST", "PUT":
+		if r.Method == "POST" && len(parts) != 3 || r.Method == "PUT" && len(parts) != 4 {
 			w.WriteHeader(405)
 			return true
 		}
@@ -512,25 +512,70 @@ func serveSCIMUsers(w http.ResponseWriter, r *http.Request, c Config, s scimUser
 				idp, err = scimTokenIdP(ctx, s, *info)
 				if err == nil {
 					var user validSCIMUser
-					user, err = validateSCIMUser(ctx, s, p, idp, input, *c.RichInfoLimit, "post", requestID)
+					operation := "post"
+					if r.Method == "PUT" {
+						operation = "put"
+					}
+					user, err = validateSCIMUser(ctx, s, p, idp, input, *c.RichInfoLimit, operation, requestID)
 					if err == nil {
-						body, err = createSCIMUser(ctx, c, s, p, *info, user, requestID)
-						status = 201
+						if r.Method == "POST" {
+							body, err = createSCIMUser(ctx, c, s, p, *info, user, requestID)
+							status = 201
+						} else {
+							body, err = updateSCIMUser(ctx, c, s, p, *info, idp, uid, user, requestID)
+						}
 					}
 				}
 			}
 		}
 	case "GET", "HEAD":
-		if len(parts) != 4 {
-			return false
-		}
 		var idp *idpConfig
 		idp, err = scimTokenIdP(ctx, s, *info)
 		if err == nil {
-			body, err = getSCIMUser(ctx, c, s, p, *info, idp, uid, requestID)
+			if len(parts) == 3 {
+				body, err = listSCIMUsers(ctx, c, s, p, *info, idp, r.URL.Query(), requestID)
+			} else {
+				body, err = getSCIMUser(ctx, c, s, p, *info, idp, uid, requestID)
+			}
 		}
 		if err == nil && body == nil {
-			err = &scimError{Status: 404, Detail: "User " + uid.String() + " not found"}
+			err = scimMissingUser(uid)
+		}
+	case "PATCH":
+		if len(parts) != 4 {
+			w.WriteHeader(405)
+			return true
+		}
+		var object map[string]any
+		object, err = scimRawJSON(r)
+		if err == nil {
+			var operations []scimPatchOperation
+			operations, err = parseSCIMPatch(object)
+			if err == nil {
+				var idp *idpConfig
+				idp, err = scimTokenIdP(ctx, s, *info)
+				if err == nil {
+					var stored map[string]any
+					stored, err = getSCIMUser(ctx, c, s, p, *info, idp, uid, requestID)
+					if err == nil && stored == nil {
+						err = scimMissingUser(uid)
+					}
+					if err == nil {
+						var input scimUserInput
+						input, err = scimStoredInput(stored)
+						if err == nil {
+							input, err = applySCIMPatch(input, operations)
+						}
+						if err == nil {
+							var user validSCIMUser
+							user, err = validateSCIMUser(ctx, s, p, idp, input, *c.RichInfoLimit, "put", requestID)
+							if err == nil {
+								body, err = updateSCIMUser(ctx, c, s, p, *info, idp, uid, user, requestID)
+							}
+						}
+					}
+				}
+			}
 		}
 	case "DELETE":
 		if len(parts) != 4 {
@@ -543,8 +588,8 @@ func serveSCIMUsers(w http.ResponseWriter, r *http.Request, c Config, s scimUser
 			return true
 		}
 	default:
-		// Update, patch and filtered listing are the next construction slice.
-		return false
+		w.WriteHeader(405)
+		return true
 	}
 	if err != nil {
 		scimFailure(w, err)

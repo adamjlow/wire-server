@@ -14,7 +14,7 @@ import environment
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     for name in ('output','runner-receipt','candidate','candidate-receipt'):parser.add_argument('--'+name,type=Path,required=True)
-    parser.add_argument('--suite',choices=('early','tokens','idps','delete','login','scim-groups'),default='early')
+    parser.add_argument('--suite',choices=('early','tokens','idps','delete','login','scim-groups','scim-users'),default='early')
     args=parser.parse_args()
     selected=environment.identified_candidate(args.candidate,args.candidate_receipt)
     record=environment.prepare(args.output,args.runner_receipt)

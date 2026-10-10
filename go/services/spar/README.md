@@ -4,8 +4,9 @@ The module implements configuration/Cassandra schema23 startup, health/lifecycle
 persistent settings/user metadata, SCIM token management, IdP CRUD/indexes and
 SAML metadata/request initiation/state stores and connected signed-login/session
 effects. SCIM authentication, Brig-backed groups and user create/read/delete are
-implemented. User update/patch/filtered listing, config/schema metadata, internal
-cleanup and remaining finite SAML/SCIM contract gaps still require completion.
+implemented, along with user update/patch/filtered listing. Config/schema
+metadata, internal cleanup and remaining finite SAML/SCIM contract gaps still
+require completion.
 Spar is not selectable or qualified yet; Haskell remains supported/default.
 
 Use pinned Go1.26.9 with GOTOOLCHAIN=local/GOWORK=off. Run
