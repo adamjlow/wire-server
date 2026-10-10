@@ -102,6 +102,15 @@ func scimFoldJSON(value any) any {
 	}
 }
 func scimJSON(r *http.Request) (map[string]any, error) {
+	object, err := scimRawJSON(r)
+	if err != nil {
+		return nil, err
+	}
+	return scimFoldJSON(object).(map[string]any), nil
+}
+
+// User extra schemas parse their original keys independently of core fields.
+func scimRawJSON(r *http.Request) (map[string]any, error) {
 	contentType, _, err := mime.ParseMediaType(r.Header.Get("Content-Type"))
 	if err != nil || (contentType != "application/json" && contentType != "application/scim+json") {
 		return nil, &scimError{Status: 415, Detail: "Unsupported Media Type"}
@@ -116,7 +125,7 @@ func scimJSON(r *http.Request) (map[string]any, error) {
 	if decoder.Decode(&extra) != io.EOF {
 		return nil, &scimError{Status: 400, Type: "invalidSyntax", Detail: "Invalid JSON request"}
 	}
-	object, ok := scimFoldJSON(value).(map[string]any)
+	object, ok := value.(map[string]any)
 	if !ok {
 		return nil, &scimError{Status: 400, Type: "invalidSyntax", Detail: "Expected JSON object"}
 	}

@@ -92,6 +92,9 @@ func newHandler(c Config, store settingsStore) http.Handler {
 		if tokens, ok := store.(scimTokenLookup); ok && serveSCIMGroups(w, r, c, tokens, peers) {
 			return
 		}
+		if users, ok := store.(scimUserStore); ok && serveSCIMUsers(w, r, c, users, peers) {
+			return
+		}
 		if store != nil && serveSettings(w, r, store) {
 			return
 		}

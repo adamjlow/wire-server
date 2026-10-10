@@ -2,9 +2,10 @@
 
 The module implements configuration/Cassandra schema23 startup, health/lifecycle,
 persistent settings/user metadata, SCIM token management, IdP CRUD/indexes and
-SAML metadata/request initiation/state stores. A configured-key signature adapter
-is tested but is not yet wired to finalize-login. Full signed assertion judgement,
-Brig user/session effects, SCIM users/groups and internal cleanup remain required.
+SAML metadata/request initiation/state stores and connected signed-login/session
+effects. SCIM authentication, Brig-backed groups and user create/read/delete are
+implemented. User update/patch/filtered listing, config/schema metadata, internal
+cleanup and remaining finite SAML/SCIM contract gaps still require completion.
 Spar is not selectable or qualified yet; Haskell remains supported/default.
 
 Use pinned Go1.26.9 with GOTOOLCHAIN=local/GOWORK=off. Run
@@ -18,7 +19,8 @@ Cassandra/DC/verified CA/discovery and request/cache policy follow native source
 Original Haskell tests run automatically in the owned private Docker harness,
 with unchanged assertions and disposable dependencies. Current construction
 evidence under qualification/evidence includes exact initial process comparisons,
-six IdP/token originals and the original IdP issuer update/delete regression.
+six IdP/token originals, the original IdP issuer update/delete regression and
+two original signed-login/UTF8 scenarios against actual Haskell peers.
 Those batches prove only their listed surfaces. The final intended profile is
 proxy-cargohold-cannon-gundeck-federator-background-worker-spar:225 executions.
 Full trust/state gaps, operations smoke, durable Haskell→Go→Haskell switchback
