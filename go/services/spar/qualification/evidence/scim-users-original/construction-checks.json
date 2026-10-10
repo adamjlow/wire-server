@@ -1,0 +1,20 @@
+{
+  "result": "pass",
+  "source_revision": "527b85c58a5a7ac941fff54619b49a8d153e4260",
+  "scope": "17 unchanged original SCIM user update/patch/email/external-ID/adoption executions with exact Go Spar and Haskell peers; construction only, not whole-service225 qualification.",
+  "xml_sha256": "ce867dac6c92a9c8150b65b9c1613631f2b631bc6937242849976c28ecbc3316",
+  "checks": [
+    "Exact17 names/variants/no failures/errors/skips",
+    "Exact static Go artifact and Haskell peer identities",
+    "Runner0/owned cleanup0/independently empty project resources",
+    "Pinned Go1.26.9 format/tidy/verify/vet/unit/race/build/vulnerability/license",
+    "Finite null/absent/email identity/primary/schema/parser/foreign-team/no-enumeration/no-op timestamp/special status protections"
+  ],
+  "review": "Delegated same-author construction review against native hscim User/PatchOp/Filter and Spar user update/Brig/Galley effects; whole-service self-approval remains pending.",
+  "unresolved": [
+    "SCIM config/schema metadata, internal cleanup and SSO email discovery routes",
+    "Complete SCIM parser/header/body/content negotiation/peer diagnostics and exact ETag/URI finite comparisons",
+    "Remaining SAML importer/Base64/cookie/mobile/diagnostic/Show/RIPEMD160/SDK traversal gaps",
+    "Final225/trust/state/operations/durable switchback/image/selector"
+  ]
+}

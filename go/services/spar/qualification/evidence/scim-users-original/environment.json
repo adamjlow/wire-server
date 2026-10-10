@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "project": "wire-e2e-db73afc7f64b4bb6b1ee44db064e65fa",
+  "source_revision": "527b85c58a5a7ac941fff54619b49a8d153e4260",
+  "runner_image_id": "sha256:099b30651813ecbe4192514cde0b096174bbfd34672529c9b21e8c7766077268",
+  "runner_revision": "890a4742e936a2e8078f1a0d39b8bb36616a385f",
+  "candidate": {
+    "path": "/dev/shm/wire-migration-spar-20261010/spar-scim-update",
+    "sha256": "9be9aff5fdc1fb1aeba0797a4eb3e04e040d68b2fb63b63cb7e0bfde537d893b",
+    "source_revision": "527b85c58a5a7ac941fff54619b49a8d153e4260"
+  },
+  "peer_candidates": {},
+  "result": "pass",
+  "e2e_executed": false,
+  "compose_sha256": "fa636669e7acd7bc69502d62b4ab256168b611a462a162de10c25aaa5649e032",
+  "files_sha256": {
+    "fixtures/configs.json": "8cc34c41cc248ae804d822a60fb610b0adead84c3e79663eb33243ef70c99876",
+    "fixtures/integration.json": "d8834dad54e1f851e689ac00691cd527aac69e0e9ce00baf149835433812c73c",
+    "fixtures/peers.json": "ca8438ea9464138dc0c75868b62eb8b12113343dada8336524c3ea467dd3a490"
+  },
+  "kind": "original-Go-Spar-token-tests",
+  "process_exit_code": 0,
+  "cleanup_exit_code": 0,
+  "post_cleanup": {
+    "containers": [],
+    "networks": [],
+    "volumes": []
+  }
+}

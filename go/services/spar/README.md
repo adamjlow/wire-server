@@ -24,6 +24,8 @@ six IdP/token originals, the original IdP issuer update/delete regression and
 two original signed-login/UTF8 scenarios against actual Haskell peers.
 Five unchanged original SCIM group scenarios also pass, including user invitation,
 read and activation plus group search/pagination/update/delete/member guards.
+Seventeen original SCIM user executions pass for email/external-ID updates,
+PATCH email paths, metadata, primary selection and adoption/pending-email cleanup.
 Those batches prove only their listed surfaces. The final intended profile is
 proxy-cargohold-cannon-gundeck-federator-background-worker-spar:225 executions.
 Full trust/state gaps, operations smoke, durable Haskell→Go→Haskell switchback

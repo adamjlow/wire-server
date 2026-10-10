@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "result": "built",
+  "source_revision": "527b85c58a5a7ac941fff54619b49a8d153e4260",
+  "binary_sha256": "9be9aff5fdc1fb1aeba0797a4eb3e04e040d68b2fb63b63cb7e0bfde537d893b",
+  "binary": "/dev/shm/wire-migration-spar-20261010/spar-scim-update",
+  "compiler": "go1.26.9",
+  "target": "linux/amd64",
+  "CGO_ENABLED": "0",
+  "build_flags": [
+    "-trimpath"
+  ],
+  "build_info": "/dev/shm/wire-migration-spar-20261010/spar-scim-update: go1.26.9\n\tpath\tgithub.com/adamjlow/wire-server/go/services/spar/cmd/spar\n\tmod\tgithub.com/adamjlow/wire-server/go/services/spar\t(devel)\t\n\tdep\tgithub.com/apache/cassandra-gocql-driver/v2\tv2.1.2\th1:lu/p0Db2av18enHJvWJQoChLssI0P+AR06STq4VdvCc=\n\tdep\tgithub.com/beevik/etree\tv1.7.0\th1:xjBk9O4p4x7D1YajePjfLzdaFC4/uYUENA7P0pv6gXA=\n\tdep\tgithub.com/jonboulle/clockwork\tv0.5.0\th1:Hyh9A8u51kptdkR+cqRpT1EebBwTn1oK9YfGYbdFz6I=\n\tdep\tgithub.com/russellhaering/goxmldsig\tv1.6.1\th1:SB7R5ttvrGIDB2juJAK/i7DQ2Ivr7agG+ohfNJjwyYU=\n\tdep\tgo.yaml.in/yaml/v3\tv3.0.5\th1:N6y/pJk8buWs9NY5ERU2HSMfm+IuD/OtfdAnq6kESPw=\n\tdep\tgolang.org/x/text\tv0.42.0\th1:JbOZXgfeCPU9gacVtYliJqOhD+zhrEqK4LfdpmlUZqI=\n\tdep\tgopkg.in/inf.v0\tv0.9.1\th1:73M5CoZyi3ZLMOyDlQh031Cx6N9NDJ2Vvfl76EDAgDc=\n\tbuild\t-buildmode=exe\n\tbuild\t-compiler=gc\n\tbuild\t-trimpath=true\n\tbuild\tDefaultGODEBUG=rsa1024min=0\n\tbuild\tCGO_ENABLED=0\n\tbuild\tGOARCH=amd64\n\tbuild\tGOOS=linux\n\tbuild\tGOAMD64=v1\n\tbuild\tvcs=git\n\tbuild\tvcs.revision=527b85c58a5a7ac941fff54619b49a8d153e4260\n\tbuild\tvcs.time=2026-10-10T12:25:39Z\n\tbuild\tvcs.modified=false\n",
+  "quality_log": {
+    "path": "/home/operator/.cache/wire-migration/spar-20261010/scim-user-update-go-check.log",
+    "sha256": "24c367e28c05b9c8cb6b5991652ce95e1706ed96ca8da3b5d947f5bc5455c208"
+  },
+  "scope": "SCIM user update/patch/listing construction artifact; original SCIM and whole-service qualification pending."
+}
