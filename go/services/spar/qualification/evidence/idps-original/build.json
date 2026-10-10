@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "result": "built",
+  "source_revision": "72051fbc1ed1e9a3282887b885dab4e966d59bd8",
+  "binary_sha256": "764670cc13a3453ffb652fc0f8f8a74611410417ecc8ac752391bba1047d4a0b",
+  "binary": "/dev/shm/wire-migration-spar-20261010/spar-idps",
+  "compiler": "go1.26.9",
+  "target": "linux/amd64",
+  "CGO_ENABLED": "0",
+  "build_flags": [
+    "-trimpath"
+  ],
+  "build_info": "/dev/shm/wire-migration-spar-20261010/spar-idps: go1.26.9\n\tpath\tgithub.com/adamjlow/wire-server/go/services/spar/cmd/spar\n\tmod\tgithub.com/adamjlow/wire-server/go/services/spar\t(devel)\t\n\tdep\tgithub.com/apache/cassandra-gocql-driver/v2\tv2.1.2\th1:lu/p0Db2av18enHJvWJQoChLssI0P+AR06STq4VdvCc=\n\tdep\tgo.yaml.in/yaml/v3\tv3.0.5\th1:N6y/pJk8buWs9NY5ERU2HSMfm+IuD/OtfdAnq6kESPw=\n\tdep\tgopkg.in/inf.v0\tv0.9.1\th1:73M5CoZyi3ZLMOyDlQh031Cx6N9NDJ2Vvfl76EDAgDc=\n\tbuild\t-buildmode=exe\n\tbuild\t-compiler=gc\n\tbuild\t-trimpath=true\n\tbuild\tCGO_ENABLED=0\n\tbuild\tGOARCH=amd64\n\tbuild\tGOOS=linux\n\tbuild\tGOAMD64=v1\n\tbuild\tvcs=git\n\tbuild\tvcs.revision=72051fbc1ed1e9a3282887b885dab4e966d59bd8\n\tbuild\tvcs.time=2026-10-10T10:22:08Z\n\tbuild\tvcs.modified=false\n",
+  "quality_log": {
+    "path": "/home/operator/.cache/wire-migration/spar-20261010/idps-go-check.log",
+    "sha256": "3aa48441692f28830b8a9c3290fcbeb370b85a0ec090cbc3cfe6544c52469da6"
+  },
+  "scope": "IdP create/read/update and token construction increment; no full-service qualification."
+}

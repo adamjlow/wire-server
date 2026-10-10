@@ -1,0 +1,114 @@
+[
+  {
+    "path": "/home/operator/.cache/wire-migration/spar-20261010/idps-original/controller.log",
+    "sha256": "0ee08c2570dcdb3d803e35528e5fd5cd0bf0ba02601ea3d117ad338e53ec9c2d"
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/spar-20261010/idps-original/reports/background-worker-0.log",
+    "sha256": "ff8a48622c2704735ecbc74e31af16148b3c6215325ab547ec3fac566977a4da"
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/spar-20261010/idps-original/reports/background-worker-1.log",
+    "sha256": "8aa1302bc9f9fb786a5f24f43ce25dd75df1e6a1c5dcf2647427e8f4c6399177"
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/spar-20261010/idps-original/reports/brig-0.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/spar-20261010/idps-original/reports/brig-1.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/spar-20261010/idps-original/reports/cannon-0.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/spar-20261010/idps-original/reports/cannon-1.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/spar-20261010/idps-original/reports/cargohold-0.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/spar-20261010/idps-original/reports/cargohold-1.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/spar-20261010/idps-original/reports/federator-0.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/spar-20261010/idps-original/reports/federator-1.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/spar-20261010/idps-original/reports/galley-0.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/spar-20261010/idps-original/reports/galley-1.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/spar-20261010/idps-original/reports/gundeck-0.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/spar-20261010/idps-original/reports/gundeck-1.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/spar-20261010/idps-original/reports/nginz-0.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/spar-20261010/idps-original/reports/nginz-1.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/spar-20261010/idps-original/reports/proxy-0.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/spar-20261010/idps-original/reports/proxy-1.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/spar-20261010/idps-original/reports/spar-0.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/spar-20261010/idps-original/reports/spar-1.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/spar-20261010/idps-original/reports/stern-0.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/spar-20261010/idps-original/reports/stern-1.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/spar-20261010/idps-original/reports/wire-server-enterprise-0.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/spar-20261010/idps-original/reports/wire-server-enterprise-1.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "libs/wire-api/test/golden/testObject_IdP_1.json",
+    "sha256": "3295c4d86a45a29a1d174339baca33455e3ec0c7294189cab555199bc8aa16b3"
+  },
+  {
+    "path": "libs/wire-api/test/golden/testObject_IdP_2.json",
+    "sha256": "6c890c514a07df7454e889d9a17ab4a942f8a0e8043fac156308f1e59f69feff"
+  },
+  {
+    "path": "libs/wire-api/test/golden/testObject_IdP_3.json",
+    "sha256": "dc91232b8a537fd394ae89920eb8bcfbff6245e42759443b636433cd9f2b69c4"
+  }
+]

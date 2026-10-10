@@ -70,8 +70,15 @@
       "command": "Pinned Go1.26.9 checks plus two unchanged original Haskell integration cases executed against exact Go Spar with Haskell peers; strict XML both expected names/no failures/errors/skips, runner0 and owned cleanup0. This is a construction increment, not final225 qualification.",
       "revision": "1ca3fcd2ad6449dc4edb712a663c984afb228014",
       "artifact": "go/services/spar/qualification/evidence/tokens-original/result.json"
+    },
+    {
+      "criterion": "quality",
+      "result": "pass",
+      "command": "Pinned Go1.26.9 checks, three unchanged IdP JSON goldens, metadata/allowlist negatives and six unchanged original IdP/token tests against exact Go Spar/Haskell peers. Strict six-name XML/no failures/errors/skips, exact selected identities, runner0 and owned cleanup0. Construction increment only; full original225 remains pending.",
+      "revision": "72051fbc1ed1e9a3282887b885dab4e966d59bd8",
+      "artifact": "go/services/spar/qualification/evidence/idps-original/result.json"
     }
   ],
   "review": null,
-  "handoff": "Progress: typed IdP model/source three goldens, XML metadata parser, native IdP/issuer/team/raw/default storage and conflicts implemented. Public create/read/list/raw/update and internal list now compile with actual admin/permissions/SSO feature/fingerprint/multi-ingress notification calls. Pinned Go checks and golden/metadata/security negatives pass. Next six unchanged original IdP/token tests (including prior two) against exact Go executable. Bound-user deletion, SAML login/SSO, SCIM users/groups, final225/gaps/ops/switchback/image/selector remain incomplete; compatibility null."
+  "handoff": "Progress: source72051fbc1ed1e9a3282887b885dab4e966d59bd8 implements IdP model/metadata/native storage/index/version conflicts, public create/read/list/raw/update and internal list. Three unchanged upstream JSON goldens and pinned Go checks pass. Six unchanged original IdP/token tests pass against exact Go Spar with Haskell peers, strict names/XML/selected hashes/runner0/owned cleanup0 retained. This batch includes prior two token tests (six total, not eight). Next SAML auth request/assertion/verdict/user stores, signed login validation and bound-user/purge IdP deletion; SCIM users/groups remain incomplete. Final225/trust/state gaps/ops/durable switchback/image/selector pending, compatibility null. Source replacement ownership concern recorded, not repaired or treated as a verified exploit."
 }
