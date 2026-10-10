@@ -1,0 +1,178 @@
+{
+  "result": "fail",
+  "source_revision": "ea61760b0a1d684bc47c1682106212011e25bc69",
+  "candidate": {
+    "path": "/dev/shm/wire-migration-spar-20261010/spar-middleware",
+    "sha256": "617213754fd71012d2381784fcf5544a517070db189681425093c2325f49687e",
+    "source_revision": "ea61760b0a1d684bc47c1682106212011e25bc69"
+  },
+  "existing33_differences": {},
+  "middleware_differences": {
+    "gzip-upper-settings": {
+      "native": {
+        "status": 400,
+        "headers": {
+          "content-type": null,
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null
+        },
+        "body": "Unexpected \"\\US\\139\\b\\NUL\\NUL\\NUL\\NUL\\NUL\\STX\\255\\171VJIMK,\\205)\\137/.\\206\\143O\\206OIU\\178\", expecting JSON value"
+      },
+      "go": {
+        "status": 200,
+        "headers": {
+          "content-type": "application/json;charset=utf-8",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null
+        },
+        "body": ""
+      }
+    },
+    "gzip-invalid-settings": {
+      "native": {
+        "status": 400,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null
+        },
+        "body": {
+          "code": 400,
+          "label": "client-error"
+        }
+      },
+      "go": {
+        "status": 400,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null
+        },
+        "body": {
+          "code": 400,
+          "label": "bad-request"
+        }
+      }
+    },
+    "gzip-truncated-settings": {
+      "native": {
+        "status": 200,
+        "headers": {
+          "content-type": "application/json;charset=utf-8",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null
+        },
+        "body": ""
+      },
+      "go": {
+        "status": 400,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null
+        },
+        "body": {
+          "code": 400,
+          "label": "bad-request"
+        }
+      }
+    },
+    "metrics-POST": {
+      "native": {
+        "status": 404,
+        "headers": {
+          "content-type": null,
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null
+        },
+        "counts": {},
+        "metric_names": []
+      },
+      "go": {
+        "status": 200,
+        "headers": {
+          "content-type": "text/plain; version=0.0.4",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null
+        },
+        "counts": {
+          "('/i/scim/userinfo/:user', 'POST', '200')": 1.0,
+          "('/i/sso/settings', 'PUT', '200')": 3.0,
+          "('/i/sso/settings', 'PUT', '400')": 2.0,
+          "('/i/sso/settings', 'PUT', '404')": 1.0,
+          "('/i/status', 'HEAD', '200')": 1.0,
+          "('/i/status', 'POST', '405')": 1.0,
+          "('/scim/v2/ResourceTypes', 'GET', '200')": 1.0,
+          "('/scim/v2/ResourceTypes', 'HEAD', '200')": 1.0,
+          "('/scim/v2/Schemas', 'GET', '200')": 1.0,
+          "('/scim/v2/Schemas', 'HEAD', '200')": 1.0,
+          "('/scim/v2/Schemas/:id', 'GET', '200')": 5.0,
+          "('/scim/v2/Schemas/:id', 'GET', '404')": 3.0,
+          "('/scim/v2/Schemas/:id', 'HEAD', '200')": 5.0,
+          "('/scim/v2/Schemas/:id', 'HEAD', '404')": 3.0,
+          "('/scim/v2/ServiceProviderConfig', 'GET', '200')": 1.0,
+          "('/scim/v2/ServiceProviderConfig', 'HEAD', '200')": 1.0,
+          "('/sso/settings', 'GET', '200')": 2.0,
+          "('/sso/settings', 'HEAD', '200')": 1.0,
+          "('N/A', 'GET', '404')": 2.0,
+          "('prometheus', 'GET', '200')": 1.0
+        },
+        "metric_names": [
+          "gc_bytes_allocated_total",
+          "gc_bytes_used_current",
+          "gc_bytes_used_max",
+          "gc_seconds_cpu",
+          "gc_seconds_wall",
+          "http_request_duration_seconds",
+          "net_connections"
+        ]
+      }
+    },
+    "metrics-HEAD": {
+      "native": {
+        "status": 404,
+        "headers": {
+          "content-type": null,
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null
+        }
+      },
+      "go": {
+        "status": 200,
+        "headers": {
+          "content-type": "text/plain; version=0.0.4",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null
+        }
+      }
+    }
+  },
+  "runner_exit_code": 1,
+  "cleanup_exit_code": 0,
+  "independent_post_cleanup": {
+    "containers": [],
+    "networks": [],
+    "volumes": []
+  },
+  "analysis": "Native treats Content-Encoding gzip case-sensitively, silently accepts the complete JSON body with missing gzip trailer, projects invalid compression as400client-error without inner cache headers, and intercepts metrics onlyGET. Current Go differs. Correct candidate, retain this native observation unchanged. Middleware comparison excludes incidental parser diagnostics and runtime latency/GC bytes; uppercase encoding causes ordinary parser error and its plain-body diagnostic is also runtime-specific."
+}

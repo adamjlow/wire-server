@@ -35,9 +35,6 @@ var metricRoutes = []string{
 }
 
 func metricRoute(path string) string {
-	if path == "/i/metrics" {
-		return "prometheus"
-	}
 	parts := strings.Split(strings.Trim(path, "/"), "/")
 	for _, route := range metricRoutes {
 		pattern := strings.Split(strings.TrimPrefix(route, "/"), "/")
@@ -74,6 +71,9 @@ func newHTTPMetrics() *httpMetrics { return &httpMetrics{latencies: map[string]*
 
 func (m *httpMetrics) observe(path, method string, status int, elapsed time.Duration) {
 	normalized := metricRoute(path)
+	if path == "/i/metrics" && method == http.MethodGet {
+		normalized = "prometheus"
+	}
 	labels := fmt.Sprintf("handler=%s,method=%s,status_code=%s", strconv.Quote(normalized), strconv.Quote(method), strconv.Quote(strconv.Itoa(status)))
 	seconds := elapsed.Seconds()
 	m.mu.Lock()

@@ -82,6 +82,7 @@ def observe(binary,config,name):
                 for method in ('GET','POST','HEAD'):
                     key='metrics-'+method
                     middleware[key]=request(method,'/i/metrics',b'invalid gzip',{'Content-Encoding':'gzip'})
+                middleware['metrics-GET-final']=request('GET','/i/metrics')
             begin=time.monotonic();process.send_signal(signal.SIGTERM);code=process.wait(timeout=35)
             if code!=0:raise ValueError(name+' failed clean SIGTERM')
             return {'responses':replies,'middleware':middleware,'stop_exit_code':code,'stop_seconds':time.monotonic()-begin,'binary_sha256':hashlib.sha256(Path(binary).read_bytes()).hexdigest()}
@@ -127,13 +128,13 @@ def main():
                         nproject['counts']=metric_counts(nreply);gproject['counts']=metric_counts(greply)
                         nproject['metric_names']=sorted(re.findall(r'^# TYPE (\S+) \S+',nreply['body'],re.M))
                         gproject['metric_names']=sorted(re.findall(r'^# TYPE (\S+) \S+',greply['body'],re.M))
-                elif key in ('gzip-invalid-settings','gzip-truncated-settings'):
-                    nproject={**nreply,'body':{k:nreply['body'].get(k) for k in ('code','label')} if isinstance(nreply['body'],dict) else nreply['body']}
-                    gproject={**greply,'body':{k:greply['body'].get(k) for k in ('code','label')} if isinstance(greply['body'],dict) else greply['body']}
+                elif key in ('gzip-upper-settings','gzip-invalid-settings','gzip-truncated-settings'):
+                    nproject={**nreply,'body':{k:nreply['body'].get(k) for k in ('code','label')} if isinstance(nreply['body'],dict) else {'plain_error':True} if nreply['status']>=400 else nreply['body']}
+                    gproject={**greply,'body':{k:greply['body'].get(k) for k in ('code','label')} if isinstance(greply['body'],dict) else {'plain_error':True} if greply['status']>=400 else greply['body']}
                 else:nproject=nreply;gproject=greply
                 if nproject!=gproject:differences[key]={'native':nproject,'go':gproject}
             output['middleware_differences']=differences
-            output['scope']='Original33 actual process HTTP replies plus declared6 gzip/readback and3 metrics probes; exact response/state/header checks, error code/label (incidental parser text excluded), normalized histogram count/name checks (latency/GC values are runtime-specific and startup health poll count excluded). Not original e2e or full operations qualification.'
+            output['scope']='Original33 actual process HTTP replies plus declared6 gzip/readback and4 metrics probes; exact response/state/header checks, error code/label (incidental parser text excluded), normalized histogram count/name checks (latency/GC values are runtime-specific and startup health poll count excluded). Not original e2e or full operations qualification.'
         output['result']='pass' if not output['differences'] and not output.get('middleware_differences') else 'fail' 
         return 0 if output['result']=='pass' else 1
     except Exception as error:

@@ -106,16 +106,18 @@ func newHandler(c Config, store settingsStore) *sparHTTP {
 			metrics.observe(r.URL.Path, r.Method, status, time.Since(start))
 		}()
 		// Prometheus intercepts the route before gunzip/cache policy, as in WAI.
-		if r.URL.Path == "/i/metrics" {
+		if r.URL.Path == "/i/metrics" && r.Method == http.MethodGet {
 			metrics.serve(w)
 			return
 		}
-		if strings.EqualFold(r.Header.Get("Content-Encoding"), "gzip") {
+		if r.Header.Get("Content-Encoding") == "gzip" {
 			r = r.Clone(r.Context())
 			r.Header.Del("Content-Encoding")
 			r.Header.Del("Content-Length")
 			r.ContentLength = -1
-			r.Body = &gunzipBody{source: r.Body}
+			body := &gunzipBody{source: r.Body}
+			r.Body = body
+			w = &gunzipWriter{ResponseWriter: w, body: body}
 			defer r.Body.Close()
 		}
 		w.Header().Set("Cache-Control", "no-cache, no-store")

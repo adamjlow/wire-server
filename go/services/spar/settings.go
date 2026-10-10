@@ -55,7 +55,9 @@ func serveSettings(w http.ResponseWriter, r *http.Request, store settingsStore) 
 		err := decoder.Decode(&object)
 		var extra any
 		if err != nil || decoder.Decode(&extra) != io.EOF || object == nil {
-			wireError(w, 400, "bad-request", "Invalid SSO settings")
+			w.Header()["Content-Type"] = nil
+			w.WriteHeader(http.StatusBadRequest)
+			_, _ = w.Write([]byte("Invalid SSO settings"))
 			return true
 		}
 		raw, present := object["default_sso_code"]

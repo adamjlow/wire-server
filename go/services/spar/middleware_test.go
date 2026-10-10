@@ -37,13 +37,18 @@ func TestGunzipSettingsAndUnusedBodies(t *testing.T) {
 		{"PUT", "/v0/i/sso/settings", valid, 404, 0},
 		{"PUT", "/i/sso/settings", valid, 200, 1},
 		{"PUT", "/i/sso/settings", []byte("invalid gzip"), 400, 1},
-		{"PUT", "/i/sso/settings", valid[:len(valid)-5], 400, 1},
+		{"PUT", "/i/sso/settings", valid[:len(valid)-5], 200, 2},
 	} {
 		req := httptest.NewRequest(tc.method, tc.path, bytes.NewReader(tc.body))
 		req.Header.Set("Content-Encoding", "gzip")
 		req.Header.Set("Content-Type", "application/json")
 		w := httptest.NewRecorder()
 		h.ServeHTTP(w, req)
+		if tc.method == "PUT" && tc.path == "/i/sso/settings" && string(tc.body) == "invalid gzip" {
+			if w.Header().Get("Cache-Control") != "" || w.Header().Get("Pragma") != "" || !strings.Contains(w.Body.String(), `"label":"client-error"`) {
+				t.Fatal("gzip middleware error boundary", w.Header(), w.Body.String())
+			}
+		}
 		if w.Code != tc.code || store.writes != tc.writes {
 			t.Fatal(tc.path, w.Code, store.writes)
 		}
@@ -69,5 +74,16 @@ func TestMetricsNormalizeCapturesAndCountConcurrentRequests(t *testing.T) {
 	}
 	if !strings.Contains(body, `http_request_duration_seconds_count{handler="/sso/settings",method="GET",status_code="200"} 20`) || !strings.Contains(body, `handler="/i/scim/userinfo/:user"`) || strings.Contains(body, uid) {
 		t.Fatal("metrics count or capture labels", body)
+	}
+}
+
+func TestMetricsOnlyInterceptGET(t *testing.T) {
+	h := NewHandler(Config{})
+	for _, method := range []string{"HEAD", "POST"} {
+		w := httptest.NewRecorder()
+		h.ServeHTTP(w, httptest.NewRequest(method, "/i/metrics", nil))
+		if w.Code != 404 || w.Header().Get("Cache-Control") != "no-cache, no-store" || w.Header().Get("Content-Type") != "" {
+			t.Fatal("unsupported metrics method", method, w.Code, w.Header())
+		}
 	}
 }
