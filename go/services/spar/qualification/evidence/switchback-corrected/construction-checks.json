@@ -1,0 +1,78 @@
+{
+  "result": "pass",
+  "scope": "Finite actual durable native-Go-native handover; not final225/operations/image/selector/whole service acceptance.",
+  "source_revision": "58c386e77b0e8afcdf6674cc79c40709164fbeec",
+  "candidate_sha256": "d8db1d29203485acc66f48ab2e464d5e3ff5b150f9e11e49888f434d7ebe085d",
+  "native_sha256": "9c80adbfd76199ad3ab9bcf14c4eab8352a09ac2e0960078f8cd23615f8e58d1",
+  "fixture_executable": {
+    "path": "/dev/shm/wire-migration-spar-20261010/spar-switchback-uri-fixtures.test",
+    "sha256": "600b90390cb96ec6942c5a9b3273521016fe9a49a7e2ffb338595f7919c037c1",
+    "source_revision": "58c386e77b0e8afcdf6674cc79c40709164fbeec"
+  },
+  "observations_sha256": "c565024ca6ea7fbde12eaac1a2e6f76247b8b90db22b137e95ccb5cae04ffab8",
+  "actual_actions": 102,
+  "snapshots": [
+    "native-populated-cleanup",
+    "native-before-handover",
+    "go-converted-legacy",
+    "go-cleaned-native-team",
+    "go-before-return",
+    "native-after-return",
+    "native-deleted-Go-state"
+  ],
+  "log_sha256": {
+    "switchback-fixture.log": "c26de83abdc9496cd1301470918ec39ecca1cf389ef0ae1c6504da1800d1c431",
+    "spar-0.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "spar-switchback-go.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "spar-switchback-haskell.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "owners": [
+    {
+      "implementation": "haskell",
+      "phase": "native-first",
+      "pid": 791,
+      "sha256": "9c80adbfd76199ad3ab9bcf14c4eab8352a09ac2e0960078f8cd23615f8e58d1",
+      "shutdown": {
+        "exit_code": 0,
+        "seconds": 0.007398735731840134
+      }
+    },
+    {
+      "implementation": "go",
+      "phase": "go-middle",
+      "pid": 1177,
+      "sha256": "d8db1d29203485acc66f48ab2e464d5e3ff5b150f9e11e49888f434d7ebe085d",
+      "shutdown": {
+        "exit_code": 0,
+        "seconds": 0.003171011805534363
+      }
+    },
+    {
+      "implementation": "haskell",
+      "phase": "native-return",
+      "pid": 1189,
+      "sha256": "9c80adbfd76199ad3ab9bcf14c4eab8352a09ac2e0960078f8cd23615f8e58d1",
+      "shutdown": {
+        "exit_code": 0,
+        "seconds": 0.007200464606285095
+      }
+    }
+  ],
+  "assertions": [
+    "Full IdP/token/SCIM user/group metadata/version/URI and actual Brig account match across both handovers.",
+    "Native legacy unnamed plaintext token lazily converted in Go; returning native uses hashed token.",
+    "Native pending web/mobile request/verdict completes in Go, Go pending web/mobile completes in native.",
+    "Native replay rejected by Go; Go replay rejected by native, no callback cookie.",
+    "Native and Go reject cookie-in-path400; supported query substitution percent-encodes actual Set-Cookie and user ID.",
+    "Go cleans populated native team twice, removing IdP/token/SAML mappings and preserving SCIM metadata/external mapping/Brig account as native source.",
+    "Returning native confirms cleaned team absence and deletes Go-updated user/group/token/IdP and relevant mappings."
+  ],
+  "runner_exit_code": 0,
+  "cleanup_exit_code": 0,
+  "post_cleanup": {
+    "containers": [],
+    "networks": [],
+    "volumes": []
+  },
+  "review": "Delegated same-author increment review; no independent or final whole-service approval."
+}
