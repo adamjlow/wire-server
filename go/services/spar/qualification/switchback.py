@@ -2,7 +2,7 @@
 import base64
 import hashlib
 from html.parser import HTMLParser
-import http.client
+import http.client as http_client
 import json
 import os
 from pathlib import Path
@@ -29,7 +29,7 @@ def http(service,method,path,body=None,headers=None,expected=None):
     headers={'Request-Id':'spar-switchback-synthetic',**(headers or {})}
     if isinstance(body,(dict,list)):
         body=json.dumps(body);headers.setdefault('Content-Type','application/json')
-    connection=http.client.HTTPConnection('127.0.0.1',PORTS[service],timeout=15)
+    connection=http_client.HTTPConnection('127.0.0.1',PORTS[service],timeout=15)
     try:
         connection.request(method,path,body,headers)
         response=connection.getresponse();data=response.read(1024*1024+1)
@@ -128,7 +128,7 @@ def main():
         while True:
             if helper.poll()is not None:raise ValueError('synthetic state/signing fixture exited')
             try:metadata=http('fixture','GET','/metadata',expected=200)['body'];break
-            except (OSError,http.client.HTTPException):pass
+            except (OSError,http_client.HTTPException):pass
             if time.monotonic()>deadline:raise ValueError('state fixture readiness timeout')
             time.sleep(.1)
         issuer=re.search(r'entityID="([^"]+)"',metadata).group(1)
@@ -173,7 +173,7 @@ def main():
                 if owner_process.poll()is not None:raise ValueError('new Spar owner exited')
                 try:
                     if http('spar','GET','/i/status')['status']==200:return
-                except (OSError,http.client.HTTPException):pass
+                except (OSError,http_client.HTTPException):pass
                 if time.monotonic()>deadline:raise ValueError('Spar handover readiness timeout')
                 time.sleep(.1)
         stop();start('go')

@@ -1,0 +1,5 @@
+{
+  "result": "fail",
+  "source_revision": "e443dd7f7b7e1ebc41eb3b83a2a019e98f58d7fd",
+  "scope": "Driver failed before first HTTP action: local http function shadowed imported http.client module. No state handover or parity claim. Actual runner1/cleanup0/empty resources retained. Correct module alias only; runtime unchanged."
+}

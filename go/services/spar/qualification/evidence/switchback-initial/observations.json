@@ -1,0 +1,20 @@
+{
+  "result": "fail",
+  "kind": "durable-native-Go-native-Spar",
+  "e2e_executed": false,
+  "owners": [
+    {
+      "implementation": "haskell",
+      "phase": "native-first",
+      "pid": 821,
+      "sha256": "9c80adbfd76199ad3ab9bcf14c4eab8352a09ac2e0960078f8cd23615f8e58d1"
+    }
+  ],
+  "actions": [],
+  "snapshots": {},
+  "candidate_sha256": "b3ac571d3a13160c306570ae74a8133ef6139b5244d96a5f54051c2947a1475f",
+  "config_sha256": "c6fd50b5388904c4604384f6c491a436c9e9c769abe0a861174d55b63be23273",
+  "native_sha256": "9c80adbfd76199ad3ab9bcf14c4eab8352a09ac2e0960078f8cd23615f8e58d1",
+  "error_category": "AttributeError",
+  "error": "'function' object has no attribute 'client'"
+}
