@@ -4,7 +4,7 @@
   "title": "Default-preserving worker selector and factual reference count correction",
   "service": "background-worker",
   "kind": "contract-change",
-  "status": "active",
+  "status": "done",
   "owner": "codex",
   "branch": "go-background-worker-selector",
   "depends_on": [
@@ -32,7 +32,25 @@
       "required_evidence": "124 executions,120 distinct functions/four Events overlaps verified from actual original XML; no oracle assertion, test list, behavior or acceptance change; same-author delegated review."
     }
   ],
-  "evidence": [],
-  "review": null,
-  "handoff": "Serialized distinct-branch selector/count task; implementation remains active on go-migration, disjoint write scopes. No candidate availability publication until all remaining gates pass."
+  "evidence": [
+    {
+      "criterion": "selection",
+      "result": "pass",
+      "command": "Committed selector actualHelm/defaultbyteidentity/oneworkerimage andsixnegativeCLIcasespass,Recreate/mounts/probes/environmentretained; unchangedoriginalXML124/120/fourEventoverlaps factualmetadataonly; make migration-check migration-test pass32tests. No sourceassertions/deps/default/deployment/push orcurrentqualificationclaim.",
+      "revision": "230d738117145d12c66a0892f79e62e4eb491063",
+      "artifact": "docs/go-migration/qualifications/background-worker-selector-20261010/result.json"
+    },
+    {
+      "criterion": "count",
+      "result": "pass",
+      "command": "Committed selector actualHelm/defaultbyteidentity/oneworkerimage andsixnegativeCLIcasespass,Recreate/mounts/probes/environmentretained; unchangedoriginalXML124/120/fourEventoverlaps factualmetadataonly; make migration-check migration-test pass32tests. No sourceassertions/deps/default/deployment/push orcurrentqualificationclaim.",
+      "revision": "230d738117145d12c66a0892f79e62e4eb491063",
+      "artifact": "docs/go-migration/qualifications/background-worker-selector-20261010/result.json"
+    }
+  ],
+  "review": {
+    "by": "codex (self-review delegated by user)",
+    "artifact": ".migration/reviews/background-worker-selector.md"
+  },
+  "handoff": "Optionalselector/countmetadata self-reviewedcomplete; mergeback go-migration. Currentworker5a24 unchanged. Implementation current124/ops/finalreview/availability stillpending."
 }

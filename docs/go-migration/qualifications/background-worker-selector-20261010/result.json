@@ -1,0 +1,72 @@
+{
+  "result": "pass",
+  "source_revision": "230d738117145d12c66a0892f79e62e4eb491063",
+  "script_sha256": "a060eadade3acadba25eb969d056476e440c3c937f61823e4adcf5fc8754059c",
+  "default_byte_unchanged": true,
+  "changes": [
+    {
+      "line": 1469,
+      "before": "          image: \"quay.io/wire/background-worker:do-not-use\"",
+      "after": "          image: \"sha256:965c576532a1dc0c3a7a31be9cfa6267e2185f93847e9a0ef7379e3f1aecf68d\""
+    }
+  ],
+  "negative_cases": {
+    "invalid-image": {
+      "exit_code": 2,
+      "error": "Background-worker selection failed: invalid container image reference"
+    },
+    "missing-deployment": {
+      "exit_code": 2,
+      "error": "Background-worker selection failed: expected one background-worker deployment"
+    },
+    "non-recreate": {
+      "exit_code": 2,
+      "error": "Background-worker selection failed: background-worker must preserve Recreate strategy"
+    },
+    "missing-galley-mount": {
+      "exit_code": 2,
+      "error": "Background-worker selection failed: background-worker default config mount missing"
+    },
+    "oversized-render": {
+      "exit_code": 2,
+      "error": "Background-worker selection failed: render exceeds bounded input"
+    },
+    "multiple-deployments": {
+      "exit_code": 2,
+      "error": "Background-worker selection failed: expected one background-worker deployment"
+    }
+  },
+  "render_inputs": {
+    "command": [
+      "/home/operator/.cache/wire-migration/toolchains/helm-3.22.0/helm",
+      "template",
+      "wire",
+      "/home/operator/.cache/wire-migration/cargohold-chart-selection-20261008/charts/wire-server",
+      "--values",
+      "/home/operator/.cache/wire-migration/cargohold-chart-selection-20261008/synthetic-values.json",
+      "--set",
+      "tags.federation=true",
+      "--set",
+      "federator.tls.useSharedFederatorSecret=true"
+    ],
+    "helm_sha256": "7a319dee5ea7a1f7d7a0d92d5c223586f3b65abc33163c9de2a85f083aa3df2b",
+    "values_sha256": "e8698d232498afd90640f1a73a83f2dfe90b1f6893415e7751b3a76913ad4208",
+    "render_sha256": "33cd0a838270644bab8412941aac896a4b30d11d8933da9ac3c3c909616b92aa",
+    "exit_code": 0,
+    "source_chart_files_identical": true
+  },
+  "image_id": "sha256:965c576532a1dc0c3a7a31be9cfa6267e2185f93847e9a0ef7379e3f1aecf68d",
+  "default_sha256": "33cd0a838270644bab8412941aac896a4b30d11d8933da9ac3c3c909616b92aa",
+  "selected_sha256": "c67b141a4da2179b90e13c48adab6dbae98ba7b546ab78194b0708b758518cf7",
+  "execution_count": 124,
+  "distinct_functions": 120,
+  "overlaps": {
+    "Events.testBackendPusherRecoversFromQueueDeletion": 2,
+    "Events.testEventsDeadLettered": 2,
+    "Events.testEventsDeadLetteredWithReconnect": 2,
+    "Events.testTransientEventsDoNotTriggerDeadLetters": 2
+  },
+  "original_assertions_changed": false,
+  "deployed": false,
+  "pushed": false
+}
