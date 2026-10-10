@@ -1,0 +1,33 @@
+{
+  "scope": "Module checks and unchanged upstream SelfProfile JSON fixture only; native HTTP/backend/e2e/whole-service qualification remains pending.",
+  "source_revision": "fad69e6e485b616c900fdfe009eb5ac0b9f24ea9",
+  "quality_exit_code": 0,
+  "e2e_executed": false,
+  "native_http_compared": false,
+  "input_sha256": {
+    "go/services/brig/cmd/brig/main.go": "c68e761016a67698e9cf298d6499d0f1ebcd27eaf4d788502e626600b4a792df",
+    "go/services/brig/config.go": "442076fe154c6c945fb0145a1467b3c58ac0408ead0363a68b08c50e0c529657",
+    "go/services/brig/config_test.go": "a45931292c54cd5548148cdb040cb8a7e8036ed521cd95e8ab16e475383f3f77",
+    "go/services/brig/go.mod": "425c8270bd631de9ddbe78bce7333eec752ce1a5ef393839a8a28c56a6e39aa4",
+    "go/services/brig/go.sum": "810c75fb95de02857d2f3a872986191df3bb04307d9f8a55f843e5f728548df3",
+    "go/services/brig/migrations.go": "d9a10922837f6fd76f1c45ce76dbb67cba4ef94f3bf88fecd4fac05a9176267f",
+    "go/services/brig/migrations_test.go": "1ced0ace5d8078a19656de6e3ae298cb20039cb52547dd28f163c5b54a0d91c7",
+    "go/services/brig/peers.go": "06590c360afe56408fa7e0884480d515c0dd0ba104c2a9930872c53f9b1c6697",
+    "go/services/brig/profiles.go": "387e84a87e78a39f93b5bb6633018d1faceebc1e27f718220688bec9db3e7b77",
+    "go/services/brig/profiles_test.go": "f431e60270fc51de3356dc221d58490f8d6fafe3a8e15244d98b5380e5f00758",
+    "go/services/brig/read_handlers.go": "46dd48692b5898a8eb653f63c27155b1de946e10a27dc30c84092c19a53685b8",
+    "go/services/brig/read_handlers_test.go": "5c10e20ac16b609c76776753959f96d654bddf4e104c359e9e22b486a5fa7bed",
+    "go/services/brig/server.go": "b9a44112f8e18720f4ba31f09be2fec7fc9f5e3e62c03f78163b60cb18389ced",
+    "go/services/brig/server_test.go": "857fd71f7adfecd13baeb9e5aa9be71e4290a14c91a682b25dd1721a5dff19c1",
+    "go/services/brig/sessions.go": "6ab9379b1c230b6a5cdbce90ccb2535db537e8a6273ec14f815e9358179aad4a",
+    "go/services/brig/sessions_test.go": "5776239ff2b09a8344c670c4d5173c269a5c89c9d1891632f679655dda275303",
+    "go/services/brig/store.go": "f6fd613c1abc20e8ea4cc58619f138fe1ae2c41f91b70d276b7069b1edf51c75",
+    "go/services/brig/stores_qualification_test.go": "1f96512a12a917b65713df0513001849761c2cc6324a688219e003d2923bf00c",
+    "go/services/brig/user_auth_store.go": "d2c51cf4668f6566a6c34f1b7cc932e840715ee619a357e8d84ffba96a664a58",
+    "go/services/brig/user_store.go": "e281ec56f47287ac009a76e529a3c61e191559bdd040a69e7f68f975ba059262",
+    "go/services/brig/zauth.go": "1cf8e309d902b12e5e71a849a38ee6daae44684834073940a7215552e1cca90d",
+    "go/services/brig/zauth_test.go": "4aa1d7a961c418c4d499b2ce5ac747c785e96a142b2aa4c257d4e72a2eb2cd17",
+    "libs/wire-api/test/golden/testObject_SelfProfile_user_1.json": "63893400d29b9fb931c9836080f35b3c18493490203a62adc40370a3800d98a9"
+  },
+  "check_log_sha256": "1067f6790fa80ce8c1c3cc9942015fe3c668399674668aa959f092e358796369"
+}
