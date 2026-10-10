@@ -1,5 +1,7 @@
 """Finite actual native/Go startup and HTTP comparison in an owned namespace."""
 import contextlib
+import gzip
+import re
 import hashlib
 import http.client
 import json
@@ -17,10 +19,10 @@ sys.path.insert(0,'/opt/wire-e2e')
 import runtime
 
 
-def request(method,path,body=None):
+def request(method,path,body=None,headers=None):
     connection=http.client.HTTPConnection('127.0.0.1',8088,timeout=5)
     try:
-        connection.request(method,path,body=body,headers={'Request-Id':'spar-early-synthetic','Content-Type':'application/json'})
+        connection.request(method,path,body=body,headers={'Request-Id':'spar-early-synthetic','Content-Type':'application/json',**(headers or {})})
         response=connection.getresponse();body=response.read(1024*1024+1)
         if len(body)>1024*1024:raise ValueError('unexpected large reference response')
         text=body.decode('utf-8')
@@ -29,6 +31,19 @@ def request(method,path,body=None):
         headers={name.lower():response.getheader(name) for name in ('Content-Type','Cache-Control','Pragma','Request-Id','Allow')}
         return {'status':response.status,'headers':headers,'body':value}
     finally:connection.close()
+
+
+def metric_counts(reply):
+    counts={}
+    for line in reply['body'].splitlines():
+        match=re.fullmatch(r'http_request_duration_seconds_count\{(.*)\} ([0-9.eE+-]+)',line)
+        if match:
+            labels=dict(re.findall(r'(\w+)="([^"]*)"',match[1]))
+            # Startup health polling can issue a different number of requests.
+            if labels.get('handler')=='/i/status' and labels.get('method')=='GET':continue
+            key=tuple(labels.get(k) for k in ('handler','method','status_code'))
+            counts[str(key)]=float(match[2])
+    return counts
 
 
 def observe(binary,config,name):
@@ -52,9 +67,24 @@ def observe(binary,config,name):
                 for method in ('GET','HEAD'):
                     key=method+' /scim/v2/'+path
                     replies[key]=request(method,'/scim/v2/'+path)
+            middleware={}
+            if '--middleware' in sys.argv:
+                valid=gzip.compress(b'{"default_sso_code":null}',mtime=0)
+                tests=[('gzip-settings','PUT','/i/sso/settings',valid,'gzip'),
+                       ('gzip-upper-settings','PUT','/i/sso/settings',valid,'GZIP'),
+                       ('gzip-invalid-health','GET','/i/status',b'invalid gzip','gzip'),
+                       ('gzip-invalid-unknown','GET','/unknown',b'invalid gzip','gzip'),
+                       ('gzip-invalid-settings','PUT','/i/sso/settings',b'invalid gzip','gzip'),
+                       ('gzip-truncated-settings','PUT','/i/sso/settings',valid[:-5],'gzip')]
+                for key,method,path,body,encoding in tests:
+                    middleware[key]=request(method,path,body,{'Content-Encoding':encoding})
+                middleware['gzip-settings-readback']=request('GET','/sso/settings')
+                for method in ('GET','POST','HEAD'):
+                    key='metrics-'+method
+                    middleware[key]=request(method,'/i/metrics',b'invalid gzip',{'Content-Encoding':'gzip'})
             begin=time.monotonic();process.send_signal(signal.SIGTERM);code=process.wait(timeout=35)
             if code!=0:raise ValueError(name+' failed clean SIGTERM')
-            return {'responses':replies,'stop_exit_code':code,'stop_seconds':time.monotonic()-begin,'binary_sha256':hashlib.sha256(Path(binary).read_bytes()).hexdigest()}
+            return {'responses':replies,'middleware':middleware,'stop_exit_code':code,'stop_seconds':time.monotonic()-begin,'binary_sha256':hashlib.sha256(Path(binary).read_bytes()).hexdigest()}
         finally:
             if process.poll()is None:
                 process.kill();process.wait(timeout=10)
@@ -83,7 +113,28 @@ def main():
         output['native']=observe(native,config,'native')
         output['go']=observe(candidate,config,'go')
         output['differences']={key:{'native':value,'go':output['go']['responses'][key]} for key,value in output['native']['responses'].items() if value!=output['go']['responses'][key]}
-        output['result']='pass' if not output['differences'] else 'fail'
+        if '--middleware' in sys.argv:
+            native=output['native']['middleware'];go=output['go']['middleware'];differences={}
+            # Valid decompression, lazy unread bodies, method/header behavior and
+            # persisted state are exact comparisons. Parser exception text is
+            # runtime-specific; error code/label/headers remain part of the check.
+            for key,nreply in native.items():
+                greply=go[key]
+                if key.startswith('metrics-'):
+                    nproject={k:v for k,v in nreply.items() if k!='body'}
+                    gproject={k:v for k,v in greply.items() if k!='body'}
+                    if key!='metrics-HEAD':
+                        nproject['counts']=metric_counts(nreply);gproject['counts']=metric_counts(greply)
+                        nproject['metric_names']=sorted(re.findall(r'^# TYPE (\S+) \S+',nreply['body'],re.M))
+                        gproject['metric_names']=sorted(re.findall(r'^# TYPE (\S+) \S+',greply['body'],re.M))
+                elif key in ('gzip-invalid-settings','gzip-truncated-settings'):
+                    nproject={**nreply,'body':{k:nreply['body'].get(k) for k in ('code','label')} if isinstance(nreply['body'],dict) else nreply['body']}
+                    gproject={**greply,'body':{k:greply['body'].get(k) for k in ('code','label')} if isinstance(greply['body'],dict) else greply['body']}
+                else:nproject=nreply;gproject=greply
+                if nproject!=gproject:differences[key]={'native':nproject,'go':gproject}
+            output['middleware_differences']=differences
+            output['scope']='Original33 actual process HTTP replies plus declared6 gzip/readback and3 metrics probes; exact response/state/header checks, error code/label (incidental parser text excluded), normalized histogram count/name checks (latency/GC values are runtime-specific and startup health poll count excluded). Not original e2e or full operations qualification.'
+        output['result']='pass' if not output['differences'] and not output.get('middleware_differences') else 'fail' 
         return 0 if output['result']=='pass' else 1
     except Exception as error:
         output.update(result='fail',error_category=type(error).__name__,error=str(error)[:300]);return 1

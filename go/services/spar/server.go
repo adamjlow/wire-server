@@ -29,9 +29,39 @@ func decimal(s string) bool {
 }
 func NewHandler(c Config) http.Handler { return newHandler(c, nil) }
 
-func newHandler(c Config, store settingsStore) http.Handler {
+type sparHTTP struct {
+	http.Handler
+	metrics *httpMetrics
+}
+
+type metricWriter struct {
+	http.ResponseWriter
+	status int
+}
+
+func (w *metricWriter) WriteHeader(code int) {
+	if code >= 100 && code < 200 {
+		w.ResponseWriter.WriteHeader(code)
+		return
+	}
+	if w.status != 0 {
+		return
+	}
+	w.status = code
+	w.ResponseWriter.WriteHeader(code)
+}
+func (w *metricWriter) Write(body []byte) (int, error) {
+	if w.status == 0 {
+		w.WriteHeader(http.StatusOK)
+	}
+	return w.ResponseWriter.Write(body)
+}
+func (w *metricWriter) Unwrap() http.ResponseWriter { return w.ResponseWriter }
+
+func newHandler(c Config, store settingsStore) *sparHTTP {
+	metrics := newHTTPMetrics()
 	peers := peerClient{config: c, http: &http.Client{Timeout: 10 * time.Second, CheckRedirect: func(*http.Request, []*http.Request) error { return http.ErrUseLastResponse }}}
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	return &sparHTTP{metrics: metrics, Handler: http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		segments := strings.Split(strings.TrimPrefix(r.URL.Path, "/"), "/")
 		first := segments[0]
 		if strings.HasPrefix(first, "v") && decimal(first[1:]) {
@@ -65,6 +95,29 @@ func newHandler(c Config, store settingsStore) http.Handler {
 			}
 		}
 		r.Header.Set("Request-Id", requestID)
+		observed := &metricWriter{ResponseWriter: w}
+		w = observed
+		start := time.Now()
+		defer func() {
+			status := observed.status
+			if status == 0 {
+				status = http.StatusOK
+			}
+			metrics.observe(r.URL.Path, r.Method, status, time.Since(start))
+		}()
+		// Prometheus intercepts the route before gunzip/cache policy, as in WAI.
+		if r.URL.Path == "/i/metrics" {
+			metrics.serve(w)
+			return
+		}
+		if strings.EqualFold(r.Header.Get("Content-Encoding"), "gzip") {
+			r = r.Clone(r.Context())
+			r.Header.Del("Content-Encoding")
+			r.Header.Del("Content-Length")
+			r.ContentLength = -1
+			r.Body = &gunzipBody{source: r.Body}
+			defer r.Body.Close()
+		}
 		w.Header().Set("Cache-Control", "no-cache, no-store")
 		w.Header().Set("Pragma", "no-cache")
 		w.Header()["Content-Type"] = nil
@@ -107,10 +160,9 @@ func newHandler(c Config, store settingsStore) http.Handler {
 		if store != nil && serveSettings(w, r, store) {
 			return
 		}
-		// Remaining source routes
-		// are not successful placeholders and must be implemented before selection.
+		// Unknown route.
 		w.WriteHeader(http.StatusNotFound)
-	})
+	})}
 }
 func Run(ctx context.Context, c Config) error {
 	if err := c.Validate(); err != nil {
@@ -125,7 +177,11 @@ func Run(ctx context.Context, c Config) error {
 	if err != nil {
 		return errors.New("cannot bind Spar HTTP listener")
 	}
-	server := &http.Server{Handler: newHandler(c, cassandraStore{session: session}), ReadHeaderTimeout: 30 * time.Second}
+	handler := newHandler(c, cassandraStore{session: session})
+	metricsCtx, stopMetrics := context.WithCancel(ctx)
+	defer stopMetrics()
+	go handler.metrics.Collect(metricsCtx)
+	server := &http.Server{Handler: handler, ReadHeaderTimeout: 30 * time.Second, ConnState: handler.metrics.ConnState}
 	stopped := make(chan error, 1)
 	go func() { stopped <- server.Serve(listener) }()
 	select {
