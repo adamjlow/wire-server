@@ -80,6 +80,12 @@ func newHandler(c Config, store settingsStore) http.Handler {
 		if serveSCIMMetadata(w, r) {
 			return
 		}
+		if cleanup, ok := store.(internalCleanupStore); ok && serveInternalCleanup(w, r, cleanup, peers) {
+			return
+		}
+		if discovery, ok := store.(emailDiscoveryStore); ok && serveEmailDiscovery(w, r, c, discovery, peers) {
+			return
+		}
 		if db, ok := store.(cassandraStore); ok && serveIdPs(w, r, c, db, peers) {
 			return
 		}
