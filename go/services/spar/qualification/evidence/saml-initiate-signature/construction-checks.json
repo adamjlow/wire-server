@@ -1,0 +1,42 @@
+{
+  "source_revision": "ccb42dcf898765e0b119d424c91b27c2f94cb4ff",
+  "result": "pass",
+  "scope": "Construction checks and unchanged source fixture reuse only; not original integration execution, login/session or whole-service parity.",
+  "checks": [
+    "pinned Go format/tidy/verify/vet/race/build/module vulnerability/license",
+    "metadata/initiate/domain/mobile/request issuer binding/label/escaping tests",
+    "configured key/expired key date/unsigned/tamper/wrapping/reference/duplicate credential negatives",
+    "unchanged Microsoft signed XML fixture and native ADFS repair retry",
+    "Go default rejection vs native legacy RSA compatibility and wrapping protection"
+  ],
+  "fixtures": [
+    {
+      "path": "libs/saml2-web-sso/test/samples/microsoft-authnresponse-2.xml",
+      "sha256": "771d2a0c126f66920b8f58a64af16c8fcb3a4e046bad3d0813e4842b88b08cfb"
+    },
+    {
+      "path": "libs/wire-api/test/golden/testObject_UserSSOId_user_2.json",
+      "sha256": "68b401f930a2a52e130f7dbab536ac8f7fed1002ad0d47993b900b39f6bddbb0"
+    },
+    {
+      "path": "libs/wire-api/test/golden/testObject_IdP_1.json",
+      "sha256": "3295c4d86a45a29a1d174339baca33455e3ec0c7294189cab555199bc8aa16b3"
+    },
+    {
+      "path": "libs/wire-api/test/golden/testObject_IdP_2.json",
+      "sha256": "6c890c514a07df7454e889d9a17ab4a942f8a0e8043fac156308f1e59f69feff"
+    },
+    {
+      "path": "libs/wire-api/test/golden/testObject_IdP_3.json",
+      "sha256": "dc91232b8a537fd394ae89920eb8bcfbff6245e42759443b636433cd9f2b69c4"
+    }
+  ],
+  "unresolved": [
+    "RIPEMD160 digest/SDK namespace traversal limit",
+    "full assertion judge and actual Brig login/session verdict effects",
+    "SCIM users/groups/internal cleanup",
+    "final225/mixed profile/finite state gaps/ops/durable switchback/image/selector"
+  ],
+  "security_authority": "User explicitly instructed mirroring current backend and documenting concerns. Spar-local rsa1024min=0 preserves existing configured-key policy; no signature bypass, oracle change or deployment approval.",
+  "review": "Same-author construction review under user delegation; whole-service review incomplete."
+}

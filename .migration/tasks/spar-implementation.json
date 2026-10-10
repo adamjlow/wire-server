@@ -84,8 +84,15 @@
       "command": "Pinned Go1.26.9 checks incl race/vulnerability/license; unchanged original NameID golden and focused TTL/verdict/self-deletion tests; one unchanged original issuer update/delete test against exact Go Spar with Haskell peers. Strict one-name XML/no failures/errors/skips, runner0/owned cleanup0/no remaining resources. Construction increment only, signed login/SCIM/final225 still pending.",
       "revision": "77b401df2d4bd7d21e7fdb98731cd7336dbe9750",
       "artifact": "go/services/spar/qualification/evidence/idp-delete-original/result.json"
+    },
+    {
+      "criterion": "quality",
+      "result": "pass",
+      "command": "Pinned Go1.26.9 format/tidy/verify/vet/race/build/vulnerability/license, metadata/initiate/mobile/domain/binding tests and configured-key signature tests reusing unchanged Microsoft XML plus prior IdP/NameID goldens. Exact main artifact carries native RSA compatibility default. Construction only; no finalize-login or original225 claim.",
+      "revision": "ccb42dcf898765e0b119d424c91b27c2f94cb4ff",
+      "artifact": "go/services/spar/qualification/evidence/saml-initiate-signature/construction-checks.json"
     }
   ],
   "review": null,
-  "handoff": "Progress: source77b401 state/IdP delete passed original update/delete regression; six prior IdP/token originals retained. Current source adds metadata/initiate/precheck domain/v1/v2/mobile/contact/URI handling and persistent request/verdict binding plus first configured-key signature adapter. Pinned Go1.26.9 checks incl race/vulnerability/license pass; unchanged Microsoft fixture, IdP/NameID goldens, ADFS fallback and tamper/wrapping/key/credential/ref/URI/domain negatives pass. User-authorized native RSA policy retained via Spar-local rsa1024min=0; inherited weak keys documented, no signature bypass or oracle edits. Adapter still has RIPEMD160/SDK traversal-limit gaps, and is not wired into finalize-login. Next resolve these finite adapter gaps and implement full assertion judge/issuer/request/replay/time/audience/recipient checks, then actual Brig SAML user/cookie verdict effects and SCIM users/groups/internal cleanup. Final225/state/ops/switchback/image/selector remain incomplete; compatibility null."
+  "handoff": "Progress: source77b401 state/IdP delete passed original update/delete regression; six prior IdP/token originals retained. Sourceccb42dcf898765e0b119d424c91b27c2f94cb4ff adds metadata/initiate/precheck domain/v1/v2/mobile/contact/URI handling and persistent request/verdict binding plus first configured-key signature adapter. Pinned Go1.26.9 checks incl race/vulnerability/license pass; unchanged Microsoft fixture, IdP/NameID goldens, ADFS fallback and tamper/wrapping/key/credential/ref/URI/domain negatives pass. User-authorized native RSA policy retained via Spar-local rsa1024min=0; inherited weak keys documented, no signature bypass or oracle edits. Adapter still has RIPEMD160/SDK traversal-limit gaps, and is not wired into finalize-login. Next resolve these finite adapter gaps and implement full assertion judge/issuer/request/replay/time/audience/recipient checks, then actual Brig SAML user/cookie verdict effects and SCIM users/groups/internal cleanup. Final225/state/ops/switchback/image/selector remain incomplete; compatibility null."
 }
