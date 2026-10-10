@@ -40,17 +40,22 @@ type peerClient struct {
 }
 
 func (p peerClient) request(ctx context.Context, endpoint Endpoint, method, path, requestID, user string, body any) (int, []byte, error) {
+	status, encoded, _, err := p.requestWithHeaders(ctx, endpoint, method, path, requestID, user, body)
+	return status, encoded, err
+}
+
+func (p peerClient) requestWithHeaders(ctx context.Context, endpoint Endpoint, method, path, requestID, user string, body any) (int, []byte, http.Header, error) {
 	var payload io.Reader
 	if body != nil {
 		encoded, err := json.Marshal(body)
 		if err != nil {
-			return 0, nil, errors.New("peer request encoding failed")
+			return 0, nil, nil, errors.New("peer request encoding failed")
 		}
 		payload = bytes.NewReader(encoded)
 	}
 	req, err := http.NewRequestWithContext(ctx, method, "http://"+endpoint.Address()+path, payload)
 	if err != nil {
-		return 0, nil, errors.New("invalid peer request")
+		return 0, nil, nil, errors.New("invalid peer request")
 	}
 	req.Header.Set("Request-Id", requestID)
 	if user != "" {
@@ -61,14 +66,14 @@ func (p peerClient) request(ctx context.Context, endpoint Endpoint, method, path
 	}
 	response, err := p.http.Do(req)
 	if err != nil {
-		return 0, nil, errors.New("peer request failed")
+		return 0, nil, nil, errors.New("peer request failed")
 	}
 	defer response.Body.Close()
 	encoded, err := io.ReadAll(response.Body)
 	if err != nil {
-		return 0, nil, errors.New("peer response failed")
+		return 0, nil, nil, errors.New("peer response failed")
 	}
-	return response.StatusCode, encoded, nil
+	return response.StatusCode, encoded, response.Header.Clone(), nil
 }
 
 // Hidden permissions use the highest native role contained in the intersection,

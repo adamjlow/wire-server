@@ -142,8 +142,15 @@ func TestOriginalMicrosoftSignatureFixture(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if _, err = verifiedAssertions(data, []*x509.Certificate{cert}); err != nil {
+	verified, err := verifiedAssertions(data, []*x509.Certificate{cert})
+	if err != nil {
 		t.Fatal("original Microsoft signature rejected", err)
+	}
+	for _, node := range verified {
+		assertion, err := parseSAMLAssertion(node)
+		if err != nil || assertion.ID == "" || len(assertion.Statements) != 1 || len(assertion.Confirmations) != 1 {
+			t.Fatal("original verified assertion did not parse", err)
+		}
 	}
 	adfs := []byte(strings.ReplaceAll(string(data), "><", "> <"))
 	if _, err = verifiedAssertions(adfs, []*x509.Certificate{cert}); err != nil {

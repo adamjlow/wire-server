@@ -40,7 +40,15 @@ func parseNameID(encoded string) (samlNameID, error) {
 	if err != nil || n.Name != (xml.Name{Space: assertionNS, Local: "NameID"}) || len(n.Children) != 0 {
 		return id, bad
 	}
-	id = samlNameID{Format: n.attr("Format"), Value: n.Text, NameQualifier: optionalXMLAttr(n, "NameQualifier"), SPNameQualifier: optionalXMLAttr(n, "SPNameQualifier"), SPProvidedID: optionalXMLAttr(n, "SPProvidedID")}
+	return parseNameIDNode(n)
+}
+
+func parseNameIDNode(n *xmlNode) (samlNameID, error) {
+	bad := errors.New("invalid SAML NameID")
+	if n.Name != (xml.Name{Space: assertionNS, Local: "NameID"}) || len(n.Children) != 0 {
+		return samlNameID{}, bad
+	}
+	id := samlNameID{Format: n.attr("Format"), Value: n.Text, NameQualifier: optionalXMLAttr(n, "NameQualifier"), SPNameQualifier: optionalXMLAttr(n, "SPNameQualifier"), SPProvidedID: optionalXMLAttr(n, "SPProvidedID")}
 	if id.Format == "" {
 		id.Format = nameID11 + "unspecified"
 	}
