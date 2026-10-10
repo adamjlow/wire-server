@@ -1,0 +1,17 @@
+{
+  "result": "fail",
+  "source_revision": "8c74c1d34ba3d530a4c4d6092421a8b196cdcebc",
+  "candidate": {
+    "path": "/dev/shm/wire-migration-spar-20261010/spar-signature-native",
+    "sha256": "a75db164a20e87155ba320b2b61bad558f411f7afb622bdb5f333e79e3dcbe73",
+    "source_revision": "5e57870fb2568524cbf6bacc6ad52ebe17047c50"
+  },
+  "runner_exit_code": 1,
+  "cleanup_exit_code": 0,
+  "independent_post_cleanup": {
+    "containers": [],
+    "networks": [],
+    "volumes": []
+  },
+  "analysis": "First fixture failed native XML preflight: unprocessed Subject ID attribute (native bad-response-xml400). Correct full wire fixture by removing invalid Subject ID; failed additional matching-ID digest still tests native successful-reference rule without an invalid subelement ID. Go imported unknown Subject attributes and needs the actual native XML rejection before lookup/verification. Native signature cases remain unexecuted after this first parse rejection. Initial custom mount preparation failed before any resources started and was corrected using approved read-only fixture mount."
+}

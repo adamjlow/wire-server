@@ -12,6 +12,7 @@ import (
 )
 
 var errSAMLAssertion = errors.New("invalid SAML assertion")
+var errSAMLXMLAttribute = errors.New("unexpected SAML XML attribute")
 
 const bearerMethod = "urn:oasis:names:tc:SAML:2.0:cm:bearer"
 
@@ -85,6 +86,13 @@ func parseSAMLAssertion(n *xmlNode) (samlAssertion, error) {
 	subject, err := singleSAMLChild(n, "Subject")
 	if err != nil {
 		return a, err
+	}
+	// Native HasXML Subject has no attributes. Namespace declarations are
+	// syntax, but unexpected data attributes must fail before identity lookup.
+	for _, attribute := range subject.Attributes {
+		if attribute.Name.Space != "xmlns" && !(attribute.Name.Space == "" && attribute.Name.Local == "xmlns") {
+			return a, errSAMLXMLAttribute
+		}
 	}
 	name, err := singleSAMLChild(subject, "NameID")
 	if err != nil {

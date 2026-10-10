@@ -233,7 +233,7 @@ func resignTestInfo(t *testing.T, signature *etree.Element, key *rsa.PrivateKey,
 func qualificationResponseSource(kind, attributes string) string {
 	issuer := "https://synthetic.example/qualification/" + kind
 	instant := "2026-10-10T00:00:00Z"
-	return `<samlp:Response xmlns:samlp="` + protocolNS + `" xmlns:saml="` + assertionNS + `" ID="_response" Version="2.0" IssueInstant="` + instant + `"><saml:Issuer>` + issuer + `</saml:Issuer><samlp:Status><samlp:StatusCode Value="urn:oasis:names:tc:SAML:2.0:status:Success"/></samlp:Status><saml:Assertion ID="_assertion" Version="2.0" IssueInstant="` + instant + `"><saml:Issuer>` + issuer + `</saml:Issuer><saml:Subject ID="_subject"><saml:NameID Format="` + nameID11 + `emailAddress">synthetic@example.test</saml:NameID><saml:SubjectConfirmation Method="` + bearerMethod + `"><saml:SubjectConfirmationData Recipient="https://synthetic.example/sso/finalize-login" NotOnOrAfter="2030-01-01T00:00:00Z" InResponseTo="_qualification-request"/></saml:SubjectConfirmation></saml:Subject><saml:Conditions NotOnOrAfter="2030-01-01T00:00:00Z"><saml:AudienceRestriction><saml:Audience>https://synthetic.example/sso/finalize-login</saml:Audience></saml:AudienceRestriction></saml:Conditions><saml:AuthnStatement AuthnInstant="` + instant + `"><saml:AuthnContext><saml:AuthnContextClassRef>urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport</saml:AuthnContextClassRef></saml:AuthnContext></saml:AuthnStatement>` + attributes + `</saml:Assertion></samlp:Response>`
+	return `<samlp:Response xmlns:samlp="` + protocolNS + `" xmlns:saml="` + assertionNS + `" ID="_response" Version="2.0" IssueInstant="` + instant + `"><saml:Issuer>` + issuer + `</saml:Issuer><samlp:Status><samlp:StatusCode Value="urn:oasis:names:tc:SAML:2.0:status:Success"/></samlp:Status><saml:Assertion ID="_assertion" Version="2.0" IssueInstant="` + instant + `"><saml:Issuer>` + issuer + `</saml:Issuer><saml:Subject><saml:NameID Format="` + nameID11 + `emailAddress">synthetic@example.test</saml:NameID><saml:SubjectConfirmation Method="` + bearerMethod + `"><saml:SubjectConfirmationData Recipient="https://synthetic.example/sso/finalize-login" NotOnOrAfter="2030-01-01T00:00:00Z" InResponseTo="_qualification-request"/></saml:SubjectConfirmation></saml:Subject><saml:Conditions NotOnOrAfter="2030-01-01T00:00:00Z"><saml:AudienceRestriction><saml:Audience>https://synthetic.example/sso/finalize-login</saml:Audience></saml:AudienceRestriction></saml:Conditions><saml:AuthnStatement AuthnInstant="` + instant + `"><saml:AuthnContext><saml:AuthnContextClassRef>urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport</saml:AuthnContextClassRef></saml:AuthnContext></saml:AuthnStatement>` + attributes + `</saml:Assertion></samlp:Response>`
 }
 
 // The same finite crypto tests can seed/emit synthetic wire inputs for the
@@ -346,8 +346,6 @@ func TestNativeSuccessfulReferenceSelection(t *testing.T) {
 				switch kind {
 				case "missing-extra":
 					extra.SelectAttr("URI").Value = "#missing"
-				case "bad-extra-digest":
-					extra.SelectAttr("URI").Value = "#_subject"
 				case "duplicate-valid":
 					accepted = false
 				}
