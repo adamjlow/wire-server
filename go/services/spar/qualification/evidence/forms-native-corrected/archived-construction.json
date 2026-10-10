@@ -1,0 +1,38 @@
+{
+  "kind": "lossless-archive-of-superseded-completed-construction-binaries",
+  "result": "pass",
+  "archives": [
+    {
+      "original": "/home/operator/.cache/wire-migration/background-worker-20261009/conversation-counters-background-worker",
+      "original_size": 20030806,
+      "original_sha256": "9e21f14e4f11d203faa98e71bea7490c5c2d172fa879e67da73bf47275035f8f",
+      "original_mode": 509,
+      "archive": "/home/operator/.cache/wire-migration/background-worker-20261009/conversation-counters-background-worker.construction-binary.gz",
+      "archive_size": 9696103,
+      "archive_sha256": "1fb67cb526751262d5ad0a80c5d9018b823f16600b903e05709c033dd1344abe",
+      "source_revision": "309733bb48febdb8708e6b1c5aadb94cb03fe8ab",
+      "build_info": "/home/operator/.cache/wire-migration/background-worker-20261009/conversation-counters-background-worker: go1.26.9\n\tpath\tgithub.com/adamjlow/wire-server/go/services/background-worker/cmd/background-worker\n\tmod\tgithub.com/adamjlow/wire-server/go/services/background-worker\t(devel)\t\n\tdep\tgithub.com/apache/cassandra-gocql-driver/v2\tv2.1.2\th1:lu/p0Db2av18enHJvWJQoChLssI0P+AR06STq4VdvCc=\n\tdep\tgithub.com/jackc/pgpassfile\tv1.0.0\th1:/6Hmqy13Ss2zCq62VdNG8tM1wchn8zjSGOBJ6icpsIM=\n\tdep\tgithub.com/jackc/pgservicefile\tv0.0.0-20240606120523-5a60cdf6a761\th1:iCEnooe7UlwOQYpKFhBabPMi4aNAfoODPEFNiAnClxo=\n\tdep\tgithub.com/jackc/pgx/v5\tv5.11.0\th1:IzBBtyK9AHqf98cctWFifYSci2hgQR/cd56wB4p+ogg=\n\tdep\tgithub.com/jackc/puddle/v2\tv2.2.2\th1:PR8nw+E/1w0GLuRFSmiioY6UooMp6KJv0/61nB7icHo=\n\tdep\tgithub.com/klauspost/cpuid/v2\tv2.2.10\th1:tBs3QSyvjDyFTq3uoc/9xFpCuOsJQFNPiAhYdw2skhE=\n\tdep\tgithub.com/rabbitmq/amqp091-go\tv1.15.0\th1:LEQL4/yp48/Wigt6A6XOu18RQRo8ZHtB5I/KZJn+gkw=\n\tdep\tgithub.com/zeebo/xxh3\tv1.1.0\th1:s7DLGDK45Dyfg7++yxI0khrfwq9661w9EN78eP/UZVs=\n\tdep\tgo.yaml.in/yaml/v3\tv3.0.5\th1:N6y/pJk8buWs9NY5ERU2HSMfm+IuD/OtfdAnq6kESPw=\n\tdep\tgolang.org/x/net\tv0.60.0\th1:79p50tfZlm0J9YfoDsSi639qSXNGVwEzOPLCxM2FsYU=\n\tdep\tgolang.org/x/sync\tv0.23.0\th1:KameEIfc1IkluZyXWLn39Wd4tURc6GbCiISGiZm2bQk=\n\tdep\tgolang.org/x/text\tv0.42.0\th1:JbOZXgfeCPU9gacVtYliJqOhD+zhrEqK4LfdpmlUZqI=\n\tdep\tgopkg.in/inf.v0\tv0.9.1\th1:73M5CoZyi3ZLMOyDlQh031Cx6N9NDJ2Vvfl76EDAgDc=\n\tbuild\t-buildmode=exe\n\tbuild\t-compiler=gc\n\tbuild\t-trimpath=true\n\tbuild\tCGO_ENABLED=0\n\tbuild\tGOARCH=amd64\n\tbuild\tGOOS=linux\n\tbuild\tGOAMD64=v1\n\tbuild\tvcs=git\n\tbuild\tvcs.revision=309733bb48febdb8708e6b1c5aadb94cb03fe8ab\n\tbuild\tvcs.time=2026-10-09T22:09:19Z\n\tbuild\tvcs.modified=false\n",
+      "recovered_bytes": 10334703,
+      "restoration": "gzip -dc ARCHIVE > ORIGINAL; restore original_mode; verify original_sha256"
+    },
+    {
+      "original": "/home/operator/.cache/wire-migration/background-worker-20261009/six-go-worker-89f24",
+      "original_size": 21396474,
+      "original_sha256": "706fed84952a9ee80dc1c9ac7b670d7417114cfe93b835d6d5fe94e58e2628d6",
+      "original_mode": 509,
+      "archive": "/home/operator/.cache/wire-migration/background-worker-20261009/six-go-worker-89f24.construction-binary.gz",
+      "archive_size": 10259760,
+      "archive_sha256": "9a4f5b170ae6274d6b2a9304193458cf70d36250a2cd5a73f1719448466a60de",
+      "source_revision": "89f24e7a0045f7176e066daa194144554ac171bd",
+      "build_info": "/home/operator/.cache/wire-migration/background-worker-20261009/six-go-worker-89f24: go1.26.9\n\tpath\tgithub.com/adamjlow/wire-server/go/services/background-worker/cmd/background-worker\n\tmod\tgithub.com/adamjlow/wire-server/go/services/background-worker\t(devel)\t\n\tdep\tgithub.com/apache/cassandra-gocql-driver/v2\tv2.1.2\th1:lu/p0Db2av18enHJvWJQoChLssI0P+AR06STq4VdvCc=\n\tdep\tgithub.com/jackc/pgpassfile\tv1.0.0\th1:/6Hmqy13Ss2zCq62VdNG8tM1wchn8zjSGOBJ6icpsIM=\n\tdep\tgithub.com/jackc/pgservicefile\tv0.0.0-20240606120523-5a60cdf6a761\th1:iCEnooe7UlwOQYpKFhBabPMi4aNAfoODPEFNiAnClxo=\n\tdep\tgithub.com/jackc/pgx/v5\tv5.11.0\th1:IzBBtyK9AHqf98cctWFifYSci2hgQR/cd56wB4p+ogg=\n\tdep\tgithub.com/jackc/puddle/v2\tv2.2.2\th1:PR8nw+E/1w0GLuRFSmiioY6UooMp6KJv0/61nB7icHo=\n\tdep\tgithub.com/klauspost/cpuid/v2\tv2.2.10\th1:tBs3QSyvjDyFTq3uoc/9xFpCuOsJQFNPiAhYdw2skhE=\n\tdep\tgithub.com/rabbitmq/amqp091-go\tv1.15.0\th1:LEQL4/yp48/Wigt6A6XOu18RQRo8ZHtB5I/KZJn+gkw=\n\tdep\tgithub.com/zeebo/xxh3\tv1.1.0\th1:s7DLGDK45Dyfg7++yxI0khrfwq9661w9EN78eP/UZVs=\n\tdep\tgo.yaml.in/yaml/v3\tv3.0.5\th1:N6y/pJk8buWs9NY5ERU2HSMfm+IuD/OtfdAnq6kESPw=\n\tdep\tgolang.org/x/net\tv0.60.0\th1:79p50tfZlm0J9YfoDsSi639qSXNGVwEzOPLCxM2FsYU=\n\tdep\tgolang.org/x/sync\tv0.23.0\th1:KameEIfc1IkluZyXWLn39Wd4tURc6GbCiISGiZm2bQk=\n\tdep\tgolang.org/x/text\tv0.42.0\th1:JbOZXgfeCPU9gacVtYliJqOhD+zhrEqK4LfdpmlUZqI=\n\tdep\tgopkg.in/inf.v0\tv0.9.1\th1:73M5CoZyi3ZLMOyDlQh031Cx6N9NDJ2Vvfl76EDAgDc=\n\tbuild\t-buildmode=exe\n\tbuild\t-compiler=gc\n\tbuild\t-trimpath=true\n\tbuild\tCGO_ENABLED=0\n\tbuild\tGOARCH=amd64\n\tbuild\tGOOS=linux\n\tbuild\tGOAMD64=v1\n\tbuild\tvcs=git\n\tbuild\tvcs.revision=89f24e7a0045f7176e066daa194144554ac171bd\n\tbuild\tvcs.time=2026-10-10T02:00:02Z\n\tbuild\tvcs.modified=false\n",
+      "recovered_bytes": 11136714,
+      "restoration": "gzip -dc ARCHIVE > ORIGINAL; restore original_mode; verify original_sha256"
+    }
+  ],
+  "current_qualified_worker_unchanged": {
+    "path": "/home/operator/.cache/wire-migration/background-worker-20261009/worker-response-5a24",
+    "sha256": "9a3157e2f61a3406e4923b1a5e569f2ad0f03e50ccdad25b4c7f43d22f3bc658"
+  },
+  "no_executing_or_mounted_targets": true,
+  "recovered_bytes": 21471417
+}

@@ -28,7 +28,10 @@ PATCH email paths, metadata, primary selection and adoption/pending-email cleanu
 An earlier seven-Go construction artifact also passed all101 unchanged Spar
 and related originals. The current signature increment passes21 actual native/Go
 signature cases plus33 HTTP comparisons; these are supplemental construction
-checks, not a new final original-suite result. Evidence includes exact artifacts,
+checks, not a new final original-suite result. The form parser additionally
+passes20 native limit/encoding/type/order comparisons and bounded-read/no-effect
+regressions, preserving the pinned native streaming semantics without temporary
+files or new dependencies. Evidence includes exact artifacts,
 retained failures and clean owned-resource cleanup.
 Those batches prove only their listed surfaces. The final intended profile is
 proxy-cargohold-cannon-gundeck-federator-background-worker-spar:225 executions.
