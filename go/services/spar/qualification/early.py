@@ -133,7 +133,7 @@ def main():
         cfg=json.loads(Path('/fixtures/peers.json').read_text())['0']['spar'];config.write_text(json.dumps(cfg))
         if '--signatures' in sys.argv:
             with Path('/reports/signature-fixtures.log').open('w') as log:
-                subprocess.run(['/candidate/signature-fixtures.test','-test.run=^(TestNativeDigestAndLargeAssertionCompatibility|TestNativeSuccessfulReferenceSelection)$','-test.timeout=90s'],env={**os.environ,'SPAR_SIGNATURE_FIXTURE_CONFIG':str(config)},stdout=log,stderr=subprocess.STDOUT,timeout=95,check=True)
+                subprocess.run(['/fixtures/signature-fixtures.test','-test.run=^(TestNativeDigestAndLargeAssertionCompatibility|TestNativeSuccessfulReferenceSelection)$','-test.timeout=90s'],env={**os.environ,'SPAR_SIGNATURE_FIXTURE_CONFIG':str(config)},stdout=log,stderr=subprocess.STDOUT,timeout=95,check=True)
         native=str(Path(shutil.which('spar')).resolve(strict=True));candidate='/candidate/spar' 
         output['config_sha256']=hashlib.sha256(config.read_bytes()).hexdigest()
         output['native']=observe(native,config,'native')

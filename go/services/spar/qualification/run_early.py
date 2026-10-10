@@ -4,6 +4,8 @@ import hashlib
 import json
 from pathlib import Path
 import subprocess
+import shutil
+import tempfile
 import sys
 import time
 
@@ -32,7 +34,14 @@ def main():
     if args.suite=='middleware':runner['command']+=['--middleware']
     if args.suite=='signatures':
         runner['command']+=['--signatures']
-        runner['volumes'].append({'type':'bind','source':str(args.signature_fixtures.resolve(strict=True)),'target':'/candidate/signature-fixtures.test','read_only':True})
+        # Use the existing approved read-only /fixtures mount. Do not broaden
+        # protected isolation rules to introduce another arbitrary host bind.
+        fixture_dir=Path(tempfile.mkdtemp(prefix='wire-spar-signatures-',dir='/dev/shm'))
+        fixture_dir.chmod(0o755)
+        for fixture in (output/'fixtures').iterdir():shutil.copy2(fixture,fixture_dir/fixture.name)
+        shutil.copy2(args.signature_fixtures.resolve(strict=True),fixture_dir/'signature-fixtures.test')
+        for volume in runner['volumes']:
+            if volume['type']=='bind' and volume['target']=='/fixtures':volume['source']=str(fixture_dir)
     if args.suite not in ('early','middleware','signatures'):runner['command']+=['--suite',args.suite]
     runner['volumes'].append({'type':'bind','source':selected['path'],'target':'/candidate/spar','read_only':True})
     environment.validate_isolation(spec)
@@ -69,6 +78,7 @@ def main():
         record['post_cleanup']=remaining
         if cleanup.returncode!=0 or any(remaining.values()):record['result']='fail';code=1
         (output/'environment.json').write_text(json.dumps(record,indent=2)+'\n')
+        if args.suite=='signatures':shutil.rmtree(fixture_dir)
     print(json.dumps({'result':record['result'],'process_exit_code':record.get('process_exit_code'),'cleanup_exit_code':record['cleanup_exit_code'],'project':record['project']},indent=2));return code
 
 if __name__=='__main__':raise SystemExit(main())
