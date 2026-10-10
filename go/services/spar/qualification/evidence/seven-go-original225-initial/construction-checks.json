@@ -1,0 +1,59 @@
+{
+  "result": "fail",
+  "controller_source_revision": "ceccae81f1e68f999fae7129e6c95cd35eec0cae",
+  "spar_source_revision": "98c8a3c495d2b67b52fd443456ca3fd88afb59a9",
+  "executions": 124,
+  "passed": 123,
+  "failed": [
+    "Migration.DomainRegistration.testDomainRegistrationMigration"
+  ],
+  "spar_original101_executed": false,
+  "reason": "Original native ModService backend restart times out waiting for NginzHttp2 port10099 to be free. No assertion/native/harness change; full225 gate remains unsatisfied.",
+  "cleanup_exit_code": 0,
+  "independent_post_cleanup": {
+    "containers": [],
+    "networks": [],
+    "volumes": []
+  },
+  "suites": {
+    "proxy": {
+      "result": "pass",
+      "executions": 5,
+      "xml_sha256": "c552e5d67f859f3a4cdabfec4b857a6cd01a8851cd13139082b47e9395ea0233"
+    },
+    "cargohold": {
+      "result": "pass",
+      "executions": 27,
+      "xml_sha256": "082689ac6a789f4f37c9f480d466a3075061e73f75c80a2c634829829fc2d003"
+    },
+    "gundeck": {
+      "result": "pass",
+      "executions": 40,
+      "xml_sha256": "7678d9c32e4595df9da6dfa26d3db3535eda42dbb847052acb1be1ecf7c11fb2"
+    },
+    "federator": {
+      "result": "pass",
+      "executions": 5,
+      "xml_sha256": "627c0f8b3129f32e58241e69414c5d64dcb8d64161426f5691d93602b89e8467"
+    },
+    "background-worker": {
+      "result": "failed",
+      "executions": 47,
+      "xml_sha256": "679d37b72e4ef8bf7aa59703025400d7235468236a18736f87c68d23d60a2671"
+    }
+  },
+  "logs": {
+    "/home/operator/.cache/wire-migration/spar-20261010/seven-go-original225-initial-controller.log": {
+      "sha256": "6df1938480ff0c6e643ae75ce64c0276a7fe5fbfe728c671fc877a30bfff4564",
+      "size": 103
+    },
+    "/home/operator/.cache/wire-migration/spar-20261010/seven-go-original225-initial/baseline-proxy-cargohold-cannon-gundeck-federator-background-worker-spar.log": {
+      "sha256": "06d0a936fd6e072421b04300815110b4664deb39b6f0264c391a9067dba8cd0b",
+      "size": 1224682
+    },
+    "/home/operator/.cache/wire-migration/spar-20261010/seven-go-original225-initial/dependencies.log": {
+      "sha256": "08e0f4c473baf4cdfe57cdbcb1e765b1b5e229b541e4e1cb56d5381d4c6bb16a",
+      "size": 173685
+    }
+  }
+}
