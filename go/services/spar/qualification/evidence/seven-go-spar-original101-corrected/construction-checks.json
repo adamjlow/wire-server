@@ -1,0 +1,220 @@
+{
+  "result": "pass",
+  "controller_source_revision": "ad2743c688198c62654dc3b20ecbfbfd59b47362",
+  "spar_source_revision": "ad2743c688198c62654dc3b20ecbfbfd59b47362",
+  "spar_build": {
+    "schema_version": 1,
+    "result": "built",
+    "source_revision": "ad2743c688198c62654dc3b20ecbfbfd59b47362",
+    "binary_sha256": "e6a59a02c0d3216595bb3672fcae39b75d5cfef3c1558ac1944896906e31fe87",
+    "binary": "/dev/shm/wire-migration-spar-20261010/spar-finalize-errors",
+    "compiler": "go1.26.9",
+    "target": "linux/amd64",
+    "CGO_ENABLED": "0",
+    "build_flags": [
+      "-trimpath"
+    ],
+    "build_info": "/dev/shm/wire-migration-spar-20261010/spar-finalize-errors: go1.26.9\n\tpath\tgithub.com/adamjlow/wire-server/go/services/spar/cmd/spar\n\tmod\tgithub.com/adamjlow/wire-server/go/services/spar\t(devel)\t\n\tdep\tgithub.com/apache/cassandra-gocql-driver/v2\tv2.1.2\th1:lu/p0Db2av18enHJvWJQoChLssI0P+AR06STq4VdvCc=\n\tdep\tgithub.com/beevik/etree\tv1.7.0\th1:xjBk9O4p4x7D1YajePjfLzdaFC4/uYUENA7P0pv6gXA=\n\tdep\tgithub.com/jonboulle/clockwork\tv0.5.0\th1:Hyh9A8u51kptdkR+cqRpT1EebBwTn1oK9YfGYbdFz6I=\n\tdep\tgithub.com/russellhaering/goxmldsig\tv1.6.1\th1:SB7R5ttvrGIDB2juJAK/i7DQ2Ivr7agG+ohfNJjwyYU=\n\tdep\tgo.yaml.in/yaml/v3\tv3.0.5\th1:N6y/pJk8buWs9NY5ERU2HSMfm+IuD/OtfdAnq6kESPw=\n\tdep\tgolang.org/x/text\tv0.42.0\th1:JbOZXgfeCPU9gacVtYliJqOhD+zhrEqK4LfdpmlUZqI=\n\tdep\tgopkg.in/inf.v0\tv0.9.1\th1:73M5CoZyi3ZLMOyDlQh031Cx6N9NDJ2Vvfl76EDAgDc=\n\tbuild\t-buildmode=exe\n\tbuild\t-compiler=gc\n\tbuild\t-trimpath=true\n\tbuild\tDefaultGODEBUG=rsa1024min=0\n\tbuild\tCGO_ENABLED=0\n\tbuild\tGOARCH=amd64\n\tbuild\tGOOS=linux\n\tbuild\tGOAMD64=v1\n\tbuild\tvcs=git\n\tbuild\tvcs.revision=ad2743c688198c62654dc3b20ecbfbfd59b47362\n\tbuild\tvcs.time=2026-10-10T13:32:05Z\n\tbuild\tvcs.modified=false\n",
+    "quality_log": {
+      "path": "/home/operator/.cache/wire-migration/spar-20261010/finalize-error-go-check.log",
+      "sha256": "3472437bf305274972919ef97f49d8c559678aa0654057de5f71af2768931c7f"
+    },
+    "scope": "Finalization error projection correction; original101 qualification pending."
+  },
+  "executions": 101,
+  "passed": 101,
+  "failed": [],
+  "required_names": [
+    "Spar.CertFingerprintAllowlist.testAcceptsMultiCertWhenAllListed",
+    "Spar.CertFingerprintAllowlist.testAcceptsWhenAllowlistEmpty",
+    "Spar.CertFingerprintAllowlist.testAcceptsWhenFingerprintListed",
+    "Spar.CertFingerprintAllowlist.testCreateRejectsWhenFingerprintNotListed",
+    "Spar.CertFingerprintAllowlist.testFinalizeLoginSucceedsWhenCertAllowlisted",
+    "Spar.CertFingerprintAllowlist.testRejectsMultiCertWhenAnyMissing",
+    "Spar.CertFingerprintAllowlist.testUpdateRejectsWhenFingerprintNotListed",
+    "Spar.GetByEmail.testGetSsoCodeByEmailDisabledMultiIngress",
+    "Spar.GetByEmail.testGetSsoCodeByEmailDisabledRegular",
+    "Spar.GetByEmail.testGetSsoCodeByEmailNonSSOUser",
+    "Spar.GetByEmail.testGetSsoCodeByEmailRegular[requireexternalemailverification=false][idpscimtoken=false]",
+    "Spar.GetByEmail.testGetSsoCodeByEmailRegular[requireexternalemailverification=false][idpscimtoken=true]",
+    "Spar.GetByEmail.testGetSsoCodeByEmailRegular[requireexternalemailverification=true][idpscimtoken=false]",
+    "Spar.GetByEmail.testGetSsoCodeByEmailRegular[requireexternalemailverification=true][idpscimtoken=true]",
+    "Spar.GetByEmail.testGetSsoCodeByEmailWithMultiIngress[requireexternalemailverification=false][idpscimtoken=false]",
+    "Spar.GetByEmail.testGetSsoCodeByEmailWithMultiIngress[requireexternalemailverification=false][idpscimtoken=true]",
+    "Spar.GetByEmail.testGetSsoCodeByEmailWithMultiIngress[requireexternalemailverification=true][idpscimtoken=false]",
+    "Spar.GetByEmail.testGetSsoCodeByEmailWithMultiIngress[requireexternalemailverification=true][idpscimtoken=true]",
+    "Spar.IdPIssuerUpdate.testUpdateIdPIssuerThenDelete",
+    "Spar.MultiIngressCrossIdpSso.testCrossIdpSsoMigration[usescim=false]",
+    "Spar.MultiIngressCrossIdpSso.testCrossIdpSsoMigration[usescim=true]",
+    "Spar.MultiIngressCrossIdpSso.testCrossIngressRequestResponseMismatch",
+    "Spar.MultiIngressCrossIdpSso.testCrossTeamIdpLoginRejected",
+    "Spar.MultiIngressCrossIdpSso.testIdpNotFoundError",
+    "Spar.MultiIngressCrossIdpSso.testNonEmailNameIdRejectedInMultiIngress",
+    "Spar.MultiIngressCrossIdpSso.testScimUserLoginsDifferentIdP",
+    "Spar.MultiIngressCrossIdpSso.testUnsolicitedSamlResponseRejected",
+    "Spar.MultiIngressIdp.testMultiIngressAtMostOneIdPPerDomain",
+    "Spar.MultiIngressIdp.testMultiIngressIdPIssuerDifferentDomains",
+    "Spar.MultiIngressIdp.testMultiIngressIdpSimpleCase",
+    "Spar.MultiIngressIdp.testNonMultiIngressSetupsCanHaveMoreIdPsPerDomain",
+    "Spar.MultiIngressIdp.testUnconfiguredDomain",
+    "Spar.MultiIngressSSO.testMultiIngressSSODomainBoundIdp",
+    "Spar.MultiIngressSSO.testMultiIngressSSOGeneralIdp",
+    "Spar.MultiIngressSSO.testSsoWithoutMultiIngress",
+    "Spar.STM.testCreateIdpsAndScimsV7",
+    "Spar.testAllowUpdatesBySCIMWhenE2EIdEnabled[sso-enabled=false]",
+    "Spar.testAllowUpdatesBySCIMWhenE2EIdEnabled[sso-enabled=true]",
+    "Spar.testCheckAdminGetTeamId",
+    "Spar.testCheckAdminGetTeamIdV7",
+    "Spar.testIdpUpdate",
+    "Spar.testNoPasswordResetForSAMLUser",
+    "Spar.testScimLoginNoSamlEmailValidation[requireexternalemailverification=false]",
+    "Spar.testScimLoginNoSamlEmailValidation[requireexternalemailverification=true]",
+    "Spar.testScimReinviteAfterRevoke",
+    "Spar.testScimUpdateEmailAddressAndExternalId",
+    "Spar.testScimUpdateEmailAddress[extidisemail=false][requireexternalemailverification=false]",
+    "Spar.testScimUpdateEmailAddress[extidisemail=false][requireexternalemailverification=true]",
+    "Spar.testScimUpdateEmailAddress[extidisemail=true][requireexternalemailverification=false]",
+    "Spar.testScimUpdateEmailAddress[extidisemail=true][requireexternalemailverification=true]",
+    "Spar.testScimUserChangeNameOnRegisteringIgnoredV16",
+    "Spar.testScimUserIsNotAllowedToChangeName",
+    "Spar.testScimUserIsNotAllowedToChangeNameOnRegistering",
+    "Spar.testSparCreateScimTokenAssocImplicitly",
+    "Spar.testSparCreateScimTokenNoName",
+    "Spar.testSparCreateScimTokenWithName",
+    "Spar.testSparCreateTwoScimTokensForOneIdp",
+    "Spar.testSparEmulateSPInitiatedLogin",
+    "Spar.testSparExpiredIdpCertStillWorks",
+    "Spar.testSparExternalIdDifferentFromEmail",
+    "Spar.testSparExternalIdDifferentFromEmailWithIdp",
+    "Spar.testSparExternalIdUpdateToANonEmail",
+    "Spar.testSparMigrateFromExternalIdOnlyToEmail[mailunchanged=false]",
+    "Spar.testSparMigrateFromExternalIdOnlyToEmail[mailunchanged=true]",
+    "Spar.testSparPatchEmailSubAttrRemoveNull",
+    "Spar.testSparPatchEmailValuePath",
+    "Spar.testSparPatchEmailValuePathInPlace",
+    "Spar.testSparRejectsMultiplePrimaryEmails",
+    "Spar.testSparSPInitiatedLoginWithUtf8",
+    "Spar.testSparScimCreateGetSearchUserGroup",
+    "Spar.testSparScimDeleteUserGroup",
+    "Spar.testSparScimEmailMetaRoundTrip",
+    "Spar.testSparScimEmailTypeNonWorkEcho",
+    "Spar.testSparScimGroupSearchOnlyReturnsScimGroups",
+    "Spar.testSparScimInvalidatesPendingEmail",
+    "Spar.testSparScimTokenLimit",
+    "Spar.testSparScimUpdateUserGroup",
+    "Spar.testSparScimUpdateUserGroupRejectsInvalidMembers",
+    "Spar.testSparUserCreationInvitationTimeout",
+    "Spar.testSsoLoginAndEmailVerification",
+    "Spar.testSsoLoginNoSamlEmailValidation[requireexternalemailverification=false]",
+    "Spar.testSsoLoginNoSamlEmailValidation[requireexternalemailverification=true]",
+    "Spar.testTeamInvitationUsedAfterScimUserDeleted",
+    "Spar.testTeamInvitationWhenScimAccountExists",
+    "Spar.testTeamInvitationWhenScimInvitationExpired",
+    "Spar.testTeamInvitationWhenScimInvitationPending",
+    "Auth.testSetCookieLabelOnSsoFlow",
+    "DomainVerification.testGetDomainRegistrationUserExistsSso",
+    "DomainVerification.testScimAndSamlWithRegisteredEmailDomain",
+    "DomainVerification.testScimOnlyWithRegisteredEmailDomain",
+    "DomainVerification.testSsoLoginNoEmailVerification",
+    "DomainVerification.testUpdateTeamInviteSSO",
+    "DomainVerification.testVerificationRequiredIfEmailDomainRedirectNotSso",
+    "EnterpriseLogin.testDomainRegistrationUnAuthorizeFailureWhenSso",
+    "FeatureFlags.SSO.testSSODisabledByDefault",
+    "FeatureFlags.SSO.testSSOEnabledByDefault",
+    "FeatureFlags.testNonMemberAccess[feature=validateSAMLemails]",
+    "Register.testDisallowRegistrationWhenEmailDomainIsTakenByATeamWithSSO",
+    "SystemSettings.testGetSettingsInternalSsoIdpChangeDetection[sso-idp-change-detection=just[bool=false]]",
+    "SystemSettings.testGetSettingsInternalSsoIdpChangeDetection[sso-idp-change-detection=just[bool=true]]",
+    "SystemSettings.testGetSettingsInternalSsoIdpChangeDetection[sso-idp-change-detection=nothing]"
+  ],
+  "xml_sha256": "eacff5e77bc86ec2c4411a3744b76a7ae6d0e3d56405b32c449c1edb72620caf",
+  "implementations": {
+    "spar": {
+      "implementation": "go",
+      "path": "/candidate/spar",
+      "sha256": "e6a59a02c0d3216595bb3672fcae39b75d5cfef3c1558ac1944896906e31fe87"
+    },
+    "background-worker": {
+      "implementation": "go",
+      "path": "/candidate/background-worker",
+      "sha256": "9a3157e2f61a3406e4923b1a5e569f2ad0f03e50ccdad25b4c7f43d22f3bc658"
+    },
+    "federator": {
+      "implementation": "go",
+      "path": "/candidate/federator",
+      "sha256": "fbe1d6d62762e79da64a15a6e06af9ce7448ab2ace0ca33530ec261aa46a4595"
+    },
+    "gundeck": {
+      "implementation": "go",
+      "path": "/candidate/gundeck",
+      "sha256": "a50512ef30d7fa9ddf92c2c1933e69769d6691e08cdfbe9f7c4f2d266071f46c"
+    },
+    "cannon": {
+      "implementation": "go",
+      "path": "/candidate/cannon",
+      "sha256": "ced2d1923a1c456a5e4025b10d699707f1e302115bfd17ffea1e092552da39fa"
+    },
+    "cargohold": {
+      "implementation": "go",
+      "path": "/candidate/cargohold",
+      "sha256": "1838097eef9dba908c76ce893dbecd4224a2e1ac78c9ad126c8a56033dd655e1"
+    },
+    "proxy": {
+      "implementation": "go",
+      "path": "/candidate/proxy",
+      "sha256": "abf252dbe14cdb44777c994387a3a99df7e0906fbd21c514ee698d3644da7594"
+    },
+    "wire-server-enterprise": {
+      "implementation": "haskell",
+      "path": "/nix/store/fcm9yzhyyc1p653a36fj1l5mw0znwip4-wire-server-enterprise/bin/wire-server-enterprise",
+      "sha256": "084c532621fd19cb229b884196f3e3ce59e96f3c34c92156499243952bb9fd4c"
+    },
+    "stern": {
+      "implementation": "haskell",
+      "path": "/nix/store/q34cnzy5f0q5fm2m32hq73gz9da0gy9y-stern/bin/stern",
+      "sha256": "3f2c71bf87baba43bfc9c97dc1f53b29e290b536c395c267f9b76a8ef04be7e7"
+    },
+    "galley": {
+      "implementation": "haskell",
+      "path": "/nix/store/fbfpq5phd97caxsgjym3x7wpsif7pvx9-galley/bin/galley",
+      "sha256": "b4c0b3e23dee8006aeda611b6a80b6c6fd032176d96c028d3f41a4aa30d0f436"
+    },
+    "brig": {
+      "implementation": "haskell",
+      "path": "/nix/store/f6l2f0l8l2r6z9jbg937q96k6056iqfn-brig/bin/brig",
+      "sha256": "c45a40da63268712a7cacdbd884287fa3dc93cec179d70323d3f22f7d5cdf1ca"
+    }
+  },
+  "runner_exit_code": 0,
+  "cleanup_exit_code": 0,
+  "independent_post_cleanup": {
+    "containers": [],
+    "networks": [],
+    "volumes": []
+  },
+  "logs": {
+    "/home/operator/.cache/wire-migration/spar-20261010/seven-go-spar-original101-corrected-controller.log": {
+      "sha256": "11a50ef9a767300c636ca134772ae27bb64303d16e53b7928b55c9128baac37b",
+      "size": 4637
+    },
+    "/home/operator/.cache/wire-migration/spar-20261010/seven-go-spar-original101-corrected/baseline-spar.log": {
+      "sha256": "d60ab0b4cb385a2e65cdbf1555e6fdb7083b2eb33ad32103cc82dabb23099443",
+      "size": 973056
+    },
+    "/home/operator/.cache/wire-migration/spar-20261010/seven-go-spar-original101-corrected/dependencies.log": {
+      "sha256": "de65cbc9d6f9f6069ef9bc1926eea6652fc4f6285ec6b899c94b129d626e9642",
+      "size": 139764
+    },
+    "/home/operator/.cache/wire-migration/spar-20261010/finalize-error-go-check.log": {
+      "sha256": "3472437bf305274972919ef97f49d8c559678aa0654057de5f71af2768931c7f",
+      "size": 1237
+    }
+  },
+  "review": {
+    "kind": "delegated-same-author",
+    "scope": "Finalization error projection increment",
+    "result": "pass",
+    "reason": "Signed unknown-request/IdP regressions confirm no identity or session effects; native inherited diagnostic/form echo retained without assertion logs; original101 assertions and peers unchanged. Whole-service review remains pending."
+  },
+  "scope": "All101 unchanged Spar/related originals with seven actual Go components pass. Not final225, operations/switchback/image/selection or whole-service compatibility; subsequent source changes require final qualification."
+}
