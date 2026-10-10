@@ -1,0 +1,127 @@
+[
+  {
+    "path": "/home/operator/.cache/wire-migration/spar-20261010/scim-groups-original-corrected/controller.log",
+    "sha256": "e98db37beb96056746441c4bffa34821b1db64cb2acbfacbc1d0363f51be8739",
+    "size": 941165
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/spar-20261010/scim-groups-original-corrected/reports/background-worker-0.log",
+    "sha256": "4e485cc298aebaf1f58edb6d797f22764daf121e2fda991f59273817b585b310",
+    "size": 814
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/spar-20261010/scim-groups-original-corrected/reports/background-worker-1.log",
+    "sha256": "2f38704adcb7054f3e4438d7c4303cae5825781e202a9e9b119144bb0ac1281d",
+    "size": 1027
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/spar-20261010/scim-groups-original-corrected/reports/brig-0.log",
+    "sha256": "bcbe224c795f7972f9e83c359550b741d65d2c66fbfbc4408de351c975877dcf",
+    "size": 93
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/spar-20261010/scim-groups-original-corrected/reports/brig-1.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/spar-20261010/scim-groups-original-corrected/reports/cannon-0.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/spar-20261010/scim-groups-original-corrected/reports/cannon-1.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/spar-20261010/scim-groups-original-corrected/reports/cargohold-0.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/spar-20261010/scim-groups-original-corrected/reports/cargohold-1.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/spar-20261010/scim-groups-original-corrected/reports/federator-0.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/spar-20261010/scim-groups-original-corrected/reports/federator-1.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/spar-20261010/scim-groups-original-corrected/reports/galley-0.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/spar-20261010/scim-groups-original-corrected/reports/galley-1.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/spar-20261010/scim-groups-original-corrected/reports/gundeck-0.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/spar-20261010/scim-groups-original-corrected/reports/gundeck-1.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/spar-20261010/scim-groups-original-corrected/reports/nginz-0.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/spar-20261010/scim-groups-original-corrected/reports/nginz-1.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/spar-20261010/scim-groups-original-corrected/reports/proxy-0.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/spar-20261010/scim-groups-original-corrected/reports/proxy-1.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/spar-20261010/scim-groups-original-corrected/reports/spar-0.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/spar-20261010/scim-groups-original-corrected/reports/spar-1.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/spar-20261010/scim-groups-original-corrected/reports/stern-0.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/spar-20261010/scim-groups-original-corrected/reports/stern-1.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/spar-20261010/scim-groups-original-corrected/reports/wire-server-enterprise-0.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/spar-20261010/scim-groups-original-corrected/reports/wire-server-enterprise-1.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size": 0
+  }
+]

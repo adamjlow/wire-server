@@ -1,0 +1,20 @@
+{
+  "result": "pass",
+  "source_revision": "a02ff7bbc4108bc71d489ced16b94a03e28940bb",
+  "scope": "Five unchanged original SCIM group scenarios with Go Spar/Haskell peers, including user invitation/read/activation and native nullable group lookup; construction only, not whole-service225 qualification.",
+  "xml_sha256": "c4263597c1687d4b0dc18df05e0aba33263ded44e93726a0fd26c9ebacb8f9bb",
+  "checks": [
+    "Exact five names/no failures/errors/skips",
+    "Exact static Go artifact and Haskell peer identities",
+    "Runner0/owned cleanup0/independently empty project resources",
+    "Pinned Go1.26.9 format/tidy/verify/vet/unit/race/build/vulnerability/license",
+    "Twenty unchanged rich-info goldens and finite user validation/null state/team/effect-order/failure guards"
+  ],
+  "review": "Same-author construction review against native Spar.SCIM, Brig/Galley APIs and Cassandra schemas; whole-service self-approval remains pending.",
+  "unresolved": [
+    "SCIM PUT/PATCH/filter/config/schema/internal cleanup",
+    "Complete SCIM parser/header/body/content negotiation/peer errors and exact ETag/URI serialization edges",
+    "Remaining SAML importer/Base64/cookie/mobile/diagnostic/Show/RIPEMD160/SDK traversal gaps",
+    "Final225/trust/state/operations/durable switchback/image/selector"
+  ]
+}

@@ -119,8 +119,15 @@
       "command": "Pinned Go1.26.9 checks and finite SCIM token/team/auth/group RPC/member-guard/pagination/serialization tests. Construction only; original groups not executed because SCIM user provisioning is pending.",
       "revision": "d585ed1b9cf8a7ec307370f5482a7089f9e1d20d",
       "artifact": "go/services/spar/qualification/evidence/scim-groups/construction-checks.json"
+    },
+    {
+      "criterion": "quality",
+      "result": "pass",
+      "command": "Pinned Go1.26.9 checks, twenty unchanged rich-info goldens and five unchanged original SCIM group scenarios against exact Go Spar/Haskell peers; strict XML/names/no failures/errors/skips, runner0/owned cleanup0/no remaining resources. Construction only, full225 outstanding.",
+      "revision": "a02ff7bbc4108bc71d489ced16b94a03e28940bb",
+      "artifact": "go/services/spar/qualification/evidence/scim-groups-original-corrected/construction-checks.json"
     }
   ],
   "review": null,
-  "handoff": "Progress: sourced585ed1b9cf8a7ec307370f5482a7089f9e1d20d adds SCIM authentication and Brig-backed group create/get/list/update/delete and inherited PATCH-error handling, token-authoritative team scoping, managedBy/team/additional-member checks, createdAt/v1 metadata and pagination/filter translation. Pinned Go1.26.9 checks incl race/vulnerability/license pass; focused actual HTTP boundary/auth/guard/serialization tests pass. Original group scenarios unrun until SCIM user provisioning is implemented, no whole-service claim. Previous exact sourcea26bd211 login2 originals with real Haskell peers/runner0/cleanup0 and native101/prior IdP/token/delete evidence retained. Next SCIM users/invitations/model/validation/stores/config/schema/internal cleanup, then batch originals. Resolve parser/body/header/negotiation/peer-error/PATCH details plus remaining SAML importer/Base64/cookie/mobile/diagnostic/error-Show/RIPEMD160/SDK traversal gaps; final225/state/ops/switchback/image/selector incomplete. Haskell/oracles/defaults unchanged; compatibility null. Docker floor recovered via lossless task-owned completed .test archives, capacity still tight."
+  "handoff": "Progress: sourcea02ff7bbc4108bc71d489ced16b94a03e28940bb implements SCIM user create/read/delete with actual invitation/SAML accounts, legacy creation status and nullable metadata, native adoption/identity guards and crash/effect ordering. Pinned Go1.26.9 checks and unchanged rich-info20 goldens pass. Five unchanged original group scenarios pass against exact Go Spar/Haskell peers; runner0/cleanup0/empty owned resources. Initial source5aca failed delete/read nullable group200null; corrected decoder, original assertion unchanged and failed evidence retained. Earlier exact original login2, IdP/token6, issuer-delete1 and native101 baseline retained. Next substantive SCIM PUT/PATCH/filter/config/schema/internal cleanup; full parser/diagnostic/ETag/URI parity and previous SAML importer/Base64/cookie/mobile/Show/RIPEMD160/SDK traversal gaps remain. Final225/state/trust/ops/durable switchback/image/selector pending; compatibility null/Haskell default unchanged. No native unit executable/build claimed. Disk floor remains tight; completed task-owned test and superseded early construction binaries losslessly archived with restoration receipts, current qualified artifacts preserved."
 }
