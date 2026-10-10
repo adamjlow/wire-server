@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "id": "e2e-nginx-orphans",
+  "title": "Supervise orphan native Nginx workers in owned Docker tests",
+  "service": "framework",
+  "kind": "contract-change",
+  "status": "queued",
+  "owner": null,
+  "branch": null,
+  "depends_on": [
+    "spar-contract"
+  ],
+  "write_paths": [
+    ".migration/tasks/e2e-nginx-orphans.json",
+    "tools/parity/docker/orphan_nginx.py",
+    "tools/parity/docker/environment.py",
+    "tools/parity/docker/README.md",
+    "docs/go-migration/plans/e2e-nginx-orphans.md",
+    "docs/go-migration/qualifications/e2e-nginx-orphans-20261010",
+    ".migration/reviews/e2e-nginx-orphans.md",
+    "changelog.d/5-internal/e2e-nginx-orphans"
+  ],
+  "plan": "docs/go-migration/plans/e2e-nginx-orphans.md",
+  "acceptance_criteria": [
+    {
+      "id": "isolation",
+      "description": "Opt-in cleanup of actual orphan native Nginx workers only, with bounded exact ownership.",
+      "required_evidence": "Nonroot65534/private disposable PID1 guard; only adopted nginx worker processes, UID/executable identity and pidfd-safe signaling. Never signal live masters/healthy workers/other services or host/unrelated resources. Exact supervisor and source receipts, original catalogues/assertions/timeouts unchanged, no Haskell/native repair or default/deploy change."
+    },
+    {
+      "id": "native-proof",
+      "description": "Prove native orphan cleanup and preservation of healthy workers.",
+      "required_evidence": "Owned Docker actual pinned native nginx two masters/workers; original-style master SIGKILL produces actual orphan listener. Supervisor terminates/reaps only adopted workers and releases listener while healthy master/worker continues HTTP200. Exact PID/executable/signal/hash/exit and ownedcleanup receipts. Hostguard negative, existing harness tests, scoped validation and user-delegated same-author review."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": "Concrete original native cleanup50ms/SIGKILL leaves orphan nginx listeners; source/runtime failure retained in Spar. Implement optional owned-harness process supervision without changing Haskell/assertions or extending service timeouts."
+}
