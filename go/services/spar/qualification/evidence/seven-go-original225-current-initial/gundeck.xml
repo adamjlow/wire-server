@@ -1,0 +1,48 @@
+<?xml version='1.0' ?><testsuites name="wire-server"><testsuite name="integration" tests="40" failures="1" time="2077.241304687"><testcase name="Cells.testCellsIgnoredEvents" time="60.258909028" /><testcase name="Demo.testModifiedCannon" time="1.746729035" /><testcase name="Demo.testWebSockets" time="0.088521632" /><testcase name="Events.testBackendPusherRecoversFromQueueDeletion" time="3.181744267" /><testcase name="Events.testChannelKilled" time="4.79513768" /><testcase name="Events.testChannelLimit" time="1.470879855" /><testcase name="Events.testConsumeEventsAckNewEventWithoutAckingOldOne" time="61.523575087" /><testcase name="Events.testConsumeEventsAcks" time="61.527782188" /><testcase name="Events.testConsumeEventsForDifferentUsers" time="120.962839313" /><testcase name="Events.testConsumeEventsMultipleAcks" time="66.76071071" /><testcase name="Events.testConsumeEventsOneWebSocket" time="122.168974225" /><testcase name="Events.testConsumeEventsWhileHavingLegacyClients" time="61.947359105" /><testcase name="Events.testConsumeTempEvents" time="182.124838332" /><testcase name="Events.testEndOfInitialSync" time="123.409786879" /><testcase name="Events.testEndOfInitialSyncAckMultiple" time="62.343700472" /><testcase name="Events.testEndOfInitialSyncIgnoreExpired" time="5.976958962" /><testcase name="Events.testEndOfInitialSyncMoreEventsAfterSyncMessage" time="7.07683238" /><testcase name="Events.testEventsDeadLettered" time="66.422833728" /><testcase name="Events.testEventsDeadLetteredWithReconnect" time="59.770772993" /><testcase name="Events.testEventsForSpecificClients" time="67.984681417"><failure>assertion failure:
+Did not expect event: 
+{
+    &quot;data&quot;: {
+        &quot;delivery_tag&quot;: 1,
+        &quot;event&quot;: {
+            &quot;id&quot;: &quot;b69aec41-c4ca-11f1-be7b-a28e3bde6807&quot;,
+            &quot;payload&quot;: [
+                {
+                    &quot;client&quot;: {
+                        &quot;capabilities&quot;: {
+                            &quot;capabilities&quot;: [
+                                &quot;legalhold-implicit-consent&quot;
+                            ]
+                        },
+                        &quot;id&quot;: &quot;84d8668106dcd42a&quot;,
+                        &quot;label&quot;: &quot;Test Device&quot;,
+                        &quot;mls_public_keys&quot;: {},
+                        &quot;model&quot;: &quot;Test Model&quot;,
+                        &quot;time&quot;: &quot;2026-10-10T16:50:34.731Z&quot;,
+                        &quot;type&quot;: &quot;permanent&quot;
+                    },
+                    &quot;type&quot;: &quot;user.client-add&quot;
+                }
+            ]
+        }
+    },
+    &quot;type&quot;: &quot;event&quot;
+}
+
+call stack: 
+1. assertFailure at test/Test/Events.hs:1152
+
+2. assertNoEventHelper at test/Test/Events.hs:1157
+
+3. assertNoEvent_ at test/Test/Events.hs:275
+
+4. k at test/Testlib/ModService.hs:89
+
+5. withModifiedBackend at test/Test/Events.hs:242
+
+
+
+context:
+temp client should not get any events meant solely for client 1 or 2
+
+Set WIRE_INTEGRATION_TEST_VERBOSITY=1 if you want to see complete trace of the HTTP traffic in curl pseudo-syntax.
+</failure></testcase><testcase name="Events.testPrefetchCount" time="5.876505116" /><testcase name="Events.testSendMessageNoReturnToSenderWithConsumableNotificationsProteus" time="63.897297415" /><testcase name="Events.testSingleConsumer" time="286.729895398" /><testcase name="Events.testTemporaryQueuesAreDeletedAfterUse" time="11.761147963" /><testcase name="Events.testTransientEvents" time="63.248807005" /><testcase name="Events.testTransientEventsDoNotTriggerDeadLetters" time="64.724794136" /><testcase name="Events.testTypingIndicatorIsNotSentToOwnClient[federated=false]" time="181.120664799" /><testcase name="Events.testTypingIndicatorIsNotSentToOwnClient[federated=true]" time="246.513048847" /><testcase name="Events.testWebSocketTimeout" time="2.746153081" /><testcase name="MLS.Notifications.testNotificationPagination" time="0.937210551" /><testcase name="MLS.Notifications.testNotificationPaginationOversizeSince" time="0.953896501" /><testcase name="Notifications.testAddClientNotification" time="0.049211516" /><testcase name="Notifications.testBulkPushSameMessage" time="3.749470286" /><testcase name="Notifications.testFetchAllNotifications" time="0.053225152" /><testcase name="Notifications.testGetServerTime" time="0.02189573" /><testcase name="Notifications.testInvalidNotification" time="0.010180039" /><testcase name="Notifications.testLastNotification" time="0.027276303" /><testcase name="Notifications.testTargetClientPush" time="2.029626615" /><testcase name="PushToken.testRegisterPushToken" time="1.229194395" /><testcase name="PushToken.testVoipTokenRegistrationFails" time="0.018236551" /></testsuite></testsuites>

@@ -1,0 +1,18 @@
+{
+  "result": "fail",
+  "executed": 72,
+  "passed": 71,
+  "failed": "Events.testEventsForSpecificClients",
+  "failure": "Temporary client unexpectedly received an earlier user.client-add broadcast. Attribution unproven.",
+  "post_cleanup": {
+    "containers": [],
+    "networks": [],
+    "volumes": []
+  },
+  "unrun": [
+    "federator5",
+    "background-worker47",
+    "spar101"
+  ],
+  "scope": "Original full-profile failure retained. Separately passing proxy5/cargohold27 current exact tuple may be reused; no failing suite/report qualifies."
+}
