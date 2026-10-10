@@ -1,0 +1,115 @@
+{
+  "kind": "lossless-archive-completed-task-owned-test-executables",
+  "entries": [
+    {
+      "original": "/home/operator/.cache/wire-migration/background-worker-20261009/adminless-scheduling-check",
+      "original_size": 22580899,
+      "original_sha256": "c498301876dc0b54a3766e101f0a4bb19f3682a44e6d2d9155688a5fddfee1cb",
+      "archive": "/home/operator/.cache/wire-migration/background-worker-20261009/adminless-scheduling-check.test-binary.gz",
+      "archive_size": 10848768,
+      "archive_sha256": "aaef497a3301d966d3c04dc04819ed60954da5af404de540a37cdcd8041ef5b7",
+      "build_info": "/home/operator/.cache/wire-migration/background-worker-20261009/adminless-scheduling-check: go1.26.9\n\tpath\tgithub.com/adamjlow/wire-server/go/services/background-worker.test\n\tmod\tgithub.com/adamjlow/wire-server/go/services/background-worker\t(devel)\t\n\tbuild\t-buildmode=exe\n\tbuild\t-compiler=gc\n\tbuild\t-tags=schemacheck\n\tbuild\tCGO_ENABLED=0\n\tbuild\tGOARCH=amd64\n\tbuild\tGOOS=linux\n\tbuild\tGOAMD64=v1\n",
+      "restoration": "gzip -dc ARCHIVE > ORIGINAL; chmod 755 ORIGINAL; verify original SHA256"
+    },
+    {
+      "original": "/home/operator/.cache/wire-migration/background-worker-20261009/bot-dhe-final-tests",
+      "original_size": 22522176,
+      "original_sha256": "a2b4e5b5cce320b328e76af7741414361e275f357d0d1bc96b091b290ff2bcf8",
+      "archive": "/home/operator/.cache/wire-migration/background-worker-20261009/bot-dhe-final-tests.test-binary.gz",
+      "archive_size": 10873167,
+      "archive_sha256": "947c73b51bacaf78210a89aa88f4c1bd12954fb3ed9d5a538934a333895ac2d2",
+      "build_info": "/home/operator/.cache/wire-migration/background-worker-20261009/bot-dhe-final-tests: go1.26.9\n\tpath\tgithub.com/adamjlow/wire-server/go/services/background-worker.test\n\tmod\tgithub.com/adamjlow/wire-server/go/services/background-worker\t(devel)\t\n\tbuild\t-buildmode=exe\n\tbuild\t-compiler=gc\n\tbuild\t-trimpath=true\n\tbuild\tCGO_ENABLED=0\n\tbuild\tGOARCH=amd64\n\tbuild\tGOOS=linux\n\tbuild\tGOAMD64=v1\n",
+      "restoration": "gzip -dc ARCHIVE > ORIGINAL; chmod 755 ORIGINAL; verify original SHA256"
+    },
+    {
+      "original": "/home/operator/.cache/wire-migration/background-worker-20261009/bot-dhe-tests",
+      "original_size": 22505966,
+      "original_sha256": "242f7b7a49a80338964c6cd3d8ae27a18d174ca3a0e0686385d1a16e91f3ce07",
+      "archive": "/home/operator/.cache/wire-migration/background-worker-20261009/bot-dhe-tests.test-binary.gz",
+      "archive_size": 10865896,
+      "archive_sha256": "5c1df7ff17897b6d4f58b8f213acc5903828ef1d064f1d5f2e0c2d1ddb1a0514",
+      "build_info": "/home/operator/.cache/wire-migration/background-worker-20261009/bot-dhe-tests: go1.26.9\n\tpath\tgithub.com/adamjlow/wire-server/go/services/background-worker.test\n\tmod\tgithub.com/adamjlow/wire-server/go/services/background-worker\t(devel)\t\n\tbuild\t-buildmode=exe\n\tbuild\t-compiler=gc\n\tbuild\t-trimpath=true\n\tbuild\tCGO_ENABLED=0\n\tbuild\tGOARCH=amd64\n\tbuild\tGOOS=linux\n\tbuild\tGOAMD64=v1\n",
+      "restoration": "gzip -dc ARCHIVE > ORIGINAL; chmod 755 ORIGINAL; verify original SHA256"
+    },
+    {
+      "original": "/home/operator/.cache/wire-migration/background-worker-20261009/bot-image-tests-89f24",
+      "original_size": 22739064,
+      "original_sha256": "6ce8cb16614cb07efa9c24c7abc53ae9f42a3f1d1b4fe65333eee3e8a28ac431",
+      "archive": "/home/operator/.cache/wire-migration/background-worker-20261009/bot-image-tests-89f24.test-binary.gz",
+      "archive_size": 10955053,
+      "archive_sha256": "fb11aedd474ce9ae6b44beceddeb5c4b6b2e93f6568f8964ba59f360dffdef2d",
+      "build_info": "/home/operator/.cache/wire-migration/background-worker-20261009/bot-image-tests-89f24: go1.26.9\n\tpath\tgithub.com/adamjlow/wire-server/go/services/background-worker.test\n\tmod\tgithub.com/adamjlow/wire-server/go/services/background-worker\t(devel)\t\n\tbuild\t-buildmode=exe\n\tbuild\t-compiler=gc\n\tbuild\tCGO_ENABLED=0\n\tbuild\tGOARCH=amd64\n\tbuild\tGOOS=linux\n\tbuild\tGOAMD64=v1\n",
+      "restoration": "gzip -dc ARCHIVE > ORIGINAL; chmod 755 ORIGINAL; verify original SHA256"
+    },
+    {
+      "original": "/home/operator/.cache/wire-migration/background-worker-20261009/conversation-removal-check",
+      "original_size": 22467491,
+      "original_sha256": "544c0b55aae8875ac6a85ad86c2b878eb46b1e1654167811b77405d4dfbf8857",
+      "archive": "/home/operator/.cache/wire-migration/background-worker-20261009/conversation-removal-check.test-binary.gz",
+      "archive_size": 10792948,
+      "archive_sha256": "ff15923cbedbde94bddc44918f3232862f18d5c3530df17859e0923d7c8e7256",
+      "build_info": "/home/operator/.cache/wire-migration/background-worker-20261009/conversation-removal-check: go1.26.9\n\tpath\tgithub.com/adamjlow/wire-server/go/services/background-worker.test\n\tmod\tgithub.com/adamjlow/wire-server/go/services/background-worker\t(devel)\t\n\tbuild\t-buildmode=exe\n\tbuild\t-compiler=gc\n\tbuild\t-tags=schemacheck\n\tbuild\tCGO_ENABLED=0\n\tbuild\tGOARCH=amd64\n\tbuild\tGOOS=linux\n\tbuild\tGOAMD64=v1\n",
+      "restoration": "gzip -dc ARCHIVE > ORIGINAL; chmod 755 ORIGINAL; verify original SHA256"
+    },
+    {
+      "original": "/home/operator/.cache/wire-migration/background-worker-20261009/meetings-cleanup-check",
+      "original_size": 21313752,
+      "original_sha256": "cb388f48c6dcbeef6fbb603756cf8b94c10d748eff3f986b415887c34ecd3b48",
+      "archive": "/home/operator/.cache/wire-migration/background-worker-20261009/meetings-cleanup-check.test-binary.gz",
+      "archive_size": 10275297,
+      "archive_sha256": "671a729cd2c949a04bb0e4ffb37439664cfac95a0eb39629938489563bddc4bb",
+      "build_info": "/home/operator/.cache/wire-migration/background-worker-20261009/meetings-cleanup-check: go1.26.9\n\tpath\tgithub.com/adamjlow/wire-server/go/services/background-worker.test\n\tmod\tgithub.com/adamjlow/wire-server/go/services/background-worker\t(devel)\t\n\tbuild\t-buildmode=exe\n\tbuild\t-compiler=gc\n\tbuild\t-tags=schemacheck\n\tbuild\tCGO_ENABLED=0\n\tbuild\tGOARCH=amd64\n\tbuild\tGOOS=linux\n\tbuild\tGOAMD64=v1\n",
+      "restoration": "gzip -dc ARCHIVE > ORIGINAL; chmod 755 ORIGINAL; verify original SHA256"
+    },
+    {
+      "original": "/home/operator/.cache/wire-migration/background-worker-20261009/scheduled-cron-check",
+      "original_size": 20679185,
+      "original_sha256": "8d5670028fec80535a4470e78c2321673b5d885cafeba68ba91fb3b5b3c418e5",
+      "archive": "/home/operator/.cache/wire-migration/background-worker-20261009/scheduled-cron-check.test-binary.gz",
+      "archive_size": 10076204,
+      "archive_sha256": "9f543f4dbf24ab69e142aa7a8c22bbe5e7ac7a6378618d726811294f54e24473",
+      "build_info": "/home/operator/.cache/wire-migration/background-worker-20261009/scheduled-cron-check: go1.26.9\n\tpath\tgithub.com/adamjlow/wire-server/go/services/background-worker.test\n\tmod\tgithub.com/adamjlow/wire-server/go/services/background-worker\t(devel)\t\n\tbuild\t-buildmode=exe\n\tbuild\t-compiler=gc\n\tbuild\t-tags=schemacheck\n\tbuild\tCGO_ENABLED=0\n\tbuild\tGOARCH=amd64\n\tbuild\tGOOS=linux\n\tbuild\tGOAMD64=v1\n",
+      "restoration": "gzip -dc ARCHIVE > ORIGINAL; chmod 755 ORIGINAL; verify original SHA256"
+    },
+    {
+      "original": "/home/operator/.cache/wire-migration/background-worker-20261009/scheduled-execution-check",
+      "original_size": 22751614,
+      "original_sha256": "c58595ae21211daabb41b6043d9486dbe68610fd440ff76fc3818356e5fe1351",
+      "archive": "/home/operator/.cache/wire-migration/background-worker-20261009/scheduled-execution-check.test-binary.gz",
+      "archive_size": 10927727,
+      "archive_sha256": "721e3ad4cd6b74417cfede1ac568112e0c45ac90baf0c1c993c56b9b4ff04555",
+      "build_info": "/home/operator/.cache/wire-migration/background-worker-20261009/scheduled-execution-check: go1.26.9\n\tpath\tgithub.com/adamjlow/wire-server/go/services/background-worker.test\n\tmod\tgithub.com/adamjlow/wire-server/go/services/background-worker\t(devel)\t\n\tbuild\t-buildmode=exe\n\tbuild\t-compiler=gc\n\tbuild\t-tags=schemacheck\n\tbuild\tCGO_ENABLED=0\n\tbuild\tGOARCH=amd64\n\tbuild\tGOOS=linux\n\tbuild\tGOAMD64=v1\n",
+      "restoration": "gzip -dc ARCHIVE > ORIGINAL; chmod 755 ORIGINAL; verify original SHA256"
+    },
+    {
+      "original": "/home/operator/.cache/wire-migration/background-worker-20261009/scheduled-pool-check",
+      "original_size": 22866304,
+      "original_sha256": "a3b20cd71532534cef5be44ff6a10101d44541ecd7ff8b82c7a571b3a4266228",
+      "archive": "/home/operator/.cache/wire-migration/background-worker-20261009/scheduled-pool-check.test-binary.gz",
+      "archive_size": 10982761,
+      "archive_sha256": "1303d8ea20bf04c0edeb7df1c01296e3a69ccc91ae44086ae170e029c5a78d94",
+      "build_info": "/home/operator/.cache/wire-migration/background-worker-20261009/scheduled-pool-check: go1.26.9\n\tpath\tgithub.com/adamjlow/wire-server/go/services/background-worker.test\n\tmod\tgithub.com/adamjlow/wire-server/go/services/background-worker\t(devel)\t\n\tbuild\t-buildmode=exe\n\tbuild\t-compiler=gc\n\tbuild\t-tags=schemacheck\n\tbuild\tCGO_ENABLED=0\n\tbuild\tGOARCH=amd64\n\tbuild\tGOOS=linux\n\tbuild\tGOAMD64=v1\n",
+      "restoration": "gzip -dc ARCHIVE > ORIGINAL; chmod 755 ORIGINAL; verify original SHA256"
+    },
+    {
+      "original": "/home/operator/.cache/wire-migration/background-worker-20261009/scheduled-reaper-check",
+      "original_size": 20633218,
+      "original_sha256": "833475cc1ba6c7017030e30f349200e1f040a667f3b9037285cfd28000c78200",
+      "archive": "/home/operator/.cache/wire-migration/background-worker-20261009/scheduled-reaper-check.test-binary.gz",
+      "archive_size": 10057883,
+      "archive_sha256": "504cd703e25712f0056eb85a4bdbef215b54cfc51c20d280616724d858d9c841",
+      "build_info": "/home/operator/.cache/wire-migration/background-worker-20261009/scheduled-reaper-check: go1.26.9\n\tpath\tgithub.com/adamjlow/wire-server/go/services/background-worker.test\n\tmod\tgithub.com/adamjlow/wire-server/go/services/background-worker\t(devel)\t\n\tbuild\t-buildmode=exe\n\tbuild\t-compiler=gc\n\tbuild\t-tags=schemacheck\n\tbuild\tCGO_ENABLED=0\n\tbuild\tGOARCH=amd64\n\tbuild\tGOOS=linux\n\tbuild\tGOAMD64=v1\n",
+      "restoration": "gzip -dc ARCHIVE > ORIGINAL; chmod 755 ORIGINAL; verify original SHA256"
+    },
+    {
+      "original": "/home/operator/.cache/wire-migration/background-worker-20261009/scheduled-schema-check",
+      "original_size": 20532197,
+      "original_sha256": "4fbd316dddd4143e2c72c324156e854dcd45a986d675020b8ceccd41dd0e06b7",
+      "archive": "/home/operator/.cache/wire-migration/background-worker-20261009/scheduled-schema-check.test-binary.gz",
+      "archive_size": 10015748,
+      "archive_sha256": "9d3de3c6c56967a1f2a445dc6254af29a42f45f9c7733723a03c32b080a9ad64",
+      "build_info": "/home/operator/.cache/wire-migration/background-worker-20261009/scheduled-schema-check: go1.26.9\n\tpath\tgithub.com/adamjlow/wire-server/go/services/background-worker.test\n\tmod\tgithub.com/adamjlow/wire-server/go/services/background-worker\t(devel)\t\n\tbuild\t-buildmode=exe\n\tbuild\t-compiler=gc\n\tbuild\t-tags=schemacheck\n\tbuild\tCGO_ENABLED=0\n\tbuild\tGOARCH=amd64\n\tbuild\tGOOS=linux\n\tbuild\tGOAMD64=v1\n",
+      "restoration": "gzip -dc ARCHIVE > ORIGINAL; chmod 755 ORIGINAL; verify original SHA256"
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+<?xml version='1.0' ?><testsuites name="wire-server"><testsuite name="integration" tests="2" failures="0" time="0.984839301"><testcase name="Spar.testSparEmulateSPInitiatedLogin" time="0.423824079" /><testcase name="Spar.testSparSPInitiatedLoginWithUtf8" time="0.561015222" /></testsuite></testsuites>
