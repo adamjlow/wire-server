@@ -287,7 +287,7 @@ func TestNativeDigestAndLargeAssertionCompatibility(t *testing.T) {
 		t.Run(algorithm, func(t *testing.T) {
 			attributes := ""
 			if algorithm == "large" {
-				attributes = `<saml:AttributeStatement>` + strings.Repeat(`<saml:Attribute Name="synthetic"><saml:AttributeValue>synthetic</saml:AttributeValue></saml:Attribute>`, 600) + `</saml:AttributeStatement>`
+				attributes = `<saml:AttributeStatement>` + strings.Repeat(`<saml:Attribute Name="a"><saml:AttributeValue>x</saml:AttributeValue></saml:Attribute>`, 510) + `</saml:AttributeStatement>`
 			}
 			source := qualificationResponseSource(algorithm, attributes)
 			doc, cert, key := signedTestResponseWithKey(t, 1024, source)

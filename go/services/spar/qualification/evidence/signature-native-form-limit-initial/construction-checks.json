@@ -1,0 +1,17 @@
+{
+  "result": "fail",
+  "source_revision": "7796ccc65dc54785bfc5c173ab5bde1f4cafb040",
+  "candidate": {
+    "path": "/dev/shm/wire-migration-spar-20261010/spar-signature-verdict-corrected",
+    "sha256": "e879254aaf28ee4c8b4133404088f7c74e4a007b3587c1d150a1a8c6a8d50f71",
+    "source_revision": "12a3484618ed01e5d22091dba0dfcffd3dbd0297"
+  },
+  "runner_exit_code": 1,
+  "cleanup_exit_code": 0,
+  "independent_post_cleanup": {
+    "containers": [],
+    "networks": [],
+    "volumes": []
+  },
+  "analysis": "Bounded log observation reveals actual large fixture generic500 is pre-SAML maximum parameter size exceeded:65344 (native log). Prior immediate-log race explanation was incorrect for this case. Shorten synthetic names/values and use510 Attribute+Value pairs (1020nodes plus SAML structure), preserving SDK1000-limit proof below native form boundary. Concrete native form parsing limit remains a finite protocol gap; must source/implement it before final qualification. Runtime unchanged; reuse candidate12a34846/checks, compile corrected fixture only."
+}
