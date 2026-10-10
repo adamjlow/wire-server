@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "id": "background-worker-harness-fd",
+  "title": "Bound private runner descriptors and preserve high-FD TCP forwarding",
+  "service": "framework",
+  "kind": "framework",
+  "status": "queued",
+  "owner": null,
+  "branch": null,
+  "depends_on": [
+    "background-worker-contract"
+  ],
+  "write_paths": [
+    ".migration/tasks/background-worker-harness-fd.json",
+    "docs/go-migration/plans/background-worker-harness-fd.md",
+    "tools/parity/docker/runtime.py",
+    "tools/parity/docker/environment.py",
+    "tools/parity/docker/test_container.py",
+    "tools/parity/docker/test_environment.py",
+    "docs/go-migration/qualifications/background-worker-harness-fd"
+  ],
+  "plan": "docs/go-migration/plans/background-worker-harness-fd.md",
+  "acceptance_criteria": [
+    {
+      "id": "fixture",
+      "description": "Support bounded high-FD private fixture without changing byte/EOF or original oracle behavior.",
+      "required_evidence": "Runner-only8192 nofile, DefaultSelector relay preserving idle/half-close, actual high-FD regression and existing isolation/harness checks, same original catalogues/assertions/normalization and nonroot/private cleanup."
+    },
+    {
+      "id": "observed-run",
+      "description": "Measure a current exact original47 run with unchanged candidate and retain honest attribution/results.",
+      "required_evidence": "Immutable runner/worker/dependency/compiler identities, actual FD/thread/RSS/memory monitor, complete original47 XML including every failure/skip, terminal controller/owned cleanup; no qualification claim if failing. Same-author delegated scoped review."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": "Queued bounded fixture repair from actual observed runner limit and original proxy EMFILE reproduction; original run attribution unproven. Go candidate source and whole acceptance unchanged."
+}
