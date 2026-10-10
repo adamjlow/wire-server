@@ -30,6 +30,7 @@ func decimal(s string) bool {
 func NewHandler(c Config) http.Handler { return newHandler(c, nil) }
 
 func newHandler(c Config, store settingsStore) http.Handler {
+	peers := peerClient{config: c, http: &http.Client{Timeout: 10 * time.Second, CheckRedirect: func(*http.Request, []*http.Request) error { return http.ErrUseLastResponse }}}
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		segments := strings.Split(strings.TrimPrefix(r.URL.Path, "/"), "/")
 		first := segments[0]
@@ -74,6 +75,9 @@ func newHandler(c Config, store settingsStore) http.Handler {
 			}
 			w.Header().Set("Content-Type", "application/json;charset=utf-8")
 			w.WriteHeader(http.StatusOK)
+			return
+		}
+		if tokens, ok := store.(tokenStore); ok && serveTokens(w, r, c, tokens, peers) {
 			return
 		}
 		if store != nil && serveSettings(w, r, store) {

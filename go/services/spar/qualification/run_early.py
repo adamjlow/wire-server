@@ -14,25 +14,29 @@ import environment
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     for name in ('output','runner-receipt','candidate','candidate-receipt'):parser.add_argument('--'+name,type=Path,required=True)
+    parser.add_argument('--suite',choices=('early','tokens'),default='early')
     args=parser.parse_args()
     selected=environment.identified_candidate(args.candidate,args.candidate_receipt)
     record=environment.prepare(args.output,args.runner_receipt)
     output=args.output.resolve();compose_path=output/'compose.json';spec=json.loads(compose_path.read_text())
-    spec['services']={name:service for name,service in spec['services'].items() if name in ('cassandra','runner')}
-    spec['networks']={'demo_wire':spec['networks']['demo_wire']}
-    runner=spec['services']['runner'];runner['networks']=['demo_wire']
+    if args.suite=='early':
+        spec['services']={name:service for name,service in spec['services'].items() if name in ('cassandra','runner')}
+        spec['networks']={'demo_wire':spec['networks']['demo_wire']}
+    runner=spec['services']['runner']
+    if args.suite=='early':runner['networks']=['demo_wire']
     runner['entrypoint']=['/nix/store/60m4rxhg2fldqaak400c0lry96ijrzqn-python3-3.13.13/bin/python3']
-    runner['command']=['/source/go/services/spar/qualification/early.py']
+    runner['command']=['/source/go/services/spar/qualification/'+('early.py' if args.suite=='early' else 'tokens.py')]
     runner['volumes'].append({'type':'bind','source':selected['path'],'target':'/candidate/spar','read_only':True})
     environment.validate_isolation(spec)
     compose_path.write_text(json.dumps(spec,indent=2)+'\n')
-    record.update(kind='early-native-Go-Spar-process',candidate=selected,compose_sha256=hashlib.sha256(compose_path.read_bytes()).hexdigest())
+    record.update(kind='early-native-Go-Spar-process' if args.suite=='early' else 'original-Go-Spar-token-tests',candidate=selected,compose_sha256=hashlib.sha256(compose_path.read_bytes()).hexdigest())
     compose=['docker','compose','-p',record['project'],'-f',str(compose_path)]
     code=1
     try:
-        subprocess.run([*compose,'up','--detach','cassandra'],check=True,timeout=90,capture_output=True)
+        dependencies=['cassandra'] if args.suite=='early' else [name for name in spec['services'] if name!='runner']
+        subprocess.run([*compose,'up','--detach',*dependencies],check=True,timeout=120,capture_output=True)
         with (output/'controller.log').open('w')as log:
-            result=subprocess.run([*compose,'run','--rm','--no-deps','runner'],stdout=log,stderr=subprocess.STDOUT,timeout=240)
+            result=subprocess.run([*compose,'run','--rm','--no-deps','runner'],stdout=log,stderr=subprocess.STDOUT,timeout=240 if args.suite=='early' else 900)
         code=result.returncode;record['process_exit_code']=code
         observed=json.loads((output/'reports/result.json').read_text());record['result']=observed['result']
         if code!=0 or observed['result']!='pass':code=1
