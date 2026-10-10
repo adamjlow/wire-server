@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "result": "built",
+  "source_revision": "87deed0f0cdf2dff4d03a994ee22d15dc00ffda2",
+  "binary_sha256": "9b9a3e45430ea6deef42029d570a06d496f5ce7a040213b96dba69e6b73643eb",
+  "binary": "/home/operator/.cache/wire-migration/spar-20261010/spar-settings-corrected",
+  "compiler": "go1.26.9",
+  "target": "linux/amd64",
+  "CGO_ENABLED": "0",
+  "build_flags": [
+    "-trimpath"
+  ],
+  "build_info": "/home/operator/.cache/wire-migration/spar-20261010/spar-settings-corrected: go1.26.9\n\tpath\tgithub.com/adamjlow/wire-server/go/services/spar/cmd/spar\n\tmod\tgithub.com/adamjlow/wire-server/go/services/spar\t(devel)\t\n\tdep\tgithub.com/apache/cassandra-gocql-driver/v2\tv2.1.2\th1:lu/p0Db2av18enHJvWJQoChLssI0P+AR06STq4VdvCc=\n\tdep\tgo.yaml.in/yaml/v3\tv3.0.5\th1:N6y/pJk8buWs9NY5ERU2HSMfm+IuD/OtfdAnq6kESPw=\n\tdep\tgopkg.in/inf.v0\tv0.9.1\th1:73M5CoZyi3ZLMOyDlQh031Cx6N9NDJ2Vvfl76EDAgDc=\n\tbuild\t-buildmode=exe\n\tbuild\t-compiler=gc\n\tbuild\t-trimpath=true\n\tbuild\tCGO_ENABLED=0\n\tbuild\tGOARCH=amd64\n\tbuild\tGOOS=linux\n\tbuild\tGOAMD64=v1\n\tbuild\tvcs=git\n\tbuild\tvcs.revision=87deed0f0cdf2dff4d03a994ee22d15dc00ffda2\n\tbuild\tvcs.time=2026-10-10T09:58:38Z\n\tbuild\tvcs.modified=false\n",
+  "quality_log": {
+    "path": "/home/operator/.cache/wire-migration/spar-20261010/settings-corrected-go-check.log",
+    "sha256": "a076ec5b946484a42bdab108bdbde40199217c271878d8b6b5bd1244b7c5f790"
+  },
+  "scope": "Settings/SCIM metadata process increment; no full-service qualification."
+}

@@ -1,0 +1,296 @@
+{
+  "kind": "early-process-comparison",
+  "result": "pass",
+  "e2e_executed": false,
+  "scope": "Configuration, real schema23 startup, health/method/version/errors, default-settings empty/clear/missing IdP, missing SCIM metadata and SIGTERM; no complete SSO/SCIM qualification.",
+  "config_sha256": "c6fd50b5388904c4604384f6c491a436c9e9c769abe0a861174d55b63be23273",
+  "native": {
+    "responses": {
+      "GET /i/status": {
+        "status": 200,
+        "headers": {
+          "content-type": "application/json;charset=utf-8",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null
+        },
+        "body": ""
+      },
+      "HEAD /i/status": {
+        "status": 200,
+        "headers": {
+          "content-type": "application/json;charset=utf-8",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null
+        },
+        "body": ""
+      },
+      "POST /i/status": {
+        "status": 405,
+        "headers": {
+          "content-type": null,
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null
+        },
+        "body": ""
+      },
+      "GET /v0/i/status": {
+        "status": 404,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null
+        },
+        "body": {
+          "code": 404,
+          "label": "unsupported-version",
+          "message": "Internal APIs (`/i/...`) are not under version control"
+        }
+      },
+      "GET /v99/i/status": {
+        "status": 404,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null
+        },
+        "body": {
+          "code": 404,
+          "label": "unsupported-version",
+          "message": "Internal APIs (`/i/...`) are not under version control"
+        }
+      },
+      "GET /unknown": {
+        "status": 404,
+        "headers": {
+          "content-type": null,
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null
+        },
+        "body": ""
+      },
+      "GET /sso/settings": {
+        "status": 200,
+        "headers": {
+          "content-type": "application/json;charset=utf-8",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null
+        },
+        "body": {
+          "default_sso_code": null
+        }
+      },
+      "HEAD /sso/settings": {
+        "status": 200,
+        "headers": {
+          "content-type": "application/json;charset=utf-8",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null
+        },
+        "body": ""
+      },
+      "PUT /i/sso/settings {\"default_sso_code\":null}": {
+        "status": 200,
+        "headers": {
+          "content-type": "application/json;charset=utf-8",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null
+        },
+        "body": ""
+      },
+      "PUT /i/sso/settings {\"default_sso_code\":\"00000000-0000-4000-8000-000000000001\"}": {
+        "status": 404,
+        "headers": {
+          "content-type": null,
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null
+        },
+        "body": {
+          "code": 404,
+          "label": "not-found",
+          "message": "Could not find IdP."
+        }
+      },
+      "POST /i/scim/userinfo/00000000-0000-4000-8000-000000000002": {
+        "status": 200,
+        "headers": {
+          "content-type": "application/json;charset=utf-8",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null
+        },
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000002"
+        }
+      }
+    },
+    "stop_exit_code": 0,
+    "stop_seconds": 0.007409880869090557,
+    "binary_sha256": "9c80adbfd76199ad3ab9bcf14c4eab8352a09ac2e0960078f8cd23615f8e58d1"
+  },
+  "go": {
+    "responses": {
+      "GET /i/status": {
+        "status": 200,
+        "headers": {
+          "content-type": "application/json;charset=utf-8",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null
+        },
+        "body": ""
+      },
+      "HEAD /i/status": {
+        "status": 200,
+        "headers": {
+          "content-type": "application/json;charset=utf-8",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null
+        },
+        "body": ""
+      },
+      "POST /i/status": {
+        "status": 405,
+        "headers": {
+          "content-type": null,
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null
+        },
+        "body": ""
+      },
+      "GET /v0/i/status": {
+        "status": 404,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null
+        },
+        "body": {
+          "code": 404,
+          "label": "unsupported-version",
+          "message": "Internal APIs (`/i/...`) are not under version control"
+        }
+      },
+      "GET /v99/i/status": {
+        "status": 404,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null
+        },
+        "body": {
+          "code": 404,
+          "label": "unsupported-version",
+          "message": "Internal APIs (`/i/...`) are not under version control"
+        }
+      },
+      "GET /unknown": {
+        "status": 404,
+        "headers": {
+          "content-type": null,
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null
+        },
+        "body": ""
+      },
+      "GET /sso/settings": {
+        "status": 200,
+        "headers": {
+          "content-type": "application/json;charset=utf-8",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null
+        },
+        "body": {
+          "default_sso_code": null
+        }
+      },
+      "HEAD /sso/settings": {
+        "status": 200,
+        "headers": {
+          "content-type": "application/json;charset=utf-8",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null
+        },
+        "body": ""
+      },
+      "PUT /i/sso/settings {\"default_sso_code\":null}": {
+        "status": 200,
+        "headers": {
+          "content-type": "application/json;charset=utf-8",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null
+        },
+        "body": ""
+      },
+      "PUT /i/sso/settings {\"default_sso_code\":\"00000000-0000-4000-8000-000000000001\"}": {
+        "status": 404,
+        "headers": {
+          "content-type": null,
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null
+        },
+        "body": {
+          "code": 404,
+          "label": "not-found",
+          "message": "Could not find IdP."
+        }
+      },
+      "POST /i/scim/userinfo/00000000-0000-4000-8000-000000000002": {
+        "status": 200,
+        "headers": {
+          "content-type": "application/json;charset=utf-8",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null
+        },
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000002"
+        }
+      }
+    },
+    "stop_exit_code": 0,
+    "stop_seconds": 0.001131964847445488,
+    "binary_sha256": "9b9a3e45430ea6deef42029d570a06d496f5ce7a040213b96dba69e6b73643eb"
+  },
+  "differences": {}
+}

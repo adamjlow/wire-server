@@ -49,8 +49,22 @@
       "command": "python3 go/check.py spar with pinned Go1.26.9: format/tidy/verify/vet/unit/race/build/vulnerability/license (current initial Go source only; final whole-service matrix remains outstanding).",
       "revision": "9e209e02bdea478b84de16413c75c4e64e9e99b4",
       "artifact": "go/services/spar/qualification/evidence/early-corrected/go-check.log"
+    },
+    {
+      "criterion": "service",
+      "result": "blocked",
+      "command": "Expanded native/Go comparison passed 11 cases at exact source/artifact, including persistent settings clear/missing IdP/absent SCIM metadata. Full service and populated durable state still incomplete.",
+      "revision": "87deed0f0cdf2dff4d03a994ee22d15dc00ffda2",
+      "artifact": "go/services/spar/qualification/evidence/settings-corrected/result.json"
+    },
+    {
+      "criterion": "quality",
+      "result": "pass",
+      "command": "python3 go/check.py spar using pinned Go1.26.9: format/tidy/verify/vet/unit/race/build/vulnerability/license; current persistent increment only, final service verification outstanding.",
+      "revision": "87deed0f0cdf2dff4d03a994ee22d15dc00ffda2",
+      "artifact": "go/services/spar/qualification/evidence/settings-corrected/go-check.log"
     }
   ],
   "review": null,
-  "handoff": "Progress: early native/Go process comparison passes. Implemented real persistent public SSO settings GET, internal nullable settings PUT with referenced IdP validation and native delete-then-insert order, internal SCIM user-info POST. Source certificate blobs are XML KeyInfo, not DER; decoder and negative input/entity tests added. Pinned Go checks pass; expanded actual native/Go process comparison next. Full SSO/IdP/SCIM, final225/gaps/operations/switchback/image/selector remain incomplete, compatibility null."
+  "handoff": "Progress: persistent SSO settings GET/PUT and SCIM user-info POST implemented with native tables/consistency/order/IdP validation and XML KeyInfo certificate codec. Exact source87deed0f0cdf2dff4d03a994ee22d15dc00ffda2 passes eleven strict native/Go HTTP comparisons, real schema23 startup, clean SIGTERM, runner0 and owned cleanup0/no resources; pinned Go checks pass. Initial missing-IdP header failure retained. Compared cases cover empty settings, clear, nonexistent IdP and absent metadata; populated IdP/default/metadata and actual durable switchback are not yet proven. Next substantive construction: complete IdP row/model/CRUD and SCIM token storage + Brig/Galley permission RPCs, then SAML/SCIM handlers. Full original225, finite trust/state gaps, operations, switchback, image/selector incomplete; compatibility null."
 }

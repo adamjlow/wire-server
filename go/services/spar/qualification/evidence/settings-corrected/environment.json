@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "project": "wire-e2e-ea894fbe98a947d293a093416b0cf098",
+  "source_revision": "87deed0f0cdf2dff4d03a994ee22d15dc00ffda2",
+  "runner_image_id": "sha256:099b30651813ecbe4192514cde0b096174bbfd34672529c9b21e8c7766077268",
+  "runner_revision": "890a4742e936a2e8078f1a0d39b8bb36616a385f",
+  "candidate": {
+    "path": "/home/operator/.cache/wire-migration/spar-20261010/spar-settings-corrected",
+    "sha256": "9b9a3e45430ea6deef42029d570a06d496f5ce7a040213b96dba69e6b73643eb",
+    "source_revision": "87deed0f0cdf2dff4d03a994ee22d15dc00ffda2"
+  },
+  "peer_candidates": {},
+  "result": "pass",
+  "e2e_executed": false,
+  "compose_sha256": "fb2b82663e75392a5f1dc2b7a92b1fa19af739e993360593824a53b7446c9c39",
+  "files_sha256": {
+    "fixtures/configs.json": "8cc34c41cc248ae804d822a60fb610b0adead84c3e79663eb33243ef70c99876",
+    "fixtures/integration.json": "d8834dad54e1f851e689ac00691cd527aac69e0e9ce00baf149835433812c73c",
+    "fixtures/peers.json": "ca8438ea9464138dc0c75868b62eb8b12113343dada8336524c3ea467dd3a490"
+  },
+  "kind": "early-native-Go-Spar-process",
+  "process_exit_code": 0,
+  "cleanup_exit_code": 0,
+  "post_cleanup": {
+    "containers": [],
+    "networks": [],
+    "volumes": []
+  }
+}
