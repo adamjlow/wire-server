@@ -12,10 +12,11 @@ import (
 )
 
 type brigAccount struct {
-	ID      gocql.UUID                         `json:"id"`
-	Team    *gocql.UUID                        `json:"team"`
-	Deleted bool                               `json:"deleted"`
-	SSOID   *struct{ Tenant, Subject *string } `json:"sso_id"`
+	ID        gocql.UUID                         `json:"id"`
+	Team      *gocql.UUID                        `json:"team"`
+	Deleted   bool                               `json:"deleted"`
+	ManagedBy string                             `json:"managed_by"`
+	SSOID     *struct{ Tenant, Subject *string } `json:"sso_id"`
 }
 
 func (p peerClient) account(ctx context.Context, uid gocql.UUID, requestID string, pending bool) (*brigAccount, error) {
