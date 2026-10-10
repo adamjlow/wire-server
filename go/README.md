@@ -6,6 +6,12 @@ identifies the unchanged peer images/compiler receipts. The optional
 [background-worker](services/background-worker/README.md) now completes the six-Go
 mixed stack: [all124 original executions pass](services/background-worker/evidence/final-original124-20261010/)
 with remaining Haskell peers, plus finite operations and durable switchback.
+The optional [Spar](services/spar/README.md) adds the seventh Go service:
+[all225 original executions qualify](services/spar/qualification/evidence/final-original225-batched/result.json)
+through six complete suites in three owned batches with identical selected
+artifacts and Haskell remainder. Its [review](services/spar/REVIEW.md) records
+current trust/protocol, exact-image loaded shutdown and actual durable switchback
+proof, inherited concerns and retained failed attempts.
 Historical Go1.26.8 receipts remain history; use identified current artifacts.
 Haskell remains supported/default.
 

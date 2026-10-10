@@ -112,22 +112,27 @@ All four suite receipts identify every selected executable; the host verifies
 hashes before accepting success. Exact runner, controller, image and fixture
 identities remain in the retained receipts. No complete backend-suite claim.
 
-Background-worker was a Haskell peer in that passing five-service run. Its
-[whole-service migration](../../../docs/go-migration/plans/background-worker.md)
-now has completed inventory, a frozen contract, strict six-service selection and
-an original47 worker catalogue. The final combined profile
-`proxy-cargohold-cannon-gundeck-federator-background-worker` requires124 original
-executions with all six Go services and remaining Haskell peers. That final
-qualification has not passed. A partial run selecting only Go worker executed
-gundeck40:38 passed,2 failed, owned cleanup0; exact failure evidence is retained
-in the worker plan. Existing event coverage does not qualify scheduled jobs,
-migrations or durable switchback.
+Background-worker was a Haskell peer in the historical five-service run. Its
+[whole-service review](../../../go/services/background-worker/REVIEW.md) records
+completed original124 with six Go services, bounded operations and actual durable
+switchback. Earlier partial/failing construction runs remain retained, not a
+passing native baseline. Existing event coverage alone did not qualify jobs/migrations.
 
 ## Spar original parity profile
 
 `--service spar` runs101 unchanged original executions:86 Spar module cases plus15 related cross-service SSO/SCIM cases from actual pinned discovery. The explicit spar-tests.json catalogue retains all original boolean variants, assertions and required XML checks. Use prepare without selections for an all-Haskell baseline; add an identified Spar candidate or repeated --select arguments for substitution.
 
 `proxy-cargohold-cannon-gundeck-federator-background-worker-spar` requires exactly seven identified Go candidates and runs the existing124 peer executions plus Spar101 (225 executions). Missing, duplicate, foreign or ambiguous selections fail; source/fixtures/candidate mounts remain read-only and dependencies/cleanup remain owned. Adding a profile does not claim a suite passed or change Haskell defaults.
+
+The [current whole-service qualification](../../../go/services/spar/qualification/evidence/final-original225-batched/result.json)
+passes all225 executions through six complete original suites in three owned
+batches: proxy5/cargohold27, Spar101/gundeck40/federator5, worker47. All seven Go
+artifact hashes and Haskell remainder/config/runner/dependency identities match;
+strict original XML/names and owned cleanup pass. Earlier overall failed runs
+remain failed, no partial failed suite qualifies and no synthetic XML is merged.
+The final worker47 used optional orphan supervision with original exit0 and zero
+supervisor signals; the separate native proof demonstrated actual orphan reaping.
+
 
 ## Optional native Nginx orphan supervision
 

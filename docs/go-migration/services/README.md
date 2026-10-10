@@ -4,7 +4,7 @@ The authoritative stage is in [`.migration/services/`](../../../.migration/servi
 The initial registry covers proxy, cannon, cargohold, federator, gundeck,
 background-worker, spar, brig and galley. Current records, rather than this index,
 provide live stages and verified revision tuples. Existing dossiers cover proxy,
-cargohold, cannon, gundeck, federator and background-worker; their evidence
+cargohold, cannon, gundeck, federator, background-worker and Spar; their evidence
 includes real Haskell reference captures and original tests.
 
 Use [current patched artifacts](../qualifications/go-patched-20261009/README.md)
@@ -17,7 +17,17 @@ Its [inventory](background-worker/inventory.md), frozen
 and [final self-review](../../../go/services/background-worker/REVIEW.md) link
 current six-Go/Haskell-peer original124, operations, durable switchback and optional
 selection evidence. Historical failed reference/candidate runs remain retained;
-no original assertion was waived. Spar, brig and galley remain unimplemented.
+no original assertion was waived.
+
+Spar is available at its [exact compatibility tuple](../../../.migration/services/spar.json).
+Its [inventory](spar/inventory.md), [contract](spar/contract.md), [plan](../plans/spar.md)
+and [delegated same-author review](../../../go/services/spar/REVIEW.md) link the
+current seven-Go/Haskell original225 qualification: six complete passing suites
+in three owned batches with identical selected artifacts/config/runner/dependencies.
+Original Spar101, native trust/protocol controls, exact-image loaded shutdown and
+actual durable native-Go-native switchback pass. Failed earlier overall runs and
+serious inherited concerns remain explicit; Haskell stays default. Brig and Galley
+remain unimplemented.
 
 Haskell remains supported and default; milestones never retire its implementation. Keep the latest verified
 upstream/reference/candidate tuple and its report in the compatibility record,

@@ -113,9 +113,15 @@ static/dynamic peers without installing GHC/Cabal/Nix or backend packages on the
 host. Use only the user-authorized internal Docker environment, with synthetic
 data, trusted fixture TLS, no host ports and owned cleanup. Preflight alone still
 cannot qualify e2e execution; shared/production integration targets remain prohibited.
-Background-worker's [plan](../../docs/go-migration/plans/background-worker.md)
-now links its completed inventory and frozen contract. Strict six-service selection
-and the original worker47 catalogue are implemented. Final qualification requires
-original77+worker47 =124 executions with six identified Go services and remaining
-Haskell peers. Retained native full-suite runs and a partial candidate gundeck40
-run failed; they establish execution, not a passing whole-worker baseline.
+Background-worker's [whole-service review](../../go/services/background-worker/REVIEW.md)
+records its completed six-Go/Haskell original124, jobs/migrations, bounded operations
+and actual durable switchback. Earlier failed baseline/construction runs remain history.
+
+Spar's [whole-service review](../../go/services/spar/REVIEW.md) now records
+original101 and the [current seven-Go/Haskell225 qualification](../../go/services/spar/qualification/evidence/final-original225-batched/result.json).
+Six complete passing suites qualify in three owned namespaces with identical
+selected artifact/config/runner/dependency identities; no failed XML is filtered
+or merged and earlier failed overall attempts remain failed. Native protocol/trust,
+exact-image loaded shutdown and durable native-Go-native state switchback pass.
+See the Docker runner documentation for optional owned native-Nginx orphan
+supervision; original assertions/deadlines/Haskell production code are unchanged.
