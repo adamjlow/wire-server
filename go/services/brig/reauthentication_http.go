@@ -116,7 +116,7 @@ func (h reauthenticationHandler) handle(w http.ResponseWriter, r *http.Request, 
 		return
 	}
 	user, _ := gocql.ParseUUID(canonical)
-	if media, err := mime.ParseMediaType(r.Header.Get("Content-Type")); err != nil || !strings.EqualFold(media, "application/json") {
+	if media, _, err := mime.ParseMediaType(r.Header.Get("Content-Type")); err != nil || !strings.EqualFold(media, "application/json") {
 		w.WriteHeader(http.StatusUnsupportedMediaType)
 		return
 	}

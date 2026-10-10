@@ -1,0 +1,10 @@
+{
+  "source_revision": "899d58802bb5af4b95444fd86df235f5865a8704",
+  "result": "failed",
+  "stage": "go vet",
+  "reason": "mime.ParseMediaType returns three values",
+  "sdk_controller_exit_code": 1,
+  "network_cleanup_exit_code": 0,
+  "owned_containers_remaining": false,
+  "owned_networks_remaining": false
+}
