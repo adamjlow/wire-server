@@ -1,0 +1,34 @@
+{
+  "result": "pass",
+  "scope": "Bounded original code-migration diagnosis only; prior mixed-stack failure not reproduced or attributed, not final225 pass.",
+  "modes": {
+    "native": {
+      "tests": 5,
+      "worker": {
+        "implementation": "haskell",
+        "path": "/nix/store/16b8f2naixj573wx924avn2y36mn0yvv-background-worker/bin/background-worker",
+        "sha256": "985aab36d8e92baa59eb3f8da9851f7f2b7be35f201fe2cea63ddf395d350cb0"
+      },
+      "cleanup": {
+        "containers": [],
+        "networks": [],
+        "volumes": []
+      },
+      "project": "wire-e2e-4845bcdc37a7440a915a1bc787a5e8b6"
+    },
+    "go": {
+      "tests": 5,
+      "worker": {
+        "implementation": "go",
+        "path": "/candidate/background-worker",
+        "sha256": "9a3157e2f61a3406e4923b1a5e569f2ad0f03e50ccdad25b4c7f43d22f3bc658"
+      },
+      "cleanup": {
+        "containers": [],
+        "networks": [],
+        "volumes": []
+      },
+      "project": "wire-e2e-358465937abc4fa2bb0256ceb6d8a59e"
+    }
+  }
+}
