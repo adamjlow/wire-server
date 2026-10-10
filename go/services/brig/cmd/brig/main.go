@@ -85,13 +85,15 @@ func execute(args []string, stdout, stderr io.Writer) int {
 		return 1
 	}
 	if command == "migrate-postgres" {
-		// No successful migration stub. The native-compatible ledger/execution is
-		// still required before this initial whole-service implementation qualifies.
-		_ = dbname
-		_ = reset
-		fmt.Fprintln(stderr, "PostgreSQL migration execution is not implemented yet")
-		return 1
+		ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
+		defer stop()
+		if err = brig.MigratePostgres(ctx, c, dbname, reset); err != nil {
+			fmt.Fprintln(stderr, err)
+			return 1
+		}
+		return 0
 	}
+
 	ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
 	defer stop()
 	if err = brig.Run(ctx, c); err != nil {

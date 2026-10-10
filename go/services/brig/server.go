@@ -130,6 +130,9 @@ func Run(ctx context.Context, c Config) error {
 		return err
 	}
 	defer postgres.Close()
+	if err = runPostgresMigrations(ctx, postgres, time.Duration(c.PostgresPool.Acquisition)); err != nil {
+		return err
+	}
 	listener, err := net.Listen("tcp", c.Brig.Address())
 	if err != nil {
 		return errors.New("Brig listener initialization failed")
