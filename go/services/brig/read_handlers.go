@@ -53,6 +53,30 @@ func routeParseError(w http.ResponseWriter, message string) {
 
 func (b brigReadHandlers) handle(w http.ResponseWriter, r *http.Request, path string) bool {
 	segments := strings.Split(strings.Trim(path, "/"), "/")
+	if len(segments) == 5 && segments[0] == "i" && segments[1] == "users" && segments[3] == "features" && segments[4] == "conferenceCalling" {
+		if r.Method != http.MethodGet && r.Method != http.MethodHead {
+			w.WriteHeader(405)
+			return true
+		}
+		canonical, valid := tokenUUID(segments[2])
+		if !valid {
+			routeParseError(w, "invalid UUID")
+			return true
+		}
+		user, _ := gocql.ParseUUID(canonical)
+		stored, err := b.users.conferenceCalling(r.Context(), user)
+		if err != nil {
+			wireError(w, 500, "server-error", "Internal Server Error")
+			return true
+		}
+		status, err := conferenceCallingStatus(b.config, stored)
+		if err != nil {
+			wireError(w, 500, "server-error", "Internal Server Error")
+			return true
+		}
+		readJSON(w, r, map[string]any{"status": status, "config": map[string]bool{"useSFTForOneToOneCalls": false}, "ttl": "unlimited"})
+		return true
+	}
 	if len(segments) == 4 && segments[0] == "i" && segments[1] == "users" && segments[3] == "status" {
 		if r.Method != http.MethodGet && r.Method != http.MethodHead {
 			w.WriteHeader(405)

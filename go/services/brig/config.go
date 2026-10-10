@@ -71,10 +71,17 @@ type Config struct {
 		} `yaml:"authSettings"`
 	} `yaml:"zauth"`
 	Settings struct {
-		Domain           string         `yaml:"setFederationDomain"`
-		DefaultLocale    string         `yaml:"setDefaultUserLocale"`
-		DisabledVersions []string       `yaml:"setDisabledAPIVersions"`
-		Other            map[string]any `yaml:",inline"`
+		Domain           string   `yaml:"setFederationDomain"`
+		DefaultLocale    string   `yaml:"setDefaultUserLocale"`
+		DisabledVersions []string `yaml:"setDisabledAPIVersions"`
+		FeatureFlags     *struct {
+			ConferenceCalling struct {
+				DefaultForNull *struct {
+					Status string `yaml:"status"`
+				} `yaml:"defaultForNull"`
+			} `yaml:"conferenceCalling"`
+		} `yaml:"setFeatureFlags"`
+		Other map[string]any `yaml:",inline"`
 	} `yaml:"optSettings"`
 	// Preserve options not yet typed in this initial implementation slice.
 	// This is not a claim that all retained options are implemented.
@@ -114,6 +121,9 @@ func (c Config) Validate() error {
 		if mode != "cassandra" && mode != "postgresql" && mode != "migration-to-postgresql" {
 			return invalid
 		}
+	}
+	if _, err := conferenceCallingStatus(c, nil); err != nil {
+		return invalid
 	}
 	return nil
 }
