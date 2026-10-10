@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "id": "spar-selector-contract",
+  "title": "Optional Spar image-only Helm selection preserving native defaults",
+  "service": "spar",
+  "kind": "contract-change",
+  "status": "queued",
+  "owner": null,
+  "branch": null,
+  "depends_on": [
+    "spar-contract"
+  ],
+  "write_paths": [
+    ".migration/tasks/spar-selector-contract.json",
+    "docs/go-migration/plans/spar-selector.md",
+    "tools/parity/spar_helm_postrender.py",
+    "docs/go-migration/qualifications/spar-selector-20261010",
+    ".migration/reviews/spar-selector.md",
+    "changelog.d/5-internal/spar-selector"
+  ],
+  "plan": "docs/go-migration/plans/spar-selector.md",
+  "acceptance_criteria": [
+    {
+      "id": "selection",
+      "description": "Optional image-only selection preserves default output and native RollingUpdate deployment.",
+      "required_evidence": "Actual unchanged Helm source chart render; no-option byte identity, exactly one Spar image changed, config mounts/probes/env/strategy identical; finite malformed/missing/duplicate/container/config/strategy negatives fail closed. Exact qualified optional image, bounded CLI; source/reference/originalassertions/defaults untouched, no push/deploy; user-delegated same-author review accurately labelled."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": "Queued separately protected selector work authorized by wholeSpargoal; serialized after implementation imageproof and before final225. Runtime implementation remains separately active."
+}
