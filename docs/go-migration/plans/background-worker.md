@@ -46,8 +46,9 @@ schema-before-health startup, per-pool drain and the native meetings counter.
 pass on guarded adminless jobs, expired meeting/code removal, manual cron,
 reaper gates and shutdown. Full Cassandra/Brig/Rabbit/bot interactions and
 Service.Run's complete process startup still require original-test qualification.
-Next resolve the explicit pusher/transport/diagnostic gaps and validate the current
-whole process in the existing Docker harness. Completion still requires the exact
+Pusher retry/discovery and finite-DHE bot transport are now constructed with
+focused evidence. Next audit ordinary HTTP defaults/stored diagnostics, resolve
+the pre-enable SCIM failure and validate the current whole process in Docker. Completion still requires the exact
 final six-Go/Haskell-peer run (124 executions,119 distinct original assertions),
 resolution of retained failures, bounded operations, actual durable
 Haskell->Go->Haskell switchback, optional image/selector and delegated same-author
@@ -239,7 +240,9 @@ Serious inherited concerns include PostgreSQL sslmode=prefer plaintext fallback,
 transient/unconfirmed child-job publication, write-before-notification loss on
 retry, poison-job requeue loops and bot pin authentication without hostname checks.
 Native RSA-only bot TLS permits finite-DHE AEAD suites absent from Go TLS; providers
-supporting only those suites have an unresolved interoperability limitation.
+supporting only those suites now have an OpenSSL stream fallback under construction.
+Its focused patched-CLI checks pass; final image and whole-service qualification
+are still required.
 Native URI IPv6 serialization removes brackets and can produce ambiguous stored
 URLs. Keep these findings separate from the parity implementation; no production
 security policy change is authorized. Eventual distribution must include retained
@@ -453,3 +456,16 @@ harness 2 GiB preparation floor. The [preparation receipt](../../../go/services/
 records this environment observation, not a test pass. Read-only inspection of the
 pinned runner found OpenSSL 3.6.2 at its Nix store path; no fallback transport or
 new production dependency is selected or qualified by that discovery.
+
+Bot finite-DHE compatibility is now constructed with a narrow fallback from Go's
+remote cipher-negotiation failure to an authenticated OpenSSL TLS1.2 stream. The
+same mandatory RSA pin/signature/date verifier runs before HTTP data, and Go pin
+failures cannot trigger fallback. Helpers use fixed arguments, no inherited backend
+credentials, bounded transcript/time/concurrency and close/cancellation reaping.
+[Exact construction evidence](../../../go/services/background-worker/evidence/bot-dhe-20261010/)
+records full current Go checks and a real finite-DHE-only fixture on patched
+OpenSSL3.5.9, built inside Docker from publisher-checksummed source. The older
+runner CLI is fixture-only; final image must package the patched supported CLI
+and its license. No Go module or Haskell dependency changed. Ordinary HTTP manager
+and stored diagnostics review, SCIM repair, final original suites and all unchanged
+operations/switchback/image/selector/review requirements remain outstanding.

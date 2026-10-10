@@ -1,3 +1,4 @@
 Construct the optional whole-service Go background-worker, connecting notification/DLQ/group-sync workers, all seven migrations and scheduled adminless/meetings pools with native storage, retry and drain contracts.
 Retain limited original Haskell notification and MLS migration results plus scoped PostgreSQL construction evidence; the unresolved pre-migration SCIM failure and final whole-service qualification remain explicit.
 Reconcile current documentation and historical receipts; Haskell remains supported/default and the incomplete candidate is not selectable or qualified.
+Preserve finite-DHE bot compatibility with an OpenSSL stream fallback that authenticates the actual RSA-pinned certificate before HTTP; validate scoped TLS/security/lifecycle cases with a patched container-built CLI.

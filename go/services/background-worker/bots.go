@@ -13,6 +13,7 @@ import (
 	"encoding/json"
 	"errors"
 	"math/big"
+	"net"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -185,7 +186,10 @@ func (d *externalBotDelivery) deliver(ctx context.Context, bot localConversation
 	u.User, u.RawQuery, u.Fragment = nil, "", ""
 	u.Path = strings.TrimSuffix(u.Path, "/") + "/bots/" + bot.ID + "/messages"
 	u.RawPath = ""
-	transport := &http.Transport{Proxy: nil, TLSClientConfig: pinnedBotTLS(service.Fingerprints, d.Roots)}
+	config := pinnedBotTLS(service.Fingerprints, d.Roots)
+	transport := &http.Transport{Proxy: nil, DialTLSContext: func(ctx context.Context, network, address string) (net.Conn, error) {
+		return dialPinnedBot(ctx, network, address, config, "openssl")
+	}}
 	defer transport.CloseIdleConnections()
 	client := &http.Client{Transport: transport, Timeout: 5 * time.Second, CheckRedirect: func(*http.Request, []*http.Request) error { return http.ErrUseLastResponse }}
 	for attempt := 0; ; attempt++ {

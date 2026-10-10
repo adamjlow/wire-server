@@ -1,0 +1,12 @@
+{
+  "removed": "/home/operator/.cache/wire-migration/background-worker-20261009/openssl-3.5.9/build/source",
+  "reason": "completed reproducible owned compile tree; all containers terminal and removed",
+  "preserved": [
+    "patched tested install",
+    "verified archive",
+    "build/test logs and receipts",
+    "test binary",
+    "reference and peer artifacts"
+  ],
+  "available_bytes_after": 2269814784
+}

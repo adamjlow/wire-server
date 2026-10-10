@@ -111,3 +111,12 @@ Required meetings configuration and one-run retention cutoff now pass
 serialization and fixed-point/SQL timestamp arithmetic are preserved, including
 large finite timestamp wrap as an inherited concern. Concrete deletion and runtime/counter integration are connected; complete mixed-stack
 qualification remains unfinished. This construction evidence is not original-suite proof.
+
+The source bot finite-DHE suites now use a restricted authenticated OpenSSL stream
+fallback when Go receives the remote TLS handshake-failure alert. Mandatory pin,
+signature and date checks run before any HTTP data; authentication failures never
+fall back. [Construction receipts](evidence/bot-dhe-20261010/) include full Go checks
+and a real finite-DHE fixture with patched OpenSSL3.5.9 built in Docker. The optional
+image must supply a supported patched `openssl` on its trusted PATH and retain the
+Apache2.0 license; absent CLI fails the callback. Final image/mixed-stack/lifecycle
+qualification is still outstanding. No backend credentials are passed to the helper.

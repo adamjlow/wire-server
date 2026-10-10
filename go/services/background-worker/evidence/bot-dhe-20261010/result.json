@@ -1,0 +1,19 @@
+{
+  "source_parent": "3d9054248b600787cdacb43f34e0e26a5c4837e6",
+  "worktree_identity": "source-files.json; production+test inputs uncommitted at execution, no final executable claim",
+  "compiler": "go1.26.9",
+  "test_binary_sha256": "a2b4e5b5cce320b328e76af7741414361e275f357d0d1bc96b091b290ff2bcf8",
+  "openssl_binary_sha256": "2d83c0141792c96f3942d2c00985029a43482c2f159f8e572933c077d9dc8fb6",
+  "openssl_version": "OpenSSL 3.5.9 29 Sep 2026 (Library: OpenSSL 3.5.9 29 Sep 2026)",
+  "runner_image": "sha256:cd03212430eef6cfde0324b50885c12980ee211483ab27dde6ee730252966cd2",
+  "go_check_exit_code": 0,
+  "patched_fixture_exit_code": 0,
+  "cleanup": "all construction containers --rm; exact three owner-label queries empty; no host ports or service backends",
+  "earlier_failed_attempt": {
+    "go_test_exit_code": 1,
+    "observed_error": "TestBotFiniteDHEAuthenticatesActualStream: context deadline exceeded",
+    "cause": "parser waited for nonexistent extra blank line after TLS1.2 session delimiter; repaired without changing pin/date or original assertions",
+    "original_log": "overwritten during focused iteration; failure retained here from observed tool output, not presented as a raw log"
+  },
+  "external_raw_build_log_sha256": "c8ba062ce9bf2d742a5897c2835298d8eea6d370ee092e8ffa83b14ab4646721"
+}
