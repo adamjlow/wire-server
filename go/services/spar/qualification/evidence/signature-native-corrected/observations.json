@@ -1,0 +1,666 @@
+{
+  "native": {
+    "binary_sha256": "9c80adbfd76199ad3ab9bcf14c4eab8352a09ac2e0960078f8cd23615f8e58d1",
+    "stop_exit_code": 0,
+    "stop_seconds": 0.007236809469759464,
+    "existing_checks": 33,
+    "signatures": {
+      "bad-extra-digest-signed": {
+        "fixture_sha256": "2760b881a460d857b5645fdcbf0cd6d8a833dac8485b0a9b7e2f0f69a9d3d406",
+        "signature_accepted": true,
+        "idp_read_status": 200,
+        "status": 500,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "label": "server-error",
+        "message": "Internal Server Error"
+      },
+      "bad-extra-digest-tampered": {
+        "fixture_sha256": "2760b881a460d857b5645fdcbf0cd6d8a833dac8485b0a9b7e2f0f69a9d3d406",
+        "signature_accepted": false,
+        "idp_read_status": 200,
+        "status": 400,
+        "headers": {
+          "content-type": "text/html",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "label": "wire:sso:error:bad-response-signature"
+      },
+      "bad-first-matching-signed": {
+        "fixture_sha256": "344c3c4053920b09d8762efe179b6ffdf5187fde24052d92d051b1399e746ad3",
+        "signature_accepted": true,
+        "idp_read_status": 200,
+        "status": 500,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "label": "server-error",
+        "message": "Internal Server Error"
+      },
+      "bad-first-matching-tampered": {
+        "fixture_sha256": "344c3c4053920b09d8762efe179b6ffdf5187fde24052d92d051b1399e746ad3",
+        "signature_accepted": false,
+        "idp_read_status": 200,
+        "status": 400,
+        "headers": {
+          "content-type": "text/html",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "label": "wire:sso:error:bad-response-signature"
+      },
+      "duplicate-valid-signed": {
+        "fixture_sha256": "5943c100674437f8fc668966dc83d6ae019d3af5e003d3ba3f7ba25ae92c0cc2",
+        "signature_accepted": false,
+        "idp_read_status": 200,
+        "status": 400,
+        "headers": {
+          "content-type": "text/html",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "label": "wire:sso:error:bad-response-signature"
+      },
+      "large-signed": {
+        "fixture_sha256": "5dff6d20ebdb9eabcad1f1507090b326b02b97801998cb7b22a6c228a2979151",
+        "signature_accepted": true,
+        "idp_read_status": 200,
+        "status": 500,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "label": "server-error",
+        "message": "Internal Server Error"
+      },
+      "large-tampered": {
+        "fixture_sha256": "5dff6d20ebdb9eabcad1f1507090b326b02b97801998cb7b22a6c228a2979151",
+        "signature_accepted": false,
+        "idp_read_status": 200,
+        "status": 400,
+        "headers": {
+          "content-type": "text/html",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "label": "wire:sso:error:bad-response-signature"
+      },
+      "missing-extra-signed": {
+        "fixture_sha256": "bdf58bac9fc741250408ec25818fadd805c506cc4514136c27568d5bde99cd36",
+        "signature_accepted": true,
+        "idp_read_status": 200,
+        "status": 500,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "label": "server-error",
+        "message": "Internal Server Error"
+      },
+      "missing-extra-tampered": {
+        "fixture_sha256": "bdf58bac9fc741250408ec25818fadd805c506cc4514136c27568d5bde99cd36",
+        "signature_accepted": false,
+        "idp_read_status": 200,
+        "status": 400,
+        "headers": {
+          "content-type": "text/html",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "label": "wire:sso:error:bad-response-signature"
+      },
+      "no-matching-signed": {
+        "fixture_sha256": "98d3e72ab865691d01645bc95cf93a7f2a9278a9d87d4d1f54ace69a20a6fe19",
+        "signature_accepted": false,
+        "idp_read_status": 200,
+        "status": 400,
+        "headers": {
+          "content-type": "text/html",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "label": "wire:sso:error:bad-response-signature"
+      },
+      "ripemd160-signed": {
+        "fixture_sha256": "04f9d6f9baa3369e65a77dbfd540b6373d2705af3fc42fd274cac2eb6cf38635",
+        "signature_accepted": true,
+        "idp_read_status": 200,
+        "status": 500,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "label": "server-error",
+        "message": "Internal Server Error"
+      },
+      "ripemd160-tampered": {
+        "fixture_sha256": "04f9d6f9baa3369e65a77dbfd540b6373d2705af3fc42fd274cac2eb6cf38635",
+        "signature_accepted": false,
+        "idp_read_status": 200,
+        "status": 400,
+        "headers": {
+          "content-type": "text/html",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "label": "wire:sso:error:bad-response-signature"
+      },
+      "rsa-sha1-signed": {
+        "fixture_sha256": "1d73f34cf9dce9178277042ff2371cef3a8d4e7a80ad9d2fc6101248f266adf6",
+        "signature_accepted": true,
+        "idp_read_status": 200,
+        "status": 500,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "label": "server-error",
+        "message": "Internal Server Error"
+      },
+      "rsa-sha1-tampered": {
+        "fixture_sha256": "1d73f34cf9dce9178277042ff2371cef3a8d4e7a80ad9d2fc6101248f266adf6",
+        "signature_accepted": false,
+        "idp_read_status": 200,
+        "status": 400,
+        "headers": {
+          "content-type": "text/html",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "label": "wire:sso:error:bad-response-signature"
+      },
+      "sha1-signed": {
+        "fixture_sha256": "c9c6bdcb561c9e3a7da5fad0c337d251fa9ef497829a00fb6f6a5530b036d220",
+        "signature_accepted": true,
+        "idp_read_status": 200,
+        "status": 500,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "label": "server-error",
+        "message": "Internal Server Error"
+      },
+      "sha1-tampered": {
+        "fixture_sha256": "c9c6bdcb561c9e3a7da5fad0c337d251fa9ef497829a00fb6f6a5530b036d220",
+        "signature_accepted": false,
+        "idp_read_status": 200,
+        "status": 400,
+        "headers": {
+          "content-type": "text/html",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "label": "wire:sso:error:bad-response-signature"
+      },
+      "sha256-signed": {
+        "fixture_sha256": "4db7e7f34981485750a0b7a427852da4588bc62a4a9ee5ac890aa727741265ae",
+        "signature_accepted": true,
+        "idp_read_status": 200,
+        "status": 500,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "label": "server-error",
+        "message": "Internal Server Error"
+      },
+      "sha256-tampered": {
+        "fixture_sha256": "4db7e7f34981485750a0b7a427852da4588bc62a4a9ee5ac890aa727741265ae",
+        "signature_accepted": false,
+        "idp_read_status": 200,
+        "status": 400,
+        "headers": {
+          "content-type": "text/html",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "label": "wire:sso:error:bad-response-signature"
+      },
+      "sha512-signed": {
+        "fixture_sha256": "a9eb8e90b67903f638ad78e3779551fb7a6f8eb9aa96b74746ceee00f8614946",
+        "signature_accepted": true,
+        "idp_read_status": 200,
+        "status": 500,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "label": "server-error",
+        "message": "Internal Server Error"
+      },
+      "sha512-tampered": {
+        "fixture_sha256": "a9eb8e90b67903f638ad78e3779551fb7a6f8eb9aa96b74746ceee00f8614946",
+        "signature_accepted": false,
+        "idp_read_status": 200,
+        "status": 400,
+        "headers": {
+          "content-type": "text/html",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "label": "wire:sso:error:bad-response-signature"
+      },
+      "unsupported-transform-signed": {
+        "fixture_sha256": "de24f73c3c862c17e74bc4e52a468cf6aeb04be00601dce6fd1d58874a86b518",
+        "signature_accepted": false,
+        "idp_read_status": 200,
+        "status": 400,
+        "headers": {
+          "content-type": "text/html",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "label": "wire:sso:error:bad-response-signature"
+      }
+    }
+  },
+  "go": {
+    "binary_sha256": "d0e3be2e5b12bf70cccc1ae5a3b2bea625125e9fe51e1407a914410bc6758569",
+    "stop_exit_code": 0,
+    "stop_seconds": 0.0031760865822434425,
+    "existing_checks": 33,
+    "signatures": {
+      "bad-extra-digest-signed": {
+        "fixture_sha256": "2760b881a460d857b5645fdcbf0cd6d8a833dac8485b0a9b7e2f0f69a9d3d406",
+        "signature_accepted": true,
+        "idp_read_status": 200,
+        "status": 500,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "label": "server-error",
+        "message": "Internal Server Error"
+      },
+      "bad-extra-digest-tampered": {
+        "fixture_sha256": "2760b881a460d857b5645fdcbf0cd6d8a833dac8485b0a9b7e2f0f69a9d3d406",
+        "signature_accepted": false,
+        "idp_read_status": 200,
+        "status": 400,
+        "headers": {
+          "content-type": "text/html",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "label": "wire:sso:error:bad-response-signature"
+      },
+      "bad-first-matching-signed": {
+        "fixture_sha256": "344c3c4053920b09d8762efe179b6ffdf5187fde24052d92d051b1399e746ad3",
+        "signature_accepted": true,
+        "idp_read_status": 200,
+        "status": 500,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "label": "server-error",
+        "message": "Internal Server Error"
+      },
+      "bad-first-matching-tampered": {
+        "fixture_sha256": "344c3c4053920b09d8762efe179b6ffdf5187fde24052d92d051b1399e746ad3",
+        "signature_accepted": false,
+        "idp_read_status": 200,
+        "status": 400,
+        "headers": {
+          "content-type": "text/html",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "label": "wire:sso:error:bad-response-signature"
+      },
+      "duplicate-valid-signed": {
+        "fixture_sha256": "5943c100674437f8fc668966dc83d6ae019d3af5e003d3ba3f7ba25ae92c0cc2",
+        "signature_accepted": false,
+        "idp_read_status": 200,
+        "status": 400,
+        "headers": {
+          "content-type": "text/html",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "label": "wire:sso:error:bad-response-signature"
+      },
+      "large-signed": {
+        "fixture_sha256": "5dff6d20ebdb9eabcad1f1507090b326b02b97801998cb7b22a6c228a2979151",
+        "signature_accepted": true,
+        "idp_read_status": 200,
+        "status": 500,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "label": "server-error",
+        "message": "Internal Server Error"
+      },
+      "large-tampered": {
+        "fixture_sha256": "5dff6d20ebdb9eabcad1f1507090b326b02b97801998cb7b22a6c228a2979151",
+        "signature_accepted": false,
+        "idp_read_status": 200,
+        "status": 400,
+        "headers": {
+          "content-type": "text/html",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "label": "wire:sso:error:bad-response-signature"
+      },
+      "missing-extra-signed": {
+        "fixture_sha256": "bdf58bac9fc741250408ec25818fadd805c506cc4514136c27568d5bde99cd36",
+        "signature_accepted": true,
+        "idp_read_status": 200,
+        "status": 500,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "label": "server-error",
+        "message": "Internal Server Error"
+      },
+      "missing-extra-tampered": {
+        "fixture_sha256": "bdf58bac9fc741250408ec25818fadd805c506cc4514136c27568d5bde99cd36",
+        "signature_accepted": false,
+        "idp_read_status": 200,
+        "status": 400,
+        "headers": {
+          "content-type": "text/html",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "label": "wire:sso:error:bad-response-signature"
+      },
+      "no-matching-signed": {
+        "fixture_sha256": "98d3e72ab865691d01645bc95cf93a7f2a9278a9d87d4d1f54ace69a20a6fe19",
+        "signature_accepted": false,
+        "idp_read_status": 200,
+        "status": 400,
+        "headers": {
+          "content-type": "text/html",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "label": "wire:sso:error:bad-response-signature"
+      },
+      "ripemd160-signed": {
+        "fixture_sha256": "04f9d6f9baa3369e65a77dbfd540b6373d2705af3fc42fd274cac2eb6cf38635",
+        "signature_accepted": true,
+        "idp_read_status": 200,
+        "status": 500,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "label": "server-error",
+        "message": "Internal Server Error"
+      },
+      "ripemd160-tampered": {
+        "fixture_sha256": "04f9d6f9baa3369e65a77dbfd540b6373d2705af3fc42fd274cac2eb6cf38635",
+        "signature_accepted": false,
+        "idp_read_status": 200,
+        "status": 400,
+        "headers": {
+          "content-type": "text/html",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "label": "wire:sso:error:bad-response-signature"
+      },
+      "rsa-sha1-signed": {
+        "fixture_sha256": "1d73f34cf9dce9178277042ff2371cef3a8d4e7a80ad9d2fc6101248f266adf6",
+        "signature_accepted": true,
+        "idp_read_status": 200,
+        "status": 500,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "label": "server-error",
+        "message": "Internal Server Error"
+      },
+      "rsa-sha1-tampered": {
+        "fixture_sha256": "1d73f34cf9dce9178277042ff2371cef3a8d4e7a80ad9d2fc6101248f266adf6",
+        "signature_accepted": false,
+        "idp_read_status": 200,
+        "status": 400,
+        "headers": {
+          "content-type": "text/html",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "label": "wire:sso:error:bad-response-signature"
+      },
+      "sha1-signed": {
+        "fixture_sha256": "c9c6bdcb561c9e3a7da5fad0c337d251fa9ef497829a00fb6f6a5530b036d220",
+        "signature_accepted": true,
+        "idp_read_status": 200,
+        "status": 500,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "label": "server-error",
+        "message": "Internal Server Error"
+      },
+      "sha1-tampered": {
+        "fixture_sha256": "c9c6bdcb561c9e3a7da5fad0c337d251fa9ef497829a00fb6f6a5530b036d220",
+        "signature_accepted": false,
+        "idp_read_status": 200,
+        "status": 400,
+        "headers": {
+          "content-type": "text/html",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "label": "wire:sso:error:bad-response-signature"
+      },
+      "sha256-signed": {
+        "fixture_sha256": "4db7e7f34981485750a0b7a427852da4588bc62a4a9ee5ac890aa727741265ae",
+        "signature_accepted": true,
+        "idp_read_status": 200,
+        "status": 500,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "label": "server-error",
+        "message": "Internal Server Error"
+      },
+      "sha256-tampered": {
+        "fixture_sha256": "4db7e7f34981485750a0b7a427852da4588bc62a4a9ee5ac890aa727741265ae",
+        "signature_accepted": false,
+        "idp_read_status": 200,
+        "status": 400,
+        "headers": {
+          "content-type": "text/html",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "label": "wire:sso:error:bad-response-signature"
+      },
+      "sha512-signed": {
+        "fixture_sha256": "a9eb8e90b67903f638ad78e3779551fb7a6f8eb9aa96b74746ceee00f8614946",
+        "signature_accepted": true,
+        "idp_read_status": 200,
+        "status": 500,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "label": "server-error",
+        "message": "Internal Server Error"
+      },
+      "sha512-tampered": {
+        "fixture_sha256": "a9eb8e90b67903f638ad78e3779551fb7a6f8eb9aa96b74746ceee00f8614946",
+        "signature_accepted": false,
+        "idp_read_status": 200,
+        "status": 400,
+        "headers": {
+          "content-type": "text/html",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "label": "wire:sso:error:bad-response-signature"
+      },
+      "unsupported-transform-signed": {
+        "fixture_sha256": "de24f73c3c862c17e74bc4e52a468cf6aeb04be00601dce6fd1d58874a86b518",
+        "signature_accepted": false,
+        "idp_read_status": 200,
+        "status": 400,
+        "headers": {
+          "content-type": "text/html",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "label": "wire:sso:error:bad-response-signature"
+      }
+    }
+  }
+}

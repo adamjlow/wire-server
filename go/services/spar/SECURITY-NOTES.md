@@ -30,7 +30,30 @@ The source's user_v2 key case-folds the unqualified subject and ignores NameID q
 
 Native certToCreds requires RSA/SHA256 certificate algorithm but imposes no RSA modulus minimum. Original SAML tests call mkSignCredsWithCert Nothing96 (RSA.generate's byte size:768 bits; the fixture exponent is17). Go1.26.9's VerifyPKCS1v15 enforces1024 bits by default, a demonstrated mismatch. Under the user's explicit instruction to mirror the current backend and record serious concerns, Spar alone uses //go:debug rsa1024min=0 to retain existing configured-key acceptance; this preserves the native policy rather than adding a minimum or changing Haskell/original fixtures. Every digest, signature, configured-key, issuer and replay check remains mandatory. It does not alter peer services or approve deployment/hardening. Small RSA keys are a serious inherited weakness: a reviewed future policy should require modern key sizes, with deliberate fixture/contract updates. The compatibility test proves default rejection, native-policy acceptance and rejection of a wrapped assertion even with a legacy key. Same-author implementation review is not an independent security audit.
 
-The current goxmldsig1.6.1 adapter verifies stored configured keys only, ignores advertised response KeyInfo, restricts RSA signature methods to native SHA1/SHA256, rejects ambiguous IDs and returns only the verified referenced subtree. Its copy of the configured certificate removes the SDK's web-PKI date constraint because native expired pinned keys are supported; the connected judge enforces assertion timestamps with actual clock checks. ADFS whitespace repair is retried only after unmodified verification fails, matching source allVerifies. These crypto tests are not complete login qualification. Remaining concrete SDK differences include native RIPEMD160 digest support and the SDK's namespace traversal limit; resolve these before whole-service verification, without patching originals or declaring unsupported forms compatible.
+The service-local signature adapter uses maintained goxmldsig1.6.1 canonicalizers,
+standard Go RSA verification and standalone Decred RIPEMD160 v1.0.2. It trusts
+stored configured keys only, ignores advertised response KeyInfo, rejects
+ambiguous IDs and returns the verified assertion subtree. Native digest methods
+SHA1/SHA256/SHA512/RIPEMD160 and RSA-SHA1/SHA256 remain supported, with exactly
+one successful matching assertion-ID reference; failed additional references
+are not universally fatal. Duplicate successful references and credentials are
+rejected. Pinned certificates are not subject to web-PKI validity-date checks,
+matching the native policy; the connected judge checks assertion timestamps.
+ADFS whitespace repair is retried only after unmodified verification fails.
+Actual native/Go comparison passes twelve signed cases plus nine paired tamper
+controls, including an assertion with over1,000 nodes, without any session or
+cookie. Native matching diagnostics establish the missing-request boundary for
+accepted signatures. This supplements earlier original tests; it does not
+establish whole-service state/operations or final225 qualification.
+
+Native form parsing rejects the initial larger synthetic fixture before SAML,
+with generic500 and maximum-parameter-size diagnostic. This is a concrete
+remaining protocol/resource-limit gap in Go; preserve the source limit and
+error projection before final qualification. The accepted large-assertion
+fixture uses shorter values to isolate the signature node-limit behavior.
+The attempted golang.org/x/crypto dependency was rejected by the unchanged
+module vulnerability gate; the standalone ISC RIPEMD module passes that gate.
+No scanner waiver, dependency fork or signature bypass was introduced.
 
 Internal team cleanup follows native Spar.App.deleteTeam: delete tokens, then issuer-wide user_v2 mappings and IdP configuration for each team IdP. The native assumption that issuers are not shared between teams conflicts with version-2 shared-issuer configurations. Deleting one team may remove another team's SAML mappings for that issuer. This is a serious inherited cross-team state concern observed in source, not an exploit demonstrated by this increment. Preserve the native sequence; a future team-scoped key/policy fix requires reviewed contract work and switchback planning.
 

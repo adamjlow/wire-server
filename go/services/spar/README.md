@@ -4,9 +4,8 @@ The module implements configuration/Cassandra schema23 startup, health/lifecycle
 persistent settings/user metadata, SCIM token management, IdP CRUD/indexes and
 SAML metadata/request initiation/state stores and connected signed-login/session
 effects. SCIM authentication, Brig-backed groups and user create/read/delete are
-implemented, along with user update/patch/filtered listing. Config/schema
-metadata, internal cleanup and remaining finite SAML/SCIM contract gaps still
-require completion.
+implemented, along with user update/patch/filtered listing. Config/schema metadata, internal cleanup and SSO discovery are connected.
+Remaining finite protocol/state contracts still require qualification.
 Spar is not selectable or qualified yet; Haskell remains supported/default.
 
 Use pinned Go1.26.9 with GOTOOLCHAIN=local/GOWORK=off. Run
@@ -26,6 +25,11 @@ Five unchanged original SCIM group scenarios also pass, including user invitatio
 read and activation plus group search/pagination/update/delete/member guards.
 Seventeen original SCIM user executions pass for email/external-ID updates,
 PATCH email paths, metadata, primary selection and adoption/pending-email cleanup.
+An earlier seven-Go construction artifact also passed all101 unchanged Spar
+and related originals. The current signature increment passes21 actual native/Go
+signature cases plus33 HTTP comparisons; these are supplemental construction
+checks, not a new final original-suite result. Evidence includes exact artifacts,
+retained failures and clean owned-resource cleanup.
 Those batches prove only their listed surfaces. The final intended profile is
 proxy-cargohold-cannon-gundeck-federator-background-worker-spar:225 executions.
 Full trust/state gaps, operations smoke, durable Haskell→Go→Haskell switchback
@@ -33,7 +37,10 @@ and optional image/selector remain pending. See the [plan](../../../docs/go-migr
 and [frozen contract](../../../docs/go-migration/services/spar/contract.md).
 
 Dependencies use the reviewed gocql2/YAML/x/text versions and goxmldsig1.6.1
-with etree1.7.0. Signature tests reuse unchanged original Microsoft XML and
+with etree1.7.0 and standalone Decred RIPEMD160 v1.0.2. A service-local pinned-key
+adapter uses the maintained canonicalizers and standard Go RSA verification,
+preserving native digest/reference and expired-key behavior. Signature tests
+reuse unchanged original Microsoft XML and
 IdP/NameID goldens and cover pinned keys, expired certificates, the native ADFS
 fallback, tamper/wrapping/unsigned assertions and duplicate credentials. Native
 policy accepts legacy small RSA keys; the main binary's service-local compatibility

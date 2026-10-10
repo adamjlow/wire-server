@@ -1,0 +1,110 @@
+{
+  "result": "pass",
+  "source_revision": "a0326a44be902501529b25b41afcadd3339bf3d9",
+  "candidate": {
+    "path": "/dev/shm/wire-migration-spar-20261010/spar-signature-headers-corrected",
+    "sha256": "d0e3be2e5b12bf70cccc1ae5a3b2bea625125e9fe51e1407a914410bc6758569",
+    "source_revision": "a0326a44be902501529b25b41afcadd3339bf3d9"
+  },
+  "build": {
+    "schema_version": 1,
+    "result": "built",
+    "source_revision": "a0326a44be902501529b25b41afcadd3339bf3d9",
+    "binary_sha256": "d0e3be2e5b12bf70cccc1ae5a3b2bea625125e9fe51e1407a914410bc6758569",
+    "binary": "/dev/shm/wire-migration-spar-20261010/spar-signature-headers-corrected",
+    "compiler": "go1.26.9",
+    "target": "linux/amd64",
+    "CGO_ENABLED": "0",
+    "build_flags": [
+      "-trimpath"
+    ],
+    "build_info": "/dev/shm/wire-migration-spar-20261010/spar-signature-headers-corrected: go1.26.9\n\tpath\tgithub.com/adamjlow/wire-server/go/services/spar/cmd/spar\n\tmod\tgithub.com/adamjlow/wire-server/go/services/spar\t(devel)\t\n\tdep\tgithub.com/apache/cassandra-gocql-driver/v2\tv2.1.2\th1:lu/p0Db2av18enHJvWJQoChLssI0P+AR06STq4VdvCc=\n\tdep\tgithub.com/beevik/etree\tv1.7.0\th1:xjBk9O4p4x7D1YajePjfLzdaFC4/uYUENA7P0pv6gXA=\n\tdep\tgithub.com/decred/dcrd/crypto/ripemd160\tv1.0.2\th1:TvGTmUBHDU75OHro9ojPLK+Yv7gDl2hnUvRocRCjsys=\n\tdep\tgithub.com/jonboulle/clockwork\tv0.5.0\th1:Hyh9A8u51kptdkR+cqRpT1EebBwTn1oK9YfGYbdFz6I=\n\tdep\tgithub.com/russellhaering/goxmldsig\tv1.6.1\th1:SB7R5ttvrGIDB2juJAK/i7DQ2Ivr7agG+ohfNJjwyYU=\n\tdep\tgo.yaml.in/yaml/v3\tv3.0.5\th1:N6y/pJk8buWs9NY5ERU2HSMfm+IuD/OtfdAnq6kESPw=\n\tdep\tgolang.org/x/text\tv0.42.0\th1:JbOZXgfeCPU9gacVtYliJqOhD+zhrEqK4LfdpmlUZqI=\n\tdep\tgopkg.in/inf.v0\tv0.9.1\th1:73M5CoZyi3ZLMOyDlQh031Cx6N9NDJ2Vvfl76EDAgDc=\n\tbuild\t-buildmode=exe\n\tbuild\t-compiler=gc\n\tbuild\t-trimpath=true\n\tbuild\tDefaultGODEBUG=rsa1024min=0\n\tbuild\tCGO_ENABLED=0\n\tbuild\tGOARCH=amd64\n\tbuild\tGOOS=linux\n\tbuild\tGOAMD64=v1\n\tbuild\tvcs=git\n\tbuild\tvcs.revision=a0326a44be902501529b25b41afcadd3339bf3d9\n\tbuild\tvcs.time=2026-10-10T14:36:54Z\n\tbuild\tvcs.modified=false\n",
+    "quality_log": {
+      "path": "/home/operator/.cache/wire-migration/spar-20261010/signature-headers-corrected-go-check.log",
+      "sha256": "a2f7bc32be80f7b40eac700bce56ad89241fe6a74adfcaf52487901142893898"
+    },
+    "scope": "Native signature proof with outer missing-verdict error headers; fixture compiled705d4dc85 unchanged.",
+    "fixture_executable": {
+      "path": "/dev/shm/wire-migration-spar-20261010/spar-signature-fixtures-form-corrected.test",
+      "sha256": "74b49d96e5571098978a574167761b6ed35b5356c63ec047bfa4fb5c7bdf387d",
+      "source_revision": "705d4dc851199a3045b631c66b8a57b8dfe6e1cc"
+    }
+  },
+  "signature_fixture_executable": {
+    "path": "/dev/shm/wire-migration-spar-20261010/spar-signature-fixtures-form-corrected.test",
+    "sha256": "74b49d96e5571098978a574167761b6ed35b5356c63ec047bfa4fb5c7bdf387d",
+    "source_revision": "705d4dc851199a3045b631c66b8a57b8dfe6e1cc"
+  },
+  "existing_process_checks": 33,
+  "signed_cases": 12,
+  "paired_tamper_controls": 9,
+  "idp_reads_per_implementation": 12,
+  "differences": {},
+  "signature_differences": {},
+  "runner_exit_code": 0,
+  "cleanup_exit_code": 0,
+  "independent_post_cleanup": {
+    "containers": [],
+    "networks": [],
+    "volumes": []
+  },
+  "artifacts": {
+    "/home/operator/.cache/wire-migration/spar-20261010/signature-native-headers-corrected/reports/result.json": {
+      "sha256": "d179b050bf694dad4cb85cdbfd4447f9cf140e832b5c7466ae2ed44c96c587e2",
+      "size": 617868
+    },
+    "/home/operator/.cache/wire-migration/spar-20261010/signature-native-headers-corrected/reports/native-signature-replies.json": {
+      "sha256": "0128a65eddd3a4a4dfe80c1f92f96e9597e45a3ce1bac5bb4317292fe4a2e419",
+      "size": 161764,
+      "retained": {
+        "path": "go/services/spar/qualification/evidence/signature-native-corrected/native-signature-replies.json.gz",
+        "sha256": "ef27b0c0f0e56ccc13f0f119e1c88fcc32e31797275214e94ec3dfef480689e7",
+        "compression": "gzip",
+        "uncompressed_sha256": "0128a65eddd3a4a4dfe80c1f92f96e9597e45a3ce1bac5bb4317292fe4a2e419"
+      }
+    },
+    "/home/operator/.cache/wire-migration/spar-20261010/signature-native-headers-corrected/reports/go-signature-replies.json": {
+      "sha256": "9ec35dbf012bde7c19dc191357a26446c1066b777658b5a1dc51a5e6818ee795",
+      "size": 161052,
+      "retained": {
+        "path": "go/services/spar/qualification/evidence/signature-native-corrected/go-signature-replies.json.gz",
+        "sha256": "64b895f22d29b70a3389ba8f367c6a729d804c6b1887f5b073b59c8d4afd5542",
+        "compression": "gzip",
+        "uncompressed_sha256": "9ec35dbf012bde7c19dc191357a26446c1066b777658b5a1dc51a5e6818ee795"
+      }
+    },
+    "/home/operator/.cache/wire-migration/spar-20261010/signature-native-headers-corrected/reports/native.log": {
+      "sha256": "f6e807d1b38f3fea1ce2011c95fe92d2d435782bcc275e3f3542027791850504",
+      "size": 265346,
+      "retained": {
+        "path": "go/services/spar/qualification/evidence/signature-native-corrected/native.log.gz",
+        "sha256": "1902074cf18b9dfbe2d6e357ba8d244ab0bc4075d4cc05e25c6ef47d42764a85",
+        "compression": "gzip",
+        "uncompressed_sha256": "f6e807d1b38f3fea1ce2011c95fe92d2d435782bcc275e3f3542027791850504"
+      }
+    },
+    "/home/operator/.cache/wire-migration/spar-20261010/signature-native-headers-corrected/reports/go.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    "/home/operator/.cache/wire-migration/spar-20261010/signature-native-headers-corrected/reports/signature-fixtures.log": {
+      "sha256": "c26de83abdc9496cd1301470918ec39ecca1cf389ef0ae1c6504da1800d1c431",
+      "size": 5
+    },
+    "/home/operator/.cache/wire-migration/spar-20261010/signature-native-headers-corrected/controller.log": {
+      "sha256": "8e52764e1c39056bfff6f40631cd52c5f1d7502d7c7d1ebebd045ae4a59fc715",
+      "size": 173
+    },
+    "/home/operator/.cache/wire-migration/spar-20261010/signature-headers-corrected-go-check.log": {
+      "sha256": "a2f7bc32be80f7b40eac700bce56ad89241fe6a74adfcaf52487901142893898",
+      "size": 1366
+    }
+  },
+  "scope": "Finite actual native/Go signature comparison:12 signed cases plus9 paired tamper controls. Native stored IdP reads, SHA1/256/512/RIPEMD160, RSA-SHA1/256, >1000nodes, failed-extra versus unique successful matching reference and unsupported transform. Accepted signatures must reach the unknown-request JSON500 boundary with no session; bad signatures400. Raw runtime-specific HTML diagnostics retained, not byte-normalized into a full-equality claim. Includes existing33 process replies. No original e2e or full durable switchback/operations claim.",
+  "review": {
+    "kind": "delegated-same-author",
+    "scope": "Spar signature adapter and native XML/outer missing-verdict boundary increment",
+    "result": "pass",
+    "reason": "Actual native/Go21-case signature and33-response comparisons, native matching missing-request diagnostic for all9 accepted cases, no session/cookie on any fixture, tamper/wrapping/duplicate/key tests and pinned Go quality/security/license checks. Configured keys only, exactlyone successful matching assertion reference, no external URI fetch or auth bypass; maintained canonicalization and standalone RIPEMD module. Runtime-specific HTML diagnostics retained raw, not claimed byte-equal. Whole-service review/form limit/state/ops/final225 pending."
+  }
+}
