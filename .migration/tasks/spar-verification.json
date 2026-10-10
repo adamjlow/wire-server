@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "id": "spar-verification",
+  "title": "Spar verification",
+  "service": "spar",
+  "kind": "verification",
+  "status": "queued",
+  "owner": null,
+  "branch": null,
+  "depends_on": [
+    "spar-implementation"
+  ],
+  "write_paths": [
+    ".migration/tasks/spar-verification.json"
+  ],
+  "plan": "docs/go-migration/plans/spar.md",
+  "acceptance_criteria": [
+    {
+      "id": "parity",
+      "description": "Review and record final Spar parity acceptance.",
+      "required_evidence": "Review exact Spar source40c1b2f896fe20d5d9aad4a7c90a815fcfa0e067/static9fabe438/imagece3965bf/referencef663: all225 unchanged original seven-Go/Haskell executions across complete passing suites, strict names/XML/actual identities and owned cleanup; pinned Go quality/security/license/native protocol proof reuse; exact-image100/concurrency8 and loaded drain; actual102-action/seven-snapshot native-Go-native; optional byte-exact default/image-only Helm selector. REVIEW.md records same-author delegation, retained failed attempts, inherited security concerns and unrun native checks. No production/push/default/Haskell policy change."
+    },
+    {
+      "id": "security",
+      "description": "Review and record final Spar security acceptance.",
+      "required_evidence": "Review exact Spar source40c1b2f896fe20d5d9aad4a7c90a815fcfa0e067/static9fabe438/imagece3965bf/referencef663: all225 unchanged original seven-Go/Haskell executions across complete passing suites, strict names/XML/actual identities and owned cleanup; pinned Go quality/security/license/native protocol proof reuse; exact-image100/concurrency8 and loaded drain; actual102-action/seven-snapshot native-Go-native; optional byte-exact default/image-only Helm selector. REVIEW.md records same-author delegation, retained failed attempts, inherited security concerns and unrun native checks. No production/push/default/Haskell policy change."
+    },
+    {
+      "id": "operations",
+      "description": "Review and record final Spar operations acceptance.",
+      "required_evidence": "Review exact Spar source40c1b2f896fe20d5d9aad4a7c90a815fcfa0e067/static9fabe438/imagece3965bf/referencef663: all225 unchanged original seven-Go/Haskell executions across complete passing suites, strict names/XML/actual identities and owned cleanup; pinned Go quality/security/license/native protocol proof reuse; exact-image100/concurrency8 and loaded drain; actual102-action/seven-snapshot native-Go-native; optional byte-exact default/image-only Helm selector. REVIEW.md records same-author delegation, retained failed attempts, inherited security concerns and unrun native checks. No production/push/default/Haskell policy change."
+    },
+    {
+      "id": "rollback",
+      "description": "Review and record final Spar rollback acceptance.",
+      "required_evidence": "Review exact Spar source40c1b2f896fe20d5d9aad4a7c90a815fcfa0e067/static9fabe438/imagece3965bf/referencef663: all225 unchanged original seven-Go/Haskell executions across complete passing suites, strict names/XML/actual identities and owned cleanup; pinned Go quality/security/license/native protocol proof reuse; exact-image100/concurrency8 and loaded drain; actual102-action/seven-snapshot native-Go-native; optional byte-exact default/image-only Helm selector. REVIEW.md records same-author delegation, retained failed attempts, inherited security concerns and unrun native checks. No production/push/default/Haskell policy change."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": "Queued final finite reviewed gate; reuse unchanged exact runtime evidence, preserve immutable history and Haskell defaults."
+}

@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "id": "spar-completion",
+  "title": "Spar completion",
+  "service": "framework",
+  "kind": "framework",
+  "status": "queued",
+  "owner": null,
+  "branch": null,
+  "depends_on": [
+    "spar-verification",
+    "spar-selection"
+  ],
+  "write_paths": [
+    ".migration/tasks/spar-completion.json",
+    ".migration/services/spar.json",
+    "docs/go-migration/README.md",
+    "docs/go-migration/services/README.md",
+    "go/README.md",
+    "tools/parity/README.md",
+    "tools/parity/docker/README.md"
+  ],
+  "plan": "docs/go-migration/plans/spar.md",
+  "acceptance_criteria": [
+    {
+      "id": "gates",
+      "description": "Review and record final Spar gates acceptance.",
+      "required_evidence": "Review exact Spar source40c1b2f896fe20d5d9aad4a7c90a815fcfa0e067/static9fabe438/imagece3965bf/referencef663: all225 unchanged original seven-Go/Haskell executions across complete passing suites, strict names/XML/actual identities and owned cleanup; pinned Go quality/security/license/native protocol proof reuse; exact-image100/concurrency8 and loaded drain; actual102-action/seven-snapshot native-Go-native; optional byte-exact default/image-only Helm selector. REVIEW.md records same-author delegation, retained failed attempts, inherited security concerns and unrun native checks. No production/push/default/Haskell policy change."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": "Queued final finite reviewed gate; reuse unchanged exact runtime evidence, preserve immutable history and Haskell defaults."
+}
