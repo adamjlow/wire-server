@@ -1,0 +1,23 @@
+Traceback (most recent call last):
+  File "/home/operator/wire-server/go/services/background-worker/qualification/run_switchback.py", line 142, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/home/operator/wire-server/go/services/background-worker/qualification/run_switchback.py", line 94, in main
+    stop('haskell-first')
+  File "/home/operator/wire-server/go/services/background-worker/qualification/run_switchback.py", line 63, in stop
+    started=time.monotonic();call(['docker','kill','--signal','TERM',owner]);code=int(call(['docker','wait',owner],35))
+                                                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/operator/wire-server/go/services/background-worker/qualification/run_operations.py", line 19, in call
+    result=subprocess.run(list(map(str,args)),capture_output=True,text=True,timeout=timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 550, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 1209, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 2116, in _communicate
+    self._check_timeout(endtime, orig_timeout, stdout, stderr)
+  File "/usr/lib/python3.12/subprocess.py", line 1253, in _check_timeout
+    raise TimeoutExpired(
+subprocess.TimeoutExpired: Command '['docker', 'wait', 'c35603a144432dcd9894378d49872ddb0020910888e95011abd0eeeab51e88d8']' timed out after 35 seconds

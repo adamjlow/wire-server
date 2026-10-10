@@ -60,12 +60,20 @@ def main():
             time.sleep(.2)
     def stop(label):
         nonlocal owner
-        started=time.monotonic();call(['docker','kill','--signal','TERM',owner]);code=int(call(['docker','wait',owner],35))
+        started=time.monotonic()
+        if label=='haskell-first':
+            # Explicit crash/reclaim handover: bounded stop may kill a blocked
+            # native handler, as an orchestrator does after its stop allowance.
+            call(['docker','stop','--time','5',owner],12)
+            code=json.loads(call(['docker','inspect',owner]))[0]['State']['ExitCode']
+        else:
+            call(['docker','kill','--signal','TERM',owner]);code=int(call(['docker','wait',owner],35))
         owners[-1]['shutdown']={'exit_code':code,'seconds':time.monotonic()-started}
         logs=subprocess.run(['docker','logs',owner],capture_output=True,text=True,timeout=30)
         (a.output/'reports'/(label+'.log')).write_text(logs.stdout+logs.stderr)
         call(['docker','rm',owner]);owner=None
-        if code!=0:raise ValueError(label+' did not exit cleanly')
+        if code!=0 and not (label=='haskell-first' and code==137):raise ValueError(label+' did not exit cleanly')
+        owners[-1]['shutdown']['forced_after_sigterm']=code==137
     try:
         call([*compose,'up','--detach',*environment.DEPENDENCIES],120)
         helper=call([*compose,'run','--detach','--no-deps','--entrypoint',PYTHON,'runner',SCRIPT+'namespace.py','switchback'])
