@@ -85,6 +85,13 @@ def observe(binary,config,name):
                     key='metrics-'+method
                     middleware[key]=request(method,'/i/metrics',b'invalid gzip',{'Content-Encoding':'gzip'})
                 middleware['metrics-GET-final']=request('GET','/i/metrics')
+            forms={}
+            if '--forms' in sys.argv:
+                from forms import cases
+                for key,body,content_type in cases():
+                    forms[key]=request('POST','/sso/finalize-login',body,{'Content-Type':content_type})
+                    Path('/reports/'+name+'-form-replies.json').write_text(json.dumps(forms,indent=2)+'\n')
+                    if forms[key]['headers']['set-cookie'] is not None:raise ValueError('malformed form created a session')
             signature_checks={}
             if '--signatures' in sys.argv:
                 fixtures=sorted(Path('/reports/signature-fixtures').glob('*.json'))
@@ -117,7 +124,7 @@ def observe(binary,config,name):
                         elif reply['status']!=400 or not isinstance(reply['body'],str) or 'wire:sso:error:bad-response-signature' not in reply['body']:raise ValueError('invalid signature was not rejected at verification')
             begin=time.monotonic();process.send_signal(signal.SIGTERM);code=process.wait(timeout=35)
             if code!=0:raise ValueError(name+' failed clean SIGTERM')
-            return {'responses':replies,'middleware':middleware,'signature_checks':signature_checks,'stop_exit_code':code,'stop_seconds':time.monotonic()-begin,'binary_sha256':hashlib.sha256(Path(binary).read_bytes()).hexdigest()}
+            return {'responses':replies,'middleware':middleware,'signature_checks':signature_checks,'forms':forms,'stop_exit_code':code,'stop_seconds':time.monotonic()-begin,'binary_sha256':hashlib.sha256(Path(binary).read_bytes()).hexdigest()}
         finally:
             if process.poll()is None:
                 process.kill();process.wait(timeout=10)
@@ -183,7 +190,11 @@ def main():
                 if projection(native)!=projection(go):differences[key]={'native':projection(native),'go':projection(go)}
             output['signature_differences']=differences
             output['scope']='Finite actual native/Go signature comparison:12 signed cases plus9 paired tamper controls. Native stored IdP reads, SHA1/256/512/RIPEMD160, RSA-SHA1/256, >1000nodes, failed-extra versus unique successful matching reference and unsupported transform. Accepted signatures must reach the unknown-request JSON500 boundary with no session; bad signatures400. Raw runtime-specific HTML diagnostics retained, not byte-normalized into a full-equality claim. Includes existing33 process replies. No original e2e or full durable switchback/operations claim.'
-        output['result']='pass' if not output['differences'] and not output.get('middleware_differences') and not output.get('signature_differences') else 'fail'  
+        if '--forms' in sys.argv:
+            from forms import projection
+            output['form_differences']={key:{'native':projection(value),'go':projection(output['go']['forms'][key])} for key,value in output['native']['forms'].items() if projection(value)!=projection(output['go']['forms'][key])}
+            output['scope']='Twenty pinned native form limit/encoding/content-type/order probes plus33 existing HTTP replies. Exact status/header/JSON/plainbody or HTMLtitle, runtime debug retained; no original e2e or state/operations qualification.'
+        output['result']='pass' if not output['differences'] and not output.get('middleware_differences') and not output.get('signature_differences') and not output.get('form_differences') else 'fail'  
         return 0 if output['result']=='pass' else 1
     except Exception as error:
         output.update(result='fail',error_category=type(error).__name__,error=str(error)[:300]);return 1
