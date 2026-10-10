@@ -1,0 +1,13 @@
+{
+  "result": "pass",
+  "source_revision": "54ebf63faaa1fa5d0ae05b2395efc171eb7a506f",
+  "supervisor_sha256": "c185d41ce150c27294aac68824d8817c7669fc53d72977488738665724b8cc31",
+  "native_nginx_sha256": "55fff25936ce9019c564e91e8bc6fdfe3d2d4945f5d569edaa60e4c8e5f80bdb",
+  "native_master_SIGKILL": "Deliberate reproduction of original compiled test cleanup; not Spar service shutdown.",
+  "healthy_worker_preserved": true,
+  "orphan_exit_code": 0,
+  "harness_tests": 27,
+  "host_guard_exit_code": 2,
+  "default_flag": false,
+  "original_assertions_catalogues_timeouts_unchanged": true
+}

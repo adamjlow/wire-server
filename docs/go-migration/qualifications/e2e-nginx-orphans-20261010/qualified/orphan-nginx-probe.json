@@ -1,0 +1,14 @@
+{
+  "result": "pass",
+  "kind": "actual-native-Nginx-orphan-and-healthy-worker-probe",
+  "orphan_master_pid": 8,
+  "orphan_master_exit": -9,
+  "orphan_worker_pid": 9,
+  "orphan_parent_pid": 1,
+  "orphan_listener_before": true,
+  "healthy_master_pid": 10,
+  "orphan_listener_after": false,
+  "orphan_worker_reaped": true,
+  "healthy_http_after": 200,
+  "healthy_stop_exit": 0
+}

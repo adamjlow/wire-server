@@ -1,0 +1,1 @@
+Add explicit owned Docker PID1 supervision for adopted native Nginx test workers. Preserve original assertions, timeouts, service code and defaults; retain actual orphan/healthy-worker proof and strict cleanup.

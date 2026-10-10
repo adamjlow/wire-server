@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "project": "wire-e2e-3eb3034e797d4b638a6ed4cb5520565c",
+  "source_revision": "54ebf63faaa1fa5d0ae05b2395efc171eb7a506f",
+  "runner_image_id": "sha256:099b30651813ecbe4192514cde0b096174bbfd34672529c9b21e8c7766077268",
+  "runner_revision": "890a4742e936a2e8078f1a0d39b8bb36616a385f",
+  "candidate": null,
+  "peer_candidates": {},
+  "result": "pass",
+  "e2e_executed": false,
+  "compose_sha256": "5a32659c0708a806fa5f4aa0d8b0e38844906da4024d0946d15f6108a623b9a6",
+  "files_sha256": {
+    "fixtures/configs.json": "8cc34c41cc248ae804d822a60fb610b0adead84c3e79663eb33243ef70c99876",
+    "fixtures/integration.json": "d8834dad54e1f851e689ac00691cd527aac69e0e9ce00baf149835433812c73c",
+    "fixtures/peers.json": "ca8438ea9464138dc0c75868b62eb8b12113343dada8336524c3ea467dd3a490"
+  },
+  "supervisor_sha256": "c185d41ce150c27294aac68824d8817c7669fc53d72977488738665724b8cc31",
+  "process_exit_code": 0,
+  "cleanup_exit_code": 0,
+  "post_cleanup": {
+    "containers": [],
+    "networks": [],
+    "volumes": []
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "result": "pass",
+  "kind": "owned-native-Nginx-orphan-supervision",
+  "uid": 65534,
+  "pid": 1,
+  "signals": [
+    {
+      "pid": 9,
+      "parent_pid": 1,
+      "start_ticks": 547392862,
+      "uid": 65534,
+      "command": "nginx: worker process",
+      "executable": "/nix/store/8pggi5hic4rxc1v232rza0r4gigv0nz4-nginx-1.30.2/bin/nginx",
+      "executable_sha256": "55fff25936ce9019c564e91e8bc6fdfe3d2d4945f5d569edaa60e4c8e5f80bdb",
+      "signal": "SIGTERM",
+      "signal_monotonic": 5473928.789891379,
+      "exit_code": 0,
+      "reaped": true
+    }
+  ],
+  "scope": "Adopted native nginx workers only; original service/test code, assertions and deadlines unchanged.",
+  "original_exit_code": 0
+}

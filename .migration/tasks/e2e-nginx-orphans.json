@@ -4,7 +4,7 @@
   "title": "Supervise orphan native Nginx workers in owned Docker tests",
   "service": "framework",
   "kind": "contract-change",
-  "status": "active",
+  "status": "done",
   "owner": "codex",
   "branch": "go-e2e-nginx-orphans",
   "depends_on": [
@@ -33,7 +33,25 @@
       "required_evidence": "Owned Docker actual pinned native nginx two masters/workers; original-style master SIGKILL produces actual orphan listener. Supervisor terminates/reaps only adopted workers and releases listener while healthy master/worker continues HTTP200. Exact PID/executable/signal/hash/exit and ownedcleanup receipts. Hostguard negative, existing harness tests, scoped validation and user-delegated same-author review."
     }
   ],
-  "evidence": [],
-  "review": null,
-  "handoff": "Concrete original native cleanup50ms/SIGKILL leaves orphan nginx listeners; source/runtime failure retained in Spar. Implement optional owned-harness process supervision without changing Haskell/assertions or extending service timeouts."
+  "evidence": [
+    {
+      "criterion": "isolation",
+      "result": "pass",
+      "command": "Actual owned nonroot PID1 two-native-Nginx master/worker probe, orphan SIGTERM0/reap/listener release and healthy HTTP200/stop0, hostguard2,27 existing harness tests, exact source/native/PID/cleanup identities; delegated same-author scope/security review. No original assertion/catalogue/timeout/default/Haskell change.",
+      "revision": "54ebf63faaa1fa5d0ae05b2395efc171eb7a506f",
+      "artifact": ".migration/reviews/e2e-nginx-orphans.md"
+    },
+    {
+      "criterion": "native-proof",
+      "result": "pass",
+      "command": "Actual owned nonroot PID1 two-native-Nginx master/worker probe, orphan SIGTERM0/reap/listener release and healthy HTTP200/stop0, hostguard2,27 existing harness tests, exact source/native/PID/cleanup identities; delegated same-author scope/security review. No original assertion/catalogue/timeout/default/Haskell change.",
+      "revision": "54ebf63faaa1fa5d0ae05b2395efc171eb7a506f",
+      "artifact": ".migration/reviews/e2e-nginx-orphans.md"
+    }
+  ],
+  "review": {
+    "by": "codex (same-author self-review delegated by user)",
+    "artifact": ".migration/reviews/e2e-nginx-orphans.md"
+  },
+  "handoff": "Optional supervisor actual native orphan/healthy proof and27 harness tests pass, host guard rejects; failures retained. Original assertions/timeouts/source/defaults unchanged. Spar may now qualify remaining whole Worker47 with exact7 artifacts; no service availability/production change."
 }

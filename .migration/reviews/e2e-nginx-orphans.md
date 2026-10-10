@@ -1,0 +1,11 @@
+# Owned Nginx orphan supervision review
+
+Approved by codex under the user's delegated self-review authority (“Please review these yourself ... if so self approve”). This is same-author review of a concrete Docker test-environment fix, not independent review or production approval.
+
+Original ModService cleanup sends SIGINT, waits50ms, then SIGKILLs the master. Retained original failures show actual orphan native nginx workers listening on10099. No Haskell source, original assertion, catalogue, timeout or service implementation was changed. The environment CLI adds explicit `--reap-orphan-nginx`; omitted selection preserves the existing entrypoint.
+
+The supervisor requires UID65534, disposable marker and container PID1. It selects only adopted nginx workers with matching real/effective/saved/fs UID, native read-only Nix executable, worker command and parent identity. It opens a pidfd and rechecks start ticks before SIGTERM, reaps only targeted adopted children, fails after5s or256 lifetime signals, and records actual executable/PID/signal/exit identities. Healthy workers whose master is alive and every Go service are excluded. The original runner's exit remains decisive; failed originals are never converted to passes. Source/candidate mounts, private networks, no-host-ports/capability limits and project cleanup remain unchanged.
+
+Actual pinned native nginx1.30.2 probe demonstrates master SIGKILL leaves an adopted live listener, then worker SIGTERM exits0/reaps/releases its port; the second master/worker continues HTTP200 and stops0. Wrapper/probe/cleanup0 and independently empty project. Host invocation rejects2. All27 existing Docker-harness tests pass. Exact receipts and both failed probe fixtures are retained under docs/go-migration/qualifications/e2e-nginx-orphans-20261010. Initial queue/claim checks also rejected the missing required plan and were corrected before implementation; no failed check is presented as a pass.
+
+This is bounded housekeeping of orphan test processes. It does not repair native production shutdown or guarantee every ephemeral federation/queue test is free of timing races. Spar must still obtain the complete original47-case worker pass with exact seven artifacts; this task alone is no service-compatibility gate.
