@@ -1,0 +1,26 @@
+# Optional Go Spar (under construction)
+
+This is an initial runnable configuration/Cassandra/schema23/health/lifecycle
+slice, not a selectable whole-service replacement. SSO/IdP/SCIM routes are not
+implemented yet; the frozen whole-service acceptance still applies. Haskell
+remains supported/default. No compatibility or deployment claim.
+
+Use pinned Go1.26.9 with GOTOOLCHAIN=local/GOWORK=off. Run
+`python3 go/check.py spar` from the repository root. Build `./cmd/spar` from this
+module with CGO_ENABLED=0 for the owned Docker runner. The CLI accepts
+-c/--config-file, default /etc/wire/spar/conf/spar.yaml. Original configuration
+supports single/multi-ingress forms, Cassandra/DC/verified CA/discovery roles and
+source limits/fingerprint syntax; future handlers will apply the TTL/state rules.
+
+Startup actually connects to the configured Cassandra keyspace and reads its
+source schema gate before serving. It does not create or rewrite schema. Ordinary
+health and internal version guards, source cache policy/request IDs and graceful
+SIGTERM are present. Config/database errors avoid payloads/credentials. Only the
+existing reviewed gocql2/YAML versions are used; no new crypto dependency yet.
+
+The qualification/early.py and run_early.py helpers execute a bounded actual
+Haskell→Go process comparison in an owned internal Cassandra-only Docker fixture.
+They compare HTTP/method/version/errors and clean SIGTERM, record exact identities
+and require owned cleanup. This is not execution of original101 against Go or
+proof of complete SAML/SCIM/storage behaviour. Actual reference originals101 and
+the full contract remain in docs/go-migration/services/spar/.
