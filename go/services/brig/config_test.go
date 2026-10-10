@@ -2,12 +2,40 @@
 package brig
 
 import (
+	"bytes"
+	"crypto/ed25519"
+	"encoding/base64"
+	"encoding/hex"
 	"os"
 	"path/filepath"
 	"strings"
 	"testing"
 	"time"
 )
+
+func TestSigningKeysUseNativeURLAlphabet(t *testing.T) {
+	// RFC 8032's public test vector is synthetic and exercises both alphabets.
+	seed, err := hex.DecodeString("9d61b19deffd5a60ba844af492ec2cc44449c5697b326919703bac031cae7f60")
+	if err != nil {
+		t.Fatal(err)
+	}
+	private := ed25519.NewKeyFromSeed(seed)
+	public := private.Public().(ed25519.PublicKey)
+	for _, material := range [][]byte{private, public} {
+		path := filepath.Join(t.TempDir(), "keys.txt")
+		encoded := base64.URLEncoding.EncodeToString(material)
+		if !strings.ContainsAny(encoded, "-_") {
+			t.Fatal("synthetic key must exercise URL alphabet")
+		}
+		if err := os.WriteFile(path, []byte(encoded+"\n\n"+encoded+"\n"), 0600); err != nil {
+			t.Fatal(err)
+		}
+		keys, err := readSigningKeys(path, len(material))
+		if err != nil || len(keys) != 2 || !bytes.Equal(keys[0], material) || !bytes.Equal(keys[1], material) {
+			t.Fatal("native URL-encoded signing keys did not round trip")
+		}
+	}
+}
 
 func TestOriginalConfigPreservesTemplatesAndStorageModes(t *testing.T) {
 	c, err := LoadConfig("../../../services/brig/brig.integration.yaml")

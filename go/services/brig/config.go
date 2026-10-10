@@ -131,7 +131,8 @@ func readSigningKeys(path string, size int) ([][]byte, error) {
 		if strings.ContainsAny(line, "\r\n") {
 			return nil, errors.New("invalid ZAuth key encoding")
 		}
-		key, err := base64.StdEncoding.Strict().DecodeString(line)
+		// Sodium.Crypto.Sign's Read instances use Base64.URL for both keys.
+		key, err := base64.URLEncoding.DecodeString(line)
 		if err != nil || len(key) != size {
 			return nil, errors.New("invalid ZAuth key encoding")
 		}
