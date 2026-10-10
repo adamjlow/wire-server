@@ -1,0 +1,23 @@
+# Optional whole-service Go Spar
+
+User-selected goal2026-10-10. Reference source: f6636ed53315fa7b0fc4c8aa39c0bb30c98b6d5e. Work on go-migration; Haskell remains supported/default. Explicit continuing same-author review delegation applies, accurately labelled. No production switch, push, Haskell repair or security-policy exception.
+
+## Sequence and finite acceptance
+
+1. Inventory actual public/internal SSO/IdP/SCIM API versions, config/multi-ingress, Brig/Galley interactions, Cassandra state/TTLs, schema gates and shutdown. Discover original compiled test functions in the pinned nonroot Docker runner; compare with source and record absent native unit executables. Discovery is not a passing integration run.
+2. Freeze source-cited contract and relevant original test catalogue through a separately scoped protected contract task. Extend existing owned Docker harness only for required Spar tests/fixtures; retain all original assertions and baseline failures.
+3. Build a runnable isolated Go process early, compare configuration/health/lifecycle with actual Haskell, then implement the complete service contract. No SSO/SCIM/security path may be silently stubbed. Use Go1.26.9 and established dependencies; select SAML/XML signature library only after version/advisory/license review and actual trust-boundary tests.
+4. Validate the final exact executable: pinned Go format/tidy/verify/vet/unit/race/build/vulnerability/license, relevant unchanged original Spar tests plus previously selected six-Go peer tests, focused uncovered security/serialization/storage cases, one declared operations smoke, actual same-state Haskell→Go→Haskell switchback, trusted nonroot optional image and default-preserving selector. No speculative extra validation after the finite matrix passes.
+5. Retain exact source/binary/image/config/report identities and cleanup. Review under user delegation; publish legal verification/selection/availability and compatibility records in adjacent scoped transitions.
+
+## Security and scope
+
+Preserve authentication/authorization, team/IdP isolation, SAML signature and request/assertion replay protection, issuer/audience/destination/time/NameID validation, certificate allowlist policy, SCIM bearer token/re-auth semantics, URI/redirect rules and source-visible errors. Use parameterized storage, secret-free diagnostics and synthetic fixtures. New parser choices must not introduce XXE, signature wrapping or unsigned assertion acceptance. Do not silently harden inherited behaviour: record serious existing concerns separately, including certificate/date and logging policy discovered in source. Existing Haskell source/tests/schemas are protected; candidate code remains additive.
+
+Original tests run only in the authorized owned private Docker environment: internal networks, no host ports, nonroot/cap-drop/read-only mounts, synthetic data and owned cleanup. Existing published runner d0301bbb18ca37904b0c9693725acf6d3ab19b4203f8bda23be3508aabf16f8e supplies compiled originals; no host GHC/Cabal/Nix install. Full native rebuilds/unit executables unavailable are recorded, not claimed passed.
+
+## First task and evidence
+
+spar-inventory reserves this plan, its task, inventory/discovery/review files and changelog. Source reads identify full boundary and test gaps; bounded network-none Docker --list/help discovers actual executable identities. Inventory review must distinguish source definitions, compiled discoveries and executed tests. Evidence lives under docs/go-migration/services/spar/; whole qualification remains unsatisfied until implementation and actual tests pass. Run make migration-check migration-test and scoped transition check at handoff.
+
+No candidate exists yet. Rollback is existing Haskell selection; later actual switchback must preserve IdP/token/user/SCIM mappings and pending authentication state on unchanged schemas/config. Initial inventory will define the exact original-case count and concrete supplemental negatives before implementation.

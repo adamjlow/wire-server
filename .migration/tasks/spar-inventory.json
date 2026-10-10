@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "id": "spar-inventory",
+  "title": "Inventory full Spar service boundary and reusable original tests",
+  "service": "spar",
+  "kind": "discovery",
+  "status": "queued",
+  "owner": null,
+  "branch": null,
+  "depends_on": [
+    "background-worker-completion"
+  ],
+  "write_paths": [
+    ".migration/tasks/spar-inventory.json",
+    "docs/go-migration/plans/spar.md",
+    "docs/go-migration/services/spar/inventory.md",
+    "docs/go-migration/services/spar/test-discovery.json",
+    "docs/go-migration/services/spar/inventory-review.md",
+    "changelog.d/5-internal/spar-inventory"
+  ],
+  "plan": "docs/go-migration/plans/spar.md",
+  "acceptance_criteria": [
+    {
+      "id": "inventory",
+      "description": "Map complete Spar HTTP/config/storage/lifecycle/security boundary.",
+      "required_evidence": "Actual source routes/handlers, SAML/SCIM flows, ingress/config/dependency interactions, schema/TTL/state and material inherited concerns, with finite acceptance gaps."
+    },
+    {
+      "id": "tests",
+      "description": "Identify reusable source and compiled original tests without claiming unrun passes.",
+      "required_evidence": "Actual pinned nonroot network-none Docker original --list/help and executable identities; map source tests and compiled variants, native unit availability and finite baseline/harness needs."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": "Inventory and runnable reference comparison first; freeze protected oracle separately before additive implementation."
+}
