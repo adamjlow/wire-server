@@ -60,7 +60,25 @@ type Config struct {
 
 func absoluteURI(s string) bool { u, err := url.Parse(s); return err == nil && u.IsAbs() }
 func validDomain(c DomainConfig) bool {
-	return absoluteURI(c.AppURI) && absoluteURI(c.SSOURI) && c.Contacts != nil
+	if !absoluteURI(c.AppURI) || !absoluteURI(c.SSOURI) || c.Contacts == nil {
+		return false
+	}
+	for _, contact := range c.Contacts {
+		switch contact["type"] {
+		case "ContactTechnical", "ContactSupport", "ContactAdministrative", "ContactBilling", "ContactOther":
+		default:
+			return false
+		}
+		for _, key := range []string{"company", "givenName", "surname", "email", "phone"} {
+			if value := contact[key]; value != nil {
+				text, ok := value.(string)
+				if !ok || (key == "email" && !absoluteURI(text)) {
+					return false
+				}
+			}
+		}
+	}
+	return true
 }
 func knownVersion(s string) bool {
 	if len(s) < 2 || s[0] != 'v' {

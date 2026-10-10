@@ -1,34 +1,35 @@
 # Optional Go Spar (under construction)
 
-This is an initial runnable configuration/Cassandra/schema23/health/lifecycle
-slice, not a selectable whole-service replacement. Complete SSO/IdP/SCIM behavior is not
-implemented yet; the frozen whole-service acceptance still applies. Haskell
-remains supported/default. No compatibility or deployment claim.
+The module implements configuration/Cassandra schema23 startup, health/lifecycle,
+persistent settings/user metadata, SCIM token management, IdP CRUD/indexes and
+SAML metadata/request initiation/state stores. A configured-key signature adapter
+is tested but is not yet wired to finalize-login. Full signed assertion judgement,
+Brig user/session effects, SCIM users/groups and internal cleanup remain required.
+Spar is not selectable or qualified yet; Haskell remains supported/default.
 
 Use pinned Go1.26.9 with GOTOOLCHAIN=local/GOWORK=off. Run
 `python3 go/check.py spar` from the repository root. Build `./cmd/spar` from this
 module with CGO_ENABLED=0 for the owned Docker runner. The CLI accepts
--c/--config-file, default /etc/wire/spar/conf/spar.yaml. Original configuration
-supports single/multi-ingress forms, Cassandra/DC/verified CA/discovery roles and
-source limits/fingerprint syntax; future handlers will apply the TTL/state rules.
+-c/--config-file, default /etc/wire/spar/conf/spar.yaml. Startup connects to the
+configured Cassandra keyspace and checks schema before listening; it does not
+create or rewrite schemas. Single/multi-ingress configuration, TTL rounding,
+Cassandra/DC/verified CA/discovery and request/cache policy follow native source.
 
-Startup actually connects to the configured Cassandra keyspace and reads its
-source schema gate before serving. It does not create or rewrite schema. Ordinary
-health and internal version guards, source cache policy/request IDs and graceful
-SIGTERM are present. Config/database errors avoid payloads/credentials. Only the
-existing reviewed gocql2/YAML versions are used; no new crypto dependency yet.
+Original Haskell tests run automatically in the owned private Docker harness,
+with unchanged assertions and disposable dependencies. Current construction
+evidence under qualification/evidence includes exact initial process comparisons,
+six IdP/token originals and the original IdP issuer update/delete regression.
+Those batches prove only their listed surfaces. The final intended profile is
+proxy-cargohold-cannon-gundeck-federator-background-worker-spar:225 executions.
+Full trust/state gaps, operations smoke, durable Haskell→Go→Haskell switchback
+and optional image/selector remain pending. See the [plan](../../../docs/go-migration/plans/spar.md)
+and [frozen contract](../../../docs/go-migration/services/spar/contract.md).
 
-The qualification/early.py and run_early.py helpers execute a bounded actual
-Haskell→Go process comparison in an owned internal Cassandra-only Docker fixture.
-They compare HTTP/method/version/errors and clean SIGTERM, record exact identities
-and require owned cleanup. This is not execution of original101 against Go or
-proof of complete SAML/SCIM/storage behaviour. Actual reference originals101 and
-the full contract remain in docs/go-migration/services/spar/.
-
-The corrected early comparison passed at source9e209e02bdea478b84de16413c75c4e64e9e99b4: six exact native/Go HTTP responses, real schema23 startup, clean SIGTERM and owned cleanup. qualification/evidence/ retains the initial failure and corrected pass with exact identities. This qualifies only the initial process behavior, not the remaining service.
-
-Persistent /sso/settings GET, /i/sso/settings PUT and /i/scim/userinfo/:id POST now use original Cassandra tables and query consistency. Setting an IdP checks its typed row first; certificate blobs use source XML KeyInfo, without imposing certificate validity-date policy. Missing SCIM metadata omits created_on. Expanded native/Go qualification passes eleven exact responses at source87deed0f0cdf2dff4d03a994ee22d15dc00ffda2, including empty settings, persistent clear, unknown IdP and missing SCIM metadata. Populated state, complete IdP/SCIM/SSO handlers and whole-service switchback remain unqualified.
-
-SCIM token create/list/rename/delete management routes are implemented with Brig/Galley permission checks and creation reauthentication, crypto-random tokens and native logged dual-index Cassandra writes. Legacy plaintext conversion and v7/v8 response differences are preserved. At source1ca3fcd2ad6449dc4edb712a663c984afb228014, both unchanged original NoName/WithName tests pass against Go Spar with Haskell peers, strict XML and owned cleanup. Subsequent mandatory-null column checks follow native typed codecs; the final exact-artifact matrix remains pending. SAML/IdP CRUD and SCIM user/group behavior remain under construction.
-
-IdP create/read/list/raw/update and internal team list are implemented with original certificate XML, issuer/version conflict/index semantics, admin/member permission RPCs, SSO feature, fingerprint allowlist and multi-ingress notifications. The three original IdP JSON goldens pass unchanged. Six unchanged original IdP/token tests pass at source72051fbc1ed1e9a3282887b885dab4e966d59bd8, with strict XML and owned cleanup; bound-user/purge deletion, SAML and SCIM user/group routes remain incomplete.
+Dependencies use the reviewed gocql2/YAML/x/text versions and goxmldsig1.6.1
+with etree1.7.0. Signature tests reuse unchanged original Microsoft XML and
+IdP/NameID goldens and cover pinned keys, expired certificates, the native ADFS
+fallback, tamper/wrapping/unsigned assertions and duplicate credentials. Native
+policy accepts legacy small RSA keys; the main binary's service-local compatibility
+default preserves that acceptance without bypassing signature verification.
+See [security notes](SECURITY-NOTES.md) for inherited concerns and unresolved
+adapter gaps; tests of a signature helper do not qualify login/session security.

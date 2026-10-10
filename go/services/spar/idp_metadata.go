@@ -52,8 +52,20 @@ func (n *xmlNode) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 func parseXMLNode(encoded []byte) (*xmlNode, error) {
 	decoder := xml.NewDecoder(strings.NewReader(string(encoded)))
 	var node xmlNode
-	if err := decoder.Decode(&node); err != nil {
-		return nil, errors.New("invalid XML document")
+	for {
+		token, err := decoder.Token()
+		if err != nil {
+			return nil, errors.New("invalid XML document")
+		}
+		if start, ok := token.(xml.StartElement); ok {
+			if decoder.DecodeElement(&node, &start) != nil {
+				return nil, errors.New("invalid XML document")
+			}
+			break
+		}
+		if text, ok := token.(xml.CharData); ok && strings.TrimSpace(string(text)) != "" {
+			return nil, errors.New("invalid XML document")
+		}
 	}
 	for {
 		token, err := decoder.Token()

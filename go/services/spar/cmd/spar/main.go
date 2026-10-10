@@ -1,4 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-only
+
+// Preserve the existing backend's configured RSA signing-key policy. Original
+// SAML tests use 768-bit keys; no signature/digest/trust check is bypassed. This
+// service-local compatibility default does not alter other Go services.
+//go:debug rsa1024min=0
+
 package main
 
 import (
