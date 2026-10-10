@@ -4,7 +4,7 @@
   "title": "Freeze whole Brig contract and original Docker baseline",
   "service": "brig",
   "kind": "contract-change",
-  "status": "active",
+  "status": "done",
   "owner": "codex",
   "branch": "go-brig-contract",
   "depends_on": [
@@ -36,7 +36,32 @@
       "required_evidence": "Same-author review accurately labelled and explicit user authorization applied; assertions/normalization/deadlines/Haskell sources and default behavior unchanged. Existing harness checks and scope/migration checks pass; retain failures and finite remaining gaps."
     }
   ],
-  "evidence": [],
-  "review": null,
-  "handoff": "Protected whole Brig contract/original baseline claimed on separate branch; freeze310/535 assertions and concrete protocol/state gaps, add owned Brig harness support and execute native baseline. No candidate/Haskell policy/default change."
+  "evidence": [
+    {
+      "criterion": "contract",
+      "result": "pass",
+      "command": "Freeze complete24 public/internal/federation/docs/version/config/CLI/schema/queues/search/storage/crypto/lifecycle requirements and finite trust/state/operations/actual switchback matrix before implementation;757 native source inputs byte-match referencef663; native metrics captured, source Named index labelled source-only.",
+      "revision": "344ca7cdcad8983380f15ddc6d30ce02bb29cc3b",
+      "artifact": "docs/go-migration/services/brig/contract.md"
+    },
+    {
+      "criterion": "originals",
+      "result": "pass",
+      "command": "Execute all native310 unchanged original tests under corrected identified runner f487/source3922;309pass/1failure/no skips. Criterion retained-failure branch: exact native SCIM migration HTTP500 retained with bounded diagnosis, explicit native-green/final535 acceptance unsatisfied. Initial306pass/4failed attempt retained; four fixture cases now pass. Both actual exits/receipts/rawlogs and independently empty owned resources retained; no waiver/Haskell repair/unexecuted native unit/build pass.",
+      "revision": "344ca7cdcad8983380f15ddc6d30ce02bb29cc3b",
+      "artifact": "docs/go-migration/services/brig/oracle/native-original310-fixture-corrected/diagnosis.json"
+    },
+    {
+      "criterion": "review",
+      "result": "pass",
+      "command": "User-delegated same-author review;33 Docker harness and32 migration-validator tests pass; scoped migration check passes. Source/assertions/shared XML checker/normalization/deadlines/default unchanged. Review approves protected requirements/setup only, native passing baseline and Go qualification remain unsatisfied.",
+      "revision": "344ca7cdcad8983380f15ddc6d30ce02bb29cc3b",
+      "artifact": "docs/go-migration/services/brig/oracle/contract-review.md"
+    }
+  ],
+  "review": {
+    "by": "codex (same-author self-review explicitly delegated by user)",
+    "artifact": "docs/go-migration/services/brig/oracle/contract-review.md"
+  },
+  "handoff": "Protected contract/setup complete on explicitly permitted retained-native-failure branch, not a green baseline or Go parity. Whole Brig goal active. Publish contracted then implementing gates separately; implement whole Go Brig without native repair. Final unchanged original535 incl retained SCIM migration failure must pass, plus focused state/operations/rollback/image/selector. Galley only after actual Brig goal completion."
 }
