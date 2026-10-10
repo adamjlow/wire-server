@@ -37,5 +37,5 @@
   ],
   "evidence": [],
   "review": null,
-  "handoff": "Progress: first isolated Go config/Cassandra/schema23/health/version/cache/requestID/shutdown process compiles; five meaningful race-tested negatives/source config and full pinned Go checks pass. Native/Go owned Cassandra-only comparison ready, not yet executed. SSO/IdP/SCIM and final225/storage/ops/switchback/image/selector incomplete, compatibility null. Next exact static build/current source proof then actual early comparison; use discovered mismatch evidence to fix, not exhaustive helper testing."
+  "handoff": "Progress: real native/Go schema23 startup and clean SIGTERM executed. First six-response comparison failed on health Content-Type and response Request-Id; failure retained under module qualification/evidence/early-719cd. Go corrected using actual native output and middleware source; full pinned checks pass. Repeat exact corrected comparison next. Full SSO/IdP/SCIM, original225, storage/operations/switchback/image/selector remain incomplete; compatibility null."
 }

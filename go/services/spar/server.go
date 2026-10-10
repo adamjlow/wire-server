@@ -61,7 +61,7 @@ func NewHandler(c Config) http.Handler {
 				requestID = encoded[:8] + "-" + encoded[8:12] + "-" + encoded[12:16] + "-" + encoded[16:20] + "-" + encoded[20:]
 			}
 		}
-		w.Header().Set("Request-Id", requestID)
+		r.Header.Set("Request-Id", requestID)
 		w.Header().Set("Cache-Control", "no-cache, no-store")
 		w.Header().Set("Pragma", "no-cache")
 		w.Header()["Content-Type"] = nil
@@ -70,6 +70,7 @@ func NewHandler(c Config) http.Handler {
 				w.WriteHeader(http.StatusMethodNotAllowed)
 				return
 			}
+			w.Header().Set("Content-Type", "application/json;charset=utf-8")
 			w.WriteHeader(http.StatusOK)
 			return
 		}

@@ -1,0 +1,267 @@
+{
+  "kind": "early-process-comparison",
+  "result": "fail",
+  "e2e_executed": false,
+  "scope": "Configuration, real schema23 startup, health/method/version/errors and SIGTERM only; no SSO/SCIM qualification.",
+  "config_sha256": "c6fd50b5388904c4604384f6c491a436c9e9c769abe0a861174d55b63be23273",
+  "native": {
+    "responses": {
+      "GET /i/status": {
+        "status": 200,
+        "headers": {
+          "content-type": "application/json;charset=utf-8",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null
+        },
+        "body": ""
+      },
+      "HEAD /i/status": {
+        "status": 200,
+        "headers": {
+          "content-type": "application/json;charset=utf-8",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null
+        },
+        "body": ""
+      },
+      "POST /i/status": {
+        "status": 405,
+        "headers": {
+          "content-type": null,
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null
+        },
+        "body": ""
+      },
+      "GET /v0/i/status": {
+        "status": 404,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null
+        },
+        "body": {
+          "code": 404,
+          "label": "unsupported-version",
+          "message": "Internal APIs (`/i/...`) are not under version control"
+        }
+      },
+      "GET /v99/i/status": {
+        "status": 404,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null
+        },
+        "body": {
+          "code": 404,
+          "label": "unsupported-version",
+          "message": "Internal APIs (`/i/...`) are not under version control"
+        }
+      },
+      "GET /unknown": {
+        "status": 404,
+        "headers": {
+          "content-type": null,
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null
+        },
+        "body": ""
+      }
+    },
+    "stop_exit_code": 0,
+    "stop_seconds": 0.003183279186487198,
+    "binary_sha256": "9c80adbfd76199ad3ab9bcf14c4eab8352a09ac2e0960078f8cd23615f8e58d1"
+  },
+  "go": {
+    "responses": {
+      "GET /i/status": {
+        "status": 200,
+        "headers": {
+          "content-type": null,
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": "spar-early-synthetic",
+          "allow": null
+        },
+        "body": ""
+      },
+      "HEAD /i/status": {
+        "status": 200,
+        "headers": {
+          "content-type": null,
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": "spar-early-synthetic",
+          "allow": null
+        },
+        "body": ""
+      },
+      "POST /i/status": {
+        "status": 405,
+        "headers": {
+          "content-type": null,
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": "spar-early-synthetic",
+          "allow": null
+        },
+        "body": ""
+      },
+      "GET /v0/i/status": {
+        "status": 404,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null
+        },
+        "body": {
+          "code": 404,
+          "label": "unsupported-version",
+          "message": "Internal APIs (`/i/...`) are not under version control"
+        }
+      },
+      "GET /v99/i/status": {
+        "status": 404,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null
+        },
+        "body": {
+          "code": 404,
+          "label": "unsupported-version",
+          "message": "Internal APIs (`/i/...`) are not under version control"
+        }
+      },
+      "GET /unknown": {
+        "status": 404,
+        "headers": {
+          "content-type": null,
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": "spar-early-synthetic",
+          "allow": null
+        },
+        "body": ""
+      }
+    },
+    "stop_exit_code": 0,
+    "stop_seconds": 0.00332675501704216,
+    "binary_sha256": "4264b3d42f0500f8daac1b7ed3c80bc2313e59f5364f18598cdc19c1504333b9"
+  },
+  "differences": {
+    "GET /i/status": {
+      "native": {
+        "status": 200,
+        "headers": {
+          "content-type": "application/json;charset=utf-8",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null
+        },
+        "body": ""
+      },
+      "go": {
+        "status": 200,
+        "headers": {
+          "content-type": null,
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": "spar-early-synthetic",
+          "allow": null
+        },
+        "body": ""
+      }
+    },
+    "HEAD /i/status": {
+      "native": {
+        "status": 200,
+        "headers": {
+          "content-type": "application/json;charset=utf-8",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null
+        },
+        "body": ""
+      },
+      "go": {
+        "status": 200,
+        "headers": {
+          "content-type": null,
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": "spar-early-synthetic",
+          "allow": null
+        },
+        "body": ""
+      }
+    },
+    "POST /i/status": {
+      "native": {
+        "status": 405,
+        "headers": {
+          "content-type": null,
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null
+        },
+        "body": ""
+      },
+      "go": {
+        "status": 405,
+        "headers": {
+          "content-type": null,
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": "spar-early-synthetic",
+          "allow": null
+        },
+        "body": ""
+      }
+    },
+    "GET /unknown": {
+      "native": {
+        "status": 404,
+        "headers": {
+          "content-type": null,
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null
+        },
+        "body": ""
+      },
+      "go": {
+        "status": 404,
+        "headers": {
+          "content-type": null,
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": "spar-early-synthetic",
+          "allow": null
+        },
+        "body": ""
+      }
+    }
+  }
+}
