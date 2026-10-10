@@ -1,0 +1,10 @@
+{
+  "retry_source_url": "https://raw.githubusercontent.com/Soostone/retry/0.9.3.1/src/Control/Retry.hs",
+  "version_evidence": "Retained native worker error stack in cache/haskell-baseline-dns-private/baseline-background-worker.log identifies retry0.9.3.1; no fresh native decoder/policy execution.",
+  "files": {
+    "/home/operator/wire-server/services/background-worker/src/Wire/BackendNotificationPusher.hs": "c1f97218ead477dbbd8ca17b4e375457a7847c244c2f2f3289d6bcf0b65a5f2b",
+    "/home/operator/wire-server/libs/extended/src/Network/RabbitMqAdmin.hs": "efd66f84db24cd955810de2e4c29e455bd9aa4b23cf660c5cb789012c11be2cd",
+    "/home/operator/.cache/wire-migration/background-worker-20261009/retry-0.9.3.1.hs": "9630a750e3d6dd906d0fe27e4b464becb2f6fbab9480407a8f3a74a0e4ccf806",
+    "/home/operator/.cache/wire-migration/background-worker-20261009/retry-0.9.3.1-LICENSE": "81c623d2af020cc64e40280e076e46c0ddad70764e092685cedab15dbe9ef671"
+  }
+}

@@ -9,3 +9,4 @@ Construct source adminless decisions and team-scan/local-promotion stores, reusi
 Implement adminless feature defaults, partial patches, native duration arithmetic and migration-routed storage lookup with limited original-schema PG validation.
 Construct scheduled dispatcher, registry, owned notification controls and shared reconnecting listener; preserve transactional typed claim rollback and durable grace-timeout leases with isolated PostgreSQL evidence. Whole scheduled runtime remains unfinished.
 Connect both scheduled pools to domain handlers, shared listener, cron and reapers; preserve schema-before-health startup, cleanup run counter and per-pool durable drain, with limited combined native-schema PostgreSQL validation.
+Preserve native notification jitter/cap ordering and cumulative queue-discovery retries, pagination, required fields and body acceptance; record inherited unbounded discovery memory concern.

@@ -428,3 +428,14 @@ Initial missing-migration/invalid-expectation/wrong-code-key fixture failures an
 superseded helper identities are retained. Next source pusher discovery and botTLS/
 ordinary transport/diagnostic review, then current original47/final six-Go124 and
 all unchanged operations/switchback/image/selector/review acceptance.
+
+Pusher retry/discovery gaps are repaired using source retry0.9.3.1 semantics:
+saturated half-plus-inclusive-draw jitter, cap after jitter, and whole-pagination
+restart with60s accumulated-wait budget. Native queue-page required exact-case
+fields, integral signed metadata, page order and full body acceptance are preserved.
+[Exact Go/source/HTTP evidence](../../../go/services/background-worker/evidence/notification-retry-20261010/)
+passes; no fresh Haskell policy execution or current whole-service qualification.
+Removing the artificial discovery response cap preserves an inherited memory/
+availability concern; new limits need separate review. BSD3 notice retained.
+Next bot finite-DHE compatibility, ordinary transport and stored diagnostics,
+then current original tests and all unchanged final acceptance.

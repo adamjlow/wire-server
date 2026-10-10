@@ -8,7 +8,6 @@ import (
 	"encoding/json"
 	"errors"
 	"io"
-	"math/rand/v2"
 	"net"
 	"net/http"
 	"net/url"
@@ -197,7 +196,7 @@ func (s *Service) consumeNotifications(ctx context.Context, client *http.Client,
 			}
 			d = next
 		}
-		backoff := time.Duration(s.Config.Pusher.Min) * time.Microsecond
+		iteration := uint64(0)
 		for {
 			action, err := s.deliverNotification(ctx, client, target, d.Body)
 			if ctx.Err() != nil {
@@ -213,17 +212,11 @@ func (s *Service) consumeNotifications(ctx context.Context, client *http.Client,
 					}
 					break
 				}
-				if !wait(ctx, time.Duration(rand.Int64N(int64(backoff)))) {
+				delay := min(nativeNotificationDelay(s.Config.Pusher.Min, iteration, nil), s.Config.Pusher.Max)
+				if !wait(ctx, time.Duration(delay)*time.Microsecond) {
 					return
 				}
-				max := time.Duration(s.Config.Pusher.Max) * time.Microsecond
-				if backoff < max {
-					if backoff > max/2 {
-						backoff = max
-					} else {
-						backoff *= 2
-					}
-				}
+				iteration++
 				continue
 			}
 			switch action {
@@ -293,6 +286,9 @@ func (s *Service) openRabbit(ctx context.Context, name string) (*amqp.Connection
 }
 
 func (s *Service) remoteDomains(ctx context.Context, client *http.Client) ([]string, error) {
+	return retryQueueDiscovery(ctx, func() ([]string, error) { return s.remoteDomainsAttempt(ctx, client) }, nil, wait)
+}
+func (s *Service) remoteDomainsAttempt(ctx context.Context, client *http.Client) ([]string, error) {
 	c := s.Config.Rabbit
 	scheme := "http"
 	if c.TLS {
@@ -313,25 +309,21 @@ func (s *Service) remoteDomains(ctx context.Context, client *http.Client) ([]str
 		if err != nil {
 			return nil, errors.New("queue discovery failed")
 		}
-		var data struct {
-			Items []struct {
-				Name string `json:"name"`
-			} `json:"items"`
-			Page  int `json:"page"`
-			Pages int `json:"page_count"`
-		}
-		err = json.NewDecoder(io.LimitReader(resp.Body, 8<<20)).Decode(&data)
+		body, readErr := io.ReadAll(resp.Body)
 		_ = resp.Body.Close()
-		if err != nil || resp.StatusCode != 200 || data.Page != page || data.Pages < 0 {
+		data, err := decodeQueueDiscoveryPage(body)
+		if readErr != nil || err != nil || resp.StatusCode != 200 {
 			return nil, errors.New("invalid queue discovery response")
 		}
+		pageDomains := []string{}
 		for _, q := range data.Items {
 			suffix, ok := strings.CutPrefix(q.Name, "backend-notifications.")
 			if ok && validDomain(suffix) {
-				domains = append(domains, strings.ToLower(suffix))
+				pageDomains = append(pageDomains, strings.ToLower(suffix))
 			}
 		}
-		if page >= data.Pages {
+		domains = append(pageDomains, domains...)
+		if data.Page >= data.Pages {
 			return domains, nil
 		}
 	}
