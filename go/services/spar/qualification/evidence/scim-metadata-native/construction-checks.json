@@ -1,0 +1,42 @@
+{
+  "result": "pass",
+  "source_revision": "b55621aece1d3d219b1ae3ceb350f5e15e9d6d61",
+  "candidate_sha256": "c7db81c746cf6abf6a978ae4ba9fe4b2b946da327a5d291058c55c6b0307e0a5",
+  "responses_compared": 33,
+  "metadata_responses": 22,
+  "differences": {},
+  "native_stop_exit_code": 0,
+  "go_stop_exit_code": 0,
+  "runner_exit_code": 0,
+  "cleanup_exit_code": 0,
+  "project": "wire-e2e-8ad9e7e0a2c3431ea0c8f7fa608dc74a",
+  "independent_post_cleanup": {
+    "containers": [],
+    "networks": [],
+    "volumes": []
+  },
+  "checks": "Pinned Go1.26.9 format/tidy/verify/vet/unit/race/build/vulnerability/license; exact five schemas also verified against frozen primary native source.",
+  "log_receipts": {
+    "controller.log": {
+      "path": "/home/operator/.cache/wire-migration/spar-20261010/scim-metadata-native/controller.log",
+      "sha256": "ee8b2abf19e6f5df095d800393d6fe0f0e12c1eace432019458a030ccb22e5f8",
+      "size": 173
+    },
+    "schema.log": {
+      "path": "/home/operator/.cache/wire-migration/spar-20261010/scim-metadata-native/reports/schema.log",
+      "sha256": "a79585788a4ff96a2d6bb057126ac0e04a8653a93cde8d61876f5ca934256825",
+      "size": 7747
+    },
+    "native.log": {
+      "path": "/home/operator/.cache/wire-migration/spar-20261010/scim-metadata-native/reports/native.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    "go.log": {
+      "path": "/home/operator/.cache/wire-migration/spar-20261010/scim-metadata-native/reports/go.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    }
+  },
+  "scope": "Public SCIM configuration/resource/schema/extension errors, real schema23 startup, prior health/settings checks and SIGTERM only. No original e2e suite executed in this increment; whole-service qualification remains pending."
+}

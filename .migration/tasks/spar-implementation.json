@@ -133,8 +133,15 @@
       "command": "Pinned Go1.26.9 checks and17 unchanged original SCIM email/external-ID/update/patch/adoption executions against exact Go Spar/Haskell peers; exact names/variants/no failure/error/skip, runner0/owned cleanup0/no remaining resources. Construction only, full225 outstanding.",
       "revision": "527b85c58a5a7ac941fff54619b49a8d153e4260",
       "artifact": "go/services/spar/qualification/evidence/scim-users-original/construction-checks.json"
+    },
+    {
+      "criterion": "quality",
+      "result": "pass",
+      "command": "Pinned Go1.26.9 quality checks and33 actual native/Go HTTP comparisons (22 public SCIM metadata plus11 startup/settings); both SIGTERM0, runner0/cleanup0/independently empty resources. Construction increment only; final225 remains pending.",
+      "revision": "b55621aece1d3d219b1ae3ceb350f5e15e9d6d61",
+      "artifact": "go/services/spar/qualification/evidence/scim-metadata-native/construction-checks.json"
     }
   ],
   "review": null,
-  "handoff": "Progress: source527b85c58a5a7ac941fff54619b49a8d153e4260 implements SCIM PUT/PATCH/filter with native identity/email/index update ordering, changed account fields/roles/status, null/absent/email value-path/rich-info rules, native no-op timestamps and token-team listing. Pinned Go1.26.9 checks and finite security/parser/effect tests pass;17 unchanged original SCIM user executions pass with exact Go Spar/Haskell peers, runner0/cleanup0/empty project resources. Prior sourcea02 group5 originals and sourcea26 login2 plus IdP/token6/delete1 and native101 baseline retained. Next config/schema metadata, internal pending-user/team cleanup and SSO email discovery; then remaining SCIM protocol/ETag/URI and SAML importer/Base64/cookie/mobile/diagnostic/Show/RIPEMD160/SDK traversal gaps, final225/state/trust/ops/durable switchback/image/selector. Haskell/reference/oracles/defaults unchanged; compatibility null. Native unit executable/build unavailable, not a pass. Disk capacity tight; two superseded partial worker construction artifacts losslessly archived with hashes/restoration receipts, current available artifacts unchanged."
+  "handoff": "Public SCIM metadata increment sourceb55621aece1d3d219b1ae3ceb350f5e15e9d6d61 passes pinned Go quality and33 actual native/Go responses, exact native constants/headers/errors and both clean shutdowns. Owned Docker cleanup and independent resource check pass. Prior17 original SCIM user,5 group,2 login and IdP/token/delete evidence retained, as is native101 baseline. Next internal pending-user/team cleanup and V15 SSO email discovery; remaining finite protocol/trust/ETag/URI gaps, final225 seven-Go profile, operations smoke, durable Haskell-Go-Haskell switchback, optional image/selector and legal review/availability gates outstanding. Whole-service goal active, compatibility null, Haskell default. Native unit executable/build unavailable, not a pass. No new dependencies/protected source/oracle changes."
 }
