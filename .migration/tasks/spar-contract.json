@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "id": "spar-contract",
+  "title": "Spar contract",
+  "service": "spar",
+  "kind": "contract-change",
+  "status": "queued",
+  "owner": null,
+  "branch": null,
+  "depends_on": [
+    "spar-inventory-gate"
+  ],
+  "write_paths": [
+    ".migration/tasks/spar-contract.json",
+    "docs/go-migration/plans/spar.md",
+    "docs/go-migration/services/spar/contract.md",
+    "docs/go-migration/services/spar/oracle",
+    "tools/parity/docker/spar-tests.json",
+    "tools/parity/docker/Dockerfile",
+    "tools/parity/docker/runner.py",
+    "tools/parity/docker/runtime.py",
+    "tools/parity/docker/environment.py",
+    "tools/parity/docker/control.py",
+    "tools/parity/docker/test_container.py",
+    "tools/parity/docker/test_environment.py",
+    "tools/parity/docker/README.md",
+    "changelog.d/5-internal/spar-contract"
+  ],
+  "plan": "docs/go-migration/plans/spar.md",
+  "acceptance_criteria": [
+    {
+      "id": "contract",
+      "description": "Freeze full source-visible Spar API, security and durable state contract with finite gap matrix.",
+      "required_evidence": "Exact source routes/errors/versions/SSO XML signature/verdict/cookie/IdP/SCIM serialization, TTL/state codec/cleanup/legacy token policy; original cases and inherited concerns pinned without Haskell changes."
+    },
+    {
+      "id": "baseline",
+      "description": "Enable and execute original Spar baseline in existing private Docker harness.",
+      "required_evidence": "Relevant unchanged compiled originals and source variants in explicit catalogue; owned all-Haskell Spar baseline with strict coverage/XML/identities/cleanup, record actual failures and finite gap comparisons. Extend selected seven-Go profile without changing existing assertions/defaults; setup missing cases cannot pass."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": "Reuse completed source/discovery evidence. No candidate yet; preserve source schemas/assertions/defaults and finite acceptance."
+}

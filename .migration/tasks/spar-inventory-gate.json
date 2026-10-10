@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "id": "spar-inventory-gate",
+  "title": "Spar inventory gate",
+  "service": "framework",
+  "kind": "framework",
+  "status": "queued",
+  "owner": null,
+  "branch": null,
+  "depends_on": [
+    "spar-inventory"
+  ],
+  "write_paths": [
+    ".migration/tasks/spar-inventory-gate.json",
+    ".migration/services/spar.json"
+  ],
+  "plan": "docs/go-migration/plans/spar.md",
+  "acceptance_criteria": [
+    {
+      "id": "gate",
+      "description": "Publish completed Spar source inventory gate legally.",
+      "required_evidence": "Completed discovery task with actual source boundary and pinned original executable list; registered\u2192inventoried only, compatibility null, Haskell defaults unchanged."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": "Reuse completed source/discovery evidence. No candidate yet; preserve source schemas/assertions/defaults and finite acceptance."
+}
