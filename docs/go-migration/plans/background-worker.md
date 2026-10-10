@@ -13,14 +13,15 @@ starting mixed-deployment baseline. The service is inventoried and its finite
 reference contract is frozen with explicit baseline limitations. Go construction
 now includes a runnable notification pusher and Cassandra dead-user watcher, plus
 connected background-job consumption, conversation-storage/notification adapters
-and all seven migration families. Scheduled jobs remain under construction.
+and all seven migration families. Scheduled adminless/meetings jobs are connected
+to their domain adapters, pools, listener, cron and reapers; whole-process
+qualification remains incomplete.
 Whole-service parity is not yet claimed; the task record owns current status.
 
 ## Reconciled checkpoint (2026-10-10)
 
-Reviewed documentation and current records at
-`30bcc7f5e399f834391fb76ceac812ccebcfa075` and the scheduled-runtime
-integration worktree. The active goal is completion of
+Reconciled documentation against committed implementation and receipts at
+`972e97540c14d6087a2b885b6c631b260ee8edb8`. The active goal is completion of
 the whole background-worker, with Haskell remaining supported and default.
 The implementation task and service record remain active/implementing; no
 background-worker compatibility or deployment availability is advertised.
@@ -30,10 +31,9 @@ background-worker compatibility or deployment availability is advertised.
 | [Original gundeck40](../../../go/services/background-worker/evidence/jobs-original-20261009/) | 40/40 original assertions pass with Go worker and Haskell peers | Earlier executable; notification/DLQ/queue lifecycle only |
 | [Original MLS migration](../../../go/services/background-worker/evidence/conversation-original-20261009/) | Five storage phases and final shared MLS history pass | One case with Haskell peers; not the final mixed-stack qualification |
 | [Original users2](../../../go/services/background-worker/evidence/user-original-20261009/) | 1/2 cases pass; retained SCIM500 failure occurs before migration activation | Enabled user migration remains unverified; failure is not waived |
-| [Scheduled schema](../../../go/services/background-worker/evidence/scheduled-schema-20261009/) and [reaper](../../../go/services/background-worker/evidence/scheduled-reaper-20261009/) | Native schema comparison and isolated PostgreSQL storage/gate checks pass | Components are constructed but scheduled runtime is not started |
-
-| [Adminless notifications](../../../go/services/background-worker/evidence/adminless-notifications-20261009/) and [scheduling](../../../go/services/background-worker/evidence/adminless-scheduling-20261009/) | Source-based adapters and their focused Go/storage checks pass | Not yet connected to the whole scheduled runtime |
-| [Scheduled execution](../../../go/services/background-worker/evidence/scheduled-execution-20261009/) | Go checks and isolated PostgreSQL completion, retry, lease and rollup checks pass | Does not qualify pool dispatch, listener or the complete service |
+| [Scheduled schema](../../../go/services/background-worker/evidence/scheduled-schema-20261009/) and [reaper](../../../go/services/background-worker/evidence/scheduled-reaper-20261009/) | Native schema comparison and isolated PostgreSQL storage/gate checks pass | Connected to service startup; original whole-process qualification outstanding |
+| [Adminless notifications](../../../go/services/background-worker/evidence/adminless-notifications-20261009/) and [scheduling](../../../go/services/background-worker/evidence/adminless-scheduling-20261009/) | Source-based adapters and their focused Go/storage checks pass | Connected to both pools; enabled external-peer behavior not qualified |
+| [Scheduled execution](../../../go/services/background-worker/evidence/scheduled-execution-20261009/) | Go checks and isolated PostgreSQL completion, retry, lease and rollup checks pass | Earlier execution component proof; later pool/runtime receipts listed below |
 
 Pool dispatch, worker registry heartbeat, pause/cancel notifications, a shared
 reconnecting listener and transactional typed claim validation are constructed.
@@ -216,7 +216,8 @@ expensive tests without a repair. Actual user migration effects remain unverifie
 Scheduled payloads, Arbiter claims/heartbeat/retry/ACK/worker registration,
 sibling locking/wakeup and archive retention are constructed. Native schema setup is constructed and checked;
 Reaper and cron components are constructed and checked; adminless/meetings domain
-handlers and scheduled runtime integration are unfinished.
+handlers and scheduled runtime integration are now connected; full external-peer
+qualification is unfinished.
 The initial original MLS case reached enabled phase3 and reported both migration
 loops completed (local32/remote2), but timed out because the native helper expects
 counter text1.0 while Go emitted1. [Failed proof](../../../go/services/background-worker/evidence/conversation-original-initial-20261009/)
@@ -227,8 +228,8 @@ no errors/skips/failures, owned cleanup0 and empty project labels.
 [Passing proof](../../../go/services/background-worker/evidence/conversation-original-20261009/)
 covers all five storage phases, enabled local/remote migration and final shared
 MLS history. This is limited real DB/interoperability evidence, not the final
-whole-service or six-Go run. Continue with scheduled jobs and consolidate source startup/supervision/logging
-and graceful drain. Final original47/exact six-Go124, actual durable
+whole-service or six-Go run. Scheduled jobs and per-pool drain are now connected. Resolve the remaining
+transport and diagnostic gaps before final original-test qualification. Final original47/exact six-Go124, actual durable
 Haskell->Go->Haskell switchback, bounded operations, optional image/selector and
 delegated same-author review remain mandatory. Native local Haskell build checks
 remain unavailable/unrun. Service/task/goal remain active; Haskell stays default,
@@ -244,7 +245,13 @@ URLs. Keep these findings separate from the parity implementation; no production
 security policy change is authorized. Eventual distribution must include retained
 email/URI BSD3 and Arbiter MIT notices.
 
-Scheduled bootstrap now preserves pinned native SQL bodies, registry names/order,
+## Historical construction checkpoints
+
+The following entries describe successive implementation increments and evidence
+for their exact inputs. Their next-step notes are historical; the reconciled
+checkpoint above and active task own current status and remaining acceptance.
+
+Scheduled bootstrap preserves pinned native SQL bodies, registry names/order,
 Base64-MD5 migration checksums, dedicated native advisory lock, native transaction
 commit/rollback distinctions, default durability and adminless partial index.
 [Exact construction receipts](../../../go/services/background-worker/evidence/scheduled-schema-20261009/)
@@ -252,9 +259,8 @@ include passing full Go checks and an actual isolated PostgreSQL qualifier:227
 native captured column records match exactly,76 ledger entries, queued-job
 preservation and checksum mismatch behavior pass, owned cleanup complete.
 Initial fixture TCP-readiness race is retained and repaired; no candidate/oracle
-assertion change or failure waiver. This function remains unstarted until full
-scheduled runtime exists. Next complete adminless/meetings handlers and integrate cron/reaper,
-then runtime/startup/drain and the previously declared final acceptance.
+assertion change or failure waiver. This receipt predates runtime integration.
+Schema setup now runs before health in service startup; the receipt does not qualify that complete startup path.
 
 Scheduled reaper construction now covers the five native schema-gated operations,
 including bounded scans, live-lease/suspension guards, per-row worker thresholds,
@@ -263,8 +269,8 @@ cleanup, archive expiry, transaction-local timeout and committed watermark rules
 [Exact receipts](../../../go/services/background-worker/evidence/scheduled-reaper-20261009/)
 retain full passing Go checks and an actual isolated PostgreSQL test of these
 storage/concurrency/rollback effects, with all owned resources removed. No fresh
-Haskell reaper execution or full scheduled claim. Reaper/schema components remain
-unstarted until scheduled runtime exists. Next adminless/meetings domain handlers and cron integration, then runtime/startup/drain and the declared whole-service qualification.
+Haskell reaper execution or full scheduled claim. This receipt predates runtime
+integration. Reaper/schema components are now connected; their original whole-process qualification remains outstanding.
 
 Cron persisted storage now preserves native default/override and queue-healing
 semantics, five-minute manual requests, transactional claims, monotone minute/manual
@@ -400,8 +406,8 @@ qualifier never calls that executor; final current code has separate passing
 checks. No full scheduled runtime/native comparison. Native rollup descendant
 cascade precedes guarded root move, an inherited ownership-race concern recorded
 without silently changing behavior. Stored error diagnostic equivalence remains
-for whole-service review. Next dispatcher/registry/pause/NOTIFY and domain startup/
-drain/metrics wiring, then unchanged qualification.
+for whole-service review. Subsequent pool and runtime receipts below cover
+dispatcher/registry/pause/NOTIFY and domain startup/drain/metrics construction.
 
 Scheduled pool construction preserves native capacity, pause/resume and queued-job
 handling, registry proof-of-work cadence, missing-row registration, owned typed
@@ -412,8 +418,9 @@ pause reconciliation until the next heartbeat. Full default Go checks and actual
 native-schema PostgreSQL construction tests pass:
 [exact evidence](../../../go/services/background-worker/evidence/scheduled-pool-20261010/).
 The fixture covers the combined cancellation signals, not which won, and is no
-fresh Haskell or full-runtime comparison. Next concrete domain wiring, cron/reaper,
-startup/drain/metrics; full acceptance remains unchanged and incomplete.
+fresh Haskell or full-runtime comparison. Subsequent runtime receipts below cover
+domain wiring, cron/reaper, startup/drain/metrics construction; full acceptance
+remains unchanged and incomplete.
 
 Scheduled runtime integration now binds both pools to existing adminless and meetings
 adapters, per-job Brig/capability request scopes, independent Rabbit publisher,
@@ -439,3 +446,10 @@ Removing the artificial discovery response cap preserves an inherited memory/
 availability concern; new limits need separate review. BSD3 notice retained.
 Next bot finite-DHE compatibility, ordinary transport and stored diagnostics,
 then current original tests and all unchanged final acceptance.
+
+The owned construction-cache cleanup recovered 1,312,280,776 bytes without removing
+qualified executables or reference artifacts; available space rose above the
+harness 2 GiB preparation floor. The [preparation receipt](../../../go/services/background-worker/evidence/harness-preparation-20261010/README.md)
+records this environment observation, not a test pass. Read-only inspection of the
+pinned runner found OpenSSL 3.6.2 at its Nix store path; no fallback transport or
+new production dependency is selected or qualified by that discovery.

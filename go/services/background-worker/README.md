@@ -48,9 +48,10 @@ Its unstarted workers correctly reported500. This was a health-only comparison,
 not an E2E or Rabbit/storage switchback. Exact static build/compiler/hash and
 comparison receipts are in evidence/early-20261009. Required Go checks passed
 for the early Go source; final checks must be repeated when the implementation
-is complete. Discovery retry budget, graceful in-flight draining and complete
-configuration/source-gap coverage still need refinement alongside the remaining
-worker families. The existing intermittent peer transport issue stays open.
+is complete. Later construction implements the native discovery retry budget
+and scheduled per-pool drain. Final process validation, transport compatibility and stored error
+diagnostic review remain outstanding. The existing intermittent peer transport
+issue stays open.
 
 The unchanged original gundeck suite passed40/40 with the exact worker executable
 from source00557161c5218fba7ce290ba57536561298a35e3 and remaining Haskell peers.
@@ -69,7 +70,8 @@ cover this limited storage construction, not full scheduled execution or switchb
 The five scheduled reaper operations passed an isolated Docker PostgreSQL check,
 including lease guards, tree-DLQ snapshots/parent resume, shared gate exclusion and
 timeout rollback. [Exact receipts](evidence/scheduled-reaper-20261009/) cover this
-storage construction. The reaper is not started until scheduled runtime exists.
+storage construction. The reaper is now connected to the scheduled runtime;
+this earlier receipt does not qualify the whole service.
 
 Cron storage passed an isolated PostgreSQL check for operator override retention,
 queue healing, manual-request expiry/claim rollback, monotone watermarks and
@@ -77,8 +79,8 @@ transaction-scoped leadership. [Exact receipts](evidence/scheduled-cron-storage-
 cover that earlier storage checkpoint. Cron parsing, insertion and scheduler
 construction now also pass [Go and isolated PostgreSQL checks](evidence/scheduled-cron-runtime-20261009/),
 including native job fields, overlap/manual rules, DST dedup, insertion failures,
-startup/wake and cancellation. Domain handlers and runtime integration remain
-unfinished; cron is not started by the service.
+startup/wake and cancellation. Cron is now connected to the service runtime;
+this earlier receipt does not qualify live domain adapters or complete startup.
 
 The unchanged original Haskell MLS migration test passed1/1 on source
 309733bb48febdb8708e6b1c5aadb94cb03fe8ab with only Go worker/Haskell peers.
@@ -100,8 +102,8 @@ Meetings storage and cleanup orchestration now pass [construction checks](eviden
 including actual PostgreSQL execution with9 readonly original migrations. Native
 expiry ordering/limits, open/boundary retention, full-row validation, code routing,
 batch/error behavior and deletion guards are implemented. Conversation/proposal
-removal adapters and service wiring remain
-unfinished; this fixture explicitly stubs missing conversations. No full meetings
+removal adapters and service wiring are now connected. This earlier storage
+fixture explicitly stubs missing conversations. No full meetings
 handler or original cleanup-test qualification is claimed.
 
 Required meetings configuration and one-run retention cutoff now pass
