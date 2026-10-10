@@ -86,6 +86,10 @@ func TestFinalizeVerifiedSessionAndSecurityDenials(t *testing.T) {
 			r := httptest.NewRequest("POST", "/sso/finalize-login", strings.NewReader(form.Encode()))
 			r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 			w := httptest.NewRecorder()
+			if kind == "unknown-request" {
+				w.Header().Set("Cache-Control", "no-cache, no-store")
+				w.Header().Set("Pragma", "no-cache")
+			}
 			if !serveSAMLFinalize(w, r, config, boundary, b) {
 				t.Fatal("finalization not dispatched")
 			}
@@ -106,7 +110,7 @@ func TestFinalizeVerifiedSessionAndSecurityDenials(t *testing.T) {
 						Label   string `json:"label"`
 						Message string `json:"message"`
 					}
-					if w.Code != 500 || w.Header().Get("Content-Type") != "" || json.Unmarshal(w.Body.Bytes(), &body) != nil || body.Label != "server-error" || body.Message != "Internal Server Error" {
+					if w.Code != 500 || w.Header().Get("Content-Type") != "application/json" || w.Header().Get("Cache-Control") != "" || w.Header().Get("Pragma") != "" || json.Unmarshal(w.Body.Bytes(), &body) != nil || body.Label != "server-error" || body.Message != "Internal Server Error" {
 						t.Fatal("missing verdict must use the ordinary wire error boundary", w.Code, w.Body.String())
 					}
 				} else if kind == "unknown-idp" {

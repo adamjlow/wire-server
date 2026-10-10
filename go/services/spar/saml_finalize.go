@@ -186,6 +186,14 @@ func samlFailurePage(w http.ResponseWriter, err error, inputs url.Values) {
 	_, _ = w.Write([]byte(samlHTML("<head>\n  <title>wire:sso:error:" + nativeXMLEscape(api.Label, false) + "</title>\n</head>\n</body>\n  sorry, something went wrong :(<br>\n  please copy the following debug information to your clipboard and provide it when opening an issue in our customer support.<br><br>\n  <pre>" + debug + "</pre>\n</body>")))
 }
 
+// Native missing/incoherent verdict exceptions cross the outer WAI error
+// boundary, which replaces inner SAML cache headers with generic JSON.
+func samlFinalizeServerError(w http.ResponseWriter) {
+	w.Header().Del("Cache-Control")
+	w.Header().Del("Pragma")
+	wireError(w, 500, "server-error", "Internal Server Error")
+}
+
 func serveSAMLFinalize(w http.ResponseWriter, r *http.Request, c Config, s samlFinalizeStore, p samlLoginPeers) bool {
 	parts := strings.Split(strings.Trim(r.URL.Path, "/"), "/")
 	if len(parts) < 2 || parts[0] != "sso" || parts[1] != "finalize-login" || len(parts) > 3 {
@@ -255,7 +263,7 @@ func serveSAMLFinalize(w http.ResponseWriter, r *http.Request, c Config, s samlF
 			return true
 		}
 		if request != "" && request != *id {
-			domainError(w, &apiError{500, "server-error", "Internal Server Error"})
+			samlFinalizeServerError(w)
 			return true
 		}
 		request = *id
@@ -266,7 +274,7 @@ func serveSAMLFinalize(w http.ResponseWriter, r *http.Request, c Config, s samlF
 		return true
 	}
 	if format == nil {
-		domainError(w, &apiError{500, "server-error", "Internal Server Error"})
+		samlFinalizeServerError(w)
 		return true
 	}
 	var uid gocql.UUID

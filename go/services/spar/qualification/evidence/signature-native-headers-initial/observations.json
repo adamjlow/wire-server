@@ -1,0 +1,280 @@
+{
+  "kind": "early-process-comparison",
+  "result": "fail",
+  "e2e_executed": false,
+  "scope": "Finite actual native/Go signature comparison:12 signed cases plus9 paired tamper controls. Native stored IdP reads, SHA1/256/512/RIPEMD160, RSA-SHA1/256, >1000nodes, failed-extra versus unique successful matching reference and unsupported transform. Accepted signatures must reach the unknown-request JSON500 boundary with no session; bad signatures400. Raw runtime-specific HTML diagnostics retained, not byte-normalized into a full-equality claim. Includes existing33 process replies. No original e2e or full durable switchback/operations claim.",
+  "config_sha256": "c6fd50b5388904c4604384f6c491a436c9e9c769abe0a861174d55b63be23273",
+  "differences": {},
+  "signature_differences": {
+    "bad-extra-digest-signed": {
+      "native": {
+        "status": 500,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "signature_accepted": true,
+        "idp_read_status": 200,
+        "label": "server-error"
+      },
+      "go": {
+        "status": 500,
+        "headers": {
+          "content-type": null,
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "signature_accepted": true,
+        "idp_read_status": 200,
+        "label": "server-error"
+      }
+    },
+    "bad-first-matching-signed": {
+      "native": {
+        "status": 500,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "signature_accepted": true,
+        "idp_read_status": 200,
+        "label": "server-error"
+      },
+      "go": {
+        "status": 500,
+        "headers": {
+          "content-type": null,
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "signature_accepted": true,
+        "idp_read_status": 200,
+        "label": "server-error"
+      }
+    },
+    "large-signed": {
+      "native": {
+        "status": 500,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "signature_accepted": true,
+        "idp_read_status": 200,
+        "label": "server-error"
+      },
+      "go": {
+        "status": 500,
+        "headers": {
+          "content-type": null,
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "signature_accepted": true,
+        "idp_read_status": 200,
+        "label": "server-error"
+      }
+    },
+    "missing-extra-signed": {
+      "native": {
+        "status": 500,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "signature_accepted": true,
+        "idp_read_status": 200,
+        "label": "server-error"
+      },
+      "go": {
+        "status": 500,
+        "headers": {
+          "content-type": null,
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "signature_accepted": true,
+        "idp_read_status": 200,
+        "label": "server-error"
+      }
+    },
+    "ripemd160-signed": {
+      "native": {
+        "status": 500,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "signature_accepted": true,
+        "idp_read_status": 200,
+        "label": "server-error"
+      },
+      "go": {
+        "status": 500,
+        "headers": {
+          "content-type": null,
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "signature_accepted": true,
+        "idp_read_status": 200,
+        "label": "server-error"
+      }
+    },
+    "rsa-sha1-signed": {
+      "native": {
+        "status": 500,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "signature_accepted": true,
+        "idp_read_status": 200,
+        "label": "server-error"
+      },
+      "go": {
+        "status": 500,
+        "headers": {
+          "content-type": null,
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "signature_accepted": true,
+        "idp_read_status": 200,
+        "label": "server-error"
+      }
+    },
+    "sha1-signed": {
+      "native": {
+        "status": 500,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "signature_accepted": true,
+        "idp_read_status": 200,
+        "label": "server-error"
+      },
+      "go": {
+        "status": 500,
+        "headers": {
+          "content-type": null,
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "signature_accepted": true,
+        "idp_read_status": 200,
+        "label": "server-error"
+      }
+    },
+    "sha256-signed": {
+      "native": {
+        "status": 500,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "signature_accepted": true,
+        "idp_read_status": 200,
+        "label": "server-error"
+      },
+      "go": {
+        "status": 500,
+        "headers": {
+          "content-type": null,
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "signature_accepted": true,
+        "idp_read_status": 200,
+        "label": "server-error"
+      }
+    },
+    "sha512-signed": {
+      "native": {
+        "status": 500,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "signature_accepted": true,
+        "idp_read_status": 200,
+        "label": "server-error"
+      },
+      "go": {
+        "status": 500,
+        "headers": {
+          "content-type": null,
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "signature_accepted": true,
+        "idp_read_status": 200,
+        "label": "server-error"
+      }
+    }
+  }
+}

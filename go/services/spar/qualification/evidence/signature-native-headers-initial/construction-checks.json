@@ -1,0 +1,295 @@
+{
+  "result": "fail",
+  "source_revision": "705d4dc851199a3045b631c66b8a57b8dfe6e1cc",
+  "candidate": {
+    "path": "/dev/shm/wire-migration-spar-20261010/spar-signature-verdict-corrected",
+    "sha256": "e879254aaf28ee4c8b4133404088f7c74e4a007b3587c1d150a1a8c6a8d50f71",
+    "source_revision": "12a3484618ed01e5d22091dba0dfcffd3dbd0297"
+  },
+  "runner_exit_code": 1,
+  "cleanup_exit_code": 0,
+  "independent_post_cleanup": {
+    "containers": [],
+    "networks": [],
+    "volumes": []
+  },
+  "signature_checks_per_implementation": 21,
+  "existing_checks_per_implementation": 33,
+  "signature_differences": {
+    "bad-extra-digest-signed": {
+      "native": {
+        "status": 500,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "signature_accepted": true,
+        "idp_read_status": 200,
+        "label": "server-error"
+      },
+      "go": {
+        "status": 500,
+        "headers": {
+          "content-type": null,
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "signature_accepted": true,
+        "idp_read_status": 200,
+        "label": "server-error"
+      }
+    },
+    "bad-first-matching-signed": {
+      "native": {
+        "status": 500,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "signature_accepted": true,
+        "idp_read_status": 200,
+        "label": "server-error"
+      },
+      "go": {
+        "status": 500,
+        "headers": {
+          "content-type": null,
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "signature_accepted": true,
+        "idp_read_status": 200,
+        "label": "server-error"
+      }
+    },
+    "large-signed": {
+      "native": {
+        "status": 500,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "signature_accepted": true,
+        "idp_read_status": 200,
+        "label": "server-error"
+      },
+      "go": {
+        "status": 500,
+        "headers": {
+          "content-type": null,
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "signature_accepted": true,
+        "idp_read_status": 200,
+        "label": "server-error"
+      }
+    },
+    "missing-extra-signed": {
+      "native": {
+        "status": 500,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "signature_accepted": true,
+        "idp_read_status": 200,
+        "label": "server-error"
+      },
+      "go": {
+        "status": 500,
+        "headers": {
+          "content-type": null,
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "signature_accepted": true,
+        "idp_read_status": 200,
+        "label": "server-error"
+      }
+    },
+    "ripemd160-signed": {
+      "native": {
+        "status": 500,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "signature_accepted": true,
+        "idp_read_status": 200,
+        "label": "server-error"
+      },
+      "go": {
+        "status": 500,
+        "headers": {
+          "content-type": null,
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "signature_accepted": true,
+        "idp_read_status": 200,
+        "label": "server-error"
+      }
+    },
+    "rsa-sha1-signed": {
+      "native": {
+        "status": 500,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "signature_accepted": true,
+        "idp_read_status": 200,
+        "label": "server-error"
+      },
+      "go": {
+        "status": 500,
+        "headers": {
+          "content-type": null,
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "signature_accepted": true,
+        "idp_read_status": 200,
+        "label": "server-error"
+      }
+    },
+    "sha1-signed": {
+      "native": {
+        "status": 500,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "signature_accepted": true,
+        "idp_read_status": 200,
+        "label": "server-error"
+      },
+      "go": {
+        "status": 500,
+        "headers": {
+          "content-type": null,
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "signature_accepted": true,
+        "idp_read_status": 200,
+        "label": "server-error"
+      }
+    },
+    "sha256-signed": {
+      "native": {
+        "status": 500,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "signature_accepted": true,
+        "idp_read_status": 200,
+        "label": "server-error"
+      },
+      "go": {
+        "status": 500,
+        "headers": {
+          "content-type": null,
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "signature_accepted": true,
+        "idp_read_status": 200,
+        "label": "server-error"
+      }
+    },
+    "sha512-signed": {
+      "native": {
+        "status": 500,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "signature_accepted": true,
+        "idp_read_status": 200,
+        "label": "server-error"
+      },
+      "go": {
+        "status": 500,
+        "headers": {
+          "content-type": null,
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "signature_accepted": true,
+        "idp_read_status": 200,
+        "label": "server-error"
+      }
+    }
+  },
+  "analysis": "All12 signed+9tamper cases and12internalIdP reads executed for each service. Verification/status/label/no-cookie agrees; nine accepted missing-request500 responses differ: native application/json without cache/pragma, Go omittedContentType with innercache. Existing33 exact replies match. Correct outer generic-error projection; originals/harness/reference unchanged.",
+  "raw_result": {
+    "path": "/home/operator/.cache/wire-migration/spar-20261010/signature-native-form-corrected/reports/result.json",
+    "sha256": "0d0a03e03f4ba45e69af425309b0d0abf5eed26749f1dc463d9c4894fca88b2b"
+  }
+}
