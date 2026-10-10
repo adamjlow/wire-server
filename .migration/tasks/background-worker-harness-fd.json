@@ -4,9 +4,9 @@
   "title": "Bound private runner descriptors and preserve high-FD TCP forwarding",
   "service": "framework",
   "kind": "framework",
-  "status": "queued",
-  "owner": null,
-  "branch": null,
+  "status": "active",
+  "owner": "codex",
+  "branch": "task/background-worker-harness-fd",
   "depends_on": [
     "background-worker-contract"
   ],
@@ -34,5 +34,5 @@
   ],
   "evidence": [],
   "review": null,
-  "handoff": "Queued bounded fixture repair from actual observed runner limit and original proxy EMFILE reproduction; original run attribution unproven. Go candidate source and whole acceptance unchanged."
+  "handoff": "Serialized writer on this branch; Go implementation remains reserved on go-migration and is not edited. Apply bounded descriptor/selector repair, focused real regression and monitored original47 rerun."
 }
