@@ -9,6 +9,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgtype"
 )
 
@@ -59,7 +60,12 @@ func (s *postgresStore) ClaimScheduledJobs(ctx context.Context, queue, workerID 
 			return err
 		}
 		defer conn.Release()
-		rows, err := conn.Query(ctx, sql, budget, visibility.Seconds(), worker)
+		tx, err := conn.BeginTx(ctx, pgx.TxOptions{IsoLevel: pgx.ReadCommitted})
+		if err != nil {
+			return postgresFailure(err, "scheduled claim transaction failed")
+		}
+		defer func() { _ = tx.Rollback(ctx) }()
+		rows, err := tx.Query(ctx, sql, budget, visibility.Seconds(), worker)
 		if err != nil {
 			return postgresFailure(err, "scheduled job claim failed")
 		}
@@ -70,10 +76,19 @@ func (s *postgresStore) ClaimScheduledJobs(ctx context.Context, queue, workerID 
 			if err := rows.Scan(&job.ID, &job.Payload, &job.GroupKey, &job.Attempts, &job.MaxAttempts, &job.ParentID, &job.ParentState, &job.ArchiveFor, &job.NotVisibleUntil, &job.ClaimedBy, &job.CancelRequestedAt); err != nil {
 				return postgresFailure(err, "scheduled job claim decode failed")
 			}
+			// Native claimJobsCached decodes the entire typed batch before commit.
+			// One malformed payload rolls back all claims, not a retry/DLQ job.
+			if _, err := decodeScheduledPayload(queue, job.Payload); err != nil {
+				return err
+			}
 			attemptJobs = append(attemptJobs, job)
 		}
 		if err := rows.Err(); err != nil {
 			return postgresFailure(err, "scheduled job claim failed")
+		}
+		rows.Close()
+		if err := tx.Commit(ctx); err != nil {
+			return postgresFailure(err, "scheduled claim commit failed")
 		}
 		jobs = attemptJobs
 		return nil

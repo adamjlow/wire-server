@@ -1,0 +1,9 @@
+{
+  "command": "GOTOOLCHAIN=local GOWORK=off python3 go/check.py background-worker",
+  "compiler": "Go1.26.9",
+  "exit_code": 0,
+  "result": "pass",
+  "base_revision": "803484f312c1c77be8a2e170f301c5dd10bd92cf",
+  "inputs_sha256": "683eab1181a38561e30b8900458ba6349699bf755402ebfd1a008bc87ca02abd",
+  "limitation": "Default checks ran before addition of build-tagged Docker test; production and normal-test inputs unchanged. Tagged test separately compiled and executed with recorded helper identity."
+}

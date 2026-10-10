@@ -1,0 +1,213 @@
+[
+  {
+    "command": [
+      "docker",
+      "network",
+      "create",
+      "--internal",
+      "--label",
+      "wire.migration.owner=wire-worker-scheduled-pool-f7e3c728d82e4f7492c01002a4ce474c",
+      "wire-worker-scheduled-pool-f7e3c728d82e4f7492c01002a4ce474c-net"
+    ],
+    "exit_code": 0,
+    "output": "e67d1afb64c096cd0b2840f207c533e7878870a0d652d68d1679a75e716d43cf\n"
+  },
+  {
+    "command": [
+      "docker",
+      "volume",
+      "create",
+      "--label",
+      "wire.migration.owner=wire-worker-scheduled-pool-f7e3c728d82e4f7492c01002a4ce474c",
+      "wire-worker-scheduled-pool-f7e3c728d82e4f7492c01002a4ce474c-pg"
+    ],
+    "exit_code": 0,
+    "output": "wire-worker-scheduled-pool-f7e3c728d82e4f7492c01002a4ce474c-pg\n"
+  },
+  {
+    "command": [
+      "docker",
+      "run",
+      "-d",
+      "--name",
+      "wire-worker-scheduled-pool-f7e3c728d82e4f7492c01002a4ce474c-postgres",
+      "--label",
+      "wire.migration.owner=wire-worker-scheduled-pool-f7e3c728d82e4f7492c01002a4ce474c",
+      "--network",
+      "wire-worker-scheduled-pool-f7e3c728d82e4f7492c01002a4ce474c-net",
+      "--network-alias",
+      "postgres",
+      "--memory",
+      "512m",
+      "-e",
+      "POSTGRES_PASSWORD=synthetic-schema-only",
+      "-e",
+      "POSTGRES_DB=backendA",
+      "--mount",
+      "type=volume,src=wire-worker-scheduled-pool-f7e3c728d82e4f7492c01002a4ce474c-pg,dst=/var/lib/postgresql/data",
+      "postgres@sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24"
+    ],
+    "exit_code": 0,
+    "output": "825fc353e7f957f5aaa70240f0607126914518da6bcd16cc037d9ae78af1c6b1\n"
+  },
+  {
+    "command": [
+      "docker",
+      "exec",
+      "wire-worker-scheduled-pool-f7e3c728d82e4f7492c01002a4ce474c-postgres",
+      "pg_isready",
+      "-h",
+      "127.0.0.1",
+      "-U",
+      "postgres",
+      "-d",
+      "backendA"
+    ],
+    "exit_code": 2,
+    "output": "127.0.0.1:5432 - no response\n"
+  },
+  {
+    "command": [
+      "docker",
+      "exec",
+      "wire-worker-scheduled-pool-f7e3c728d82e4f7492c01002a4ce474c-postgres",
+      "pg_isready",
+      "-h",
+      "127.0.0.1",
+      "-U",
+      "postgres",
+      "-d",
+      "backendA"
+    ],
+    "exit_code": 2,
+    "output": "127.0.0.1:5432 - no response\n"
+  },
+  {
+    "command": [
+      "docker",
+      "exec",
+      "wire-worker-scheduled-pool-f7e3c728d82e4f7492c01002a4ce474c-postgres",
+      "pg_isready",
+      "-h",
+      "127.0.0.1",
+      "-U",
+      "postgres",
+      "-d",
+      "backendA"
+    ],
+    "exit_code": 0,
+    "output": "127.0.0.1:5432 - accepting connections\n"
+  },
+  {
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "--name",
+      "wire-worker-scheduled-pool-f7e3c728d82e4f7492c01002a4ce474c-check",
+      "--label",
+      "wire.migration.owner=wire-worker-scheduled-pool-f7e3c728d82e4f7492c01002a4ce474c",
+      "--network",
+      "wire-worker-scheduled-pool-f7e3c728d82e4f7492c01002a4ce474c-net",
+      "--user",
+      "65532:65532",
+      "--cap-drop",
+      "ALL",
+      "--security-opt",
+      "no-new-privileges",
+      "--read-only",
+      "--tmpfs",
+      "/tmp:rw,size=16m",
+      "-e",
+      "WIRE_SCHEMA_CHECK_SYNTHETIC=1",
+      "--mount",
+      "type=bind,src=/home/operator/.cache/wire-migration/background-worker-20261009/scheduled-pool-check,dst=/qualifier/schema-check,readonly",
+      "--mount",
+      "type=bind,src=/home/operator/wire-server/libs/wire-subsystems/postgres-migrations,dst=/reference/migrations,readonly",
+      "--entrypoint",
+      "/qualifier/schema-check",
+      "sha256:cd03212430eef6cfde0324b50885c12980ee211483ab27dde6ee730252966cd2",
+      "-test.run",
+      "^TestScheduledPoolDockerStorage$",
+      "-test.v"
+    ],
+    "exit_code": 0,
+    "output": "=== RUN   TestScheduledPoolDockerStorage\n--- PASS: TestScheduledPoolDockerStorage (1.27s)\nPASS\n"
+  },
+  {
+    "command": [
+      "docker",
+      "rm",
+      "-f",
+      "wire-worker-scheduled-pool-f7e3c728d82e4f7492c01002a4ce474c-check"
+    ],
+    "exit_code": 0,
+    "output": ""
+  },
+  {
+    "command": [
+      "docker",
+      "rm",
+      "-f",
+      "wire-worker-scheduled-pool-f7e3c728d82e4f7492c01002a4ce474c-postgres"
+    ],
+    "exit_code": 0,
+    "output": "wire-worker-scheduled-pool-f7e3c728d82e4f7492c01002a4ce474c-postgres\n"
+  },
+  {
+    "command": [
+      "docker",
+      "volume",
+      "rm",
+      "wire-worker-scheduled-pool-f7e3c728d82e4f7492c01002a4ce474c-pg"
+    ],
+    "exit_code": 0,
+    "output": "wire-worker-scheduled-pool-f7e3c728d82e4f7492c01002a4ce474c-pg\n"
+  },
+  {
+    "command": [
+      "docker",
+      "network",
+      "rm",
+      "wire-worker-scheduled-pool-f7e3c728d82e4f7492c01002a4ce474c-net"
+    ],
+    "exit_code": 0,
+    "output": "wire-worker-scheduled-pool-f7e3c728d82e4f7492c01002a4ce474c-net\n"
+  },
+  {
+    "command": [
+      "docker",
+      "container",
+      "ls",
+      "-q",
+      "--filter",
+      "label=wire.migration.owner=wire-worker-scheduled-pool-f7e3c728d82e4f7492c01002a4ce474c"
+    ],
+    "exit_code": 0,
+    "output": ""
+  },
+  {
+    "command": [
+      "docker",
+      "network",
+      "ls",
+      "-q",
+      "--filter",
+      "label=wire.migration.owner=wire-worker-scheduled-pool-f7e3c728d82e4f7492c01002a4ce474c"
+    ],
+    "exit_code": 0,
+    "output": ""
+  },
+  {
+    "command": [
+      "docker",
+      "volume",
+      "ls",
+      "-q",
+      "--filter",
+      "label=wire.migration.owner=wire-worker-scheduled-pool-f7e3c728d82e4f7492c01002a4ce474c"
+    ],
+    "exit_code": 0,
+    "output": ""
+  }
+]

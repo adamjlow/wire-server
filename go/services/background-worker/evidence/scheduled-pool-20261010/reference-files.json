@@ -1,0 +1,12 @@
+{
+  "arbiter_revision": "b9c57eb1f8277d97616aa449bea471fe9ce14eda",
+  "files": {
+    "/home/operator/wire-server/services/background-worker/src/Wire/BackgroundWorker/Workers.hs": "835bf199b3fbf370d3dadce73883e710314b0a527251b39457fe174f6cbdfd0c",
+    "/home/operator/.cache/wire-migration/background-worker-20261009/arbiter/arbiter-worker/src/Arbiter/Worker.hs": "27380f9f0df977f35f17cc592bb9f49fd64a4b2ccc990b59ca4998ea6104e4a9",
+    "/home/operator/.cache/wire-migration/background-worker-20261009/arbiter/arbiter-worker/src/Arbiter/Worker/Dispatcher.hs": "e7a37b0f45bedbe0381c28bb7fd0687f36b0b79545d21b58c0fbcba339670164",
+    "/home/operator/.cache/wire-migration/background-worker-20261009/arbiter/arbiter-worker/src/Arbiter/Worker/NotificationListener.hs": "c38477ef3128835bcfa9d85adf449315ea147dd1ba301ae333f46fdd26bf2d7d",
+    "/home/operator/.cache/wire-migration/background-worker-20261009/arbiter/arbiter-worker/src/Arbiter/Worker/ChannelHandlers.hs": "18ea0e55cb77e6043182bb4fbe464d73f55154d329ed80c593403677d4c39890",
+    "/home/operator/.cache/wire-migration/background-worker-20261009/arbiter/arbiter-core/src/Arbiter/Core/Operations.hs": "32e57dcc0c0d1359cb50ba9d032763135d0e57968cda97b5e4e455256e449459",
+    "/home/operator/.cache/wire-migration/background-worker-20261009/arbiter/arbiter-core/src/Arbiter/Core/Listen.hs": "ab079a41b095a68e894a913cd2d76900993ad32565e75712aaa36ac5b7d4908c"
+  }
+}

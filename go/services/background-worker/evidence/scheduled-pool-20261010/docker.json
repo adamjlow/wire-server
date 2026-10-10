@@ -1,0 +1,57 @@
+{
+  "owner": "wire-worker-scheduled-pool-f7e3c728d82e4f7492c01002a4ce474c",
+  "postgres_image": "postgres@sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24",
+  "runner_image": "sha256:cd03212430eef6cfde0324b50885c12980ee211483ab27dde6ee730252966cd2",
+  "binary_sha256": "a3b20cd71532534cef5be44ff6a10101d44541ecd7ff8b82c7a571b3a4266228",
+  "test": "TestScheduledPoolDockerStorage",
+  "test_tag": "schemacheck",
+  "test_exit_code": 0,
+  "result": "pass",
+  "cleanup": [
+    {
+      "command": [
+        "docker",
+        "rm",
+        "-f",
+        "wire-worker-scheduled-pool-f7e3c728d82e4f7492c01002a4ce474c-check"
+      ],
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "command": [
+        "docker",
+        "rm",
+        "-f",
+        "wire-worker-scheduled-pool-f7e3c728d82e4f7492c01002a4ce474c-postgres"
+      ],
+      "exit_code": 0,
+      "output": "wire-worker-scheduled-pool-f7e3c728d82e4f7492c01002a4ce474c-postgres\n"
+    },
+    {
+      "command": [
+        "docker",
+        "volume",
+        "rm",
+        "wire-worker-scheduled-pool-f7e3c728d82e4f7492c01002a4ce474c-pg"
+      ],
+      "exit_code": 0,
+      "output": "wire-worker-scheduled-pool-f7e3c728d82e4f7492c01002a4ce474c-pg\n"
+    },
+    {
+      "command": [
+        "docker",
+        "network",
+        "rm",
+        "wire-worker-scheduled-pool-f7e3c728d82e4f7492c01002a4ce474c-net"
+      ],
+      "exit_code": 0,
+      "output": "wire-worker-scheduled-pool-f7e3c728d82e4f7492c01002a4ce474c-net\n"
+    }
+  ],
+  "remaining_owned": {
+    "container": "",
+    "network": "",
+    "volume": ""
+  }
+}

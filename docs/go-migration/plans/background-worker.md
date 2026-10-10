@@ -16,10 +16,11 @@ connected background-job consumption, conversation-storage/notification adapters
 and all seven migration families. Scheduled jobs remain under construction.
 Whole-service parity is not yet claimed; the task record owns current status.
 
-## Reconciled checkpoint (2026-10-09)
+## Reconciled checkpoint (2026-10-10)
 
 Reviewed documentation and current records at
-`d65a02082d7753c65d03b603e4e62f6e6c685af0`. The active goal is completion of
+`803484f312c1c77be8a2e170f301c5dd10bd92cf` and the pending scheduled-pool
+worktree changes. The active goal is completion of
 the whole background-worker, with Haskell remaining supported and default.
 The implementation task and service record remain active/implementing; no
 background-worker compatibility or deployment availability is advertised.
@@ -31,8 +32,18 @@ background-worker compatibility or deployment availability is advertised.
 | [Original users2](../../../go/services/background-worker/evidence/user-original-20261009/) | 1/2 cases pass; retained SCIM500 failure occurs before migration activation | Enabled user migration remains unverified; failure is not waived |
 | [Scheduled schema](../../../go/services/background-worker/evidence/scheduled-schema-20261009/) and [reaper](../../../go/services/background-worker/evidence/scheduled-reaper-20261009/) | Native schema comparison and isolated PostgreSQL storage/gate checks pass | Components are constructed but scheduled runtime is not started |
 
-Next implement adminless and meetings handlers, then connect cron/reaper and scheduled
-runtime and finish startup/drain behavior. Completion still requires the exact
+| [Adminless notifications](../../../go/services/background-worker/evidence/adminless-notifications-20261009/) and [scheduling](../../../go/services/background-worker/evidence/adminless-scheduling-20261009/) | Source-based adapters and their focused Go/storage checks pass | Not yet connected to the whole scheduled runtime |
+| [Scheduled execution](../../../go/services/background-worker/evidence/scheduled-execution-20261009/) | Go checks and isolated PostgreSQL completion, retry, lease and rollup checks pass | Does not qualify pool dispatch, listener or the complete service |
+
+Pool dispatch, worker registry heartbeat, pause/cancel notifications, a shared
+reconnecting listener and transactional typed claim validation are constructed.
+[Exact construction evidence](../../../go/services/background-worker/evidence/scheduled-pool-20261010/)
+records passing Go checks and a real isolated PostgreSQL fixture, including claim
+rollback, reconnect, registry restoration and durable finite drain. The retained
+initial failure was a synthetic queue setup error. These components still require
+connection to the domain handlers and whole-service qualification.
+Next connect the existing adminless/meetings handlers, cron and reaper, then finish
+startup, metrics and drain behavior. Completion still requires the exact
 final six-Go/Haskell-peer run (124 executions,119 distinct original assertions),
 resolution of retained failures, bounded operations, actual durable
 Haskell->Go->Haskell switchback, optional image/selector and delegated same-author
@@ -387,3 +398,15 @@ cascade precedes guarded root move, an inherited ownership-race concern recorded
 without silently changing behavior. Stored error diagnostic equivalence remains
 for whole-service review. Next dispatcher/registry/pause/NOTIFY and domain startup/
 drain/metrics wiring, then unchanged qualification.
+
+Scheduled pool construction preserves native capacity, pause/resume and queued-job
+handling, registry proof-of-work cadence, missing-row registration, owned typed
+NOTIFY controls and one shared reconnecting listener with sticky readiness.
+Claim payload decoding now occurs inside the transaction before commit, so any
+malformed row rolls back the whole typed batch. Native re-registration defers
+pause reconciliation until the next heartbeat. Full default Go checks and actual
+native-schema PostgreSQL construction tests pass:
+[exact evidence](../../../go/services/background-worker/evidence/scheduled-pool-20261010/).
+The fixture covers the combined cancellation signals, not which won, and is no
+fresh Haskell or full-runtime comparison. Next concrete domain wiring, cron/reaper,
+startup/drain/metrics; full acceptance remains unchanged and incomplete.
