@@ -1,0 +1,28 @@
+{
+  "result": "failed",
+  "source_revision": "0450bd12c1a01559c5362694a943980eb0c26b71",
+  "build": {
+    "source_revision": "0450bd12c1a01559c5362694a943980eb0c26b71",
+    "binary_sha256": "df7008e06319d8f583dc9b45c2da305c7a0690c9db62c48d7972dd6cd8204a1a",
+    "unit_binary_sha256": "950ae06ed5acc6d8e88785325bc27469452e984692fff97af304a56d731d5ea3",
+    "sdk_image": "sha256:f2f47f614f5dbefa4ef1bc2cbf2f24cf95dfa0d65e3e73c8878a74630baaae30",
+    "runner_image": "sha256:f487c90fd364aac9daee5a1ce6e60fdba0ab74ab0c671ab0de0198e8f05659a9",
+    "toolchain": "go1.26.9",
+    "sdk_controller_exit_code": 0,
+    "unchanged_runner_unit_exit_code": 0,
+    "network_cleanup_exit_code": 0,
+    "go_checks": "pass",
+    "sdk_archives_manifest_sha256": "07173839615bf3c6d83058fb88319bd292d232bf9584f84fbf17cb5652e198b5"
+  },
+  "project": "wire-e2e-5dcc491f25e249f8ac728147f09401cb",
+  "compose_sha256": "c3a8c899ff8c7594244c977df622214bffebe0ace1908ac962c6e82ad28211b6",
+  "runner_image": "sha256:f487c90fd364aac9daee5a1ce6e60fdba0ab74ab0c671ab0de0198e8f05659a9",
+  "e2e_executed": false,
+  "runner_exit_code": 1,
+  "cleanup_exit_code": 0,
+  "remaining_resources": {
+    "container": "",
+    "network": "",
+    "volume": ""
+  }
+}
