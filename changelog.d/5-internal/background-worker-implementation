@@ -8,3 +8,4 @@ Construct unchecked conversation deletion with native MLS/history/proposal/code/
 Construct source adminless decisions and team-scan/local-promotion stores, reusing original selection vectors; concrete feature/account/notification/scheduling adapters and runtime remain unfinished.
 Implement adminless feature defaults, partial patches, native duration arithmetic and migration-routed storage lookup with limited original-schema PG validation.
 Construct scheduled dispatcher, registry, owned notification controls and shared reconnecting listener; preserve transactional typed claim rollback and durable grace-timeout leases with isolated PostgreSQL evidence. Whole scheduled runtime remains unfinished.
+Connect both scheduled pools to domain handlers, shared listener, cron and reapers; preserve schema-before-health startup, cleanup run counter and per-pool durable drain, with limited combined native-schema PostgreSQL validation.

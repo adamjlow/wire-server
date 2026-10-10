@@ -19,8 +19,8 @@ Whole-service parity is not yet claimed; the task record owns current status.
 ## Reconciled checkpoint (2026-10-10)
 
 Reviewed documentation and current records at
-`803484f312c1c77be8a2e170f301c5dd10bd92cf` and the pending scheduled-pool
-worktree changes. The active goal is completion of
+`30bcc7f5e399f834391fb76ceac812ccebcfa075` and the scheduled-runtime
+integration worktree. The active goal is completion of
 the whole background-worker, with Haskell remaining supported and default.
 The implementation task and service record remain active/implementing; no
 background-worker compatibility or deployment availability is advertised.
@@ -40,10 +40,14 @@ reconnecting listener and transactional typed claim validation are constructed.
 [Exact construction evidence](../../../go/services/background-worker/evidence/scheduled-pool-20261010/)
 records passing Go checks and a real isolated PostgreSQL fixture, including claim
 rollback, reconnect, registry restoration and durable finite drain. The retained
-initial failure was a synthetic queue setup error. These components still require
-connection to the domain handlers and whole-service qualification.
-Next connect the existing adminless/meetings handlers, cron and reaper, then finish
-startup, metrics and drain behavior. Completion still requires the exact
+initial failure was a synthetic queue setup error. The pools are now connected to domain handlers, cron and reapers, with source
+schema-before-health startup, per-pool drain and the native meetings counter.
+[Combined PostgreSQL construction checks](../../../go/services/background-worker/evidence/scheduled-runtime-20261010/)
+pass on guarded adminless jobs, expired meeting/code removal, manual cron,
+reaper gates and shutdown. Full Cassandra/Brig/Rabbit/bot interactions and
+Service.Run's complete process startup still require original-test qualification.
+Next resolve the explicit pusher/transport/diagnostic gaps and validate the current
+whole process in the existing Docker harness. Completion still requires the exact
 final six-Go/Haskell-peer run (124 executions,119 distinct original assertions),
 resolution of retained failures, bounded operations, actual durable
 Haskell->Go->Haskell switchback, optional image/selector and delegated same-author
@@ -410,3 +414,17 @@ native-schema PostgreSQL construction tests pass:
 The fixture covers the combined cancellation signals, not which won, and is no
 fresh Haskell or full-runtime comparison. Next concrete domain wiring, cron/reaper,
 startup/drain/metrics; full acceptance remains unchanged and incomplete.
+
+Scheduled runtime integration now binds both pools to existing adminless and meetings
+adapters, per-job Brig/capability request scopes, independent Rabbit publisher,
+shared listener, cron and per-pool gated reapers. Source schema bootstrap runs
+before health, support threads survive both drains, native cleanup run counter is
+exposed, and grace expiry does not force nonzero process exit. Full current Go
+checks and combined original-schema PostgreSQL integration pass:
+[exact evidence](../../../go/services/background-worker/evidence/scheduled-runtime-20261010/).
+The fixture explicitly has PostgreSQL-only routing, disabled adminless feature,
+no external peers and bypasses full prepare/startup; no whole-service E2E claim.
+Initial missing-migration/invalid-expectation/wrong-code-key fixture failures and
+superseded helper identities are retained. Next source pusher discovery and botTLS/
+ordinary transport/diagnostic review, then current original47/final six-Go124 and
+all unchanged operations/switchback/image/selector/review acceptance.

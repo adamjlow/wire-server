@@ -1,0 +1,213 @@
+[
+  {
+    "command": [
+      "docker",
+      "network",
+      "create",
+      "--internal",
+      "--label",
+      "wire.migration.owner=wire-worker-scheduled-runtime-df37ab0329d1430eaac0fc4914174350",
+      "wire-worker-scheduled-runtime-df37ab0329d1430eaac0fc4914174350-net"
+    ],
+    "exit_code": 0,
+    "output": "af894e9077f98f1a3c8c39cebad759f5e9cfae22421a157c6c7b9b7358e1992b\n"
+  },
+  {
+    "command": [
+      "docker",
+      "volume",
+      "create",
+      "--label",
+      "wire.migration.owner=wire-worker-scheduled-runtime-df37ab0329d1430eaac0fc4914174350",
+      "wire-worker-scheduled-runtime-df37ab0329d1430eaac0fc4914174350-pg"
+    ],
+    "exit_code": 0,
+    "output": "wire-worker-scheduled-runtime-df37ab0329d1430eaac0fc4914174350-pg\n"
+  },
+  {
+    "command": [
+      "docker",
+      "run",
+      "-d",
+      "--name",
+      "wire-worker-scheduled-runtime-df37ab0329d1430eaac0fc4914174350-postgres",
+      "--label",
+      "wire.migration.owner=wire-worker-scheduled-runtime-df37ab0329d1430eaac0fc4914174350",
+      "--network",
+      "wire-worker-scheduled-runtime-df37ab0329d1430eaac0fc4914174350-net",
+      "--network-alias",
+      "postgres",
+      "--memory",
+      "512m",
+      "-e",
+      "POSTGRES_PASSWORD=synthetic-schema-only",
+      "-e",
+      "POSTGRES_DB=backendA",
+      "--mount",
+      "type=volume,src=wire-worker-scheduled-runtime-df37ab0329d1430eaac0fc4914174350-pg,dst=/var/lib/postgresql/data",
+      "postgres@sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24"
+    ],
+    "exit_code": 0,
+    "output": "b7099c6b4b4173ed8ae9d21c290845983a829e6e8e0b384a5e213d7addb96e5f\n"
+  },
+  {
+    "command": [
+      "docker",
+      "exec",
+      "wire-worker-scheduled-runtime-df37ab0329d1430eaac0fc4914174350-postgres",
+      "pg_isready",
+      "-h",
+      "127.0.0.1",
+      "-U",
+      "postgres",
+      "-d",
+      "backendA"
+    ],
+    "exit_code": 2,
+    "output": "127.0.0.1:5432 - no response\n"
+  },
+  {
+    "command": [
+      "docker",
+      "exec",
+      "wire-worker-scheduled-runtime-df37ab0329d1430eaac0fc4914174350-postgres",
+      "pg_isready",
+      "-h",
+      "127.0.0.1",
+      "-U",
+      "postgres",
+      "-d",
+      "backendA"
+    ],
+    "exit_code": 2,
+    "output": "127.0.0.1:5432 - no response\n"
+  },
+  {
+    "command": [
+      "docker",
+      "exec",
+      "wire-worker-scheduled-runtime-df37ab0329d1430eaac0fc4914174350-postgres",
+      "pg_isready",
+      "-h",
+      "127.0.0.1",
+      "-U",
+      "postgres",
+      "-d",
+      "backendA"
+    ],
+    "exit_code": 0,
+    "output": "127.0.0.1:5432 - accepting connections\n"
+  },
+  {
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "--name",
+      "wire-worker-scheduled-runtime-df37ab0329d1430eaac0fc4914174350-check",
+      "--label",
+      "wire.migration.owner=wire-worker-scheduled-runtime-df37ab0329d1430eaac0fc4914174350",
+      "--network",
+      "wire-worker-scheduled-runtime-df37ab0329d1430eaac0fc4914174350-net",
+      "--user",
+      "65532:65532",
+      "--cap-drop",
+      "ALL",
+      "--security-opt",
+      "no-new-privileges",
+      "--read-only",
+      "--tmpfs",
+      "/tmp:rw,size=16m",
+      "-e",
+      "WIRE_SCHEMA_CHECK_SYNTHETIC=1",
+      "--mount",
+      "type=bind,src=/home/operator/.cache/wire-migration/background-worker-20261009/scheduled-runtime-check,dst=/qualifier/schema-check,readonly",
+      "--mount",
+      "type=bind,src=/home/operator/wire-server/libs/wire-subsystems/postgres-migrations,dst=/reference/migrations,readonly",
+      "--entrypoint",
+      "/qualifier/schema-check",
+      "sha256:cd03212430eef6cfde0324b50885c12980ee211483ab27dde6ee730252966cd2",
+      "-test.run",
+      "^TestScheduledDomainDockerRuntime$",
+      "-test.v"
+    ],
+    "exit_code": 1,
+    "output": "=== RUN   TestScheduledDomainDockerRuntime\n2026/10/10 00:20:12 ERROR meetings cleanup batch failed\n    scheduled_runtime_docker_test.go:102: runtime state did not converge SELECT count(*) FROM arbiter.conversations 1 0\n2026/10/10 00:20:17 ERROR scheduled worker operation failed queue=meetings operation=shutdown-mark status=error\n2026/10/10 00:20:17 ERROR scheduled worker operation failed queue=meetings operation=deregister status=error\n--- FAIL: TestScheduledDomainDockerRuntime (5.13s)\nFAIL\n"
+  },
+  {
+    "command": [
+      "docker",
+      "rm",
+      "-f",
+      "wire-worker-scheduled-runtime-df37ab0329d1430eaac0fc4914174350-check"
+    ],
+    "exit_code": 0,
+    "output": ""
+  },
+  {
+    "command": [
+      "docker",
+      "rm",
+      "-f",
+      "wire-worker-scheduled-runtime-df37ab0329d1430eaac0fc4914174350-postgres"
+    ],
+    "exit_code": 0,
+    "output": "wire-worker-scheduled-runtime-df37ab0329d1430eaac0fc4914174350-postgres\n"
+  },
+  {
+    "command": [
+      "docker",
+      "volume",
+      "rm",
+      "wire-worker-scheduled-runtime-df37ab0329d1430eaac0fc4914174350-pg"
+    ],
+    "exit_code": 0,
+    "output": "wire-worker-scheduled-runtime-df37ab0329d1430eaac0fc4914174350-pg\n"
+  },
+  {
+    "command": [
+      "docker",
+      "network",
+      "rm",
+      "wire-worker-scheduled-runtime-df37ab0329d1430eaac0fc4914174350-net"
+    ],
+    "exit_code": 0,
+    "output": "wire-worker-scheduled-runtime-df37ab0329d1430eaac0fc4914174350-net\n"
+  },
+  {
+    "command": [
+      "docker",
+      "container",
+      "ls",
+      "-q",
+      "--filter",
+      "label=wire.migration.owner=wire-worker-scheduled-runtime-df37ab0329d1430eaac0fc4914174350"
+    ],
+    "exit_code": 0,
+    "output": ""
+  },
+  {
+    "command": [
+      "docker",
+      "network",
+      "ls",
+      "-q",
+      "--filter",
+      "label=wire.migration.owner=wire-worker-scheduled-runtime-df37ab0329d1430eaac0fc4914174350"
+    ],
+    "exit_code": 0,
+    "output": ""
+  },
+  {
+    "command": [
+      "docker",
+      "volume",
+      "ls",
+      "-q",
+      "--filter",
+      "label=wire.migration.owner=wire-worker-scheduled-runtime-df37ab0329d1430eaac0fc4914174350"
+    ],
+    "exit_code": 0,
+    "output": ""
+  }
+]

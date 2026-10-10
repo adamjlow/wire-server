@@ -1,0 +1,9 @@
+{
+  "command": "GOTOOLCHAIN=local GOWORK=off python3 go/check.py background-worker",
+  "compiler": "Go1.26.9",
+  "exit_code": 0,
+  "result": "pass",
+  "base_revision": "30bcc7f5e399f834391fb76ceac812ccebcfa075",
+  "inputs_sha256": "6bc4ea08e4419d8604bd8a2289719bd9fef883f0784f05d5efb58c7fd56767cd",
+  "limitation": "Default checks exclude schemacheck-tagged fixture; final tagged fixture separately compiled and executed."
+}

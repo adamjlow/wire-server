@@ -1,0 +1,9 @@
+{
+  "compiler": "Go1.26.9",
+  "CGO_ENABLED": "0",
+  "command": "go -C /home/operator/wire-server/go/services/background-worker test -c -tags schemacheck -o /home/operator/.cache/wire-migration/background-worker-20261009/scheduled-runtime-check",
+  "exit_code": 0,
+  "base_revision": "30bcc7f5e399f834391fb76ceac812ccebcfa075",
+  "binary_sha256": "9f35af20b98652e46a348ed3f40ac75c8b12e2dc1bd8f4dfcd6841187015d929",
+  "inputs_sha256": "0799bfbc2956e77ba6feeb41c3d6843cb0437c65b238ab75559961b1914c7c7d"
+}

@@ -5,6 +5,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"log/slog"
 	"net"
 	"net/http"
 	"strings"
@@ -15,14 +16,15 @@ import (
 var workerNames = []string{"backend-notification-pusher", "dead-user-notification-watcher", "background-job-consumer"}
 
 type Service struct {
-	Config        Config
-	Galley        GalleyConfig
-	mu            sync.Mutex
-	working       [3]bool
-	notifications map[string]*notificationMetrics
-	jobs          map[string]*jobMetrics
-	jobsBusy      int
-	migrations    map[string]*migrationMetrics
+	Config              Config
+	Galley              GalleyConfig
+	mu                  sync.Mutex
+	working             [3]bool
+	notifications       map[string]*notificationMetrics
+	jobs                map[string]*jobMetrics
+	jobsBusy            int
+	meetingsCleanupRuns uint64
+	migrations          map[string]*migrationMetrics
 }
 type notificationMetrics struct {
 	pushed, dropped, errors uint64
@@ -82,6 +84,7 @@ func (s *Service) Handler() http.Handler {
 		}
 		w.Header().Set("Content-Type", "text/plain; version=0.0.4; charset=utf-8")
 		s.writeMigrationMetrics(w)
+		_, _ = fmt.Fprintf(w, "wire_meetings_cleanup_runs_total %d\n", s.meetingsCleanupRuns)
 		for i, name := range workerNames {
 			n := 0
 			if s.working[i] {
@@ -119,19 +122,24 @@ func (s *Service) Handler() http.Handler {
 }
 
 func (s *Service) Run(ctx context.Context) error {
-	// Construction remains incomplete: scheduled jobs are not connected yet.
+	runCtx, cancel := context.WithCancel(ctx)
+	defer cancel()
+	scheduled, cleanupScheduled, err := s.prepareScheduled(runCtx)
+	if err != nil {
+		return err
+	}
+	defer cleanupScheduled()
 	listener, err := net.Listen("tcp", s.Config.HTTP.Address())
 	if err != nil {
 		return errors.New("health listener could not start")
 	}
 	server := &http.Server{Handler: s.Handler(), ReadHeaderTimeout: 5 * time.Second, IdleTimeout: 75 * time.Second, MaxHeaderBytes: 1 << 20}
-	runCtx, cancel := context.WithCancel(ctx)
-	defer cancel()
 	var wg sync.WaitGroup
 	wg.Go(func() { s.runPusher(runCtx) })
 	wg.Go(func() { s.runDeadWatcher(runCtx) })
 	wg.Go(func() { s.runJobs(runCtx) })
 	wg.Go(func() { s.runMigrations(runCtx) })
+	wg.Go(func() { scheduled.Run(runCtx) })
 	done := make(chan error, 1)
 	go func() { done <- server.Serve(listener) }()
 	select {
@@ -145,14 +153,13 @@ func (s *Service) Run(ctx context.Context) error {
 		graceCtx, stop = context.WithTimeout(graceCtx, time.Duration(*s.Config.Jobs.Grace))
 	}
 	defer stop()
-	_ = server.Shutdown(graceCtx)
-	finished := make(chan struct{})
-	go func() { wg.Wait(); close(finished) }()
-	select {
-	case <-finished:
-	case <-graceCtx.Done():
-		return errors.New("worker shutdown exceeded configured grace")
+	if shutdownErr := server.Shutdown(graceCtx); shutdownErr != nil {
+		slog.Warn("health server drain timed out")
+		_ = server.Close()
 	}
+	// Native grace applies to each scheduled pool's drain; expiration warns and
+	// cancels those jobs, preserving their leases. It is not a process exit error.
+	wg.Wait()
 	if err != nil && !errors.Is(err, http.ErrServerClosed) {
 		return errors.New("health server failed")
 	}

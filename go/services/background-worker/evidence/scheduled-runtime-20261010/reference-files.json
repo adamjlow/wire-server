@@ -1,0 +1,23 @@
+{
+  "arbiter_revision": "b9c57eb1f8277d97616aa449bea471fe9ce14eda",
+  "files": {
+    "/home/operator/wire-server/services/background-worker/src/Wire/BackgroundWorker.hs": "41c4841685c8ce4e4bcddb47c848641b25e644d7941edd69fc75d0b2de9ac61c",
+    "/home/operator/wire-server/services/background-worker/src/Wire/BackgroundWorker/Workers.hs": "835bf199b3fbf370d3dadce73883e710314b0a527251b39457fe174f6cbdfd0c",
+    "/home/operator/wire-server/services/background-worker/src/Wire/BackgroundWorker/Env.hs": "b546b421261a8f56f053ad4264e4a6cd68501fc7d2592de53a89ce074288b931",
+    "/home/operator/wire-server/services/background-worker/src/Wire/MeetingsCleanupWorker.hs": "7024cf2ae06ecc650b18eb4cc254ffdcb9044e480d8c64f911050cc15e442367",
+    "/home/operator/wire-server/libs/wire-subsystems/src/Wire/BackendNotificationQueueAccess/RabbitMq.hs": "87f1b4c3323054c020378ba64b16a25d59f1d0fcabf0fbad659bb7607b49e19d",
+    "/home/operator/.cache/wire-migration/background-worker-20261009/arbiter/arbiter-worker/src/Arbiter/Worker.hs": "27380f9f0df977f35f17cc592bb9f49fd64a4b2ccc990b59ca4998ea6104e4a9",
+    "/home/operator/wire-server/libs/wire-subsystems/postgres-migrations/20250908142515-create-conversation-tables.sql": "6b8e9c3c1dad70bdc73dcad50faf8a4c7f9d27693db76a8d7e7e66cd11491db5",
+    "/home/operator/wire-server/libs/wire-subsystems/postgres-migrations/20260121092128-history_metadata.sql": "5be947c514abda9f44df5de4b54c070eeb17a095489b6359c364a34e262487f9",
+    "/home/operator/wire-server/libs/wire-subsystems/postgres-migrations/20260123124917-team-features.sql": "3a05e1c7e29b268843ef25ab6ac249d8346dd667576dc12bac43a1799b6ceb24",
+    "/home/operator/wire-server/libs/wire-subsystems/postgres-migrations/20251213223355-create-meetings-table.sql": "09faf384e48f0b774ddf1c118764c815d9a600f575067b9bd8d3a0ee4b380ec6",
+    "/home/operator/wire-server/libs/wire-subsystems/postgres-migrations/20260115150600-conversation-codes.sql": "aa7ca22fb3121ecf14677db1787c1870fb4865f0e4dbda124f6e106da35e6f47",
+    "/home/operator/wire-server/libs/wire-subsystems/postgres-migrations/20260619120000-conversation-codes-target.sql": "909e7db41180f2f5f74f40d054005078e2bc65ee8f77767cd0962d4d256206d3",
+    "/home/operator/wire-server/libs/wire-subsystems/postgres-migrations/20260708090000-meetings-recurrence-eff-end-index.sql": "bd33f571b059ce5d53bf0b3cc7f1824ec82f44e3ebf79d065aa77a766bf948a3",
+    "/home/operator/wire-server/libs/wire-subsystems/postgres-migrations/20260708100000-meetings-end-time-nonrecurring-index.sql": "6718b3a9283cc149f4f73926b4d575ae210584e68fb1f6da274ae9b0dd164fdf",
+    "/home/operator/wire-server/libs/wire-subsystems/postgres-migrations/20260713120000-meetings-recurrence-consistency-constraint.sql": "a552e6c1303a0f2f14e134b2a02ff122404074a2d70e06f006c2b0cd8c09f2c2",
+    "/home/operator/wire-server/libs/wire-subsystems/postgres-migrations/20260729120000-meetings-tzid.sql": "c9512b754b167b303e84e62d1c2ae93e09284a3a9369ea64acd14d3dcfa3e339",
+    "/home/operator/wire-server/libs/wire-subsystems/postgres-migrations/20260729120500-meetings-tzid-notnull.sql": "03ce623778c345a7c77b989a27b8bc79d98c8af35816fe5c25302f3125c91356",
+    "/home/operator/wire-server/libs/wire-subsystems/postgres-migrations/20260923120000-meetings-mtype.sql": "3a30b6d7cdab4cece75c03698c923d173e09b2498b703ab9b682b856a48cdc3c"
+  }
+}

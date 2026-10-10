@@ -21,11 +21,15 @@ bounded parallel scan under exclusive UUID locks. Conversation migration runs
 native independent local-conversation and remote-membership scans, with complete
 member status/subconversation/MLS-history copy and source cleanup/ledger ordering.
 
-PostgreSQL scheduled adminless/meetings workers remain disconnected. Claim,
-heartbeat, retry, acknowledgement and native schema bootstrap components exist;
-reaper and cron components exist; scheduled runtime integration and domain handlers remain
-unfinished. Actual user and other
-migration families and scheduled database effects remain unqualified. This state
+PostgreSQL scheduled adminless/meetings workers are connected to the source-based
+claim/lease/completion, registry, shared listener, cron/reaper and domain adapters.
+Startup applies the native scheduled schema before exposing health; each pool
+drains under the configured grace policy and leaves unfinished leases durable.
+The native meetings cleanup run counter is exposed. Construction Go checks and
+[combined PostgreSQL runtime checks](evidence/scheduled-runtime-20261010/) pass.
+These checks exercise PostgreSQL-only routing, guarded adminless jobs and meetings
+cleanup; they do not qualify live Cassandra/Brig/Rabbit/bot interactions, the complete
+process startup path, all enabled migrations or whole-service lifecycle. This state
 must not be selected for a deployment. Final acceptance remains the whole service
 in the [reference contract](../../../docs/go-migration/services/background-worker/contract.md)
 and [plan](../../../docs/go-migration/plans/background-worker.md): the final six-Go
@@ -103,5 +107,5 @@ handler or original cleanup-test qualification is claimed.
 Required meetings configuration and one-run retention cutoff now pass
 [Go construction checks](evidence/meetings-config-20261009/). Source cron
 serialization and fixed-point/SQL timestamp arithmetic are preserved, including
-large finite timestamp wrap as an inherited concern. Concrete deletion and
-runtime/metrics integration remain unfinished; this is not original-suite proof.
+large finite timestamp wrap as an inherited concern. Concrete deletion and runtime/counter integration are connected; complete mixed-stack
+qualification remains unfinished. This construction evidence is not original-suite proof.
