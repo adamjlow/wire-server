@@ -4,9 +4,9 @@
   "title": "Spar implementation",
   "service": "spar",
   "kind": "implementation",
-  "status": "queued",
-  "owner": null,
-  "branch": null,
+  "status": "active",
+  "owner": "codex",
+  "branch": "go-migration",
   "depends_on": [
     "spar-implementation-gates",
     "go-security-patch-20261009"
