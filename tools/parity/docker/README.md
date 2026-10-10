@@ -137,3 +137,19 @@ supervisor signals; the separate native proof demonstrated actual orphan reaping
 ## Optional native Nginx orphan supervision
 
 `environment.py run --reap-orphan-nginx` runs a nonroot PID1 supervisor inside the existing disposable runner. It terminates only adopted native Nginx workers left after the published test runner kills their master after50ms; healthy workers and Go services remain untouched. Original assertions, catalogues, timeouts and selected hashes are unchanged, and an original failure remains a failure. Actual native orphan/healthy-worker proof and host-guard/harness tests are retained in [the qualification](../../../docs/go-migration/qualifications/e2e-nginx-orphans-20261010/qualified/). The option is test-environment housekeeping, not a Haskell source or production shutdown repair.
+
+## Brig original contract profile
+
+`--service brig` selects310 unchanged original executions (260 base functions),
+including all discovered boolean/API variants in brig-tests.json. The
+[source discovery](../../../docs/go-migration/services/brig/test-discovery.json)
+retains exact compiled names and source mapping. Prepare without selections for
+an all-Haskell baseline; opt-in Brig candidate/peer selections mount its identified
+executable read-only. Existing standalone native schema/index utilities remain
+available; the selected Brig process supplies its own configured runtime.
+
+`proxy-cargohold-cannon-gundeck-federator-background-worker-spar-brig` requires
+exactly eight identified Go executables and seven original suites totalling535
+executions (existing225 plus Brig310). Earlier profile required names/counts and
+all original compiled assertions/deadlines are unchanged. Discovery/catalogue and
+harness unit checks do not establish an integration baseline or Go Brig support.

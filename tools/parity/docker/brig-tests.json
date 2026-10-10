@@ -1,0 +1,686 @@
+{
+  "schema_version": 1,
+  "description": "310 unchanged original Brig-relevant executions,260 source functions; exact published discovery variants, including19 legal-hold client/claim/auth cases.",
+  "services": {
+    "brig": [
+      {
+        "module": "Test.Apps",
+        "source": "integration/test/Test/Apps.hs",
+        "tests": [
+          "testAppReceivesMemberJoinNotification",
+          "testCreateGetApp",
+          "testCrossTeamAppConversation",
+          "testDeleteAppFromTeam",
+          "testFindApp",
+          "testPutApp",
+          "testReAddExternalAppToGroupConversation",
+          "testRefreshAppCookie",
+          "testRemoveReAddExternalAppOne2OneConversation",
+          "testRemoveServicesAccessRole",
+          "testRetrieveUsersIncludingApps",
+          "testTeamSizeWithApps"
+        ],
+        "variants": {
+          "testCreateGetApp": [
+            "domain=otherdomain",
+            "domain=owndomain"
+          ],
+          "testCrossTeamAppConversation": [
+            "domain=otherdomain",
+            "domain=owndomain"
+          ],
+          "testFindApp": [
+            "domain=otherdomain",
+            "domain=owndomain"
+          ],
+          "testTeamSizeWithApps": [
+            "test internal api=false",
+            "test internal api=true"
+          ]
+        }
+      },
+      {
+        "module": "Test.Auth",
+        "source": "integration/test/Test/Auth.hs",
+        "tests": [
+          "testAWS4_HMAC_SHA256_token2",
+          "testBearerToken2",
+          "testInvalidCookie",
+          "testLimitRetries",
+          "testSetCookieLabelOnSsoFlow",
+          "testTooManyCookies"
+        ]
+      },
+      {
+        "module": "Test.B2B",
+        "source": "integration/test/Test/B2B.hs",
+        "tests": [
+          "testConnectUsers"
+        ]
+      },
+      {
+        "module": "Test.BlockedDomains",
+        "source": "integration/test/Test/BlockedDomains.hs",
+        "tests": [
+          "testCannotChangeOwnEmailWithBlockedDomain",
+          "testCannotChangeTeamMemberEmailWithBlockedDomain",
+          "testCannotCreateTeamInvitationWithBlockedDomain",
+          "testCannotSendActivationCodeToBlockedDomain"
+        ]
+      },
+      {
+        "module": "Test.Bot",
+        "source": "integration/test/Test/Bot.hs",
+        "tests": [
+          "testBotSelfSigned",
+          "testBotUnknownSignatory"
+        ]
+      },
+      {
+        "module": "Test.Brig",
+        "source": "integration/test/Test/Brig.hs",
+        "tests": [
+          "testCrudFederationRemoteTeams",
+          "testCrudFederationRemotes",
+          "testCrudOAuthClient",
+          "testDeleteEmail",
+          "testSFTCredentials",
+          "testSFTFederation",
+          "testSFTNoCredentials"
+        ]
+      },
+      {
+        "module": "Test.Client",
+        "source": "integration/test/Test/Client.hs",
+        "tests": [
+          "testClientLastActive",
+          "testCreateClientWithCapabilities",
+          "testGetClientCapabilitiesV7",
+          "testListClientsIfBackendIsOffline",
+          "testUpdateClientWithConsumableNotificationsCapability"
+        ]
+      },
+      {
+        "module": "Test.Connection",
+        "source": "integration/test/Test/Connection.hs",
+        "tests": [
+          "testAppConnection",
+          "testCancel",
+          "testConnectFromBlocked",
+          "testConnectFromIgnored",
+          "testConnectWithRemoteUser",
+          "testConnectionLimits",
+          "testFederationAllowAllConnectWithRemote",
+          "testFederationAllowDynamicConnectWithRemote",
+          "testFederationAllowMixedConnectWithRemote",
+          "testInternalGetConStatusesAll",
+          "testNonFederatingRemoteTeam",
+          "testNonMutualFederationConnectionAttempt",
+          "testPendingConnectionUserDeleted",
+          "testRemoteUserGetsDeleted",
+          "testSentFromBlocked",
+          "testSentFromIgnored"
+        ],
+        "variants": {
+          "testCancel": [
+            "domain=other"
+          ],
+          "testConnectFromBlocked": [
+            "domain=other"
+          ],
+          "testConnectFromIgnored": [
+            "domain=other"
+          ],
+          "testConnectWithRemoteUser": [
+            "domain=otherdomain",
+            "domain=owndomain"
+          ],
+          "testConnectionLimits": [
+            "domain=other"
+          ],
+          "testPendingConnectionUserDeleted": [
+            "domain=otherdomain",
+            "domain=owndomain"
+          ],
+          "testSentFromBlocked": [
+            "domain=other"
+          ],
+          "testSentFromIgnored": [
+            "domain=other"
+          ]
+        }
+      },
+      {
+        "module": "Test.DomainVerification",
+        "source": "integration/test/Test/DomainVerification.hs",
+        "tests": [
+          "testChallengeTtl",
+          "testCreateChallengeFailsIfLocked",
+          "testDisabledEnterpriseService",
+          "testDomainVerificationGetOwnershipToken",
+          "testDomainVerificationLockedState",
+          "testDomainVerificationOnPremFlow",
+          "testDomainVerificationOnPremFlowNoRegistration",
+          "testDomainVerificationRemoveFailure",
+          "testDomainVerificationUpdateRedirectRequiresWebappUrl",
+          "testDomainVerificationWrongAuth",
+          "testGetAndDeleteRegisteredDomains",
+          "testGetDomainRegistrationUserExistsBackend",
+          "testGetDomainRegistrationUserExistsSso",
+          "testOverwriteOwnershipToken",
+          "testScimAndSamlWithRegisteredEmailDomain",
+          "testScimOnlyWithRegisteredEmailDomain",
+          "testSsoLoginNoEmailVerification",
+          "testUpdateTeamInvite",
+          "testUpdateTeamInviteLocked",
+          "testUpdateTeamInviteSSO",
+          "testVerificationRequiredIfEmailDomainRedirectNotSso",
+          "testVerifyChallengeFailsIfLocked",
+          "testVerifyChallengeFailsIfNotPreauthorized"
+        ]
+      },
+      {
+        "module": "Test.EJPD",
+        "source": "integration/test/Test/EJPD.hs",
+        "tests": [
+          "testEJPDRequest",
+          "testEJPDRequestRemote"
+        ]
+      },
+      {
+        "module": "Test.EnterpriseLogin",
+        "source": "integration/test/Test/EnterpriseLogin.hs",
+        "tests": [
+          "testDomainRegistrationBackendToUnAuthorize",
+          "testDomainRegistrationDelete",
+          "testDomainRegistrationLock",
+          "testDomainRegistrationLockPreviousValueOverwritten",
+          "testDomainRegistrationNoRegistrationToUnAuthorize",
+          "testDomainRegistrationPreAuthorize",
+          "testDomainRegistrationPreAuthorizeDoesNotAlterTeamInvite",
+          "testDomainRegistrationPreAuthorizeFailsIfLocked",
+          "testDomainRegistrationPreAuthorizedToUnAuthorize",
+          "testDomainRegistrationQueriesDoNotCreateEntry",
+          "testDomainRegistrationUnAuthorizeFailureWhenLocked",
+          "testDomainRegistrationUnAuthorizeFailureWhenSso",
+          "testDomainRegistrationUnlockErrorIfNotLocked",
+          "testDomainRegistrationUpdate",
+          "testDomainRegistrationUpdateInvalidCases"
+        ]
+      },
+      {
+        "module": "Test.FeatureFlags.ConferenceCalling",
+        "source": "integration/test/Test/FeatureFlags/ConferenceCalling.hs",
+        "tests": [
+          "testConferenceCalling",
+          "testPatchConferenceCalling"
+        ],
+        "variants": {
+          "testConferenceCalling": [
+            "api=internal",
+            "api=public"
+          ]
+        }
+      },
+      {
+        "module": "Test.FeatureFlags.MlsE2EId",
+        "source": "integration/test/Test/FeatureFlags/MlsE2EId.hs",
+        "tests": [
+          "testMLSE2EId",
+          "testMlsE2EConfigCrlProxyNotRequiredInV5",
+          "testMlsE2EConfigCrlProxyRequired",
+          "testPatchE2EId"
+        ],
+        "variants": {
+          "testMLSE2EId": [
+            "api=internal",
+            "api=public"
+          ]
+        }
+      },
+      {
+        "module": "Test.FeatureFlags.SndFactorPasswordChallenge",
+        "source": "integration/test/Test/FeatureFlags/SndFactorPasswordChallenge.hs",
+        "tests": [
+          "testPatchSndFactorPasswordChallenge",
+          "testSndFactorPasswordChallenge"
+        ],
+        "variants": {
+          "testSndFactorPasswordChallenge": [
+            "api=internal",
+            "api=public"
+          ]
+        }
+      },
+      {
+        "module": "Test.FeatureFlags.User",
+        "source": "integration/test/Test/FeatureFlags/User.hs",
+        "tests": [
+          "testFeatureConferenceCallingForUser"
+        ]
+      },
+      {
+        "module": "Test.LegalHold",
+        "source": "integration/test/Test/LegalHold.hs",
+        "tests": [
+          "testBlockClaimingKeyPackageForLHUsers",
+          "testLHAddClientManually",
+          "testLHApproveDevice",
+          "testLHClaimKeys",
+          "testLHConnectionsWithConsentingUsers",
+          "testLHConnectionsWithNonConsentingUsers",
+          "testLHDeleteClientManually",
+          "testLHDisableForUser",
+          "testLHHappyFlow"
+        ],
+        "variants": {
+          "testLHApproveDevice": [
+            "consent=explicit",
+            "consent=implicit"
+          ],
+          "testLHClaimKeys": [
+            "lhapprovedorpending=lhapproved][testclaimkeys=tckconsentandnewclients",
+            "lhapprovedorpending=lhapproved][testclaimkeys=tckconsentmissing",
+            "lhapprovedorpending=lhpending][testclaimkeys=tckconsentandnewclients",
+            "lhapprovedorpending=lhpending][testclaimkeys=tckconsentmissing"
+          ],
+          "testLHConnectionsWithConsentingUsers": [
+            "lhapiversion=v0",
+            "lhapiversion=v1"
+          ],
+          "testLHConnectionsWithNonConsentingUsers": [
+            "lhapiversion=v0",
+            "lhapiversion=v1"
+          ],
+          "testLHDisableForUser": [
+            "consent=explicit",
+            "consent=implicit"
+          ],
+          "testLHHappyFlow": [
+            "consent=explicit][lhapiversion=v0",
+            "consent=explicit][lhapiversion=v1",
+            "consent=implicit][lhapiversion=v0",
+            "consent=implicit][lhapiversion=v1"
+          ]
+        }
+      },
+      {
+        "module": "Test.Login",
+        "source": "integration/test/Test/Login.hs",
+        "tests": [
+          "testLoginVerify6DigitEmailCodeSuccess",
+          "testLoginVerify6DigitExpiredCodeFails",
+          "testLoginVerify6DigitLimitRetries",
+          "testLoginVerify6DigitMissingCodeFails",
+          "testLoginVerify6DigitResendCodeSuccessAndRateLimiting",
+          "testLoginVerify6DigitWrongCodeFails"
+        ]
+      },
+      {
+        "module": "Test.MLS.Clients",
+        "source": "integration/test/Test/MLS/Clients.hs",
+        "tests": [
+          "testGetMLSClients"
+        ]
+      },
+      {
+        "module": "Test.MLS.KeyPackage",
+        "source": "integration/test/Test/MLS/KeyPackage.hs",
+        "tests": [
+          "testClaimKeyPackagesEphemeralUser",
+          "testClaimKeyPackagesUserDeleted",
+          "testClaimKeyPackagesUserSuspended",
+          "testDeleteKeyPackages",
+          "testKeyPackageClaim",
+          "testKeyPackageCount",
+          "testKeyPackageMultipleCiphersuites",
+          "testKeyPackageRemoteClaim",
+          "testKeyPackageSelfClaim",
+          "testKeyPackageUploadNoKey",
+          "testReplaceKeyPackages",
+          "testReplaceKeyPackagesV7",
+          "testUnsupportedCiphersuite"
+        ],
+        "variants": {
+          "testKeyPackageCount": [
+            "suite=0x0001",
+            "suite=0x0002",
+            "suite=0x0005",
+            "suite=0x0007"
+          ]
+        }
+      },
+      {
+        "module": "Test.MLS.Keys",
+        "source": "integration/test/Test/MLS/Keys.hs",
+        "tests": [
+          "testJWKPublicKeys",
+          "testPublicKeysMLSNotEnabled",
+          "testRawPublicKeys"
+        ]
+      },
+      {
+        "module": "Test.Migration.BlockList",
+        "source": "integration/test/Test/Migration/BlockList.hs",
+        "tests": [
+          "testBlockListMigration"
+        ]
+      },
+      {
+        "module": "Test.Migration.DomainRegistration",
+        "source": "integration/test/Test/Migration/DomainRegistration.hs",
+        "tests": [
+          "testDomainRegistrationMigration"
+        ]
+      },
+      {
+        "module": "Test.Migration.PasswordReset",
+        "source": "integration/test/Test/Migration/PasswordReset.hs",
+        "tests": [
+          "testPasswordResetMigration"
+        ]
+      },
+      {
+        "module": "Test.Migration.User",
+        "source": "integration/test/Test/Migration/User.hs",
+        "tests": [
+          "testMigrationOfInvalidUsers",
+          "testMigrationOfUsersWithHandleDisputes",
+          "testReindexingUsersDuringMigration",
+          "testUserMigrationToPostgres"
+        ]
+      },
+      {
+        "module": "Test.NginxZAuthModule",
+        "source": "integration/test/Test/NginxZAuthModule.hs",
+        "tests": [
+          "testAWS4_HMAC_SHA256_token",
+          "testBearerToken"
+        ]
+      },
+      {
+        "module": "Test.OAuth",
+        "source": "integration/test/Test/OAuth.hs",
+        "tests": [
+          "testOAuthRevokeSession",
+          "testRevokeApplicationAccountAccess",
+          "testRevokeApplicationAccountAccessV6"
+        ]
+      },
+      {
+        "module": "Test.PasswordReset",
+        "source": "integration/test/Test/PasswordReset.hs",
+        "tests": [
+          "testPasswordResetAfterEmailUpdate",
+          "testPasswordResetInvalidPasswordLength",
+          "testPasswordResetShouldSucceedButFailOnWrongInputs"
+        ]
+      },
+      {
+        "module": "Test.Property",
+        "source": "integration/test/Test/Property.hs",
+        "tests": [
+          "testClearProperties",
+          "testGetProperties",
+          "testMaxLength",
+          "testMaxProperties",
+          "testPropertyNameNotAscii",
+          "testSetGetDeleteProperty"
+        ]
+      },
+      {
+        "module": "Test.Provider",
+        "source": "integration/test/Test/Provider.hs",
+        "tests": [
+          "testProviderPasswordReset",
+          "testProviderPasswordResetAfterEmailUpdate",
+          "testProviderSearchWhitelist",
+          "testProviderUploadAsset"
+        ]
+      },
+      {
+        "module": "Test.Register",
+        "source": "integration/test/Test/Register.hs",
+        "tests": [
+          "testAllowRegistrationWhenEmailDomainIsTakenByATeamButRedirectIsNone",
+          "testDisallowAcceptingInvitesAfterDomainIsClaimed",
+          "testDisallowRegistrationWhenEmailDomainDoesNotAllowRegistration",
+          "testDisallowRegistrationWhenEmailDomainIsClaimedByOtherBackend",
+          "testDisallowRegistrationWhenEmailDomainIsTakenByATeamWithSSO"
+        ]
+      },
+      {
+        "module": "Test.Search",
+        "source": "integration/test/Test/Search.hs",
+        "tests": [
+          "testEphemeralUsersSearch",
+          "testFederatedUserSearch",
+          "testFederatedUserSearchForNonTeamUser",
+          "testFederatedUserSearchNonTeamSearcher",
+          "testFederatedUserSearchWithType",
+          "testFederatedUserSearchWithTypeOwnDomain",
+          "testReindexAllUsers",
+          "testSearchContactForExternalUsers",
+          "testSearchForTeamMembersWithRoles",
+          "testSearchWithDifferentEndpoints",
+          "testStealthUsersWithFederation",
+          "testSuspendedUserSearch",
+          "testTeamSearchEmailFilter",
+          "testTeamSearchUserIncludesUserGroups",
+          "testUserSearchable"
+        ]
+      },
+      {
+        "module": "Test.Services",
+        "source": "integration/test/Test/Services.hs",
+        "tests": [
+          "testUpdateServiceUpdateAcceptHeader"
+        ]
+      },
+      {
+        "module": "Test.Shape",
+        "source": "integration/test/Test/Shape.hs",
+        "tests": [
+          "testShapeArrayElementMismatch",
+          "testShapeEmptyArray",
+          "testShapeMissingKey",
+          "testShapeNestedPathReported",
+          "testShapeObjectMatch",
+          "testShapeObjectMatchLenient",
+          "testShapeSAny",
+          "testShapeUnexpectedKey",
+          "testShapeWrongTypeObject",
+          "testShapeWrongTypeString",
+          "testValueShape"
+        ]
+      },
+      {
+        "module": "Test.Swagger",
+        "source": "integration/test/Test/Swagger.hs",
+        "tests": [
+          "testSwagger",
+          "testSwaggerInternalVersionedNotFound",
+          "testSwaggerLint",
+          "testSwaggerToc"
+        ],
+        "variants": {
+          "testSwaggerLint": [
+            "swagger=ibrig",
+            "swagger=icannon",
+            "swagger=icargohold",
+            "swagger=igalley",
+            "swagger=igundeck",
+            "swagger=ispar",
+            "swagger=public"
+          ]
+        }
+      },
+      {
+        "module": "Test.SystemSettings",
+        "source": "integration/test/Test/SystemSettings.hs",
+        "tests": [
+          "testGetSettingsInternalSsoIdpChangeDetection",
+          "testGetSettingsInternal",
+          "testGetSettingsPublic"
+        ],
+        "variants": {
+          "testGetSettingsInternalSsoIdpChangeDetection": [
+            "sso-idp-change-detection=just[bool=false]",
+            "sso-idp-change-detection=just[bool=true]",
+            "sso-idp-change-detection=nothing"
+          ],
+          "testGetSettingsInternal": [
+            "enabled-mls=just[bool=false]",
+            "enabled-mls=just[bool=true]",
+            "enabled-mls=nothing"
+          ],
+          "testGetSettingsPublic": [
+            "nomad-profiles=just[bool=false]][restrict-user-creation=just[bool=false]",
+            "nomad-profiles=just[bool=false]][restrict-user-creation=just[bool=true]",
+            "nomad-profiles=just[bool=false]][restrict-user-creation=nothing",
+            "nomad-profiles=just[bool=true]][restrict-user-creation=just[bool=false]",
+            "nomad-profiles=just[bool=true]][restrict-user-creation=just[bool=true]",
+            "nomad-profiles=just[bool=true]][restrict-user-creation=nothing",
+            "nomad-profiles=nothing][restrict-user-creation=just[bool=false]",
+            "nomad-profiles=nothing][restrict-user-creation=just[bool=true]",
+            "nomad-profiles=nothing][restrict-user-creation=nothing"
+          ]
+        }
+      },
+      {
+        "module": "Test.TeamCollaborators",
+        "source": "integration/test/Test/TeamCollaborators.hs",
+        "tests": [
+          "testCollaboratorCanCreateTeamConv",
+          "testCreateTeamCollaborator",
+          "testCreateTeamCollaboratorPostTwice",
+          "testImplicitConnectionAllowed",
+          "testImplicitConnectionNoCollaborator",
+          "testImplicitConnectionNotConfigured",
+          "testRemoveCollaboratorInO2O",
+          "testRemoveCollaboratorInO2OConnected",
+          "testRemoveCollaboratorInTeamConversation",
+          "testRemoveCollaboratorInTeamsO2O",
+          "testTeamCollaboratorEndpointsForbiddenForOtherTeams",
+          "testUpdateCollaborator"
+        ],
+        "variants": {
+          "testCollaboratorCanCreateTeamConv": [
+            "collaborator-has-team=false",
+            "collaborator-has-team=true"
+          ]
+        }
+      },
+      {
+        "module": "Test.TeamSettings",
+        "source": "integration/test/Test/TeamSettings.hs",
+        "tests": [
+          "testTeamPropertiesUpdate",
+          "testTeamSettingsUpdate"
+        ]
+      },
+      {
+        "module": "Test.Teams",
+        "source": "integration/test/Test/Teams.hs",
+        "tests": [
+          "testAcceptInvitePersonalUserToTeamEmailDomainForAnotherBackend",
+          "testDeleteTeamUserRatelimitingIsPropagated",
+          "testGetTeamsInvitationInfo",
+          "testInvitationTypesAreDistinct",
+          "testInvitePersonalUserToLargeTeam",
+          "testInvitePersonalUserToTeam",
+          "testInvitePersonalUserToTeamEmailDomainForAnotherBackend",
+          "testInvitePersonalUserToTeamLegacy",
+          "testInvitePersonalUserToTeamMultipleInvitations",
+          "testListUsersContactStatus",
+          "testListUsersEmailVisibility",
+          "testSelectTeamMembersByIds",
+          "testTeamMemberCsvExport",
+          "testTeamUserCannotBeInvited",
+          "testUpgradeGuestToTeamShouldFail",
+          "testUpgradePersonalToTeam",
+          "testUpgradePersonalToTeamAlreadyInATeam",
+          "testUpgradePersonalToTeamEmailDomainForAnotherBackend"
+        ],
+        "variants": {
+          "testInvitationTypesAreDistinct": [
+            "domain=otherdomain",
+            "domain=owndomain"
+          ]
+        }
+      },
+      {
+        "module": "Test.User",
+        "source": "integration/test/Test/User.hs",
+        "tests": [
+          "testActivateAccountWithPhoneV5",
+          "testActivateEmailForEmailDomainForAnotherBackend",
+          "testCreateUserSupportedProtocols",
+          "testEphemeralUserCreation",
+          "testMigratingPasswordHashingAlgorithm",
+          "testPasswordChange",
+          "testRemoveMlsSupportShouldFail",
+          "testSupportedProtocols",
+          "testSuspendNonExistingUser",
+          "testUpdateEmailForEmailDomainForAnotherBackend",
+          "testUpdateHandle",
+          "testUpdateSelf",
+          "testUserProfileSchemaContainsPicture",
+          "testUserProfileSchemaContainsPicture17"
+        ],
+        "variants": {
+          "testEphemeralUserCreation": [
+            "ephemeral-user-creation-enabled=false",
+            "ephemeral-user-creation-enabled=true"
+          ],
+          "testSupportedProtocols": [
+            "domain=otherdomain",
+            "domain=owndomain"
+          ],
+          "testUpdateSelf": [
+            "mode=testupdatedisplayname",
+            "mode=testupdateemailaddress",
+            "mode=testupdatelocale"
+          ]
+        }
+      },
+      {
+        "module": "Test.UserGroup",
+        "source": "integration/test/Test/UserGroup.hs",
+        "tests": [
+          "testUserGroupAddGroupDenied",
+          "testUserGroupAddUsersToGroupWithChannels",
+          "testUserGroupGetGroups",
+          "testUserGroupGetGroupsAllInputs",
+          "testUserGroupMembersCount",
+          "testUserGroupRemovalOnDelete",
+          "testUserGroupSmoke",
+          "testUserGroupUpdateChannelsNonAdmin",
+          "testUserGroupUpdateChannelsNonChannel",
+          "testUserGroupUpdateChannelsNonExisting",
+          "testUserGroupUpdateChannelsSucceeds"
+        ]
+      },
+      {
+        "module": "Test.Version",
+        "source": "integration/test/Test/Version.hs",
+        "tests": [
+          "testVersionDisabled",
+          "testVersionDisabledDevNotAdvertised",
+          "testVersionDisabledNotAdvertised",
+          "testVersionUnsupported",
+          "testVersion"
+        ],
+        "variants": {
+          "testVersion": [
+            "version=unversioned",
+            "version=v1",
+            "version=v3",
+            "version=v6",
+            "version=versioned"
+          ]
+        }
+      }
+    ]
+  }
+}

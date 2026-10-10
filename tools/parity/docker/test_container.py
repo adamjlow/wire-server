@@ -90,6 +90,25 @@ class ContainerTests(unittest.TestCase):
         with self.assertRaises(ValueError):runtime.selections(profile,executable,pairs)
         self.assertEqual({'spar'},set(runtime.selections('spar',executable,[])))
 
+    def test_brig_catalogue_preserves_all_discovered_original_variants(self):
+        discovery=json.loads((FILES.parents[2]/'docs/go-migration/services/brig/test-discovery.json').read_text())
+        expected=discovery['proposed_original_selection']['names']
+        self.assertEqual(310,len(runner.names('brig')))
+        self.assertEqual(expected,runner.names('brig'))
+        self.assertEqual(310,len(set(expected)))
+
+    def test_eight_service_selection_is_exact_and_brig_is_optional(self):
+        executable=self.root/'candidate';executable.write_text('synthetic');executable.chmod(0o755)
+        names=('proxy','cargohold','cannon','gundeck','federator','background-worker','spar','brig')
+        pairs=[(name,str(executable)) for name in names]
+        profile='proxy-cargohold-cannon-gundeck-federator-background-worker-spar-brig'
+        self.assertEqual(set(names),set(runtime.selections(profile,None,pairs)))
+        for invalid in (pairs[:-1],pairs+[pairs[-1]],pairs+[('galley',str(executable))]):
+            with self.assertRaises(ValueError):runtime.selections(profile,None,invalid)
+        with self.assertRaises(ValueError):runtime.selections(profile,executable,pairs)
+        self.assertEqual({'brig'},set(runtime.selections('brig',executable,[])))
+        self.assertEqual({},runtime.selections('brig',None,[]))
+
     def test_background_worker_catalogue_matches_actual_compiled_discovery(self):
         discovered=json.loads((FILES.parents[2]/'docs/go-migration/services/background-worker/test-discovery.json').read_text())['worker_cases']
         names=runner.names('background-worker')
