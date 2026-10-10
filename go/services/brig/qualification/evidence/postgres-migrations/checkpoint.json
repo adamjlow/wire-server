@@ -1,0 +1,17 @@
+{
+  "scope": "PostgreSQL migrations only; not Brig backend/API/e2e qualification",
+  "candidate_source_revision": "0be6fff398470c5bca27bbcb8b22509e97bd6c97",
+  "binary_sha256": "7cf2b48202928b0d1debc7b090919af03cd100da864c1940203f8dd443f59bb9",
+  "check_scope": "Complete Go module checks for this source revision",
+  "checks_exit_code": 0,
+  "actual_cli_executions": 15,
+  "advisory_lock_witnesses": 6,
+  "owned_resources_removed": true,
+  "files_sha256": {
+    "build.json": "be1ba16a8b54f4055629906e1e79a83e60064cc8169e85d8f9c7c5034565fe5b",
+    "go-check.log": "cb84afdad40263fe36f3da52b0f00c3898905b9817e43d24159854a13c5aebd1",
+    "go-schema.sql": "51b6754291baf51b3bdd257fb6924d0102ae35fe8f1c0182696697bd36af75a8",
+    "native-schema.sql": "51b6754291baf51b3bdd257fb6924d0102ae35fe8f1c0182696697bd36af75a8",
+    "result.json": "591eea854be14cdd38f066b0a8e75fdd168622ef332e66b72c6f7d12d6a9b23a"
+  }
+}

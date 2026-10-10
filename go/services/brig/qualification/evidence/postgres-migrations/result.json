@@ -1,0 +1,505 @@
+{
+  "result": "pass",
+  "scope": "Owned native/Go PostgreSQL migration observations; not whole Brig parity.",
+  "e2e_executed": false,
+  "source_revision": "0be6fff398470c5bca27bbcb8b22509e97bd6c97",
+  "binary_sha256": "7cf2b48202928b0d1debc7b090919af03cd100da864c1940203f8dd443f59bb9",
+  "runner_image": "sha256:f487c90fd364aac9daee5a1ce6e60fdba0ab74ab0c671ab0de0198e8f05659a9",
+  "native_brig_sha256": "c45a40da63268712a7cacdbd884287fa3dc93cec179d70323d3f22f7d5cdf1ca",
+  "postgres_image": "postgres@sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24",
+  "input_configs_sha256": "a72b39e034c0563ea28260de4782ee8122f5b8e015887f835fd30b04ad4b8180",
+  "fixture_sha256": "5cb3a0bcc8c1a85294391dfcb976bff85e10135bb6908b9f6612541b49145e66",
+  "records": [
+    {
+      "implementation": "haskell",
+      "database": "native_first",
+      "args": [],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "implementation": "go",
+      "database": "native_first",
+      "args": [],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "implementation": "haskell",
+      "database": "native_first",
+      "args": [],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "implementation": "go",
+      "database": "go_first",
+      "args": [],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "implementation": "haskell",
+      "database": "go_first",
+      "args": [],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "implementation": "haskell",
+      "database": "go_first",
+      "args": [],
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "brig: PostgresMigrationError (ScriptChanged \"20250423103417-create-user-group-table.sql\")\nHasCallStack backtrace:\n  collectBacktraces, called at libraries/ghc-internal/src/GHC/Internal/Exception.hs:169:13 in ghc-internal:GHC.Internal.Exception\n  toExceptionWithBacktrace, called at libraries/ghc-internal/src/GHC/Internal/IO.hs:260:11 in ghc-internal:GHC.Internal.IO\n  throwIO, called at libraries/ghc-internal/src/GHC/Internal/Control/Exception/Base.hs:195:43 in ghc-internal:GHC.Internal.Control.Exception.Base\n\n\n"
+    },
+    {
+      "implementation": "go",
+      "database": "go_first",
+      "args": [],
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "PostgreSQL migration checksum mismatch: 20250423103417-create-user-group-table.sql\n"
+    },
+    {
+      "implementation": "go",
+      "database": "go_first",
+      "args": [
+        "--reset"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "implementation": "haskell",
+      "database": "go_first",
+      "args": [],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "implementation": "haskell",
+      "database": "native_first",
+      "lock_script": "20260428072649-create-conv-parent-index.sql",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "implementation": "go",
+      "database": "native_first",
+      "lock_script": "20260428072649-create-conv-parent-index.sql",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "implementation": "haskell",
+      "database": "native_first",
+      "lock_script": "20260708090000-meetings-recurrence-eff-end-index.sql",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "implementation": "go",
+      "database": "native_first",
+      "lock_script": "20260708090000-meetings-recurrence-eff-end-index.sql",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "implementation": "haskell",
+      "database": "native_first",
+      "lock_script": "20260708100000-meetings-end-time-nonrecurring-index.sql",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "implementation": "go",
+      "database": "native_first",
+      "lock_script": "20260708100000-meetings-end-time-nonrecurring-index.sql",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "snapshots": {
+    "native_initial": [
+      {
+        "filename": "20250423103417-create-user-group-table.sql",
+        "checksum": "E2arIjoqD7wKiN0aehpK8A==",
+        "executed_at": "2026-10-10 21:53:48.425355"
+      },
+      {
+        "filename": "20250423115049-create-user-group-member-table.sql",
+        "checksum": "UAh/n3NPrOtMziZa13S+FA==",
+        "executed_at": "2026-10-10 21:53:48.428133"
+      },
+      {
+        "filename": "20250604084743-user_group_member_delete_on_cascade.sql",
+        "checksum": "vUSUGgqx/L2SqhDT80ER/A==",
+        "executed_at": "2026-10-10 21:53:48.429374"
+      },
+      {
+        "filename": "20250709174300-create-collaborators-table.sql",
+        "checksum": "4fFdwr5YoKtIFnT77c7cMQ==",
+        "executed_at": "2026-10-10 21:53:48.431071"
+      },
+      {
+        "filename": "20250721-create-apps-table.sql",
+        "checksum": "G1BBsrp7D8AXIIWlZfFzJQ==",
+        "executed_at": "2026-10-10 21:53:48.432347"
+      },
+      {
+        "filename": "20250729181800-create-collaborators-uid.sql",
+        "checksum": "2wY9ibm41LHk3fdJ78xz9Q==",
+        "executed_at": "2026-10-10 21:53:48.433283"
+      },
+      {
+        "filename": "20250908142515-create-conversation-tables.sql",
+        "checksum": "QhmQhjR/NzW4vCQZKXBREg==",
+        "executed_at": "2026-10-10 21:53:48.433718"
+      },
+      {
+        "filename": "202509190851023-user_group_conversations_create_table.sql",
+        "checksum": "wXS9rwgur6kVGH7s37gHnw==",
+        "executed_at": "2026-10-10 21:53:48.440685"
+      },
+      {
+        "filename": "20251009140323-user_group_member_index.sql",
+        "checksum": "cCa+TIIkYpef9+RTpBlaAA==",
+        "executed_at": "2026-10-10 21:53:48.44185"
+      },
+      {
+        "filename": "20251015124151-create-conversation-migration-status.sql",
+        "checksum": "InaNI3wVgPe3wXSqkDKbkA==",
+        "executed_at": "2026-10-10 21:53:48.44229"
+      },
+      {
+        "filename": "20251027090100-mls-out-of-sync.sql",
+        "checksum": "mg66EK/nKYnCfPPPEJklOw==",
+        "executed_at": "2026-10-10 21:53:48.443207"
+      },
+      {
+        "filename": "20251121090452-conversation_team_group_type_lower_name_id_idx.sql",
+        "checksum": "x6XNop3Vu4oDED7PGufCqg==",
+        "executed_at": "2026-10-10 21:53:48.444402"
+      },
+      {
+        "filename": "20251127115917-app-fields-category-description-creator.sql",
+        "checksum": "7uijhLOV7oYLnsEzjzjA2A==",
+        "executed_at": "2026-10-10 21:53:48.445037"
+      },
+      {
+        "filename": "20251213223355-create-meetings-table.sql",
+        "checksum": "oIlDua9QtRb3aYQ8TN2Vmg==",
+        "executed_at": "2026-10-10 21:53:48.445555"
+      },
+      {
+        "filename": "20260113140936-create-user-tables.sql",
+        "checksum": "yxDFMyudljj1aSKTMpE4cA==",
+        "executed_at": "2026-10-10 21:53:48.448663"
+      },
+      {
+        "filename": "20260115150600-conversation-codes.sql",
+        "checksum": "dGxlupLgddA9zyVF7nI7ug==",
+        "executed_at": "2026-10-10 21:53:48.453358"
+      },
+      {
+        "filename": "20260121092128-history_metadata.sql",
+        "checksum": "meQbueg/8q2Y6kE97Se7AA==",
+        "executed_at": "2026-10-10 21:53:48.454749"
+      },
+      {
+        "filename": "20260123124917-team-features.sql",
+        "checksum": "Pgpjo8tEOMllSyiqH29u5g==",
+        "executed_at": "2026-10-10 21:53:48.455091"
+      },
+      {
+        "filename": "20260420134603-domain_registration.sql",
+        "checksum": "CHALhEjzn65k38u99jgYvQ==",
+        "executed_at": "2026-10-10 21:53:48.456287"
+      },
+      {
+        "filename": "20260428072649-create-conv-parent-index.sql",
+        "checksum": "EGbfrrOlVkqEHiNxGDXA8g==",
+        "executed_at": "2026-10-10 21:53:48.459334"
+      },
+      {
+        "filename": "20260507162106-history_client.sql",
+        "checksum": "RcGziAUcTZQTCnsb9lPBmw==",
+        "executed_at": "2026-10-10 21:53:48.459559"
+      },
+      {
+        "filename": "20260619120000-conversation-codes-target.sql",
+        "checksum": "KJvGFHBBZXlw4CV0jKMpQg==",
+        "executed_at": "2026-10-10 21:53:48.46064"
+      },
+      {
+        "filename": "20260625104559-add-user-migration-pending-deletes.sql",
+        "checksum": "PN8vltEPMB11n+IwqMyeoQ==",
+        "executed_at": "2026-10-10 21:53:48.46112"
+      },
+      {
+        "filename": "20260708090000-meetings-recurrence-eff-end-index.sql",
+        "checksum": "+Xu0wNgn3LYDyBsMEjw9Ug==",
+        "executed_at": "2026-10-10 21:53:48.462531"
+      },
+      {
+        "filename": "20260708100000-meetings-end-time-nonrecurring-index.sql",
+        "checksum": "1xYMtrxd+Pd7OewrFfyI/Q==",
+        "executed_at": "2026-10-10 21:53:48.463268"
+      },
+      {
+        "filename": "20260713120000-meetings-recurrence-consistency-constraint.sql",
+        "checksum": "KuVQd/TP/43PMewVRgjInA==",
+        "executed_at": "2026-10-10 21:53:48.463393"
+      },
+      {
+        "filename": "20260729120000-meetings-tzid.sql",
+        "checksum": "umQdOdf3YbuUsQxwBqtSoQ==",
+        "executed_at": "2026-10-10 21:53:48.463881"
+      },
+      {
+        "filename": "20260729120500-meetings-tzid-notnull.sql",
+        "checksum": "81Jx6CFMlbJthOEYi1q07w==",
+        "executed_at": "2026-10-10 21:53:48.464281"
+      },
+      {
+        "filename": "20260803164250-blacklist.sql",
+        "checksum": "KUJGLcTljStfPc7h+91h1A==",
+        "executed_at": "2026-10-10 21:53:48.465157"
+      },
+      {
+        "filename": "20260804090521-password-reset.sql",
+        "checksum": "KXAMpHW3KkqJOAeyaHDXyw==",
+        "executed_at": "2026-10-10 21:53:48.466239"
+      },
+      {
+        "filename": "20260819120000-meetings-conversation-access.sql",
+        "checksum": "c7AwmkN7BUH7G8c6iKZldQ==",
+        "executed_at": "2026-10-10 21:53:48.467307"
+      },
+      {
+        "filename": "20260923120000-meetings-mtype.sql",
+        "checksum": "vaCLvWlUp9ZEmVSqkWg3bg==",
+        "executed_at": "2026-10-10 21:53:48.467932"
+      }
+    ],
+    "go_initial": [
+      {
+        "filename": "20250423103417-create-user-group-table.sql",
+        "checksum": "E2arIjoqD7wKiN0aehpK8A==",
+        "executed_at": "2026-10-10 21:53:49.066252"
+      },
+      {
+        "filename": "20250423115049-create-user-group-member-table.sql",
+        "checksum": "UAh/n3NPrOtMziZa13S+FA==",
+        "executed_at": "2026-10-10 21:53:49.069293"
+      },
+      {
+        "filename": "20250604084743-user_group_member_delete_on_cascade.sql",
+        "checksum": "vUSUGgqx/L2SqhDT80ER/A==",
+        "executed_at": "2026-10-10 21:53:49.070748"
+      },
+      {
+        "filename": "20250709174300-create-collaborators-table.sql",
+        "checksum": "4fFdwr5YoKtIFnT77c7cMQ==",
+        "executed_at": "2026-10-10 21:53:49.072454"
+      },
+      {
+        "filename": "20250721-create-apps-table.sql",
+        "checksum": "G1BBsrp7D8AXIIWlZfFzJQ==",
+        "executed_at": "2026-10-10 21:53:49.073879"
+      },
+      {
+        "filename": "20250729181800-create-collaborators-uid.sql",
+        "checksum": "2wY9ibm41LHk3fdJ78xz9Q==",
+        "executed_at": "2026-10-10 21:53:49.07479"
+      },
+      {
+        "filename": "20250908142515-create-conversation-tables.sql",
+        "checksum": "QhmQhjR/NzW4vCQZKXBREg==",
+        "executed_at": "2026-10-10 21:53:49.075229"
+      },
+      {
+        "filename": "202509190851023-user_group_conversations_create_table.sql",
+        "checksum": "wXS9rwgur6kVGH7s37gHnw==",
+        "executed_at": "2026-10-10 21:53:49.081818"
+      },
+      {
+        "filename": "20251009140323-user_group_member_index.sql",
+        "checksum": "cCa+TIIkYpef9+RTpBlaAA==",
+        "executed_at": "2026-10-10 21:53:49.082972"
+      },
+      {
+        "filename": "20251015124151-create-conversation-migration-status.sql",
+        "checksum": "InaNI3wVgPe3wXSqkDKbkA==",
+        "executed_at": "2026-10-10 21:53:49.083393"
+      },
+      {
+        "filename": "20251027090100-mls-out-of-sync.sql",
+        "checksum": "mg66EK/nKYnCfPPPEJklOw==",
+        "executed_at": "2026-10-10 21:53:49.08435"
+      },
+      {
+        "filename": "20251121090452-conversation_team_group_type_lower_name_id_idx.sql",
+        "checksum": "x6XNop3Vu4oDED7PGufCqg==",
+        "executed_at": "2026-10-10 21:53:49.085206"
+      },
+      {
+        "filename": "20251127115917-app-fields-category-description-creator.sql",
+        "checksum": "7uijhLOV7oYLnsEzjzjA2A==",
+        "executed_at": "2026-10-10 21:53:49.085983"
+      },
+      {
+        "filename": "20251213223355-create-meetings-table.sql",
+        "checksum": "oIlDua9QtRb3aYQ8TN2Vmg==",
+        "executed_at": "2026-10-10 21:53:49.086483"
+      },
+      {
+        "filename": "20260113140936-create-user-tables.sql",
+        "checksum": "yxDFMyudljj1aSKTMpE4cA==",
+        "executed_at": "2026-10-10 21:53:49.090395"
+      },
+      {
+        "filename": "20260115150600-conversation-codes.sql",
+        "checksum": "dGxlupLgddA9zyVF7nI7ug==",
+        "executed_at": "2026-10-10 21:53:49.094807"
+      },
+      {
+        "filename": "20260121092128-history_metadata.sql",
+        "checksum": "meQbueg/8q2Y6kE97Se7AA==",
+        "executed_at": "2026-10-10 21:53:49.096038"
+      },
+      {
+        "filename": "20260123124917-team-features.sql",
+        "checksum": "Pgpjo8tEOMllSyiqH29u5g==",
+        "executed_at": "2026-10-10 21:53:49.096294"
+      },
+      {
+        "filename": "20260420134603-domain_registration.sql",
+        "checksum": "CHALhEjzn65k38u99jgYvQ==",
+        "executed_at": "2026-10-10 21:53:49.097309"
+      },
+      {
+        "filename": "20260428072649-create-conv-parent-index.sql",
+        "checksum": "EGbfrrOlVkqEHiNxGDXA8g==",
+        "executed_at": "2026-10-10 21:53:49.100054"
+      },
+      {
+        "filename": "20260507162106-history_client.sql",
+        "checksum": "RcGziAUcTZQTCnsb9lPBmw==",
+        "executed_at": "2026-10-10 21:53:49.100189"
+      },
+      {
+        "filename": "20260619120000-conversation-codes-target.sql",
+        "checksum": "KJvGFHBBZXlw4CV0jKMpQg==",
+        "executed_at": "2026-10-10 21:53:49.101151"
+      },
+      {
+        "filename": "20260625104559-add-user-migration-pending-deletes.sql",
+        "checksum": "PN8vltEPMB11n+IwqMyeoQ==",
+        "executed_at": "2026-10-10 21:53:49.101788"
+      },
+      {
+        "filename": "20260708090000-meetings-recurrence-eff-end-index.sql",
+        "checksum": "+Xu0wNgn3LYDyBsMEjw9Ug==",
+        "executed_at": "2026-10-10 21:53:49.10297"
+      },
+      {
+        "filename": "20260708100000-meetings-end-time-nonrecurring-index.sql",
+        "checksum": "1xYMtrxd+Pd7OewrFfyI/Q==",
+        "executed_at": "2026-10-10 21:53:49.103639"
+      },
+      {
+        "filename": "20260713120000-meetings-recurrence-consistency-constraint.sql",
+        "checksum": "KuVQd/TP/43PMewVRgjInA==",
+        "executed_at": "2026-10-10 21:53:49.103706"
+      },
+      {
+        "filename": "20260729120000-meetings-tzid.sql",
+        "checksum": "umQdOdf3YbuUsQxwBqtSoQ==",
+        "executed_at": "2026-10-10 21:53:49.104038"
+      },
+      {
+        "filename": "20260729120500-meetings-tzid-notnull.sql",
+        "checksum": "81Jx6CFMlbJthOEYi1q07w==",
+        "executed_at": "2026-10-10 21:53:49.104319"
+      },
+      {
+        "filename": "20260803164250-blacklist.sql",
+        "checksum": "KUJGLcTljStfPc7h+91h1A==",
+        "executed_at": "2026-10-10 21:53:49.104942"
+      },
+      {
+        "filename": "20260804090521-password-reset.sql",
+        "checksum": "KXAMpHW3KkqJOAeyaHDXyw==",
+        "executed_at": "2026-10-10 21:53:49.105894"
+      },
+      {
+        "filename": "20260819120000-meetings-conversation-access.sql",
+        "checksum": "c7AwmkN7BUH7G8c6iKZldQ==",
+        "executed_at": "2026-10-10 21:53:49.106828"
+      },
+      {
+        "filename": "20260923120000-meetings-mtype.sql",
+        "checksum": "vaCLvWlUp9ZEmVSqkWg3bg==",
+        "executed_at": "2026-10-10 21:53:49.107287"
+      }
+    ]
+  },
+  "locks": [
+    {
+      "script": "20260428072649-create-conv-parent-index.sql",
+      "key": -3962430568099842098,
+      "implementation": "haskell",
+      "blocked": true
+    },
+    {
+      "script": "20260428072649-create-conv-parent-index.sql",
+      "key": -3962430568099842098,
+      "implementation": "go",
+      "blocked": true
+    },
+    {
+      "script": "20260708090000-meetings-recurrence-eff-end-index.sql",
+      "key": 8538085667562752327,
+      "implementation": "haskell",
+      "blocked": true
+    },
+    {
+      "script": "20260708090000-meetings-recurrence-eff-end-index.sql",
+      "key": 8538085667562752327,
+      "implementation": "go",
+      "blocked": true
+    },
+    {
+      "script": "20260708100000-meetings-end-time-nonrecurring-index.sql",
+      "key": 398870150894652206,
+      "implementation": "haskell",
+      "blocked": true
+    },
+    {
+      "script": "20260708100000-meetings-end-time-nonrecurring-index.sql",
+      "key": 398870150894652206,
+      "implementation": "go",
+      "blocked": true
+    }
+  ],
+  "cleanup": {
+    "remaining_containers": "",
+    "remaining_networks": "",
+    "remaining_volumes": ""
+  }
+}

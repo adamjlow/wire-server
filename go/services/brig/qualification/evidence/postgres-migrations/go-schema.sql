@@ -1,0 +1,891 @@
+--
+-- PostgreSQL database dump
+--
+
+
+-- Dumped from database version 17.11
+-- Dumped by pg_dump version 17.11
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET transaction_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Name: meeting_type; Type: TYPE; Schema: public; Owner: -
+--
+
+CREATE TYPE public.meeting_type AS ENUM (
+    'immediate',
+    'scheduled'
+);
+
+
+--
+-- Name: recurrence_frequency; Type: TYPE; Schema: public; Owner: -
+--
+
+CREATE TYPE public.recurrence_frequency AS ENUM (
+    'daily',
+    'weekly',
+    'monthly',
+    'yearly'
+);
+
+
+--
+-- Name: update_updated_at(); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.update_updated_at() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+  NEW.updated_at = now();
+  RETURN NEW;
+END;
+$$;
+
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- Name: apps; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.apps (
+    user_id uuid NOT NULL,
+    team_id uuid NOT NULL,
+    metadata json,
+    category text DEFAULT 'other'::text NOT NULL,
+    description text DEFAULT ''::text NOT NULL,
+    creator uuid NOT NULL
+);
+
+
+--
+-- Name: asset; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.asset (
+    user_id uuid NOT NULL,
+    typ integer NOT NULL,
+    key text NOT NULL,
+    size integer
+);
+
+
+--
+-- Name: bot_conv; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.bot_conv (
+    id uuid NOT NULL,
+    conv uuid NOT NULL,
+    conv_team uuid
+);
+
+
+--
+-- Name: collaborators; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.collaborators (
+    user_id uuid NOT NULL,
+    team_id uuid NOT NULL,
+    permissions smallint[]
+);
+
+
+--
+-- Name: conversation; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.conversation (
+    id uuid NOT NULL,
+    access integer[],
+    access_roles_v2 integer[],
+    cells_state integer,
+    channel_add_permission integer,
+    cipher_suite integer,
+    creator uuid,
+    epoch bigint,
+    epoch_timestamp timestamp with time zone,
+    group_conv_type integer,
+    group_id bytea,
+    message_timer bigint,
+    name text,
+    protocol integer,
+    public_group_state bytea,
+    receipt_mode integer,
+    team uuid,
+    type integer NOT NULL,
+    parent_conv uuid,
+    history_depth bigint
+);
+
+
+--
+-- Name: conversation_codes; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.conversation_codes (
+    key text NOT NULL,
+    conversation uuid NOT NULL,
+    password bytea,
+    value text NOT NULL,
+    expires_at timestamp with time zone NOT NULL,
+    target text DEFAULT 'conv'::text NOT NULL
+);
+
+
+--
+-- Name: conversation_member; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.conversation_member (
+    conv uuid NOT NULL,
+    "user" uuid NOT NULL,
+    conversation_role text,
+    hidden boolean,
+    hidden_ref text,
+    otr_archived boolean,
+    otr_archived_ref text,
+    otr_muted boolean,
+    otr_muted_ref text,
+    otr_muted_status integer,
+    provider uuid,
+    service uuid
+);
+
+
+--
+-- Name: conversation_migration_pending_deletes; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.conversation_migration_pending_deletes (
+    typ text NOT NULL,
+    id uuid NOT NULL
+);
+
+
+--
+-- Name: conversation_out_of_sync; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.conversation_out_of_sync (
+    conv_id uuid NOT NULL,
+    out_of_sync boolean NOT NULL
+);
+
+
+--
+-- Name: deleted_user; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.deleted_user (
+    id uuid NOT NULL,
+    team uuid,
+    created_at timestamp with time zone NOT NULL,
+    deleted_at timestamp with time zone DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+
+
+--
+-- Name: domain_registration; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.domain_registration (
+    domain text NOT NULL,
+    authorized_team uuid,
+    domain_redirect integer,
+    team_invite integer,
+    idp_id uuid,
+    backend_url bytea,
+    team uuid,
+    dns_verification_token text,
+    ownership_token_hash bytea,
+    webapp_url bytea
+);
+
+
+--
+-- Name: domain_registration_challenge; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.domain_registration_challenge (
+    id uuid NOT NULL,
+    domain text NOT NULL,
+    challenge_token_hash bytea NOT NULL,
+    dns_verification_token text NOT NULL,
+    expires_at timestamp with time zone NOT NULL
+);
+
+
+--
+-- Name: email_blocklist; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.email_blocklist (
+    email text NOT NULL
+);
+
+
+--
+-- Name: local_conversation_remote_member; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.local_conversation_remote_member (
+    conv uuid NOT NULL,
+    user_remote_domain text NOT NULL,
+    user_remote_id uuid NOT NULL,
+    conversation_role text
+);
+
+
+--
+-- Name: meetings; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.meetings (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    title text NOT NULL,
+    creator uuid NOT NULL,
+    start_time timestamp with time zone NOT NULL,
+    end_time timestamp with time zone NOT NULL,
+    recurrence_frequency public.recurrence_frequency,
+    recurrence_interval integer,
+    recurrence_until timestamp with time zone,
+    conversation_id uuid NOT NULL,
+    invited_emails text[] DEFAULT '{}'::text[] NOT NULL,
+    trial boolean DEFAULT false NOT NULL,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL,
+    tzid text NOT NULL,
+    mtype public.meeting_type DEFAULT 'scheduled'::public.meeting_type NOT NULL,
+    CONSTRAINT meetings_recurrence_consistency CHECK ((((recurrence_frequency IS NULL) AND (recurrence_interval IS NULL) AND (recurrence_until IS NULL)) OR ((recurrence_frequency IS NOT NULL) AND (recurrence_interval IS NOT NULL)))),
+    CONSTRAINT meetings_title_length CHECK ((length(title) <= 256)),
+    CONSTRAINT meetings_title_not_empty CHECK ((length(TRIM(BOTH FROM title)) > 0)),
+    CONSTRAINT meetings_valid_time_range CHECK ((end_time > start_time))
+);
+
+
+--
+-- Name: mls_group_member_client; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.mls_group_member_client (
+    group_id bytea NOT NULL,
+    user_domain text NOT NULL,
+    "user" uuid NOT NULL,
+    client text NOT NULL,
+    leaf_node_index integer NOT NULL,
+    removal_pending boolean NOT NULL
+);
+
+
+--
+-- Name: mls_history_client; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.mls_history_client (
+    group_id bytea NOT NULL,
+    id uuid NOT NULL,
+    leaf_node_index integer NOT NULL,
+    removal_pending boolean NOT NULL
+);
+
+
+--
+-- Name: password_reset; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.password_reset (
+    key text NOT NULL,
+    code text NOT NULL,
+    user_id uuid NOT NULL,
+    retries integer,
+    timeout timestamp with time zone,
+    expires_at timestamp with time zone NOT NULL
+);
+
+
+--
+-- Name: remote_conversation_local_member; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.remote_conversation_local_member (
+    "user" uuid NOT NULL,
+    conv_remote_domain text NOT NULL,
+    conv_remote_id uuid NOT NULL,
+    hidden boolean,
+    hidden_ref text,
+    otr_archived boolean,
+    otr_archived_ref text,
+    otr_muted_ref text,
+    otr_muted_status integer
+);
+
+
+--
+-- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.schema_migrations (
+    filename character varying(512) NOT NULL,
+    checksum character varying(32) NOT NULL,
+    executed_at timestamp without time zone DEFAULT now() NOT NULL
+);
+
+
+--
+-- Name: subconversation; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.subconversation (
+    conv_id uuid NOT NULL,
+    subconv_id text NOT NULL,
+    cipher_suite integer,
+    epoch bigint NOT NULL,
+    epoch_timestamp timestamp with time zone NOT NULL,
+    group_id bytea NOT NULL,
+    public_group_state bytea
+);
+
+
+--
+-- Name: team_features; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.team_features (
+    team uuid NOT NULL,
+    feature text NOT NULL,
+    config jsonb,
+    lock_status integer,
+    status integer
+);
+
+
+--
+-- Name: user_group; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.user_group (
+    team_id uuid NOT NULL,
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    name text NOT NULL,
+    managed_by integer NOT NULL,
+    created_at timestamp with time zone DEFAULT now()
+);
+
+
+--
+-- Name: user_group_channel; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.user_group_channel (
+    user_group_id uuid NOT NULL,
+    conv_id uuid NOT NULL
+);
+
+
+--
+-- Name: user_group_member; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.user_group_member (
+    user_group_id uuid NOT NULL,
+    user_id uuid NOT NULL
+);
+
+
+--
+-- Name: user_migration_pending_deletes; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.user_migration_pending_deletes (
+    id uuid NOT NULL
+);
+
+
+--
+-- Name: wire_user; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.wire_user (
+    id uuid NOT NULL,
+    user_type integer NOT NULL,
+    accent_id integer NOT NULL,
+    activated boolean NOT NULL,
+    country text,
+    email text,
+    email_unvalidated text,
+    expires timestamp with time zone,
+    feature_conference_calling integer,
+    handle text,
+    language text,
+    managed_by integer,
+    name text NOT NULL,
+    password text,
+    picture jsonb,
+    provider uuid,
+    service uuid,
+    searchable boolean,
+    sso_id jsonb,
+    account_status integer,
+    supported_protocols integer,
+    team uuid,
+    text_status text,
+    rich_info jsonb,
+    created_at timestamp with time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at timestamp with time zone DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+
+
+--
+-- Name: apps apps_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.apps
+    ADD CONSTRAINT apps_pkey PRIMARY KEY (user_id);
+
+
+--
+-- Name: bot_conv bot_conv_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.bot_conv
+    ADD CONSTRAINT bot_conv_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: collaborators collaborators_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.collaborators
+    ADD CONSTRAINT collaborators_pkey PRIMARY KEY (user_id, team_id);
+
+
+--
+-- Name: conversation_codes conversation_codes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.conversation_codes
+    ADD CONSTRAINT conversation_codes_pkey PRIMARY KEY (key);
+
+
+--
+-- Name: conversation_member conversation_member_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.conversation_member
+    ADD CONSTRAINT conversation_member_pkey PRIMARY KEY (conv, "user");
+
+
+--
+-- Name: conversation_migration_pending_deletes conversation_migration_pending_deletes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.conversation_migration_pending_deletes
+    ADD CONSTRAINT conversation_migration_pending_deletes_pkey PRIMARY KEY (typ, id);
+
+
+--
+-- Name: conversation_out_of_sync conversation_out_of_sync_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.conversation_out_of_sync
+    ADD CONSTRAINT conversation_out_of_sync_pkey PRIMARY KEY (conv_id);
+
+
+--
+-- Name: conversation conversation_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.conversation
+    ADD CONSTRAINT conversation_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: deleted_user deleted_user_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.deleted_user
+    ADD CONSTRAINT deleted_user_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: domain_registration_challenge domain_registration_challenge_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.domain_registration_challenge
+    ADD CONSTRAINT domain_registration_challenge_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: domain_registration domain_registration_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.domain_registration
+    ADD CONSTRAINT domain_registration_pkey PRIMARY KEY (domain);
+
+
+--
+-- Name: email_blocklist email_blocklist_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.email_blocklist
+    ADD CONSTRAINT email_blocklist_pkey PRIMARY KEY (email);
+
+
+--
+-- Name: local_conversation_remote_member local_conversation_remote_member_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.local_conversation_remote_member
+    ADD CONSTRAINT local_conversation_remote_member_pkey PRIMARY KEY (conv, user_remote_domain, user_remote_id);
+
+
+--
+-- Name: meetings meetings_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.meetings
+    ADD CONSTRAINT meetings_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: mls_group_member_client mls_group_member_client_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.mls_group_member_client
+    ADD CONSTRAINT mls_group_member_client_pkey PRIMARY KEY (group_id, user_domain, "user", client);
+
+
+--
+-- Name: mls_history_client mls_history_client_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.mls_history_client
+    ADD CONSTRAINT mls_history_client_pkey PRIMARY KEY (group_id, id);
+
+
+--
+-- Name: password_reset password_reset_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.password_reset
+    ADD CONSTRAINT password_reset_pkey PRIMARY KEY (key);
+
+
+--
+-- Name: remote_conversation_local_member remote_conversation_local_member_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.remote_conversation_local_member
+    ADD CONSTRAINT remote_conversation_local_member_pkey PRIMARY KEY ("user", conv_remote_domain, conv_remote_id);
+
+
+--
+-- Name: subconversation subconversation_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.subconversation
+    ADD CONSTRAINT subconversation_pkey PRIMARY KEY (conv_id, subconv_id);
+
+
+--
+-- Name: team_features team_features_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.team_features
+    ADD CONSTRAINT team_features_pkey PRIMARY KEY (team, feature);
+
+
+--
+-- Name: user_group_channel user_group_channel_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_group_channel
+    ADD CONSTRAINT user_group_channel_pkey PRIMARY KEY (user_group_id, conv_id);
+
+
+--
+-- Name: user_group user_group_id_key; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_group
+    ADD CONSTRAINT user_group_id_key UNIQUE (id);
+
+
+--
+-- Name: user_group_member user_group_member_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_group_member
+    ADD CONSTRAINT user_group_member_pkey PRIMARY KEY (user_group_id, user_id);
+
+
+--
+-- Name: user_group user_group_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_group
+    ADD CONSTRAINT user_group_pkey PRIMARY KEY (team_id, id);
+
+
+--
+-- Name: user_migration_pending_deletes user_migration_pending_deletes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_migration_pending_deletes
+    ADD CONSTRAINT user_migration_pending_deletes_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: wire_user wire_user_handle_key; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.wire_user
+    ADD CONSTRAINT wire_user_handle_key UNIQUE (handle);
+
+
+--
+-- Name: wire_user wire_user_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.wire_user
+    ADD CONSTRAINT wire_user_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: asset_user_id_idx; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX asset_user_id_idx ON public.asset USING btree (user_id);
+
+
+--
+-- Name: bot_conv_conv_idx; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX bot_conv_conv_idx ON public.bot_conv USING btree (conv);
+
+
+--
+-- Name: bot_conv_team_idx; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX bot_conv_team_idx ON public.bot_conv USING btree (conv_team);
+
+
+--
+-- Name: collaborators_team_id_idx; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX collaborators_team_id_idx ON public.collaborators USING btree (team_id);
+
+
+--
+-- Name: collaborators_user_id_idx; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX collaborators_user_id_idx ON public.collaborators USING btree (user_id);
+
+
+--
+-- Name: conversation_codes_expires_at_idx; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX conversation_codes_expires_at_idx ON public.conversation_codes USING btree (expires_at);
+
+
+--
+-- Name: conversation_codes_key_expires_at_idx; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX conversation_codes_key_expires_at_idx ON public.conversation_codes USING btree (key, expires_at);
+
+
+--
+-- Name: conversation_member_user_idx; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX conversation_member_user_idx ON public.conversation_member USING btree ("user");
+
+
+--
+-- Name: conversation_parent_conv_idx; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX conversation_parent_conv_idx ON public.conversation USING btree (parent_conv);
+
+
+--
+-- Name: conversation_team_group_type_lower_name_id_idx; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX conversation_team_group_type_lower_name_id_idx ON public.conversation USING btree (team, group_conv_type, lower(name), id);
+
+
+--
+-- Name: conversation_team_idx; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX conversation_team_idx ON public.conversation USING btree (team);
+
+
+--
+-- Name: domain_registration_authorized_team_idx; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX domain_registration_authorized_team_idx ON public.domain_registration USING btree (authorized_team);
+
+
+--
+-- Name: domain_registration_challenge_expires_at_idx; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX domain_registration_challenge_expires_at_idx ON public.domain_registration_challenge USING btree (expires_at);
+
+
+--
+-- Name: idx_meetings_conversation; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_meetings_conversation ON public.meetings USING btree (conversation_id);
+
+
+--
+-- Name: idx_meetings_creator; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_meetings_creator ON public.meetings USING btree (creator);
+
+
+--
+-- Name: idx_meetings_end_time; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_meetings_end_time ON public.meetings USING btree (end_time);
+
+
+--
+-- Name: idx_meetings_end_time_nonrecurring; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_meetings_end_time_nonrecurring ON public.meetings USING btree (end_time) WHERE (recurrence_frequency IS NULL);
+
+
+--
+-- Name: idx_meetings_recurrence_eff_end; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_meetings_recurrence_eff_end ON public.meetings USING btree (GREATEST(end_time, recurrence_until)) WHERE ((recurrence_frequency IS NOT NULL) AND (recurrence_interval IS NOT NULL) AND (recurrence_until IS NOT NULL));
+
+
+--
+-- Name: idx_meetings_start_time; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_meetings_start_time ON public.meetings USING btree (start_time);
+
+
+--
+-- Name: user_group_member_user_id_idx; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX user_group_member_user_id_idx ON public.user_group_member USING btree (user_id);
+
+
+--
+-- Name: wire_user_service_idx; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX wire_user_service_idx ON public.wire_user USING btree (provider, service);
+
+
+--
+-- Name: wire_user update_user_updated_at; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER update_user_updated_at BEFORE UPDATE ON public.wire_user FOR EACH ROW EXECUTE FUNCTION public.update_updated_at();
+
+
+--
+-- Name: bot_conv bot_conv_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.bot_conv
+    ADD CONSTRAINT bot_conv_id_fkey FOREIGN KEY (id) REFERENCES public.wire_user(id) ON DELETE CASCADE;
+
+
+--
+-- Name: conversation_member conversation_member_conv_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.conversation_member
+    ADD CONSTRAINT conversation_member_conv_fkey FOREIGN KEY (conv) REFERENCES public.conversation(id) ON DELETE CASCADE;
+
+
+--
+-- Name: conversation_out_of_sync conversation_out_of_sync_conv_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.conversation_out_of_sync
+    ADD CONSTRAINT conversation_out_of_sync_conv_id_fkey FOREIGN KEY (conv_id) REFERENCES public.conversation(id) ON DELETE CASCADE;
+
+
+--
+-- Name: conversation conversation_parent_conv_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.conversation
+    ADD CONSTRAINT conversation_parent_conv_fkey FOREIGN KEY (parent_conv) REFERENCES public.conversation(id) ON DELETE CASCADE;
+
+
+--
+-- Name: user_group_member fk_user_group; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_group_member
+    ADD CONSTRAINT fk_user_group FOREIGN KEY (user_group_id) REFERENCES public.user_group(id) ON DELETE CASCADE;
+
+
+--
+-- Name: user_group_channel fk_user_group_channel; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_group_channel
+    ADD CONSTRAINT fk_user_group_channel FOREIGN KEY (user_group_id) REFERENCES public.user_group(id) ON DELETE CASCADE;
+
+
+--
+-- Name: local_conversation_remote_member local_conversation_remote_member_conv_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.local_conversation_remote_member
+    ADD CONSTRAINT local_conversation_remote_member_conv_fkey FOREIGN KEY (conv) REFERENCES public.conversation(id) ON DELETE CASCADE;
+
+
+--
+-- Name: subconversation subconversation_conv_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.subconversation
+    ADD CONSTRAINT subconversation_conv_id_fkey FOREIGN KEY (conv_id) REFERENCES public.conversation(id) ON DELETE CASCADE;
+
+
+--
+-- PostgreSQL database dump complete
+--
+

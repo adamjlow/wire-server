@@ -111,8 +111,9 @@ func NewHandler(c Config) http.Handler {
 }
 
 // Run currently supplies the first runnable startup slice on initialized
-// native schemas. PostgreSQL migrations, dependency/background initialization,
-// and business handlers remain required before this replacement can qualify.
+// native Cassandra schemas, applying native-compatible PostgreSQL migrations.
+// Dependency/background initialization and business handlers remain required
+// before this replacement can qualify.
 func Run(ctx context.Context, c Config) error {
 	if err := c.Validate(); err != nil {
 		return err

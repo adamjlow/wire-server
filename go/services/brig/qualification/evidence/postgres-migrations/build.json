@@ -1,0 +1,6 @@
+{
+  "source_revision": "0be6fff398470c5bca27bbcb8b22509e97bd6c97",
+  "binary_sha256": "7cf2b48202928b0d1debc7b090919af03cd100da864c1940203f8dd443f59bb9",
+  "toolchain": "go1.26.9",
+  "build_command": "CGO_ENABLED=0 GOTOOLCHAIN=local GOWORK=off go build -trimpath ./cmd/brig"
+}
