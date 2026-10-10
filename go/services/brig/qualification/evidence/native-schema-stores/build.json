@@ -1,0 +1,6 @@
+{
+  "source_revision": "06031e6988d9c7445969dae8e60f5c657098bc64",
+  "binary_sha256": "44517f81ee99be8e6484d25d454d523dad2f2d8a4b220ca2dc5938a9ceca2ee4",
+  "toolchain": "go1.26.9",
+  "build_command": "CGO_ENABLED=0 GOTOOLCHAIN=local GOWORK=off go test -tags=brig_storage_qualification -c"
+}

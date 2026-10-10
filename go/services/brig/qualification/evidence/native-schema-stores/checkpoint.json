@@ -1,0 +1,22 @@
+{
+  "scope": "Actual Go storage assertions on native-created schemas; no native Brig HTTP/token/password verification or e2e/switchback claim. HTTP wiring remains pending.",
+  "source_revision": "06031e6988d9c7445969dae8e60f5c657098bc64",
+  "test_binary_sha256": "44517f81ee99be8e6484d25d454d523dad2f2d8a4b220ca2dc5938a9ceca2ee4",
+  "quality_exit_code": 0,
+  "candidate_assertions_exit_code": 0,
+  "native_schema_utility_exit_code": 0,
+  "owned_cleanup_empty": true,
+  "files_sha256": {
+    "build.json": "e2943cc8395ab3698440056a2a0cae7648aca3b8dfa2ef51adc24b02efd1b478",
+    "go-check.log": "2717cf2d2d94713d0b75259cad7d4f86650175c63d5e0354febd9e850f80b71a",
+    "native-schema.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "native-schema.stdout": "cc864efeda24291a27d131638017dc6ba505257c127e9a2d093b7d77634c5c2a",
+    "result.json": "d9743b3a407e9f1e8199308411b9497416dadbbbb8759313fb8d8b1f4f67ca43",
+    "test.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "test.stdout": "673acedeb82efda4b972dc15e9139cc3697b5610daef26e8ffe137c8136ffa01"
+  },
+  "external_dependency_logs": {
+    "cassandra.log": "8fd3a6443718f7e5d41bdb05402a86898b9d11323bbfe1e8a9f45e03845cab4f",
+    "postgres.log": "3ee48835a7f8bfddd60bb9a936ad8a4eea01f1cfd268f23d83dbc8d91e3811ef"
+  }
+}
