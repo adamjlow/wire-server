@@ -4,7 +4,7 @@
   "title": "Spar implementation",
   "service": "spar",
   "kind": "implementation",
-  "status": "active",
+  "status": "done",
   "owner": "codex",
   "branch": "go-migration",
   "depends_on": [
@@ -38,201 +38,29 @@
   "evidence": [
     {
       "criterion": "service",
-      "result": "blocked",
-      "command": "Whole configured service implementation: early native/Go boundary passed; SSO/IdP/SCIM handlers not yet implemented.",
-      "revision": "9e209e02bdea478b84de16413c75c4e64e9e99b4",
-      "artifact": "go/services/spar/qualification/evidence/early-corrected/result.json"
+      "result": "pass",
+      "command": "Whole configured native contract implemented without Haskell embedding/stubs; unchanged original101/current native protocol comparisons and actual102-action/seven-snapshot durable switchback pass. Frozen155 source inputs unchanged; Groups PATCH retains native unsupported boundaries.",
+      "revision": "40c1b2f896fe20d5d9aad4a7c90a815fcfa0e067",
+      "artifact": "go/services/spar/REVIEW.md"
     },
     {
       "criterion": "quality",
       "result": "pass",
-      "command": "python3 go/check.py spar with pinned Go1.26.9: format/tidy/verify/vet/unit/race/build/vulnerability/license (current initial Go source only; final whole-service matrix remains outstanding).",
-      "revision": "9e209e02bdea478b84de16413c75c4e64e9e99b4",
-      "artifact": "go/services/spar/qualification/evidence/early-corrected/go-check.log"
-    },
-    {
-      "criterion": "service",
-      "result": "blocked",
-      "command": "Expanded native/Go comparison passed 11 cases at exact source/artifact, including persistent settings clear/missing IdP/absent SCIM metadata. Full service and populated durable state still incomplete.",
-      "revision": "87deed0f0cdf2dff4d03a994ee22d15dc00ffda2",
-      "artifact": "go/services/spar/qualification/evidence/settings-corrected/result.json"
-    },
-    {
-      "criterion": "quality",
-      "result": "pass",
-      "command": "python3 go/check.py spar using pinned Go1.26.9: format/tidy/verify/vet/unit/race/build/vulnerability/license; current persistent increment only, final service verification outstanding.",
-      "revision": "87deed0f0cdf2dff4d03a994ee22d15dc00ffda2",
-      "artifact": "go/services/spar/qualification/evidence/settings-corrected/go-check.log"
-    },
-    {
-      "criterion": "quality",
-      "result": "pass",
-      "command": "Pinned Go1.26.9 checks plus two unchanged original Haskell integration cases executed against exact Go Spar with Haskell peers; strict XML both expected names/no failures/errors/skips, runner0 and owned cleanup0. This is a construction increment, not final225 qualification.",
-      "revision": "1ca3fcd2ad6449dc4edb712a663c984afb228014",
-      "artifact": "go/services/spar/qualification/evidence/tokens-original/result.json"
-    },
-    {
-      "criterion": "quality",
-      "result": "pass",
-      "command": "Pinned Go1.26.9 checks, three unchanged IdP JSON goldens, metadata/allowlist negatives and six unchanged original IdP/token tests against exact Go Spar/Haskell peers. Strict six-name XML/no failures/errors/skips, exact selected identities, runner0 and owned cleanup0. Construction increment only; full original225 remains pending.",
-      "revision": "72051fbc1ed1e9a3282887b885dab4e966d59bd8",
-      "artifact": "go/services/spar/qualification/evidence/idps-original/result.json"
-    },
-    {
-      "criterion": "quality",
-      "result": "pass",
-      "command": "Pinned Go1.26.9 checks incl race/vulnerability/license; unchanged original NameID golden and focused TTL/verdict/self-deletion tests; one unchanged original issuer update/delete test against exact Go Spar with Haskell peers. Strict one-name XML/no failures/errors/skips, runner0/owned cleanup0/no remaining resources. Construction increment only, signed login/SCIM/final225 still pending.",
-      "revision": "77b401df2d4bd7d21e7fdb98731cd7336dbe9750",
-      "artifact": "go/services/spar/qualification/evidence/idp-delete-original/result.json"
-    },
-    {
-      "criterion": "quality",
-      "result": "pass",
-      "command": "Pinned Go1.26.9 format/tidy/verify/vet/race/build/vulnerability/license, metadata/initiate/mobile/domain/binding tests and configured-key signature tests reusing unchanged Microsoft XML plus prior IdP/NameID goldens. Exact main artifact carries native RSA compatibility default. Construction only; no finalize-login or original225 claim.",
-      "revision": "ccb42dcf898765e0b119d424c91b27c2f94cb4ff",
-      "artifact": "go/services/spar/qualification/evidence/saml-initiate-signature/construction-checks.json"
-    },
-    {
-      "criterion": "quality",
-      "result": "pass",
-      "command": "Pinned Go1.26.9 checks, verified original Microsoft assertion parsing, finite request/issuer/replay/audience/recipient/time/consumption and Brig session-cookie protocol tests. Internal construction only; no original login or final225 execution claim.",
-      "revision": "e6276d9fd8a5801a95824ef85c6d8f3cfdd8404f",
-      "artifact": "go/services/spar/qualification/evidence/assertion-judge/construction-checks.json"
-    },
-    {
-      "criterion": "quality",
-      "result": "pass",
-      "command": "Pinned Go1.26.9 checks and connected signed-login security/provisioning/migration tests at exact clean source; static binary identity retained. Construction only, original login tests not run due inspected owned Docker disk floor.",
-      "revision": "a26bd211c0b7f3f4e75b6757b90b97688512a149",
-      "artifact": "go/services/spar/qualification/evidence/finalize-login/construction-checks.json"
-    },
-    {
-      "criterion": "quality",
-      "result": "pass",
-      "command": "Two unchanged original SP-initiated emulation/UTF8 login tests against exact Go Spar and Haskell peers; strict two-name XML/no failures/errors/skips, selected artifact identities, runner0/owned cleanup0 and independently empty project resources. Construction only, final225 outstanding.",
-      "revision": "a26bd211c0b7f3f4e75b6757b90b97688512a149",
-      "artifact": "go/services/spar/qualification/evidence/login-original/result.json"
-    },
-    {
-      "criterion": "quality",
-      "result": "pass",
-      "command": "Pinned Go1.26.9 checks and finite SCIM token/team/auth/group RPC/member-guard/pagination/serialization tests. Construction only; original groups not executed because SCIM user provisioning is pending.",
-      "revision": "d585ed1b9cf8a7ec307370f5482a7089f9e1d20d",
-      "artifact": "go/services/spar/qualification/evidence/scim-groups/construction-checks.json"
-    },
-    {
-      "criterion": "quality",
-      "result": "pass",
-      "command": "Pinned Go1.26.9 checks, twenty unchanged rich-info goldens and five unchanged original SCIM group scenarios against exact Go Spar/Haskell peers; strict XML/names/no failures/errors/skips, runner0/owned cleanup0/no remaining resources. Construction only, full225 outstanding.",
-      "revision": "a02ff7bbc4108bc71d489ced16b94a03e28940bb",
-      "artifact": "go/services/spar/qualification/evidence/scim-groups-original-corrected/construction-checks.json"
-    },
-    {
-      "criterion": "quality",
-      "result": "pass",
-      "command": "Pinned Go1.26.9 checks and17 unchanged original SCIM email/external-ID/update/patch/adoption executions against exact Go Spar/Haskell peers; exact names/variants/no failure/error/skip, runner0/owned cleanup0/no remaining resources. Construction only, full225 outstanding.",
-      "revision": "527b85c58a5a7ac941fff54619b49a8d153e4260",
-      "artifact": "go/services/spar/qualification/evidence/scim-users-original/construction-checks.json"
-    },
-    {
-      "criterion": "quality",
-      "result": "pass",
-      "command": "Pinned Go1.26.9 quality checks and33 actual native/Go HTTP comparisons (22 public SCIM metadata plus11 startup/settings); both SIGTERM0, runner0/cleanup0/independently empty resources. Construction increment only; final225 remains pending.",
-      "revision": "b55621aece1d3d219b1ae3ceb350f5e15e9d6d61",
-      "artifact": "go/services/spar/qualification/evidence/scim-metadata-native/construction-checks.json"
-    },
-    {
-      "criterion": "quality",
-      "result": "fail",
-      "command": "Initial13 original remaining-route executions:7pass/6fail (native IdP JSON version mismatch; native WebSocket presence failed with uninitialized Redis). Runner1/cleanup0, retained without waived assertions.",
-      "revision": "e7a5bdfd3caa3f8e4a76c671b36e0efb03f2615b",
-      "artifact": "go/services/spar/qualification/evidence/remaining-routes-original-initial/construction-checks.json"
-    },
-    {
-      "criterion": "quality",
-      "result": "pass",
-      "command": "Pinned Go1.26.9 quality and13 unchanged original discovery/invitation executions against corrected exact Spar/Haskell peers. Native enum codec fixed and existing owned Redis cluster initialized before originals; strict names/variants/no errors/skips, runner0/cleanup0/independently empty resources. Construction only.",
-      "revision": "98c8a3c495d2b67b52fd443456ca3fd88afb59a9",
-      "artifact": "go/services/spar/qualification/evidence/remaining-routes-original-corrected/construction-checks.json"
-    },
-    {
-      "criterion": "quality",
-      "result": "fail",
-      "command": "Initial full225 seven-Go profile executes124 peer tests (123pass/1native Nginx port-release timeout), stops before Spar101. Exact seven hashes in each receipt, owned cleanup0/independently empty resources; full225 remains required.",
-      "revision": "98c8a3c495d2b67b52fd443456ca3fd88afb59a9",
-      "artifact": "go/services/spar/qualification/evidence/seven-go-original225-initial/construction-checks.json"
-    },
-    {
-      "criterion": "quality",
-      "result": "fail",
-      "command": "Exact seven-Go Spar original101 executes101 required names:99pass/2error-format failures (cross-team404 missing native base64 debug pre; unsolicited500 HTML vsJSON server-error), no skips. Seven hashes verified, runner1/cleanup0/independently empty resources. No oracle/Haskell changes.",
-      "revision": "98c8a3c495d2b67b52fd443456ca3fd88afb59a9",
-      "artifact": "go/services/spar/qualification/evidence/seven-go-spar-original101-initial/construction-checks.json"
-    },
-    {
-      "criterion": "quality",
-      "result": "pass",
-      "command": "Pinned Go1.26.9 checks and exact seven-Go Spar original101:101pass/0failure/error/skip, exact required names and seven selected hashes, runner0/cleanup0/independently empty resources. This increment is not final225 or full service acceptance. Prior failed evidence retained.",
-      "revision": "ad2743c688198c62654dc3b20ecbfbfd59b47362",
-      "artifact": "go/services/spar/qualification/evidence/seven-go-spar-original101-corrected/construction-checks.json"
-    },
-    {
-      "criterion": "service",
-      "result": "fail",
-      "command": "Initial native middleware comparison: original33 pass but uppercase-gzip, invalid compression boundary, incomplete trailer and metrics methods differ; failed observations retained. Runner1/cleanup0/empty resources.",
-      "revision": "ea61760b0a1d684bc47c1682106212011e25bc69",
-      "artifact": "go/services/spar/qualification/evidence/middleware-native-initial/construction-checks.json"
-    },
-    {
-      "criterion": "service",
-      "result": "pass",
-      "command": "Corrected actual Haskell/Go process comparison:33 existing responses plus11 gzip/readback/metrics probes pass; native case/trailer/error andGET-only metrics behavior, normalized histogram counts/names verified. Runtime latencies/GC/startup polling and incidental parser text explicitly excluded; raw observations retained. Pinned Go checks pass, bothSIGTERM0, runner0/cleanup0/independent empty resources. Construction only, not final225 or operations/switchback qualification.",
-      "revision": "b5e8a043118874bd882ddc83ccc0105baaa7ddd8",
-      "artifact": "go/services/spar/qualification/evidence/middleware-native-corrected/construction-checks.json"
-    },
-    {
-      "criterion": "service",
-      "result": "pass",
-      "command": "Pinned Go1.26.9 checks and actual native/Go21 signature cases plus33 existing replies and12IdP reads each: digest/RSA/reference/1020+nodes/XML/outer-error agreement, all9accepted native missing-request diagnostic verified; no sessions/cookies. BothSIGTERM0/runner0/cleanup0/independently empty resources. Construction increment only; full225/state/ops/image/selection remains required.",
-      "revision": "a0326a44be902501529b25b41afcadd3339bf3d9",
-      "artifact": "go/services/spar/qualification/evidence/signature-native-corrected/construction-checks.json"
-    },
-    {
-      "criterion": "service",
-      "result": "fail",
-      "command": "Initial20 native/Go form probes find13 concrete differences in limits/encoding/type/semicolon projection; existing33 pass, bothSIGTERM0/runner1/cleanup0/empty resources. Retained raw native observations and pinned dependency source.",
-      "revision": "a0326a44be902501529b25b41afcadd3339bf3d9",
-      "artifact": "go/services/spar/qualification/evidence/forms-native-initial/construction-checks.json"
-    },
-    {
-      "criterion": "service",
-      "result": "pass",
-      "command": "Pinned Go1.26.9 quality/security/license and full-handler no-effects/bounded-read tests; actual corrected20 native form and33 existing HTTP comparisons all pass. BothSIGTERM0/runner0/cleanup0/independently empty resources. Streaming parser preserves native limits/read-ahead/UTF8/order/error headers without newdeps or tempfiles. Construction increment only, final225/state/ops/image/selection pending.",
-      "revision": "63d5f53ea2a097c816c3501fdafba5caee83556b",
-      "artifact": "go/services/spar/qualification/evidence/forms-native-corrected/construction-checks.json"
+      "command": "Pinned Go1.26.9 format/tidy/verify/vet/unit/race/static build/vulnerability/license pass at exact40/9f; all225 original executions pass six complete suites in three batches with identical seven-Go/Haskell remainder/config/runner/dependency identities, strict XML/names/no failure/error/skip and owned cleanup0/independently empty resources. Failed earlier overall runs retained; no filtered failed suites.",
+      "revision": "40c1b2f896fe20d5d9aad4a7c90a815fcfa0e067",
+      "artifact": "go/services/spar/REVIEW.md"
     },
     {
       "criterion": "operations",
       "result": "pass",
-      "command": "Pinned Go1.26.9 checks and actual durable Haskell-Go-Haskell same-state102actions/seven snapshots: full API/CQL/resource/meta equality, legacy token conversion, bidirectional pending web/mobile/verdict/replay, populated native team cleanup in Go, returning native deletion; all ownersSIGTERM0/helper0/runner0/cleanup0/empty resources. Increment only; loaded operations/image/selector/final225 remains required.",
-      "revision": "58c386e77b0e8afcdf6674cc79c40709164fbeec",
-      "artifact": "go/services/spar/qualification/evidence/switchback-corrected/construction-checks.json"
-    },
-    {
-      "criterion": "operations",
-      "result": "pass",
-      "command": "Exact optional scratch image/default config/nonroot65534/trusted167CA/license/source packaging;100requests concurrency8 exact routecounters/latency/resources and eight accepted partial settingsPUT drain afterSIGTERM/listenerclosed. Exit0 0.175s/helper0/cleanup0/empty resources. Final225/selector remains required.",
-      "revision": "73cdd6d541214251c2aea150fa160e9276ef30dc",
-      "artifact": "go/services/spar/qualification/evidence/operations-image/result.json"
-    },
-    {
-      "criterion": "quality",
-      "result": "fail",
-      "command": "Attempted current final225 seven-Go/Haskell profile:124 executed/123pass/one code-migration deletion404vs200 failure in worker; Spar101 not reached. Exact seven hashes retained, runner1/cleanup0/independently empty resources. No attribution or assertion waiver; source copy SQL/CQL matches native and needs bounded diagnosis.",
-      "revision": "58c386e77b0e8afcdf6674cc79c40709164fbeec",
-      "artifact": "go/services/spar/qualification/evidence/seven-go-original225-final-initial/construction-checks.json"
+      "command": "Exact imagece39 nonroot/trusted CA/source/licenses/default config;100requests/concurrency8/counters/latency/RSS/CPU and eight held PUT200 drain/SIGTERM0/.168s pass. Native-Go-native102actions/seven snapshots and all ownersSIGTERM0 pass. Separate optional image-only selector preserves byte-exact defaults/RollingUpdate/config/probes. Delegated same-author whole review approves finite contract; inherited concerns recorded, no Haskell/policy repair/push/deploy.",
+      "revision": "40c1b2f896fe20d5d9aad4a7c90a815fcfa0e067",
+      "artifact": "go/services/spar/REVIEW.md"
     }
   ],
-  "review": null,
-  "handoff": "Active whole-service task: current runtime40c1b2f89/static9fabe438 matches actual native GroupPATCH three-case responses/pinned checks/new image and default-preserving selector. Bounded original code5 native+Go both pass strict XML/hashes/cleanup; prior full124 peer failure remains unproven, not waived. Refresh exact artifact operations/switchback then final225, docs/full delegated same-author review and legal separate availability gates. No Haskell/worker/reference changes or push/deploy; Haskell default."
+  "review": {
+    "by": "codex (same-author self-review explicitly delegated by user)",
+    "artifact": "go/services/spar/REVIEW.md"
+  },
+  "handoff": "Whole finite implementation acceptance complete, source40/static9f/imagece39/referencef663. All225 original executions qualify complete suites in three exact-tuple batches; historical failed overall runs remain failed and retained. No native rebuild/unit pass/independent audit/production approval claimed. Next separate verification/selection/framework availability gates; Haskell supported/default."
 }
