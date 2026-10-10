@@ -4,9 +4,9 @@
   "title": "Default-preserving worker selector and factual reference count correction",
   "service": "background-worker",
   "kind": "contract-change",
-  "status": "queued",
-  "owner": null,
-  "branch": null,
+  "status": "active",
+  "owner": "codex",
+  "branch": "go-background-worker-selector",
   "depends_on": [
     "background-worker-contract"
   ],
