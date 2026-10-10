@@ -334,6 +334,7 @@ func TestNativeDigestAndLargeAssertionCompatibility(t *testing.T) {
 			}
 		})
 	}
+	runSwitchbackFixture(t)
 }
 
 func TestNativeSuccessfulReferenceSelection(t *testing.T) {
