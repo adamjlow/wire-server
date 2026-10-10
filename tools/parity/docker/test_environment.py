@@ -57,6 +57,8 @@ class EnvironmentTests(unittest.TestCase):
         self.assertEqual({},spec['volumes']['dns-server-data'])
         self.assertNotIn('ports',dns)
         self.assertTrue(all(n['internal'] for n in spec['networks'].values()))
+        self.assertEqual({'nofile':{'soft':8192,'hard':8192}},spec['services']['runner']['ulimits'])
+        self.assertTrue(all('ulimits' not in service for name,service in spec['services'].items() if name!='runner'))
 
     def test_peer_b_storage_queues_and_ports_are_isolated_from_a(self):
         original={'brig':{'port':8082},'cassandra':{'keyspace':'brig_test'}}

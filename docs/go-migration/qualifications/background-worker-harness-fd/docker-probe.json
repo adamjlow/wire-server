@@ -1,0 +1,25 @@
+{
+  "args": [
+    "docker",
+    "run",
+    "--rm",
+    "--network=none",
+    "--read-only",
+    "--user=65534:65534",
+    "--cap-drop=ALL",
+    "--security-opt=no-new-privileges",
+    "--memory=256m",
+    "--pids-limit=128",
+    "--ulimit=nofile=8192:8192",
+    "--label",
+    "wire.migration.owner=background-worker-high-fd-probe",
+    "--entrypoint",
+    "/nix/store/60m4rxhg2fldqaak400c0lry96ijrzqn-python3-3.13.13/bin/python3",
+    "-i",
+    "sha256:d0301bbb18ca37904b0c9693725acf6d3ab19b4203f8bda23be3508aabf16f8e",
+    "-"
+  ],
+  "exit_code": 0,
+  "stdout": "",
+  "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 1.004s\n\nOK\n"
+}
