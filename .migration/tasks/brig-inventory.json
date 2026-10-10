@@ -4,9 +4,9 @@
   "title": "Inventory whole Brig boundary and reusable original tests",
   "service": "brig",
   "kind": "discovery",
-  "status": "queued",
-  "owner": null,
-  "branch": null,
+  "status": "active",
+  "owner": "codex",
+  "branch": "go-migration",
   "depends_on": [
     "spar-completion"
   ],
@@ -33,5 +33,5 @@
   ],
   "evidence": [],
   "review": null,
-  "handoff": "Queued first Brig discovery; whole-service goal active, Haskell default, no candidate or test pass claim."
+  "handoff": "Brig inventory claimed; read actual source and discover original compiled tests before freezing finite contract/harness requirements."
 }
