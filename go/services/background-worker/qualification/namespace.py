@@ -20,6 +20,9 @@ try:
     worker=configs['background-worker']
     worker['backgroundWorker']['port']=16189
     worker['federatorInternal']['port']=16197
+    if len(sys.argv)==2 and sys.argv[1]=='switchback':
+        worker['jobs'].update({'visibilityTimeout':'5s','jobHeartbeatInterval':'1s','gracefulShutdownTimeout':'2s'})
+        worker['meetingsCleanup']['schedule']='0 0 1 1 *'
     out=Path('/reports/image-configs')
     for name,config in [('background-worker',worker),('galley',configs['galley'])]:
         directory=out/name/'conf';directory.mkdir(parents=True)
