@@ -188,8 +188,8 @@ func TestOwnedDurableStores(t *testing.T) {
 		}
 	}
 	clients := clientStore{cassandra}
-	got, err := clients.get(ctx, clientOwner, "00001")
-	if err != nil || got == nil || got.ID != "1" || got.Class == nil || *got.Class != 2 || len(got.Capabilities) != 2 || len(got.PublicKeys) != 4 || !got.Created.Equal(created) {
+	gotClient, err := clients.get(ctx, clientOwner, "00001")
+	if err != nil || gotClient == nil || gotClient.ID != "1" || gotClient.Class == nil || *gotClient.Class != 2 || len(gotClient.Capabilities) != 2 || len(gotClient.PublicKeys) != 4 || !gotClient.Created.Equal(created) {
 		t.Fatal("actual native client/MLS fields not preserved", err)
 	}
 	listed, err := clients.list(ctx, clientOwner)

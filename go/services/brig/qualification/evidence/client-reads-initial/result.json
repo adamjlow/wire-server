@@ -1,0 +1,11 @@
+{
+  "source_revision": "cf74d4287d6e512a0e87ce2dbee0f69fc41fafd8",
+  "result": "failed",
+  "stage": "tagged storage test compilation",
+  "reason": "got local name already has sessionCookie type",
+  "standard_go_checks": "pass",
+  "sdk_controller_exit_code": 1,
+  "network_cleanup_exit_code": 0,
+  "owned_containers_remaining": false,
+  "owned_networks_remaining": false
+}
