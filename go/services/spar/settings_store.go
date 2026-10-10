@@ -57,7 +57,7 @@ func decodeStoredCertificate(blob []byte) (*x509.Certificate, error) {
 func (s cassandraStore) requireIdP(ctx context.Context, id gocql.UUID) error {
 	// Read the complete typed row, as the reference does before accepting the
 	// default. Missing or malformed rows must never authorize a setting change.
-	var stored, team gocql.UUID
+	var stored, team *gocql.UUID
 	var issuer, uri string
 	var head []byte
 	var tail [][]byte
@@ -71,6 +71,9 @@ func (s cassandraStore) requireIdP(ctx context.Context, id gocql.UUID) error {
 	}
 	if err != nil {
 		return err
+	}
+	if stored == nil || team == nil {
+		return errors.New("invalid stored IdP row")
 	}
 	if version != nil && *version != 1 && *version != 2 {
 		return errors.New("invalid stored IdP API version")
@@ -111,6 +114,9 @@ func (s cassandraStore) userCreated(ctx context.Context, id gocql.UUID) (*time.T
 	err := s.read(ctx, "SELECT created_at, last_updated_at, email_type, email_primary FROM scim_user_times WHERE uid = ?", id).Scan(&created, &updated, &emailType, &emailPrimary)
 	if errors.Is(err, gocql.ErrNotFound) {
 		return nil, nil
+	}
+	if err == nil && (created == nil || updated == nil) {
+		return nil, errors.New("invalid stored SCIM metadata")
 	}
 	return created, err
 }

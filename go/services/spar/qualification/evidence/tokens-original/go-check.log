@@ -1,0 +1,11 @@
+all modules verified
+ok  	github.com/adamjlow/wire-server/go/services/spar	1.018s
+?   	github.com/adamjlow/wire-server/go/services/spar/cmd/spar	[no test files]
+all modules verified
+No vulnerabilities found.
+W1010 10:06:43.948131  191814 library.go:394] module github.com/adamjlow/wire-server/go/services/spar has empty version, defaults to HEAD. The license URL may be incorrect. Please verify!
+github.com/adamjlow/wire-server/go/services/spar,https://github.com/adamjlow/wire-server/blob/HEAD/go/services/spar/LICENSE,AGPL-3.0
+github.com/apache/cassandra-gocql-driver/v2,https://github.com/apache/cassandra-gocql-driver/blob/v2.1.2/LICENSE,Apache-2.0
+go.yaml.in/yaml/v3,https://github.com/yaml/go-yaml/blob/v3.0.5/LICENSE,MIT
+gopkg.in/inf.v0,https://github.com/go-inf/inf/blob/v0.9.1/LICENSE,BSD-3-Clause
+Go module checks passed: spar; Go 1.26.9

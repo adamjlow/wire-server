@@ -1,0 +1,1 @@
+<?xml version='1.0' ?><testsuites name="wire-server"><testsuite name="integration" tests="2" failures="0" time="1.391861232"><testcase name="Spar.testSparCreateScimTokenNoName" time="0.833555075" /><testcase name="Spar.testSparCreateScimTokenWithName" time="0.558306157" /></testsuite></testsuites>

@@ -64,10 +64,21 @@ func readTokenRows(query *gocql.Query) ([]tokenRow, error) {
 	rows := []tokenRow{}
 	for {
 		var row tokenRow
-		var name *string
-		if !iter.Scan(&row.key, &row.info.Team, &row.info.ID, &row.info.CreatedAt, &row.info.IdP, &row.info.Description, &name) {
+		var key, description, name *string
+		var team, id *gocql.UUID
+		var created *time.Time
+		if !iter.Scan(&key, &team, &id, &created, &row.info.IdP, &description, &name) {
 			break
 		}
+		if key == nil || team == nil || id == nil || created == nil || description == nil {
+			_ = iter.Close()
+			return nil, errors.New("invalid stored SCIM token row")
+		}
+		row.key = *key
+		row.info.Team = *team
+		row.info.ID = *id
+		row.info.CreatedAt = *created
+		row.info.Description = *description
 		row.info.Name = row.info.ID.String()
 		if name != nil {
 			row.info.Name = *name

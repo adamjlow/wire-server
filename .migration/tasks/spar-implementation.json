@@ -63,8 +63,15 @@
       "command": "python3 go/check.py spar using pinned Go1.26.9: format/tidy/verify/vet/unit/race/build/vulnerability/license; current persistent increment only, final service verification outstanding.",
       "revision": "87deed0f0cdf2dff4d03a994ee22d15dc00ffda2",
       "artifact": "go/services/spar/qualification/evidence/settings-corrected/go-check.log"
+    },
+    {
+      "criterion": "quality",
+      "result": "pass",
+      "command": "Pinned Go1.26.9 checks plus two unchanged original Haskell integration cases executed against exact Go Spar with Haskell peers; strict XML both expected names/no failures/errors/skips, runner0 and owned cleanup0. This is a construction increment, not final225 qualification.",
+      "revision": "1ca3fcd2ad6449dc4edb712a663c984afb228014",
+      "artifact": "go/services/spar/qualification/evidence/tokens-original/result.json"
     }
   ],
   "review": null,
-  "handoff": "Progress: SCIM token create/list/name/delete routes compile with real logged dual-index Cassandra storage, plaintext-precedence conversion, sorted lists, native v6/v7 vs v8 responses, crypto tokens and Brig/Galley permission+reauthentication RPCs. Pinned Go checks pass, including permission intersection/reauth-code-denial/legacy precedence negatives. Preparing two unchanged original token tests (NoName/WithName) in owned full dependency Docker environment; execution pending. SAML/IdP CRUD/SCIM users/groups and final225/gaps/ops/switchback/image/selector incomplete. Compatibility null."
+  "handoff": "Progress: SCIM token management, persistent logged dual indices, legacy precedence and Brig/Galley authorization/reauthentication implemented. At source1ca3fcd2ad6449dc4edb712a663c984afb228014, both original NoName/WithName tests pass with actual Go Spar/Haskell peers; strict XML/selected hashes/checks/runner0/owned cleanup0 retained. Added native required-null CQL row decoding after that run: missing mandatory token/IdP/metadata columns now reject instead of becoming zero values (normal routes still need final exact-artifact batch validation). Pinned checks for this follow-up pass. Next complete IdP model/CRUD using original XML cert codec and source handles/indexes/replacement semantics, then SAML/SCIM users/groups. Final225/trust+state gaps/ops/durable switchback/image/selector incomplete; compatibility null."
 }
