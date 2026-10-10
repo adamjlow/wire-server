@@ -1,0 +1,50 @@
+{
+  "result": "fail",
+  "source_revision": "c7729c92ecc5ff0f92c8e987b1c906bb1aedfe09",
+  "candidate_revision": "58c386e77b0e8afcdf6674cc79c40709164fbeec",
+  "candidate_sha256": "d8db1d29203485acc66f48ab2e464d5e3ff5b150f9e11e49888f434d7ebe085d",
+  "cases": {
+    "proxy": {
+      "executed": 5,
+      "failure": 0,
+      "error": 0,
+      "skipped": 0
+    },
+    "cargohold": {
+      "executed": 27,
+      "failure": 0,
+      "error": 0,
+      "skipped": 0
+    },
+    "gundeck": {
+      "executed": 40,
+      "failure": 0,
+      "error": 0,
+      "skipped": 0
+    },
+    "federator": {
+      "executed": 5,
+      "failure": 0,
+      "error": 0,
+      "skipped": 0
+    },
+    "background-worker": {
+      "executed": 47,
+      "failure": 1,
+      "error": 0,
+      "skipped": 0
+    }
+  },
+  "executed": 124,
+  "Spar_original101_executed": false,
+  "failure": "Migration.ConversationCodes.testConversationCodesMigration[has-password=true][with-zhost=false] expected404 afterdelete, actualnativeGalley200/code remains. Attribution not established: current GoWorker copy SQL and CQL match native source including stale-page upsert race. No Haskell/reference/test fix or assertion waiver. Need finite native/Go original-code migration diagnosis; prior completed124 tuple evidence retained.",
+  "runner_exit_code": 1,
+  "cleanup_exit_code": 0,
+  "post_cleanup": {
+    "containers": [],
+    "networks": [],
+    "volumes": []
+  },
+  "baseline_log_sha256": "3781b6abd59b0d88c7b21770565ff011f9e11367536451df778dbe9f894e4095",
+  "scope": "Attempted final225, actual124/123pass/1fail; no final wholeSpar qualification."
+}

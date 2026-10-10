@@ -1,0 +1,48 @@
+<?xml version='1.0' ?><testsuites name="wire-server"><testsuite name="integration" tests="47" failures="1" time="765.585990655"><testcase name="AdminlessGroups.testAdminlessJobCancellationIsTeamScoped" time="21.374027897" /><testcase name="AdminlessGroups.testAdminlessJobsCancelledOnFeatureDisable" time="15.945824085" /><testcase name="AdminlessGroups.testAdminlessJobsRecreatedOnFeatureConfigChange" time="21.659262024" /><testcase name="AdminlessGroups.testAdminlessReplaceMembers" time="1.041810729" /><testcase name="AdminlessGroups.testAdminlessReplaceMembersAddsAdmin" time="0.434810665" /><testcase name="AdminlessGroups.testAdminlessReplaceMembersAddsEligibleMember" time="0.33785777" /><testcase name="AdminlessGroups.testAdminlessSetupAutopromotesWithRemoteMembers" time="2.961223607" /><testcase name="AdminlessGroups.testAdminlessSetupDeletesWithOriginAndRemoteMembers" time="1.4642006" /><testcase name="AdminlessGroups.testAdminlessSetupDeletesWithSystemEventAndRemoteMembers" time="1.521548049" /><testcase name="AdminlessGroups.testAdminlessSetupMemberUpdateAfterAdminLeaves" time="0.159546871" /><testcase name="AdminlessGroups.testAdminlessSetupOnFeatureEnable" time="5.245315646" /><testcase name="AdminlessGroups.testAdminlessSetupSendsReminderWithOriginUserAndRemoteMembers" time="10.883464098" /><testcase name="AdminlessGroups.testAdminlessSetupSendsReminderWithRemoteMembers" time="10.654541894" /><testcase name="AdminlessGroups.testAdminlessSetupSystemMemberUpdate" time="0.296397994" /><testcase name="AdminlessGroups.testOnLastAdminLeaveFeatureDisabled" time="0.336957993" /><testcase name="AdminlessGroups.testOnLastAdminLeaveNoEligibleMembersExist" time="10.955518184" /><testcase name="AdminlessGroups.testOnLastAdminLeaveReturnEligibleMembers" time="1.450069153" /><testcase name="AdminlessGroups.testOnLastAdminLeaveReturnsEligibleMembersForGroupType[channel=false]" time="0.230153808" /><testcase name="AdminlessGroups.testOnLastAdminLeaveReturnsEligibleMembersForGroupType[channel=true]" time="0.227187447" /><testcase name="AdminlessGroups.testOnLastAdminSelfDeletionAutopromotes" time="0.348564366" /><testcase name="AdminlessGroups.testOnLastAdminTeamMemberDeletionAutopromotes[channel=false]" time="0.356464393" /><testcase name="AdminlessGroups.testOnLastAdminTeamMemberDeletionAutopromotes[channel=true]" time="0.353009771" /><testcase name="AdminlessGroups.testPersonalUserLastAdminLeaveReturnsAdminlessConversation" time="0.66249822" /><testcase name="Events.testBackendPusherRecoversFromQueueDeletion" time="1.774559376" /><testcase name="Events.testEventsDeadLettered" time="62.3756932" /><testcase name="Events.testEventsDeadLetteredWithReconnect" time="5.632932996" /><testcase name="Events.testTransientEventsDoNotTriggerDeadLetters" time="61.079209225" /><testcase name="Federation.testNotificationsForOfflineBackends" time="3.823041584" /><testcase name="Meetings.testMeetingCleanup" time="44.286935878" /><testcase name="Migration.BlockList.testBlockListMigration" time="3.555782989" /><testcase name="Migration.Conversation.testMigrationToPostgresMLS" time="29.415990457" /><testcase name="Migration.Conversation.testMigrationToPostgresProteus" time="151.660941433" /><testcase name="Migration.ConversationCodes.testConversationCodesMigrationExpiration" time="26.795860357" /><testcase name="Migration.ConversationCodes.testConversationCodesMigration[has-password=false][with-zhost=false]" time="18.127665848" /><testcase name="Migration.ConversationCodes.testConversationCodesMigration[has-password=false][with-zhost=true]" time="27.616789741" /><testcase name="Migration.ConversationCodes.testConversationCodesMigration[has-password=true][with-zhost=false]" time="13.707146186"><failure>assertion failure:
+Actual:
+200
+Expected:
+404
+
+call stack: 
+1. assertFailure at test/Testlib/Assertions.hs:123
+
+2. shouldMatchWithMsg at test/Testlib/Assertions.hs:92
+
+3. shouldMatch at test/Testlib/Assertions.hs:219
+
+4. shouldMatchInt at test/Testlib/HTTP.hs:155
+
+5. assertStatus at test/Test/Migration/ConversationCodes.hs:113
+
+
+
+request as command line: 
+curl -X &#39;GET&#39; &#39;http://127.0.0.1:12085/v19/conversations/28074d7f-8019-422c-b1e9-1baa30cca5cf/code?cnv=28074d7f-8019-422c-b1e9-1baa30cca5cf&#39; -H &#39;Request-Id: Migration.ConversationCodes.testConversationCodesMigration[has-password=true][with-zhost=false]__GET_/v19/conversations/28074d7f-8019-422c-b1e9-1baa30cca5cf/code__247&#39; -H &#39;Z-Connection: conn&#39; -H &#39;Z-User: c9a8e966-e324-4cf5-96c0-0b16b2de42f5&#39;
+request: 
+GET http://127.0.0.1:12085/v19/conversations/28074d7f-8019-422c-b1e9-1baa30cca5cf/code?cnv=28074d7f-8019-422c-b1e9-1baa30cca5cf
+request headers: 
+Request-Id: Migration.ConversationCodes.testConversationCodesMigration[has-password=true][with-zhost=false]__GET_/v19/conversations/28074d7f-8019-422c-b1e9-1baa30cca5cf/code__247
+Z-Connection: conn
+Z-User: c9a8e966-e324-4cf5-96c0-0b16b2de42f5
+request body:
+
+response status: 200
+response headers:
+Transfer-Encoding: chunked
+Date: Sat, 10 Oct 2026 16:01:40 GMT
+traceparent: 00-768bf7ed1c013fe262cbcda21e180142-3f7a29aabbee4b53-01
+tracestate: 
+Content-Encoding: gzip
+Content-Type: application/json;charset=utf-8
+Vary: Accept-Encoding
+response body:
+{
+    &quot;code&quot;: &quot;2FIePsqyMHw7mDayGAcZ&quot;,
+    &quot;has_password&quot;: true,
+    &quot;key&quot;: &quot;MRqNk622nmoYY3J0WwmW&quot;,
+    &quot;uri&quot;: &quot;https://account.wire.com/conversation-join/?key=MRqNk622nmoYY3J0WwmW&amp;code=2FIePsqyMHw7mDayGAcZ&quot;
+}
+
+Set WIRE_INTEGRATION_TEST_VERBOSITY=1 if you want to see complete trace of the HTTP traffic in curl pseudo-syntax.
+</failure></testcase><testcase name="Migration.ConversationCodes.testConversationCodesMigration[has-password=true][with-zhost=true]" time="18.936294604" /><testcase name="Migration.DomainRegistration.testDomainRegistrationMigration" time="17.268611882" /><testcase name="Migration.PasswordReset.testPasswordResetMigration" time="14.385603578" /><testcase name="Migration.TeamFeatures.testTeamFeaturesMigration" time="22.886661414" /><testcase name="Migration.User.testMigrationOfInvalidUsers" time="5.685106067" /><testcase name="Migration.User.testMigrationOfUsersWithHandleDisputes" time="15.646198645" /><testcase name="Migration.User.testReindexingUsersDuringMigration" time="26.849607418" /><testcase name="Migration.User.testUserMigrationToPostgres" time="75.024954126" /><testcase name="UserGroup.testUserGroupAddUsersToGroupWithChannels" time="3.279438167" /><testcase name="UserGroup.testUserGroupSmoke" time="5.21671886" /><testcase name="UserGroup.testUserGroupUpdateChannelsSucceeds" time="1.65399136" /></testsuite></testsuites>

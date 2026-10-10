@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "service": "cargohold",
+  "base_image": "quay.io/wire/integration@sha256:f5db439022d1c0ccf071c25f9c0d132ed21a9e5e3647db59c593d33614bc4f27",
+  "required_tests": [
+    "Cargohold.API.testSimpleRoundtrip",
+    "Cargohold.API.testDownloadWithAcceptHeader",
+    "Cargohold.API.testSimpleTokens",
+    "Cargohold.API.testSimpleS3ClosedConnectionReuse",
+    "Cargohold.API.testDownloadURLOverride",
+    "Cargohold.API.testUploadCompatibility",
+    "Cargohold.API.testRemoteDownloadWrongDomain",
+    "Cargohold.API.testRemoteDownloadNoAsset",
+    "Cargohold.API.testRemoteDownloadShort",
+    "Cargohold.API.testRemoteDownloadLong",
+    "Cargohold.API.V3.testSimpleRoundtrip",
+    "Cargohold.API.V3.testUploadWrongContentLength",
+    "Cargohold.API.Federation.testGetAssetAvailablePublic",
+    "Cargohold.API.Federation.testGetAssetAvailablePrivate",
+    "Cargohold.API.Federation.testGetAssetNotAvailable",
+    "Cargohold.API.Federation.testGetAssetWrongToken",
+    "Cargohold.API.Federation.testLargeAsset",
+    "Cargohold.API.Federation.testStreamAsset",
+    "Cargohold.API.Federation.testStreamAssetNotAvailable",
+    "Cargohold.API.Federation.testStreamAssetWrongToken",
+    "Cargohold.AssetUpload.testAssetUploadVerifiedUser",
+    "Cargohold.AssetUpload.testAssetUploadUnknownUser",
+    "Cargohold.AssetUpload.testUploadAssetEphemeralUser",
+    "Cargohold.AssetUpload.testUploadAssetFileSizeLimit",
+    "Cargohold.AssetUpload.testUploadAssetFileSizeLimitStrict",
+    "Cargohold.AssetDownload.testDownloadAsset",
+    "Cargohold.AssetDownload.testDownloadAssetMultiIngressS3DownloadUrl"
+  ],
+  "candidate": {
+    "path": "/candidate/cargohold",
+    "sha256": "1838097eef9dba908c76ce893dbecd4224a2e1ac78c9ad126c8a56033dd655e1"
+  },
+  "config_sha256": "d8834dad54e1f851e689ac00691cd527aac69e0e9ce00baf149835433812c73c",
+  "e2e_executed": true,
+  "result": "pass",
+  "implementations": {
+    "spar": {
+      "implementation": "go",
+      "path": "/candidate/spar",
+      "sha256": "d8db1d29203485acc66f48ab2e464d5e3ff5b150f9e11e49888f434d7ebe085d"
+    },
+    "background-worker": {
+      "implementation": "go",
+      "path": "/candidate/background-worker",
+      "sha256": "9a3157e2f61a3406e4923b1a5e569f2ad0f03e50ccdad25b4c7f43d22f3bc658"
+    },
+    "federator": {
+      "implementation": "go",
+      "path": "/candidate/federator",
+      "sha256": "fbe1d6d62762e79da64a15a6e06af9ce7448ab2ace0ca33530ec261aa46a4595"
+    },
+    "gundeck": {
+      "implementation": "go",
+      "path": "/candidate/gundeck",
+      "sha256": "a50512ef30d7fa9ddf92c2c1933e69769d6691e08cdfbe9f7c4f2d266071f46c"
+    },
+    "cannon": {
+      "implementation": "go",
+      "path": "/candidate/cannon",
+      "sha256": "ced2d1923a1c456a5e4025b10d699707f1e302115bfd17ffea1e092552da39fa"
+    },
+    "cargohold": {
+      "implementation": "go",
+      "path": "/candidate/cargohold",
+      "sha256": "1838097eef9dba908c76ce893dbecd4224a2e1ac78c9ad126c8a56033dd655e1"
+    },
+    "proxy": {
+      "implementation": "go",
+      "path": "/candidate/proxy",
+      "sha256": "abf252dbe14cdb44777c994387a3a99df7e0906fbd21c514ee698d3644da7594"
+    },
+    "wire-server-enterprise": {
+      "implementation": "haskell",
+      "path": "/nix/store/fcm9yzhyyc1p653a36fj1l5mw0znwip4-wire-server-enterprise/bin/wire-server-enterprise",
+      "sha256": "084c532621fd19cb229b884196f3e3ce59e96f3c34c92156499243952bb9fd4c"
+    },
+    "stern": {
+      "implementation": "haskell",
+      "path": "/nix/store/q34cnzy5f0q5fm2m32hq73gz9da0gy9y-stern/bin/stern",
+      "sha256": "3f2c71bf87baba43bfc9c97dc1f53b29e290b536c395c267f9b76a8ef04be7e7"
+    },
+    "galley": {
+      "implementation": "haskell",
+      "path": "/nix/store/fbfpq5phd97caxsgjym3x7wpsif7pvx9-galley/bin/galley",
+      "sha256": "b4c0b3e23dee8006aeda611b6a80b6c6fd032176d96c028d3f41a4aa30d0f436"
+    },
+    "brig": {
+      "implementation": "haskell",
+      "path": "/nix/store/f6l2f0l8l2r6z9jbg937q96k6056iqfn-brig/bin/brig",
+      "sha256": "c45a40da63268712a7cacdbd884287fa3dc93cec179d70323d3f22f7d5cdf1ca"
+    }
+  },
+  "process_exit_code": 0,
+  "validated_report": {
+    "tests": 27,
+    "sha256": "61461a3b76932a5b69eb5c3d898edea91d4cb0201d94f24bd6d26dd334d2594c"
+  }
+}
