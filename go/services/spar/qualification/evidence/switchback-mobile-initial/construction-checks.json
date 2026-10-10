@@ -1,0 +1,7 @@
+{
+  "result": "fail",
+  "source_revision": "08e76020700a1e12ddc512d33ec985762039b7fb",
+  "candidate_revision": "63d5f53ea2a097c816c3501fdafba5caee83556b",
+  "observations_sha256": "31fa5faae70d83759659bf976aaa759f4e58850ab52f4ad68aa33e5e63b0f262",
+  "scope": "Same-state native-Go-native full resource surfaces and legacy token conversion matched. Native pending web/mobile completed in Go, replay denied; native return consumed Go web, then rejected cookie substituted in URI path with400bad-success-redirect. Go accepted that raw-space path. Actual concrete native URI mismatch; correct Go URI parse/serialization and use native supported query-based cookie placeholder for successful mobile handover. Retain old invalid-path boundary as denial test. Runner1/cleanup0/independently empty resources. Whole switchback not yet pass."
+}

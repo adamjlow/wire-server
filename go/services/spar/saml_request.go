@@ -86,17 +86,18 @@ func authRequestFormat(query url.Values) (verdictFormat, error) {
 		return fail("need-both-redirect-urls")
 	}
 	for _, raw := range []*string{format.Success, format.Error} {
-		u, err := url.Parse(*raw)
-		if err != nil || !u.IsAbs() {
+		normalized, err := samlVerdictURI(*raw)
+		if err != nil {
 			return verdictFormat{}, &apiError{400, "bad-request", "Invalid redirect URI"}
 		}
 		scheme, _, _ := strings.Cut(*raw, ":")
 		if !strings.HasPrefix(scheme, "wire") {
 			return fail("invalid-schema")
 		}
-		if len(u.String()) > 140 {
+		if len(normalized) > 140 {
 			return fail("url-too-long")
 		}
+		*raw = normalized
 	}
 	format.Mobile = true
 	return format, nil

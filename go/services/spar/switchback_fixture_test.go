@@ -62,7 +62,7 @@ func runSwitchbackFixture(t *testing.T) {
 	}
 	var stateMutex sync.Mutex
 	var activeTeam, activeIdP, activeUser gocql.UUID
-	var external, legacyToken string
+	var external, legacyToken, activeToken string
 	activeIssuer := issuer
 	mux := http.NewServeMux()
 	mux.HandleFunc("GET /metadata", func(w http.ResponseWriter, r *http.Request) {
@@ -94,6 +94,7 @@ func runSwitchbackFixture(t *testing.T) {
 				activeUser, err = gocql.ParseUUID(input.User)
 			}
 			external = input.External
+			activeToken = input.Token
 			activeIssuer = input.Issuer
 			if !strings.HasPrefix(activeIssuer, issuer) {
 				err = errors.New("invalid synthetic issuer binding")
@@ -129,6 +130,7 @@ func runSwitchbackFixture(t *testing.T) {
 				{"team_idp", "SELECT * FROM team_idp WHERE team = ?", []any{activeTeam}},
 				{"issuer_idp_v2", "SELECT * FROM issuer_idp_v2 WHERE issuer = ?", []any{activeIssuer}},
 				{"tokens", "SELECT * FROM team_provisioning_by_team WHERE team = ?", []any{activeTeam}},
+				{"token_lookup", "SELECT * FROM team_provisioning_by_token WHERE token_ = ?", []any{tokenHash(activeToken)}},
 				{"legacy_token_lookup", "SELECT * FROM team_provisioning_by_token WHERE token_ IN ?", []any{[]string{legacyToken, tokenHash(legacyToken)}}},
 				{"user_v2", "SELECT * FROM user_v2 WHERE issuer = ?", []any{activeIssuer}},
 				{"legacy_user", "SELECT * FROM user WHERE issuer = ?", []any{activeIssuer}},

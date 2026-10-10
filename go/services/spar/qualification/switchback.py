@@ -42,7 +42,7 @@ def http(service,method,path,body=None,headers=None,expected=None):
     for key,value in list(recorded['headers'].items()):
         if key.lower()=='set-cookie':recorded['headers'][key]='synthetic-cookie-sha256:'+hashlib.sha256(value.encode()).hexdigest()
         if key.lower()=='location' and value.startswith('wire://granted/'):
-            recorded['headers'][key]='wire://granted/[synthetic-cookie]/'+value.rsplit('/',1)[-1]
+            recorded['headers'][key]='synthetic-mobile-location-sha256:'+hashlib.sha256(value.encode()).hexdigest()
     if isinstance(recorded['body'],dict) and 'token' in recorded['body']:
         recorded['body']['token']='synthetic-token-sha256:'+hashlib.sha256(recorded['body']['token'].encode()).hexdigest()
     output['actions'].append({'service':service,'method':method,'path':path,'reply':recorded});save()
@@ -60,32 +60,36 @@ class RequestForm(HTMLParser):
         if tag=='input' and values.get('name')=='SAMLRequest':self.request=values.get('value')
 
 
-def pending(idp,team,email,mobile=False,assertion=None):
+def pending(idp,team,email,mobile=False,assertion=None,bad_mobile=False):
     query={'label':'synthetic-switchback-label'}
-    if mobile:query.update(success_redirect='wire://granted/$cookie/$userid',error_redirect='wire://denied/$label')
+    if mobile:query.update(success_redirect='wire://granted/$cookie/$userid' if bad_mobile else 'wire://granted/?cookie=$cookie&userid=$userid',error_redirect='wire://denied/$label')
     reply=http('spar','GET','/sso/initiate-login/'+idp+'?'+urllib.parse.urlencode(query),expected=200)
     form=RequestForm();form.feed(reply['body'])
     if form.request is None:raise ValueError('actual SP AuthnRequest absent')
     metadata=http('spar','GET','/sso/metadata/'+team,expected=200)['body']
     signed=http('fixture','POST','/sign',{'request':form.request,'metadata':metadata,'subject':email,'assertionID':assertion or ''},expected=200)['body']
-    signed['mobile']=mobile
+    signed['mobile']=mobile;signed['bad_mobile']=bad_mobile
     return signed
 
 
 def finish(team,user,signed,accepted=True):
     data=urllib.parse.urlencode({'SAMLResponse':base64.b64encode(signed['xml'].encode()).decode()})
-    reply=http('spar','POST','/sso/finalize-login/'+team,data,{'Content-Type':'application/x-www-form-urlencoded'},expected=303 if accepted and signed['mobile'] else 200)
+    reply=http('spar','POST','/sso/finalize-login/'+team,data,{'Content-Type':'application/x-www-form-urlencoded'},expected=400 if signed['bad_mobile'] else 303 if accepted and signed['mobile'] else 200)
     cookie=header(reply,'Set-Cookie')
+    if signed['bad_mobile']:
+        if cookie is not None or '<title>wire:sso:error:bad-success-redirect</title>' not in reply['body']:raise ValueError('native invalid cookie-path boundary differs')
+        return
     if accepted:
         if cookie is None or ('u='+user) not in cookie:raise ValueError('verified callback did not create the expected account session')
         if signed['mobile']:
             location=header(reply,'Location')
-            if location is None or not location.startswith('wire://granted/') or not location.endswith('/'+user) or '$cookie' in location:raise ValueError('mobile verdict state/substitution failed')
+            parameters=urllib.parse.parse_qs(urllib.parse.urlsplit(location or '').query)
+            if location is None or not location.startswith('wire://granted/') or parameters.get('userid')!=[user] or parameters.get('cookie')!=[cookie]:raise ValueError('mobile verdict state/substitution failed')
         elif '<title>wire:sso:success</title>' not in reply['body']:raise ValueError('web verdict failed')
     elif cookie is not None or '<title>wire:sso:error:forbidden</title>' not in reply['body']:raise ValueError('replayed assertion created a session or missed denial boundary')
 
 
-def bind(team,idp,user,email,issuer):return http('fixture','POST','/state',{'action':'bind','team':team,'idp':idp,'user':user,'external':email,'issuer':issuer},expected=200)['body']
+def bind(team,idp,user,email,issuer,token):return http('fixture','POST','/state',{'action':'bind','team':team,'idp':idp,'user':user,'external':email,'issuer':issuer,'token':token},expected=200)['body']
 
 
 def snapshot(label,requests,assertions):
@@ -138,20 +142,33 @@ def main():
             for feature,status in [('sso','enabled'),('validateSAMLemails','disabled')]:http('galley','PATCH','/i/teams/'+account['team']+'/features/'+feature,{'status':status},expected=200)
             return account['id'],account['team']
         def token(caller,idp=None):return http('spar','POST','/scim/auth-tokens',{'password':password,'description':'synthetic switchback','name':'synthetic switchback','idp':idp},{'Z-User':caller},expected=200)['body']
-        def user_payload(email):return {'schemas':['urn:ietf:params:scim:schemas:core:2.0:User','urn:wire:scim:schemas:profile:1.0','urn:ietf:params:scim:schemas:extension:wire:1.0:User'],'userName':'synthetic'+uuid.uuid4().hex[:12],'externalId':email,'displayName':'Synthetic Switchback User','active':True,'preferredLanguage':'en','roles':[{'value':'member'}],'emails':[{'value':email,'type':'work','primary':True}],'urn:ietf:params:scim:schemas:extension:wire:1.0:User':{'department':'synthetic'}}
+        def user_payload(email):return {'schemas':['urn:ietf:params:scim:schemas:core:2.0:User','urn:wire:scim:schemas:profile:1.0','urn:ietf:params:scim:schemas:extension:wire:1.0:User'],'userName':'synthetic'+uuid.uuid4().hex[:12],'externalId':email,'displayName':'Synthetic Switchback User','active':True,'preferredLanguage':'en','roles':['member'],'emails':[{'value':email,'type':'work','primary':True}],'urn:ietf:params:scim:schemas:extension:wire:1.0:User':{'department':'synthetic'}}
         owner,tid=team()
         idp=http('spar','POST','/identity-providers?api_version=v2',metadata,{'Content-Type':'application/xml','Z-User':owner},expected=201)['body']['id']
         minted=token(owner,idp);bearer=minted['token']
         email='synthetic-user-'+uuid.uuid4().hex+'@example.test'
         user=http('spar','POST','/scim/v2/Users',user_payload(email),{'Authorization':'Bearer '+bearer},expected=201)['body'];uid=user['id']
         group=http('spar','POST','/scim/v2/Groups',{'schemas':['urn:ietf:params:scim:schemas:core:2.0:Group'],'displayName':'Synthetic Switchback Group','members':[{'value':uid,'type':'User','$ref':user['meta']['location']}]},{'Authorization':'Bearer '+bearer},expected=201)['body'];gid=group['id']
-        bind(tid,idp,uid,email,issuer)
+        bind(tid,idp,uid,email,issuer,bearer)
         legacy='synthetic-switchback-'+uuid.uuid4().hex;legacy_id=str(uuid.uuid4())
         http('fixture','POST','/state',{'action':'legacy-token','token':legacy,'tokenID':legacy_id},expected=200)
         initial=surface(owner,bearer,idp,uid,gid)
+        cleanup_owner,cleanup_team=team()
+        cleanup_issuer=issuer+'/cleanup'
+        cleanup_idp=http('spar','POST','/identity-providers?api_version=v2',metadata.replace(issuer,cleanup_issuer),{'Content-Type':'application/xml','Z-User':cleanup_owner},expected=201)['body']['id']
+        cleanup_token=token(cleanup_owner,cleanup_idp)['token']
+        cleanup_email='synthetic-cleanup-'+uuid.uuid4().hex+'@example.test'
+        cleanup_user=http('spar','POST','/scim/v2/Users',user_payload(cleanup_email),{'Authorization':'Bearer '+cleanup_token},expected=201)['body']['id']
+        bind(cleanup_team,cleanup_idp,cleanup_user,cleanup_email,cleanup_issuer,cleanup_token)
+        cleanup_before=snapshot('native-populated-cleanup',[],[])
+        for name in ('idp','team_idp','issuer_idp_v2','tokens','token_lookup','user_v2','scim_external','scim_meta'):
+            if not cleanup_before[name]:raise ValueError('populated native cleanup prerequisite missing '+name)
+        cleanup_account=http('brig','GET','/i/users?ids='+cleanup_user+'&includePendingInvitations=true',expected=200)['body']
+        bind(tid,idp,uid,email,issuer,bearer)
+        native_bad=pending(idp,tid,email,True,bad_mobile=True);finish(tid,uid,native_bad)
         completed=pending(idp,tid,email);finish(tid,uid,completed)
         native_web=pending(idp,tid,email);native_mobile=pending(idp,tid,email,True)
-        requests=[v['request_id'] for v in (completed,native_web,native_mobile)];assertions=[v['assertion_id'] for v in (completed,native_web,native_mobile)]
+        requests=[v['request_id'] for v in (native_bad,completed,native_web,native_mobile)];assertions=[v['assertion_id'] for v in (native_bad,completed,native_web,native_mobile)]
         before=snapshot('native-before-handover',requests,assertions)
         for value in (native_web,native_mobile):assert_pending(before,value)
         if len(before['authresp'][completed['assertion_id']])!=1 or len(before['legacy_token_lookup'])!=1 or before['legacy_token_lookup'][0]['token_']!=legacy:raise ValueError('native replay or historical token prerequisite absent')
@@ -183,17 +200,27 @@ def main():
         if len(converted['legacy_token_lookup'])!=1 or not converted['legacy_token_lookup'][0]['token_'].startswith('sha512:') or converted['legacy_token_lookup'][0]['id']!=legacy_id:raise ValueError('Go legacy token conversion failed')
         for value in (native_web,native_mobile):finish(tid,uid,value)
         replay=pending(idp,tid,email,assertion=completed['assertion_id']);finish(tid,uid,replay,False)
-        updated={**initial['user'],'displayName':'Synthetic Go Updated User'}
+        updated={**initial['user'],'displayName':'Synthetic Go Updated User','roles':['member']}
         http('spar','PUT','/scim/v2/Users/'+uid,updated,{'Authorization':'Bearer '+bearer},expected=200)
         updated_group={**initial['group'],'displayName':'Synthetic Go Updated Group'}
         http('spar','PUT','/scim/v2/Groups/'+gid,updated_group,{'Authorization':'Bearer '+bearer},expected=200)
         go_surface=surface(owner,bearer,idp,uid,gid)
+        bind(cleanup_team,cleanup_idp,cleanup_user,cleanup_email,cleanup_issuer,cleanup_token)
+        for _ in range(2):http('spar','DELETE','/i/teams/'+cleanup_team,expected=204)
+        cleanup_after=snapshot('go-cleaned-native-team',[],[])
+        if any(cleanup_after[name] for name in ('idp','team_idp','issuer_idp_v2','tokens','token_lookup','user_v2')):raise ValueError('Go populated team cleanup left native state')
+        if any(cleanup_after[name]!=cleanup_before[name] for name in ('scim_external','scim_meta')):raise ValueError('Go team cleanup changed unrelated native SCIM state')
+        if http('brig','GET','/i/users?ids='+cleanup_user+'&includePendingInvitations=true',expected=200)['body']!=cleanup_account:raise ValueError('Go team cleanup mutated the Brig account')
+        bind(tid,idp,uid,email,issuer,bearer)
+        go_bad=pending(idp,tid,email,True,bad_mobile=True);finish(tid,uid,go_bad)
         go_web=pending(idp,tid,email);go_mobile=pending(idp,tid,email,True)
-        requests += [v['request_id'] for v in (replay,go_web,go_mobile)];assertions += [v['assertion_id'] for v in (go_web,go_mobile)]
+        requests += [v['request_id'] for v in (replay,go_bad,go_web,go_mobile)];assertions += [v['assertion_id'] for v in (go_bad,go_web,go_mobile)]
         go_before=snapshot('go-before-return',requests,assertions)
         for value in (go_web,go_mobile):assert_pending(go_before,value)
         if go_before['authreq'][native_web['request_id']] or go_before['authreq'][native_mobile['request_id']] or len(go_before['authresp'][native_web['assertion_id']])!=1:raise ValueError('Go did not consume native requests/store assertion replay')
         stop();start('haskell')
+        http('spar','GET','/identity-providers/'+cleanup_idp,headers={'Z-User':cleanup_owner},expected=404)
+        if http('spar','GET','/scim/auth-tokens',headers={'Z-User':cleanup_owner},expected=200)['body']!={'tokens':[]}:raise ValueError('returning native found Go-cleaned team tokens')
         if surface(owner,bearer,idp,uid,gid)!=go_surface:raise ValueError('returning native cannot read identical Go metadata/updates')
         if http('spar','GET','/scim/v2/Users/'+uid,headers={'Authorization':'Bearer '+legacy},expected=200)['body']!=go_surface['user']:raise ValueError('returning native cannot use converted legacy token')
         for value in (go_web,go_mobile):finish(tid,uid,value)
@@ -208,10 +235,10 @@ def main():
         for token_id in (minted['info']['id'],legacy_id):http('spar','DELETE','/scim/auth-tokens?id='+token_id,headers={'Z-User':owner},expected=204)
         http('spar','DELETE','/identity-providers/'+idp,headers={'Z-User':owner},expected=204)
         deleted=snapshot('native-deleted-Go-state',requests,assertions)
-        if any(deleted[name] for name in ('idp','team_idp','issuer_idp_v2','tokens','legacy_token_lookup','user_v2','scim_external','scim_meta')):raise ValueError('returning native deletion left incompatible service state')
+        if any(deleted[name] for name in ('idp','team_idp','issuer_idp_v2','tokens','token_lookup','legacy_token_lookup','user_v2','scim_external','scim_meta')):raise ValueError('returning native deletion left incompatible service state')
         stop();helper.send_signal(signal.SIGTERM)
         if helper.wait(timeout=15)!=0:raise ValueError('fixture process failed')
-        output.update(result='pass',original_e2e_executed=False,scope='Actual same-state API/CQL native-Go-native IdP/token/legacy conversion/SCIM user/group/metadata/pending web-mobile requests/verdict/replay and returning-native deletion. Not final225 or operations/image/selector qualification.');return 0
+        output.update(result='pass',original_e2e_executed=False,scope='Actual same-state API/CQL native-Go-native IdP/token/legacy conversion/SCIM user/group/metadata/pending web-mobile requests/verdict/replay and populated native team cleanup in Go, invalid mobile cookie-path denial and returning-native deletion. Not final225 or operations/image/selector qualification.');return 0
     except Exception as error:
         output.update(result='fail',error_category=type(error).__name__,error=str(error)[:300]);return 1
     finally:

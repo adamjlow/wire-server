@@ -294,6 +294,11 @@ func parseSCIMUser(object map[string]any) (scimUserInput, error) {
 			return user, &scimError{Status: 400, Type: "invalidSyntax", Detail: "Invalid roles"}
 		}
 		for _, value := range roles {
+			// Frozen hscim Role also accepts legacy bare strings.
+			if text, ok := value.(string); ok {
+				user.Roles = append(user.Roles, &text)
+				continue
+			}
 			role, ok := value.(map[string]any)
 			if !ok {
 				return user, &scimError{Status: 400, Type: "invalidSyntax", Detail: "Invalid role"}

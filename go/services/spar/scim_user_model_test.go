@@ -74,11 +74,13 @@ func TestSCIMUserValidationContract(t *testing.T) {
 		detail     string
 	}{
 		{"valid", `{"userName":"Synthetic.User","externalId":"synthetic@example.test","preferredLanguage":"en-US","roles":[{"value":"partner"}]}`, 0, ""},
+		{"legacy-role", `{"userName":"Synthetic.User","externalId":"synthetic@example.test","preferredLanguage":"en-US","roles":["partner"]}`, 0, ""},
 		{"password", `{"userName":"synthetic","externalId":"synthetic@example.test","password":"synthetic-password"}`, 400, "Setting user passwords is not supported"},
 		{"external-required", `{"userName":"synthetic"}`, 400, "externalId is required"},
 		{"no-idp-no-email", `{"userName":"synthetic","externalId":"opaque"}`, 400, "Could not process externalId"},
 		{"invalid-handle", `{"userName":"synthetic@invalid","externalId":"synthetic@example.test"}`, 400, "is not a valid Wire handle"},
 		{"two-primaries", `{"userName":"synthetic","externalId":"synthetic@example.test","emails":[{"value":"one@example.test","primary":true},{"value":"two@example.test","primary":"TRUE"}]}`, 400, "More than one email is marked as primary"},
+		{"invalid-legacy-role", `{"userName":"synthetic","externalId":"synthetic@example.test","roles":["administrator"]}`, 400, "Valid roles are owner, admin, member, partner."},
 		{"invalid-role", `{"userName":"synthetic","externalId":"synthetic@example.test","roles":[{"value":"administrator"}]}`, 400, "Valid roles are owner, admin, member, partner."},
 		{"uppercase-language", `{"userName":"synthetic","externalId":"synthetic@example.test","preferredLanguage":"EN"}`, 400, "Could not parse language"},
 	} {

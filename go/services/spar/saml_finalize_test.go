@@ -16,6 +16,38 @@ import (
 	"github.com/apache/cassandra-gocql-driver/v2"
 )
 
+func TestMobileCookieRedirectNativeURIContract(t *testing.T) {
+	uid := scimTestID(t, "000000000001")
+	cookie := "zuid=synthetic; Path=/access; HttpOnly"
+	failure := "wire://denied/$label"
+	for _, test := range []struct {
+		name, success string
+		accepted      bool
+	}{
+		{"cookie-query", "wire://granted/?cookie=$cookie&userid=$userid", true},
+		{"cookie-path", "wire://granted/$cookie/$userid", false},
+	} {
+		t.Run(test.name, func(t *testing.T) {
+			w := httptest.NewRecorder()
+			format := verdictFormat{Mobile: true, Success: &test.success, Error: &failure}
+			err := samlRenderVerdict(w, format, uid, cookie, "", nil)
+			if !test.accepted {
+				if err == nil || w.Header().Get("Set-Cookie") != "" || w.Header().Get("Location") != "" {
+					t.Fatal("native invalid-cookie-path boundary differs", err, w.Header())
+				}
+				return
+			}
+			if err != nil || w.Code != 303 || w.Header().Get("Set-Cookie") != cookie {
+				t.Fatal("native mobile query verdict differs", err, w.Code)
+			}
+			location := w.Header().Get("Location")
+			if location != "wire://granted/?cookie=zuid%3Dsynthetic%3B%20Path%3D%2Faccess%3B%20HttpOnly&userid="+uid.String() {
+				t.Fatal("native lax query percent-encoding differs", location)
+			}
+		})
+	}
+}
+
 type finalizeBoundary struct {
 	*loginBoundary
 	*judgeMemory

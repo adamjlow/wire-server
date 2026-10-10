@@ -116,15 +116,15 @@ func samlRenderVerdict(w http.ResponseWriter, format verdictFormat, uid gocql.UU
 		} else {
 			location = samlSubstitute(location, "label", label)
 		}
-		u, err := url.Parse(location)
-		if err != nil || !u.IsAbs() {
+		location, err := samlVerdictURI(location)
+		if err != nil {
 			errorLabel := "bad-failure-redirect"
 			if granted {
 				errorLabel = "bad-success-redirect"
 			}
 			return &apiError{400, errorLabel, "re-parsing the substituted URI failed"}
 		}
-		w.Header().Set("Location", u.String())
+		w.Header().Set("Location", location)
 		if granted {
 			w.Header().Set("Set-Cookie", cookie)
 		} else {
@@ -151,6 +151,41 @@ func samlRenderVerdict(w http.ResponseWriter, format verdictFormat, uid gocql.UU
 }
 func samlSubstitute(uri, name, value string) string {
 	return strings.ReplaceAll(strings.ReplaceAll(uri, "%24"+name, value), "$"+name, value)
+}
+
+// Spar pins uri-bytestring 0.3.3.1: paths reject unescaped whitespace,
+// while lax query values accept Set-Cookie and serialize it percent-encoded.
+// net/url alone accepts raw path spaces and leaves query spaces unescaped.
+func samlVerdictURI(raw string) (string, error) {
+	raw = strings.TrimSpace(raw)
+	u, err := url.Parse(raw)
+	if err != nil || !u.IsAbs() {
+		return "", errors.New("invalid substituted URI")
+	}
+	path := raw[len(u.Scheme)+1:]
+	path, _, _ = strings.Cut(path, "?")
+	path, _, _ = strings.Cut(path, "#")
+	if strings.HasPrefix(path, "//") {
+		_, path, _ = strings.Cut(path[2:], "/")
+	}
+	for index := 0; index < len(path); index++ {
+		ch := path[index]
+		if !(ch >= 'a' && ch <= 'z' || ch >= 'A' && ch <= 'Z' || ch >= '0' && ch <= '9' || strings.ContainsRune("/~._-%!$&'()*+,;=:@", rune(ch))) {
+			return "", errors.New("invalid substituted URI path")
+		}
+	}
+	query := []string{}
+	encode := func(value string) string {
+		return strings.ReplaceAll(url.QueryEscape(samlFormDecode(value)), "+", "%20")
+	}
+	for _, pair := range strings.Split(u.RawQuery, "&") {
+		key, value, _ := strings.Cut(pair, "=")
+		if key != "" {
+			query = append(query, encode(key)+"="+encode(value))
+		}
+	}
+	u.RawQuery, u.ForceQuery = strings.Join(query, "&"), false
+	return u.String(), nil
 }
 
 func samlFailurePage(w http.ResponseWriter, err error, inputs url.Values) {
