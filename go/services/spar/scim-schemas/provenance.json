@@ -1,0 +1,41 @@
+{
+  "reference_revision": "f6636ed53315fa7b0fc4c8aa39c0bb30c98b6d5e",
+  "extraction": "Exact public JSON values from native aesonQQ constants, reformatted only. Native list order retained.",
+  "schemas": [
+    {
+      "file": "User.json",
+      "id": "urn:ietf:params:scim:schemas:core:2.0:User",
+      "source": "libs/hscim/src/Web/Scim/Capabilities/MetaSchema/User.hs",
+      "source_sha256": "eb29df1d29fb978e98c958bf5d0b86f05d12ae568924a8825de0ebbba30b012b",
+      "json_sha256": "55c111e76258e4dcf33d2b63d34defcd87c898015cf868431af680b78fbd79f7"
+    },
+    {
+      "file": "SPConfig.json",
+      "id": "urn:ietf:params:scim:schemas:core:2.0:ServiceProviderConfig",
+      "source": "libs/hscim/src/Web/Scim/Capabilities/MetaSchema/SPConfig.hs",
+      "source_sha256": "1caa185256411bda92b338f40bac279fb747c744b369cb801e9d4d213ba3a968",
+      "json_sha256": "cae3460a6e71ca4ef069654bf09e648b5d81b60002c5ac72067f66a0e8c531a5"
+    },
+    {
+      "file": "Group.json",
+      "id": "urn:ietf:params:scim:schemas:core:2.0:Group",
+      "source": "libs/hscim/src/Web/Scim/Capabilities/MetaSchema/Group.hs",
+      "source_sha256": "fa1884625668fd85096802d71fea9f891eef51ca78fb3e64e4486d0e927ef963",
+      "json_sha256": "9d658bba0f6b180786896d85f130d376ba548e1e38d0261d3482c55fa861cc38"
+    },
+    {
+      "file": "Schema.json",
+      "id": "urn:ietf:params:scim:schemas:core:2.0:Schema",
+      "source": "libs/hscim/src/Web/Scim/Capabilities/MetaSchema/Schema.hs",
+      "source_sha256": "2db0732994fc7a11729c89c613b33955e203e00076b636fcac7e32ab85ee3598",
+      "json_sha256": "46a17c5d6db77e5fd6e65a94e7663c5dba7ac33f6ef7221bf4c35f00673785f9"
+    },
+    {
+      "file": "ResourceType.json",
+      "id": "urn:ietf:params:scim:schemas:core:2.0:ResourceType",
+      "source": "libs/hscim/src/Web/Scim/Capabilities/MetaSchema/ResourceType.hs",
+      "source_sha256": "4e54e1b421f7d14a52f236db5953279b8b1834bd986150d1c91e8108e7ccfdd9",
+      "json_sha256": "bb10d86ed15bb94d036e47bd2caa3f7ce5856e589d0168933c87fcda7ccf365a"
+    }
+  ]
+}

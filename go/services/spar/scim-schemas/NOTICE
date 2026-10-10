@@ -1,0 +1,4 @@
+Public SCIM schema JSON extracted from libs/hscim/src/Web/Scim/Capabilities/MetaSchema/*.hs.
+Copyright (C) 2022 Wire Swiss GmbH <opensource@wire.com>.
+Licensed under GNU Affero General Public License version 3 or later (AGPL-3.0-or-later).
+See the repository LICENSE file and provenance.json for source attribution and hashes.

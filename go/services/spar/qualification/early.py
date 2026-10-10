@@ -47,6 +47,11 @@ def observe(binary,config,name):
             # Additional persistent handlers, using the same native database.
             for method,path,body in [('GET','/sso/settings',None),('HEAD','/sso/settings',None),('PUT','/i/sso/settings','{"default_sso_code":null}'),('PUT','/i/sso/settings','{"default_sso_code":"00000000-0000-4000-8000-000000000001"}'),('POST','/i/scim/userinfo/00000000-0000-4000-8000-000000000002',None)]:
                 replies[method+' '+path+(' '+body if body else '')]=request(method,path,body)
+            metadata=['ServiceProviderConfig','Schemas','ResourceTypes']+['Schemas/urn:ietf:params:scim:schemas:core:2.0:'+name for name in ('User','ServiceProviderConfig','Group','Schema','ResourceType')]+['Schemas/urn:wire:scim:schemas:profile:1.0','Schemas/urn:ietf:params:scim:schemas:extension:wire:1.0:User','Schemas/unknown']
+            for path in metadata:
+                for method in ('GET','HEAD'):
+                    key=method+' /scim/v2/'+path
+                    replies[key]=request(method,'/scim/v2/'+path)
             begin=time.monotonic();process.send_signal(signal.SIGTERM);code=process.wait(timeout=35)
             if code!=0:raise ValueError(name+' failed clean SIGTERM')
             return {'responses':replies,'stop_exit_code':code,'stop_seconds':time.monotonic()-begin,'binary_sha256':hashlib.sha256(Path(binary).read_bytes()).hexdigest()}
@@ -57,7 +62,7 @@ def observe(binary,config,name):
 
 def main():
     if os.getuid()!=65534:raise ValueError('nonroot namespace required')
-    output={'kind':'early-process-comparison','result':'running','e2e_executed':False,'scope':'Configuration, real schema23 startup, health/method/version/errors, default-settings empty/clear/missing IdP, missing SCIM metadata and SIGTERM; no complete SSO/SCIM qualification.'}
+    output={'kind':'early-process-comparison','result':'running','e2e_executed':False,'scope':'Configuration, real schema23 startup, health/method/version/errors, default-settings empty/clear/missing IdP, missing SCIM user metadata, public config/resources/five schemas/unknown and advertised extension GET/HEAD, SIGTERM; no complete SSO/SCIM qualification.'}
     forward=None
     try:
         forward=runtime.TCPServer(('127.0.0.1',9042),runtime.Forward);forward.destination=('cassandra',9042)

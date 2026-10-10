@@ -77,6 +77,9 @@ func newHandler(c Config, store settingsStore) http.Handler {
 			w.WriteHeader(http.StatusOK)
 			return
 		}
+		if serveSCIMMetadata(w, r) {
+			return
+		}
 		if db, ok := store.(cassandraStore); ok && serveIdPs(w, r, c, db, peers) {
 			return
 		}
