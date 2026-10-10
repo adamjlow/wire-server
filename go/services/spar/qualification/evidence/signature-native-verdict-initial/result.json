@@ -1,0 +1,9 @@
+{
+  "kind": "early-process-comparison",
+  "result": "fail",
+  "e2e_executed": false,
+  "scope": "Configuration, real schema23 startup, health/method/version/errors, default-settings empty/clear/missing IdP, missing SCIM user metadata, public config/resources/five schemas/unknown and advertised extension GET/HEAD, SIGTERM; no complete SSO/SCIM qualification.",
+  "config_sha256": "c6fd50b5388904c4604384f6c491a436c9e9c769abe0a861174d55b63be23273",
+  "error_category": "ValueError",
+  "error": "valid signature did not reach missing-request verdict boundary"
+}

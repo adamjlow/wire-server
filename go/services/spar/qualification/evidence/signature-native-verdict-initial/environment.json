@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "project": "wire-e2e-5ba640e6f19d4420aaa296fa32b77ee7",
+  "source_revision": "624635c7b57711728dafb0824fd92b5e066754dd",
+  "runner_image_id": "sha256:099b30651813ecbe4192514cde0b096174bbfd34672529c9b21e8c7766077268",
+  "runner_revision": "890a4742e936a2e8078f1a0d39b8bb36616a385f",
+  "candidate": {
+    "path": "/dev/shm/wire-migration-spar-20261010/spar-signature-order-corrected",
+    "sha256": "7929851ff09d2e1abcdaddd61ccf8e997d64e64f06b011dfaf1d6cb4f26890cf",
+    "source_revision": "624635c7b57711728dafb0824fd92b5e066754dd"
+  },
+  "peer_candidates": {},
+  "result": "fail",
+  "e2e_executed": false,
+  "compose_sha256": "47e86f717ca56f86823b9900cf45a2e22bf916480acad472b5a3e9779db05ebb",
+  "files_sha256": {
+    "fixtures/configs.json": "8cc34c41cc248ae804d822a60fb610b0adead84c3e79663eb33243ef70c99876",
+    "fixtures/integration.json": "d8834dad54e1f851e689ac00691cd527aac69e0e9ce00baf149835433812c73c",
+    "fixtures/peers.json": "ca8438ea9464138dc0c75868b62eb8b12113343dada8336524c3ea467dd3a490"
+  },
+  "signature_fixture_executable": {
+    "path": "/dev/shm/wire-migration-spar-20261010/spar-signature-fixtures-order-corrected.test",
+    "sha256": "a9221fe640b9448451056387a05d28ac0b5259679c7843b1c5c34e19cbeae20b",
+    "source_revision": "624635c7b57711728dafb0824fd92b5e066754dd"
+  },
+  "kind": "early-native-Go-Spar-process",
+  "process_exit_code": 1,
+  "cleanup_exit_code": 0,
+  "post_cleanup": {
+    "containers": [],
+    "networks": [],
+    "volumes": []
+  }
+}

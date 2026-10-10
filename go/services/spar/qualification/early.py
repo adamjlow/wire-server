@@ -103,7 +103,11 @@ def observe(binary,config,name):
                         Path('/reports/'+name+'-signature-replies.json').write_text(json.dumps(signature_checks,indent=2)+'\n')
                         if reply['headers']['set-cookie'] is not None:raise ValueError('qualification response created a session')
                         if accepted:
-                            if reply['status']!=500 or not isinstance(reply['body'],dict) or reply['body'].get('label')!='server-error' or 'verdict format' not in reply['body'].get('message',''):raise ValueError('valid signature did not reach missing-request verdict boundary')
+                            if reply['status']!=500 or not isinstance(reply['body'],dict) or reply['body'].get('label')!='server-error' or reply['body'].get('message')!='Internal Server Error':raise ValueError('valid signature did not reach missing-request verdict boundary')
+                            if name=='native':
+                                diagnostics=[base64.b64decode(value).decode() for value in re.findall(r'<pre>([A-Za-z0-9+/=]+)</pre>',Path('/reports/native.log').read_text())]
+                                encoded=base64.b64encode(xml.encode()).decode()
+                                if not any('CustomError SparNoSuchRequest' in value and encoded in value for value in diagnostics):raise ValueError('native generic500 lacks the actual missing-request diagnostic')
                         elif reply['status']!=400 or not isinstance(reply['body'],str) or 'wire:sso:error:bad-response-signature' not in reply['body']:raise ValueError('invalid signature was not rejected at verification')
             begin=time.monotonic();process.send_signal(signal.SIGTERM);code=process.wait(timeout=35)
             if code!=0:raise ValueError(name+' failed clean SIGTERM')

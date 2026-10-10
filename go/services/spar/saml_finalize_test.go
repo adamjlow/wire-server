@@ -103,9 +103,10 @@ func TestFinalizeVerifiedSessionAndSecurityDenials(t *testing.T) {
 					}
 				} else if kind == "unknown-request" {
 					var body struct {
-						Label string `json:"label"`
+						Label   string `json:"label"`
+						Message string `json:"message"`
 					}
-					if w.Code != 500 || w.Header().Get("Content-Type") != "" || json.Unmarshal(w.Body.Bytes(), &body) != nil || body.Label != "server-error" {
+					if w.Code != 500 || w.Header().Get("Content-Type") != "" || json.Unmarshal(w.Body.Bytes(), &body) != nil || body.Label != "server-error" || body.Message != "Internal Server Error" {
 						t.Fatal("missing verdict must use the ordinary wire error boundary", w.Code, w.Body.String())
 					}
 				} else if kind == "unknown-idp" {

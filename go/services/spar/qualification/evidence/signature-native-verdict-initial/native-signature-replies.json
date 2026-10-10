@@ -1,0 +1,23 @@
+{
+  "bad-extra-digest-signed": {
+    "reply": {
+      "status": 500,
+      "headers": {
+        "content-type": "application/json",
+        "cache-control": null,
+        "pragma": null,
+        "request-id": null,
+        "allow": null,
+        "set-cookie": null
+      },
+      "body": {
+        "code": 500,
+        "label": "server-error",
+        "message": "Internal Server Error"
+      }
+    },
+    "fixture_sha256": "782ebdabde417bbdd6aca4deeda94c353246f99830bc3b0c9005f01a25b6bf2c",
+    "signature_accepted": true,
+    "idp_read_status": 200
+  }
+}

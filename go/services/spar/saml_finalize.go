@@ -255,7 +255,7 @@ func serveSAMLFinalize(w http.ResponseWriter, r *http.Request, c Config, s samlF
 			return true
 		}
 		if request != "" && request != *id {
-			domainError(w, &apiError{500, "server-error", "AuthRequest seems to have disappeared (could not find verdict format)."})
+			domainError(w, &apiError{500, "server-error", "Internal Server Error"})
 			return true
 		}
 		request = *id
@@ -266,7 +266,7 @@ func serveSAMLFinalize(w http.ResponseWriter, r *http.Request, c Config, s samlF
 		return true
 	}
 	if format == nil {
-		domainError(w, &apiError{500, "server-error", "AuthRequest seems to have disappeared (could not find verdict format)."})
+		domainError(w, &apiError{500, "server-error", "Internal Server Error"})
 		return true
 	}
 	var uid gocql.UUID

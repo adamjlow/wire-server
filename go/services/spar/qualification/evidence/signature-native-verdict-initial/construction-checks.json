@@ -1,0 +1,17 @@
+{
+  "result": "fail",
+  "source_revision": "624635c7b57711728dafb0824fd92b5e066754dd",
+  "candidate": {
+    "path": "/dev/shm/wire-migration-spar-20261010/spar-signature-order-corrected",
+    "sha256": "7929851ff09d2e1abcdaddd61ccf8e997d64e64f06b011dfaf1d6cb4f26890cf",
+    "source_revision": "624635c7b57711728dafb0824fd92b5e066754dd"
+  },
+  "runner_exit_code": 1,
+  "cleanup_exit_code": 0,
+  "independent_post_cleanup": {
+    "containers": [],
+    "networks": [],
+    "volumes": []
+  },
+  "analysis": "First native signed fixture passes XML/signature and logs CustomError SparNoSuchRequest with matching synthetic SAML input. HTTP500 is generic Internal Server Error. Newly strengthened construction probe incorrectly required diagnostic text in public message. Match actual generic message in Go; prove native missing-request phase from retained own diagnostic instead. Remaining fixture cases not executed."
+}
