@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "id": "background-worker-selector-contract",
+  "title": "Default-preserving worker selector and factual reference count correction",
+  "service": "background-worker",
+  "kind": "contract-change",
+  "status": "queued",
+  "owner": null,
+  "branch": null,
+  "depends_on": [
+    "background-worker-contract"
+  ],
+  "write_paths": [
+    ".migration/tasks/background-worker-selector-contract.json",
+    "docs/go-migration/plans/background-worker-selector.md",
+    "docs/go-migration/services/background-worker/contract.md",
+    "tools/parity/background_worker_helm_postrender.py",
+    "docs/go-migration/qualifications/background-worker-selector-20261010",
+    ".migration/reviews/background-worker-selector.md",
+    "changelog.d/5-internal/background-worker-selector"
+  ],
+  "plan": "docs/go-migration/plans/background-worker-selector.md",
+  "acceptance_criteria": [
+    {
+      "id": "selection",
+      "description": "Select only worker image and preserve Haskell defaults, Recreate/config/probes.",
+      "required_evidence": "Actual unchanged source Helm chart render; default byte identity, one-image difference, malformed/missing/non-Recreate fail-closed; bounded Python CLI; no deployment/push."
+    },
+    {
+      "id": "count",
+      "description": "Correct factual distinct-function count from unchanged original catalogues.",
+      "required_evidence": "124 executions,120 distinct functions/four Events overlaps verified from actual original XML; no oracle assertion, test list, behavior or acceptance change; same-author delegated review."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": "Serialized distinct-branch selector/count task; implementation remains active on go-migration, disjoint write scopes. No candidate availability publication until all remaining gates pass."
+}
