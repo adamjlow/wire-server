@@ -1,4 +1,4 @@
-"""Run two unchanged published original token tests against Go Spar and Haskell peers."""
+"""Run selected unchanged published originals against Go Spar and Haskell peers."""
 import argparse
 import hashlib
 import json
@@ -16,10 +16,10 @@ TOKEN_TESTS=['Spar.testSparCreateScimTokenNoName','Spar.testSparCreateScimTokenW
 IDP_TESTS=TOKEN_TESTS+['Spar.testSparCreateScimTokenAssocImplicitly','Spar.testSparCreateTwoScimTokensForOneIdp','Spar.testCheckAdminGetTeamId','Spar.testCheckAdminGetTeamIdV7']
 
 def main():
-    parser=argparse.ArgumentParser();parser.add_argument('--suite',choices=('tokens','idps'),default='tokens');args=parser.parse_args()
-    tests=TOKEN_TESTS if args.suite=='tokens' else IDP_TESTS
+    parser=argparse.ArgumentParser();parser.add_argument('--suite',choices=('tokens','idps','delete'),default='tokens');args=parser.parse_args()
+    tests={'tokens':TOKEN_TESTS,'idps':IDP_TESTS,'delete':['Spar.IdPIssuerUpdate.testUpdateIdPIssuerThenDelete']}[args.suite]
     if os.getuid()!=65534 or os.environ.get('WIRE_E2E_DISPOSABLE')!='1':raise ValueError('owned nonroot disposable environment required')
-    output={'kind':'original-Go-Spar-token-tests' if args.suite=='tokens' else 'original-Go-Spar-IdP-token-tests','result':'running','e2e_executed':False,'required_tests':tests,'scope':'Selected original IdP/token construction tests only; full Spar and seven-Go qualification incomplete.'}
+    output={'kind':'original-Go-Spar-token-tests' if args.suite=='tokens' else 'original-Go-Spar-'+args.suite+'-tests','result':'running','e2e_executed':False,'required_tests':tests,'scope':'Selected original IdP/token/delete construction tests only; full Spar and seven-Go qualification incomplete.'}
     processes=[];logs=[];servers=[]
     try:
         if not set(tests).issubset(runner.discover('spar')):raise ValueError('original required names absent')
@@ -32,7 +32,7 @@ def main():
         binary=runner.binary('integration');output['integration']=binary
         result=subprocess.run([binary['path'],'--config',str(config),*[arg for name in tests for arg in ('--include',name)],'--xml',str(xml)],timeout=300)
         output.update(e2e_executed=True,process_exit_code=result.returncode)
-        if result.returncode!=0 or not xml.is_file():raise ValueError('original token execution failed')
+        if result.returncode!=0 or not xml.is_file():raise ValueError('selected original execution failed')
         output['validated_report']=harness.check_xml(xml,tests);output['result']='pass';return 0
     except Exception as error:
         output.update(result='fail',error_category=type(error).__name__,error=str(error)[:300]);return 1

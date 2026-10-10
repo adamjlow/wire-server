@@ -4,7 +4,6 @@ package spar
 import (
 	"encoding/hex"
 	"errors"
-	"math"
 	"net"
 	"net/url"
 	"os"
@@ -46,8 +45,8 @@ type Config struct {
 	Brig                 Endpoint        `yaml:"brig"`
 	Galley               Endpoint        `yaml:"galley"`
 	Cassandra            CassandraConfig `yaml:"cassandra"`
-	MaxAuthRequestTTL    *float64        `yaml:"maxttlAuthreq"`
-	MaxAssertionTTL      *float64        `yaml:"maxttlAuthresp"`
+	MaxAuthRequestTTL    *TTL            `yaml:"maxttlAuthreq"`
+	MaxAssertionTTL      *TTL            `yaml:"maxttlAuthresp"`
 	MaxTokens            *int            `yaml:"maxScimTokens"`
 	RichInfoLimit        *int            `yaml:"richInfoLimit"`
 	DisabledVersions     []string        `yaml:"disabledAPIVersions"`
@@ -77,11 +76,6 @@ func (c Config) Validate() error {
 	}
 	if c.SAML.LogLevel == "" || c.MaxAuthRequestTTL == nil || c.MaxAssertionTTL == nil || c.MaxTokens == nil || c.RichInfoLimit == nil || c.EnableEmailDiscovery == nil || c.DisabledVersions == nil {
 		return invalid
-	}
-	for _, ttl := range []*float64{c.MaxAuthRequestTTL, c.MaxAssertionTTL} {
-		if math.IsNaN(*ttl) || math.IsInf(*ttl, 0) {
-			return invalid
-		}
 	}
 	if c.SAML.Domains == nil {
 		if !validDomain(c.SAML.DomainConfig) {

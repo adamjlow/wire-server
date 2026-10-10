@@ -22,6 +22,10 @@ type apiError struct {
 func (e *apiError) Error() string { return e.Label }
 func domainError(w http.ResponseWriter, err error) {
 	var e *apiError
+	var ttl *ttlError
+	if errors.As(err, &ttl) {
+		err = &apiError{400, "ttl-error", ttl.Error()}
+	}
 	if !errors.As(err, &e) {
 		e = &apiError{500, "server-error", "Server Error"}
 	}

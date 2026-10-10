@@ -24,3 +24,5 @@ as in the source; they do not replace mandatory SAML signature validation. An
 empty allowlist is permitted for single ingress but rejected for multi ingress.
 Expired certificates remain valid stored signing-key material, matching the
 original fixture/test; signed login validation is still pending.
+
+The source's user_v2 key case-folds the unqualified subject and ignores NameID qualifiers and team. The Go mapping store preserves that key and UID-guarded deletion, including copy-on-lookup legacy migration. IdP purge must check Brig's team for every mapping before deleting accounts; issuer-wide deletion alone would cross a team boundary for shared version-2 issuers. Request-to-issuer and assertion-replay tables are implemented, but signed login has not yet been wired to enforce them; their presence does not qualify login security. Existing read/check/write replay and UID-delete races remain source concerns for the final review.

@@ -128,8 +128,12 @@ func serveIdPs(w http.ResponseWriter, r *http.Request, c Config, s cassandraStor
 		}
 	}
 	if r.Method == "DELETE" {
-		return false
-	} // Bound-user/purge behavior awaits the SAML user store.
+		if suffix == "" || rawRoute {
+			return false
+		}
+		serveIdPDelete(w, r, c, s, p, id)
+		return true
+	}
 	if r.Method == "GET" || r.Method == "HEAD" {
 		if suffix == "" {
 			team, err := p.authorize(r.Context(), user, requestID)
