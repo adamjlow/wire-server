@@ -4,7 +4,7 @@
   "title": "Bound private runner descriptors and preserve high-FD TCP forwarding",
   "service": "framework",
   "kind": "framework",
-  "status": "review",
+  "status": "done",
   "owner": "codex",
   "branch": "task/background-worker-harness-fd",
   "depends_on": [
