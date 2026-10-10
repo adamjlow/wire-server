@@ -18,7 +18,32 @@ to their domain adapters, pools, listener, cron and reapers; whole-process
 qualification remains incomplete.
 Whole-service parity is not yet claimed; the task record owns current status.
 
-## Reconciled checkpoint (2026-10-10)
+## Current validation checkpoint (2026-10-10)
+
+The latest unchanged original Haskell worker suite passes **46 of 47** cases on
+clean Go source `12107801eab254cc61c87b88b8f9d2291cbd0558`, with the remaining
+services in Haskell. [Exact monitored receipts](../qualifications/background-worker-harness-fd/README.md)
+retain all 47 assertions, no errors/skips, and successful cleanup with no owned
+resources remaining. All 23 adminless cases, meetings cleanup, other migrations,
+handle disputes and reindexing pass. Main user migration still fails phase1:
+SCIM deletion GET returns500 instead404 while migrateUsersfalse/Cassandra is
+selected. This repeats the retained pre-enable failure; it is not waived or
+attributed to Haskell without a matching native-worker reference run.
+
+The separately reviewed Docker fixture repair gives only the runner a bounded
+8192 descriptor ceiling and high-FD selector. Measured runner demand reaches1702
+FDs, exceeding the prior1024 ceiling. No observed OOM/PID-limit events. The previous
+44/47 run remains historical evidence; two previously failing cases now pass, but
+individual historical causality is unproved without old resource measurements.
+
+Goal and implementation task remain active; Haskell is supported/default and
+compatibility remains null. Next establish the matching reference behavior for
+the SCIM failure, resolve concrete ordinary HTTP proxy/reused-connection gaps,
+then validate the exact final six-Go124, bounded operations, durable
+Haskell-Go-Haskell switchback and optional patched-OpenSSL image/selector.
+Only the final passing acceptance permits whole-service approval/availability.
+
+## Earlier construction checkpoint (2026-10-10)
 
 Reconciled documentation against committed implementation and receipts at
 `972e97540c14d6087a2b885b6c631b260ee8edb8`. The active goal is completion of

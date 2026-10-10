@@ -1,7 +1,15 @@
 # Optional Go background-worker (under construction)
 
 This module is under construction, not an available service replacement.
-Haskell remains the supported default. Both original configuration files and CLI
+Haskell remains the supported default. The latest unchanged original worker suite
+passes **46/47** on clean source12107801e with Haskell peers; all adminless,
+meetings, handle-dispute and reindex cases pass. Main user migration still fails
+phase1 SCIM deletion GET500 instead404 before migration activation. It remains
+open, with no baseline waiver. [Exact monitored results](../../../docs/go-migration/qualifications/background-worker-harness-fd/README.md)
+retain every assertion and owned cleanup. Final six-Go124, operations, durable
+switchback and optional patched-OpenSSL image/selector remain pending.
+
+Both original configuration files and CLI
 paths are accepted. Health/readiness and the federation-notification consumer are
 implemented with verified RabbitMQ TLS, paginated queue discovery, single-active
 quorum queues, raw-body forwarding over internal HTTP2, version selection,
@@ -49,9 +57,11 @@ not an E2E or Rabbit/storage switchback. Exact static build/compiler/hash and
 comparison receipts are in evidence/early-20261009. Required Go checks passed
 for the early Go source; final checks must be repeated when the implementation
 is complete. Later construction implements the native discovery retry budget
-and scheduled per-pool drain. Final process validation, transport compatibility and stored error
-diagnostic review remain outstanding. The existing intermittent peer transport
-issue stays open.
+and scheduled per-pool drain. Stored error diagnostics and connection/header timeout phases now have
+[construction receipts](evidence/http-diagnostics-20261010/). The ordinary HTTP
+proxy/reused-connection audit and final process validation remain outstanding.
+A separately reviewed fixture fix supports the measured1702-FD runner demand;
+the remaining SCIM failure is explicit in the current checkpoint above.
 
 The unchanged original gundeck suite passed40/40 with the exact worker executable
 from source00557161c5218fba7ce290ba57536561298a35e3 and remaining Haskell peers.
@@ -103,8 +113,8 @@ including actual PostgreSQL execution with9 readonly original migrations. Native
 expiry ordering/limits, open/boundary retention, full-row validation, code routing,
 batch/error behavior and deletion guards are implemented. Conversation/proposal
 removal adapters and service wiring are now connected. This earlier storage
-fixture explicitly stubs missing conversations. No full meetings
-handler or original cleanup-test qualification is claimed.
+fixture explicitly stubs missing conversations. At that checkpoint the full meetings handler and original cleanup test were not
+qualified; the current original47 run above now passes the native cleanup case.
 
 Required meetings configuration and one-run retention cutoff now pass
 [Go construction checks](evidence/meetings-config-20261009/). Source cron
