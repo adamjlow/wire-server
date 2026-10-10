@@ -4,7 +4,7 @@
   "title": "Inventory whole Brig boundary and reusable original tests",
   "service": "brig",
   "kind": "discovery",
-  "status": "active",
+  "status": "done",
   "owner": "codex",
   "branch": "go-migration",
   "depends_on": [
@@ -31,7 +31,25 @@
       "required_evidence": "Actual pinned nonroot network-none Docker original list/help and binary identities; source/compiled variants mapped, unavailable native checks explicit, concrete original baseline/selection/gap requirements established without claiming unrun passes."
     }
   ],
-  "evidence": [],
-  "review": null,
-  "handoff": "Brig inventory claimed; read actual source and discover original compiled tests before freezing finite contract/harness requirements."
+  "evidence": [
+    {
+      "criterion": "inventory",
+      "result": "pass",
+      "command": "Read complete public24 families/internal/federation/docs/version, runtime queues/search/CLI/migrations/three storage modes/crypto/config/schema94 and Helm;19 primary sources byte-match referencef663, finite gap/operations/rollback requirements and sourced inherited concerns recorded.",
+      "revision": "0d3801f4a23f8285ded94c41178476024f3ed242",
+      "artifact": "docs/go-migration/services/brig/inventory.md"
+    },
+    {
+      "criterion": "tests",
+      "result": "pass",
+      "command": "Actual pinned nonroot/network-none/read-only Docker integration --list and brig --help exit0;1001 unique compiled executions, proposed310/260 base functions mapped to hashed source without gaps, all variants retained,37 source-only legacy test files and absent native unit/legacy/compiler binaries recorded. No backend/e2e run/pass claimed; owned --rm container absent. Scoped state check and32 validator tests pass.",
+      "revision": "0d3801f4a23f8285ded94c41178476024f3ed242",
+      "artifact": "docs/go-migration/services/brig/test-discovery.json"
+    }
+  ],
+  "review": {
+    "by": "codex (same-author self-review explicitly delegated by user)",
+    "artifact": "docs/go-migration/services/brig/inventory-review.md"
+  },
+  "handoff": "Discovery complete only, whole Brig goal active. Publish inventoried gate then protected contract/catalogue/only concrete harness extensions and actual original baseline. Proposed310 original Brig +225 peers=535; no candidate/runtime/native rebuild/e2e pass claimed."
 }
