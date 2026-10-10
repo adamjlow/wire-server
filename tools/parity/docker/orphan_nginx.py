@@ -95,7 +95,7 @@ def probe_child():
     context(child=True);masters=[];report={'result':'running','kind':'actual-native-Nginx-orphan-and-healthy-worker-probe'}
     try:
         for name,port in [('orphan',18090),('healthy',18091)]:
-            config=Path('/tmp')/(name+'.conf');config.write_text('worker_processes 1; pid /tmp/'+name+'.pid; error_log /dev/stderr; events { worker_connections 64; } http { access_log off; server { listen '+str(port)+'; location / { return 200 "synthetic-'+name+'"; } } }')
+            config=Path('/tmp')/(name+'.conf');config.write_text('worker_processes 1; pid /tmp/'+name+'.pid; error_log /dev/stderr; events { worker_connections 64; } http { access_log off; server { listen '+str(port)+'; zauth_keystore /source/libs/wire-subsystems/test/resources/zauth/pubkeys.txt; zauth_acl /source/services/nginz/integration-test/conf/nginz/zauth_acl.txt; oauth_pub_key /source/services/nginz/integration-test/resources/oauth/ed25519_public.jwk; location / { zauth off; return 200 "synthetic-'+name+'"; } } }')
             p=subprocess.Popen(['nginx','-c',str(config),'-g','daemon off;','-e','/dev/stderr']);masters.append(p)
             deadline=time.monotonic()+10
             while True:

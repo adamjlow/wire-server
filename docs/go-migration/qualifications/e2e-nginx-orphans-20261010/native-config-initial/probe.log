@@ -1,0 +1,9 @@
+ Network wire-e2e-a0d48e8603e14486a79e761d86716f31_demo_wire Creating 
+ Network wire-e2e-a0d48e8603e14486a79e761d86716f31_demo_wire Creating 
+ Network wire-e2e-a0d48e8603e14486a79e761d86716f31_demo_wire Created 
+ Network wire-e2e-a0d48e8603e14486a79e761d86716f31_demo_wire Created 
+ Container wire-e2e-a0d48e8603e14486a79e761d86716f31-runner-run-8e4ce93732e9 Creating 
+ Container wire-e2e-a0d48e8603e14486a79e761d86716f31-runner-run-8e4ce93732e9 Created 
+2026/10/10 17:45:37 [emerg] 8#8: missing 'zauth_keystore' in /tmp/orphan.conf:1
+nginx: [emerg] missing 'zauth_keystore' in /tmp/orphan.conf:1
+

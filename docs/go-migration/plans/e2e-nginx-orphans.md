@@ -29,3 +29,5 @@ that failed validation openly. This follow-up supplies the immutable declared
 plan path and revalidates the active claim before any implementation/probe.
 
 Initial owned native probe at8c6bb8d51 stopped before proving orphan behavior: Python helper function http shadowed imported http.client. Runner1/cleanup0/empty and exact source receipts retained in qualifications/initial. Alias the imported client explicitly; no reference/assertion change, corrected actual probe required.
+
+Second actualprobe/f34173ed3 fails nativeNginx startup: Wire custom module requires zauth_keystore, so bare generic Nginx fixture is invalid. Retain actualmissing-keystore error/runner1/cleanup0/empty in native-config-initial. Configure repository synthetic public auth keystore/ACL/OAuth fixture and native health-location zauth-off, as originalfixture; no original/protected serviceconfig edits or productionauth change. Corrected nativeprobe stillrequired.
