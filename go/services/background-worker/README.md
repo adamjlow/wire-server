@@ -7,7 +7,8 @@ no failures/errors/skips and successful owned cleanup. [Exact receipts](evidence
 identify clean source89f24e7a and every selected executable. A concrete response
 ACK/retry gap found during actual switchback is now repaired: Post200/JSON/object
 is required, matching native EmptyResponse. Current full Go checks pass; the
-changed executable still needs exact final mixed-stack and lifecycle qualification. Older SCIM failures
+changed executable now passes real durable switchback and bounded operations;
+current original124 and final review remain pending. Older SCIM failures
 remain historical; none was skipped or waived. The unchanged catalogues contain
 120 distinct functions because four Events cases overlap across suites.
 
@@ -15,9 +16,11 @@ An optional scratch image now includes the same worker, static patched OpenSSL3.
 reference CA bundle and license notices. Existing bot/DHE/pin/date/cancellation
 tests pass in that exact image. [Construction receipts](evidence/image-construction-20261010/)
 join passing default-mount/health/loaded operations on89f24e7a in
-[operations evidence](evidence/operations-image-20261010/). Updated executable
-qualification, actual complete durable switchback, separately scoped selector
-and final review remain pending; compatibility remains null.
+[operations evidence](evidence/operations-image-20261010/). Current [durable switchback](evidence/switchback-final-20261010/) and
+[exact-image operations](evidence/operations-final-20261010/) now pass. The
+[optional selector](../../../tools/parity/background_worker_helm_postrender.py)
+preserves Haskell/default rendering and changes only the worker image. Current
+original124/final review remain pending; compatibility remains null.
 
 Both original configuration files and CLI
 paths are accepted. Health/readiness and the federation-notification consumer are

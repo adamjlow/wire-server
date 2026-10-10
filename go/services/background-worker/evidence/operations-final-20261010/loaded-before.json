@@ -1,0 +1,137 @@
+{
+  "sink_entered": 1,
+  "queue": {
+    "consumer_details": [
+      {
+        "arguments": {},
+        "channel_details": {
+          "connection_name": "172.20.2.12:44866 -> 172.20.2.10:5671",
+          "name": "172.20.2.12:44866 -> 172.20.2.10:5671 (1)",
+          "node": "rabbit@c5b79ccde0e0",
+          "number": 1,
+          "peer_host": "172.20.2.12",
+          "peer_port": 44866,
+          "user": "guest"
+        },
+        "ack_required": true,
+        "active": true,
+        "activity_status": "single_active",
+        "consumer_tag": "pusher.1",
+        "consumer_timeout": 1800000,
+        "exclusive": false,
+        "prefetch_count": 1,
+        "queue": {
+          "name": "backend-notifications.operations.synthetic",
+          "vhost": "backendA"
+        }
+      }
+    ],
+    "arguments": {
+      "x-queue-type": "quorum",
+      "x-single-active-consumer": true
+    },
+    "auto_delete": false,
+    "consumer_capacity": 1.0,
+    "consumer_utilisation": 1.0,
+    "consumers": 1,
+    "deliveries": [],
+    "delivery_limit": 20,
+    "durable": true,
+    "effective_policy_definition": {},
+    "exclusive": false,
+    "garbage_collection": {
+      "fullsweep_after": 65535,
+      "max_heap_size": 0,
+      "min_bin_vheap_size": 2984878,
+      "min_heap_size": 233,
+      "minor_gcs": 9
+    },
+    "incoming": [],
+    "leader": "rabbit@c5b79ccde0e0",
+    "members": [
+      "rabbit@c5b79ccde0e0"
+    ],
+    "memory": 42508,
+    "message_bytes": 210,
+    "message_bytes_dlx": 0,
+    "message_bytes_persistent": 210,
+    "message_bytes_ram": 0,
+    "message_bytes_ready": 105,
+    "message_bytes_unacknowledged": 105,
+    "message_stats": {
+      "ack": 0,
+      "ack_details": {
+        "rate": 0.0
+      },
+      "deliver": 1,
+      "deliver_details": {
+        "rate": 0.0
+      },
+      "deliver_get": 1,
+      "deliver_get_details": {
+        "rate": 0.0
+      },
+      "deliver_no_ack": 0,
+      "deliver_no_ack_details": {
+        "rate": 0.0
+      },
+      "get": 0,
+      "get_details": {
+        "rate": 0.0
+      },
+      "get_empty": 0,
+      "get_empty_details": {
+        "rate": 0.0
+      },
+      "get_no_ack": 0,
+      "get_no_ack_details": {
+        "rate": 0.0
+      },
+      "publish": 2,
+      "publish_details": {
+        "rate": 0.0
+      },
+      "redeliver": 0,
+      "redeliver_details": {
+        "rate": 0.0
+      }
+    },
+    "messages": 2,
+    "messages_details": {
+      "rate": 0.4
+    },
+    "messages_dlx": 0,
+    "messages_persistent": 2,
+    "messages_ram": 0,
+    "messages_ready": 1,
+    "messages_ready_details": {
+      "rate": 0.2
+    },
+    "messages_ready_high": 0,
+    "messages_ready_normal": 1,
+    "messages_ready_returned": 0,
+    "messages_unacknowledged": 1,
+    "messages_unacknowledged_details": {
+      "rate": 0.2
+    },
+    "name": "backend-notifications.operations.synthetic",
+    "node": "rabbit@c5b79ccde0e0",
+    "online": [
+      "rabbit@c5b79ccde0e0"
+    ],
+    "open_files": {
+      "rabbit@c5b79ccde0e0": 0
+    },
+    "operator_policy": null,
+    "policy": null,
+    "publishers": 0,
+    "reductions": 22073,
+    "reductions_details": {
+      "rate": 1170.4
+    },
+    "single_active_consumer_tag": "pusher.1",
+    "state": "running",
+    "type": "quorum",
+    "vhost": "backendA"
+  }
+}

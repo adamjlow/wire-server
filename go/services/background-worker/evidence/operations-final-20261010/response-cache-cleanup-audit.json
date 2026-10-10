@@ -1,0 +1,139 @@
+{
+  "rule": "Reproducible GOCACHE regular -d entries >1MiB, older30min, exact worker module identity within first2MiB; no live Go compiler. Qualified/reference executables, dependency cache, source archives and evidence retained.",
+  "cutoff_unix": 1791600654.2855785,
+  "live_compilers": [],
+  "candidates": [
+    {
+      "path": "/home/operator/.cache/go-build/75/7551509f0b7dbe6583be0f7004eae8bfbb3454d61c20b647e7083e68c67944ab-d",
+      "bytes": 10096012,
+      "mtime": 1791597149.5802474
+    },
+    {
+      "path": "/home/operator/.cache/go-build/19/19e0b916f9bab5c56f5d613236cce564944d485c2401ca5ffa5322fc30860e17-d",
+      "bytes": 6724788,
+      "mtime": 1791594528.2164075
+    },
+    {
+      "path": "/home/operator/.cache/go-build/4c/4c4723a6e22b346ab4f690daa05b43f35a61690bde30094ab171956cf4ffb533-d",
+      "bytes": 10096842,
+      "mtime": 1791598354.2689764
+    },
+    {
+      "path": "/home/operator/.cache/go-build/bd/bd3fbcacc7a1c48cc1b270f106724a79b982bbb3a99170ea7fc032251d6aff3e-d",
+      "bytes": 6735008,
+      "mtime": 1791594331.4756858
+    },
+    {
+      "path": "/home/operator/.cache/go-build/0c/0c1f9d0bdceeba9d2191b9b9498952c9cb6ec53704389d0d2952d2d2bf3f90e9-d",
+      "bytes": 7696770,
+      "mtime": 1791597212.1892645
+    },
+    {
+      "path": "/home/operator/.cache/go-build/13/13fa4e64cab7c8c9f4a1c967102d02c99fee57ce661b9f8cdb3ffb85b6c34d46-d",
+      "bytes": 9799538,
+      "mtime": 1791593639.652198
+    },
+    {
+      "path": "/home/operator/.cache/go-build/2a/2aa57a814e2a5731290bd0b76f039f6067294a07394811c81762b0ea38626de3-d",
+      "bytes": 7569584,
+      "mtime": 1791593640.5806148
+    },
+    {
+      "path": "/home/operator/.cache/go-build/d6/d6cc67fee6c513f61ef313dd7c59f18a14b1a00ec359f9d272ae5ab43639cbcc-d",
+      "bytes": 9809462,
+      "mtime": 1791593580.1201916
+    },
+    {
+      "path": "/home/operator/.cache/go-build/de/de72cb8a1c4ba1066e311ea7ae2cf117f80a6cdc59ae3b4128602474cd7f2212-d",
+      "bytes": 6654450,
+      "mtime": 1791593636.6493428
+    },
+    {
+      "path": "/home/operator/.cache/go-build/b8/b87c0ba0edf05cfbe1111c649044bc8a5e1bd8d237dc1db5feec9ee4cb3af49a-d",
+      "bytes": 7573866,
+      "mtime": 1791594048.5676947
+    },
+    {
+      "path": "/home/operator/.cache/go-build/7f/7ff0c7cade1bd475c259ae5e55a58df15e2e86bf51e20af4a3b6225f8354e276-d",
+      "bytes": 9830968,
+      "mtime": 1791594048.0088158
+    },
+    {
+      "path": "/home/operator/.cache/go-build/70/70e792ce891cc8cd9ee9e8944f642af51d57d472d0fae1e7d80ce51e2952fb15-d",
+      "bytes": 7653996,
+      "mtime": 1791594332.9009142
+    },
+    {
+      "path": "/home/operator/.cache/go-build/7a/7a005540dfc5bb2429027d7539d5b391296ac4a954017ffab0cf2e64a7b818b6-d",
+      "bytes": 6772642,
+      "mtime": 1791597147.899361
+    },
+    {
+      "path": "/home/operator/.cache/go-build/14/14e5dfd17473bcf64b31fc3248b75d3f48661f042b9d929a13ab094817a44c82-d",
+      "bytes": 7696282,
+      "mtime": 1791597177.7343357
+    },
+    {
+      "path": "/home/operator/.cache/go-build/d3/d31caa51d4795f2b4ce4278b5787ff815477eab7bd95556b4923ba45ad8e9ed5-d",
+      "bytes": 11399374,
+      "mtime": 1791594050.7783005
+    },
+    {
+      "path": "/home/operator/.cache/go-build/4f/4f74873ec6a06eaf04d370c320c3cc244bb433fdaae1f1b95679cc9b2f2b589a-d",
+      "bytes": 11682980,
+      "mtime": 1791597214.2864184
+    },
+    {
+      "path": "/home/operator/.cache/go-build/d9/d923c983b5d8c9f2dd87c5d9234d41f7cc16eb77604df0ad74b565b984f8bab0-d",
+      "bytes": 10520238,
+      "mtime": 1791594372.099663
+    },
+    {
+      "path": "/home/operator/.cache/go-build/cd/cd812f062d848b94ab3314277bc29fac1d9731dc3bd708ad58aab7815871cf64-d",
+      "bytes": 11538192,
+      "mtime": 1791594334.9414096
+    },
+    {
+      "path": "/home/operator/.cache/go-build/40/4049a47322fca3b6748a8660e97f49b2b0747a4e220d10bf86da76379a2c7814-d",
+      "bytes": 11362814,
+      "mtime": 1791593642.670082
+    },
+    {
+      "path": "/home/operator/.cache/go-build/e3/e3a354259160ab30e2c8f52e024dcfbf9dbd7792930d8342430468cc74d52d50-d",
+      "bytes": 11682928,
+      "mtime": 1791597395.0305498
+    },
+    {
+      "path": "/home/operator/.cache/go-build/bc/bc748e24f102097d9d6c126cff74ad1dff1debdcfb5126b863d78a4d6ae4ec4c-d",
+      "bytes": 6658214,
+      "mtime": 1791594046.591292
+    },
+    {
+      "path": "/home/operator/.cache/go-build/cb/cbebff7d53d4ff37f6beccbce4b4a53407c7661809e77ac082dacffc9581d589-d",
+      "bytes": 9819598,
+      "mtime": 1791593846.6630464
+    },
+    {
+      "path": "/home/operator/.cache/go-build/26/26bcd55272d5b1eaa0a88275036208ef90f0058ce7fd8ad17bc5a0ad7c0ab976-d",
+      "bytes": 6763046,
+      "mtime": 1791597615.8946404
+    },
+    {
+      "path": "/home/operator/.cache/go-build/67/672243a0422f19e2017f4aa61b9d9ae63e3cd8d6e03e204aca22aa7d27210d6a-d",
+      "bytes": 11386236,
+      "mtime": 1791593849.5094693
+    },
+    {
+      "path": "/home/operator/.cache/go-build/1e/1ea51bc2c23285b7f8d4edaca9de52003e44e042b1ba95479081d45e5ed19aa9-d",
+      "bytes": 11682276,
+      "mtime": 1791597179.8564768
+    },
+    {
+      "path": "/home/operator/.cache/go-build/77/771b29c51490a38ae90b8f74d1d9f3faa2c298dd92f4e0f8289c8f2efe5dfceb-d",
+      "bytes": 9809776,
+      "mtime": 1791593533.521319
+    }
+  ],
+  "bytes": 239015880,
+  "free_before": 1755164672
+}

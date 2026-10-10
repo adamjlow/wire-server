@@ -1,0 +1,48 @@
+{
+  "result": "pass",
+  "requests": 100,
+  "concurrency": 8,
+  "jobs": {
+    "sync-user-group": 5,
+    "sync-user-group-and-channel": 5
+  },
+  "busy": 0,
+  "queue": {
+    "garbage_collection": {
+      "max_heap_size": -1,
+      "min_bin_vheap_size": -1,
+      "min_heap_size": -1,
+      "fullsweep_after": -1,
+      "minor_gcs": -1
+    },
+    "consumer_details": [],
+    "arguments": {
+      "x-queue-type": "quorum"
+    },
+    "auto_delete": false,
+    "deliveries": [],
+    "durable": true,
+    "exclusive": false,
+    "incoming": [],
+    "leader": "rabbit@c5b79ccde0e0",
+    "members": [
+      "rabbit@c5b79ccde0e0"
+    ],
+    "name": "background-jobs",
+    "node": "rabbit@c5b79ccde0e0",
+    "online": [
+      "rabbit@c5b79ccde0e0"
+    ],
+    "state": "running",
+    "type": "quorum",
+    "vhost": "backendA"
+  },
+  "seconds": 0.5974184749647975,
+  "latency_seconds": {
+    "min": 0.00031643640249967575,
+    "max": 0.006234519183635712,
+    "p50": 0.0014318004250526428,
+    "p95": 0.004411740228533745
+  },
+  "metrics": "wire_meetings_cleanup_runs_total 1\nwire_background_worker_running_workers{worker=\"backend-notification-pusher\"} 1\nwire_background_worker_running_workers{worker=\"dead-user-notification-watcher\"} 1\nwire_background_worker_running_workers{worker=\"background-job-consumer\"} 1\nwire_background_jobs_workers_busy 0\nwire_background_jobs_concurrency_configured 4\nwire_background_jobs_received_total{job_type=\"sync-user-group\"} 5\nwire_background_jobs_started_total{job_type=\"sync-user-group\"} 5\nwire_background_jobs_succeeded_total{job_type=\"sync-user-group\"} 5\nwire_background_jobs_failed_total{job_type=\"sync-user-group\"} 0\nwire_background_jobs_invalid_total{job_type=\"sync-user-group\"} 0\nwire_background_jobs_redelivered_total{job_type=\"sync-user-group\"} 0\nwire_background_jobs_duration_seconds_bucket{job_type=\"sync-user-group\",le=\"0.005\"} 4\nwire_background_jobs_duration_seconds_bucket{job_type=\"sync-user-group\",le=\"0.01\"} 5\nwire_background_jobs_duration_seconds_bucket{job_type=\"sync-user-group\",le=\"0.025\"} 5\nwire_background_jobs_duration_seconds_bucket{job_type=\"sync-user-group\",le=\"0.05\"} 5\nwire_background_jobs_duration_seconds_bucket{job_type=\"sync-user-group\",le=\"0.1\"} 5\nwire_background_jobs_duration_seconds_bucket{job_type=\"sync-user-group\",le=\"0.25\"} 5\nwire_background_jobs_duration_seconds_bucket{job_type=\"sync-user-group\",le=\"0.5\"} 5\nwire_background_jobs_duration_seconds_bucket{job_type=\"sync-user-group\",le=\"1\"} 5\nwire_background_jobs_duration_seconds_bucket{job_type=\"sync-user-group\",le=\"2.5\"} 5\nwire_background_jobs_duration_seconds_bucket{job_type=\"sync-user-group\",le=\"5\"} 5\nwire_background_jobs_duration_seconds_bucket{job_type=\"sync-user-group\",le=\"10\"} 5\nwire_background_jobs_duration_seconds_bucket{job_type=\"sync-user-group\",le=\"+Inf\"} 5\nwire_background_jobs_duration_seconds_sum{job_type=\"sync-user-group\"} 0.008365291\nwire_background_jobs_duration_seconds_count{job_type=\"sync-user-group\"} 5\nwire_background_jobs_received_total{job_type=\"sync-user-group-and-channel\"} 5\nwire_background_jobs_started_total{job_type=\"sync-user-group-and-channel\"} 5\nwire_background_jobs_succeeded_total{job_type=\"sync-user-group-and-channel\"} 5\nwire_background_jobs_failed_total{job_type=\"sync-user-group-and-channel\"} 0\nwire_background_jobs_invalid_total{job_type=\"sync-user-group-and-channel\"} 0\nwire_background_jobs_redelivered_total{job_type=\"sync-user-group-and-channel\"} 0\nwire_background_jobs_duration_seconds_bucket{job_type=\"sync-user-group-and-channel\",le=\"0.005\"} 5\nwire_background_jobs_duration_seconds_bucket{job_type=\"sync-user-group-and-channel\",le=\"0.01\"} 5\nwire_background_jobs_duration_seconds_bucket{job_type=\"sync-user-group-and-channel\",le=\"0.025\"} 5\nwire_background_jobs_duration_seconds_bucket{job_type=\"sync-user-group-and-channel\",le=\"0.05\"} 5\nwire_background_jobs_duration_seconds_bucket{job_type=\"sync-user-group-and-channel\",le=\"0.1\"} 5\nwire_background_jobs_duration_seconds_bucket{job_type=\"sync-user-group-and-channel\",le=\"0.25\"} 5\nwire_background_jobs_duration_seconds_bucket{job_type=\"sync-user-group-and-channel\",le=\"0.5\"} 5\nwire_background_jobs_duration_seconds_bucket{job_type=\"sync-user-group-and-channel\",le=\"1\"} 5\nwire_background_jobs_duration_seconds_bucket{job_type=\"sync-user-group-and-channel\",le=\"2.5\"} 5\nwire_background_jobs_duration_seconds_bucket{job_type=\"sync-user-group-and-channel\",le=\"5\"} 5\nwire_background_jobs_duration_seconds_bucket{job_type=\"sync-user-group-and-channel\",le=\"10\"} 5\nwire_background_jobs_duration_seconds_bucket{job_type=\"sync-user-group-and-channel\",le=\"+Inf\"} 5\nwire_background_jobs_duration_seconds_sum{job_type=\"sync-user-group-and-channel\"} 0.005314794\nwire_background_jobs_duration_seconds_count{job_type=\"sync-user-group-and-channel\"} 5\n"
+}

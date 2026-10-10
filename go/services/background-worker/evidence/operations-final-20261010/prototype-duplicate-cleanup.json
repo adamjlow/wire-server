@@ -1,0 +1,19 @@
+{
+  "reason": "Remove byte-identical obsolete prototype context executable copies only; primary exact qualified binaries, local images, CA/license context/source archives and all evidence retained.",
+  "files": [
+    {
+      "removed_duplicate": "/home/operator/.cache/wire-migration/background-worker-20261009/worker-image-89f24/background-worker",
+      "retained_primary": "/home/operator/.cache/wire-migration/background-worker-20261009/six-go-worker-89f24",
+      "bytes": 21396474,
+      "sha256": "706fed84952a9ee80dc1c9ac7b670d7417114cfe93b835d6d5fe94e58e2628d6"
+    },
+    {
+      "removed_duplicate": "/home/operator/.cache/wire-migration/background-worker-20261009/worker-image-89f24/openssl",
+      "retained_primary": "/home/operator/.cache/wire-migration/background-worker-20261009/openssl-musl-3.5.9/openssl",
+      "bytes": 10123360,
+      "sha256": "a2907b93619b6e95b070fc14ae5db587ed4c3cff981ad07e5016f673d8afee5c"
+    }
+  ],
+  "free_before": 2140053504,
+  "free_after": 2171576320
+}

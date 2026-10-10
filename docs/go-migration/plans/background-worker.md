@@ -640,3 +640,13 @@ the target row. Return Haskell migrates a further user, completes another meetin
 job, preserves shared archives/data and ACKs both actual notification bodies.
 Go and return Haskell SIGTERM exit0; cleanup0/no owned resources. Required current
 original124/operations and protected selector/final review gates remain pending.
+
+[Current exact-image operations](../../../go/services/background-worker/evidence/operations-final-20261010/)
+passes the declared100health/8concurrency and10job smoke in0.597s, measured RSS/CPU/
+latency and clean30s-grace loaded SIGTERM0/.0577s preserving both unsent messages;
+cleanup0/no owned resources. Separately scoped
+[optional selector/count review](../qualifications/background-worker-selector-20261010/)
+passes actual default byte identity, one-image replacement and six fail-closed
+CLI cases; Recreate/mounts/probes remain unchanged. Primary contract count is
+corrected120/four Events overlaps without changing required124 assertions.
+Current original124 and final delegated same-author review/publication remain.
