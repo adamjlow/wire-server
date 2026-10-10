@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "status": "queued",
+  "owner": null,
+  "branch": null,
+  "evidence": [],
+  "review": null,
+  "plan": "docs/go-migration/plans/brig.md",
+  "id": "brig-implementation-gates",
+  "title": "Publish Brig contracted and implementing gates",
+  "service": "framework",
+  "kind": "framework",
+  "depends_on": [
+    "brig-contract"
+  ],
+  "write_paths": [
+    ".migration/tasks/brig-implementation-gates.json",
+    ".migration/services/brig.json"
+  ],
+  "acceptance_criteria": [
+    {
+      "id": "gates",
+      "description": "Publish adjacent contracted then implementing stages without parity or native-green claim.",
+      "required_evidence": "Completed inventory and protected whole contract with executable finite plan and retained baseline failure; preserve immutable gates/Haskell default/compatibility null. Source requirements remain whole-service; user delegated self-review is labelled honestly."
+    }
+  ],
+  "handoff": "Claim then publish one adjacent stage per commit; native310 remains309pass/1failure and final535 acceptance unsatisfied, no candidate claim."
+}

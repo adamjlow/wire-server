@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "status": "queued",
+  "owner": null,
+  "branch": null,
+  "evidence": [],
+  "review": null,
+  "plan": "docs/go-migration/plans/brig.md",
+  "id": "brig-implementation",
+  "title": "Implement and qualify whole optional Go Brig service",
+  "service": "brig",
+  "kind": "implementation",
+  "depends_on": [
+    "brig-implementation-gates",
+    "go-security-patch-20261009"
+  ],
+  "write_paths": [
+    ".migration/tasks/brig-implementation.json",
+    "go/services/brig",
+    "docs/go-migration/plans/brig.md",
+    "changelog.d/5-internal/brig-implementation"
+  ],
+  "acceptance_criteria": [
+    {
+      "id": "service",
+      "description": "Implement entire configured native Brig contract, starting with real native/Go executable comparison.",
+      "required_evidence": "All24 public families/internal/federation/docs/version/options/CLI/schema/storage/search/queue/discovery/auth/crypto/lifecycle supported without native embedding or success stubs; early startup/health/config/error/version/native comparison. Preserve historical password/token/cookie/prekey/MLS/DPoP and native security acceptance."
+    },
+    {
+      "id": "quality",
+      "description": "Validate final exact executable against finite original and focused contract matrix.",
+      "required_evidence": "Pinned Go format/tidy/verify/vet/unit/race/build/vulnerability/license checks and reviewed dependencies; all535 original eight-Go/Haskell executions in complete suites, unchanged strict names/XML/no failure/error/skip and exact artifact/source/runner/config/cleanup identities. Focused frozen crypto/trust/state/serialization/config/three storage-mode controls; retain failed native SCIM baseline and all candidate failures, no Haskell repairs/assertion/deadline/normalization changes."
+    },
+    {
+      "id": "operations",
+      "description": "Prove optional process/image and actual durable native-Go-native rollback.",
+      "required_evidence": "Frozen100request/concurrency8 latency/RSS/CPU/metrics smoke and eight held-body drain/listener close/SIGTERM0 within35s; actual unchanged-schema same-state native-Go-native auth/password/cookie/client/prekey/MLS/property/connection/pending action/OAuth/apps/groups/domain/queue/search and storage-mode witnesses. Trusted nonroot optional source/license image and separately scoped image-only/default-byte-preserving selector. Exact final qualified artifact and user-delegated same-author self-review with serious inherited concerns and unavailable native checks accurately recorded."
+    }
+  ],
+  "handoff": "Whole implementation begins only after gates implementing; early runnable native comparison then complete configured service and finite qualification. Native green baseline unavailable309/310, no acceptance waiver. Galley follows actual complete Brig goal, no push/deploy."
+}
