@@ -24,3 +24,11 @@ openssl-musl-3.5.9 cache; build.py/build.json identify exact inputs and outputs.
 This is construction proof. Run the committed generic packager, real image health,
 trusted-CA/default mounts/SIGTERM/declared operations and actual same-state durable
 switchback before whole-service qualification. No production switch or remote push.
+
+The committed generic packager now runs successfully on cleanfc99aa141 using
+the same identified worker/helper. [Its receipt](committed-image.json) produces
+exactly the already-tested prototype imageIDa14d2033, with identical rootfs/runtime
+config/file hashes, UID65534 and worker entrypoint. The retained [packager check](packager-check.json)
+accepts both actual static artifacts and rejects the earlier dynamic Nix helper.
+No compiler/fixture/test containers remain. Real health/default mounts, bounded
+operations and durable switchback still require execution.

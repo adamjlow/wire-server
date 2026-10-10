@@ -1,0 +1,11 @@
+{
+  "command": "PinnedGo1.26.9 python3 go/services/background-worker/build_image.py with identified89f24 worker/helper receipts",
+  "exit_code": 0,
+  "packaging_revision": "fc99aa141769e8e4a259ce6681f928f6052f2f84",
+  "image_id": "sha256:a14d2033f771f8849c604028709c6745e0f8a682c8da60d1a616dba1639dd655",
+  "prototype_same_image_id": true,
+  "rootfs_runtime_config_and_file_hashes_match": true,
+  "nonroot_entrypoint": true,
+  "static_elf_positive_and_dynamic_helper_negative_checks": true,
+  "owned_compiler_fixture_test_containers_remaining": []
+}
