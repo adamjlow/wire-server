@@ -4,9 +4,9 @@
   "title": "Background-worker selection",
   "service": "background-worker",
   "kind": "operations",
-  "status": "queued",
-  "owner": null,
-  "branch": null,
+  "status": "active",
+  "owner": "codex",
+  "branch": "go-migration",
   "depends_on": [
     "background-worker-verification",
     "background-worker-selector-contract"
