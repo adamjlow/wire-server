@@ -91,8 +91,15 @@
       "command": "Pinned Go1.26.9 format/tidy/verify/vet/race/build/vulnerability/license, metadata/initiate/mobile/domain/binding tests and configured-key signature tests reusing unchanged Microsoft XML plus prior IdP/NameID goldens. Exact main artifact carries native RSA compatibility default. Construction only; no finalize-login or original225 claim.",
       "revision": "ccb42dcf898765e0b119d424c91b27c2f94cb4ff",
       "artifact": "go/services/spar/qualification/evidence/saml-initiate-signature/construction-checks.json"
+    },
+    {
+      "criterion": "quality",
+      "result": "pass",
+      "command": "Pinned Go1.26.9 checks, verified original Microsoft assertion parsing, finite request/issuer/replay/audience/recipient/time/consumption and Brig session-cookie protocol tests. Internal construction only; no original login or final225 execution claim.",
+      "revision": "e6276d9fd8a5801a95824ef85c6d8f3cfdd8404f",
+      "artifact": "go/services/spar/qualification/evidence/assertion-judge/construction-checks.json"
     }
   ],
   "review": null,
-  "handoff": "Progress: source77b401 state/IdP delete passed original update/delete regression; six prior IdP/token originals retained. Sourceccb42dcf898765e0b119d424c91b27c2f94cb4ff adds metadata/initiate/precheck domain/v1/v2/mobile/contact/URI handling and persistent request/verdict binding plus first configured-key signature adapter. Pinned Go1.26.9 checks incl race/vulnerability/license pass; unchanged Microsoft fixture, IdP/NameID goldens, ADFS fallback and tamper/wrapping/key/credential/ref/URI/domain negatives pass. User-authorized native RSA policy retained via Spar-local rsa1024min=0; inherited weak keys documented, no signature bypass or oracle edits. Adapter still has RIPEMD160/SDK traversal-limit gaps, and is not wired into finalize-login. Next resolve these finite adapter gaps and implement full assertion judge/issuer/request/replay/time/audience/recipient checks, then actual Brig SAML user/cookie verdict effects and SCIM users/groups/internal cleanup. Final225/state/ops/switchback/image/selector remain incomplete; compatibility null."
+  "handoff": "Progress: sourcee6276d9fd8a5801a95824ef85c6d8f3cfdd8404f adds parsed verified assertions, issuer-bound request/replay/time/audience/recipient judgement and Brig persist=true SSO session RPC with backend-only first Set-Cookie field. Pinned Go1.26.9 format/tidy/verify/vet/unit/race/build/vulnerability/license pass; original Microsoft assertion fixture parses. Native fatal/ordinary storage effects and accumulated denial precedence preserved. These boundaries are not wired to finalize-login. Next complete actual login/user provision/migration/email/verdict/cookie flow, resolve malformed-importer/exact conflicting-ref rendering and RIPEMD160/SDK traversal-limit gaps, then batch original SAML tests through existing owned Docker harness. Continue SCIM users/groups/internal cleanup. Existing native101 and six IdP/token plus one delete originals retained; no new original execution in this increment. Final225/state/ops/switchback/image/selector and whole-service review incomplete; compatibility null. Haskell source, oracle and defaults unchanged."
 }

@@ -1,0 +1,21 @@
+{
+  "source_revision": "e6276d9fd8a5801a95824ef85c6d8f3cfdd8404f",
+  "result": "pass",
+  "scope": "Internal construction boundaries only; not original login integration execution or whole-service qualification.",
+  "checks": [
+    "Pinned Go1.26.9 format/tidy/verify/vet/unit/race/build/vulnerability/license",
+    "Unchanged Microsoft verified assertion fixture parses",
+    "Finite issuer/request/replay/audience/recipient/time/session/consumption and storage-failure checks",
+    "Native accumulated-denial precedence and conflicting signed subjects",
+    "Actual Brig SSO RPC envelope and backend-only cookie source; absent-cookie and denied-response failures"
+  ],
+  "go_check_log_sha256": "efc17f6f365eaf831ce06dc7393a21ccca2e966e41c7a940698c97bab117fb56",
+  "unresolved": [
+    "Finalize-login wiring, user provisioning/migration, email and verdict/cookie rendering",
+    "Malformed assertion importer and exact conflicting-reference error rendering",
+    "RIPEMD160 and SDK namespace traversal-limit compatibility",
+    "SCIM users/groups/internal cleanup",
+    "Final225 mixed profile, finite state/security gaps, operations, durable switchback, image and selector"
+  ],
+  "review": "Same-author construction review under user delegation. Checked native SP.hs/XML.hs storage and denial order and BrigAPIAccess/Rpc.hs session protocol. No whole-service approval."
+}
