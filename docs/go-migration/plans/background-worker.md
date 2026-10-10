@@ -559,3 +559,15 @@ including DHE/pin/date/cancellation/transcript/reaping. No host dependencies are
 installed. Commit/run the generic packager, then prove real default mounts/health,
 declared operations/loaded SIGTERM and durable Haskell-Go-Haskell switchback;
 image construction alone does not satisfy those gates.
+
+The next operations check is declared before execution in
+`go/services/background-worker/qualification/`:100 health requests, concurrency8,
+plus five nonexistent-group and five nonexistent-group/channel jobs, all ACKed
+with received/started/succeeded counters and inflight0 within30s. Record health
+latencies and actual image process RSS/CPU. A real private h2c notification sink
+holds one delivery with another pending; SIGTERM must exit0 within configured30s
+plus5s and return both unsent messages to the durable queue. The exact image uses
+both default config mounts, UID65534, verified Rabbit CA, no host ports, read-only
+source/rootfs and owned mandatory cleanup. The qualification sink is separate
+from the shipping executable/image. This is operations evidence, not another
+original-suite run or the required complete durable switchback.
