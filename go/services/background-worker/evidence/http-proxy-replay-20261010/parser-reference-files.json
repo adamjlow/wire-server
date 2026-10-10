@@ -1,0 +1,10 @@
+{
+  "Headers.hs": {
+    "url": "https://raw.githubusercontent.com/snoyberg/http-client/http-client-0.7.19/http-client/Network/HTTP/Client/Headers.hs",
+    "sha256": "0f72621b3e82fd2de69b462db34dde9a25379e316e3a9f20bbf806f1c604d937"
+  },
+  "Connection.hs": {
+    "url": "https://raw.githubusercontent.com/snoyberg/http-client/http-client-0.7.19/http-client/Network/HTTP/Client/Connection.hs",
+    "sha256": "c85a8f92e8ce4ee2a5f231e4a036da84e55b54be36b17b185c6ce13e11669635"
+  }
+}

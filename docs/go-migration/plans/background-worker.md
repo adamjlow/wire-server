@@ -535,3 +535,11 @@ validation and reused incomplete-header recovery. Fresh/status/one-shot/body/
 cancellation negatives pass. Full Go checks pass; remaining ordinary parser audit
 is explicit. Final mixed-stack124, operations, durable switchback and patched
 OpenSSL image/selector are still required before whole-service qualification.
+
+The [finite ordinary-manager source review](../../../go/services/background-worker/evidence/http-proxy-replay-20261010/ordinary-manager-review.md)
+closes the ordinary HTTP audit for used valid Brig/Gundeck bindings. Native
+malformed-line tolerance and fragmentation-dependent helper limits versus Go's
+standard bounded parser are explicit, not a claim of arbitrary malformed HTTP or
+whole-library byte identity. The frozen original assertions/service gates remain
+unchanged. Next run the exact current worker with five qualified Go peers through
+all original124 assertions; no speculative helper identity suite is added.

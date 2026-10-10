@@ -27,7 +27,10 @@ Source hashes identify the exact code/test contents.
 Same-author source review under existing user delegation checks proxy credential
 confidentiality, context/transport cleanup, retry eligibility and existing domain
 bindings. This component proof is not final whole-service qualification.
-Remaining ordinary-parser audit includes native4096 line/100 field defaults and
-lenient invalid header lines versus Go's standard HTTP parser; do not silently
-claim arbitrary byte-parser identity or waive supported contract differences.
+The [finite ordinary-manager review](ordinary-manager-review.md) documents
+native fragment-dependent line/count guards and lenient malformed-line handling
+versus Go's standard parser. Used valid Brig/Gundeck interactions are preserved;
+no arbitrary malformed-wire or http-client library replacement identity is claimed.
+Original/service contract failures remain failures; no new acceptance gate or
+exception is introduced for incidental parser identity.
 Final sixGo124/operations/durable switchback/image/selector remain pending.
