@@ -8,6 +8,7 @@ import (
 	"encoding/binary"
 	"errors"
 	"math"
+	"math/big"
 	"slices"
 	"time"
 
@@ -31,6 +32,9 @@ type tokenIssuer struct {
 func (i tokenIssuer) sign(t ZToken, now time.Time, ttl int64) (ZToken, error) {
 	t.Version, t.Key = 1, i.index
 	// floor(now + integer TTL), as Data.ZAuth.Creation.newToken does.
+	// big.Int value copies share backing words. Renewing a copied token must
+	// never mutate the original signed header's expiration.
+	t.Expires = *new(big.Int)
 	t.Expires.SetInt64(now.Unix() + ttl)
 	if err := t.Sign(i.key); err != nil {
 		return ZToken{}, err

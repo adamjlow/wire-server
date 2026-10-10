@@ -1,0 +1,8 @@
+all modules verified
+--- FAIL: TestAccessMultipleCookiesFirstSuccessAndStorageFailure (0.00s)
+    access_tokens_test.go:88: must inspect all and select first valid cookie <nil>
+FAIL
+FAIL	github.com/adamjlow/wire-server/go/services/brig	0.380s
+?   	github.com/adamjlow/wire-server/go/services/brig/cmd/brig	[no test files]
+FAIL
+Candidate checks failed: go test failed (exit 1)

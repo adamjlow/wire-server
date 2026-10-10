@@ -158,6 +158,9 @@ func TestTokenIssuanceAndAccessRenewal(t *testing.T) {
 		if err != nil || renewed.Connection != access.Connection {
 			t.Fatal("renewal must preserve connection", err)
 		}
+		if access.Expires.Int64() != 1000+ttl || access.Verify(keys, now) != nil {
+			t.Fatal("renewal mutated the original signed token")
+		}
 		want := other
 		if legal {
 			want = client

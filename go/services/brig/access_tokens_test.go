@@ -5,6 +5,7 @@ import (
 	"context"
 	"crypto/ed25519"
 	"errors"
+	"math/big"
 	"net/http/httptest"
 	"testing"
 	"time"
@@ -79,7 +80,7 @@ func TestAccessMultipleCookiesFirstSuccessAndStorageFailure(t *testing.T) {
 	lookup := &memoryCookieLookup{store: store}
 	s := accessTokenService{lookup: lookup, sessions: m, keys: []ed25519.PublicKey{m.issuer.key.Public().(ed25519.PublicKey)}, now: func() time.Time { return now }}
 	expired := one.token
-	expired.Expires.SetInt64(999)
+	expired.Expires = *big.NewInt(999)
 	if err := expired.Sign(m.issuer.key); err != nil {
 		t.Fatal(err)
 	}

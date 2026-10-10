@@ -1,0 +1,10 @@
+{
+  "source_revision": "1c332f94fc456003beb444d9f2f13e69cf59d7bd",
+  "result": "failed",
+  "stage": "go test",
+  "reason": "test copied mutable big.Int and accidentally changed original token expiry; same alias hazard existed in access renewal issuer.sign",
+  "sdk_controller_exit_code": 1,
+  "network_cleanup_exit_code": 0,
+  "owned_containers_remaining": false,
+  "owned_networks_remaining": false
+}
