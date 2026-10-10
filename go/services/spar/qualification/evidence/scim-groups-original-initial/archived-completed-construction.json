@@ -1,0 +1,47 @@
+{
+  "kind": "lossless-archive-completed-task-owned-construction-executables",
+  "scope": "One completed test and three early superseded construction services; current qualified worker source5a24 and its available artifacts unchanged.",
+  "entries": [
+    {
+      "original": "/home/operator/.cache/wire-migration/background-worker-20261009/scheduled-cron-runtime-check",
+      "original_size": 21165746,
+      "original_sha256": "d595eee42e2c39cd907c1dd27180ea8b743b58481011c12d4b6463812cd113d0",
+      "archive": "/home/operator/.cache/wire-migration/background-worker-20261009/scheduled-cron-runtime-check.construction-binary.gz",
+      "archive_size": 10245401,
+      "archive_sha256": "b93a463fb5a3b668fd00eeb2d4594c8eacb64c8795b36ed7040ccff63ddd41b3",
+      "build_info": "/home/operator/.cache/wire-migration/background-worker-20261009/scheduled-cron-runtime-check: go1.26.9\n\tpath\tgithub.com/adamjlow/wire-server/go/services/background-worker.test\n\tmod\tgithub.com/adamjlow/wire-server/go/services/background-worker\t(devel)\t\n\tbuild\t-buildmode=exe\n\tbuild\t-compiler=gc\n\tbuild\t-tags=schemacheck\n\tbuild\tCGO_ENABLED=0\n\tbuild\tGOARCH=amd64\n\tbuild\tGOOS=linux\n\tbuild\tGOAMD64=v1\n",
+      "restoration": "gzip -dc ARCHIVE > ORIGINAL; chmod 755 ORIGINAL; verify original SHA256"
+    },
+    {
+      "original": "/home/operator/.cache/wire-migration/background-worker-20261009/early-background-worker",
+      "original_size": 11903170,
+      "original_sha256": "670d299e86bdb958252a2a95855d7246184b7fc5027ec6384db4d1a3edeed200",
+      "archive": "/home/operator/.cache/wire-migration/background-worker-20261009/early-background-worker.construction-binary.gz",
+      "archive_size": 6388551,
+      "archive_sha256": "e2daf9216788091d101ab16648a26c4a4f8fbe5388bb036718df06706c5c1cae",
+      "build_info": "/home/operator/.cache/wire-migration/background-worker-20261009/early-background-worker: go1.26.9\n\tpath\tgithub.com/adamjlow/wire-server/go/services/background-worker/cmd/background-worker\n\tmod\tgithub.com/adamjlow/wire-server/go/services/background-worker\t(devel)\t\n\tdep\tgithub.com/rabbitmq/amqp091-go\tv1.15.0\th1:LEQL4/yp48/Wigt6A6XOu18RQRo8ZHtB5I/KZJn+gkw=\n\tdep\tgo.yaml.in/yaml/v3\tv3.0.5\th1:N6y/pJk8buWs9NY5ERU2HSMfm+IuD/OtfdAnq6kESPw=\n\tdep\tgolang.org/x/net\tv0.60.0\th1:79p50tfZlm0J9YfoDsSi639qSXNGVwEzOPLCxM2FsYU=\n\tdep\tgolang.org/x/text\tv0.42.0\th1:JbOZXgfeCPU9gacVtYliJqOhD+zhrEqK4LfdpmlUZqI=\n\tbuild\t-buildmode=exe\n\tbuild\t-compiler=gc\n\tbuild\t-trimpath=true\n\tbuild\tCGO_ENABLED=0\n\tbuild\tGOARCH=amd64\n\tbuild\tGOOS=linux\n\tbuild\tGOAMD64=v1\n\tbuild\tvcs=git\n\tbuild\tvcs.revision=bdfb252dc3e1a87c14eb282ef6982e3d3194548b\n\tbuild\tvcs.time=2026-10-09T18:43:18Z\n\tbuild\tvcs.modified=false\n",
+      "restoration": "gzip -dc ARCHIVE > ORIGINAL; chmod 755 ORIGINAL; verify original SHA256"
+    },
+    {
+      "original": "/home/operator/.cache/wire-migration/background-worker-20261009/watcher-background-worker",
+      "original_size": 13550976,
+      "original_sha256": "348aefab849854a20c1e43963f204e5a310d088ab013b21923bfd84979af8c3f",
+      "archive": "/home/operator/.cache/wire-migration/background-worker-20261009/watcher-background-worker.construction-binary.gz",
+      "archive_size": 7170959,
+      "archive_sha256": "a904108ad6ed548bfc63257c7d7d339f6f79ef0000b85b33e21435643cd9445d",
+      "build_info": "/home/operator/.cache/wire-migration/background-worker-20261009/watcher-background-worker: go1.26.9\n\tpath\tgithub.com/adamjlow/wire-server/go/services/background-worker/cmd/background-worker\n\tmod\tgithub.com/adamjlow/wire-server/go/services/background-worker\t(devel)\t\n\tdep\tgithub.com/apache/cassandra-gocql-driver/v2\tv2.1.2\th1:lu/p0Db2av18enHJvWJQoChLssI0P+AR06STq4VdvCc=\n\tdep\tgithub.com/rabbitmq/amqp091-go\tv1.15.0\th1:LEQL4/yp48/Wigt6A6XOu18RQRo8ZHtB5I/KZJn+gkw=\n\tdep\tgo.yaml.in/yaml/v3\tv3.0.5\th1:N6y/pJk8buWs9NY5ERU2HSMfm+IuD/OtfdAnq6kESPw=\n\tdep\tgolang.org/x/net\tv0.60.0\th1:79p50tfZlm0J9YfoDsSi639qSXNGVwEzOPLCxM2FsYU=\n\tdep\tgolang.org/x/text\tv0.42.0\th1:JbOZXgfeCPU9gacVtYliJqOhD+zhrEqK4LfdpmlUZqI=\n\tdep\tgopkg.in/inf.v0\tv0.9.1\th1:73M5CoZyi3ZLMOyDlQh031Cx6N9NDJ2Vvfl76EDAgDc=\n\tbuild\t-buildmode=exe\n\tbuild\t-compiler=gc\n\tbuild\t-trimpath=true\n\tbuild\tCGO_ENABLED=0\n\tbuild\tGOARCH=amd64\n\tbuild\tGOOS=linux\n\tbuild\tGOAMD64=v1\n\tbuild\tvcs=git\n\tbuild\tvcs.revision=5d7b3df25546ca9ea7a33d7eab0e4a173e3af2e9\n\tbuild\tvcs.time=2026-10-09T18:55:46Z\n\tbuild\tvcs.modified=false\n",
+      "restoration": "gzip -dc ARCHIVE > ORIGINAL; chmod 755 ORIGINAL; verify original SHA256"
+    },
+    {
+      "original": "/home/operator/.cache/wire-migration/background-worker-20261009/numeric-header-background-worker",
+      "original_size": 13551032,
+      "original_sha256": "677174f3d2fd917a7e3481624ce916dc1afc14902e8fc441b83acbb6f9598e72",
+      "archive": "/home/operator/.cache/wire-migration/background-worker-20261009/numeric-header-background-worker.construction-binary.gz",
+      "archive_size": 7170868,
+      "archive_sha256": "6b2fae62a2301960f99bb45302b3efaed86c4489a431d147105a737ef0e67e42",
+      "build_info": "/home/operator/.cache/wire-migration/background-worker-20261009/numeric-header-background-worker: go1.26.9\n\tpath\tgithub.com/adamjlow/wire-server/go/services/background-worker/cmd/background-worker\n\tmod\tgithub.com/adamjlow/wire-server/go/services/background-worker\t(devel)\t\n\tdep\tgithub.com/apache/cassandra-gocql-driver/v2\tv2.1.2\th1:lu/p0Db2av18enHJvWJQoChLssI0P+AR06STq4VdvCc=\n\tdep\tgithub.com/rabbitmq/amqp091-go\tv1.15.0\th1:LEQL4/yp48/Wigt6A6XOu18RQRo8ZHtB5I/KZJn+gkw=\n\tdep\tgo.yaml.in/yaml/v3\tv3.0.5\th1:N6y/pJk8buWs9NY5ERU2HSMfm+IuD/OtfdAnq6kESPw=\n\tdep\tgolang.org/x/net\tv0.60.0\th1:79p50tfZlm0J9YfoDsSi639qSXNGVwEzOPLCxM2FsYU=\n\tdep\tgolang.org/x/text\tv0.42.0\th1:JbOZXgfeCPU9gacVtYliJqOhD+zhrEqK4LfdpmlUZqI=\n\tdep\tgopkg.in/inf.v0\tv0.9.1\th1:73M5CoZyi3ZLMOyDlQh031Cx6N9NDJ2Vvfl76EDAgDc=\n\tbuild\t-buildmode=exe\n\tbuild\t-compiler=gc\n\tbuild\t-trimpath=true\n\tbuild\tCGO_ENABLED=0\n\tbuild\tGOARCH=amd64\n\tbuild\tGOOS=linux\n\tbuild\tGOAMD64=v1\n\tbuild\tvcs=git\n\tbuild\tvcs.revision=6198c021681272d66c57b32633594a4487847b81\n\tbuild\tvcs.time=2026-10-09T19:08:33Z\n\tbuild\tvcs.modified=false\n",
+      "restoration": "gzip -dc ARCHIVE > ORIGINAL; chmod 755 ORIGINAL; verify original SHA256"
+    }
+  ],
+  "recovered_bytes": 29195145
+}

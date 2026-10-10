@@ -162,11 +162,12 @@ func (p peerClient) group(ctx context.Context, team, id gocql.UUID, requestID st
 	if status == 404 {
 		return nil, nil
 	}
-	var group brigGroup
+	// The native RPC decodes Maybe UserGroup: 200 null is also absence.
+	var group *brigGroup
 	if status != 200 || json.Unmarshal(body, &group) != nil {
 		return nil, errors.New("invalid Brig group response")
 	}
-	return &group, nil
+	return group, nil
 }
 func scimMissingGroup(id gocql.UUID) error {
 	return &scimError{Status: 404, Detail: "Group " + id.String() + " not found"}

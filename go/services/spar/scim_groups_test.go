@@ -44,6 +44,24 @@ func scimTestID(t *testing.T, suffix string) gocql.UUID {
 	return id
 }
 
+func TestSCIMGroupNativeNullableLookup(t *testing.T) {
+	team, id := scimTestID(t, "000000000001"), scimTestID(t, "000000000002")
+	for _, status := range []int{200, 404} {
+		p, close := scimTestPeers(t, func(w http.ResponseWriter, r *http.Request) {
+			if r.URL.Path != "/i/user-groups/"+team.String()+"/"+id.String()+"/false" {
+				t.Error("wrong nullable lookup")
+			}
+			w.WriteHeader(status)
+			_, _ = w.Write([]byte("null"))
+		})
+		group, err := p.group(context.Background(), team, id, "")
+		close()
+		if err != nil || group != nil {
+			t.Fatal("native absent group became server failure", status, group, err)
+		}
+	}
+}
+
 func TestSCIMUnauthenticatedRequestsNeverReachBrig(t *testing.T) {
 	for _, header := range []string{"", "Bearer missing", "bearer synthetic-token", "Basic synthetic"} {
 		t.Run(header, func(t *testing.T) {

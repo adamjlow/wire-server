@@ -1,0 +1,47 @@
+<?xml version='1.0' ?><testsuites name="wire-server"><testsuite name="integration" tests="5" failures="1" time="10.136488882"><testcase name="Spar.testSparScimCreateGetSearchUserGroup" time="3.427597837" /><testcase name="Spar.testSparScimDeleteUserGroup" time="1.487752997"><failure>assertion failure:
+Actual:
+500
+Expected:
+404
+
+call stack: 
+1. assertFailure at test/Testlib/Assertions.hs:123
+
+2. shouldMatchWithMsg at test/Testlib/Assertions.hs:92
+
+3. shouldMatch at test/Testlib/Assertions.hs:219
+
+4. shouldMatchInt at test/Test/Spar.hs:1169
+
+
+
+request as command line: 
+curl -X &#39;GET&#39; &#39;http://127.0.0.1:8088/v19/scim/v2/Groups/ba00e810-0032-46dc-b743-57d530030577&#39; -H &#39;Request-Id: Spar.testSparScimDeleteUserGroup__GET_/v19/scim/v2/Groups/ba00e810-0032-46dc-b743-57d530030577__14&#39; -H &#39;Accept: application/scim+json&#39; -H &#39;Authorization: Bearer /BmSMyfUY0U27SKzfVHesPwES1BRghSM7UkGVSg3ak8=&#39; -H &#39;Z-Connection: conn&#39; -H &#39;Z-User: example.com&#39;
+request: 
+GET http://127.0.0.1:8088/v19/scim/v2/Groups/ba00e810-0032-46dc-b743-57d530030577
+request headers: 
+Request-Id: Spar.testSparScimDeleteUserGroup__GET_/v19/scim/v2/Groups/ba00e810-0032-46dc-b743-57d530030577__14
+Accept: application/scim+json
+Authorization: Bearer /BmSMyfUY0U27SKzfVHesPwES1BRghSM7UkGVSg3ak8=
+Z-Connection: conn
+Z-User: example.com
+request body:
+
+response status: 500
+response headers:
+Cache-Control: no-cache, no-store
+Content-Type: application/scim+json;charset=utf-8
+Pragma: no-cache
+Date: Sat, 10 Oct 2026 12:09:06 GMT
+Content-Length: 98
+response body:
+{
+    &quot;detail&quot;: &quot;Server Error&quot;,
+    &quot;schemas&quot;: [
+        &quot;urn:ietf:params:scim:api:messages:2.0:Error&quot;
+    ],
+    &quot;status&quot;: &quot;500&quot;
+}
+
+Set WIRE_INTEGRATION_TEST_VERBOSITY=1 if you want to see complete trace of the HTTP traffic in curl pseudo-syntax.
+</failure></testcase><testcase name="Spar.testSparScimGroupSearchOnlyReturnsScimGroups" time="1.788184764" /><testcase name="Spar.testSparScimUpdateUserGroup" time="2.352680141" /><testcase name="Spar.testSparScimUpdateUserGroupRejectsInvalidMembers" time="1.080273143" /></testsuite></testsuites>
