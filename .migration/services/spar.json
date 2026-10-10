@@ -2,7 +2,7 @@
   "schema_version": 1,
   "service": "spar",
   "reference_path": "services/spar",
-  "stage": "contracted",
+  "stage": "implementing",
   "oracle_paths": [
     "services/spar",
     "docs/go-migration/services/spar/contract.md",
@@ -14,6 +14,9 @@
     ],
     "contract": [
       "spar-contract"
+    ],
+    "plan": [
+      "spar-inventory"
     ]
   },
   "compatibility": null

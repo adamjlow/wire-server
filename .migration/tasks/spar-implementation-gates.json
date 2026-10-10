@@ -4,7 +4,7 @@
   "title": "Spar implementation gates",
   "service": "framework",
   "kind": "framework",
-  "status": "active",
+  "status": "done",
   "owner": "codex",
   "branch": "go-migration",
   "depends_on": [
@@ -23,7 +23,18 @@
       "required_evidence": "Completed discovery/contract source and original101 baseline, adjacent inventoried\u2192contracted\u2192implementing, immutable historical gates and compatibility null."
     }
   ],
-  "evidence": [],
-  "review": null,
-  "handoff": "Actual original101 all-Haskell baseline and source-pinned whole contract complete; reuse exact proof. Go candidate remains unimplemented/unqualified."
+  "evidence": [
+    {
+      "criterion": "gates",
+      "result": "pass",
+      "command": "Publish inventoried\u2192contracted\u2192implementing adjacent legal stages from done discovery and protected contract/original101 all-Haskell baseline. Immutable historical gates, Haskell default and compatibility null preserved; no Go qualification.",
+      "revision": "890a4742e936a2e8078f1a0d39b8bb36616a385f",
+      "artifact": "docs/go-migration/services/spar/oracle/REVIEW.md"
+    }
+  ],
+  "review": {
+    "by": "codex (self-review delegated by user)",
+    "artifact": "docs/go-migration/services/spar/oracle/REVIEW.md"
+  },
+  "handoff": "Go Spar implementation may start; full service finite acceptance still required and compatibility null."
 }
