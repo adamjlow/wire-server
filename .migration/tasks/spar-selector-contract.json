@@ -4,9 +4,9 @@
   "title": "Optional Spar image-only Helm selection preserving native defaults",
   "service": "spar",
   "kind": "contract-change",
-  "status": "queued",
-  "owner": null,
-  "branch": null,
+  "status": "active",
+  "owner": "codex",
+  "branch": "go-spar-selector",
   "depends_on": [
     "spar-contract"
   ],
