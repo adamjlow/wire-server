@@ -4,9 +4,9 @@
   "title": "Spar completion",
   "service": "framework",
   "kind": "framework",
-  "status": "queued",
-  "owner": null,
-  "branch": null,
+  "status": "active",
+  "owner": "codex",
+  "branch": "go-migration",
   "depends_on": [
     "spar-verification",
     "spar-selection"
