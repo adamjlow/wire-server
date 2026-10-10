@@ -46,7 +46,10 @@ def main():
     runner['volumes'].append({'type':'bind','source':selected['path'],'target':'/candidate/spar','read_only':True})
     environment.validate_isolation(spec)
     compose_path.write_text(json.dumps(spec,indent=2)+'\n')
-    if args.suite=='signatures':record['signature_fixture_executable']={'path':str(args.signature_fixtures.resolve()),'sha256':hashlib.sha256(args.signature_fixtures.read_bytes()).hexdigest(),'source_revision':record['source_revision']}
+    if args.suite=='signatures':
+        fixture_receipt=json.loads(args.candidate_receipt.read_text())['fixture_executable']
+        if fixture_receipt['sha256']!=hashlib.sha256(args.signature_fixtures.read_bytes()).hexdigest():raise ValueError('signature fixture executable receipt mismatch')
+        record['signature_fixture_executable']=fixture_receipt
     record.update(kind='early-native-Go-Spar-process' if args.suite in ('early','middleware','signatures') else 'original-Go-Spar-token-tests',candidate=selected,compose_sha256=hashlib.sha256(compose_path.read_bytes()).hexdigest())
     compose=['docker','compose','-p',record['project'],'-f',str(compose_path)]
     code=1
