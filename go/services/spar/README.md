@@ -1,52 +1,46 @@
-# Optional Go Spar (under construction)
+# Optional Go Spar
 
-The module implements configuration/Cassandra schema23 startup, health/lifecycle,
-persistent settings/user metadata, SCIM token management, IdP CRUD/indexes and
-SAML metadata/request initiation/state stores and connected signed-login/session
-effects. SCIM authentication, Brig-backed groups and user create/read/delete are
-implemented, along with user update/patch/filtered listing. Config/schema metadata, internal cleanup and SSO discovery are connected.
-Remaining finite protocol/state contracts still require qualification.
-Spar is not selectable or qualified yet; Haskell remains supported/default.
+This is an isolated whole-service Go replacement for Spar. Haskell remains
+supported and the default. The candidate implements SAML SSO, IdP and SCIM token
+management, SCIM users/groups, discovery and internal cleanup through the existing
+HTTP and Cassandra contracts. Native Groups PATCH remains unsupported, with its
+actual native error/media/body responses preserved.
 
-Use pinned Go1.26.9 with GOTOOLCHAIN=local/GOWORK=off. Run
-`python3 go/check.py spar` from the repository root. Build `./cmd/spar` from this
-module with CGO_ENABLED=0 for the owned Docker runner. The CLI accepts
--c/--config-file, default /etc/wire/spar/conf/spar.yaml. Startup connects to the
-configured Cassandra keyspace and checks schema before listening; it does not
-create or rewrite schemas. Single/multi-ingress configuration, TTL rounding,
-Cassandra/DC/verified CA/discovery and request/cache policy follow native source.
+The current executable passes Go quality/security checks, actual native protocol
+comparisons, durable Haskell→Go→Haskell switchback and optional container operations.
+Final mixed-stack qualification and availability approval are still pending.
+See the [plan](../../../docs/go-migration/plans/spar.md) and
+[frozen contract](../../../docs/go-migration/services/spar/contract.md).
 
-Original Haskell tests run automatically in the owned private Docker harness,
-with unchanged assertions and disposable dependencies. Current construction
-evidence under qualification/evidence includes exact initial process comparisons,
-six IdP/token originals, the original IdP issuer update/delete regression and
-two original signed-login/UTF8 scenarios against actual Haskell peers.
-Five unchanged original SCIM group scenarios also pass, including user invitation,
-read and activation plus group search/pagination/update/delete/member guards.
-Seventeen original SCIM user executions pass for email/external-ID updates,
-PATCH email paths, metadata, primary selection and adoption/pending-email cleanup.
-An earlier seven-Go construction artifact also passed all101 unchanged Spar
-and related originals. The current signature increment passes21 actual native/Go
-signature cases plus33 HTTP comparisons; these are supplemental construction
-checks, not a new final original-suite result. The form parser additionally
-passes20 native limit/encoding/type/order comparisons and bounded-read/no-effect
-regressions, preserving the pinned native streaming semantics without temporary
-files or new dependencies. Evidence includes exact artifacts,
-retained failures and clean owned-resource cleanup.
-Those batches prove only their listed surfaces. The final intended profile is
-proxy-cargohold-cannon-gundeck-federator-background-worker-spar:225 executions.
-Full trust/state gaps, operations smoke, durable Haskell→Go→Haskell switchback
-and optional image/selector remain pending. See the [plan](../../../docs/go-migration/plans/spar.md)
-and [frozen contract](../../../docs/go-migration/services/spar/contract.md).
+Use the pinned Go 1.26.9 toolchain with `GOTOOLCHAIN=local` and `GOWORK=off`.
+From the repository root, run `python3 go/check.py spar`. From this module, build
+`CGO_ENABLED=0 go build -trimpath -o spar ./cmd/spar`. The CLI accepts
+`-c`/`--config-file`; its default is `/etc/wire/spar/conf/spar.yaml`. Startup checks
+existing Cassandra schema23 before listening and never creates or rewrites schemas.
+Single/multi-ingress, configured peers, verified Cassandra CA, TTLs and stored
+legacy/v2 identities follow the frozen native contract.
 
-Dependencies use the reviewed gocql2/YAML/x/text versions and goxmldsig1.6.1
-with etree1.7.0 and standalone Decred RIPEMD160 v1.0.2. A service-local pinned-key
-adapter uses the maintained canonicalizers and standard Go RSA verification,
-preserving native digest/reference and expired-key behavior. Signature tests
-reuse unchanged original Microsoft XML and
-IdP/NameID goldens and cover pinned keys, expired certificates, the native ADFS
-fallback, tamper/wrapping/unsigned assertions and duplicate credentials. Native
-policy accepts legacy small RSA keys; the main binary's service-local compatibility
-default preserves that acceptance without bypassing signature verification.
-See [security notes](SECURITY-NOTES.md) for inherited concerns and unresolved
-adapter gaps; tests of a signature helper do not qualify login/session security.
+`build_image.py --candidate <binary> --candidate-receipt <receipt> --receipt <new-receipt>`
+packages a clean, static, qualified executable with trusted CA roots, linked licenses
+and corresponding source. The scratch image runs as65534:65534 with the native
+config path. The optional [Helm post-renderer](../../../tools/parity/spar_helm_postrender.py)
+accepts an explicit image argument; omitted selection preserves the rendered default
+bytes. Selection changes only Spar's image and retains RollingUpdate/config/probes.
+Qualification builds local images; it does not publish or deploy them.
+
+The owned Docker harness runs unchanged compiled Haskell integration assertions;
+no native toolchain/dependency installation or manual testing is required. Current
+evidence is under `qualification/evidence`, including retained failures. Exact
+artifact/source pins and finite test scope belong to each receipt: an earlier
+101-test construction pass does not qualify a later executable. Final intended
+profile is `proxy-cargohold-cannon-gundeck-federator-background-worker-spar` (225 tests).
+Native unit binaries and a full Haskell rebuild are unavailable in this environment;
+no native build or unit-test pass is claimed. No Haskell source was changed.
+
+Dependencies use maintained gocql2, YAML, x/text, goxmldsig canonicalizers, etree and
+standalone Decred RIPEMD160, without patched forks. The pinned-key signature adapter
+preserves native validation and legacy algorithms. Spar's service-local RSA
+compatibility default retains the native small-key policy without bypassing signatures.
+See [security notes](SECURITY-NOTES.md): inherited weaknesses require separate
+policy work. The finite comparisons do not claim exhaustive malformed-input error
+text, production load capacity or an independent security audit.

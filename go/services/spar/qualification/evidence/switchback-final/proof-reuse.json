@@ -1,0 +1,51 @@
+{
+  "result": "pass",
+  "final_runtime_revision": "40c1b2f896fe20d5d9aad4a7c90a815fcfa0e067",
+  "reuse": [
+    {
+      "proof": "signature",
+      "qualified_revision": "a0326a44be902501529b25b41afcadd3339bf3d9",
+      "unchanged_files": [
+        {
+          "file": "go/services/spar/saml_signature.go",
+          "sha256": "ca41f9d27457542bec027b48e4eb901e37e8c784d32ae03228034582209a7aa4"
+        },
+        {
+          "file": "go/services/spar/idp_metadata.go",
+          "sha256": "2ae53141684226e743a80ebb13e1ee527be57359d039e0b1fb7047dc5b8b4be5"
+        },
+        {
+          "file": "go/services/spar/idp_model.go",
+          "sha256": "e263285cd134faaaf61ea909efff628cc4a60787e96d215d4e2776df09f75b8d"
+        },
+        {
+          "file": "go/services/spar/go.mod",
+          "sha256": "2086645572a252a693cf3e65e4e74aa2867e46bc315943e2f07f224839112a45"
+        },
+        {
+          "file": "go/services/spar/go.sum",
+          "sha256": "d374d8b5a4b759bf89fce9946f179e6534f393374c31b0182eb16b99908f937c"
+        }
+      ]
+    },
+    {
+      "proof": "forms",
+      "qualified_revision": "63d5f53ea2a097c816c3501fdafba5caee83556b",
+      "unchanged_files": [
+        {
+          "file": "go/services/spar/saml_form.go",
+          "sha256": "28854dea7d3743d6005fc8e62b559bef4a06d78c3461156788789305b690911d"
+        },
+        {
+          "file": "go/services/spar/gunzip.go",
+          "sha256": "5073f986b8c57a3855cbe407da8b741ceafb8eeab0cbd1342636193403a8d9a0"
+        },
+        {
+          "file": "go/services/spar/metrics.go",
+          "sha256": "2ec9de0b7bd73a0f1650a1bb33a4a1317577a36d5b436776066c1b9026b4123c"
+        }
+      ]
+    }
+  ],
+  "reviewed_changes": "Finalizer form dispatch and URI rendering changed after signature proof; malformed form comparisons and actual bidirectional pending-login switchback separately prove these. Signature verification/configured key/model/module code unchanged. Middleware/core server and form rejection paths unchanged after form proof. GroupPATCH is separately characterized. Reuse these finite unchanged crypto/form input proofs rather than repeat them for evidence-only commits."
+}

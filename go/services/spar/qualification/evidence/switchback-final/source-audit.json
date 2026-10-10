@@ -1,0 +1,9 @@
+{
+  "result": "pass",
+  "source_revision": "1ba0a66f80e8321a8a53d8890727f265a9da7b03",
+  "reference_revision": "f6636ed53315fa7b0fc4c8aa39c0bb30c98b6d5e",
+  "reference_files_checked": 155,
+  "mismatches": [],
+  "manifest_sha256": "1d5dbb92fc4690128fedb0febe39ffaae2f71e537a18b2767e9f7d9e94166d94",
+  "scope": "Frozen reference byte identities only; no native rebuild or candidate test claim."
+}

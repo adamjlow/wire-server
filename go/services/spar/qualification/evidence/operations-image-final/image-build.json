@@ -1,0 +1,129 @@
+{
+  "source_revision": "40c1b2f896fe20d5d9aad4a7c90a815fcfa0e067",
+  "packaging_revision": "40c1b2f896fe20d5d9aad4a7c90a815fcfa0e067",
+  "binary_sha256": "9fabe438a2b52f723d698168350d90cb1157dc43f130803e841a7b224a884d42",
+  "image_id": "sha256:ce3965bfed8180a59d04cf9e31a154dd68b8f4312dbb1ab6f1e85dd6b0bd0132",
+  "build_info": {
+    "GoVersion": "go1.26.9",
+    "Path": "github.com/adamjlow/wire-server/go/services/spar/cmd/spar",
+    "Main": {
+      "Path": "github.com/adamjlow/wire-server/go/services/spar",
+      "Version": "(devel)"
+    },
+    "Deps": [
+      {
+        "Path": "github.com/apache/cassandra-gocql-driver/v2",
+        "Version": "v2.1.2",
+        "Sum": "h1:lu/p0Db2av18enHJvWJQoChLssI0P+AR06STq4VdvCc="
+      },
+      {
+        "Path": "github.com/beevik/etree",
+        "Version": "v1.7.0",
+        "Sum": "h1:xjBk9O4p4x7D1YajePjfLzdaFC4/uYUENA7P0pv6gXA="
+      },
+      {
+        "Path": "github.com/decred/dcrd/crypto/ripemd160",
+        "Version": "v1.0.2",
+        "Sum": "h1:TvGTmUBHDU75OHro9ojPLK+Yv7gDl2hnUvRocRCjsys="
+      },
+      {
+        "Path": "github.com/jonboulle/clockwork",
+        "Version": "v0.5.0",
+        "Sum": "h1:Hyh9A8u51kptdkR+cqRpT1EebBwTn1oK9YfGYbdFz6I="
+      },
+      {
+        "Path": "github.com/russellhaering/goxmldsig",
+        "Version": "v1.6.1",
+        "Sum": "h1:SB7R5ttvrGIDB2juJAK/i7DQ2Ivr7agG+ohfNJjwyYU="
+      },
+      {
+        "Path": "go.yaml.in/yaml/v3",
+        "Version": "v3.0.5",
+        "Sum": "h1:N6y/pJk8buWs9NY5ERU2HSMfm+IuD/OtfdAnq6kESPw="
+      },
+      {
+        "Path": "golang.org/x/text",
+        "Version": "v0.42.0",
+        "Sum": "h1:JbOZXgfeCPU9gacVtYliJqOhD+zhrEqK4LfdpmlUZqI="
+      },
+      {
+        "Path": "gopkg.in/inf.v0",
+        "Version": "v0.9.1",
+        "Sum": "h1:73M5CoZyi3ZLMOyDlQh031Cx6N9NDJ2Vvfl76EDAgDc="
+      }
+    ],
+    "Settings": [
+      {
+        "Key": "-buildmode",
+        "Value": "exe"
+      },
+      {
+        "Key": "-compiler",
+        "Value": "gc"
+      },
+      {
+        "Key": "-trimpath",
+        "Value": "true"
+      },
+      {
+        "Key": "DefaultGODEBUG",
+        "Value": "rsa1024min=0"
+      },
+      {
+        "Key": "CGO_ENABLED",
+        "Value": "0"
+      },
+      {
+        "Key": "GOARCH",
+        "Value": "amd64"
+      },
+      {
+        "Key": "GOOS",
+        "Value": "linux"
+      },
+      {
+        "Key": "GOAMD64",
+        "Value": "v1"
+      },
+      {
+        "Key": "vcs",
+        "Value": "git"
+      },
+      {
+        "Key": "vcs.revision",
+        "Value": "40c1b2f896fe20d5d9aad4a7c90a815fcfa0e067"
+      },
+      {
+        "Key": "vcs.time",
+        "Value": "2026-10-10T16:25:47Z"
+      },
+      {
+        "Key": "vcs.modified",
+        "Value": "false"
+      }
+    ]
+  },
+  "ca": {
+    "source_image": "quay.io/wire/integration@sha256:f5db439022d1c0ccf071c25f9c0d132ed21a9e5e3647db59c593d33614bc4f27",
+    "sha256": "2404c5ebc7d236b368d6a2f00b9ac5e01d6e55a75cdf44e4839f5876f45c249b",
+    "certificates": 167
+  },
+  "files_sha256": {
+    "ca-bundle.crt": "2404c5ebc7d236b368d6a2f00b9ac5e01d6e55a75cdf44e4839f5876f45c249b",
+    "Dockerfile": "c2aae6738ed124337e66989a4ceb73bb3d70c7a44c7b6d5c056c605889b41474",
+    "spar": "9fabe438a2b52f723d698168350d90cb1157dc43f130803e841a7b224a884d42",
+    "source/SOURCE-REVISION": "53e4c94a22ef55649cc5b0d30ac90845d600da42c84286d72322f75955d07a45",
+    "licenses/spar-LICENSE": "57c8ff33c9c0cfc3ef00e650a1cc910d7ee479a8bc509f6c9209a7c2a11399d6",
+    "licenses/gopkg.in/inf.v0/v0.9.1/LICENSE": "050855d9ceedf916a9e9f30d20c6f61a484448d2c2ed5810934bc8aef43861b4",
+    "licenses/golang.org/x/text/v0.42.0/LICENSE": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad",
+    "licenses/go.yaml.in/yaml/v3/v3.0.5/NOTICE": "f6c2dd3a67b576eafb89b80200b8b1627230bf3821a0c14cb99a22ac19107d00",
+    "licenses/go.yaml.in/yaml/v3/v3.0.5/LICENSE": "d18f6323b71b0b768bb5e9616e36da390fbd39369a81807cca352de4e4e6aa0b",
+    "licenses/github.com/russellhaering/goxmldsig/v1.6.1/LICENSE": "09e8a9bcec8067104652c168685ab0931e7868f9c8284b66f5ae6edae5f1130b",
+    "licenses/github.com/jonboulle/clockwork/v0.5.0/LICENSE": "a8ad31b1c3f40dca5a84119351b8fa8ddc868edd77fad8a8ebf6d8f2d16fa4ae",
+    "licenses/github.com/decred/dcrd/crypto/ripemd160/v1.0.2/LICENSE": "4060146066c8519d1b04fe2b038649855db5530586e4ae5c3aa8c8cee6f8268a",
+    "licenses/github.com/beevik/etree/v1.7.0/LICENSE": "2dfed8b3afa7acbce949aa6554b6a2aa1252e1e8e089e75d990c8ee4d374fcea",
+    "licenses/github.com/apache/cassandra-gocql-driver/v2/v2.1.2/NOTICE": "05a5f7d5c4f5c624571ac28f46e09c722b0ce5f0f01200210eb5f04136a0e6fe",
+    "licenses/github.com/apache/cassandra-gocql-driver/v2/v2.1.2/LICENSE": "8c6db340475136df3c1201d458fa5755698eace76e510471ecc9d857d6083dac"
+  },
+  "local_only": true
+}

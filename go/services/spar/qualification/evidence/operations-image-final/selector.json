@@ -1,0 +1,17 @@
+{
+  "result": "pass",
+  "source_revision": "40c1b2f896fe20d5d9aad4a7c90a815fcfa0e067",
+  "script_sha256": "835009c87b9359f6d9c2ce6caa7a0b5111f89284bef55716dea8e594dd3d7ee2",
+  "image_id": "sha256:ce3965bfed8180a59d04cf9e31a154dd68b8f4312dbb1ab6f1e85dd6b0bd0132",
+  "default_byte_unchanged": true,
+  "changes": [
+    {
+      "line": 1973,
+      "before": "          image: \"quay.io/wire/spar:do-not-use\"",
+      "after": "          image: \"sha256:ce3965bfed8180a59d04cf9e31a154dd68b8f4312dbb1ab6f1e85dd6b0bd0132\""
+    }
+  ],
+  "default_sha256": "33cd0a838270644bab8412941aac896a4b30d11d8933da9ac3c3c909616b92aa",
+  "selected_sha256": "eea9e6bc10049cfa938874ff17d254307ac541f3b21b19132b36ea901e0abe09",
+  "scope": "Exact new image/default byte proof; unchanged six selector negative results reused from separately approved selector task. No push or deploy."
+}
