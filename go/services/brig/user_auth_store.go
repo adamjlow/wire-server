@@ -5,6 +5,7 @@ import (
 	"context"
 	"encoding/binary"
 	"errors"
+	"fmt"
 	"time"
 
 	"github.com/apache/cassandra-gocql-driver/v2"
@@ -41,6 +42,12 @@ func (s userAuthStore) withPostgres(ctx context.Context, action func(*pgx.Conn) 
 
 func userStorageError(err error) error {
 	if err != nil {
+		// Keep the decoding location for diagnosis without the underlying error,
+		// which can include a stored password or other private field value.
+		var scan pgx.ScanArgError
+		if errors.As(err, &scan) {
+			return fmt.Errorf("user storage decoding failed at column %d", scan.ColumnIndex)
+		}
 		return errors.New("user storage operation failed")
 	}
 	return nil

@@ -1,0 +1,21 @@
+{
+  "result": "failed",
+  "source_revision": "218db3eaf829cc8e8f10a8bb0454533b346f900d",
+  "build": {
+    "source_revision": "218db3eaf829cc8e8f10a8bb0454533b346f900d",
+    "binary_sha256": "9eedc3044fbc255fce9c9c41f805d423eba5d5c8e269ec4632eff2965bb8bfb2",
+    "toolchain": "go1.26.9",
+    "build_command": "CGO_ENABLED=0 GOTOOLCHAIN=local GOWORK=off go build -trimpath ./cmd/brig"
+  },
+  "project": "wire-e2e-cd9ee473ad40405f87e5b6d7d29d9714",
+  "compose_sha256": "3d2a3873538dce799909e255a04d8269207b9d66640f166842e04be20fcd9bf6",
+  "runner_image": "sha256:f487c90fd364aac9daee5a1ce6e60fdba0ab74ab0c671ab0de0198e8f05659a9",
+  "e2e_executed": false,
+  "runner_exit_code": 1,
+  "cleanup_exit_code": 0,
+  "remaining_resources": {
+    "container": "",
+    "network": "",
+    "volume": ""
+  }
+}

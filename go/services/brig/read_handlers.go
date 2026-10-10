@@ -3,6 +3,7 @@ package brig
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
 	"strings"
 	"time"
@@ -92,6 +93,7 @@ func (b brigReadHandlers) handle(w http.ResponseWriter, r *http.Request, path st
 	if path == "/self" {
 		record, err := b.users.get(r.Context(), user)
 		if err != nil {
+			log.Print("Brig self profile: ", err)
 			wireError(w, 500, "server-error", "Internal Server Error")
 			return true
 		}
@@ -101,6 +103,7 @@ func (b brigReadHandlers) handle(w http.ResponseWriter, r *http.Request, path st
 		}
 		enabled, err := b.peers.hasE2EIdentity(r.Context(), user.String(), r.Header.Get("Request-Id"))
 		if err != nil {
+			log.Print("Brig self feature lookup: ", err)
 			wireError(w, 500, "server-error", "Internal Server Error")
 			return true
 		}
@@ -110,6 +113,7 @@ func (b brigReadHandlers) handle(w http.ResponseWriter, r *http.Request, path st
 		}
 		view, err := record.selfProfile(b.config.Settings.Domain, b.config.Settings.DefaultLocale)
 		if err != nil {
+			log.Print("Brig self projection: ", err)
 			wireError(w, 500, "server-error", "Internal Server Error")
 			return true
 		}
