@@ -262,7 +262,7 @@ func emitQualificationSignature(t *testing.T, kind string, doc *etree.Document, 
 	if err = (cassandraStore{session: session}).insertIdP(t.Context(), info); err != nil {
 		t.Fatal("signature fixture seed failed")
 	}
-	payload, err := json.Marshal(map[string]any{"name": kind, "xml": string(documentBytes(t, doc)), "signature_accepted": accepted, "idp": info.ID.String()})
+	payload, err := json.Marshal(map[string]any{"name": kind, "xml": string(documentBytes(t, doc)), "signature_accepted": accepted, "idp": info.ID.String(), "team": info.Extra.Team.String()})
 	if err != nil {
 		t.Fatal(err)
 	}

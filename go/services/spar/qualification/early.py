@@ -91,8 +91,8 @@ def observe(binary,config,name):
                 if len(fixtures)!=12:raise ValueError('finite signature fixture set incomplete')
                 for fixture in fixtures:
                     case=json.loads(fixture.read_text())
-                    idp=request('GET','/identity-providers/'+case['idp'])
-                    if idp['status']!=200:raise ValueError('native stored IdP decoding failed')
+                    idp=request('GET','/i/identity-providers/'+case['team'])
+                    if idp['status']!=200 or not isinstance(idp['body'],dict) or [p.get('id') for p in idp['body'].get('providers',[])]!=[case['idp']]:raise ValueError('native stored IdP decoding failed')
                     variants={'signed':case['xml']}
                     if case['signature_accepted']:variants['tampered']=case['xml'].replace('synthetic@example.test','attacker@example.test')
                     for variant,xml in variants.items():
