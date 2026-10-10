@@ -24,3 +24,5 @@ They compare HTTP/method/version/errors and clean SIGTERM, record exact identiti
 and require owned cleanup. This is not execution of original101 against Go or
 proof of complete SAML/SCIM/storage behaviour. Actual reference originals101 and
 the full contract remain in docs/go-migration/services/spar/.
+
+The corrected early comparison passed at source9e209e02bdea478b84de16413c75c4e64e9e99b4: six exact native/Go HTTP responses, real schema23 startup, clean SIGTERM and owned cleanup. qualification/evidence/ retains the initial failure and corrected pass with exact identities. This qualifies only the initial process behavior, not the remaining service.
