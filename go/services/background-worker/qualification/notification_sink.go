@@ -55,7 +55,8 @@ func main() {
 		deliveries = append(deliveries, map[string]any{"path": r.URL.Path, "body": string(body), "accepted": accepted.Load()})
 		mu.Unlock()
 		if accepted.Load() {
-			w.WriteHeader(200)
+			w.Header().Set("Content-Type", "application/json")
+			_, _ = w.Write([]byte("{}"))
 			return
 		}
 		<-r.Context().Done()

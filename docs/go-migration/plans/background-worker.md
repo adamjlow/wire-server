@@ -20,7 +20,13 @@ Whole-service parity is not yet claimed; the task record owns current status.
 
 ## Current validation checkpoint (2026-10-10)
 
-The exact final worker at clean89f24e7a with five qualified Go peers and the
+A concrete success-response ACK/retry gap discovered during durable switchback
+is now repaired to source Post200/JSON/object acceptance. Current full Go checks
+pass. The shipping executable changed;89f24e7a receipts below are historical for
+that binary, and current exact mixed124/image/operations/switchback must pass
+before whole-service approval. See [repair evidence](../../../go/services/background-worker/evidence/notification-response-20261010/).
+
+The previous qualified worker at clean89f24e7a with five qualified Go peers and the
 remaining Haskell services passes all124 original executions, including all47
 worker cases: [strict XML/artifact/cleanup evidence](../../../go/services/background-worker/evidence/six-go-original124-20261010/).
 The actual catalogues contain120 distinct functions, with four repeated Events
@@ -608,3 +614,20 @@ reclaimed by Go. This exercises actual crash/reclaim switchback as an orchestrat
 would bound a blocked owner. Go's clean shutdown criteria are unchanged and already
 pass the separate30s-grace loaded smoke; middle Go and final Haskell stops must
 exit0. No candidate failure, protected test or original acceptance is waived.
+
+The bounded rehearsal reaches Go lease reclamation and completion, partial user
+continuation and clean loaded stop, then return-Haskell storage convergence.
+Notification ACK fails because the qualification sink returned200 with no JSON
+media type; actual Haskell reports UnsupportedContentType application/octet-stream
+and retries. Retained `evidence/switchback-media-20261010` includes the failed run
+and cleanup0. This is a fixture defect and exposes a concrete candidate ACK/retry
+gap: the current Go handler accepts arbitrary2xx response media/body. Primary
+`Wire.API.Federation.BackendNotifications` declares Post200 '[JSON] EmptyResponse;
+`API.Common` accepts any JSON object, ignoring its fields. Correct used-binding
+success acceptance (200, application/json, object for notification response), keep
+secret-free retry errors and full body semantics, and cover valid/invalid media,
+status/body plus retry-before-ACK. Set valid fixture success to200/JSON/{}. This is
+not a parser identity expansion or changed reference expectation. The changed
+production executable requires current Go checks and exact final mixed124/image/
+operations/switchback evidence; old89f24e7a receipts remain historical qualification
+of that binary and cannot approve the revised one.

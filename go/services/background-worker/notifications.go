@@ -8,6 +8,7 @@ import (
 	"encoding/json"
 	"errors"
 	"io"
+	"mime"
 	"net"
 	"net/http"
 	"net/url"
@@ -110,7 +111,13 @@ func (s *Service) federationRequest(ctx context.Context, client *http.Client, ta
 		return nil, errors.New("federation notification transport failed")
 	}
 	defer resp.Body.Close()
-	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
+	// All used federation bindings are source Post200 '[JSON]. A wrong
+	// success media type is a retryable servant client error, never an ACK.
+	if resp.StatusCode == http.StatusOK {
+		media, _, err := mime.ParseMediaType(resp.Header.Get("Content-Type"))
+		if err != nil || media != "application/json" {
+			return nil, errors.New("invalid federation response media type")
+		}
 		data, err := io.ReadAll(resp.Body)
 		return data, err
 	}
@@ -132,8 +139,8 @@ func (s *Service) deliverNotification(ctx context.Context, client *http.Client, 
 			return notificationReject, nil
 		}
 		version := 0
-		_, err := s.federationRequest(ctx, client, target, n, *n.Path, *n.Component, &version, []byte(*n.Body))
-		return notificationACK, err
+		data, err := s.federationRequest(ctx, client, target, n, *n.Path, *n.Component, &version, []byte(*n.Body))
+		return notificationACK, notificationResponseError(data, err)
 	}
 	first := bundle.Notifications[0]
 	data, err := s.federationRequest(ctx, client, target, first, "api-version", "brig", nil, []byte("{}"))
@@ -170,8 +177,21 @@ func (s *Service) deliverNotification(ctx context.Context, client *http.Client, 
 		return notificationHold, nil
 	}
 	n := bundle.Notifications[index]
-	_, err = s.federationRequest(ctx, client, target, n, *n.Path, *n.Component, &best, []byte(*n.Body))
-	return notificationACK, err
+	data, err = s.federationRequest(ctx, client, target, n, *n.Path, *n.Component, &best, []byte(*n.Body))
+	return notificationACK, notificationResponseError(data, err)
+}
+
+// Wire.API.Federation.API.Common.EmptyResponse accepts any JSON object;
+// fields are intentionally ignored so compatible future responses remain valid.
+func notificationResponseError(data []byte, err error) error {
+	if err != nil {
+		return err
+	}
+	var object map[string]json.RawMessage
+	if json.Unmarshal(data, &object) != nil || object == nil {
+		return errors.New("invalid federation notification response")
+	}
+	return nil
 }
 
 func wait(ctx context.Context, delay time.Duration) bool {

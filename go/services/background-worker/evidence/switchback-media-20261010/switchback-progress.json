@@ -1,0 +1,1938 @@
+{
+  "result": "incomplete",
+  "environment": {
+    "schema_version": 1,
+    "project": "wire-e2e-8fa344f644f4445daf6381ab45e19cce",
+    "source_revision": "94881e1cdb471bcc2eed173f8fb913f9c6070ce6",
+    "runner_image_id": "sha256:d0301bbb18ca37904b0c9693725acf6d3ab19b4203f8bda23be3508aabf16f8e",
+    "runner_revision": "02fc9148aacd53b7bff23872c9f9d42f921ca707",
+    "candidate": null,
+    "peer_candidates": {},
+    "result": "prepared",
+    "e2e_executed": false,
+    "compose_sha256": "afb4c79bf623df52b14e86c4187c53b1321d60e87b186b56e4f02d7d9b8ccf71",
+    "files_sha256": {
+      "fixtures/configs.json": "8cc34c41cc248ae804d822a60fb610b0adead84c3e79663eb33243ef70c99876",
+      "fixtures/integration.json": "d8834dad54e1f851e689ac00691cd527aac69e0e9ce00baf149835433812c73c",
+      "fixtures/peers.json": "ca8438ea9464138dc0c75868b62eb8b12113343dada8336524c3ea467dd3a490"
+    },
+    "qualification_artifacts": {
+      "notification-sink": "21845e733201f152e72a98270cb2f9d2d472e01e080be22e66e62ca54927f50a",
+      "switchback-storage": "749a25fd370a1febf04ec52895a2faf1be90b78579a21f49fb4fd935c989b011"
+    }
+  },
+  "candidate": {
+    "source_revision": "89f24e7a0045f7176e066daa194144554ac171bd",
+    "packaging_revision": "fc99aa141769e8e4a259ce6681f928f6052f2f84",
+    "candidate_sha256": "706fed84952a9ee80dc1c9ac7b670d7417114cfe93b835d6d5fe94e58e2628d6",
+    "build_info": {
+      "GoVersion": "go1.26.9",
+      "Path": "github.com/adamjlow/wire-server/go/services/background-worker/cmd/background-worker",
+      "Main": {
+        "Path": "github.com/adamjlow/wire-server/go/services/background-worker",
+        "Version": "(devel)"
+      },
+      "Deps": [
+        {
+          "Path": "github.com/apache/cassandra-gocql-driver/v2",
+          "Version": "v2.1.2",
+          "Sum": "h1:lu/p0Db2av18enHJvWJQoChLssI0P+AR06STq4VdvCc="
+        },
+        {
+          "Path": "github.com/jackc/pgpassfile",
+          "Version": "v1.0.0",
+          "Sum": "h1:/6Hmqy13Ss2zCq62VdNG8tM1wchn8zjSGOBJ6icpsIM="
+        },
+        {
+          "Path": "github.com/jackc/pgservicefile",
+          "Version": "v0.0.0-20240606120523-5a60cdf6a761",
+          "Sum": "h1:iCEnooe7UlwOQYpKFhBabPMi4aNAfoODPEFNiAnClxo="
+        },
+        {
+          "Path": "github.com/jackc/pgx/v5",
+          "Version": "v5.11.0",
+          "Sum": "h1:IzBBtyK9AHqf98cctWFifYSci2hgQR/cd56wB4p+ogg="
+        },
+        {
+          "Path": "github.com/jackc/puddle/v2",
+          "Version": "v2.2.2",
+          "Sum": "h1:PR8nw+E/1w0GLuRFSmiioY6UooMp6KJv0/61nB7icHo="
+        },
+        {
+          "Path": "github.com/klauspost/cpuid/v2",
+          "Version": "v2.2.10",
+          "Sum": "h1:tBs3QSyvjDyFTq3uoc/9xFpCuOsJQFNPiAhYdw2skhE="
+        },
+        {
+          "Path": "github.com/rabbitmq/amqp091-go",
+          "Version": "v1.15.0",
+          "Sum": "h1:LEQL4/yp48/Wigt6A6XOu18RQRo8ZHtB5I/KZJn+gkw="
+        },
+        {
+          "Path": "github.com/zeebo/xxh3",
+          "Version": "v1.1.0",
+          "Sum": "h1:s7DLGDK45Dyfg7++yxI0khrfwq9661w9EN78eP/UZVs="
+        },
+        {
+          "Path": "go.yaml.in/yaml/v3",
+          "Version": "v3.0.5",
+          "Sum": "h1:N6y/pJk8buWs9NY5ERU2HSMfm+IuD/OtfdAnq6kESPw="
+        },
+        {
+          "Path": "golang.org/x/net",
+          "Version": "v0.60.0",
+          "Sum": "h1:79p50tfZlm0J9YfoDsSi639qSXNGVwEzOPLCxM2FsYU="
+        },
+        {
+          "Path": "golang.org/x/sync",
+          "Version": "v0.23.0",
+          "Sum": "h1:KameEIfc1IkluZyXWLn39Wd4tURc6GbCiISGiZm2bQk="
+        },
+        {
+          "Path": "golang.org/x/text",
+          "Version": "v0.42.0",
+          "Sum": "h1:JbOZXgfeCPU9gacVtYliJqOhD+zhrEqK4LfdpmlUZqI="
+        },
+        {
+          "Path": "gopkg.in/inf.v0",
+          "Version": "v0.9.1",
+          "Sum": "h1:73M5CoZyi3ZLMOyDlQh031Cx6N9NDJ2Vvfl76EDAgDc="
+        }
+      ],
+      "Settings": [
+        {
+          "Key": "-buildmode",
+          "Value": "exe"
+        },
+        {
+          "Key": "-compiler",
+          "Value": "gc"
+        },
+        {
+          "Key": "-trimpath",
+          "Value": "true"
+        },
+        {
+          "Key": "CGO_ENABLED",
+          "Value": "0"
+        },
+        {
+          "Key": "GOARCH",
+          "Value": "amd64"
+        },
+        {
+          "Key": "GOOS",
+          "Value": "linux"
+        },
+        {
+          "Key": "GOAMD64",
+          "Value": "v1"
+        },
+        {
+          "Key": "vcs",
+          "Value": "git"
+        },
+        {
+          "Key": "vcs.revision",
+          "Value": "89f24e7a0045f7176e066daa194144554ac171bd"
+        },
+        {
+          "Key": "vcs.time",
+          "Value": "2026-10-10T02:00:02Z"
+        },
+        {
+          "Key": "vcs.modified",
+          "Value": "false"
+        }
+      ]
+    },
+    "image_id": "sha256:a14d2033f771f8849c604028709c6745e0f8a682c8da60d1a616dba1639dd655",
+    "openssl_build": {
+      "image": "docker.io/library/alpine@sha256:294b683cb724975bec92580e1e685676bd4b50bda910ddb8c51d4cabeaec77e6",
+      "args": [
+        "docker",
+        "run",
+        "--rm",
+        "--network=bridge",
+        "--cap-drop=ALL",
+        "--security-opt=no-new-privileges",
+        "--memory=2g",
+        "--cpus=2",
+        "--pids-limit=256",
+        "--tmpfs",
+        "/work:rw,nosuid,nodev,size=768m,mode=1777",
+        "--label",
+        "wire.migration.owner=background-worker-openssl-musl-build",
+        "--mount",
+        "type=bind,source=/home/operator/.cache/wire-migration/background-worker-20261009/openssl-3.5.9/openssl-3.5.9.tar.gz,target=/input/openssl.tar.gz,readonly",
+        "--mount",
+        "type=bind,source=/home/operator/.cache/wire-migration/background-worker-20261009/openssl-musl-3.5.9,target=/output",
+        "docker.io/library/alpine@sha256:294b683cb724975bec92580e1e685676bd4b50bda910ddb8c51d4cabeaec77e6",
+        "/bin/sh",
+        "-eu",
+        "-c",
+        "printf '%s\\n' 'https://dl-cdn.alpinelinux.org/alpine/v3.24/main' > /etc/apk/repositories\napk add --no-cache build-base perl musl-dev linux-headers\napk info -v > /output/apk-packages.txt\nmkdir -p /work/source\ntar -xf /input/openssl.tar.gz --strip-components=1 -C /work/source\ncd /work/source\nperl Configure linux-x86_64 no-shared no-tests no-dso no-module -static --prefix=/work/install --openssldir=/etc/ssl\nmake -j2 build_sw\ncp apps/openssl /output/openssl\ncp LICENSE.txt /output/openssl-LICENSE.txt\nchmod 755 /output/openssl\n/output/openssl version -a\nreadelf -l /output/openssl > /output/elf-program-headers.txt\nreadelf -d /output/openssl > /output/elf-dynamic.txt\n"
+      ],
+      "script": "printf '%s\\n' 'https://dl-cdn.alpinelinux.org/alpine/v3.24/main' > /etc/apk/repositories\napk add --no-cache build-base perl musl-dev linux-headers\napk info -v > /output/apk-packages.txt\nmkdir -p /work/source\ntar -xf /input/openssl.tar.gz --strip-components=1 -C /work/source\ncd /work/source\nperl Configure linux-x86_64 no-shared no-tests no-dso no-module -static --prefix=/work/install --openssldir=/etc/ssl\nmake -j2 build_sw\ncp apps/openssl /output/openssl\ncp LICENSE.txt /output/openssl-LICENSE.txt\nchmod 755 /output/openssl\n/output/openssl version -a\nreadelf -l /output/openssl > /output/elf-program-headers.txt\nreadelf -d /output/openssl > /output/elf-dynamic.txt\n",
+      "exit_code": 0,
+      "source_sha256": "603f5602e2eef00d77fbd429d34dcd5822bb301757a1bc9cdb24c670f1eb859a",
+      "binary_sha256": "a2907b93619b6e95b070fc14ae5db587ed4c3cff981ad07e5016f673d8afee5c",
+      "source_version": "3.5.9",
+      "platform": "linux/amd64",
+      "static_linkage_verified": true,
+      "elf": "static PIE: no INTERP/DT_NEEDED; dynamic section contains only relocation metadata",
+      "verification_correction": "Builder subprocess returned0. Earlier Python assertion wrongly rejected all dynamic sections; corrected to reject shared-library dependencies. No recompile. Exact readelf outputs/build log retained.",
+      "host_dependencies_installed": false
+    },
+    "ca": {
+      "source_image": "quay.io/wire/integration@sha256:f5db439022d1c0ccf071c25f9c0d132ed21a9e5e3647db59c593d33614bc4f27",
+      "sha256": "2404c5ebc7d236b368d6a2f00b9ac5e01d6e55a75cdf44e4839f5876f45c249b",
+      "certificates": 167
+    },
+    "files_sha256": {
+      "Dockerfile": "01fd88a1627b838b161b7f48807c8a7dab34b4cfa2bc70a7fcaedc5edc3d6a68",
+      "background-worker": "706fed84952a9ee80dc1c9ac7b670d7417114cfe93b835d6d5fe94e58e2628d6",
+      "ca-bundle.crt": "2404c5ebc7d236b368d6a2f00b9ac5e01d6e55a75cdf44e4839f5876f45c249b",
+      "openssl": "a2907b93619b6e95b070fc14ae5db587ed4c3cff981ad07e5016f673d8afee5c",
+      "licenses/gcc-COPYING3": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "licenses/musl-COPYRIGHT": "b870108ec5e7790e9f9919064f1b9421d62d5f9b0e6c230c6adf7ea2da62e97b",
+      "licenses/gcc-COPYING.RUNTIME": "9d6b43ce4d8de0c878bf16b54d8e7a10d9bd42b75178153e3af6a815bdc90f74",
+      "licenses/background-worker-LICENSE": "57c8ff33c9c0cfc3ef00e650a1cc910d7ee479a8bc509f6c9209a7c2a11399d6",
+      "licenses/openssl-LICENSE.txt": "7d5450cb2d142651b8afa315b5f238efc805dad827d91ba367d8516bc9d49e7a"
+    },
+    "local_only": true
+  },
+  "owners": [
+    {
+      "label": "haskell-first",
+      "implementation": "haskell",
+      "container_id": "c5b74bd902e85c517577f4a06ae6d09e7f7f9d24b88e477383af0a562aea9971",
+      "shutdown": {
+        "exit_code": 137,
+        "seconds": 5.064002598635852,
+        "forced_after_sigterm": true
+      }
+    },
+    {
+      "label": "go-middle",
+      "implementation": "go",
+      "container_id": "24971d89c5433be66fc02dfcfdf1e4c2e3eb631046ac9f07ce99d8c24f684b1a",
+      "shutdown": {
+        "exit_code": 0,
+        "seconds": 0.04968647100031376,
+        "forced_after_sigterm": false
+      }
+    }
+  ],
+  "snapshots": {
+    "haskell-claimed": {
+      "storage": {
+        "cassandra_users": [
+          "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa1"
+        ],
+        "codes": [],
+        "conversation_archive": [],
+        "conversation_jobs": [
+          {
+            "id": 1,
+            "payload": {
+              "data": {
+                "team_id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa1",
+                "request_id": "synthetic-switchback",
+                "conversation_id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa3"
+              },
+              "type": "adminless_deletion"
+            },
+            "attempts": 0,
+            "priority": 0,
+            "dedup_key": "synthetic-switchback-conversation",
+            "group_key": null,
+            "parent_id": null,
+            "suspended": false,
+            "claimed_by": null,
+            "last_error": null,
+            "updated_at": null,
+            "archive_for": 3600,
+            "inserted_at": "2026-10-10T03:04:35.042868+00:00",
+            "max_attempts": 10,
+            "parent_state": null,
+            "dedup_strategy": null,
+            "rate_limit_key": null,
+            "concurrency_key": null,
+            "rate_limit_cost": 1,
+            "throttled_until": null,
+            "last_attempted_at": null,
+            "not_visible_until": "2026-10-10T04:04:35.042868+00:00",
+            "rate_limit_prefix": null,
+            "concurrency_prefix": null,
+            "cancel_requested_at": null
+          }
+        ],
+        "meeting_archive": [],
+        "meeting_jobs": [
+          {
+            "id": 1,
+            "payload": {
+              "data": {},
+              "type": "meetings_cleanup"
+            },
+            "attempts": 1,
+            "priority": 0,
+            "dedup_key": "synthetic-switchback-meeting",
+            "group_key": null,
+            "parent_id": null,
+            "suspended": false,
+            "claimed_by": "d7c5c05f-9990-4d01-90b8-c457fceaf8d1",
+            "last_error": null,
+            "updated_at": "2026-10-10T03:04:44.874238+00:00",
+            "archive_for": 3600,
+            "inserted_at": "2026-10-10T03:04:35.040923+00:00",
+            "max_attempts": 10,
+            "parent_state": null,
+            "dedup_strategy": null,
+            "rate_limit_key": null,
+            "concurrency_key": null,
+            "rate_limit_cost": 1,
+            "throttled_until": null,
+            "last_attempted_at": "2026-10-10T03:04:35.850303+00:00",
+            "not_visible_until": "2026-10-10T03:04:49.874238+00:00",
+            "rate_limit_prefix": null,
+            "concurrency_prefix": null,
+            "cancel_requested_at": null
+          }
+        ],
+        "meetings": [
+          {
+            "id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa4",
+            "tzid": "UTC",
+            "mtype": "scheduled",
+            "title": "synthetic switchback",
+            "trial": false,
+            "creator": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa1",
+            "end_time": "2026-10-10T01:04:35.039265+00:00",
+            "created_at": "2026-10-10T03:04:35.039265+00:00",
+            "start_time": "2026-10-10T00:04:35.039265+00:00",
+            "updated_at": "2026-10-10T03:04:35.039265+00:00",
+            "invited_emails": [],
+            "conversation_id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa3",
+            "recurrence_until": null,
+            "recurrence_interval": null,
+            "recurrence_frequency": null
+          }
+        ],
+        "pending": [
+          {
+            "id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa1"
+          }
+        ],
+        "users": [
+          {
+            "id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa1",
+            "name": "synthetic preserved partial copy",
+            "team": null,
+            "email": null,
+            "handle": null,
+            "sso_id": null,
+            "country": null,
+            "expires": null,
+            "picture": null,
+            "service": null,
+            "language": null,
+            "password": null,
+            "provider": null,
+            "accent_id": 0,
+            "activated": true,
+            "rich_info": null,
+            "user_type": 0,
+            "created_at": "2026-10-01T00:00:00+00:00",
+            "managed_by": null,
+            "searchable": null,
+            "updated_at": "2026-10-10T03:04:35.036543+00:00",
+            "text_status": null,
+            "account_status": null,
+            "email_unvalidated": null,
+            "supported_protocols": null,
+            "feature_conference_calling": null
+          }
+        ]
+      },
+      "rabbit": {
+        "notifications": {
+          "consumer_details": [
+            {
+              "arguments": {},
+              "channel_details": {
+                "connection_name": "172.20.2.12:53568 -> 172.20.2.11:5671",
+                "name": "172.20.2.12:53568 -> 172.20.2.11:5671 (1)",
+                "node": "rabbit@06c041440a81",
+                "number": 1,
+                "peer_host": "172.20.2.12",
+                "peer_port": 53568,
+                "user": "guest"
+              },
+              "ack_required": true,
+              "active": true,
+              "activity_status": "single_active",
+              "consumer_tag": "1",
+              "consumer_timeout": 1800000,
+              "exclusive": false,
+              "prefetch_count": 1,
+              "queue": {
+                "name": "backend-notifications.switchback.synthetic",
+                "vhost": "backendA"
+              }
+            }
+          ],
+          "arguments": {
+            "x-queue-type": "quorum",
+            "x-single-active-consumer": true
+          },
+          "auto_delete": false,
+          "consumer_capacity": 1.0,
+          "consumer_utilisation": 1.0,
+          "consumers": 1,
+          "deliveries": [],
+          "delivery_limit": 20,
+          "durable": true,
+          "effective_policy_definition": {},
+          "exclusive": false,
+          "garbage_collection": {
+            "fullsweep_after": 65535,
+            "max_heap_size": 0,
+            "min_bin_vheap_size": 2984878,
+            "min_heap_size": 233,
+            "minor_gcs": 7
+          },
+          "incoming": [],
+          "leader": "rabbit@06c041440a81",
+          "members": [
+            "rabbit@06c041440a81"
+          ],
+          "memory": 55380,
+          "message_bytes": 251,
+          "message_bytes_dlx": 0,
+          "message_bytes_persistent": 251,
+          "message_bytes_ram": 0,
+          "message_bytes_ready": 126,
+          "message_bytes_unacknowledged": 125,
+          "message_stats": {
+            "ack": 0,
+            "ack_details": {
+              "rate": 0.0
+            },
+            "deliver": 1,
+            "deliver_details": {
+              "rate": 0.0
+            },
+            "deliver_get": 1,
+            "deliver_get_details": {
+              "rate": 0.0
+            },
+            "deliver_no_ack": 0,
+            "deliver_no_ack_details": {
+              "rate": 0.0
+            },
+            "get": 0,
+            "get_details": {
+              "rate": 0.0
+            },
+            "get_empty": 0,
+            "get_empty_details": {
+              "rate": 0.0
+            },
+            "get_no_ack": 0,
+            "get_no_ack_details": {
+              "rate": 0.0
+            },
+            "publish": 2,
+            "publish_details": {
+              "rate": 0.0
+            },
+            "redeliver": 0,
+            "redeliver_details": {
+              "rate": 0.0
+            }
+          },
+          "messages": 2,
+          "messages_details": {
+            "rate": 0.4
+          },
+          "messages_dlx": 0,
+          "messages_persistent": 2,
+          "messages_ram": 0,
+          "messages_ready": 1,
+          "messages_ready_details": {
+            "rate": 0.2
+          },
+          "messages_ready_high": 0,
+          "messages_ready_normal": 1,
+          "messages_ready_returned": 0,
+          "messages_unacknowledged": 1,
+          "messages_unacknowledged_details": {
+            "rate": 0.2
+          },
+          "name": "backend-notifications.switchback.synthetic",
+          "node": "rabbit@06c041440a81",
+          "online": [
+            "rabbit@06c041440a81"
+          ],
+          "open_files": {
+            "rabbit@06c041440a81": 0
+          },
+          "operator_policy": null,
+          "policy": null,
+          "publishers": 0,
+          "reductions": 22079,
+          "reductions_details": {
+            "rate": 1187.0
+          },
+          "single_active_consumer_tag": "1",
+          "state": "running",
+          "type": "quorum",
+          "vhost": "backendA"
+        },
+        "jobs": {
+          "consumer_details": [
+            {
+              "arguments": {},
+              "channel_details": {
+                "connection_name": "172.20.2.12:53586 -> 172.20.2.11:5671",
+                "name": "172.20.2.12:53586 -> 172.20.2.11:5671 (1)",
+                "node": "rabbit@06c041440a81",
+                "number": 1,
+                "peer_host": "172.20.2.12",
+                "peer_port": 53586,
+                "user": "guest"
+              },
+              "ack_required": true,
+              "active": true,
+              "activity_status": "up",
+              "consumer_tag": "1",
+              "consumer_timeout": 1800000,
+              "exclusive": false,
+              "prefetch_count": 4,
+              "queue": {
+                "name": "background-jobs",
+                "vhost": "backendA"
+              }
+            }
+          ],
+          "arguments": {
+            "x-queue-type": "quorum"
+          },
+          "auto_delete": false,
+          "consumer_capacity": 1.0,
+          "consumer_utilisation": 1.0,
+          "consumers": 1,
+          "deliveries": [],
+          "delivery_limit": 20,
+          "durable": true,
+          "effective_policy_definition": {},
+          "exclusive": false,
+          "garbage_collection": {
+            "fullsweep_after": 65535,
+            "max_heap_size": 0,
+            "min_bin_vheap_size": 2984878,
+            "min_heap_size": 233,
+            "minor_gcs": 6
+          },
+          "incoming": [],
+          "leader": "rabbit@06c041440a81",
+          "members": [
+            "rabbit@06c041440a81"
+          ],
+          "memory": 68580,
+          "message_bytes": 0,
+          "message_bytes_dlx": 0,
+          "message_bytes_persistent": 0,
+          "message_bytes_ram": 0,
+          "message_bytes_ready": 0,
+          "message_bytes_unacknowledged": 0,
+          "message_stats": {
+            "ack": 1,
+            "ack_details": {
+              "rate": 0.0
+            },
+            "deliver": 1,
+            "deliver_details": {
+              "rate": 0.0
+            },
+            "deliver_get": 1,
+            "deliver_get_details": {
+              "rate": 0.0
+            },
+            "deliver_no_ack": 0,
+            "deliver_no_ack_details": {
+              "rate": 0.0
+            },
+            "get": 0,
+            "get_details": {
+              "rate": 0.0
+            },
+            "get_empty": 0,
+            "get_empty_details": {
+              "rate": 0.0
+            },
+            "get_no_ack": 0,
+            "get_no_ack_details": {
+              "rate": 0.0
+            },
+            "publish": 1,
+            "publish_details": {
+              "rate": 0.0
+            },
+            "redeliver": 0,
+            "redeliver_details": {
+              "rate": 0.0
+            }
+          },
+          "messages": 0,
+          "messages_details": {
+            "rate": 0.0
+          },
+          "messages_dlx": 0,
+          "messages_persistent": 0,
+          "messages_ram": 0,
+          "messages_ready": 0,
+          "messages_ready_details": {
+            "rate": 0.0
+          },
+          "messages_ready_high": 0,
+          "messages_ready_normal": 0,
+          "messages_ready_returned": 0,
+          "messages_unacknowledged": 0,
+          "messages_unacknowledged_details": {
+            "rate": 0.0
+          },
+          "name": "background-jobs",
+          "node": "rabbit@06c041440a81",
+          "online": [
+            "rabbit@06c041440a81"
+          ],
+          "open_files": {
+            "rabbit@06c041440a81": 0
+          },
+          "operator_policy": null,
+          "policy": null,
+          "publishers": 0,
+          "reductions": 19106,
+          "reductions_details": {
+            "rate": 75.6
+          },
+          "single_active_consumer_tag": "1",
+          "state": "running",
+          "type": "quorum",
+          "vhost": "backendA"
+        }
+      },
+      "sink": {
+        "deliveries": [
+          {
+            "accepted": false,
+            "body": "{\"phase\": \"first\"}",
+            "path": "/rpc/switchback.synthetic/galley/qualification-delivery"
+          }
+        ],
+        "entered": 1
+      }
+    },
+    "haskell-stopped": {
+      "storage": {
+        "cassandra_users": [
+          "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa1"
+        ],
+        "codes": [],
+        "conversation_archive": [],
+        "conversation_jobs": [
+          {
+            "id": 1,
+            "payload": {
+              "data": {
+                "team_id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa1",
+                "request_id": "synthetic-switchback",
+                "conversation_id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa3"
+              },
+              "type": "adminless_deletion"
+            },
+            "attempts": 0,
+            "priority": 0,
+            "dedup_key": "synthetic-switchback-conversation",
+            "group_key": null,
+            "parent_id": null,
+            "suspended": false,
+            "claimed_by": null,
+            "last_error": null,
+            "updated_at": null,
+            "archive_for": 3600,
+            "inserted_at": "2026-10-10T03:04:35.042868+00:00",
+            "max_attempts": 10,
+            "parent_state": null,
+            "dedup_strategy": null,
+            "rate_limit_key": null,
+            "concurrency_key": null,
+            "rate_limit_cost": 1,
+            "throttled_until": null,
+            "last_attempted_at": null,
+            "not_visible_until": "2026-10-10T04:04:35.042868+00:00",
+            "rate_limit_prefix": null,
+            "concurrency_prefix": null,
+            "cancel_requested_at": null
+          }
+        ],
+        "meeting_archive": [],
+        "meeting_jobs": [
+          {
+            "id": 1,
+            "payload": {
+              "data": {},
+              "type": "meetings_cleanup"
+            },
+            "attempts": 1,
+            "priority": 0,
+            "dedup_key": "synthetic-switchback-meeting",
+            "group_key": null,
+            "parent_id": null,
+            "suspended": false,
+            "claimed_by": "d7c5c05f-9990-4d01-90b8-c457fceaf8d1",
+            "last_error": null,
+            "updated_at": "2026-10-10T03:04:50.887293+00:00",
+            "archive_for": 3600,
+            "inserted_at": "2026-10-10T03:04:35.040923+00:00",
+            "max_attempts": 10,
+            "parent_state": null,
+            "dedup_strategy": null,
+            "rate_limit_key": null,
+            "concurrency_key": null,
+            "rate_limit_cost": 1,
+            "throttled_until": null,
+            "last_attempted_at": "2026-10-10T03:04:35.850303+00:00",
+            "not_visible_until": "2026-10-10T03:04:55.887293+00:00",
+            "rate_limit_prefix": null,
+            "concurrency_prefix": null,
+            "cancel_requested_at": null
+          }
+        ],
+        "meetings": [
+          {
+            "id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa4",
+            "tzid": "UTC",
+            "mtype": "scheduled",
+            "title": "synthetic switchback",
+            "trial": false,
+            "creator": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa1",
+            "end_time": "2026-10-10T01:04:35.039265+00:00",
+            "created_at": "2026-10-10T03:04:35.039265+00:00",
+            "start_time": "2026-10-10T00:04:35.039265+00:00",
+            "updated_at": "2026-10-10T03:04:35.039265+00:00",
+            "invited_emails": [],
+            "conversation_id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa3",
+            "recurrence_until": null,
+            "recurrence_interval": null,
+            "recurrence_frequency": null
+          }
+        ],
+        "pending": [
+          {
+            "id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa1"
+          }
+        ],
+        "users": [
+          {
+            "id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa1",
+            "name": "synthetic preserved partial copy",
+            "team": null,
+            "email": null,
+            "handle": null,
+            "sso_id": null,
+            "country": null,
+            "expires": null,
+            "picture": null,
+            "service": null,
+            "language": null,
+            "password": null,
+            "provider": null,
+            "accent_id": 0,
+            "activated": true,
+            "rich_info": null,
+            "user_type": 0,
+            "created_at": "2026-10-01T00:00:00+00:00",
+            "managed_by": null,
+            "searchable": null,
+            "updated_at": "2026-10-10T03:04:35.036543+00:00",
+            "text_status": null,
+            "account_status": null,
+            "email_unvalidated": null,
+            "supported_protocols": null,
+            "feature_conference_calling": null
+          }
+        ]
+      },
+      "rabbit": {
+        "notifications": {
+          "consumer_details": [],
+          "arguments": {
+            "x-queue-type": "quorum",
+            "x-single-active-consumer": true
+          },
+          "auto_delete": false,
+          "consumer_capacity": 0,
+          "consumer_utilisation": 0,
+          "consumers": 0,
+          "deliveries": [],
+          "delivery_limit": 20,
+          "durable": true,
+          "effective_policy_definition": {},
+          "exclusive": false,
+          "garbage_collection": {
+            "fullsweep_after": 65535,
+            "max_heap_size": 0,
+            "min_bin_vheap_size": 2984878,
+            "min_heap_size": 233,
+            "minor_gcs": 8
+          },
+          "incoming": [],
+          "leader": "rabbit@06c041440a81",
+          "members": [
+            "rabbit@06c041440a81"
+          ],
+          "memory": 68276,
+          "message_bytes": 251,
+          "message_bytes_dlx": 0,
+          "message_bytes_persistent": 251,
+          "message_bytes_ram": 0,
+          "message_bytes_ready": 251,
+          "message_bytes_unacknowledged": 0,
+          "message_stats": {
+            "ack": 0,
+            "ack_details": {
+              "rate": 0.0
+            },
+            "deliver": 1,
+            "deliver_details": {
+              "rate": 0.0
+            },
+            "deliver_get": 1,
+            "deliver_get_details": {
+              "rate": 0.0
+            },
+            "deliver_no_ack": 0,
+            "deliver_no_ack_details": {
+              "rate": 0.0
+            },
+            "get": 0,
+            "get_details": {
+              "rate": 0.0
+            },
+            "get_empty": 0,
+            "get_empty_details": {
+              "rate": 0.0
+            },
+            "get_no_ack": 0,
+            "get_no_ack_details": {
+              "rate": 0.0
+            },
+            "publish": 2,
+            "publish_details": {
+              "rate": 0.0
+            },
+            "redeliver": 0,
+            "redeliver_details": {
+              "rate": 0.0
+            }
+          },
+          "messages": 2,
+          "messages_details": {
+            "rate": 0.0
+          },
+          "messages_dlx": 0,
+          "messages_persistent": 2,
+          "messages_ram": 0,
+          "messages_ready": 2,
+          "messages_ready_details": {
+            "rate": 0.2
+          },
+          "messages_ready_high": 0,
+          "messages_ready_normal": 1,
+          "messages_ready_returned": 1,
+          "messages_unacknowledged": 0,
+          "messages_unacknowledged_details": {
+            "rate": -0.2
+          },
+          "name": "backend-notifications.switchback.synthetic",
+          "node": "rabbit@06c041440a81",
+          "online": [
+            "rabbit@06c041440a81"
+          ],
+          "open_files": {
+            "rabbit@06c041440a81": 0
+          },
+          "operator_policy": null,
+          "policy": null,
+          "publishers": 0,
+          "reductions": 24489,
+          "reductions_details": {
+            "rate": 212.6
+          },
+          "single_active_consumer_tag": null,
+          "state": "running",
+          "type": "quorum",
+          "vhost": "backendA"
+        },
+        "jobs": {
+          "consumer_details": [],
+          "arguments": {
+            "x-queue-type": "quorum"
+          },
+          "auto_delete": false,
+          "consumer_capacity": 0,
+          "consumer_utilisation": 0,
+          "consumers": 0,
+          "deliveries": [],
+          "delivery_limit": 20,
+          "durable": true,
+          "effective_policy_definition": {},
+          "exclusive": false,
+          "garbage_collection": {
+            "fullsweep_after": 65535,
+            "max_heap_size": 0,
+            "min_bin_vheap_size": 2984878,
+            "min_heap_size": 233,
+            "minor_gcs": 8
+          },
+          "incoming": [],
+          "leader": "rabbit@06c041440a81",
+          "members": [
+            "rabbit@06c041440a81"
+          ],
+          "memory": 47404,
+          "message_bytes": 0,
+          "message_bytes_dlx": 0,
+          "message_bytes_persistent": 0,
+          "message_bytes_ram": 0,
+          "message_bytes_ready": 0,
+          "message_bytes_unacknowledged": 0,
+          "message_stats": {
+            "ack": 1,
+            "ack_details": {
+              "rate": 0.0
+            },
+            "deliver": 1,
+            "deliver_details": {
+              "rate": 0.0
+            },
+            "deliver_get": 1,
+            "deliver_get_details": {
+              "rate": 0.0
+            },
+            "deliver_no_ack": 0,
+            "deliver_no_ack_details": {
+              "rate": 0.0
+            },
+            "get": 0,
+            "get_details": {
+              "rate": 0.0
+            },
+            "get_empty": 0,
+            "get_empty_details": {
+              "rate": 0.0
+            },
+            "get_no_ack": 0,
+            "get_no_ack_details": {
+              "rate": 0.0
+            },
+            "publish": 1,
+            "publish_details": {
+              "rate": 0.0
+            },
+            "redeliver": 0,
+            "redeliver_details": {
+              "rate": 0.0
+            }
+          },
+          "messages": 0,
+          "messages_details": {
+            "rate": 0.0
+          },
+          "messages_dlx": 0,
+          "messages_persistent": 0,
+          "messages_ram": 0,
+          "messages_ready": 0,
+          "messages_ready_details": {
+            "rate": 0.0
+          },
+          "messages_ready_high": 0,
+          "messages_ready_normal": 0,
+          "messages_ready_returned": 0,
+          "messages_unacknowledged": 0,
+          "messages_unacknowledged_details": {
+            "rate": 0.0
+          },
+          "name": "background-jobs",
+          "node": "rabbit@06c041440a81",
+          "online": [
+            "rabbit@06c041440a81"
+          ],
+          "open_files": {
+            "rabbit@06c041440a81": 0
+          },
+          "operator_policy": null,
+          "policy": null,
+          "publishers": 0,
+          "reductions": 20980,
+          "reductions_details": {
+            "rate": 72.0
+          },
+          "single_active_consumer_tag": null,
+          "state": "running",
+          "type": "quorum",
+          "vhost": "backendA"
+        }
+      },
+      "sink": {
+        "deliveries": [
+          {
+            "accepted": false,
+            "body": "{\"phase\": \"first\"}",
+            "path": "/rpc/switchback.synthetic/galley/qualification-delivery"
+          }
+        ],
+        "entered": 1
+      }
+    },
+    "go-claimed-storage": {
+      "cassandra_users": [],
+      "codes": [],
+      "conversation_archive": [
+        {
+          "id": 1,
+          "job_id": 1,
+          "result": null,
+          "payload": {
+            "data": {
+              "team_id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa1",
+              "request_id": "synthetic-switchback",
+              "conversation_id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa3"
+            },
+            "type": "adminless_deletion"
+          },
+          "attempts": 1,
+          "priority": 0,
+          "dedup_key": "synthetic-switchback-conversation",
+          "group_key": null,
+          "parent_id": null,
+          "suspended": false,
+          "claimed_by": "33f9a602-bb22-4d60-a8b1-c229eceafc4f",
+          "last_error": null,
+          "updated_at": "2026-10-10T03:05:01.561635+00:00",
+          "archive_for": 3600,
+          "inserted_at": "2026-10-10T03:04:35.042868+00:00",
+          "completed_at": "2026-10-10T03:05:01.579215+00:00",
+          "max_attempts": 10,
+          "parent_state": null,
+          "dedup_strategy": null,
+          "rate_limit_key": null,
+          "concurrency_key": null,
+          "rate_limit_cost": 1,
+          "last_attempted_at": "2026-10-10T03:05:01.561635+00:00",
+          "not_visible_until": "2026-10-10T03:05:06.561635+00:00",
+          "rate_limit_prefix": null,
+          "archive_expires_at": "2026-10-10T04:05:01.579215+00:00",
+          "concurrency_prefix": null
+        }
+      ],
+      "conversation_jobs": [],
+      "meeting_archive": [],
+      "meeting_jobs": [
+        {
+          "id": 1,
+          "payload": {
+            "data": {},
+            "type": "meetings_cleanup"
+          },
+          "attempts": 2,
+          "priority": 0,
+          "dedup_key": "synthetic-switchback-meeting",
+          "group_key": null,
+          "parent_id": null,
+          "suspended": false,
+          "claimed_by": "61c7b821-96b5-485f-8253-81c460fd2262",
+          "last_error": null,
+          "updated_at": "2026-10-10T03:05:01.574844+00:00",
+          "archive_for": 3600,
+          "inserted_at": "2026-10-10T03:04:35.040923+00:00",
+          "max_attempts": 10,
+          "parent_state": null,
+          "dedup_strategy": null,
+          "rate_limit_key": null,
+          "concurrency_key": null,
+          "rate_limit_cost": 1,
+          "throttled_until": null,
+          "last_attempted_at": "2026-10-10T03:05:01.574844+00:00",
+          "not_visible_until": "2026-10-10T03:05:06.574844+00:00",
+          "rate_limit_prefix": null,
+          "concurrency_prefix": null,
+          "cancel_requested_at": null
+        }
+      ],
+      "meetings": [
+        {
+          "id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa4",
+          "tzid": "UTC",
+          "mtype": "scheduled",
+          "title": "synthetic switchback",
+          "trial": false,
+          "creator": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa1",
+          "end_time": "2026-10-10T01:04:35.039265+00:00",
+          "created_at": "2026-10-10T03:04:35.039265+00:00",
+          "start_time": "2026-10-10T00:04:35.039265+00:00",
+          "updated_at": "2026-10-10T03:04:35.039265+00:00",
+          "invited_emails": [],
+          "conversation_id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa3",
+          "recurrence_until": null,
+          "recurrence_interval": null,
+          "recurrence_frequency": null
+        }
+      ],
+      "pending": [],
+      "users": [
+        {
+          "id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa1",
+          "name": "synthetic preserved partial copy",
+          "team": null,
+          "email": null,
+          "handle": null,
+          "sso_id": null,
+          "country": null,
+          "expires": null,
+          "picture": null,
+          "service": null,
+          "language": null,
+          "password": null,
+          "provider": null,
+          "accent_id": 0,
+          "activated": true,
+          "rich_info": null,
+          "user_type": 0,
+          "created_at": "2026-10-01T00:00:00+00:00",
+          "managed_by": null,
+          "searchable": null,
+          "updated_at": "2026-10-10T03:04:35.036543+00:00",
+          "text_status": null,
+          "account_status": null,
+          "email_unvalidated": null,
+          "supported_protocols": null,
+          "feature_conference_calling": null
+        }
+      ]
+    },
+    "go-completed-storage-notification-held": {
+      "storage": {
+        "cassandra_users": [],
+        "codes": [],
+        "conversation_archive": [
+          {
+            "id": 1,
+            "job_id": 1,
+            "result": null,
+            "payload": {
+              "data": {
+                "team_id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa1",
+                "request_id": "synthetic-switchback",
+                "conversation_id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa3"
+              },
+              "type": "adminless_deletion"
+            },
+            "attempts": 1,
+            "priority": 0,
+            "dedup_key": "synthetic-switchback-conversation",
+            "group_key": null,
+            "parent_id": null,
+            "suspended": false,
+            "claimed_by": "33f9a602-bb22-4d60-a8b1-c229eceafc4f",
+            "last_error": null,
+            "updated_at": "2026-10-10T03:05:01.561635+00:00",
+            "archive_for": 3600,
+            "inserted_at": "2026-10-10T03:04:35.042868+00:00",
+            "completed_at": "2026-10-10T03:05:01.579215+00:00",
+            "max_attempts": 10,
+            "parent_state": null,
+            "dedup_strategy": null,
+            "rate_limit_key": null,
+            "concurrency_key": null,
+            "rate_limit_cost": 1,
+            "last_attempted_at": "2026-10-10T03:05:01.561635+00:00",
+            "not_visible_until": "2026-10-10T03:05:06.561635+00:00",
+            "rate_limit_prefix": null,
+            "archive_expires_at": "2026-10-10T04:05:01.579215+00:00",
+            "concurrency_prefix": null
+          }
+        ],
+        "conversation_jobs": [],
+        "meeting_archive": [
+          {
+            "id": 1,
+            "job_id": 1,
+            "result": null,
+            "payload": {
+              "data": {},
+              "type": "meetings_cleanup"
+            },
+            "attempts": 2,
+            "priority": 0,
+            "dedup_key": "synthetic-switchback-meeting",
+            "group_key": null,
+            "parent_id": null,
+            "suspended": false,
+            "claimed_by": "61c7b821-96b5-485f-8253-81c460fd2262",
+            "last_error": null,
+            "updated_at": "2026-10-10T03:05:01.574844+00:00",
+            "archive_for": 3600,
+            "inserted_at": "2026-10-10T03:04:35.040923+00:00",
+            "completed_at": "2026-10-10T03:05:01.594722+00:00",
+            "max_attempts": 10,
+            "parent_state": null,
+            "dedup_strategy": null,
+            "rate_limit_key": null,
+            "concurrency_key": null,
+            "rate_limit_cost": 1,
+            "last_attempted_at": "2026-10-10T03:05:01.574844+00:00",
+            "not_visible_until": "2026-10-10T03:05:06.574844+00:00",
+            "rate_limit_prefix": null,
+            "archive_expires_at": "2026-10-10T04:05:01.594722+00:00",
+            "concurrency_prefix": null
+          }
+        ],
+        "meeting_jobs": [],
+        "meetings": [],
+        "pending": [],
+        "users": [
+          {
+            "id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa1",
+            "name": "synthetic preserved partial copy",
+            "team": null,
+            "email": null,
+            "handle": null,
+            "sso_id": null,
+            "country": null,
+            "expires": null,
+            "picture": null,
+            "service": null,
+            "language": null,
+            "password": null,
+            "provider": null,
+            "accent_id": 0,
+            "activated": true,
+            "rich_info": null,
+            "user_type": 0,
+            "created_at": "2026-10-01T00:00:00+00:00",
+            "managed_by": null,
+            "searchable": null,
+            "updated_at": "2026-10-10T03:04:35.036543+00:00",
+            "text_status": null,
+            "account_status": null,
+            "email_unvalidated": null,
+            "supported_protocols": null,
+            "feature_conference_calling": null
+          }
+        ]
+      },
+      "rabbit": {
+        "notifications": {
+          "consumer_details": [
+            {
+              "arguments": {},
+              "channel_details": {
+                "connection_name": "172.20.2.12:53736 -> 172.20.2.11:5671",
+                "name": "172.20.2.12:53736 -> 172.20.2.11:5671 (1)",
+                "node": "rabbit@06c041440a81",
+                "number": 1,
+                "peer_host": "172.20.2.12",
+                "peer_port": 53736,
+                "user": "guest"
+              },
+              "ack_required": true,
+              "active": true,
+              "activity_status": "single_active",
+              "consumer_tag": "pusher.1",
+              "consumer_timeout": 1800000,
+              "exclusive": false,
+              "prefetch_count": 1,
+              "queue": {
+                "name": "backend-notifications.switchback.synthetic",
+                "vhost": "backendA"
+              }
+            }
+          ],
+          "arguments": {
+            "x-queue-type": "quorum",
+            "x-single-active-consumer": true
+          },
+          "auto_delete": false,
+          "consumer_capacity": 1.0,
+          "consumer_utilisation": 1.0,
+          "consumers": 1,
+          "deliveries": [],
+          "delivery_limit": 20,
+          "durable": true,
+          "effective_policy_definition": {},
+          "exclusive": false,
+          "garbage_collection": {
+            "fullsweep_after": 65535,
+            "max_heap_size": 0,
+            "min_bin_vheap_size": 2984878,
+            "min_heap_size": 233,
+            "minor_gcs": 9
+          },
+          "incoming": [],
+          "leader": "rabbit@06c041440a81",
+          "members": [
+            "rabbit@06c041440a81"
+          ],
+          "memory": 42716,
+          "message_bytes": 251,
+          "message_bytes_dlx": 0,
+          "message_bytes_persistent": 251,
+          "message_bytes_ram": 0,
+          "message_bytes_ready": 126,
+          "message_bytes_unacknowledged": 125,
+          "message_stats": {
+            "ack": 0,
+            "ack_details": {
+              "rate": 0.0
+            },
+            "deliver": 2,
+            "deliver_details": {
+              "rate": 0.0
+            },
+            "deliver_get": 2,
+            "deliver_get_details": {
+              "rate": 0.0
+            },
+            "deliver_no_ack": 0,
+            "deliver_no_ack_details": {
+              "rate": 0.0
+            },
+            "get": 0,
+            "get_details": {
+              "rate": 0.0
+            },
+            "get_empty": 0,
+            "get_empty_details": {
+              "rate": 0.0
+            },
+            "get_no_ack": 0,
+            "get_no_ack_details": {
+              "rate": 0.0
+            },
+            "publish": 2,
+            "publish_details": {
+              "rate": 0.0
+            },
+            "redeliver": 1,
+            "redeliver_details": {
+              "rate": 0.0
+            }
+          },
+          "messages": 2,
+          "messages_details": {
+            "rate": 0.0
+          },
+          "messages_dlx": 0,
+          "messages_persistent": 2,
+          "messages_ram": 0,
+          "messages_ready": 1,
+          "messages_ready_details": {
+            "rate": -0.2
+          },
+          "messages_ready_high": 0,
+          "messages_ready_normal": 1,
+          "messages_ready_returned": 0,
+          "messages_unacknowledged": 1,
+          "messages_unacknowledged_details": {
+            "rate": 0.2
+          },
+          "name": "backend-notifications.switchback.synthetic",
+          "node": "rabbit@06c041440a81",
+          "online": [
+            "rabbit@06c041440a81"
+          ],
+          "open_files": {
+            "rabbit@06c041440a81": 0
+          },
+          "operator_policy": null,
+          "policy": null,
+          "publishers": 0,
+          "reductions": 26128,
+          "reductions_details": {
+            "rate": 253.8
+          },
+          "single_active_consumer_tag": "pusher.1",
+          "state": "running",
+          "type": "quorum",
+          "vhost": "backendA"
+        },
+        "jobs": {
+          "consumer_details": [
+            {
+              "arguments": {},
+              "channel_details": {
+                "connection_name": "172.20.2.12:53746 -> 172.20.2.11:5671",
+                "name": "172.20.2.12:53746 -> 172.20.2.11:5671 (1)",
+                "node": "rabbit@06c041440a81",
+                "number": 1,
+                "peer_host": "172.20.2.12",
+                "peer_port": 53746,
+                "user": "guest"
+              },
+              "ack_required": true,
+              "active": true,
+              "activity_status": "up",
+              "consumer_tag": "background-job-consumer",
+              "consumer_timeout": 1800000,
+              "exclusive": false,
+              "prefetch_count": 4,
+              "queue": {
+                "name": "background-jobs",
+                "vhost": "backendA"
+              }
+            }
+          ],
+          "arguments": {
+            "x-queue-type": "quorum"
+          },
+          "auto_delete": false,
+          "consumer_capacity": 1.0,
+          "consumer_utilisation": 1.0,
+          "consumers": 1,
+          "deliveries": [],
+          "delivery_limit": 20,
+          "durable": true,
+          "effective_policy_definition": {},
+          "exclusive": false,
+          "garbage_collection": {
+            "fullsweep_after": 65535,
+            "max_heap_size": 0,
+            "min_bin_vheap_size": 2984878,
+            "min_heap_size": 233,
+            "minor_gcs": 11
+          },
+          "incoming": [],
+          "leader": "rabbit@06c041440a81",
+          "members": [
+            "rabbit@06c041440a81"
+          ],
+          "memory": 42508,
+          "message_bytes": 0,
+          "message_bytes_dlx": 0,
+          "message_bytes_persistent": 0,
+          "message_bytes_ram": 0,
+          "message_bytes_ready": 0,
+          "message_bytes_unacknowledged": 0,
+          "message_stats": {
+            "ack": 2,
+            "ack_details": {
+              "rate": 0.0
+            },
+            "deliver": 2,
+            "deliver_details": {
+              "rate": 0.0
+            },
+            "deliver_get": 2,
+            "deliver_get_details": {
+              "rate": 0.0
+            },
+            "deliver_no_ack": 0,
+            "deliver_no_ack_details": {
+              "rate": 0.0
+            },
+            "get": 0,
+            "get_details": {
+              "rate": 0.0
+            },
+            "get_empty": 0,
+            "get_empty_details": {
+              "rate": 0.0
+            },
+            "get_no_ack": 0,
+            "get_no_ack_details": {
+              "rate": 0.0
+            },
+            "publish": 2,
+            "publish_details": {
+              "rate": 0.2
+            },
+            "redeliver": 0,
+            "redeliver_details": {
+              "rate": 0.0
+            }
+          },
+          "messages": 0,
+          "messages_details": {
+            "rate": 0.0
+          },
+          "messages_dlx": 0,
+          "messages_persistent": 0,
+          "messages_ram": 0,
+          "messages_ready": 0,
+          "messages_ready_details": {
+            "rate": 0.0
+          },
+          "messages_ready_high": 0,
+          "messages_ready_normal": 0,
+          "messages_ready_returned": 0,
+          "messages_unacknowledged": 0,
+          "messages_unacknowledged_details": {
+            "rate": 0.0
+          },
+          "name": "background-jobs",
+          "node": "rabbit@06c041440a81",
+          "online": [
+            "rabbit@06c041440a81"
+          ],
+          "open_files": {
+            "rabbit@06c041440a81": 0
+          },
+          "operator_policy": null,
+          "policy": null,
+          "publishers": 0,
+          "reductions": 24965,
+          "reductions_details": {
+            "rate": 81.4
+          },
+          "single_active_consumer_tag": "background-job-consumer",
+          "state": "running",
+          "type": "quorum",
+          "vhost": "backendA"
+        }
+      },
+      "sink": {
+        "deliveries": [
+          {
+            "accepted": false,
+            "body": "{\"phase\": \"first\"}",
+            "path": "/rpc/switchback.synthetic/galley/qualification-delivery"
+          },
+          {
+            "accepted": false,
+            "body": "{\"phase\": \"first\"}",
+            "path": "/rpc/switchback.synthetic/galley/qualification-delivery"
+          }
+        ],
+        "entered": 2
+      }
+    },
+    "go-stopped-haskell-return-pending": {
+      "storage": {
+        "cassandra_users": [
+          "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa2"
+        ],
+        "codes": [
+          {
+            "key": "KuWLbXWH5dAha3YKz2T5",
+            "value": "synthetic",
+            "target": "meeting",
+            "password": null,
+            "expires_at": "2026-10-10T04:05:20.728466+00:00",
+            "conversation": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa4"
+          }
+        ],
+        "conversation_archive": [
+          {
+            "id": 1,
+            "job_id": 1,
+            "result": null,
+            "payload": {
+              "data": {
+                "team_id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa1",
+                "request_id": "synthetic-switchback",
+                "conversation_id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa3"
+              },
+              "type": "adminless_deletion"
+            },
+            "attempts": 1,
+            "priority": 0,
+            "dedup_key": "synthetic-switchback-conversation",
+            "group_key": null,
+            "parent_id": null,
+            "suspended": false,
+            "claimed_by": "33f9a602-bb22-4d60-a8b1-c229eceafc4f",
+            "last_error": null,
+            "updated_at": "2026-10-10T03:05:01.561635+00:00",
+            "archive_for": 3600,
+            "inserted_at": "2026-10-10T03:04:35.042868+00:00",
+            "completed_at": "2026-10-10T03:05:01.579215+00:00",
+            "max_attempts": 10,
+            "parent_state": null,
+            "dedup_strategy": null,
+            "rate_limit_key": null,
+            "concurrency_key": null,
+            "rate_limit_cost": 1,
+            "last_attempted_at": "2026-10-10T03:05:01.561635+00:00",
+            "not_visible_until": "2026-10-10T03:05:06.561635+00:00",
+            "rate_limit_prefix": null,
+            "archive_expires_at": "2026-10-10T04:05:01.579215+00:00",
+            "concurrency_prefix": null
+          }
+        ],
+        "conversation_jobs": [],
+        "meeting_archive": [
+          {
+            "id": 1,
+            "job_id": 1,
+            "result": null,
+            "payload": {
+              "data": {},
+              "type": "meetings_cleanup"
+            },
+            "attempts": 2,
+            "priority": 0,
+            "dedup_key": "synthetic-switchback-meeting",
+            "group_key": null,
+            "parent_id": null,
+            "suspended": false,
+            "claimed_by": "61c7b821-96b5-485f-8253-81c460fd2262",
+            "last_error": null,
+            "updated_at": "2026-10-10T03:05:01.574844+00:00",
+            "archive_for": 3600,
+            "inserted_at": "2026-10-10T03:04:35.040923+00:00",
+            "completed_at": "2026-10-10T03:05:01.594722+00:00",
+            "max_attempts": 10,
+            "parent_state": null,
+            "dedup_strategy": null,
+            "rate_limit_key": null,
+            "concurrency_key": null,
+            "rate_limit_cost": 1,
+            "last_attempted_at": "2026-10-10T03:05:01.574844+00:00",
+            "not_visible_until": "2026-10-10T03:05:06.574844+00:00",
+            "rate_limit_prefix": null,
+            "archive_expires_at": "2026-10-10T04:05:01.594722+00:00",
+            "concurrency_prefix": null
+          }
+        ],
+        "meeting_jobs": [
+          {
+            "id": 2,
+            "payload": {
+              "data": {},
+              "type": "meetings_cleanup"
+            },
+            "attempts": 0,
+            "priority": 0,
+            "dedup_key": "synthetic-switchback-meeting",
+            "group_key": null,
+            "parent_id": null,
+            "suspended": false,
+            "claimed_by": null,
+            "last_error": null,
+            "updated_at": null,
+            "archive_for": 3600,
+            "inserted_at": "2026-10-10T03:05:20.729084+00:00",
+            "max_attempts": 10,
+            "parent_state": null,
+            "dedup_strategy": null,
+            "rate_limit_key": null,
+            "concurrency_key": null,
+            "rate_limit_cost": 1,
+            "throttled_until": null,
+            "last_attempted_at": null,
+            "not_visible_until": "2026-10-10T03:05:20.895734+00:00",
+            "rate_limit_prefix": null,
+            "concurrency_prefix": null,
+            "cancel_requested_at": null
+          }
+        ],
+        "meetings": [
+          {
+            "id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa4",
+            "tzid": "UTC",
+            "mtype": "scheduled",
+            "title": "synthetic switchback",
+            "trial": false,
+            "creator": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa1",
+            "end_time": "2026-10-10T01:05:20.727436+00:00",
+            "created_at": "2026-10-10T03:05:20.727436+00:00",
+            "start_time": "2026-10-10T00:05:20.727436+00:00",
+            "updated_at": "2026-10-10T03:05:20.727436+00:00",
+            "invited_emails": [],
+            "conversation_id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa3",
+            "recurrence_until": null,
+            "recurrence_interval": null,
+            "recurrence_frequency": null
+          }
+        ],
+        "pending": [],
+        "users": [
+          {
+            "id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa1",
+            "name": "synthetic preserved partial copy",
+            "team": null,
+            "email": null,
+            "handle": null,
+            "sso_id": null,
+            "country": null,
+            "expires": null,
+            "picture": null,
+            "service": null,
+            "language": null,
+            "password": null,
+            "provider": null,
+            "accent_id": 0,
+            "activated": true,
+            "rich_info": null,
+            "user_type": 0,
+            "created_at": "2026-10-01T00:00:00+00:00",
+            "managed_by": null,
+            "searchable": null,
+            "updated_at": "2026-10-10T03:04:35.036543+00:00",
+            "text_status": null,
+            "account_status": null,
+            "email_unvalidated": null,
+            "supported_protocols": null,
+            "feature_conference_calling": null
+          }
+        ]
+      },
+      "rabbit": {
+        "notifications": {
+          "consumer_details": [],
+          "arguments": {
+            "x-queue-type": "quorum",
+            "x-single-active-consumer": true
+          },
+          "auto_delete": false,
+          "consumer_capacity": 0,
+          "consumer_utilisation": 0,
+          "consumers": 0,
+          "deliveries": [],
+          "delivery_limit": 20,
+          "durable": true,
+          "effective_policy_definition": {},
+          "exclusive": false,
+          "garbage_collection": {
+            "fullsweep_after": 65535,
+            "max_heap_size": 0,
+            "min_bin_vheap_size": 2984878,
+            "min_heap_size": 233,
+            "minor_gcs": 11
+          },
+          "incoming": [],
+          "leader": "rabbit@06c041440a81",
+          "members": [
+            "rabbit@06c041440a81"
+          ],
+          "memory": 55484,
+          "message_bytes": 251,
+          "message_bytes_dlx": 0,
+          "message_bytes_persistent": 251,
+          "message_bytes_ram": 0,
+          "message_bytes_ready": 251,
+          "message_bytes_unacknowledged": 0,
+          "message_stats": {
+            "ack": 0,
+            "ack_details": {
+              "rate": 0.0
+            },
+            "deliver": 2,
+            "deliver_details": {
+              "rate": 0.0
+            },
+            "deliver_get": 2,
+            "deliver_get_details": {
+              "rate": 0.0
+            },
+            "deliver_no_ack": 0,
+            "deliver_no_ack_details": {
+              "rate": 0.0
+            },
+            "get": 0,
+            "get_details": {
+              "rate": 0.0
+            },
+            "get_empty": 0,
+            "get_empty_details": {
+              "rate": 0.0
+            },
+            "get_no_ack": 0,
+            "get_no_ack_details": {
+              "rate": 0.0
+            },
+            "publish": 2,
+            "publish_details": {
+              "rate": 0.0
+            },
+            "redeliver": 1,
+            "redeliver_details": {
+              "rate": 0.0
+            }
+          },
+          "messages": 2,
+          "messages_details": {
+            "rate": 0.0
+          },
+          "messages_dlx": 0,
+          "messages_persistent": 2,
+          "messages_ram": 0,
+          "messages_ready": 2,
+          "messages_ready_details": {
+            "rate": 0.2
+          },
+          "messages_ready_high": 0,
+          "messages_ready_normal": 1,
+          "messages_ready_returned": 1,
+          "messages_unacknowledged": 0,
+          "messages_unacknowledged_details": {
+            "rate": -0.2
+          },
+          "name": "backend-notifications.switchback.synthetic",
+          "node": "rabbit@06c041440a81",
+          "online": [
+            "rabbit@06c041440a81"
+          ],
+          "open_files": {
+            "rabbit@06c041440a81": 0
+          },
+          "operator_policy": null,
+          "policy": null,
+          "publishers": 0,
+          "reductions": 28169,
+          "reductions_details": {
+            "rate": 326.6
+          },
+          "single_active_consumer_tag": null,
+          "state": "running",
+          "type": "quorum",
+          "vhost": "backendA"
+        },
+        "jobs": {
+          "consumer_details": [],
+          "arguments": {
+            "x-queue-type": "quorum"
+          },
+          "auto_delete": false,
+          "consumer_capacity": 0,
+          "consumer_utilisation": 0,
+          "consumers": 0,
+          "deliveries": [],
+          "delivery_limit": 20,
+          "durable": true,
+          "effective_policy_definition": {},
+          "exclusive": false,
+          "garbage_collection": {
+            "fullsweep_after": 65535,
+            "max_heap_size": 0,
+            "min_bin_vheap_size": 2984878,
+            "min_heap_size": 233,
+            "minor_gcs": 13
+          },
+          "incoming": [],
+          "leader": "rabbit@06c041440a81",
+          "members": [
+            "rabbit@06c041440a81"
+          ],
+          "memory": 55388,
+          "message_bytes": 0,
+          "message_bytes_dlx": 0,
+          "message_bytes_persistent": 0,
+          "message_bytes_ram": 0,
+          "message_bytes_ready": 0,
+          "message_bytes_unacknowledged": 0,
+          "message_stats": {
+            "ack": 2,
+            "ack_details": {
+              "rate": 0.0
+            },
+            "deliver": 2,
+            "deliver_details": {
+              "rate": 0.0
+            },
+            "deliver_get": 2,
+            "deliver_get_details": {
+              "rate": 0.0
+            },
+            "deliver_no_ack": 0,
+            "deliver_no_ack_details": {
+              "rate": 0.0
+            },
+            "get": 0,
+            "get_details": {
+              "rate": 0.0
+            },
+            "get_empty": 0,
+            "get_empty_details": {
+              "rate": 0.0
+            },
+            "get_no_ack": 0,
+            "get_no_ack_details": {
+              "rate": 0.0
+            },
+            "publish": 2,
+            "publish_details": {
+              "rate": 0.0
+            },
+            "redeliver": 0,
+            "redeliver_details": {
+              "rate": 0.0
+            }
+          },
+          "messages": 0,
+          "messages_details": {
+            "rate": 0.0
+          },
+          "messages_dlx": 0,
+          "messages_persistent": 0,
+          "messages_ram": 0,
+          "messages_ready": 0,
+          "messages_ready_details": {
+            "rate": 0.0
+          },
+          "messages_ready_high": 0,
+          "messages_ready_normal": 0,
+          "messages_ready_returned": 0,
+          "messages_unacknowledged": 0,
+          "messages_unacknowledged_details": {
+            "rate": 0.0
+          },
+          "name": "background-jobs",
+          "node": "rabbit@06c041440a81",
+          "online": [
+            "rabbit@06c041440a81"
+          ],
+          "open_files": {
+            "rabbit@06c041440a81": 0
+          },
+          "operator_policy": null,
+          "policy": null,
+          "publishers": 0,
+          "reductions": 26970,
+          "reductions_details": {
+            "rate": 72.0
+          },
+          "single_active_consumer_tag": null,
+          "state": "running",
+          "type": "quorum",
+          "vhost": "backendA"
+        }
+      },
+      "sink": {
+        "deliveries": [
+          {
+            "accepted": false,
+            "body": "{\"phase\": \"first\"}",
+            "path": "/rpc/switchback.synthetic/galley/qualification-delivery"
+          },
+          {
+            "accepted": false,
+            "body": "{\"phase\": \"first\"}",
+            "path": "/rpc/switchback.synthetic/galley/qualification-delivery"
+          }
+        ],
+        "entered": 2
+      }
+    }
+  },
+  "reference_binary": {
+    "path": "/nix/store/16b8f2naixj573wx924avn2y36mn0yvv-background-worker/bin/background-worker",
+    "sha256": "985aab36d8e92baa59eb3f8da9851f7f2b7be35f201fe2cea63ddf395d350cb0",
+    "image": "sha256:d0301bbb18ca37904b0c9693725acf6d3ab19b4203f8bda23be3508aabf16f8e"
+  }
+}

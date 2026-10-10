@@ -1,0 +1,6 @@
+{
+  "services/background-worker/src/Wire/BackendNotificationPusher.hs": "c1f97218ead477dbbd8ca17b4e375457a7847c244c2f2f3289d6bcf0b65a5f2b",
+  "libs/wire-api-federation/src/Wire/API/Federation/BackendNotifications.hs": "f8430011b4a82098c8a9b5621b9947add19d4fe569ec18acb4b130e3230acb85",
+  "libs/wire-api-federation/src/Wire/API/Federation/API/Common.hs": "d3c7d6cf0a7226f06d97cf7dc91537300516ec42c7a7ab4d99c508afb2170091",
+  "libs/wire-api-federation/src/Wire/API/Federation/Client.hs": "577007c23eb139105a7a8adf8624a97b599be2c55b59c65b862056f28eedc1a0"
+}

@@ -120,6 +120,7 @@ def main():
         snapshot('go-stopped-haskell-return-pending')
         start('haskell','haskell-return')
         await_value('snapshot',lambda v:not v['meeting_jobs'] and not v['meetings'] and not v['codes'] and not v['pending'] and not v['cassandra_users'] and len(v['users'])==2)
+        snapshot('haskell-return-storage-completed')
         await_value('queue',lambda v:v['notifications'].get('messages',0)==0 and v['jobs'].get('messages',0)==0)
         final=snapshot('haskell-return-completed')
         accepted=[json.loads(x['body'])['phase'] for x in final['sink']['deliveries'] if x['accepted']]

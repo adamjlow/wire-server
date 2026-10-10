@@ -32,7 +32,10 @@ func encode(t *testing.T, value any) []byte {
 
 func testFederator(t *testing.T, handler http.HandlerFunc) (*Service, *http.Client) {
 	t.Helper()
-	server := httptest.NewUnstartedServer(handler)
+	server := httptest.NewUnstartedServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+		handler(w, r)
+	}))
 	server.Config.Protocols = new(http.Protocols)
 	server.Config.Protocols.SetHTTP1(true)
 	server.Config.Protocols.SetUnencryptedHTTP2(true)
@@ -259,5 +262,57 @@ func TestRabbitHandshakeRespectsCancellation(t *testing.T) {
 	}
 	if err == nil || time.Since(started) > time.Second {
 		t.Fatal("AMQP handshake ignored cancellation")
+	}
+}
+
+func TestNotificationSuccessRequiresSourceResponseContract(t *testing.T) {
+	for _, tc := range []struct {
+		name, media, body string
+		status            int
+		success           bool
+	}{
+		{"object", "application/json", `{}`, 200, true},
+		{"object-fields", "application/json; charset=utf-8", `{"future":true}`, 200, true},
+		{"missing-media", "", `{}`, 200, false},
+		{"wrong-media", "application/octet-stream", `{}`, 200, false},
+		{"wrong-status", "application/json", `{}`, 204, false},
+		{"empty-body", "application/json", ``, 200, false},
+		{"array-body", "application/json", `[]`, 200, false},
+		{"null-body", "application/json", `null`, 200, false},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			s, client := testFederator(t, func(w http.ResponseWriter, r *http.Request) {
+				if tc.media == "" {
+					w.Header().Del("Content-Type")
+				} else {
+					w.Header().Set("Content-Type", tc.media)
+				}
+				w.WriteHeader(tc.status)
+				_, _ = io.WriteString(w, tc.body)
+			})
+			_, err := s.deliverNotification(t.Context(), client, "target.example.com", encode(t, sourceNotification("{}")))
+			if (err == nil) != tc.success {
+				t.Fatalf("response acceptance mismatch: success=%v error=%v", tc.success, err)
+			}
+		})
+	}
+}
+
+func TestInvalidNotificationResponseRetriesBeforeACK(t *testing.T) {
+	calls := 0
+	s, client := testFederator(t, func(w http.ResponseWriter, r *http.Request) {
+		calls++
+		if calls == 1 {
+			w.Header().Set("Content-Type", "application/octet-stream")
+		}
+		_, _ = io.WriteString(w, "{}")
+	})
+	acks := &acknowledgements{}
+	deliveries := make(chan amqp.Delivery, 1)
+	deliveries <- amqp.Delivery{Body: encode(t, sourceNotification("{}")), DeliveryTag: 1, Acknowledger: acks}
+	close(deliveries)
+	s.consumeNotifications(t.Context(), client, "target.example.com", deliveries)
+	if calls != 2 || acks.acks != 1 || len(acks.rejects) != 0 {
+		t.Fatalf("invalid response acknowledged or not retried: calls=%d ack=%+v", calls, acks)
 	}
 }

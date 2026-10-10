@@ -1,0 +1,19 @@
+--- FAIL: TestNotificationSuccessRequiresSourceResponseContract (0.00s)
+    --- FAIL: TestNotificationSuccessRequiresSourceResponseContract/missing-media (0.00s)
+        notifications_test.go:292: response acceptance mismatch: success=false error=<nil>
+    --- FAIL: TestNotificationSuccessRequiresSourceResponseContract/wrong-media (0.00s)
+        notifications_test.go:292: response acceptance mismatch: success=false error=<nil>
+    --- FAIL: TestNotificationSuccessRequiresSourceResponseContract/wrong-status (0.00s)
+        notifications_test.go:292: response acceptance mismatch: success=false error=<nil>
+    --- FAIL: TestNotificationSuccessRequiresSourceResponseContract/empty-body (0.00s)
+        notifications_test.go:292: response acceptance mismatch: success=false error=<nil>
+    --- FAIL: TestNotificationSuccessRequiresSourceResponseContract/array-body (0.00s)
+        notifications_test.go:292: response acceptance mismatch: success=false error=<nil>
+    --- FAIL: TestNotificationSuccessRequiresSourceResponseContract/null-body (0.00s)
+        notifications_test.go:292: response acceptance mismatch: success=false error=<nil>
+FAIL
+FAIL	github.com/adamjlow/wire-server/go/services/background-worker	0.006s
+?   	github.com/adamjlow/wire-server/go/services/background-worker/cmd/background-worker	[no test files]
+?   	github.com/adamjlow/wire-server/go/services/background-worker/qualification	[no test files]
+?   	github.com/adamjlow/wire-server/go/services/background-worker/qualification/storage	[no test files]
+FAIL

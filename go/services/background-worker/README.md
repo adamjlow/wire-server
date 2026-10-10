@@ -1,18 +1,22 @@
 # Optional Go background-worker (under construction)
 
 This module is under construction, not an available service replacement.
-Haskell remains the supported default. The exact current six-Go/Haskell-peer
+Haskell remains the supported default. The previous exact89f24e7a six-Go/Haskell-peer
 run passes **124/124 original executions**, including all47 worker cases, with
 no failures/errors/skips and successful owned cleanup. [Exact receipts](evidence/six-go-original124-20261010/)
-identify clean source89f24e7a and every selected executable. Older SCIM failures
+identify clean source89f24e7a and every selected executable. A concrete response
+ACK/retry gap found during actual switchback is now repaired: Post200/JSON/object
+is required, matching native EmptyResponse. Current full Go checks pass; the
+changed executable still needs exact final mixed-stack and lifecycle qualification. Older SCIM failures
 remain historical; none was skipped or waived. The unchanged catalogues contain
 120 distinct functions because four Events cases overlap across suites.
 
 An optional scratch image now includes the same worker, static patched OpenSSL3.5.9,
 reference CA bundle and license notices. Existing bot/DHE/pin/date/cancellation
 tests pass in that exact image. [Construction receipts](evidence/image-construction-20261010/)
-do not qualify real image health/default mounts, loaded operations or actual
-same-state Haskell-Go-Haskell switchback. These, the separately scoped selector,
+join passing default-mount/health/loaded operations on89f24e7a in
+[operations evidence](evidence/operations-image-20261010/). Updated executable
+qualification, actual complete durable switchback, separately scoped selector
 and final review remain pending; compatibility remains null.
 
 Both original configuration files and CLI
