@@ -1,0 +1,14 @@
+{
+  "files": [
+    {
+      "path": "/home/operator/.cache/wire-migration/spar-20261010/idp-delete-original/controller.log",
+      "sha256": "717ecac8ec70348a75595cdd0cd20838722767560e7e363326b17c663f93a760",
+      "bytes": 946170
+    },
+    {
+      "path": "/home/operator/.cache/wire-migration/spar-20261010/saml-state-go-check.log",
+      "sha256": "e5f59243ccfc97425597df0631ec4244760f4c458ac3ad64b3850bc64a56e22d",
+      "bytes": 936
+    }
+  ]
+}

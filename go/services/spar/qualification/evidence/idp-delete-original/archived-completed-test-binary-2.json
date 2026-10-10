@@ -1,0 +1,11 @@
+{
+  "source": "/home/operator/.cache/wire-migration/background-worker-20261009/scheduled-runtime-check",
+  "sha256": "ef026c79fa2aa4f9c97653613a28d631b654df26b65e36400affe9c307755990",
+  "archive": "/home/operator/.cache/wire-migration/background-worker-20261009/scheduled-runtime-check.test-binary.gz",
+  "archive_sha256": "88abde1a64c9efbcd7d65fab7930f1f8350d921779cb4339f4033d85bf2b42a1",
+  "bytes": 23049520,
+  "archive_bytes": 11103291,
+  "kind": "completed Go schemacheck test executable, not service artifact",
+  "build_info": "/home/operator/.cache/wire-migration/background-worker-20261009/scheduled-runtime-check: go1.26.9\n\tpath\tgithub.com/adamjlow/wire-server/go/services/background-worker.test\n\tmod\tgithub.com/adamjlow/wire-server/go/services/background-worker\t(devel)\t\n\tbuild\t-buildmode=exe\n\tbuild\t-compiler=gc\n\tbuild\t-tags=schemacheck\n\tbuild\tCGO_ENABLED=0\n\tbuild\tGOARCH=amd64\n\tbuild\tGOOS=linux\n\tbuild\tGOAMD64=v1\n",
+  "purpose": "lossless archival; all reports/source/qualified service binaries preserved"
+}

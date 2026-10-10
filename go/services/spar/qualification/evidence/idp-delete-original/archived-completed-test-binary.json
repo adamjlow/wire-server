@@ -1,0 +1,10 @@
+{
+  "source": "/home/operator/.cache/wire-migration/background-worker-20261009/http-diagnostics-scheduled-check",
+  "sha256": "044429094558a8e7b7fb27f248e9f7a057b65f8dbf4e6a39e14022bac1d897f5",
+  "archive": "/home/operator/.cache/wire-migration/background-worker-20261009/http-diagnostics-scheduled-check.test-binary.gz",
+  "archive_sha256": "528d8e63d701043b58d680eb4730915074b548821e3cf026a886407ccd79508c",
+  "bytes": 23288167,
+  "archive_bytes": 11262355,
+  "kind": "completed task-owned Go schemacheck test executable, not available service artifact",
+  "purpose": "lossless archival to recover disposable Docker disk floor; reports/source/qualified service artifacts preserved"
+}

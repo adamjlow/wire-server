@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "result": "built",
+  "source_revision": "77b401df2d4bd7d21e7fdb98731cd7336dbe9750",
+  "binary_sha256": "dd14d5a9a2f048556b4849e50a9b82c6ef53ec48648931a7f787c14d278a50b9",
+  "binary": "/dev/shm/wire-migration-spar-20261010/spar-saml-state",
+  "compiler": "go1.26.9",
+  "target": "linux/amd64",
+  "CGO_ENABLED": "0",
+  "build_flags": [
+    "-trimpath"
+  ],
+  "build_info": "/dev/shm/wire-migration-spar-20261010/spar-saml-state: go1.26.9\n\tpath\tgithub.com/adamjlow/wire-server/go/services/spar/cmd/spar\n\tmod\tgithub.com/adamjlow/wire-server/go/services/spar\t(devel)\t\n\tdep\tgithub.com/apache/cassandra-gocql-driver/v2\tv2.1.2\th1:lu/p0Db2av18enHJvWJQoChLssI0P+AR06STq4VdvCc=\n\tdep\tgo.yaml.in/yaml/v3\tv3.0.5\th1:N6y/pJk8buWs9NY5ERU2HSMfm+IuD/OtfdAnq6kESPw=\n\tdep\tgolang.org/x/text\tv0.42.0\th1:JbOZXgfeCPU9gacVtYliJqOhD+zhrEqK4LfdpmlUZqI=\n\tdep\tgopkg.in/inf.v0\tv0.9.1\th1:73M5CoZyi3ZLMOyDlQh031Cx6N9NDJ2Vvfl76EDAgDc=\n\tbuild\t-buildmode=exe\n\tbuild\t-compiler=gc\n\tbuild\t-trimpath=true\n\tbuild\tCGO_ENABLED=0\n\tbuild\tGOARCH=amd64\n\tbuild\tGOOS=linux\n\tbuild\tGOAMD64=v1\n\tbuild\tvcs=git\n\tbuild\tvcs.revision=77b401df2d4bd7d21e7fdb98731cd7336dbe9750\n\tbuild\tvcs.time=2026-10-10T10:42:47Z\n\tbuild\tvcs.modified=false\n",
+  "quality_log": {
+    "path": "/home/operator/.cache/wire-migration/spar-20261010/saml-state-go-check.log",
+    "sha256": "e5f59243ccfc97425597df0631ec4244760f4c458ac3ad64b3850bc64a56e22d"
+  },
+  "scope": "SAML state stores/IdP deletion construction increment; full Spar qualification incomplete."
+}

@@ -77,8 +77,15 @@
       "command": "Pinned Go1.26.9 checks, three unchanged IdP JSON goldens, metadata/allowlist negatives and six unchanged original IdP/token tests against exact Go Spar/Haskell peers. Strict six-name XML/no failures/errors/skips, exact selected identities, runner0 and owned cleanup0. Construction increment only; full original225 remains pending.",
       "revision": "72051fbc1ed1e9a3282887b885dab4e966d59bd8",
       "artifact": "go/services/spar/qualification/evidence/idps-original/result.json"
+    },
+    {
+      "criterion": "quality",
+      "result": "pass",
+      "command": "Pinned Go1.26.9 checks incl race/vulnerability/license; unchanged original NameID golden and focused TTL/verdict/self-deletion tests; one unchanged original issuer update/delete test against exact Go Spar with Haskell peers. Strict one-name XML/no failures/errors/skips, runner0/owned cleanup0/no remaining resources. Construction increment only, signed login/SCIM/final225 still pending.",
+      "revision": "77b401df2d4bd7d21e7fdb98731cd7336dbe9750",
+      "artifact": "go/services/spar/qualification/evidence/idp-delete-original/result.json"
     }
   ],
   "review": null,
-  "handoff": "Progress: prior six original IdP/token cases passed at72051. Current increment implements exact Int32 TTL config/derived bounds, request/assertion/verdict CQL stores, NameID XML/Unicode user_v2 keys/legacy lookup migration/guarded deletion/paging, and public IdP delete/purge with own-IdP denial and Brig team filtering. Pinned Go checks, unchanged NameID golden and finite TTL/verdict/self-deletion tests pass. Next exact-source original empty-IdP issuer update/delete regression, then complete signed SAML login and SCIM users/groups. Uncommon email grammar/Unicode source-table differences remain validation gaps. Final225/trust/state/ops/switchback/image/selector remain incomplete; compatibility null."
+  "handoff": "Progress: source77b401df2d4bd7d21e7fdb98731cd7336dbe9750 adds request/assertion/verdict stores, exact native TTL rounding/bounds, NameID/user_v2/legacy migration/guarded deletion/paging and public IdP delete/purge. Pinned Go checks and original NameID golden/finite TTL/verdict/self-deletion negatives pass. One unchanged original issuer update/delete regression passes against exact Go Spar/Haskell peers, strict XML/names/hashes/runner0/cleanup0/no resources; prior six original IdP/token tests retained, not rerun. Bound-user purge awaits full signed-login/SCIM qualification. Next complete signed SAML login and metadata/initiate routes, then SCIM users/groups/internal cleanup. Uncommon email grammar/Unicode source-table differences remain finite validation gaps. Final225/trust/state/ops/switchback/image/selector incomplete; compatibility null. Two completed task-owned schemacheck test binaries archived losslessly with hash-verified gzip to recover Docker floor; original reports/source/available service artifacts untouched."
 }
