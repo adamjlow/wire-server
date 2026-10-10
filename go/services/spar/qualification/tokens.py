@@ -14,12 +14,13 @@ import runtime
 
 TOKEN_TESTS=['Spar.testSparCreateScimTokenNoName','Spar.testSparCreateScimTokenWithName']
 IDP_TESTS=TOKEN_TESTS+['Spar.testSparCreateScimTokenAssocImplicitly','Spar.testSparCreateTwoScimTokensForOneIdp','Spar.testCheckAdminGetTeamId','Spar.testCheckAdminGetTeamIdV7']
+LOGIN_TESTS=['Spar.testSparEmulateSPInitiatedLogin','Spar.testSparSPInitiatedLoginWithUtf8']
 
 def main():
-    parser=argparse.ArgumentParser();parser.add_argument('--suite',choices=('tokens','idps','delete'),default='tokens');args=parser.parse_args()
-    tests={'tokens':TOKEN_TESTS,'idps':IDP_TESTS,'delete':['Spar.IdPIssuerUpdate.testUpdateIdPIssuerThenDelete']}[args.suite]
+    parser=argparse.ArgumentParser();parser.add_argument('--suite',choices=('tokens','idps','delete','login'),default='tokens');args=parser.parse_args()
+    tests={'tokens':TOKEN_TESTS,'idps':IDP_TESTS,'delete':['Spar.IdPIssuerUpdate.testUpdateIdPIssuerThenDelete'],'login':LOGIN_TESTS}[args.suite]
     if os.getuid()!=65534 or os.environ.get('WIRE_E2E_DISPOSABLE')!='1':raise ValueError('owned nonroot disposable environment required')
-    output={'kind':'original-Go-Spar-token-tests' if args.suite=='tokens' else 'original-Go-Spar-'+args.suite+'-tests','result':'running','e2e_executed':False,'required_tests':tests,'scope':'Selected original IdP/token/delete construction tests only; full Spar and seven-Go qualification incomplete.'}
+    output={'kind':'original-Go-Spar-token-tests' if args.suite=='tokens' else 'original-Go-Spar-'+args.suite+'-tests','result':'running','e2e_executed':False,'required_tests':tests,'scope':'Selected original construction tests only; full Spar and seven-Go qualification incomplete.'}
     processes=[];logs=[];servers=[]
     try:
         if not set(tests).issubset(runner.discover('spar')):raise ValueError('original required names absent')

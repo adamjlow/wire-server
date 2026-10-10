@@ -83,6 +83,9 @@ func newHandler(c Config, store settingsStore) http.Handler {
 		if saml, ok := store.(samlRequestStore); ok && serveSAMLRequest(w, r, c, saml) {
 			return
 		}
+		if saml, ok := store.(samlFinalizeStore); ok && serveSAMLFinalize(w, r, c, saml, peers) {
+			return
+		}
 		if tokens, ok := store.(tokenStore); ok && serveTokens(w, r, c, tokens, peers) {
 			return
 		}

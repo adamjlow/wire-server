@@ -16,6 +16,10 @@ import (
 )
 
 func signedTestResponse(t *testing.T, bits int) (*etree.Document, *x509.Certificate) {
+	return signedTestResponseXML(t, bits, `<samlp:Response xmlns:samlp="`+protocolNS+`" xmlns:saml="`+assertionNS+`" ID="_response"><saml:Issuer>https://synthetic.example/idp</saml:Issuer><saml:Assertion ID="_assertion" Version="2.0"><saml:Issuer>https://synthetic.example/idp</saml:Issuer><saml:Subject><saml:NameID>synthetic-user</saml:NameID></saml:Subject> </saml:Assertion></samlp:Response>`)
+}
+
+func signedTestResponseXML(t *testing.T, bits int, source string) (*etree.Document, *x509.Certificate) {
 	t.Helper()
 	key, err := rsa.GenerateKey(rand.Reader, bits)
 	if err != nil {
@@ -31,7 +35,7 @@ func signedTestResponse(t *testing.T, bits int) (*etree.Document, *x509.Certific
 		t.Fatal(err)
 	}
 	doc := etree.NewDocument()
-	if err = doc.ReadFromString(`<samlp:Response xmlns:samlp="` + protocolNS + `" xmlns:saml="` + assertionNS + `" ID="_response"><saml:Issuer>https://synthetic.example/idp</saml:Issuer><saml:Assertion ID="_assertion" Version="2.0"><saml:Issuer>https://synthetic.example/idp</saml:Issuer><saml:Subject><saml:NameID>synthetic-user</saml:NameID></saml:Subject> </saml:Assertion></samlp:Response>`); err != nil {
+	if err = doc.ReadFromString(source); err != nil {
 		t.Fatal(err)
 	}
 	ctx, err := dsig.NewSigningContext(key, [][]byte{der})
