@@ -27,7 +27,9 @@ func decimal(s string) bool {
 	}
 	return true
 }
-func NewHandler(c Config) http.Handler {
+func NewHandler(c Config) http.Handler { return newHandler(c, nil) }
+
+func newHandler(c Config, store settingsStore) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		segments := strings.Split(strings.TrimPrefix(r.URL.Path, "/"), "/")
 		first := segments[0]
@@ -74,7 +76,10 @@ func NewHandler(c Config) http.Handler {
 			w.WriteHeader(http.StatusOK)
 			return
 		}
-		// This first construction slice has only health. Remaining source routes
+		if store != nil && serveSettings(w, r, store) {
+			return
+		}
+		// Remaining source routes
 		// are not successful placeholders and must be implemented before selection.
 		w.WriteHeader(http.StatusNotFound)
 	})
@@ -92,7 +97,7 @@ func Run(ctx context.Context, c Config) error {
 	if err != nil {
 		return errors.New("cannot bind Spar HTTP listener")
 	}
-	server := &http.Server{Handler: NewHandler(c), ReadHeaderTimeout: 30 * time.Second}
+	server := &http.Server{Handler: newHandler(c, cassandraStore{session: session}), ReadHeaderTimeout: 30 * time.Second}
 	stopped := make(chan error, 1)
 	go func() { stopped <- server.Serve(listener) }()
 	select {

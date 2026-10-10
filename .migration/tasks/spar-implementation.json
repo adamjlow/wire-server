@@ -52,5 +52,5 @@
     }
   ],
   "review": null,
-  "handoff": "Progress: native101 frozen baseline passes. Corrected early Go process at 9e209e02bdea478b84de16413c75c4e64e9e99b4 passes exact six HTTP/method/version/error responses, real schema23 startup, clean native/Go SIGTERM, runner0 and owned cleanup0/no resources. Full pinned Go checks pass. Original failed comparison retained. Entire service criterion remains incomplete: next implement actual IdP/SSO/SCIM handlers and persistent codecs/RPCs; final225/security gaps/operations/durable switchback/image/selector still required. Compatibility null. No host native rebuild/unit check or original Go Spar e2e pass claimed."
+  "handoff": "Progress: early native/Go process comparison passes. Implemented real persistent public SSO settings GET, internal nullable settings PUT with referenced IdP validation and native delete-then-insert order, internal SCIM user-info POST. Source certificate blobs are XML KeyInfo, not DER; decoder and negative input/entity tests added. Pinned Go checks pass; expanded actual native/Go process comparison next. Full SSO/IdP/SCIM, final225/gaps/operations/switchback/image/selector remain incomplete, compatibility null."
 }

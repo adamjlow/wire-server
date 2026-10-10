@@ -1,7 +1,7 @@
 # Optional Go Spar (under construction)
 
 This is an initial runnable configuration/Cassandra/schema23/health/lifecycle
-slice, not a selectable whole-service replacement. SSO/IdP/SCIM routes are not
+slice, not a selectable whole-service replacement. Complete SSO/IdP/SCIM behavior is not
 implemented yet; the frozen whole-service acceptance still applies. Haskell
 remains supported/default. No compatibility or deployment claim.
 
@@ -26,3 +26,5 @@ proof of complete SAML/SCIM/storage behaviour. Actual reference originals101 and
 the full contract remain in docs/go-migration/services/spar/.
 
 The corrected early comparison passed at source9e209e02bdea478b84de16413c75c4e64e9e99b4: six exact native/Go HTTP responses, real schema23 startup, clean SIGTERM and owned cleanup. qualification/evidence/ retains the initial failure and corrected pass with exact identities. This qualifies only the initial process behavior, not the remaining service.
+
+Persistent /sso/settings GET, /i/sso/settings PUT and /i/scim/userinfo/:id POST now use original Cassandra tables and query consistency. Setting an IdP checks its typed row first; certificate blobs use source XML KeyInfo, without imposing certificate validity-date policy. Missing SCIM metadata omits created_on. Expanded native/Go qualification is pending for these new routes.
