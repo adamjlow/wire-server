@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "id": "brig-inventory",
+  "title": "Inventory whole Brig boundary and reusable original tests",
+  "service": "brig",
+  "kind": "discovery",
+  "status": "queued",
+  "owner": null,
+  "branch": null,
+  "depends_on": [
+    "spar-completion"
+  ],
+  "write_paths": [
+    ".migration/tasks/brig-inventory.json",
+    "docs/go-migration/plans/brig.md",
+    "docs/go-migration/services/brig/inventory.md",
+    "docs/go-migration/services/brig/test-discovery.json",
+    "docs/go-migration/services/brig/inventory-review.md",
+    "changelog.d/5-internal/brig-inventory"
+  ],
+  "plan": "docs/go-migration/plans/brig.md",
+  "acceptance_criteria": [
+    {
+      "id": "inventory",
+      "description": "Map complete configured Brig API/state/security/operations boundary.",
+      "required_evidence": "Source-cited public/internal/federation/account/auth/client/prekey/MLS/connection/OAuth/provider/calling/team contracts, peers/queue/search/schema/config/lifecycle and inherited concerns; finite acceptance and rollback gaps identified."
+    },
+    {
+      "id": "tests",
+      "description": "Identify reusable original compiled and source tests with finite harness needs.",
+      "required_evidence": "Actual pinned nonroot network-none Docker original list/help and binary identities; source/compiled variants mapped, unavailable native checks explicit, concrete original baseline/selection/gap requirements established without claiming unrun passes."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": "Queued first Brig discovery; whole-service goal active, Haskell default, no candidate or test pass claim."
+}
