@@ -1,0 +1,85 @@
+{
+  "kind": "original-Go-Spar-remaining-routes-tests",
+  "result": "fail",
+  "e2e_executed": true,
+  "required_tests": [
+    "Spar.GetByEmail.testGetSsoCodeByEmailDisabledMultiIngress",
+    "Spar.GetByEmail.testGetSsoCodeByEmailDisabledRegular",
+    "Spar.GetByEmail.testGetSsoCodeByEmailNonSSOUser",
+    "Spar.GetByEmail.testGetSsoCodeByEmailRegular[requireexternalemailverification=false][idpscimtoken=false]",
+    "Spar.GetByEmail.testGetSsoCodeByEmailRegular[requireexternalemailverification=false][idpscimtoken=true]",
+    "Spar.GetByEmail.testGetSsoCodeByEmailRegular[requireexternalemailverification=true][idpscimtoken=false]",
+    "Spar.GetByEmail.testGetSsoCodeByEmailRegular[requireexternalemailverification=true][idpscimtoken=true]",
+    "Spar.GetByEmail.testGetSsoCodeByEmailWithMultiIngress[requireexternalemailverification=false][idpscimtoken=false]",
+    "Spar.GetByEmail.testGetSsoCodeByEmailWithMultiIngress[requireexternalemailverification=false][idpscimtoken=true]",
+    "Spar.GetByEmail.testGetSsoCodeByEmailWithMultiIngress[requireexternalemailverification=true][idpscimtoken=false]",
+    "Spar.GetByEmail.testGetSsoCodeByEmailWithMultiIngress[requireexternalemailverification=true][idpscimtoken=true]",
+    "Spar.testSparUserCreationInvitationTimeout",
+    "Spar.testTeamInvitationWhenScimInvitationExpired"
+  ],
+  "scope": "Selected original construction tests only; full Spar and seven-Go qualification incomplete.",
+  "implementations": {
+    "spar": {
+      "implementation": "go",
+      "path": "/candidate/spar",
+      "sha256": "b2f24f9fa55e6fcd87867797bc524e4c6ed95425f27323b5d95584f4d9ce1efe"
+    },
+    "wire-server-enterprise": {
+      "implementation": "haskell",
+      "path": "/nix/store/fcm9yzhyyc1p653a36fj1l5mw0znwip4-wire-server-enterprise/bin/wire-server-enterprise",
+      "sha256": "084c532621fd19cb229b884196f3e3ce59e96f3c34c92156499243952bb9fd4c"
+    },
+    "federator": {
+      "implementation": "haskell",
+      "path": "/nix/store/6p1c8hn9mwydnqjvb06kn17xmx8kagsl-federator/bin/federator",
+      "sha256": "51b35d27a2597e78fcd2e5b6107c8655ee686682f1f6361b3ff7f3243ea846a0"
+    },
+    "stern": {
+      "implementation": "haskell",
+      "path": "/nix/store/q34cnzy5f0q5fm2m32hq73gz9da0gy9y-stern/bin/stern",
+      "sha256": "3f2c71bf87baba43bfc9c97dc1f53b29e290b536c395c267f9b76a8ef04be7e7"
+    },
+    "background-worker": {
+      "implementation": "haskell",
+      "path": "/nix/store/16b8f2naixj573wx924avn2y36mn0yvv-background-worker/bin/background-worker",
+      "sha256": "985aab36d8e92baa59eb3f8da9851f7f2b7be35f201fe2cea63ddf395d350cb0"
+    },
+    "proxy": {
+      "implementation": "haskell",
+      "path": "/nix/store/abg25gzxyp9ni145za827254xcd9jk28-proxy/bin/proxy",
+      "sha256": "bb14b3b9ec6e365c6ba9b0a4a8f915619bd19a228b1a9c737ed5c0d7c3b04ecd"
+    },
+    "gundeck": {
+      "implementation": "haskell",
+      "path": "/nix/store/i387mq9ly376q2ccd9rmmm3z8hl4bgc0-gundeck/bin/gundeck",
+      "sha256": "ad4fa17a672fde3dbdb53bc029333b467cfdece669e24c1343dc30db7a7c4942"
+    },
+    "galley": {
+      "implementation": "haskell",
+      "path": "/nix/store/fbfpq5phd97caxsgjym3x7wpsif7pvx9-galley/bin/galley",
+      "sha256": "b4c0b3e23dee8006aeda611b6a80b6c6fd032176d96c028d3f41a4aa30d0f436"
+    },
+    "cargohold": {
+      "implementation": "haskell",
+      "path": "/nix/store/wwfbpmgsy8rr9jkv8h909hpxn3vp787z-cargohold/bin/cargohold",
+      "sha256": "566403eed45f5632cd5fe628a85003a9f454757c4ac2b836a99c832d9a5faf0b"
+    },
+    "cannon": {
+      "implementation": "haskell",
+      "path": "/nix/store/h7vy66kc4syr575k8mhnxfsw4ldn7cal-cannon/bin/cannon",
+      "sha256": "cbc200caf92757bb7909b82c73d942072eac557c0eab1ce755aedeb8bf5c705d"
+    },
+    "brig": {
+      "implementation": "haskell",
+      "path": "/nix/store/f6l2f0l8l2r6z9jbg937q96k6056iqfn-brig/bin/brig",
+      "sha256": "c45a40da63268712a7cacdbd884287fa3dc93cec179d70323d3f22f7d5cdf1ca"
+    }
+  },
+  "integration": {
+    "path": "/nix/store/6ci2j9g28xsp2g35p65a4gk3rjm45vha-integration/bin/integration",
+    "sha256": "56f56a8e0f8ffd24a11982f13385d41f4d92e238e6900bcbca1ddf7d21825f4a"
+  },
+  "process_exit_code": 1,
+  "error_category": "ValueError",
+  "error": "selected original execution failed"
+}

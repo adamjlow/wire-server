@@ -1,0 +1,26 @@
+{
+  "result": "fail",
+  "source_revision": "e7a5bdfd3caa3f8e4a76c671b36e0efb03f2615b",
+  "total": 13,
+  "passed": 7,
+  "failed": [
+    "Spar.GetByEmail.testGetSsoCodeByEmailDisabledMultiIngress",
+    "Spar.GetByEmail.testGetSsoCodeByEmailWithMultiIngress[requireexternalemailverification=false][idpscimtoken=false]",
+    "Spar.GetByEmail.testGetSsoCodeByEmailWithMultiIngress[requireexternalemailverification=false][idpscimtoken=true]",
+    "Spar.GetByEmail.testGetSsoCodeByEmailWithMultiIngress[requireexternalemailverification=true][idpscimtoken=false]",
+    "Spar.GetByEmail.testGetSsoCodeByEmailWithMultiIngress[requireexternalemailverification=true][idpscimtoken=true]",
+    "Spar.testSparUserCreationInvitationTimeout"
+  ],
+  "runner_exit_code": 1,
+  "cleanup_exit_code": 0,
+  "independent_post_cleanup": {
+    "containers": [],
+    "networks": [],
+    "volumes": []
+  },
+  "analysis": "Five multi-ingress cases fail during prior IdP creation. Source demonstrates mismatched JSON enum: candidate writes v2 whereas native Brig decoder requires WireIdPAPIV2. Correct only candidate encoding/decoding with native golden and notification regression. Invitation timeout failed during native Cannon WebSocket presence registration; logs show native Gundeck Redis MissingNodeException. No Haskell repair or assertion change; retain and rerun original against fresh owned environment.",
+  "controller_log": {
+    "path": "/home/operator/.cache/wire-migration/spar-20261010/remaining-routes-original/controller.log",
+    "sha256": "b5c4af135b612c1ed325d37bed0a80d874f5015c23819916ce0eadd18e1e1506"
+  }
+}

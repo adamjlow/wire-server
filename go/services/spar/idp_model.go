@@ -65,6 +65,42 @@ type idpConfig struct {
 	Extra    idpExtra    `json:"extraInfo"`
 }
 
+// Query/storage versions are v1/v2, but the native JSON enum has constructor
+// names. Brig decodes this representation for multi-ingress notifications.
+func (e idpExtra) MarshalJSON() ([]byte, error) {
+	type fields idpExtra
+	out := fields(e)
+	if e.Version != nil {
+		version := "WireIdPAPIV1"
+		if *e.Version == "v2" {
+			version = "WireIdPAPIV2"
+		}
+		out.Version = &version
+	}
+	return json.Marshal(out)
+}
+
+func (e *idpExtra) UnmarshalJSON(data []byte) error {
+	type fields idpExtra
+	var value fields
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	if value.Version != nil {
+		version := "v1"
+		switch *value.Version {
+		case "WireIdPAPIV1":
+		case "WireIdPAPIV2":
+			version = "v2"
+		default:
+			return &apiError{400, "bad-request", "Invalid IdP API version"}
+		}
+		value.Version = &version
+	}
+	*e = idpExtra(value)
+	return nil
+}
+
 func (i idpConfig) version() int {
 	if i.Extra.Version != nil && *i.Extra.Version == "v2" {
 		return 2

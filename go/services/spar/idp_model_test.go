@@ -19,6 +19,9 @@ func TestOriginalIdPGoldensRoundTrip(t *testing.T) {
 		if err = json.Unmarshal(encoded, &config); err != nil {
 			t.Fatal(err)
 		}
+		if name == "testObject_IdP_2.json" && config.version() != 2 {
+			t.Fatal("native JSON V2 enum lost its storage/query version")
+		}
 		actual, err := json.Marshal(config)
 		if err != nil {
 			t.Fatal(err)
