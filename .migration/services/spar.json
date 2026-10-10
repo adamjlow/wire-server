@@ -2,7 +2,7 @@
   "schema_version": 1,
   "service": "spar",
   "reference_path": "services/spar",
-  "stage": "implementing",
+  "stage": "verified",
   "oracle_paths": [
     "services/spar",
     "docs/go-migration/services/spar/contract.md",
@@ -17,7 +17,24 @@
     ],
     "plan": [
       "spar-inventory"
+    ],
+    "parity": [
+      "spar-verification"
+    ],
+    "security": [
+      "spar-verification"
+    ],
+    "operations": [
+      "spar-verification"
+    ],
+    "rollback": [
+      "spar-verification"
     ]
   },
-  "compatibility": null
+  "compatibility": {
+    "upstream_revision": "f6636ed53315fa7b0fc4c8aa39c0bb30c98b6d5e",
+    "reference_revision": "f6636ed53315fa7b0fc4c8aa39c0bb30c98b6d5e",
+    "candidate_revision": "40c1b2f896fe20d5d9aad4a7c90a815fcfa0e067",
+    "verification_task": "spar-verification"
+  }
 }
