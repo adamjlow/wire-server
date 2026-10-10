@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "id": "spar-implementation",
+  "title": "Spar implementation",
+  "service": "spar",
+  "kind": "implementation",
+  "status": "queued",
+  "owner": null,
+  "branch": null,
+  "depends_on": [
+    "spar-implementation-gates",
+    "go-security-patch-20261009"
+  ],
+  "write_paths": [
+    ".migration/tasks/spar-implementation.json",
+    "go/services/spar",
+    "docs/go-migration/plans/spar.md",
+    "changelog.d/5-internal/spar-implementation"
+  ],
+  "plan": "docs/go-migration/plans/spar.md",
+  "acceptance_criteria": [
+    {
+      "id": "service",
+      "description": "Implement entire configured Spar service contract, starting with a real native/Go process comparison.",
+      "required_evidence": "No runtime embedding/stubs for supported SAML/IdP/SCIM users/groups/tokens/internal paths; early config/health/version/error/lifecycle real reference comparison. Preserve API/schema/state/permission/cert/issuer/replay/cookie/legacy/v2 behaviour from frozen source."
+    },
+    {
+      "id": "quality",
+      "description": "Validate final exact Spar executable and finite supported matrix.",
+      "required_evidence": "Pinned Go format/tidy/verify/vet/unit/race/build/vulnerability/license; reviewed dependency trust boundaries and finite frozen gap/security/state tests. All225 original seven-Go/Haskell peer executions pass strict XML/names/no error/skip, exact selected artifact identities and mandatory owned cleanup. Retain failures/unrun native checks; no oracle weakening or speculative extra gates."
+    },
+    {
+      "id": "operations",
+      "description": "Demonstrate operational optional service and durable Haskell-Go-Haskell recovery.",
+      "required_evidence": "One predeclared finite concurrency/latency/RSS/CPU/counters and loaded shutdown smoke; actual same-state IdP/token/SCIM/group/mapping/pending-SAML/verdict/replay switchback. Exact trusted nonroot optional image/config/CA lifecycle; separately scoped optional image-only selector preserving RollingUpdate/defaults. Complete delegated same-author review, serious inherited concerns documented without repairing Haskell/security policy."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": "Actual original101 all-Haskell baseline and source-pinned whole contract complete; reuse exact proof. Go candidate remains unimplemented/unqualified."
+}

@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "id": "spar-implementation-gates",
+  "title": "Spar implementation gates",
+  "service": "framework",
+  "kind": "framework",
+  "status": "queued",
+  "owner": null,
+  "branch": null,
+  "depends_on": [
+    "spar-inventory",
+    "spar-contract"
+  ],
+  "write_paths": [
+    ".migration/tasks/spar-implementation-gates.json",
+    ".migration/services/spar.json"
+  ],
+  "plan": "docs/go-migration/plans/spar.md",
+  "acceptance_criteria": [
+    {
+      "id": "gates",
+      "description": "Publish legal contracted then implementing Spar gates without qualification.",
+      "required_evidence": "Completed discovery/contract source and original101 baseline, adjacent inventoried\u2192contracted\u2192implementing, immutable historical gates and compatibility null."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": "Actual original101 all-Haskell baseline and source-pinned whole contract complete; reuse exact proof. Go candidate remains unimplemented/unqualified."
+}
