@@ -1,0 +1,14 @@
+{
+  "Core.hs": {
+    "url": "https://raw.githubusercontent.com/snoyberg/http-client/http-client-0.7.19/http-client/Network/HTTP/Client/Core.hs",
+    "sha256": "eaff191a27a1640582cde8407fb3b43ccaa6242ba81a6697328cfae34732af93"
+  },
+  "Manager.hs": {
+    "url": "https://raw.githubusercontent.com/snoyberg/http-client/http-client-0.7.19/http-client/Network/HTTP/Client/Manager.hs",
+    "sha256": "dffb7a67b0c1b7ea863b4d2e01fb42c2281b8e6a9b9b5ae9cc94b1df505547fc"
+  },
+  "Proxy.hs": {
+    "url": "https://raw.githubusercontent.com/snoyberg/http-client/http-client-0.7.19/http-client/Network/HTTP/Proxy.hs",
+    "sha256": "25248d716af0edadcdc33b3dafd96b0029c5a68f17f697c1bfa99ae58419d4d9"
+  }
+}

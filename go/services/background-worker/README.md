@@ -5,7 +5,10 @@ Haskell remains the supported default. The latest unchanged original worker suit
 passes **46/47** on clean source12107801e with Haskell peers; all adminless,
 meetings, handle-dispute and reindex cases pass. Main user migration still fails
 phase1 SCIM deletion GET500 instead404 before migration activation. It remains
-open, with no baseline waiver. [Exact monitored results](../../../docs/go-migration/qualifications/background-worker-harness-fd/README.md)
+retained, with no baseline waiver. The subsequent [matched original user pair](evidence/user-reference-pair-20261010/)
+passes2/2 with both the Haskell and unchanged Go workers, including all five
+storage phases. The wider-suite SCIM failure does not reproduce in that pair.
+[Exact monitored results](../../../docs/go-migration/qualifications/background-worker-harness-fd/README.md)
 retain every assertion and owned cleanup. Final six-Go124, operations, durable
 switchback and optional patched-OpenSSL image/selector remain pending.
 
@@ -130,3 +133,10 @@ and a real finite-DHE fixture with patched OpenSSL3.5.9 built in Docker. The opt
 image must supply a supported patched `openssl` on its trusted PATH and retain the
 Apache2.0 license; absent CLI fails the callback. Final image/mixed-stack/lifecycle
 qualification is still outstanding. No backend credentials are passed to the helper.
+
+[Ordinary HTTP construction receipts](evidence/http-proxy-replay-20261010/)
+record Haskell-compatible proxy snapshots and recovery from incomplete headers
+on reused connections. Fresh, one-shot chunked, invalid-status, timeout and
+cancellation behavior remain guarded. Full pinned Go checks pass. This does not
+qualify later executable/image or final mixed-stack/operations/switchback work;
+remaining ordinary-parser audit is explicit in the plan and task handoff.

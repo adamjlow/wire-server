@@ -1,0 +1,1 @@
+<?xml version='1.0' ?><testsuites name="wire-server"><testsuite name="integration" tests="2" failures="0" time="69.682684173"><testcase name="Migration.User.testReindexingUsersDuringMigration" time="15.698135061" /><testcase name="Migration.User.testUserMigrationToPostgres" time="53.984549112" /></testsuite></testsuites>

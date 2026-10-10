@@ -1,0 +1,8 @@
+{
+  "project": "wire-e2e-dbd811b8472c46c79e6380981039a83e",
+  "controller_exit_code": 0,
+  "elapsed_seconds": 208.721,
+  "monitor_file": "/home/operator/.cache/wire-migration/background-worker-20261009/go-users-monitor.jsonl",
+  "sample_interval_seconds": 5,
+  "monitoring": "readonly /proc and cgroup; no application environment or command lines"
+}

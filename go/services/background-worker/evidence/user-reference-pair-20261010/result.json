@@ -1,0 +1,67 @@
+{
+  "harness_revision": "6b0587b63afdbdf1661ad2b27eff714945c97e5c",
+  "candidate_revision": "12107801eab254cc61c87b88b8f9d2291cbd0558",
+  "comparison": {
+    "haskell": {
+      "result": "pass",
+      "tests": 2,
+      "worker": {
+        "implementation": "haskell",
+        "path": "/nix/store/16b8f2naixj573wx924avn2y36mn0yvv-background-worker/bin/background-worker",
+        "sha256": "985aab36d8e92baa59eb3f8da9851f7f2b7be35f201fe2cea63ddf395d350cb0"
+      },
+      "cleanup": {
+        "containers": [],
+        "networks": [],
+        "volumes": []
+      },
+      "external_logs": {
+        "baseline-background-worker-users.log": {
+          "path": "/home/operator/.cache/wire-migration/background-worker-20261009/haskell-users-reference/baseline-background-worker-users.log",
+          "sha256": "4238467d0991a35a6695a73267fe33b2f9272e41ffbfb2cc88b8390a02dcc95e"
+        },
+        "dependencies.log": {
+          "path": "/home/operator/.cache/wire-migration/background-worker-20261009/haskell-users-reference/dependencies.log",
+          "sha256": "d04c822836b1c095fc87ad461c166c067c544c63d836c6a209c53d01b00b7751"
+        }
+      },
+      "runner_image": "sha256:d0301bbb18ca37904b0c9693725acf6d3ab19b4203f8bda23be3508aabf16f8e",
+      "fixtures_sha256": {
+        "fixtures/configs.json": "8cc34c41cc248ae804d822a60fb610b0adead84c3e79663eb33243ef70c99876",
+        "fixtures/integration.json": "d8834dad54e1f851e689ac00691cd527aac69e0e9ce00baf149835433812c73c",
+        "fixtures/peers.json": "ca8438ea9464138dc0c75868b62eb8b12113343dada8336524c3ea467dd3a490"
+      }
+    },
+    "go": {
+      "result": "pass",
+      "tests": 2,
+      "worker": {
+        "implementation": "go",
+        "path": "/candidate/background-worker",
+        "sha256": "ea1e1ef8c5107ccf9a9aaa7cfaa56d7ae5a92d7b494a29db48b6a1d1353c97ab"
+      },
+      "cleanup": {
+        "containers": [],
+        "networks": [],
+        "volumes": []
+      },
+      "external_logs": {
+        "baseline-background-worker-users.log": {
+          "path": "/home/operator/.cache/wire-migration/background-worker-20261009/go-users-fd8192/baseline-background-worker-users.log",
+          "sha256": "aba10ae8dc8cb26fefc51f3dfc638dda54a6661e736a4a8c66ba692ea241c951"
+        },
+        "dependencies.log": {
+          "path": "/home/operator/.cache/wire-migration/background-worker-20261009/go-users-fd8192/dependencies.log",
+          "sha256": "5f0d5cac27502fafe6e37be827a575e013bd54d43d95707fa6359ffccbbcc202"
+        }
+      },
+      "runner_image": "sha256:d0301bbb18ca37904b0c9693725acf6d3ab19b4203f8bda23be3508aabf16f8e",
+      "fixtures_sha256": {
+        "fixtures/configs.json": "8cc34c41cc248ae804d822a60fb610b0adead84c3e79663eb33243ef70c99876",
+        "fixtures/integration.json": "d8834dad54e1f851e689ac00691cd527aac69e0e9ce00baf149835433812c73c",
+        "fixtures/peers.json": "ca8438ea9464138dc0c75868b62eb8b12113343dada8336524c3ea467dd3a490"
+      }
+    }
+  },
+  "interpretation": "Both original tests pass, including main five-phase user copy/update/delete/SCIM/SSO/bot and reindexing. Whole47 phase1 SCIM500 does not reproduce in this matched pair. This does not waive that failure or qualify the final sixGo124/operations/switchback/image."
+}

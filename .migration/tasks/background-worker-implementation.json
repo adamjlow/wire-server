@@ -78,8 +78,15 @@
       "command": "Same clean12107801e candidate, bounded runner/DefaultSelector fixture: original47 has46 pass,one retained phase1 SCIM deletion GET500 instead404,no errors/skips; all adminless/meetings/handles/reindex pass. ObservedFDpeak1702 exceedsold1024;cleanup0/noownedresources. No baseline waiver or final qualification.",
       "revision": "12107801eab254cc61c87b88b8f9d2291cbd0558",
       "artifact": "docs/go-migration/qualifications/background-worker-harness-fd/result.json"
+    },
+    {
+      "criterion": "service",
+      "result": "blocked",
+      "command": "Matched repaired Docker originalusers2: both allHaskell and unchanged12107801e Go/Haskell peers pass2/2, strictXML no failure/error/skip; mainuserallfivephases and reindexpass, process/controller/cleanup0 and noownedresources. Priorwhole47SCIM500 retainednotreproduced/no waiver; final124/ops/switchback/image stillpending.",
+      "revision": "12107801eab254cc61c87b88b8f9d2291cbd0558",
+      "artifact": "go/services/background-worker/evidence/user-reference-pair-20261010/result.json"
     }
   ],
   "review": null,
-  "handoff": "Docs reconciled to latest measured46/47 on unchanged clean12107801e candidate, staticSHAea1e1ef8c5107ccf9a9aaa7cfaa56d7ae5a92d7b494a29db48b6a1d1353c97ab. Scoped reviewed runner fixture merged: nofile8192/DefaultSelector, actualDocker regression passes, host24/migration32 pass. Current original47: all23 adminless,meetings,handles,reindex and other cases pass; mainuser fails phase1 SCIM GET500 expected404 at User.hs194/runPhase1line139 with migrateUsersfalse/Cassandra. EarlierSCIMfailure remainsnotwaived; establish matching nativeworker reference beforeattribution. FDpeak1702/threads570/memory1.57GB/PID1205/noobservedOOMorPIDevents;controller2/runner1/cleanup0,noownedresources,monitor80214terminal. Exactfixture/run/XML/review in docs/go-migration/qualifications/background-worker-harness-fd. Go source unchanged/all checks reusable. Ordinaryproxy/reused-replay/headergap and final sixGo124/ops/durable Haskell-Go-Haskell/packaged patchedOpenSSL/image/selector/finalreview stillrequired. Goal/task active, compatibilitynull,Haskelldefault,nopush/deploy."
+  "handoff": "Matched repaired runner originalusers2: allHaskell2/2 and unchanged12107801e Go/Haskell2/2, allfiveuserphases/reindex, cleanups0/noownedresources. Retain previouswhole47SCIM500 as intermittentunattributednotwaived. Productioncode now proxy/reusedHTTP correction with fullGo1.26.9 checks0; focusedrace confirms final malformed-status negative test change, evidence/http-proxy-replay-20261010. New source needs cleanstaticbinary exactreceipt/final sixGo124 usingfivepatchedqualifiedpeers. Ordinaryparser audit4096line/100fields/invalid-line handling remains explicit (existing gap, no acceptance changes or byteidentityclaim). After source settled: one declared ops smoke, durableHaskell-Go-Haskell sameRabbit/PG/Cass withlease/job/migrationcontinuation, packagepatchedOpenSSL3.5.9CLI+license/CA in nonroot image, separately scopedselector, finalsameauthorreview. Sessions55809,70257,11624,69987terminal; no ownedresources. Goal/taskactive, compatibilitynull,Haskelldefault,nopush/deploy."
 }

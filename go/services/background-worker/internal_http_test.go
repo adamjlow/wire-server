@@ -8,12 +8,20 @@ import (
 	"net"
 	"net/http"
 	"net/http/httptest"
+	"strings"
+	"sync/atomic"
 	"testing"
 	"time"
 )
 
 func TestInternalHTTPHeadersTimeoutWithoutBodyDeadline(t *testing.T) {
-	transport := newInternalHTTPTransport()
+	t.Setenv("http_proxy", "")
+	t.Setenv("https_proxy", "")
+	t.Setenv("no_proxy", "")
+	transport, err := newInternalHTTPTransport()
+	if err != nil {
+		t.Fatal(err)
+	}
 	if transport.budget != 30*time.Second {
 		t.Fatal("native manager default timeout changed")
 	}
@@ -83,4 +91,82 @@ func TestInternalHTTPHeadersTimeoutWithoutBodyDeadline(t *testing.T) {
 			t.Fatal("caller cancellation was detached from response body")
 		}
 	})
+}
+
+func TestInternalHTTPReusedIncompleteHeadersAndNoUnsafeReplay(t *testing.T) {
+	for _, test := range []struct {
+		name                     string
+		warm, oneShot, malformed bool
+		wantSuccess              bool
+	}{
+		{"reused-incomplete-headers", true, false, false, true},
+		{"fresh-incomplete-headers", false, false, false, false},
+		{"one-shot-push", true, true, false, false},
+		{"malformed-status-line", true, false, true, false},
+	} {
+		t.Run(test.name, func(t *testing.T) {
+			t.Setenv("http_proxy", "")
+			t.Setenv("https_proxy", "")
+			t.Setenv("no_proxy", "")
+			var calls atomic.Int32
+			failCall := int32(1)
+			if test.warm {
+				failCall = 2
+			}
+			server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+				_, _ = io.Copy(io.Discard, r.Body)
+				if calls.Add(1) != failCall {
+					_, _ = io.WriteString(w, "ok")
+					return
+				}
+				connection, _, err := w.(http.Hijacker).Hijack()
+				if err != nil {
+					t.Error(err)
+					return
+				}
+				defer connection.Close()
+				if test.malformed {
+					_, _ = io.WriteString(connection, "not HTTP\r\n\r\n")
+				} else {
+					_, _ = io.WriteString(connection, "HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n")
+				}
+			}))
+			defer server.Close()
+			transport, err := newInternalHTTPTransport()
+			if err != nil {
+				t.Fatal(err)
+			}
+			defer transport.CloseIdleConnections()
+			client := &http.Client{Transport: transport}
+			if test.warm {
+				request, _ := http.NewRequestWithContext(t.Context(), "GET", server.URL, nil)
+				response, err := client.Do(request)
+				if err != nil {
+					t.Fatal(err)
+				}
+				_, _ = io.Copy(io.Discard, response.Body)
+				response.Body.Close()
+			}
+			request, _ := http.NewRequestWithContext(t.Context(), "GET", server.URL, nil)
+			if test.oneShot {
+				request, _ = http.NewRequestWithContext(t.Context(), "POST", server.URL, io.NopCloser(strings.NewReader("synthetic")))
+				request.ContentLength = -1
+			}
+			response, err := client.Do(request)
+			if response != nil {
+				_, _ = io.Copy(io.Discard, response.Body)
+				response.Body.Close()
+			}
+			if (err == nil) != test.wantSuccess {
+				t.Fatalf("success=%t, expected=%t", err == nil, test.wantSuccess)
+			}
+			wantCalls := failCall
+			if test.wantSuccess {
+				wantCalls++
+			}
+			if calls.Load() != wantCalls {
+				t.Fatal("fresh, malformed or one-shot request replayed incorrectly")
+			}
+		})
+	}
 }

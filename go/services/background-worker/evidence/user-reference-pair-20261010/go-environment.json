@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "project": "wire-e2e-dbd811b8472c46c79e6380981039a83e",
+  "source_revision": "6b0587b63afdbdf1661ad2b27eff714945c97e5c",
+  "runner_image_id": "sha256:d0301bbb18ca37904b0c9693725acf6d3ab19b4203f8bda23be3508aabf16f8e",
+  "runner_revision": "02fc9148aacd53b7bff23872c9f9d42f921ca707",
+  "candidate": null,
+  "peer_candidates": {
+    "background-worker": {
+      "path": "/home/operator/.cache/wire-migration/background-worker-20261009/current-original47-worker",
+      "sha256": "ea1e1ef8c5107ccf9a9aaa7cfaa56d7ae5a92d7b494a29db48b6a1d1353c97ab",
+      "source_revision": "12107801eab254cc61c87b88b8f9d2291cbd0558"
+    }
+  },
+  "result": "pass",
+  "e2e_executed": true,
+  "compose_sha256": "96da39b2acb8a6e67007c6f4b12a310497e5851213b9a15409766148d1cdace8",
+  "files_sha256": {
+    "fixtures/configs.json": "8cc34c41cc248ae804d822a60fb610b0adead84c3e79663eb33243ef70c99876",
+    "fixtures/integration.json": "d8834dad54e1f851e689ac00691cd527aac69e0e9ce00baf149835433812c73c",
+    "fixtures/peers.json": "ca8438ea9464138dc0c75868b62eb8b12113343dada8336524c3ea467dd3a490"
+  },
+  "dependencies": {
+    "fake_dynamodb": "quay.io/wire/dynamodb_local@sha256:e092d4b32889277f9dc0954bf99caaa216bdb621e399d460ac396e41c8c1a9f1",
+    "fake_sqs": "softwaremill/elasticmq-native@sha256:32d4b42a1f1fd5d311d2f46e388587c87b297364df3d25cc807f1dd361df1153",
+    "fake_localstack": "quay.io/wire/localstack@sha256:544be04ed93def3e636cc96550f262c1c8ac7f4d40e17b7c76583590a26e78d3",
+    "fake_s3": "dxflrs/garage@sha256:9c96caa2612d3411acc5b0e6701fb238dbfba33e533a6d7d3d811a4b12d0d020",
+    "redis-master": "redis@sha256:29e8589c3f9ba699b5f7aa4b3c7733c58852a3626439e619aa0ee78de08c6ca0",
+    "elasticsearch": "elasticsearch@sha256:deda76957c8cacc5dbf0d535fd14fe365f37d839813099bc32f26390a5e232dc",
+    "postgres": "postgres@sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24",
+    "cassandra": "cassandra@sha256:dad4cd7ee4281df4e96944a1faebfebd2e50ee19a9f0a1d42ac0bb17c820dd74",
+    "rabbitmq": "rabbitmq@sha256:5cbd7145b0306399ad68422c3350b6cbd1bb95704b39f5896480e5b6d4238a04",
+    "coredns": "coredns/coredns@sha256:6e5a02c21641597998b4be7cb5eb1e7b02c0d8d23cce4dd09f4682d463798890",
+    "dns-server": "technitium/dns-server@sha256:1045db38fd2f2e4d9578f9168b7eb4862575469ed0ffc79e03f36bdc772a93b5",
+    "redis-cluster": "redis@sha256:29e8589c3f9ba699b5f7aa4b3c7733c58852a3626439e619aa0ee78de08c6ca0",
+    "redis-node-1": "redis@sha256:29e8589c3f9ba699b5f7aa4b3c7733c58852a3626439e619aa0ee78de08c6ca0",
+    "redis-node-2": "redis@sha256:29e8589c3f9ba699b5f7aa4b3c7733c58852a3626439e619aa0ee78de08c6ca0",
+    "redis-node-3": "redis@sha256:29e8589c3f9ba699b5f7aa4b3c7733c58852a3626439e619aa0ee78de08c6ca0",
+    "redis-node-4": "redis@sha256:29e8589c3f9ba699b5f7aa4b3c7733c58852a3626439e619aa0ee78de08c6ca0",
+    "redis-node-5": "redis@sha256:29e8589c3f9ba699b5f7aa4b3c7733c58852a3626439e619aa0ee78de08c6ca0",
+    "redis-node-6": "redis@sha256:29e8589c3f9ba699b5f7aa4b3c7733c58852a3626439e619aa0ee78de08c6ca0"
+  },
+  "process_exit_code": 0,
+  "service": "background-worker-users",
+  "cleanup_exit_code": 0
+}

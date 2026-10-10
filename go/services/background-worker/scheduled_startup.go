@@ -16,7 +16,11 @@ func (s *Service) prepareScheduled(ctx context.Context) (*scheduledRuntime, func
 	var bots *externalBotDelivery
 	queue := &scheduledNotificationQueue{Service: s, ready: make(chan struct{})}
 	botCtx, stopBots := context.WithCancel(context.WithoutCancel(ctx))
-	ordinaryTransport := newInternalHTTPTransport()
+	ordinaryTransport, err := newInternalHTTPTransport()
+	if err != nil {
+		stopBots()
+		return nil, nil, err
+	}
 	ordinary := &http.Client{Transport: ordinaryTransport}
 	federation := notificationClient()
 	cleanup := func() {
@@ -40,7 +44,6 @@ func (s *Service) prepareScheduled(ctx context.Context) (*scheduledRuntime, func
 	if err := runScheduledSchema(ctx, s.Config.PostgresPool, s.Galley); err != nil {
 		return fail(err)
 	}
-	var err error
 	galley, err = openCassandra(s.Galley.Cassandra)
 	if err != nil {
 		return fail(err)

@@ -13,7 +13,10 @@ func (s *Service) runJobs(ctx context.Context) {
 	var galley, brig *gocql.Session
 	var postgres *postgresStore
 	var bots *externalBotDelivery
-	transport := newInternalHTTPTransport()
+	transport, err := newInternalHTTPTransport()
+	if err != nil {
+		return
+	}
 	defer transport.CloseIdleConnections()
 	defer func() {
 		s.mark(2, false)

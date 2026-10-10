@@ -1,0 +1,8 @@
+{
+  "project": "wire-e2e-cd6808a7baca4c7ebf4508a3ead75596",
+  "controller_exit_code": 0,
+  "elapsed_seconds": 214.165,
+  "monitor_file": "/home/operator/.cache/wire-migration/background-worker-20261009/haskell-users-monitor.jsonl",
+  "sample_interval_seconds": 5,
+  "monitoring": "readonly /proc and cgroup; no application environment or command lines"
+}

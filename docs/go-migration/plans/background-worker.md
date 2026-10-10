@@ -27,8 +27,9 @@ retain all 47 assertions, no errors/skips, and successful cleanup with no owned
 resources remaining. All 23 adminless cases, meetings cleanup, other migrations,
 handle disputes and reindexing pass. Main user migration still fails phase1:
 SCIM deletion GET returns500 instead404 while migrateUsersfalse/Cassandra is
-selected. This repeats the retained pre-enable failure; it is not waived or
-attributed to Haskell without a matching native-worker reference run.
+selected. This retained failure is not waived. A subsequent matched originalusers2 pair
+passes2/2 on both Haskell and unchanged Go12107801e, including all five phases;
+the wider47 failure does not reproduce and remains unattributed.
 
 The separately reviewed Docker fixture repair gives only the runner a bounded
 8192 descriptor ceiling and high-FD selector. Measured runner demand reaches1702
@@ -37,9 +38,10 @@ FDs, exceeding the prior1024 ceiling. No observed OOM/PID-limit events. The prev
 individual historical causality is unproved without old resource measurements.
 
 Goal and implementation task remain active; Haskell is supported/default and
-compatibility remains null. Next establish the matching reference behavior for
-the SCIM failure, resolve concrete ordinary HTTP proxy/reused-connection gaps,
-then validate the exact final six-Go124, bounded operations, durable
+compatibility remains null. The matching original users2 comparison passes on
+both implementations. Ordinary proxy/reused incomplete-header behavior is now
+corrected with Go checks; the remaining parser audit is explicit below. Next
+validate the settled final executable against six-Go124, bounded operations, durable
 Haskell-Go-Haskell switchback and optional patched-OpenSSL image/selector.
 Only the final passing acceptance permits whole-service approval/availability.
 
@@ -519,3 +521,17 @@ reproduces caught EMFILE/EOF. Actual run high-water was not captured, so attribu
 is unproven. Next correct the known fixture descriptor/selector limitation under a
 separate harness task and monitor a measured rerun without changing original tests.
 This does not supersede unresolved old failures or qualify the complete service.
+
+The [matched original user comparison](../../../go/services/background-worker/evidence/user-reference-pair-20261010/)
+passes2/2 first with all Haskell, then with unchanged12107801e Go worker/Haskell
+peers, including all five user phases and reindexing. Same runner/fixtures,
+strict XML and successful owned cleanup. Wider47 SCIM500 does not reproduce in
+this pair; retained failed runs are not waived. Enabled user migration now has
+actual original-test evidence for that executable, not just component checks.
+
+[Ordinary proxy/reused-connection construction](../../../go/services/background-worker/evidence/http-proxy-replay-20261010/)
+now preserves environment proxy snapshot/domain rules, credential-free startup
+validation and reused incomplete-header recovery. Fresh/status/one-shot/body/
+cancellation negatives pass. Full Go checks pass; remaining ordinary parser audit
+is explicit. Final mixed-stack124, operations, durable switchback and patched
+OpenSSL image/selector are still required before whole-service qualification.
