@@ -1,0 +1,1396 @@
+{
+  "reference_revision": "f6636ed53315fa7b0fc4c8aa39c0bb30c98b6d5e",
+  "purpose": "Source Named identifiers with locations, supplemented by frozen root/imported route schemas. Not parsed HTTP routes or a compiled coverage/pass claim.",
+  "entries": [
+    {
+      "name": "domain-registration-lock",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig/EnterpriseLogin.hs",
+      "line": 30
+    },
+    {
+      "name": "domain-registration-unlock",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig/EnterpriseLogin.hs",
+      "line": 41
+    },
+    {
+      "name": "domain-registration-pre-authorize",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig/EnterpriseLogin.hs",
+      "line": 53
+    },
+    {
+      "name": "domain-registration-unauthorize",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig/EnterpriseLogin.hs",
+      "line": 67
+    },
+    {
+      "name": "domain-registration-update",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig/EnterpriseLogin.hs",
+      "line": 79
+    },
+    {
+      "name": "domain-registration-delete",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig/EnterpriseLogin.hs",
+      "line": 91
+    },
+    {
+      "name": "domain-registration-get",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig/EnterpriseLogin.hs",
+      "line": 101
+    },
+    {
+      "name": "create-oauth-client",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig/OAuth.hs",
+      "line": 32
+    },
+    {
+      "name": "i-get-oauth-client",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig/OAuth.hs",
+      "line": 41
+    },
+    {
+      "name": "update-oauth-client",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig/OAuth.hs",
+      "line": 51
+    },
+    {
+      "name": "delete-oauth-client",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig/OAuth.hs",
+      "line": 62
+    },
+    {
+      "name": "indexRefresh",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig/SearchIndex.hs",
+      "line": 27
+    },
+    {
+      "name": "update-search-index",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig/SearchIndex.hs",
+      "line": 34
+    },
+    {
+      "name": "ejpd-request",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 204
+    },
+    {
+      "name": "i-get-accounts-by",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 275
+    },
+    {
+      "name": "i-create-group-full",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 285
+    },
+    {
+      "name": "i-get-group",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 295
+    },
+    {
+      "name": "i-get-groups",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 306
+    },
+    {
+      "name": "i-update-group",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 319
+    },
+    {
+      "name": "i-delete-group-managed",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 328
+    },
+    {
+      "name": "get-account-conference-calling-config",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 340
+    },
+    {
+      "name": "i-put-account-conference-calling-config",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 341
+    },
+    {
+      "name": "i-delete-account-conference-calling-config",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 342
+    },
+    {
+      "name": "i-get-all-connections-unqualified",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 343
+    },
+    {
+      "name": "i-get-all-connections",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 344
+    },
+    {
+      "name": "createUserNoVerify",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 345
+    },
+    {
+      "name": "createUserNoVerifySpar",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 354
+    },
+    {
+      "name": "putSelfEmail",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 361
+    },
+    {
+      "name": "iDeleteUser",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 399
+    },
+    {
+      "name": "iPutUserStatus",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 415
+    },
+    {
+      "name": "iGetUserStatus",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 424
+    },
+    {
+      "name": "iGetUsersByVariousKeys",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 432
+    },
+    {
+      "name": "iGetUserContacts",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 447
+    },
+    {
+      "name": "iGetUserActivationCode",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 454
+    },
+    {
+      "name": "iGetUserPasswordResetCode",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 461
+    },
+    {
+      "name": "iRevokeIdentity",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 468
+    },
+    {
+      "name": "iHeadBlacklist",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 476
+    },
+    {
+      "name": "iDeleteBlacklist",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 489
+    },
+    {
+      "name": "iPostBlacklist",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 496
+    },
+    {
+      "name": "iPutUserSsoId",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 503
+    },
+    {
+      "name": "iDeleteUserSsoId",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 517
+    },
+    {
+      "name": "iPutManagedBy",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 530
+    },
+    {
+      "name": "iDeletePendingEmailUpdate",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 538
+    },
+    {
+      "name": "iPutRichInfo",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 551
+    },
+    {
+      "name": "iPutHandle",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 559
+    },
+    {
+      "name": "iPutUserName",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 567
+    },
+    {
+      "name": "iGetRichInfo",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 575
+    },
+    {
+      "name": "iHeadHandle",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 582
+    },
+    {
+      "name": "iConnectionUpdate",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 595
+    },
+    {
+      "name": "iListClients",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 602
+    },
+    {
+      "name": "iListClientsFull",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 608
+    },
+    {
+      "name": "iAddClient",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 615
+    },
+    {
+      "name": "iLegalholdAddClient",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 628
+    },
+    {
+      "name": "iLegalholdDeleteClient",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 640
+    },
+    {
+      "name": "get-mls-clients",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 678
+    },
+    {
+      "name": "get-mls-client",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 690
+    },
+    {
+      "name": "get-verification-code",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 705
+    },
+    {
+      "name": "send-idp-changed-email",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 738
+    },
+    {
+      "name": "i-delete-app",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 748
+    },
+    {
+      "name": "i-get-app-ids",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 758
+    },
+    {
+      "name": "get-status",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 767
+    },
+    {
+      "name": "updateSearchVisibilityInbound",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 775
+    },
+    {
+      "name": "get-invitation-by-email",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 789
+    },
+    {
+      "name": "get-invitation-code",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 799
+    },
+    {
+      "name": "suspend-team",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 818
+    },
+    {
+      "name": "unsuspend-team",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 829
+    },
+    {
+      "name": "team-size",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 840
+    },
+    {
+      "name": "create-invitations-via-scim",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 849
+    },
+    {
+      "name": "i-update-user-locale",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 859
+    },
+    {
+      "name": "i-delete-user-locale",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 860
+    },
+    {
+      "name": "i-get-default-locale",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 861
+    },
+    {
+      "name": "get-user-export-data",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 862
+    },
+    {
+      "name": "i-check-admin-get-team-id",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 870
+    },
+    {
+      "name": "update-client-last-active",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 903
+    },
+    {
+      "name": "legalhold-login",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 914
+    },
+    {
+      "name": "sso-login",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 920
+    },
+    {
+      "name": "login-code",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 927
+    },
+    {
+      "name": "reauthenticate",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 934
+    },
+    {
+      "name": "add-federation-remotes",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 947
+    },
+    {
+      "name": "get-federation-remotes",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 955
+    },
+    {
+      "name": "update-federation-remotes",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 962
+    },
+    {
+      "name": "add-federation-remote-team",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 971
+    },
+    {
+      "name": "get-federation-remote-teams",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 982
+    },
+    {
+      "name": "delete-federation-remote-team",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 992
+    },
+    {
+      "name": "get-provider-activation-code",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 1005
+    },
+    {
+      "name": "get-provider-password-reset-code",
+      "source": "libs/wire-api/src/Wire/API/Routes/Internal/Brig.hs",
+      "line": 1013
+    },
+    {
+      "name": "add-bot@v6",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig/Bot.hs",
+      "line": 45
+    },
+    {
+      "name": "add-bot",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig/Bot.hs",
+      "line": 61
+    },
+    {
+      "name": "remove-bot@v6",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig/Bot.hs",
+      "line": 77
+    },
+    {
+      "name": "remove-bot",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig/Bot.hs",
+      "line": 91
+    },
+    {
+      "name": "bot-get-self",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig/Bot.hs",
+      "line": 105
+    },
+    {
+      "name": "bot-delete-self",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig/Bot.hs",
+      "line": 115
+    },
+    {
+      "name": "bot-list-prekeys",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig/Bot.hs",
+      "line": 126
+    },
+    {
+      "name": "bot-update-prekeys",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig/Bot.hs",
+      "line": 136
+    },
+    {
+      "name": "bot-get-client@v6",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig/Bot.hs",
+      "line": 148
+    },
+    {
+      "name": "bot-get-client@v7",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig/Bot.hs",
+      "line": 165
+    },
+    {
+      "name": "bot-get-client",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig/Bot.hs",
+      "line": 183
+    },
+    {
+      "name": "bot-claim-users-prekeys",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig/Bot.hs",
+      "line": 200
+    },
+    {
+      "name": "bot-list-users",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig/Bot.hs",
+      "line": 214
+    },
+    {
+      "name": "bot-get-user-clients",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig/Bot.hs",
+      "line": 224
+    },
+    {
+      "name": "domain-verification-challenge",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig/DomainVerification.hs",
+      "line": 323
+    },
+    {
+      "name": "verify-challenge",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig/DomainVerification.hs",
+      "line": 331
+    },
+    {
+      "name": "verify-challenge-team",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig/DomainVerification.hs",
+      "line": 346
+    },
+    {
+      "name": "domain-verification-authorize-team",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig/DomainVerification.hs",
+      "line": 361
+    },
+    {
+      "name": "update-team-invite",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig/DomainVerification.hs",
+      "line": 374
+    },
+    {
+      "name": "get-all-registered-domains@v9",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig/DomainVerification.hs",
+      "line": 386
+    },
+    {
+      "name": "get-all-registered-domains",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig/DomainVerification.hs",
+      "line": 396
+    },
+    {
+      "name": "delete-registered-domain",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig/DomainVerification.hs",
+      "line": 406
+    },
+    {
+      "name": "update-domain-redirect@v9",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig/DomainVerification.hs",
+      "line": 420
+    },
+    {
+      "name": "update-domain-redirect",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig/DomainVerification.hs",
+      "line": 433
+    },
+    {
+      "name": "get-domain-registration@v9",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig/DomainVerification.hs",
+      "line": 446
+    },
+    {
+      "name": "get-domain-registration",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig/DomainVerification.hs",
+      "line": 455
+    },
+    {
+      "name": "get-oauth-client",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig/OAuth.hs",
+      "line": 37
+    },
+    {
+      "name": "create-oauth-auth-code",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig/OAuth.hs",
+      "line": 54
+    },
+    {
+      "name": "create-oauth-access-token",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig/OAuth.hs",
+      "line": 69
+    },
+    {
+      "name": "revoke-oauth-refresh-token",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig/OAuth.hs",
+      "line": 86
+    },
+    {
+      "name": "get-oauth-applications",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig/OAuth.hs",
+      "line": 98
+    },
+    {
+      "name": "revoke-oauth-account-access-v6",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig/OAuth.hs",
+      "line": 110
+    },
+    {
+      "name": "revoke-oauth-account-access",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig/OAuth.hs",
+      "line": 124
+    },
+    {
+      "name": "delete-oauth-refresh-token",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig/OAuth.hs",
+      "line": 141
+    },
+    {
+      "name": "provider-register",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig/Provider.hs",
+      "line": 51
+    },
+    {
+      "name": "provider-activate",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig/Provider.hs",
+      "line": 63
+    },
+    {
+      "name": "provider-login",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig/Provider.hs",
+      "line": 74
+    },
+    {
+      "name": "provider-password-reset",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig/Provider.hs",
+      "line": 93
+    },
+    {
+      "name": "provider-password-reset-complete",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig/Provider.hs",
+      "line": 109
+    },
+    {
+      "name": "provider-delete",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig/Provider.hs",
+      "line": 123
+    },
+    {
+      "name": "provider-update",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig/Provider.hs",
+      "line": 134
+    },
+    {
+      "name": "provider-update-email",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig/Provider.hs",
+      "line": 144
+    },
+    {
+      "name": "provider-update-password",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig/Provider.hs",
+      "line": 157
+    },
+    {
+      "name": "provider-get-account",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig/Provider.hs",
+      "line": 169
+    },
+    {
+      "name": "provider-get-profile",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig/Provider.hs",
+      "line": 178
+    },
+    {
+      "name": "post-provider-services",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig/Services.hs",
+      "line": 34
+    },
+    {
+      "name": "get-provider-services",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig/Services.hs",
+      "line": 45
+    },
+    {
+      "name": "get-provider-services-by-service-id",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig/Services.hs",
+      "line": 54
+    },
+    {
+      "name": "put-provider-services-by-service-id",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig/Services.hs",
+      "line": 65
+    },
+    {
+      "name": "put-provider-services-connection-by-service-id",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig/Services.hs",
+      "line": 78
+    },
+    {
+      "name": "delete-provider-services-by-service-id",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig/Services.hs",
+      "line": 93
+    },
+    {
+      "name": "get-provider-services-by-provider-id",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig/Services.hs",
+      "line": 106
+    },
+    {
+      "name": "get-services",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig/Services.hs",
+      "line": 116
+    },
+    {
+      "name": "get-services-tags",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig/Services.hs",
+      "line": 127
+    },
+    {
+      "name": "get-provider-services-by-provider-id-and-service-id",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig/Services.hs",
+      "line": 136
+    },
+    {
+      "name": "get-whitelisted-services-by-team-id",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig/Services.hs",
+      "line": 148
+    },
+    {
+      "name": "post-team-whitelist-by-team-id",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig/Services.hs",
+      "line": 163
+    },
+    {
+      "name": "get-user-unqualified",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 162
+    },
+    {
+      "name": "get-user-qualified@v18",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 171
+    },
+    {
+      "name": "get-user-qualified",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 180
+    },
+    {
+      "name": "update-user-email",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 189
+    },
+    {
+      "name": "get-handle-info-unqualified",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 200
+    },
+    {
+      "name": "get-user-by-handle-qualified",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 216
+    },
+    {
+      "name": "list-users-by-unqualified-ids-or-handles",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 232
+    },
+    {
+      "name": "list-users-by-ids-or-handles@v18",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 243
+    },
+    {
+      "name": "list-users-by-ids-or-handles",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 255
+    },
+    {
+      "name": "list-users-by-ids-or-handles@V3",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 266
+    },
+    {
+      "name": "send-verification-code",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 276
+    },
+    {
+      "name": "get-rich-info",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 284
+    },
+    {
+      "name": "get-supported-protocols",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 298
+    },
+    {
+      "name": "set-user-searchable",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 311
+    },
+    {
+      "name": "create-user-group",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 330
+    },
+    {
+      "name": "get-user-group",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 340
+    },
+    {
+      "name": "get-user-groups",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 357
+    },
+    {
+      "name": "update-user-group",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 374
+    },
+    {
+      "name": "delete-user-group",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 385
+    },
+    {
+      "name": "add-user-to-group",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 395
+    },
+    {
+      "name": "add-users-to-group-bulk",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 408
+    },
+    {
+      "name": "remove-user-from-group",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 421
+    },
+    {
+      "name": "update-user-group-members",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 434
+    },
+    {
+      "name": "update-user-group-channels",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 445
+    },
+    {
+      "name": "check-user-group-name-available",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 459
+    },
+    {
+      "name": "get-self",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 471
+    },
+    {
+      "name": "delete-self",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 483
+    },
+    {
+      "name": "put-self",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 507
+    },
+    {
+      "name": "change-phone",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 516
+    },
+    {
+      "name": "remove-phone",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 530
+    },
+    {
+      "name": "remove-email",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 545
+    },
+    {
+      "name": "check-password-exists",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 556
+    },
+    {
+      "name": "change-password",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 570
+    },
+    {
+      "name": "change-locale",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 579
+    },
+    {
+      "name": "change-handle",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 589
+    },
+    {
+      "name": "change-supported-protocols",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 599
+    },
+    {
+      "name": "check-user-handles@v6",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 613
+    },
+    {
+      "name": "check-user-handles",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 627
+    },
+    {
+      "name": "check-user-handle@v6",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 640
+    },
+    {
+      "name": "check-user-handle",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 656
+    },
+    {
+      "name": "upgrade-personal-to-team",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 673
+    },
+    {
+      "name": "register@v16",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 691
+    },
+    {
+      "name": "register",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 704
+    },
+    {
+      "name": "verify-delete",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 720
+    },
+    {
+      "name": "get-activate",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 731
+    },
+    {
+      "name": "post-activate",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 754
+    },
+    {
+      "name": "post-activate-send",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 774
+    },
+    {
+      "name": "post-password-reset",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 786
+    },
+    {
+      "name": "post-password-reset-complete",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 793
+    },
+    {
+      "name": "post-password-reset-key-deprecated",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 802
+    },
+    {
+      "name": "onboarding",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 817
+    },
+    {
+      "name": "get-users-prekeys-client-unqualified",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 869
+    },
+    {
+      "name": "get-users-prekeys-client-qualified",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 880
+    },
+    {
+      "name": "get-users-prekey-bundle-unqualified",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 890
+    },
+    {
+      "name": "get-users-prekey-bundle-qualified",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 900
+    },
+    {
+      "name": "get-multi-user-prekey-bundle-unqualified",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 909
+    },
+    {
+      "name": "get-multi-user-prekey-bundle-qualified@v3",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 921
+    },
+    {
+      "name": "get-multi-user-prekey-bundle-qualified",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 933
+    },
+    {
+      "name": "add-client@v6",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 954
+    },
+    {
+      "name": "add-client@v7",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 976
+    },
+    {
+      "name": "add-client",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 999
+    },
+    {
+      "name": "update-client@v6",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 1021
+    },
+    {
+      "name": "update-client@v7",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 1032
+    },
+    {
+      "name": "update-client",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 1044
+    },
+    {
+      "name": "delete-client",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 1059
+    },
+    {
+      "name": "list-clients@v6",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 1069
+    },
+    {
+      "name": "list-clients@v7",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 1080
+    },
+    {
+      "name": "list-clients",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 1092
+    },
+    {
+      "name": "get-client@v6",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 1103
+    },
+    {
+      "name": "get-client@v7",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 1118
+    },
+    {
+      "name": "get-client",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 1134
+    },
+    {
+      "name": "get-client-capabilities@v6",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 1149
+    },
+    {
+      "name": "get-client-capabilities@v7",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 1162
+    },
+    {
+      "name": "get-client-capabilities",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 1176
+    },
+    {
+      "name": "get-client-prekeys",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 1186
+    },
+    {
+      "name": "create-access-token",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 1201
+    },
+    {
+      "name": "get-user-clients-unqualified",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 1251
+    },
+    {
+      "name": "get-user-clients-qualified",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 1260
+    },
+    {
+      "name": "get-user-client-unqualified",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 1270
+    },
+    {
+      "name": "get-user-client-qualified",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 1280
+    },
+    {
+      "name": "list-clients-bulk",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 1290
+    },
+    {
+      "name": "list-clients-bulk-v2",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 1300
+    },
+    {
+      "name": "list-clients-bulk@v2",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 1311
+    },
+    {
+      "name": "create-connection-unqualified",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 1332
+    },
+    {
+      "name": "create-connection",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 1356
+    },
+    {
+      "name": "list-local-connections",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 1379
+    },
+    {
+      "name": "list-connections",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 1389
+    },
+    {
+      "name": "get-connection-unqualified",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 1398
+    },
+    {
+      "name": "get-connection",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 1413
+    },
+    {
+      "name": "update-connection-unqualified",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 1434
+    },
+    {
+      "name": "update-connection",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 1463
+    },
+    {
+      "name": "search-contacts",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 1484
+    },
+    {
+      "name": "set-property",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 1522
+    },
+    {
+      "name": "delete-property",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 1535
+    },
+    {
+      "name": "clear-properties",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 1545
+    },
+    {
+      "name": "get-property",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 1551
+    },
+    {
+      "name": "list-property-keys",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 1563
+    },
+    {
+      "name": "list-properties",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 1570
+    },
+    {
+      "name": "mls-key-packages-upload",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 1618
+    },
+    {
+      "name": "mls-key-packages-replace@v7",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 1631
+    },
+    {
+      "name": "mls-key-packages-replace",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 1646
+    },
+    {
+      "name": "mls-key-packages-claim@v7",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 1660
+    },
+    {
+      "name": "mls-key-packages-claim",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 1673
+    },
+    {
+      "name": "mls-key-packages-count@v7",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 1685
+    },
+    {
+      "name": "mls-key-packages-count",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 1697
+    },
+    {
+      "name": "mls-key-packages-delete@v7",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 1708
+    },
+    {
+      "name": "mls-key-packages-delete",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 1720
+    },
+    {
+      "name": "browse-team",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 1738
+    },
+    {
+      "name": "access",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 1812
+    },
+    {
+      "name": "send-login-code",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 1827
+    },
+    {
+      "name": "login",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 1847
+    },
+    {
+      "name": "logout",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 1867
+    },
+    {
+      "name": "change-self-email",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 1881
+    },
+    {
+      "name": "list-cookies",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 1903
+    },
+    {
+      "name": "remove-cookies",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 1914
+    },
+    {
+      "name": "get-calls-config",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 1931
+    },
+    {
+      "name": "get-calls-config-v2",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 1944
+    },
+    {
+      "name": "send-team-invitation@v6",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 1962
+    },
+    {
+      "name": "send-team-invitation",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 1990
+    },
+    {
+      "name": "get-team-invitations",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 2018
+    },
+    {
+      "name": "get-team-invitation",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 2033
+    },
+    {
+      "name": "delete-team-invitation",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 2051
+    },
+    {
+      "name": "get-team-invitation-info",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 2062
+    },
+    {
+      "name": "head-team-invitations",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 2076
+    },
+    {
+      "name": "get-team-size",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 2089
+    },
+    {
+      "name": "accept-team-invitation",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 2105
+    },
+    {
+      "name": "get-system-settings-unauthorized",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 2124
+    },
+    {
+      "name": "get-system-settings",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 2133
+    },
+    {
+      "name": "create-app@v18",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 2144
+    },
+    {
+      "name": "create-app",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 2155
+    },
+    {
+      "name": "get-app",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 2166
+    },
+    {
+      "name": "get-apps@v18",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 2178
+    },
+    {
+      "name": "get-apps",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 2188
+    },
+    {
+      "name": "put-app",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 2198
+    },
+    {
+      "name": "refresh-app-cookie",
+      "source": "libs/wire-api/src/Wire/API/Routes/Public/Brig.hs",
+      "line": 2210
+    }
+  ]
+}
