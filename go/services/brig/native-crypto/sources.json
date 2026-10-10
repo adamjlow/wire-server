@@ -1,0 +1,12 @@
+{
+  "argon2_release": "20190702",
+  "argon2_header_url": "https://raw.githubusercontent.com/P-H-C/phc-winner-argon2/20190702/include/argon2.h",
+  "argon2_license": "Apache-2.0 or CC0-1.0",
+  "openssl_api_reference": "https://raw.githubusercontent.com/openssl/openssl/openssl-3.0.13/include/openssl/evp.h",
+  "openssl_license": "Apache-2.0",
+  "sha256": {
+    "argon2.h": "df20cb726a2fe6bccc736b81ea0d86219766a0d17f1794c19e048a34830ca1cc",
+    "ARGON2-LICENSE": "220f8736a89ff51c92ef3d497f413b48e6cf1df3d6278bc909c6308c78e1718e",
+    "OPENSSL-LICENSE.txt": "7d5450cb2d142651b8afa315b5f238efc805dad827d91ba367d8516bc9d49e7a"
+  }
+}

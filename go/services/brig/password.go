@@ -9,15 +9,11 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
-
-	"golang.org/x/crypto/argon2"
-	"golang.org/x/crypto/scrypt"
 )
 
 var (
 	errPasswordEncoding   = errors.New("invalid stored password encoding")
 	errPasswordParameters = errors.New("invalid password hashing parameters")
-	errPasswordVariant    = errors.New("password hashing variant implementation incomplete")
 )
 
 // Password values must never be included in diagnostics or generic formatting.
@@ -120,27 +116,16 @@ func (h passwordHash) derive(plain string) ([]byte, error) {
 		if h.rounds == 0 || h.rounds >= uint32(strconv.IntSize-1) || h.blockSize == 0 || h.parallelism == 0 || uint64(h.blockSize)*uint64(h.parallelism) >= 1<<30 {
 			return nil, errPasswordParameters
 		}
-		key, err := scrypt.Key([]byte(plain), h.salt, 1<<h.rounds, int(h.blockSize), int(h.parallelism), 64)
-		if err != nil {
-			return nil, errPasswordParameters
-		}
-		return key, nil
+		return h.deriveNative(plain)
 	}
-	if h.version != 19 || h.algorithm == "argon2d" || h.parallelism > 255 {
-		return nil, errPasswordVariant
+	if h.version != 19 && h.version != 16 {
+		return nil, errPasswordEncoding
 	}
 	if h.iterations == 0 || h.parallelism == 0 || uint64(h.memory) < 8*uint64(h.parallelism) || len(h.salt) < 8 {
 		return nil, errPasswordParameters
 	}
 	// Native verification fixes output length to 16, including legacy hashes.
-	switch h.algorithm {
-	case "argon2i":
-		return argon2.Key([]byte(plain), h.salt, h.iterations, h.memory, uint8(h.parallelism), 16), nil
-	case "argon2id":
-		return argon2.IDKey([]byte(plain), h.salt, h.iterations, h.memory, uint8(h.parallelism), 16), nil
-	default:
-		return nil, errPasswordEncoding
-	}
+	return h.deriveNative(plain)
 }
 
 func (h passwordHash) encode() string {
@@ -159,6 +144,7 @@ func verifyPasswordHash(encoded, plain string, argonPolicy bool) (match, needsUp
 	if err != nil {
 		return false, false, err
 	}
+	defer clear(key)
 	return subtle.ConstantTimeCompare(key, h.key) == 1, h.algorithm == "scrypt" && argonPolicy, nil
 }
 

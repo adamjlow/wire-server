@@ -4,7 +4,6 @@ package brig
 import (
 	"encoding/base64"
 	"encoding/hex"
-	"errors"
 	"fmt"
 	"strings"
 	"testing"
@@ -67,7 +66,7 @@ func TestNativePasswordGenerationFormatsAndVerificationStatus(t *testing.T) {
 	}
 }
 
-func TestArgonHistoricalVariantsAreParsedAndUnimplementedWorkIsExplicit(t *testing.T) {
+func TestArgonHistoricalVariantsAndVersions(t *testing.T) {
 	salt := base64.RawStdEncoding.EncodeToString([]byte("synthetic-salt16"))
 	key := base64.RawStdEncoding.EncodeToString(make([]byte, 16))
 	for _, variant := range []string{"argon2i", "argon2d", "argon2id"} {
@@ -78,14 +77,32 @@ func TestArgonHistoricalVariantsAreParsedAndUnimplementedWorkIsExplicit(t *testi
 				t.Fatal("native field order/last duplicate or historical version parsing changed")
 			}
 			_, err = h.derive("synthetic")
-			if variant == "argon2d" || version != "v=19$" {
-				if !errors.Is(err, errPasswordVariant) {
-					t.Fatal("unfinished historical implementation reported as wrong credential")
-				}
-			} else if err != nil {
+			if err != nil {
 				t.Fatal(err)
 			}
 		}
+	}
+}
+
+func TestArgonFullLaneCountAndOmittedVersion(t *testing.T) {
+	h := passwordHash{algorithm: "argon2id", version: 16, memory: 2048, iterations: 1, parallelism: 256, salt: []byte("synthetic-salt16")}
+	key, err := h.derive("Synthetic-password")
+	if err != nil || len(key) != 16 {
+		t.Fatal("uint32 lane count was narrowed to uint8")
+	}
+	h.key = key
+	encoded := h.encode()
+	omitted := strings.Replace(encoded, "v=16$", "", 1)
+	for _, value := range []string{encoded, omitted} {
+		ok, update, err := verifyPasswordHash(value, "Synthetic-password", true)
+		if err != nil || !ok || update {
+			t.Fatal("legacy version/lane count authentication mismatch")
+		}
+	}
+	short := h
+	short.key = h.key[:8]
+	if ok, _, err := verifyPasswordHash(short.encode(), "Synthetic-password", false); err != nil || ok {
+		t.Fatal("Argon2 verification used stored output length instead of native16")
 	}
 }
 
