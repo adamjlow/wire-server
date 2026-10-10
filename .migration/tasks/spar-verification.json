@@ -4,9 +4,9 @@
   "title": "Spar verification",
   "service": "spar",
   "kind": "verification",
-  "status": "queued",
-  "owner": null,
-  "branch": null,
+  "status": "active",
+  "owner": "codex",
+  "branch": "go-migration",
   "depends_on": [
     "spar-implementation"
   ],
