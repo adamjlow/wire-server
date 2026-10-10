@@ -77,6 +77,9 @@ func newHandler(c Config, store settingsStore) http.Handler {
 			w.WriteHeader(http.StatusOK)
 			return
 		}
+		if db, ok := store.(cassandraStore); ok && serveIdPs(w, r, c, db, peers) {
+			return
+		}
 		if tokens, ok := store.(tokenStore); ok && serveTokens(w, r, c, tokens, peers) {
 			return
 		}

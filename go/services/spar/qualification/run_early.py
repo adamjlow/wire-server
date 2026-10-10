@@ -14,7 +14,7 @@ import environment
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     for name in ('output','runner-receipt','candidate','candidate-receipt'):parser.add_argument('--'+name,type=Path,required=True)
-    parser.add_argument('--suite',choices=('early','tokens'),default='early')
+    parser.add_argument('--suite',choices=('early','tokens','idps'),default='early')
     args=parser.parse_args()
     selected=environment.identified_candidate(args.candidate,args.candidate_receipt)
     record=environment.prepare(args.output,args.runner_receipt)
@@ -26,6 +26,7 @@ def main():
     if args.suite=='early':runner['networks']=['demo_wire']
     runner['entrypoint']=['/nix/store/60m4rxhg2fldqaak400c0lry96ijrzqn-python3-3.13.13/bin/python3']
     runner['command']=['/source/go/services/spar/qualification/'+('early.py' if args.suite=='early' else 'tokens.py')]
+    if args.suite!='early':runner['command']+=['--suite',args.suite]
     runner['volumes'].append({'type':'bind','source':selected['path'],'target':'/candidate/spar','read_only':True})
     environment.validate_isolation(spec)
     compose_path.write_text(json.dumps(spec,indent=2)+'\n')
