@@ -4,7 +4,7 @@
   "title": "Spar completion",
   "service": "framework",
   "kind": "framework",
-  "status": "active",
+  "status": "done",
   "owner": "codex",
   "branch": "go-migration",
   "depends_on": [
@@ -28,7 +28,18 @@
       "required_evidence": "Review exact Spar source40c1b2f896fe20d5d9aad4a7c90a815fcfa0e067/static9fabe438/imagece3965bf/referencef663: all225 unchanged original seven-Go/Haskell executions across complete passing suites, strict names/XML/actual identities and owned cleanup; pinned Go quality/security/license/native protocol proof reuse; exact-image100/concurrency8 and loaded drain; actual102-action/seven-snapshot native-Go-native; optional byte-exact default/image-only Helm selector. REVIEW.md records same-author delegation, retained failed attempts, inherited security concerns and unrun native checks. No production/push/default/Haskell policy change."
     }
   ],
-  "evidence": [],
-  "review": null,
-  "handoff": "Queued final finite reviewed gate; reuse unchanged exact runtime evidence, preserve immutable history and Haskell defaults."
+  "evidence": [
+    {
+      "criterion": "gates",
+      "result": "pass",
+      "command": "Reviewed full Spar REVIEW.md; publish legal implementing-to-verified-to-available adjacent commits with done verification and selection, exact source40/static9f/imagece39/referencef663. Reconcile indexes/harness docs and retain earlier failures/unrun native builds; final225 strict unfiltered suite/report identities,155 frozen source files and unchanged runtime inputs rechecked, selected artifact/current optional registry/owned cleanup confirmed. Scoped transition checks and32 migration tests pass; no new runtime build needed for metadata-only completion.",
+      "revision": "40c1b2f896fe20d5d9aad4a7c90a815fcfa0e067",
+      "artifact": "go/services/spar/REVIEW.md"
+    }
+  ],
+  "review": {
+    "by": "codex (same-author self-review explicitly delegated by user)",
+    "artifact": "go/services/spar/REVIEW.md"
+  },
+  "handoff": "Optional whole-service Spar available at exact finite qualified seven-Go/Haskell tuple; all225 original executions passed complete suites across three owned batches, protocol/trust/quality/current image operations/durable switchback/selector pass. Haskell supported/default. Upstream changes require reassessment; no push/deploy/independent audit/native rebuild or security-policy repair claim."
 }
