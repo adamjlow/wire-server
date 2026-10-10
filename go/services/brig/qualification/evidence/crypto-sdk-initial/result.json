@@ -1,0 +1,18 @@
+{
+  "result": "failed",
+  "sdk_image": "sha256:f4543990682d78421a83722da61fca0c6639b7d5e10ee220a7648228cbd6e255",
+  "source_revision": "ce94d80da3f88477f9c3d20b89881feb9a62106c",
+  "controller_exit_code": 1,
+  "owned_container_remaining": false,
+  "failure": "owned /tmp mount prevented executing generated test binaries",
+  "native_packages": {
+    "libssl3": "3.0.22-1~deb12u1",
+    "libargon2-1": "0~20171227-0.3+deb12u1"
+  },
+  "security_review": "Bookworm source packages still affected by OpenSSL advisories; do not qualify",
+  "references": [
+    "https://security-tracker.debian.org/tracker/CVE-2026-77696",
+    "https://security-tracker.debian.org/tracker/CVE-2026-35189",
+    "https://security-tracker.debian.org/tracker/CVE-2026-54872"
+  ]
+}

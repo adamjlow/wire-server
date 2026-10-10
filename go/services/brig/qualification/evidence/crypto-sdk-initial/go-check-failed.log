@@ -1,0 +1,6 @@
+all modules verified
+fork/exec /tmp/go-build438114345/b243/brig.test: permission denied
+FAIL	github.com/adamjlow/wire-server/go/services/brig	0.000s
+?   	github.com/adamjlow/wire-server/go/services/brig/cmd/brig	[no test files]
+FAIL
+Candidate checks failed: go test failed (exit 1)

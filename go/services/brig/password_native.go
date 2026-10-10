@@ -9,10 +9,26 @@ package brig
 
 // OpenSSL's stable EVP API; no OpenSSL SDK installation is needed to declare
 // this one function. Runtime libraries are explicit candidate image inputs.
-extern int EVP_PBE_scrypt(const char *pass, size_t passlen,
+typedef struct ossl_lib_ctx_st OSSL_LIB_CTX;
+extern OSSL_LIB_CTX *OSSL_LIB_CTX_new(void);
+extern void OSSL_LIB_CTX_free(OSSL_LIB_CTX *ctx);
+extern int EVP_PBE_scrypt_ex(const char *pass, size_t passlen,
     const unsigned char *salt, size_t saltlen,
     uint64_t N, uint64_t r, uint64_t p, uint64_t maxmem,
-    unsigned char *key, size_t keylen);
+    unsigned char *key, size_t keylen, OSSL_LIB_CTX *ctx, const char *properties);
+
+static int brig_scrypt(const char *pass, size_t passlen,
+    const unsigned char *salt, size_t saltlen, uint64_t N, uint64_t r,
+    uint64_t p, unsigned char *key) {
+    // Crypton's Scrypt is independent of process-global OpenSSL settings.
+    // A private context preserves this even with an unrelated OPENSSL_CONF.
+    OSSL_LIB_CTX *ctx = OSSL_LIB_CTX_new();
+    if (ctx == NULL) return 0;
+    int ok = EVP_PBE_scrypt_ex(pass, passlen, salt, saltlen, N, r, p,
+                             UINT64_MAX, key, 64, ctx, NULL);
+    OSSL_LIB_CTX_free(ctx);
+    return ok;
+}
 
 static int brig_argon2(uint8_t *password, uint32_t password_len,
     uint8_t *salt, uint32_t salt_len, uint8_t *out,
@@ -48,10 +64,10 @@ func (h passwordHash) deriveNative(plain string) ([]byte, error) {
 	defer clear(password)
 	if h.algorithm == "scrypt" {
 		key := make([]byte, 64)
-		ok := C.EVP_PBE_scrypt((*C.char)(unsafe.Pointer(unsafe.SliceData(password))), C.size_t(len(password)),
+		ok := C.brig_scrypt((*C.char)(unsafe.Pointer(unsafe.SliceData(password))), C.size_t(len(password)),
 			(*C.uchar)(unsafe.Pointer(unsafe.SliceData(h.salt))), C.size_t(len(h.salt)),
-			C.uint64_t(uint64(1)<<h.rounds), C.uint64_t(h.blockSize), C.uint64_t(h.parallelism), C.uint64_t(^uint64(0)),
-			(*C.uchar)(unsafe.Pointer(unsafe.SliceData(key))), C.size_t(len(key)))
+			C.uint64_t(uint64(1)<<h.rounds), C.uint64_t(h.blockSize), C.uint64_t(h.parallelism),
+			(*C.uchar)(unsafe.Pointer(unsafe.SliceData(key))))
 		runtime.KeepAlive(h)
 		if ok != 1 {
 			clear(key)
