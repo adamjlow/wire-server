@@ -1,0 +1,57 @@
+{
+  "owner": "wire-worker-http-diagnostics-10b90d752f7b405d83a95a08cbf9fa34",
+  "postgres_image": "postgres@sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24",
+  "runner_image": "sha256:cd03212430eef6cfde0324b50885c12980ee211483ab27dde6ee730252966cd2",
+  "binary_sha256": "044429094558a8e7b7fb27f248e9f7a057b65f8dbf4e6a39e14022bac1d897f5",
+  "test": "TestScheduledExecutionDockerStorage",
+  "test_tag": "schemacheck",
+  "test_exit_code": 0,
+  "result": "pass",
+  "cleanup": [
+    {
+      "command": [
+        "docker",
+        "rm",
+        "-f",
+        "wire-worker-http-diagnostics-10b90d752f7b405d83a95a08cbf9fa34-check"
+      ],
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "command": [
+        "docker",
+        "rm",
+        "-f",
+        "wire-worker-http-diagnostics-10b90d752f7b405d83a95a08cbf9fa34-postgres"
+      ],
+      "exit_code": 0,
+      "output": "wire-worker-http-diagnostics-10b90d752f7b405d83a95a08cbf9fa34-postgres\n"
+    },
+    {
+      "command": [
+        "docker",
+        "volume",
+        "rm",
+        "wire-worker-http-diagnostics-10b90d752f7b405d83a95a08cbf9fa34-pg"
+      ],
+      "exit_code": 0,
+      "output": "wire-worker-http-diagnostics-10b90d752f7b405d83a95a08cbf9fa34-pg\n"
+    },
+    {
+      "command": [
+        "docker",
+        "network",
+        "rm",
+        "wire-worker-http-diagnostics-10b90d752f7b405d83a95a08cbf9fa34-net"
+      ],
+      "exit_code": 0,
+      "output": "wire-worker-http-diagnostics-10b90d752f7b405d83a95a08cbf9fa34-net\n"
+    }
+  ],
+  "remaining_owned": {
+    "container": "",
+    "network": "",
+    "volume": ""
+  }
+}

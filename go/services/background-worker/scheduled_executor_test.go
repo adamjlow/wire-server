@@ -17,6 +17,7 @@ type scheduledExecutionFixture struct {
 	gate        chan struct{}
 	delay       int64
 	completeErr error
+	diagnostic  string
 }
 
 func (f *scheduledExecutionFixture) note(value string) {
@@ -47,9 +48,10 @@ func (f *scheduledExecutionFixture) HeartbeatScheduledJob(context.Context, strin
 	}
 	return f.beat, nil
 }
-func (f *scheduledExecutionFixture) FailScheduledJob(_ context.Context, _ string, _ claimedScheduledJob, delay int64) (bool, error) {
+func (f *scheduledExecutionFixture) FailScheduledJob(_ context.Context, _ string, _ claimedScheduledJob, delay int64, diagnostic string) (bool, error) {
 	f.note("fail")
 	f.delay = delay
+	f.diagnostic = diagnostic
 	return true, nil
 }
 func (f *scheduledExecutionFixture) DeleteCancelledScheduledJob(context.Context, string, int64) error {
@@ -83,6 +85,9 @@ func TestScheduledExecutorSingleJobControlAndFailureBoundaries(t *testing.T) {
 			})
 			if result.Err != nil || result.Status != status {
 				t.Fatal(result)
+			}
+			if (status == "retry" || status == "dlq") && f.diagnostic != "synthetic private failure" {
+				t.Fatal("handler diagnostic was replaced before retry/DLQ")
 			}
 			want := []string{"begin", "handler", "ack", "commit"}
 			if status == "retry" || status == "dlq" {

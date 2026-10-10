@@ -72,20 +72,20 @@ func TestScheduledExecutionDockerStorage(t *testing.T) {
 	}
 	count(`SELECT count(*) FROM synthetic_effects`, 2)
 	count(`SELECT count(*) FROM arbiter.meetings WHERE id=2 AND last_error IS NULL`, 1)
-	if changed, err := store.FailScheduledJob(ctx, "meetings", job, 4); err != nil || !changed {
+	if changed, err := store.FailScheduledJob(ctx, "meetings", job, 4, "synthetic handler failure"); err != nil || !changed {
 		t.Fatal("retry failed", err)
 	}
-	count(`SELECT count(*) FROM arbiter.meetings WHERE id=2 AND attempts=1 AND claimed_by IS NULL AND last_error='scheduled job failed' AND not_visible_until BETWEEN NOW()+interval '2 seconds' AND NOW()+interval '5 seconds'`, 1)
+	count(`SELECT count(*) FROM arbiter.meetings WHERE id=2 AND attempts=1 AND claimed_by IS NULL AND last_error='synthetic handler failure' AND not_visible_until BETWEEN NOW()+interval '2 seconds' AND NOW()+interval '5 seconds'`, 1)
 	job = claimedScheduledJob{ID: 3, Attempts: 3, MaxAttempts: ptr(int32(3))}
-	if changed, err := store.FailScheduledJob(ctx, "meetings", job, 4); err != nil || !changed {
+	if changed, err := store.FailScheduledJob(ctx, "meetings", job, 4, "synthetic handler failure"); err != nil || !changed {
 		t.Fatal("DLQ failed", err)
 	}
-	count(`SELECT count(*) FROM arbiter.meetings_dlq WHERE job_id=3 AND attempts=3 AND max_attempts=3 AND last_error='scheduled job failed'`, 1)
+	count(`SELECT count(*) FROM arbiter.meetings_dlq WHERE job_id=3 AND attempts=3 AND max_attempts=3 AND last_error='synthetic handler failure'`, 1)
 	job = claimedScheduledJob{ID: 4, Attempts: 1, MaxAttempts: ptr(int32(3))}
 	if err := store.CompleteScheduledJob(ctx, "meetings", job, func(context.Context) error { return nil }); !errors.Is(err, errScheduledGone) {
 		t.Fatal("stale completion accepted", err)
 	}
-	if changed, err := store.FailScheduledJob(ctx, "meetings", job, 4); err != nil || changed {
+	if changed, err := store.FailScheduledJob(ctx, "meetings", job, 4, "synthetic handler failure"); err != nil || changed {
 		t.Fatal("stale retry changed new attempt", err)
 	}
 	count(`SELECT count(*) FROM arbiter.meetings WHERE id=4 AND attempts=2 AND last_error IS NULL`, 1)
@@ -99,7 +99,7 @@ func TestScheduledExecutionDockerStorage(t *testing.T) {
 	}
 	count(`SELECT count(*) FROM arbiter.meetings WHERE id=4`, 1)
 	job = claimedScheduledJob{ID: 500, Attempts: 10, ParentState: json.RawMessage(`{}`)}
-	if changed, err := store.FailScheduledJob(ctx, "meetings", job, 4); err != nil || !changed {
+	if changed, err := store.FailScheduledJob(ctx, "meetings", job, 4, "synthetic handler failure"); err != nil || !changed {
 		t.Fatal("rollup DLQ failed", err)
 	}
 	count(`SELECT count(*) FROM arbiter.meetings_dlq WHERE job_id IN (500,501,502)`, 3)

@@ -20,7 +20,7 @@ func TestScheduledStoreRejectsForeignQueueBeforeDatabaseAccess(t *testing.T) {
 		if _, err := store.HeartbeatScheduledJob(t.Context(), queue, 1, 1, time.Minute); err == nil {
 			t.Fatal("foreign heartbeat queue accepted")
 		}
-		if _, err := store.RetryScheduledJob(t.Context(), queue, 1, 1, 1); err == nil {
+		if _, err := store.RetryScheduledJob(t.Context(), queue, 1, 1, 1, "synthetic failure"); err == nil {
 			t.Fatal("foreign retry queue accepted")
 		}
 	}

@@ -1,0 +1,9 @@
+{
+  "source_parent": "3989998851818099561337881ef6ffa60fd05897",
+  "source_snapshot": "source-files.json; identified worktree, not final clean executable",
+  "go_version": "go1.26.9",
+  "go_check_exit_code": 0,
+  "postgres_test_exit_code": 0,
+  "reference_runner": "sha256:cd03212430eef6cfde0324b50885c12980ee211483ab27dde6ee730252966cd2",
+  "reference_library_discovery": "readonly/no-network native worker ELF contains http-client0.7.19; tagged primary source used, no native timeout replay"
+}

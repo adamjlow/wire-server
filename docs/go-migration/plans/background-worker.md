@@ -469,3 +469,17 @@ runner CLI is fixture-only; final image must package the patched supported CLI
 and its license. No Go module or Haskell dependency changed. Ordinary HTTP manager
 and stored diagnostics review, SCIM repair, final original suites and all unchanged
 operations/switchback/image/selector/review requirements remain outstanding.
+
+Ordinary internal HTTP timeout phases now follow the identified http-client0.7.19
+source:30s connection acquisition, then remaining-budget headers, with body reads
+remaining caller-cancellable and without a new total deadline. Handler diagnostics
+now flow into native guarded retry/DLQ SQL instead of a constant last_error.
+[Exact construction receipts](../../../go/services/background-worker/evidence/http-diagnostics-20261010/)
+record full Go checks, finite real HTTP tests and the reused PostgreSQL fixture
+with nonconstant persisted diagnostics and successful owned cleanup. These are
+component checks, not the final E2E or switchback proof. Native unknown exception
+rendering can persist sensitive details; Go domain adapters keep errors generic
+and panic values unformatted. Environment proxy semantics and reused-connection/
+header-parser behavior remain in the ordinary-manager audit. Next execute the
+current whole-worker original47 to expose remaining real startup/domain/storage
+failures, preserving the retained pre-enable SCIM500 as an unresolved failure.

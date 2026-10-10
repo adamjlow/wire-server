@@ -10,7 +10,7 @@ import (
 type scheduledExecutionStore interface {
 	CompleteScheduledJob(context.Context, string, claimedScheduledJob, func(context.Context) error) error
 	HeartbeatScheduledJob(context.Context, string, int64, int32, time.Duration) (scheduledHeartbeat, error)
-	FailScheduledJob(context.Context, string, claimedScheduledJob, int64) (bool, error)
+	FailScheduledJob(context.Context, string, claimedScheduledJob, int64, string) (bool, error)
 	DeleteCancelledScheduledJob(context.Context, string, int64) error
 }
 type scheduledExecutor struct {
@@ -116,7 +116,7 @@ func (e scheduledExecutor) Run(ctx context.Context, job claimedScheduledJob, for
 			return scheduledExecutionOutcome{"error", delayErr}
 		}
 	}
-	changed, failureErr := e.Store.FailScheduledJob(ctx, e.Queue, job, delay)
+	changed, failureErr := e.Store.FailScheduledJob(ctx, e.Queue, job, delay, err.Error())
 	if failureErr != nil {
 		return scheduledExecutionOutcome{"error", failureErr}
 	}

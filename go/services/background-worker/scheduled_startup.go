@@ -16,7 +16,7 @@ func (s *Service) prepareScheduled(ctx context.Context) (*scheduledRuntime, func
 	var bots *externalBotDelivery
 	queue := &scheduledNotificationQueue{Service: s, ready: make(chan struct{})}
 	botCtx, stopBots := context.WithCancel(context.WithoutCancel(ctx))
-	ordinaryTransport := &http.Transport{Proxy: nil}
+	ordinaryTransport := newInternalHTTPTransport()
 	ordinary := &http.Client{Transport: ordinaryTransport}
 	federation := notificationClient()
 	cleanup := func() {

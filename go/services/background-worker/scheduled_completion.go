@@ -49,7 +49,7 @@ func (s *postgresStore) CompleteScheduledJob(ctx context.Context, queue string, 
 	return nil
 }
 
-func (s *postgresStore) FailScheduledJob(ctx context.Context, queue string, job claimedScheduledJob, backoff int64) (changed bool, err error) {
+func (s *postgresStore) FailScheduledJob(ctx context.Context, queue string, job claimedScheduledJob, backoff int64, diagnostic string) (changed bool, err error) {
 	if _, err := renderScheduledSQL("{{queue}}", queue); err != nil {
 		return false, err
 	}
@@ -58,7 +58,7 @@ func (s *postgresStore) FailScheduledJob(ctx context.Context, queue string, job 
 		maxAttempts = *job.MaxAttempts
 	}
 	if job.Attempts < maxAttempts {
-		return s.RetryScheduledJob(ctx, queue, job.ID, job.Attempts, backoff)
+		return s.RetryScheduledJob(ctx, queue, job.ID, job.Attempts, backoff, diagnostic)
 	}
 	// Native moveToDLQ snapshots the current rollup, then descendant rollups and
 	// children, moves the exact ID+attempt and resumes its parent on success.
@@ -83,7 +83,7 @@ func (s *postgresStore) FailScheduledJob(ctx context.Context, queue string, job 
 			return false, err
 		}
 	}
-	counts, err := reaperIDs(ctx, tx, "moveToDLQSQL", queue, job.ID, job.Attempts, "scheduled job failed")
+	counts, err := reaperIDs(ctx, tx, "moveToDLQSQL", queue, job.ID, job.Attempts, diagnostic)
 	if err != nil {
 		return false, err
 	}
