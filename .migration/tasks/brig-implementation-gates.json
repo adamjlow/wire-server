@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
-  "status": "queued",
-  "owner": null,
-  "branch": null,
+  "status": "active",
+  "owner": "codex",
+  "branch": "go-migration",
   "evidence": [],
   "review": null,
   "plan": "docs/go-migration/plans/brig.md",
