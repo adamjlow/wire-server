@@ -1,0 +1,11 @@
+# Spar contract and original baseline review
+
+Approved by codex (same-author self-review delegated by user; not independent). Scope is protected reference contract/catalogue/harness establishment, not candidate compatibility or deployment.
+
+Reviewed complete route/handler/config/version/error and source-verified SAML assertion/issuer/audience/request/time/replay semantics; actual stored IdP cert trust, lenient Base64/ADFS handling, exact source cert policy and credential multiplicity are explicit. SCIM user/group/token behaviour and durable CQL/TTL/legacy/v2 mappings are pinned by155 byte-matched source files. Supplemental XML/state/cookie/unsupported group PATCH comparisons remain bounded implementation acceptance, not an existing pass claim. Inherited weaknesses are recorded separately; no Haskell fixes/API/schema/security-policy change.
+
+Catalogue101 matches actual original compiled discovery:86 Spar plus15 related cases, all source base functions/variants preserved. Actual all-Haskell101 executes original assertions in owned private nonroot runner099b3065, strict expected XML101, no skips/errors/failures, every implementation nativeHaskell, process/controller/cleanup0 and no owned containers/networks/volumes afterward. Native/source identities/config/fixtures and raw log hashes retained. No native unit/GHC rebuild claimed.
+
+Harness increment adds only Spar catalogue/replacement and exact seven-Go profile (225 future executions). Missing/duplicate/foreign/ambiguous candidates and unsafe writable/nonexact mounts reject. Previous profile catalogues/assertions, pinned base, private networking/no host ports and mandatory owned cleanup unchanged. Actual new runner builds and baseline passes. All27 Docker harness and32 migration-framework tests pass with retained logs. Scope check against active claim passes.
+
+This establishes a fit-for-purpose original Spar baseline, not a Go implementation. Publish contracted/implementing gates legally in separately scoped coordination; start a real Go process comparison early and implement every supported family. Keep finite full original/mixed/security/operations/switchback/image/selector matrix and exact candidate evidence; do not add speculative gates or silently repair reference limitations. Haskell remains supported/default; no push/production change.

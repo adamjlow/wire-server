@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "result": "built",
+  "image_id": "sha256:099b30651813ecbe4192514cde0b096174bbfd34672529c9b21e8c7766077268",
+  "source_revision": "890a4742e936a2e8078f1a0d39b8bb36616a385f",
+  "base_image": "quay.io/wire/integration@sha256:f5db439022d1c0ccf071c25f9c0d132ed21a9e5e3647db59c593d33614bc4f27",
+  "files_sha256": {
+    "harness.py": "c8b964298cf6d3adf1d31f1d0afb39aae71cc5db21e2f06410f89267b8eb8f6f",
+    "e2e-tests.json": "ddaa4bd21e3c3f770aafd1acc099c14e9b471d5717224bad2f474a2b0553586e",
+    "gundeck-tests.json": "dfe89a76672762a478b62a6d8d4365e081c92398f01becb15aa245d0a9865bd0",
+    "Dockerfile": "52d0bff57af6cae04cea37972b8a68fdd197f4e041099b4f27b77bc422237572",
+    "runtime.py": "54fc02abff190553726f89e686e3db472537c19539376135e82f872dfe45da2f",
+    "background-worker-tests.json": "f507af3cccca1ad074bf83edc6fabd9ffdef1e946eb5025729dc20a17b4a0388",
+    "spar-tests.json": "1542c02d39fc20517e0757cfdd812d78732d9d8b2e71908b2d35136f18985d85",
+    "runner.py": "65513b2dab83a8e419e18a37e64ed4833f95e74b5e0a2a2704f240b2773b457e",
+    "entrypoint.sh": "0a353437072764f537d9d1568868104c55e8e9080d06c32c31d6f1162ad0eb2f",
+    "federator-tests.json": "ade5f4def8e4e4bd50d5d5aa4282bffb3f1fcdaed0b21b7e8dc87482870d2be1"
+  },
+  "e2e_executed": false
+}

@@ -1,0 +1,40 @@
+python3 tools/migration/check.py
+Migration state valid: 9 services, 77 tasks
+python3 -m unittest discover -s tools/migration -p 'test_*.py' -v
+test_active_and_review_ownership_conflicts (test_check.ValidationTests.test_active_and_review_ownership_conflicts) ... ok
+test_base_must_be_commit_sha_not_option_or_revision_expression (test_check.ValidationTests.test_base_must_be_commit_sha_not_option_or_revision_expression) ... ok
+test_blocked_releases_scope_but_requires_handoff (test_check.ValidationTests.test_blocked_releases_scope_but_requires_handoff) ... ok
+test_changed_upstream_or_reference_cannot_relabel_old_verification (test_check.ValidationTests.test_changed_upstream_or_reference_cannot_relabel_old_verification) ... ok
+test_claim_required_and_queued_has_no_owner (test_check.ValidationTests.test_claim_required_and_queued_has_no_owner) ... ok
+test_compatibility_evidence_must_match_candidate (test_check.ValidationTests.test_compatibility_evidence_must_match_candidate) ... ok
+test_compatibility_requires_full_pins_and_matching_done_task (test_check.ValidationTests.test_compatibility_requires_full_pins_and_matching_done_task) ... ok
+test_dependencies_missing_cycle_and_unfinished (test_check.ValidationTests.test_dependencies_missing_cycle_and_unfinished) ... ok
+test_done_command_is_data_not_executed (test_check.ValidationTests.test_done_command_is_data_not_executed) ... ok
+test_done_immutable_and_illegal_reopen (test_check.ValidationTests.test_done_immutable_and_illegal_reopen) ... ok
+test_done_requires_complete_passing_evidence_and_review (test_check.ValidationTests.test_done_requires_complete_passing_evidence_and_review) ... ok
+test_evidence_revision_artifact_and_criterion_validation (test_check.ValidationTests.test_evidence_revision_artifact_and_criterion_validation) ... ok
+test_exact_cumulative_gates_and_default_protection (test_check.ValidationTests.test_exact_cumulative_gates_and_default_protection) ... ok
+test_full_lifecycle_can_be_evidenced (test_check.ValidationTests.test_full_lifecycle_can_be_evidenced) ... ok
+test_gate_requires_matching_completed_service_task_kind (test_check.ValidationTests.test_gate_requires_matching_completed_service_task_kind) ... ok
+test_git_diff_catches_untracked_staged_deleted_and_renamed_paths (test_check.ValidationTests.test_git_diff_catches_untracked_staged_deleted_and_renamed_paths) ... ok
+test_global_cutover_and_retirement_are_not_stages (test_check.ValidationTests.test_global_cutover_and_retirement_are_not_stages) ... ok
+test_haskell_reference_required_even_when_go_is_available (test_check.ValidationTests.test_haskell_reference_required_even_when_go_is_available) ... ok
+test_historical_gate_cannot_be_replaced (test_check.ValidationTests.test_historical_gate_cannot_be_replaced) ... ok
+test_implementation_cannot_claim_reference_fixtures_or_policy (test_check.ValidationTests.test_implementation_cannot_claim_reference_fixtures_or_policy) ... ok
+test_implementation_requires_contract_and_plan_gate (test_check.ValidationTests.test_implementation_requires_contract_and_plan_gate) ... ok
+test_missing_plan_and_record_ownership (test_check.ValidationTests.test_missing_plan_and_record_ownership) ... ok
+test_parser_rejects_duplicate_keys_and_nonfinite_numbers (test_check.ValidationTests.test_parser_rejects_duplicate_keys_and_nonfinite_numbers) ... ok
+test_paths_reject_traversal_absolute_globs_and_noncanonical_forms (test_check.ValidationTests.test_paths_reject_traversal_absolute_globs_and_noncanonical_forms) ... ok
+test_schema_rejects_unknown_fields_and_boolean_version (test_check.ValidationTests.test_schema_rejects_unknown_fields_and_boolean_version) ... ok
+test_seed_and_completed_discovery_gate (test_check.ValidationTests.test_seed_and_completed_discovery_gate) ... ok
+test_symlink_parent_cannot_escape_scope_or_plan (test_check.ValidationTests.test_symlink_parent_cannot_escape_scope_or_plan) ... ok
+test_transition_rejects_new_done_and_claim_mutation (test_check.ValidationTests.test_transition_rejects_new_done_and_claim_mutation) ... ok
+test_transition_rejects_skipped_stage_removed_oracle_and_record (test_check.ValidationTests.test_transition_rejects_skipped_stage_removed_oracle_and_record) ... ok
+test_unknown_service_status_and_kind (test_check.ValidationTests.test_unknown_service_status_and_kind) ... ok
+test_upstream_sync_can_clear_and_renew_claim_without_rewriting_gates (test_check.ValidationTests.test_upstream_sync_can_clear_and_renew_claim_without_rewriting_gates) ... ok
+test_verified_and_available_advancement_require_current_compatibility (test_check.ValidationTests.test_verified_and_available_advancement_require_current_compatibility) ... ok
+
+----------------------------------------------------------------------
+Ran 32 tests in 0.041s
+
+OK

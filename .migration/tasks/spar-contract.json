@@ -4,7 +4,7 @@
   "title": "Spar contract",
   "service": "spar",
   "kind": "contract-change",
-  "status": "active",
+  "status": "done",
   "owner": "codex",
   "branch": "go-migration",
   "depends_on": [
@@ -39,7 +39,25 @@
       "required_evidence": "Relevant unchanged compiled originals and source variants in explicit catalogue; owned all-Haskell Spar baseline with strict coverage/XML/identities/cleanup, record actual failures and finite gap comparisons. Extend selected seven-Go profile without changing existing assertions/defaults; setup missing cases cannot pass."
     }
   ],
-  "evidence": [],
-  "review": null,
-  "handoff": "Progress: original101 catalogue/Spar optional substitution/exact seven-Go profile implemented;27 Docker harness tests pass, original assertions unchanged. Baseline not yet executed; detailed wire/storage contract still being frozen. Build identified runner from clean commit, run owned all-Haskell Spar101, then retain strict results/cleanup. No candidate qualification."
+  "evidence": [
+    {
+      "criterion": "contract",
+      "result": "pass",
+      "command": "Freeze detailed source-visible Spar configuration/API/version/error/login/cookie/IdP/SCIM/durable state contract and finite matrix.155 primary files byte-match referencef663. SAML verified subtree/issuer/request/time/replay and actual cert/algorithm/source quirks, SCIM token legacy precedence/codec/metadata/cleanup and unsupported GroupPATCH retained; inherited concerns documented without Haskell repair.",
+      "revision": "890a4742e936a2e8078f1a0d39b8bb36616a385f",
+      "artifact": "docs/go-migration/services/spar/contract.md"
+    },
+    {
+      "criterion": "baseline",
+      "result": "pass",
+      "command": "Actual identified nonroot private Docker all-Haskell Spar101/101 original executions pass: strict required names/XML, no errors/failures/skips, all native implementations, exact fixture/binary hashes, process/controller/cleanup0/no owned resources. New optional Spar/exact seven-Go225 profile and selection/read-only-mount negatives pass27 harness tests; framework32 pass. No original assertions/schema/default changes; no native unit rebuild/candidate qualification.",
+      "revision": "890a4742e936a2e8078f1a0d39b8bb36616a385f",
+      "artifact": "docs/go-migration/services/spar/oracle/baseline-result.json"
+    }
+  ],
+  "review": {
+    "by": "codex (self-review delegated by user)",
+    "artifact": "docs/go-migration/services/spar/oracle/REVIEW.md"
+  },
+  "handoff": "Protected contract and actual original101 baseline complete; exact runner099b3065/source890a artifacts retained. Publish contracted\u2192implementing legal gates then first runnable Go comparison. Full finite candidate225/security/ops/switchback/image/selector remain unsatisfied. Haskell default, no push/deploy/security policy repair."
 }
