@@ -1,0 +1,8 @@
+{
+  "project": "wire-e2e-59b138a850ad48669714404747101601",
+  "controller_exit_code": 2,
+  "elapsed_seconds": 363.847,
+  "monitor_file": "/home/operator/.cache/wire-migration/background-worker-20261009/fd8192-monitor.jsonl",
+  "sample_interval_seconds": 5,
+  "monitoring": "readonly /proc and cgroup; no application environment or command lines"
+}

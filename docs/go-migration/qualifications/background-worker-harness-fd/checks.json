@@ -1,0 +1,24 @@
+{
+  "harness_revision": "02fc9148aacd53b7bff23872c9f9d42f921ca707",
+  "checks": [
+    {
+      "command": "python3 -m unittest discover -s tools/parity/docker -p 'test_*.py' -v",
+      "exit_code": 0,
+      "tests": 24
+    },
+    {
+      "command": "make migration-check migration-test",
+      "exit_code": 0,
+      "tests": 32
+    },
+    {
+      "command": "python3 tools/migration/check.py --base b2bd3729a7747f99b696b63645d9af5a62d8a61d --task background-worker-harness-fd",
+      "exit_code": 0
+    },
+    {
+      "command": "git diff --check",
+      "exit_code": 0
+    }
+  ],
+  "provenance": "Observed command results before committing unchanged code. Full console transcripts not retained; real immutable Docker regression transcript in docker-probe.json. No Go code changed or rebuilt; existing source12107801e quality results retained."
+}

@@ -29,3 +29,11 @@ control.py build and environment.py prepare/run with the identified candidate.
 The final same-author review uses the continuing explicit user delegation for this
 migration/harness work; label it honestly. Whole-service/final-six-Go/operations/
 actual durable switchback/image/selector qualification remains separate and pending.
+
+Measured outcome: [qualification receipts](../qualifications/background-worker-harness-fd/README.md)
+retain 46/47, one phase1 SCIM deletion GET500, no errors/skips, cleanup0/no owned
+resources. Runner demand reaches1702 descriptors, proving the old1024 ceiling is
+insufficient for this suite; no observed OOM/PID events. Historical individual
+failure attribution remains unproved. Host24 checks, migration32 checks and real
+Docker high-FD/half-close regression pass. Framework repair is approved by
+same-author delegated review; whole-service qualification remains open.

@@ -4,7 +4,7 @@
   "title": "Bound private runner descriptors and preserve high-FD TCP forwarding",
   "service": "framework",
   "kind": "framework",
-  "status": "active",
+  "status": "review",
   "owner": "codex",
   "branch": "task/background-worker-harness-fd",
   "depends_on": [
@@ -32,7 +32,25 @@
       "required_evidence": "Immutable runner/worker/dependency/compiler identities, actual FD/thread/RSS/memory monitor, complete original47 XML including every failure/skip, terminal controller/owned cleanup; no qualification claim if failing. Same-author delegated scoped review."
     }
   ],
-  "evidence": [],
-  "review": null,
-  "handoff": "Serialized writer on this branch; Go implementation remains reserved on go-migration and is not edited. Apply bounded descriptor/selector repair, focused real regression and monitored original47 rerun."
+  "evidence": [
+    {
+      "criterion": "fixture",
+      "result": "pass",
+      "command": "Host24 harness/isolation and32 migration checks; scoped/diff checks; immutable nonroot Docker actual8192 limit/high-FD multi-chunk half-close exchange passes, oracle unchanged.",
+      "revision": "02fc9148aacd53b7bff23872c9f9d42f921ca707",
+      "artifact": "docs/go-migration/qualifications/background-worker-harness-fd/checks.json"
+    },
+    {
+      "criterion": "observed-run",
+      "result": "pass",
+      "command": "Complete monitored original47 on unchanged12107801e candidate:46 pass,1 retained phase1 SCIM500 failure,no errors/skips; runnerFDpeak1702,memory/pid events0,cleanup0,no owned resources. This passes honest-observation criterion, not candidate qualification. Exact identities/XML/monitor and delegated same-author review retained.",
+      "revision": "02fc9148aacd53b7bff23872c9f9d42f921ca707",
+      "artifact": "docs/go-migration/qualifications/background-worker-harness-fd/result.json"
+    }
+  ],
+  "review": {
+    "by": "codex (self-review delegated by user)",
+    "artifact": "docs/go-migration/qualifications/background-worker-harness-fd/REVIEW.md"
+  },
+  "handoff": "Bounded fixture repair validated; monitored original47 retained46/47 with one phase1 SCIM GET500, no waiver. Merge framework branch to go-migration; reconcile implementation plan/handoff and investigate actual native reference for remaining SCIM failure. Candidate source unchanged; final sixGo124/operations/durable switchback/image/selector/whole-service review remain open."
 }

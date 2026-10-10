@@ -1,0 +1,67 @@
+{
+  "result": "failed",
+  "candidate_revision": "12107801eab254cc61c87b88b8f9d2291cbd0558",
+  "candidate_sha256": "ea1e1ef8c5107ccf9a9aaa7cfaa56d7ae5a92d7b494a29db48b6a1d1353c97ab",
+  "runner_image": "sha256:d0301bbb18ca37904b0c9693725acf6d3ab19b4203f8bda23be3508aabf16f8e",
+  "harness_revision": "02fc9148aacd53b7bff23872c9f9d42f921ca707",
+  "total": 47,
+  "passed": 46,
+  "failures": [
+    "Migration.User.testUserMigrationToPostgres"
+  ],
+  "errors": 0,
+  "skipped": 0,
+  "controller_exit_code": 2,
+  "runner_exit_code": 1,
+  "cleanup_exit_code": 0,
+  "post_cleanup": {
+    "containers": [],
+    "networks": [],
+    "volumes": []
+  },
+  "files": {
+    "environment.json": {
+      "sha256": "789dc402c627f4efb6831b8a40ef80dbe3ac90831cc4b2919b0a9487ab257807",
+      "bytes": 3126
+    },
+    "reports/background-worker.xml": {
+      "sha256": "51705d4211bd6165f39c27919dab29664ea00f070ae51abb14e51580c3318db5",
+      "bytes": 108670
+    },
+    "reports/background-worker.run.json": {
+      "sha256": "d3ba5c151564f16aef03500e8e1b7dd8cd107d0581150aafe47d96b84cc36ab5",
+      "bytes": 6110
+    },
+    "baseline-background-worker.log": {
+      "sha256": "2aac6213d5aa2f53a99da3d5881dbe1f44da88f5e9a0ddaba8ee652aa1bcd5fa",
+      "bytes": 1088908
+    },
+    "dependencies.log": {
+      "sha256": "3d581a323423a2756332a414a8cdf7900a1fe6d111163a39167f592d31a85cf6",
+      "bytes": 152866
+    }
+  },
+  "monitor": {
+    "sample_count": 70,
+    "runner_sample_count": 67,
+    "runner_fd_high_water": 1702,
+    "runner_thread_high_water": 570,
+    "runner_rss_kib_high_water": 150052,
+    "memory_bytes_high_water": 1574649856,
+    "pids_high_water": 1205,
+    "last_cgroup": {
+      "memory.current": "1049022464",
+      "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0\noom_group_kill 0",
+      "memory.peak": "1574649856",
+      "pids.current": "721",
+      "pids.events": "max 0"
+    },
+    "sampling_seconds": 5,
+    "limit": {
+      "soft": 8192,
+      "hard": 8192
+    },
+    "caveat": "Sampled high-water may undercount between probes; probe adds one read-only Python process. Previous failed run was unmonitored; this demonstrates that current suite exceeds its prior ceiling, not individual failure causality."
+  },
+  "interpretation": "Handle-dispute and reindex cases now pass. Main user case reaches phase1 deletion checks: SCIM GET500 instead404 at User.hs194, runPhase1 User.hs139, migrateUsersfalse/cassandra. Previously retained same SCIM failure is not waived. No whole-service/final-six-Go qualification."
+}
