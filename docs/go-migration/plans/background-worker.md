@@ -631,3 +631,12 @@ not a parser identity expansion or changed reference expectation. The changed
 production executable requires current Go checks and exact final mixed124/image/
 operations/switchback evidence; old89f24e7a receipts remain historical qualification
 of that binary and cannot approve the revised one.
+
+[Current exact durable switchback](../../../go/services/background-worker/evidence/switchback-final-20261010/)
+passes all three actual owners on the same Rabbit/PG/Cassandra state. Native
+claim1 survives its explicitly bounded forced stop; Go reclaims/archives attempt2
+under a new owner, completes scheduled work and partial user cleanup preserving
+the target row. Return Haskell migrates a further user, completes another meeting
+job, preserves shared archives/data and ACKs both actual notification bodies.
+Go and return Haskell SIGTERM exit0; cleanup0/no owned resources. Required current
+original124/operations and protected selector/final review gates remain pending.

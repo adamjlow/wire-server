@@ -1,0 +1,6 @@
+{"time":"2026-10-10T03:15:27.492887319Z","level":"info","context":{"pool":"meetings","worker_id":"3efc9e54-3997-4323-8fdb-71c6a8fc802b"},"message":{"text":"No listen connection, running poll-only"}}
+{"time":"2026-10-10T03:15:27.494609309Z","level":"info","context":{"pool":"conversations","worker_id":"e25ea3f1-d71c-4a2f-8205-f7dec99e8bdd"},"message":{"text":"No listen connection, running poll-only"}}
+{"time":"2026-10-10T03:15:27.506167469Z","level":"info","context":{"pool":"meetings","worker_id":"3efc9e54-3997-4323-8fdb-71c6a8fc802b"},"message":{"text":"Cron schedules initialized: 1 schedule(s) upserted"}}
+{"time":"2026-10-10T03:15:27.508148266Z","level":"info","context":{"pool":"meetings","worker_id":"3efc9e54-3997-4323-8fdb-71c6a8fc802b"},"message":{"text":"Cron scheduler started with 1 schedule(s)"}}
+{"time":"2026-10-10T03:15:36.531884859Z","level":"info","context":{"pool":"meetings","worker_id":"3efc9e54-3997-4323-8fdb-71c6a8fc802b"},"message":{"text":"Starting graceful shutdown. Draining in-flight jobs..."}}
+{"time":"2026-10-10T03:15:36.532026174Z","level":"info","context":{"pool":"meetings","worker_id":"3efc9e54-3997-4323-8fdb-71c6a8fc802b"},"message":{"text":"All workers are now idle. Graceful shutdown complete."}}
