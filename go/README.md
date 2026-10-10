@@ -1,9 +1,13 @@
 # Go candidates
 
-Current patched five-service artifacts use **Go1.26.9**. See the
-[identified images, compiler receipts and original77/container results](../docs/go-migration/qualifications/go-patched-20261009/README.md).
-Historical Go1.26.8 receipts remain history; use the new identified artifacts.
-Haskell remains the supported default.
+Current patched artifacts use **Go1.26.9**. The
+[five-service qualification](../docs/go-migration/qualifications/go-patched-20261009/README.md)
+identifies the unchanged peer images/compiler receipts. The optional
+[background-worker](services/background-worker/README.md) now completes the six-Go
+mixed stack: [all124 original executions pass](services/background-worker/evidence/final-original124-20261010/)
+with remaining Haskell peers, plus finite operations and durable switchback.
+Historical Go1.26.8 receipts remain history; use identified current artifacts.
+Haskell remains supported/default.
 
 This directory holds optional Go tooling and isolated service implementations.
 Haskell remains supported and default. Go binaries are explicit per-service

@@ -10,12 +10,14 @@ includes real Haskell reference captures and original tests.
 Use [current patched artifacts](../qualifications/go-patched-20261009/README.md)
 for the Go1.26.9 tuple; previous compiler receipts remain historical. Proxy's
 [formal operational limitation](proxy/oracle/REVIEW.md) remains unresolved despite
-its implemented/tested API and patched image. Background-worker has completed
-[inventory](background-worker/inventory.md) and a frozen
-[contract](background-worker/contract.md); construction follows
-[its plan](../plans/background-worker.md). Retained native reference runs and
-partial candidate runs include failures; no whole-service qualification is
-claimed. Spar, brig and galley remain unimplemented.
+its implemented/tested API and patched image. Background-worker is available at its
+[exact compatibility tuple](../../../.migration/services/background-worker.json).
+Its [inventory](background-worker/inventory.md), frozen
+[contract](background-worker/contract.md), [plan](../plans/background-worker.md)
+and [final self-review](../../../go/services/background-worker/REVIEW.md) link
+current six-Go/Haskell-peer original124, operations, durable switchback and optional
+selection evidence. Historical failed reference/candidate runs remain retained;
+no original assertion was waived. Spar, brig and galley remain unimplemented.
 
 Haskell remains supported and default; milestones never retire its implementation. Keep the latest verified
 upstream/reference/candidate tuple and its report in the compatibility record,

@@ -4,7 +4,7 @@ Maintain upstream-compatible Haskell services and add optional Go alternatives a
 whole-service boundaries. Haskell remains supported, default and the behavioural
 oracle. Operators choose per service; no default changes or Haskell removal follow
 from a Go rollout. Go implementations and opt-in image selectors exist for proxy,
-cargohold, cannon, gundeck and federator. See the
+cargohold, cannon, gundeck, federator and background-worker. See the
 [current patched artifacts and validation](qualifications/go-patched-20261009/README.md).
 
 | Where | Authority |
@@ -29,19 +29,20 @@ is recorded separately for exact upstream/reference/candidate revisions; a null
 compatibility record means no verified Go baseline is currently advertised.
 
 Consult [service records](../../.migration/services) for authoritative current
-stages and exact compatibility pins. Cargohold, cannon, gundeck and federator have
+stages and exact compatibility pins. Cargohold, cannon, gundeck, federator and background-worker have
 available optional implementations. Proxy is implemented, patched and tested, but
 its formal stage remains implementing with no whole-service compatibility claim:
 [review limitation](services/proxy/oracle/REVIEW.md). Historical receipts retain
-their original meaning; the latest mixed run passes77 unchanged original Haskell
-tests with five identified Go executables and remaining Haskell peers.
+their original meaning; the [latest mixed run](../../go/services/background-worker/evidence/final-original124-20261010/) passes124 unchanged original Haskell executions (120 distinct functions) with six identified Go executables and remaining Haskell peers. The five-peer patched qualification remains valid for those unchanged inputs.
 
-Background-worker is now implementing under
-[its executable plan](plans/background-worker.md), with completed source inventory
-and a frozen [reference contract](services/background-worker/contract.md).
-Its implementation and validation are incomplete; compatibility remains null. Choose subsequent
-services from actual dependencies, blast radius and testability; no fixed migration
-order is implied. See the [dossier index](services/README.md).
+Background-worker is available as an optional whole-service replacement at its
+recorded exact reference/candidate tuple. Its [plan](plans/background-worker.md)
+and [final delegated self-review](../../go/services/background-worker/REVIEW.md)
+link current original124, pinned Go checks, bounded operations, actual durable
+Haskell→Go→Haskell recovery and optional image/selector proof. Historical failures,
+inherited security concerns and unavailable native rebuilds remain explicit.
+Choose subsequent services from dependencies, blast radius and testability;
+no fixed migration order is implied. See the [dossier index](services/README.md).
 
 The [framework plan](plans/framework.md) records repository findings and design
 adaptations. Migration documentation is kept here for repository users; publishing

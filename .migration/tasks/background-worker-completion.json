@@ -4,7 +4,7 @@
   "title": "Background-worker completion",
   "service": "framework",
   "kind": "framework",
-  "status": "active",
+  "status": "done",
   "owner": "codex",
   "branch": "go-migration",
   "depends_on": [
@@ -26,7 +26,18 @@
       "required_evidence": "Exact source5a24/workerSHA9a3157/image965c: original124 six-Go/Haskell peers allpass strict names/XML/hashes and cleanup0; pinned Go quality/security/license/source14; current operations and actual durable switchback, optional nonroot trusted image/default-preserving selector/sixnegatives. REVIEW.md records same-author delegation, historical failures, security concerns and unrun native checks. No production/push/default change."
     }
   ],
-  "evidence": [],
-  "review": null,
-  "handoff": "Final implementation complete. Publish finite exact qualification and reconcile current docs through legal scoped transitions."
+  "evidence": [
+    {
+      "criterion": "gates",
+      "result": "pass",
+      "command": "Publish legal implementing\u2192verified\u2192available adjacent transitions with done verification and optional selection gates. Compatibility reference/upstreamf663, candidate5a24 matches all verification evidence. Reconcile migration/module/dossier indexes with final strict original124 and current operations/switchback/image/selector review, retaining historical failures and unrun native checks; Haskell default and no push/deploy. Scoped transition and32 migration validator tests pass.",
+      "revision": "5a24af6f27c622f62ce8cdab35923d6acc765a2d",
+      "artifact": "go/services/background-worker/REVIEW.md"
+    }
+  ],
+  "review": {
+    "by": "codex (self-review delegated by user)",
+    "artifact": "go/services/background-worker/REVIEW.md"
+  },
+  "handoff": "Optional whole-service background-worker available for named exact finite qualified tuple; current124 six-Go/Haskell peer evidence complete. Upstream sync requires reassessment. Haskell default; no remote publication/production switch or speculative tests."
 }

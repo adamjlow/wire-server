@@ -2,7 +2,7 @@
   "schema_version": 1,
   "service": "background-worker",
   "reference_path": "services/background-worker",
-  "stage": "verified",
+  "stage": "available",
   "oracle_paths": [
     "services/background-worker",
     "docs/go-migration/services/background-worker/contract.md",
@@ -29,6 +29,9 @@
     ],
     "rollback": [
       "background-worker-verification"
+    ],
+    "selection": [
+      "background-worker-selection"
     ]
   },
   "compatibility": {
