@@ -1,0 +1,15 @@
+{
+  "source_revision": "8f2d83cb58bdc2124ec842ecec4690dbdc955945",
+  "binary_sha256": "93231cc583008570794780e95c15c298b80b4cf1a295f020578831602de92776",
+  "unit_binary_sha256": "cde1ee9d8ff400e47ad59137b2f8e4726519a3dc466bdb571873006ebdb957e5",
+  "sdk_image": "sha256:f2f47f614f5dbefa4ef1bc2cbf2f24cf95dfa0d65e3e73c8878a74630baaae30",
+  "runner_image": "sha256:f487c90fd364aac9daee5a1ce6e60fdba0ab74ab0c671ab0de0198e8f05659a9",
+  "toolchain": "go1.26.9",
+  "sdk_controller_exit_code": 0,
+  "unchanged_runner_unit_exit_code": 0,
+  "network_cleanup_exit_code": 0,
+  "owned_containers_remaining": false,
+  "owned_networks_remaining": false,
+  "go_checks": "pass",
+  "sdk_archives_manifest_sha256": "07173839615bf3c6d83058fb88319bd292d232bf9584f84fbf17cb5652e198b5"
+}
