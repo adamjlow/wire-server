@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Finite native -> Go read observations on the same native-created state."""
+"""Finite native -> Go read/reauthentication observations on native-created state."""
 import argparse
 import hashlib
 import http.client
@@ -124,7 +124,11 @@ def inside():
                  ('GET', '/i/users/' + user + '/status', {}), ('GET', '/self', {}),
                  ('GET', '/self', {'Z-User': 'invalid-synthetic-uuid'}),
                  ('GET', '/self', {'Z-User': '00000000000000000000000000000001'}),
-                 ('GET', '/v1/self', {'Z-User': user})]
+                 ('GET', '/v1/self', {'Z-User': user}),
+                 ('GET', '/i/users/' + user + '/reauthenticate', {}, {'password': 'Synthetic-password-2026!'}),
+                 ('GET', '/i/users/' + user + '/reauthenticate', {}, {'password': 'Wrong-synthetic-password'}),
+                 ('GET', '/i/users/' + user + '/reauthenticate', {}, {}),
+                 ('GET', '/i/users/' + user + '/reauthenticate', {}, {'password': 'Synthetic-password-2026!', 'action': 'login'})]
         native_records = [request(*case)[0] for case in cases]
         report['records'].append({'implementation': 'haskell', 'observations': native_records})
         active.terminate()

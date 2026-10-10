@@ -12,6 +12,8 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/apache/cassandra-gocql-driver/v2"
 )
 
 func wireError(w http.ResponseWriter, code int, label, message string) {
@@ -128,6 +130,17 @@ func Run(ctx context.Context, c Config) error {
 	if _, _, err := c.signingKeys(); err != nil {
 		return err
 	}
+	if c.Settings.PasswordPolicy == nil || c.Settings.PasswordRate == nil {
+		return errors.New("missing password hashing configuration")
+	}
+	rate, err := newPasswordRateLimiter(*c.Settings.PasswordRate)
+	if err != nil {
+		return err
+	}
+	passwords, err := newPasswordService(*c.Settings.PasswordPolicy, rate, 1)
+	if err != nil {
+		return err
+	}
 	cassandra, err := openCassandra(ctx, c)
 	if err != nil {
 		return err
@@ -148,6 +161,18 @@ func Run(ctx context.Context, c Config) error {
 	transport := http.DefaultTransport.(*http.Transport).Clone()
 	defer transport.CloseIdleConnections()
 	business := brigReadHandlers{config: c, users: userStore{userAuthStore{cassandra: cassandra, postgres: postgres, mode: c.Migration["user"], acquisition: time.Duration(c.PostgresPool.Acquisition)}}, sessions: sessionStore{cassandra}, peers: brigPeers{client: &http.Client{Transport: transport, Timeout: 30 * time.Second}, galley: c.Galley}}
+	business.auth = &reauthenticationHandler{
+		accounts: business.users.get,
+		passwords: authenticationService{store: business.users.userAuthStore, passwords: passwords, isSAML: func(ctx context.Context, user gocql.UUID) (bool, error) {
+			record, err := business.users.get(ctx, user)
+			if err != nil {
+				return false, err
+			}
+			return storedSAML(record)
+		}},
+		verificationEnabled: business.peers.verificationEnabled,
+		verifyCode:          verificationCodeStore{cassandra}.verify,
+	}
 	server := &http.Server{Handler: newHandler(c, &business), ReadHeaderTimeout: 10 * time.Second, IdleTimeout: 60 * time.Second}
 	return serve(ctx, server, listener)
 }

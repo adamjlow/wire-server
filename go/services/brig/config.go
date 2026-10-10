@@ -71,9 +71,11 @@ type Config struct {
 		} `yaml:"authSettings"`
 	} `yaml:"zauth"`
 	Settings struct {
-		Domain           string   `yaml:"setFederationDomain"`
-		DefaultLocale    string   `yaml:"setDefaultUserLocale"`
-		DisabledVersions []string `yaml:"setDisabledAPIVersions"`
+		PasswordPolicy   *passwordPolicy     `yaml:"setPasswordHashingOptions"`
+		PasswordRate     *passwordRateConfig `yaml:"setPasswordHashingRateLimit"`
+		Domain           string              `yaml:"setFederationDomain"`
+		DefaultLocale    string              `yaml:"setDefaultUserLocale"`
+		DisabledVersions []string            `yaml:"setDisabledAPIVersions"`
 		FeatureFlags     *struct {
 			ConferenceCalling struct {
 				DefaultForNull *struct {

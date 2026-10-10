@@ -47,3 +47,34 @@ func (p brigPeers) hasE2EIdentity(ctx context.Context, user, requestID string) (
 		return false, errors.New("missing Galley E2E identity feature")
 	}
 }
+
+func (p brigPeers) verificationEnabled(ctx context.Context, team, requestID string) (bool, error) {
+	endpoint := "http://" + p.galley.Address() + "/i/teams/" + url.PathEscape(team) + "/features/sndFactorPasswordChallenge"
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, endpoint, nil)
+	if err != nil {
+		return false, errors.New("invalid Galley endpoint")
+	}
+	req.Header.Set("Request-Id", requestID)
+	response, err := p.client.Do(req)
+	if err != nil {
+		return false, errors.New("Galley verification feature lookup failed")
+	}
+	defer response.Body.Close()
+	if response.StatusCode < 200 || response.StatusCode >= 300 {
+		return false, errors.New("Galley verification feature lookup failed")
+	}
+	var feature struct {
+		Status string `json:"status"`
+	}
+	if json.NewDecoder(io.LimitReader(response.Body, 4<<20)).Decode(&feature) != nil {
+		return false, errors.New("invalid Galley verification feature")
+	}
+	switch feature.Status {
+	case "enabled":
+		return true, nil
+	case "disabled":
+		return false, nil
+	default:
+		return false, errors.New("missing Galley verification feature status")
+	}
+}
