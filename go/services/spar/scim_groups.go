@@ -5,6 +5,8 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
+	"io"
+	"mime"
 	"net/http"
 	"net/url"
 	"regexp"
@@ -418,8 +420,10 @@ func serveSCIMGroups(w http.ResponseWriter, r *http.Request, c Config, s scimTok
 			w.WriteHeader(405)
 			return true
 		}
-		// Native patchGroup is undefined; no new successful patch behaviour.
-		err = &scimError{Status: 500, Detail: "Prelude.undefined"}
+		// The native undefined handler is reached only after servant decodes
+		// the PatchOp body. Its exception escapes the inner SCIM/cache wrapper.
+		serveUnsupportedGroupPatch(w, r)
+		return true
 	default:
 		w.WriteHeader(405)
 		return true
@@ -430,4 +434,42 @@ func serveSCIMGroups(w http.ResponseWriter, r *http.Request, c Config, s scimTok
 		scimResponse(w, r, status, scimStoredGroup(c, *group))
 	}
 	return true
+}
+
+// Preserve the native unsupported route without inventing group mutation.
+func serveUnsupportedGroupPatch(w http.ResponseWriter, r *http.Request) {
+	media, _, err := mime.ParseMediaType(r.Header.Get("Content-Type"))
+	if err != nil || (media != "application/scim+json" && media != "application/json") {
+		w.WriteHeader(http.StatusUnsupportedMediaType)
+		return
+	}
+	decoder := json.NewDecoder(r.Body)
+	decoder.UseNumber()
+	var object map[string]any
+	err = decoder.Decode(&object)
+	message := "Invalid JSON request"
+	if err != nil {
+		// Actual pinned Aeson diagnostic for a truncated object opening. Read
+		// only this small buffered prefix; never copy an unbounded request body.
+		prefix, _ := io.ReadAll(io.LimitReader(decoder.Buffered(), 65))
+		if errors.Is(err, io.ErrUnexpectedEOF) && strings.TrimSpace(string(prefix)) == "{" {
+			message = "Unexpected end-of-input, expecting record key literal or }"
+		}
+	} else {
+		var extra any
+		if decoder.Decode(&extra) != io.EOF {
+			err = errors.New("trailing JSON")
+		}
+		if err == nil {
+			_, err = parseSCIMPatch(object)
+		}
+	}
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		_, _ = io.WriteString(w, message)
+		return
+	}
+	w.Header().Del("Cache-Control")
+	w.Header().Del("Pragma")
+	wireError(w, http.StatusInternalServerError, "server-error", "Internal Server Error")
 }

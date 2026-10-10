@@ -222,3 +222,42 @@ func TestSCIMGroupCreationChecksMembersBeforeMutation(t *testing.T) {
 		})
 	}
 }
+
+func TestUnsupportedGroupPatchPreservesNativeBoundaryWithoutMutation(t *testing.T) {
+	team := scimTestID(t, "000000000001")
+	for _, test := range []struct {
+		name, body, media, wantBody, wantType string
+		status                                int
+	}{
+		{"valid", `{"schemas":["urn:ietf:params:scim:api:messages:2.0:PatchOp"],"Operations":[{"op":"replace","path":"displayName","value":"synthetic"}]}`, "application/scim+json", "Internal Server Error", "application/json", 500},
+		{"truncated", "{", "application/scim+json", "Unexpected end-of-input, expecting record key literal or }", "", 400},
+		{"media", "{}", "application/octet-stream", "", "", 415},
+	} {
+		t.Run(test.name, func(t *testing.T) {
+			p, close := scimTestPeers(t, func(http.ResponseWriter, *http.Request) { t.Error("unsupported PATCH reached Brig") })
+			defer close()
+			r := httptest.NewRequest("PATCH", "/scim/v2/Groups/00000000-0000-4000-8000-000000000002", strings.NewReader(test.body))
+			r.Header.Set("Authorization", "Bearer synthetic-token")
+			r.Header.Set("Content-Type", test.media)
+			w := httptest.NewRecorder()
+			w.Header()["Content-Type"] = nil
+			w.Header().Set("Cache-Control", "no-cache, no-store")
+			w.Header().Set("Pragma", "no-cache")
+			lookup := &scimTestLookup{info: &tokenInfo{Team: team}}
+			if !serveSCIMGroups(w, r, Config{}, lookup, p) || w.Code != test.status || w.Header().Get("Content-Type") != test.wantType || lookup.calls != 1 {
+				t.Fatal("native boundary mismatch", w.Code, w.Header(), w.Body.String())
+			}
+			if test.status == 500 {
+				var body map[string]any
+				if json.Unmarshal(w.Body.Bytes(), &body) != nil || body["label"] != "server-error" || body["message"] != test.wantBody || w.Header().Get("Cache-Control") != "" || w.Header().Get("Pragma") != "" {
+					t.Fatal("outer exception contract", w.Body.String())
+				}
+			} else if w.Body.String() != test.wantBody || w.Header().Get("Cache-Control") != "no-cache, no-store" || w.Header().Get("Pragma") != "no-cache" {
+				t.Fatal("decode error contract", w.Body.String())
+			}
+			if w.Header().Get("Set-Cookie") != "" {
+				t.Fatal("unsupported PATCH created session")
+			}
+		})
+	}
+}
