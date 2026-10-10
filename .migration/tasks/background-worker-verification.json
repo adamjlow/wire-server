@@ -4,7 +4,7 @@
   "title": "Background-worker verification",
   "service": "background-worker",
   "kind": "verification",
-  "status": "active",
+  "status": "done",
   "owner": "codex",
   "branch": "go-migration",
   "depends_on": [
@@ -36,7 +36,39 @@
       "required_evidence": "Exact source5a24/workerSHA9a3157/image965c: original124 six-Go/Haskell peers allpass strict names/XML/hashes and cleanup0; pinned Go quality/security/license/source14; current operations and actual durable switchback, optional nonroot trusted image/default-preserving selector/sixnegatives. REVIEW.md records same-author delegation, historical failures, security concerns and unrun native checks. No production/push/default change."
     }
   ],
-  "evidence": [],
-  "review": null,
-  "handoff": "Final implementation complete. Publish finite exact qualification and reconcile current docs through legal scoped transitions."
+  "evidence": [
+    {
+      "criterion": "parity",
+      "result": "pass",
+      "command": "Exact source5a24/workerSHA9a3157/image965c: original124 six-Go/Haskell peers allpass strict names/XML/hashes and cleanup0; pinned Go quality/security/license/source14; current operations and actual durable switchback, optional nonroot trusted image/default-preserving selector/sixnegatives. REVIEW.md records same-author delegation, historical failures, security concerns and unrun native checks. No production/push/default change. Final review confirms complete finite acceptance; first native forced137 is explicitly crash recovery, Go/return-native clean shutdown pass.",
+      "revision": "5a24af6f27c622f62ce8cdab35923d6acc765a2d",
+      "artifact": "go/services/background-worker/REVIEW.md"
+    },
+    {
+      "criterion": "security",
+      "result": "pass",
+      "command": "Exact source5a24/workerSHA9a3157/image965c: original124 six-Go/Haskell peers allpass strict names/XML/hashes and cleanup0; pinned Go quality/security/license/source14; current operations and actual durable switchback, optional nonroot trusted image/default-preserving selector/sixnegatives. REVIEW.md records same-author delegation, historical failures, security concerns and unrun native checks. No production/push/default change. Final review confirms complete finite acceptance; first native forced137 is explicitly crash recovery, Go/return-native clean shutdown pass.",
+      "revision": "5a24af6f27c622f62ce8cdab35923d6acc765a2d",
+      "artifact": "go/services/background-worker/REVIEW.md"
+    },
+    {
+      "criterion": "operations",
+      "result": "pass",
+      "command": "Exact source5a24/workerSHA9a3157/image965c: original124 six-Go/Haskell peers allpass strict names/XML/hashes and cleanup0; pinned Go quality/security/license/source14; current operations and actual durable switchback, optional nonroot trusted image/default-preserving selector/sixnegatives. REVIEW.md records same-author delegation, historical failures, security concerns and unrun native checks. No production/push/default change. Final review confirms complete finite acceptance; first native forced137 is explicitly crash recovery, Go/return-native clean shutdown pass.",
+      "revision": "5a24af6f27c622f62ce8cdab35923d6acc765a2d",
+      "artifact": "go/services/background-worker/REVIEW.md"
+    },
+    {
+      "criterion": "rollback",
+      "result": "pass",
+      "command": "Exact source5a24/workerSHA9a3157/image965c: original124 six-Go/Haskell peers allpass strict names/XML/hashes and cleanup0; pinned Go quality/security/license/source14; current operations and actual durable switchback, optional nonroot trusted image/default-preserving selector/sixnegatives. REVIEW.md records same-author delegation, historical failures, security concerns and unrun native checks. No production/push/default change. Final review confirms complete finite acceptance; first native forced137 is explicitly crash recovery, Go/return-native clean shutdown pass.",
+      "revision": "5a24af6f27c622f62ce8cdab35923d6acc765a2d",
+      "artifact": "go/services/background-worker/REVIEW.md"
+    }
+  ],
+  "review": {
+    "by": "codex (self-review delegated by user)",
+    "artifact": "go/services/background-worker/REVIEW.md"
+  },
+  "handoff": "All finite current acceptance passes; current exact candidate/reference tuple and selected five peers retained. No native rebuild/independent review/production approval claim."
 }
