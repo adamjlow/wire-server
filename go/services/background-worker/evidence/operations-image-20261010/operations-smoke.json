@@ -1,0 +1,151 @@
+{
+  "result": "pass",
+  "requests": 100,
+  "concurrency": 8,
+  "jobs": {
+    "sync-user-group": 5,
+    "sync-user-group-and-channel": 5
+  },
+  "busy": 0,
+  "queue": {
+    "consumer_details": [
+      {
+        "arguments": {},
+        "channel_details": {
+          "connection_name": "172.20.2.12:39742 -> 172.20.2.7:5671",
+          "name": "172.20.2.12:39742 -> 172.20.2.7:5671 (1)",
+          "node": "rabbit@64e3a1289539",
+          "number": 1,
+          "peer_host": "172.20.2.12",
+          "peer_port": 39742,
+          "user": "guest"
+        },
+        "ack_required": true,
+        "active": true,
+        "activity_status": "up",
+        "consumer_tag": "background-job-consumer",
+        "consumer_timeout": 1800000,
+        "exclusive": false,
+        "prefetch_count": 4,
+        "queue": {
+          "name": "background-jobs",
+          "vhost": "backendA"
+        }
+      }
+    ],
+    "arguments": {
+      "x-queue-type": "quorum"
+    },
+    "auto_delete": false,
+    "consumer_capacity": 0,
+    "consumer_utilisation": 0,
+    "consumers": 0,
+    "deliveries": [],
+    "delivery_limit": 20,
+    "durable": true,
+    "effective_policy_definition": {},
+    "exclusive": false,
+    "garbage_collection": {
+      "fullsweep_after": 65535,
+      "max_heap_size": 0,
+      "min_bin_vheap_size": 2984878,
+      "min_heap_size": 233,
+      "minor_gcs": 2
+    },
+    "incoming": [],
+    "leader": "rabbit@64e3a1289539",
+    "members": [
+      "rabbit@64e3a1289539"
+    ],
+    "memory": 69068,
+    "message_bytes": 0,
+    "message_bytes_dlx": 0,
+    "message_bytes_persistent": 0,
+    "message_bytes_ram": 0,
+    "message_bytes_ready": 0,
+    "message_bytes_unacknowledged": 0,
+    "message_stats": {
+      "ack": 6,
+      "ack_details": {
+        "rate": 0.0
+      },
+      "deliver": 6,
+      "deliver_details": {
+        "rate": 0.0
+      },
+      "deliver_get": 6,
+      "deliver_get_details": {
+        "rate": 0.0
+      },
+      "deliver_no_ack": 0,
+      "deliver_no_ack_details": {
+        "rate": 0.0
+      },
+      "get": 0,
+      "get_details": {
+        "rate": 0.0
+      },
+      "get_empty": 0,
+      "get_empty_details": {
+        "rate": 0.0
+      },
+      "get_no_ack": 0,
+      "get_no_ack_details": {
+        "rate": 0.0
+      },
+      "publish": 6,
+      "publish_details": {
+        "rate": 0.0
+      },
+      "redeliver": 0,
+      "redeliver_details": {
+        "rate": 0.0
+      }
+    },
+    "messages": 0,
+    "messages_details": {
+      "rate": 0.0
+    },
+    "messages_dlx": 0,
+    "messages_persistent": 0,
+    "messages_ram": 0,
+    "messages_ready": 0,
+    "messages_ready_details": {
+      "rate": 0.0
+    },
+    "messages_ready_high": 0,
+    "messages_ready_normal": 0,
+    "messages_ready_returned": 0,
+    "messages_unacknowledged": 0,
+    "messages_unacknowledged_details": {
+      "rate": 0.0
+    },
+    "name": "background-jobs",
+    "node": "rabbit@64e3a1289539",
+    "online": [
+      "rabbit@64e3a1289539"
+    ],
+    "open_files": {
+      "rabbit@64e3a1289539": 0
+    },
+    "operator_policy": null,
+    "policy": null,
+    "publishers": 0,
+    "reductions": 14337,
+    "reductions_details": {
+      "rate": 0.0
+    },
+    "single_active_consumer_tag": null,
+    "state": "running",
+    "type": "quorum",
+    "vhost": "backendA"
+  },
+  "seconds": 0.6099239392206073,
+  "latency_seconds": {
+    "min": 0.0006620008498430252,
+    "max": 0.007070119492709637,
+    "p50": 0.00165538489818573,
+    "p95": 0.005514791235327721
+  },
+  "metrics": "wire_meetings_cleanup_runs_total 1\nwire_background_worker_running_workers{worker=\"backend-notification-pusher\"} 1\nwire_background_worker_running_workers{worker=\"dead-user-notification-watcher\"} 1\nwire_background_worker_running_workers{worker=\"background-job-consumer\"} 1\nwire_background_jobs_workers_busy 0\nwire_background_jobs_concurrency_configured 4\nwire_background_jobs_received_total{job_type=\"sync-user-group\"} 5\nwire_background_jobs_started_total{job_type=\"sync-user-group\"} 5\nwire_background_jobs_succeeded_total{job_type=\"sync-user-group\"} 5\nwire_background_jobs_failed_total{job_type=\"sync-user-group\"} 0\nwire_background_jobs_invalid_total{job_type=\"sync-user-group\"} 0\nwire_background_jobs_redelivered_total{job_type=\"sync-user-group\"} 0\nwire_background_jobs_duration_seconds_bucket{job_type=\"sync-user-group\",le=\"0.005\"} 4\nwire_background_jobs_duration_seconds_bucket{job_type=\"sync-user-group\",le=\"0.01\"} 5\nwire_background_jobs_duration_seconds_bucket{job_type=\"sync-user-group\",le=\"0.025\"} 5\nwire_background_jobs_duration_seconds_bucket{job_type=\"sync-user-group\",le=\"0.05\"} 5\nwire_background_jobs_duration_seconds_bucket{job_type=\"sync-user-group\",le=\"0.1\"} 5\nwire_background_jobs_duration_seconds_bucket{job_type=\"sync-user-group\",le=\"0.25\"} 5\nwire_background_jobs_duration_seconds_bucket{job_type=\"sync-user-group\",le=\"0.5\"} 5\nwire_background_jobs_duration_seconds_bucket{job_type=\"sync-user-group\",le=\"1\"} 5\nwire_background_jobs_duration_seconds_bucket{job_type=\"sync-user-group\",le=\"2.5\"} 5\nwire_background_jobs_duration_seconds_bucket{job_type=\"sync-user-group\",le=\"5\"} 5\nwire_background_jobs_duration_seconds_bucket{job_type=\"sync-user-group\",le=\"10\"} 5\nwire_background_jobs_duration_seconds_bucket{job_type=\"sync-user-group\",le=\"+Inf\"} 5\nwire_background_jobs_duration_seconds_sum{job_type=\"sync-user-group\"} 0.008869993999999999\nwire_background_jobs_duration_seconds_count{job_type=\"sync-user-group\"} 5\nwire_background_jobs_received_total{job_type=\"sync-user-group-and-channel\"} 5\nwire_background_jobs_started_total{job_type=\"sync-user-group-and-channel\"} 5\nwire_background_jobs_succeeded_total{job_type=\"sync-user-group-and-channel\"} 5\nwire_background_jobs_failed_total{job_type=\"sync-user-group-and-channel\"} 0\nwire_background_jobs_invalid_total{job_type=\"sync-user-group-and-channel\"} 0\nwire_background_jobs_redelivered_total{job_type=\"sync-user-group-and-channel\"} 0\nwire_background_jobs_duration_seconds_bucket{job_type=\"sync-user-group-and-channel\",le=\"0.005\"} 5\nwire_background_jobs_duration_seconds_bucket{job_type=\"sync-user-group-and-channel\",le=\"0.01\"} 5\nwire_background_jobs_duration_seconds_bucket{job_type=\"sync-user-group-and-channel\",le=\"0.025\"} 5\nwire_background_jobs_duration_seconds_bucket{job_type=\"sync-user-group-and-channel\",le=\"0.05\"} 5\nwire_background_jobs_duration_seconds_bucket{job_type=\"sync-user-group-and-channel\",le=\"0.1\"} 5\nwire_background_jobs_duration_seconds_bucket{job_type=\"sync-user-group-and-channel\",le=\"0.25\"} 5\nwire_background_jobs_duration_seconds_bucket{job_type=\"sync-user-group-and-channel\",le=\"0.5\"} 5\nwire_background_jobs_duration_seconds_bucket{job_type=\"sync-user-group-and-channel\",le=\"1\"} 5\nwire_background_jobs_duration_seconds_bucket{job_type=\"sync-user-group-and-channel\",le=\"2.5\"} 5\nwire_background_jobs_duration_seconds_bucket{job_type=\"sync-user-group-and-channel\",le=\"5\"} 5\nwire_background_jobs_duration_seconds_bucket{job_type=\"sync-user-group-and-channel\",le=\"10\"} 5\nwire_background_jobs_duration_seconds_bucket{job_type=\"sync-user-group-and-channel\",le=\"+Inf\"} 5\nwire_background_jobs_duration_seconds_sum{job_type=\"sync-user-group-and-channel\"} 0.006270359\nwire_background_jobs_duration_seconds_count{job_type=\"sync-user-group-and-channel\"} 5\n"
+}

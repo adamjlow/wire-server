@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "project": "wire-e2e-ead633689504418cbb4514276a6dfd6d",
+  "source_revision": "368aeb4143f5e9299da4b17d9bce157e2e345a5c",
+  "runner_image_id": "sha256:d0301bbb18ca37904b0c9693725acf6d3ab19b4203f8bda23be3508aabf16f8e",
+  "runner_revision": "02fc9148aacd53b7bff23872c9f9d42f921ca707",
+  "candidate": null,
+  "peer_candidates": {},
+  "result": "prepared",
+  "e2e_executed": false,
+  "compose_sha256": "2a81626350aa8288a76ebb7d0892c4650f9e13781d4293e036a256e9a6e90331",
+  "files_sha256": {
+    "fixtures/configs.json": "8cc34c41cc248ae804d822a60fb610b0adead84c3e79663eb33243ef70c99876",
+    "fixtures/integration.json": "d8834dad54e1f851e689ac00691cd527aac69e0e9ce00baf149835433812c73c",
+    "fixtures/peers.json": "ca8438ea9464138dc0c75868b62eb8b12113343dada8336524c3ea467dd3a490"
+  }
+}

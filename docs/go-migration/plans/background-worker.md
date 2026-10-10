@@ -20,30 +20,29 @@ Whole-service parity is not yet claimed; the task record owns current status.
 
 ## Current validation checkpoint (2026-10-10)
 
-The latest unchanged original Haskell worker suite passes **46 of 47** cases on
-clean Go source `12107801eab254cc61c87b88b8f9d2291cbd0558`, with the remaining
-services in Haskell. [Exact monitored receipts](../qualifications/background-worker-harness-fd/README.md)
-retain all 47 assertions, no errors/skips, and successful cleanup with no owned
-resources remaining. All 23 adminless cases, meetings cleanup, other migrations,
-handle disputes and reindexing pass. Main user migration still fails phase1:
-SCIM deletion GET returns500 instead404 while migrateUsersfalse/Cassandra is
-selected. This retained failure is not waived. A subsequent matched originalusers2 pair
-passes2/2 on both Haskell and unchanged Go12107801e, including all five phases;
-the wider47 failure does not reproduce and remains unattributed.
+The exact final worker at clean89f24e7a with five qualified Go peers and the
+remaining Haskell services passes all124 original executions, including all47
+worker cases: [strict XML/artifact/cleanup evidence](../../../go/services/background-worker/evidence/six-go-original124-20261010/).
+The actual catalogues contain120 distinct functions, with four repeated Events
+cases; the earlier119 count is a metadata error whose protected correction is
+separately scoped. Original assertions remain unchanged. Earlier failing runs
+are historical evidence, superseded by the passing final full run for this binary.
 
-The separately reviewed Docker fixture repair gives only the runner a bounded
-8192 descriptor ceiling and high-FD selector. Measured runner demand reaches1702
-FDs, exceeding the prior1024 ceiling. No observed OOM/PID-limit events. The previous
-44/47 run remains historical evidence; two previously failing cases now pass, but
-individual historical causality is unproved without old resource measurements.
+The optional nonroot image packages that exact executable and patched static
+OpenSSL3.5.9 with verified CA and license notices. Its bot TLS checks pass.
+The [declared operations smoke](../../../go/services/background-worker/evidence/operations-image-20261010/)
+now passes100 health requests/concurrency8 and ten jobs within30s, records actual
+RSS/CPU/latency, and proves loaded SIGTERM exits0 with both unsent notifications
+preserved. Both default config mounts and real verified broker TLS operate in
+the private owned image namespace; mandatory cleanup succeeds with no resources
+remaining. These checks reuse unchanged successful service/original-suite evidence.
 
-Goal and implementation task remain active; Haskell is supported/default and
-compatibility remains null. The matching original users2 comparison passes on
-both implementations. Ordinary proxy/reused incomplete-header behavior is now
-corrected with Go checks; the remaining parser audit is explicit below. Next
-validate the settled final executable against six-Go124, bounded operations, durable
-Haskell-Go-Haskell switchback and optional patched-OpenSSL image/selector.
-Only the final passing acceptance permits whole-service approval/availability.
+Goal/task remain active, service implementing and compatibility null. Remaining
+acceptance: actual durable Haskell-Go-Haskell same-state Rabbit/PG/Cassandra
+switchback with scheduled jobs/inflight lease/migration continuation, separately
+scoped optional selector/count metadata, and final delegated same-author review
+and legal availability/compatibility publication. Haskell remains supported and
+default; no push or production switch is authorized.
 
 ## Earlier construction checkpoint (2026-10-10)
 
@@ -556,9 +555,9 @@ reserved for separately scoped selector/publication work.
 packages the same worker with static patched OpenSSL3.5.9, qualified source CA,
 UID65534 and complete helper/runtime license notices. Exact-image bot tests pass
 including DHE/pin/date/cancellation/transcript/reaping. No host dependencies are
-installed. Commit/run the generic packager, then prove real default mounts/health,
-declared operations/loaded SIGTERM and durable Haskell-Go-Haskell switchback;
-image construction alone does not satisfy those gates.
+installed. The committed generic packager runs successfully and reproduces the exact tested
+image. Default mounts/health and declared operations/loaded SIGTERM now pass as
+recorded below; durable Haskell-Go-Haskell switchback remains outstanding.
 
 The next operations check is declared before execution in
 `go/services/background-worker/qualification/`:100 health requests, concurrency8,
@@ -571,3 +570,11 @@ both default config mounts, UID65534, verified Rabbit CA, no host ports, read-on
 source/rootfs and owned mandatory cleanup. The qualification sink is separate
 from the shipping executable/image. This is operations evidence, not another
 original-suite run or the required complete durable switchback.
+
+The declared operations smoke passes on the exact qualified image:100 health
+requests/concurrency8 and ten jobs in0.610s, correct counters/ACK/busy0, RSS/CPU/
+latency samples retained. Actual blocked h2c delivery has one unacked/one ready;
+SIGTERM exits0 in0.0595s and returns both unsent messages to ready. Both default
+mounts, UID65534 and verified broker CA work; cleanup0/no owned resources.
+[Exact result and finite limits](../../../go/services/background-worker/evidence/operations-image-20261010/)
+are retained. Remaining durable switchback/selector/final review gates are unchanged.
