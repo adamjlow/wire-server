@@ -15,30 +15,36 @@ import environment
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     for name in ('output','runner-receipt','candidate','candidate-receipt'):parser.add_argument('--'+name,type=Path,required=True)
-    parser.add_argument('--suite',choices=('early','middleware','tokens','idps','delete','login','scim-groups','scim-users','remaining-routes'),default='early')
+    parser.add_argument('--suite',choices=('early','middleware','signatures','tokens','idps','delete','login','scim-groups','scim-users','remaining-routes'),default='early')
+    parser.add_argument('--signature-fixtures',type=Path)
     args=parser.parse_args()
+    if args.suite=='signatures' and args.signature_fixtures is None:parser.error('signature fixtures executable required')
     selected=environment.identified_candidate(args.candidate,args.candidate_receipt)
     record=environment.prepare(args.output,args.runner_receipt)
     output=args.output.resolve();compose_path=output/'compose.json';spec=json.loads(compose_path.read_text())
-    if args.suite in ('early','middleware'):
+    if args.suite in ('early','middleware','signatures'):
         spec['services']={name:service for name,service in spec['services'].items() if name in ('cassandra','runner')}
         spec['networks']={'demo_wire':spec['networks']['demo_wire']}
     runner=spec['services']['runner']
-    if args.suite in ('early','middleware'):runner['networks']=['demo_wire']
+    if args.suite in ('early','middleware','signatures'):runner['networks']=['demo_wire']
     runner['entrypoint']=['/nix/store/60m4rxhg2fldqaak400c0lry96ijrzqn-python3-3.13.13/bin/python3']
-    runner['command']=['/source/go/services/spar/qualification/'+('early.py' if args.suite in ('early','middleware') else 'tokens.py')]
+    runner['command']=['/source/go/services/spar/qualification/'+('early.py' if args.suite in ('early','middleware','signatures') else 'tokens.py')]
     if args.suite=='middleware':runner['command']+=['--middleware']
-    if args.suite not in ('early','middleware'):runner['command']+=['--suite',args.suite]
+    if args.suite=='signatures':
+        runner['command']+=['--signatures']
+        runner['volumes'].append({'type':'bind','source':str(args.signature_fixtures.resolve(strict=True)),'target':'/candidate/signature-fixtures.test','read_only':True})
+    if args.suite not in ('early','middleware','signatures'):runner['command']+=['--suite',args.suite]
     runner['volumes'].append({'type':'bind','source':selected['path'],'target':'/candidate/spar','read_only':True})
     environment.validate_isolation(spec)
     compose_path.write_text(json.dumps(spec,indent=2)+'\n')
-    record.update(kind='early-native-Go-Spar-process' if args.suite in ('early','middleware') else 'original-Go-Spar-token-tests',candidate=selected,compose_sha256=hashlib.sha256(compose_path.read_bytes()).hexdigest())
+    if args.suite=='signatures':record['signature_fixture_executable']={'path':str(args.signature_fixtures.resolve()),'sha256':hashlib.sha256(args.signature_fixtures.read_bytes()).hexdigest(),'source_revision':record['source_revision']}
+    record.update(kind='early-native-Go-Spar-process' if args.suite in ('early','middleware','signatures') else 'original-Go-Spar-token-tests',candidate=selected,compose_sha256=hashlib.sha256(compose_path.read_bytes()).hexdigest())
     compose=['docker','compose','-p',record['project'],'-f',str(compose_path)]
     code=1
     try:
-        dependencies=['cassandra'] if args.suite in ('early','middleware') else [name for name in spec['services'] if name not in ('runner','redis-cluster')]
+        dependencies=['cassandra'] if args.suite in ('early','middleware','signatures') else [name for name in spec['services'] if name not in ('runner','redis-cluster')]
         subprocess.run([*compose,'up','--detach',*dependencies],check=True,timeout=120,capture_output=True)
-        if args.suite not in ('early','middleware'):
+        if args.suite not in ('early','middleware','signatures'):
             # Same dependency sequence as protected environment.run: creation
             # before Redis nodes are ready silently leaves native presence broken.
             deadline=time.monotonic()+90
@@ -50,7 +56,7 @@ def main():
             with (output/'redis-cluster-bootstrap.log').open('w')as log:
                 subprocess.run([*compose,'run','--rm','--no-deps','redis-cluster'],stdout=log,stderr=subprocess.STDOUT,check=True,timeout=90)
         with (output/'controller.log').open('w')as log:
-            result=subprocess.run([*compose,'run','--rm','--no-deps','runner'],stdout=log,stderr=subprocess.STDOUT,timeout=240 if args.suite in ('early','middleware') else 900)
+            result=subprocess.run([*compose,'run','--rm','--no-deps','runner'],stdout=log,stderr=subprocess.STDOUT,timeout=240 if args.suite in ('early','middleware','signatures') else 900)
         code=result.returncode;record['process_exit_code']=code
         observed=json.loads((output/'reports/result.json').read_text());record['result']=observed['result']
         if code!=0 or observed['result']!='pass':code=1

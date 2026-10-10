@@ -1,6 +1,8 @@
 """Finite actual native/Go startup and HTTP comparison in an owned namespace."""
 import contextlib
 import gzip
+import base64
+import urllib.parse
 import re
 import hashlib
 import http.client
@@ -28,7 +30,7 @@ def request(method,path,body=None,headers=None):
         text=body.decode('utf-8')
         try:value=json.loads(text)
         except json.JSONDecodeError:value=text
-        headers={name.lower():response.getheader(name) for name in ('Content-Type','Cache-Control','Pragma','Request-Id','Allow')}
+        headers={name.lower():response.getheader(name) for name in ('Content-Type','Cache-Control','Pragma','Request-Id','Allow','Set-Cookie')}
         return {'status':response.status,'headers':headers,'body':value}
     finally:connection.close()
 
@@ -83,9 +85,29 @@ def observe(binary,config,name):
                     key='metrics-'+method
                     middleware[key]=request(method,'/i/metrics',b'invalid gzip',{'Content-Encoding':'gzip'})
                 middleware['metrics-GET-final']=request('GET','/i/metrics')
+            signature_checks={}
+            if '--signatures' in sys.argv:
+                fixtures=sorted(Path('/reports/signature-fixtures').glob('*.json'))
+                if len(fixtures)!=12:raise ValueError('finite signature fixture set incomplete')
+                for fixture in fixtures:
+                    case=json.loads(fixture.read_text())
+                    idp=request('GET','/identity-providers/'+case['idp'])
+                    if idp['status']!=200:raise ValueError('native stored IdP decoding failed')
+                    variants={'signed':case['xml']}
+                    if case['signature_accepted']:variants['tampered']=case['xml'].replace('synthetic@example.test','attacker@example.test')
+                    for variant,xml in variants.items():
+                        body=urllib.parse.urlencode({'SAMLResponse':base64.b64encode(xml.encode()).decode()})
+                        reply=request('POST','/sso/finalize-login',body,{'Content-Type':'application/x-www-form-urlencoded'})
+                        accepted=variant=='signed' and case['signature_accepted']
+                        signature_checks[case['name']+'-'+variant]={'reply':reply,'fixture_sha256':hashlib.sha256(fixture.read_bytes()).hexdigest(),'signature_accepted':accepted,'idp_read_status':idp['status']}
+                        Path('/reports/'+name+'-signature-replies.json').write_text(json.dumps(signature_checks,indent=2)+'\n')
+                        if reply['headers']['set-cookie'] is not None:raise ValueError('qualification response created a session')
+                        if accepted:
+                            if reply['status']!=500 or not isinstance(reply['body'],dict) or reply['body'].get('label')!='server-error':raise ValueError('valid signature did not reach missing-request verdict boundary')
+                        elif reply['status']!=400 or not isinstance(reply['body'],str) or 'wire:sso:error:bad-response-signature' not in reply['body']:raise ValueError('invalid signature was not rejected at verification')
             begin=time.monotonic();process.send_signal(signal.SIGTERM);code=process.wait(timeout=35)
             if code!=0:raise ValueError(name+' failed clean SIGTERM')
-            return {'responses':replies,'middleware':middleware,'stop_exit_code':code,'stop_seconds':time.monotonic()-begin,'binary_sha256':hashlib.sha256(Path(binary).read_bytes()).hexdigest()}
+            return {'responses':replies,'middleware':middleware,'signature_checks':signature_checks,'stop_exit_code':code,'stop_seconds':time.monotonic()-begin,'binary_sha256':hashlib.sha256(Path(binary).read_bytes()).hexdigest()}
         finally:
             if process.poll()is None:
                 process.kill();process.wait(timeout=10)
@@ -109,7 +131,10 @@ def main():
             subprocess.run(['spar-schema','--keyspace','spar_test','--replication-factor','1','--reset'],stdout=log,stderr=subprocess.STDOUT,timeout=90,check=True)
         config=Path('/tmp/spar-early.json')
         cfg=json.loads(Path('/fixtures/peers.json').read_text())['0']['spar'];config.write_text(json.dumps(cfg))
-        native=str(Path(shutil.which('spar')).resolve(strict=True));candidate='/candidate/spar'
+        if '--signatures' in sys.argv:
+            with Path('/reports/signature-fixtures.log').open('w') as log:
+                subprocess.run(['/candidate/signature-fixtures.test','-test.run=^(TestNativeDigestAndLargeAssertionCompatibility|TestNativeSuccessfulReferenceSelection)$','-test.timeout=90s'],env={**os.environ,'SPAR_SIGNATURE_FIXTURE_CONFIG':str(config)},stdout=log,stderr=subprocess.STDOUT,timeout=95,check=True)
+        native=str(Path(shutil.which('spar')).resolve(strict=True));candidate='/candidate/spar' 
         output['config_sha256']=hashlib.sha256(config.read_bytes()).hexdigest()
         output['native']=observe(native,config,'native')
         output['go']=observe(candidate,config,'go')
@@ -135,7 +160,20 @@ def main():
                 if nproject!=gproject:differences[key]={'native':nproject,'go':gproject}
             output['middleware_differences']=differences
             output['scope']='Original33 actual process HTTP replies plus declared6 gzip/readback and4 metrics probes; exact response/state/header checks, error code/label (incidental parser text excluded), normalized histogram count/name checks (latency/GC values are runtime-specific and startup health poll count excluded). Not original e2e or full operations qualification.'
-        output['result']='pass' if not output['differences'] and not output.get('middleware_differences') else 'fail' 
+        if '--signatures' in sys.argv:
+            differences={}
+            for key,native in output['native']['signature_checks'].items():
+                go=output['go']['signature_checks'][key]
+                # Authentication HTML diagnostics contain runtime-specific error
+                # constructors. Check actual verification boundary/status/header
+                # and no-cookie behavior; keep the full raw pages for review.
+                def projection(check):
+                    reply=check['reply'];body=reply['body']
+                    return {'status':reply['status'],'headers':reply['headers'],'signature_accepted':check['signature_accepted'],'idp_read_status':check['idp_read_status'],'label':body.get('label') if isinstance(body,dict) else re.search(r'<title>([^<]+)</title>',body).group(1)}
+                if projection(native)!=projection(go):differences[key]={'native':projection(native),'go':projection(go)}
+            output['signature_differences']=differences
+            output['scope']='Finite actual native/Go signature comparison:12 signed cases plus9 paired tamper controls. Native stored IdP reads, SHA1/256/512/RIPEMD160, RSA-SHA1/256, >1000nodes, failed-extra versus unique successful matching reference and unsupported transform. Accepted signatures must reach the unknown-request JSON500 boundary with no session; bad signatures400. Raw runtime-specific HTML diagnostics retained, not byte-normalized into a full-equality claim. Includes existing33 process replies. No original e2e or full durable switchback/operations claim.'
+        output['result']='pass' if not output['differences'] and not output.get('middleware_differences') and not output.get('signature_differences') else 'fail'  
         return 0 if output['result']=='pass' else 1
     except Exception as error:
         output.update(result='fail',error_category=type(error).__name__,error=str(error)[:300]);return 1
