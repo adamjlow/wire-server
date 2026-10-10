@@ -1,0 +1,58 @@
+{
+  "result": "failed",
+  "scope": "Initial CLI help/config failure only; no health/API/e2e/state/operations/whole-service parity claim.",
+  "e2e_executed": false,
+  "source_revision": "3dc881976f01b510c44d2b5d38b60bc32f838b29",
+  "binary_sha256": "e1cc95deac7815ea36dbda90e1161693612f526dfbe4f281b718d4b4a10866a4",
+  "native_runner_image": "sha256:f487c90fd364aac9daee5a1ce6e60fdba0ab74ab0c671ab0de0198e8f05659a9",
+  "native_brig_path": "/nix/store/f6l2f0l8l2r6z9jbg937q96k6056iqfn-brig/bin/brig",
+  "records": [
+    {
+      "implementation": "haskell",
+      "args": [
+        "--help"
+      ],
+      "exit_code": 0,
+      "stdout": "Usage: brig [-c|--config-file ARG] [COMMAND]\n\n  Brig - User Service\n\nAvailable options:\n  -c,--config-file ARG     Config file to load\n                           (default: \"/etc/wire/brig/conf/brig.yaml\")\n  -h,--help                Show this help text\n\nAvailable commands:\n  run                      Run the brig service\n  migrate-postgres         Migrate the postgresql database\n",
+      "stderr": "",
+      "expected_exit_code": 0,
+      "pass": false
+    },
+    {
+      "implementation": "go",
+      "args": [
+        "--help"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "Brig - User Service\nUsage: brig [-c CONFIG] [run | migrate-postgres [--dbname NAME] [--reset]]\n  -c string\n    \tConfig file to load (default \"/etc/wire/brig/conf/brig.yaml\")\n  -config-file string\n    \tConfig file to load (default \"/etc/wire/brig/conf/brig.yaml\")\n",
+      "expected_exit_code": 0,
+      "pass": true
+    },
+    {
+      "implementation": "haskell",
+      "args": [
+        "--config-file",
+        "/tmp/nonexistent-synthetic-brig.yaml"
+      ],
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "brig: user error (InvalidYaml (Just (YamlException \"Yaml file not found: /tmp/nonexistent-synthetic-brig.yaml\")) while attempting to decode /tmp/nonexistent-synthetic-brig.yaml)\n\n",
+      "expected_exit_code": 1,
+      "pass": true
+    },
+    {
+      "implementation": "go",
+      "args": [
+        "--config-file",
+        "/tmp/nonexistent-synthetic-brig.yaml"
+      ],
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "cannot read Brig configuration\n",
+      "expected_exit_code": 1,
+      "pass": true
+    }
+  ],
+  "owned_containers_removed": true
+}

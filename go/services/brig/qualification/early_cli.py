@@ -49,13 +49,13 @@ def main():
     checksum=hashlib.sha256(binary.read_bytes()).hexdigest()
     if receipt['source_revision']!=revision or receipt['binary_sha256']!=checksum or not re.fullmatch('[0-9a-f]{40}',revision):raise ValueError('candidate receipt mismatch')
     records=[]
-    for case,expected in [(['--help'],0),(['--config-file','/tmp/nonexistent-synthetic-brig.yaml'],1)]:
+    for case,expected in [(['--help'],0),(['migrate-postgres','--help'],0),(['--config-file','/tmp/nonexistent-synthetic-brig.yaml'],1)]:
         for implementation in ['haskell','go']:
             record=observe(implementation,binary,case);record['expected_exit_code']=expected
             record['pass']=record['exit_code']==expected
-            if case==['--help']:
+            if '--help' in case:
                 text=record['stdout']+record['stderr']
-                record['pass']=record['pass'] and all(word in text for word in ['config-file','migrate-postgres','dbname','reset'])
+                record['pass']=record['pass'] and all(word in text for word in (['config-file','migrate-postgres'] if case==['--help'] else ['dbname','reset']))
             records.append(record)
     report={'result':'pass' if all(r['pass'] for r in records) else 'failed',
             'scope':'Initial CLI help/config failure only; no health/API/e2e/state/operations/whole-service parity claim.',

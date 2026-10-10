@@ -1,0 +1,8 @@
+{
+  "source_revision": "3dc881976f01b510c44d2b5d38b60bc32f838b29",
+  "binary_sha256": "e1cc95deac7815ea36dbda90e1161693612f526dfbe4f281b718d4b4a10866a4",
+  "binary": "/dev/shm/wire-migration-brig-20261010/brig-initial-3dc881976",
+  "go_version": "go1.26.9",
+  "command": "GOTOOLCHAIN=local GOWORK=off CGO_ENABLED=0 TMPDIR=/dev/shm go build -trimpath -o <identified external binary> ./cmd/brig",
+  "status": "built-initial-incomplete-slice"
+}
