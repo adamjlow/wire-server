@@ -16,6 +16,13 @@ class EnvironmentTests(unittest.TestCase):
         return {'name':'wire-e2e-'+'a'*32,'networks':{'private':{'internal':True}},
                 'volumes':{'owned':{}},'services':{'test':{'image':'sha256:'+'b'*64,'networks':{'private':None}}}}
 
+    def test_spar_mount_is_exact_and_read_only(self):
+        spec=self.spec();spec['services']['test']['volumes']=[{'type':'bind','source':'/tmp/identified-spar','target':'/candidate/spar','read_only':True}]
+        environment.validate_isolation(spec)
+        for field,value in (('target','/candidate/spar-extra'),('target','/candidate/brig'),('read_only',False)):
+            wrong=copy.deepcopy(spec);wrong['services']['test']['volumes'][0][field]=value
+            with self.assertRaises(ValueError):environment.validate_isolation(wrong)
+
     def test_federator_mount_is_exact_and_read_only(self):
         spec=self.spec();spec['services']['test']['volumes']=[{'type':'bind','source':'/tmp/identified-federator','target':'/candidate/federator','read_only':True}]
         environment.validate_isolation(spec)

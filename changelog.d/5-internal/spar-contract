@@ -1,0 +1,1 @@
+Add explicit original Spar101 test catalogue and optional Spar/seven-Go selection to the existing private Docker parity harness, retaining original assertions, exact artifact selection and owned isolation/cleanup. Baseline and detailed service contract remain in progress; Haskell default unchanged.

@@ -73,6 +73,23 @@ class ContainerTests(unittest.TestCase):
         self.assertEqual({'background-worker'},set(runtime.selections('background-worker',executable,[])))
         self.assertEqual({},runtime.selections('background-worker',None,[]))
 
+    def test_spar_catalogue_matches_actual_compiled_names_including_variants(self):
+        discovered=json.loads((FILES.parents[2]/'docs/go-migration/services/spar/test-discovery.json').read_text())
+        expected=discovered['core_cases']+discovered['other_related_discovered_cases']
+        self.assertEqual(101,len(runner.names('spar')))
+        self.assertEqual(set(expected),set(runner.names('spar')))
+
+    def test_seven_service_selection_rejects_missing_foreign_duplicate_ambiguous(self):
+        executable=self.root/'candidate';executable.write_text('synthetic');executable.chmod(0o755)
+        names=('proxy','cargohold','cannon','gundeck','federator','background-worker','spar')
+        pairs=[(name,str(executable)) for name in names]
+        profile='proxy-cargohold-cannon-gundeck-federator-background-worker-spar'
+        self.assertEqual(set(names),set(runtime.selections(profile,None,pairs)))
+        for invalid in (pairs[:-1],pairs+[pairs[-1]],pairs+[('brig',str(executable))]):
+            with self.assertRaises(ValueError):runtime.selections(profile,None,invalid)
+        with self.assertRaises(ValueError):runtime.selections(profile,executable,pairs)
+        self.assertEqual({'spar'},set(runtime.selections('spar',executable,[])))
+
     def test_background_worker_catalogue_matches_actual_compiled_discovery(self):
         discovered=json.loads((FILES.parents[2]/'docs/go-migration/services/background-worker/test-discovery.json').read_text())['worker_cases']
         names=runner.names('background-worker')

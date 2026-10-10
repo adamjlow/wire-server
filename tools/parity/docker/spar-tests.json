@@ -1,0 +1,239 @@
+{
+  "schema_version": 1,
+  "description": "Unchanged original compiled Spar86 plus15 cross-service SSO/SCIM cases;101 exact names from pinned discovery. Bracket variant suffixes retain original multiple-tag formatting.",
+  "services": {
+    "spar": [
+      {
+        "module": "Test.Spar.CertFingerprintAllowlist",
+        "source": "integration/test/Test/Spar/CertFingerprintAllowlist.hs",
+        "tests": [
+          "testAcceptsMultiCertWhenAllListed",
+          "testAcceptsWhenAllowlistEmpty",
+          "testAcceptsWhenFingerprintListed",
+          "testCreateRejectsWhenFingerprintNotListed",
+          "testFinalizeLoginSucceedsWhenCertAllowlisted",
+          "testRejectsMultiCertWhenAnyMissing",
+          "testUpdateRejectsWhenFingerprintNotListed"
+        ]
+      },
+      {
+        "module": "Test.Spar.GetByEmail",
+        "source": "integration/test/Test/Spar/GetByEmail.hs",
+        "tests": [
+          "testGetSsoCodeByEmailDisabledMultiIngress",
+          "testGetSsoCodeByEmailDisabledRegular",
+          "testGetSsoCodeByEmailNonSSOUser",
+          "testGetSsoCodeByEmailRegular",
+          "testGetSsoCodeByEmailWithMultiIngress"
+        ],
+        "variants": {
+          "testGetSsoCodeByEmailRegular": [
+            "requireexternalemailverification=false][idpscimtoken=false",
+            "requireexternalemailverification=false][idpscimtoken=true",
+            "requireexternalemailverification=true][idpscimtoken=false",
+            "requireexternalemailverification=true][idpscimtoken=true"
+          ],
+          "testGetSsoCodeByEmailWithMultiIngress": [
+            "requireexternalemailverification=false][idpscimtoken=false",
+            "requireexternalemailverification=false][idpscimtoken=true",
+            "requireexternalemailverification=true][idpscimtoken=false",
+            "requireexternalemailverification=true][idpscimtoken=true"
+          ]
+        }
+      },
+      {
+        "module": "Test.Spar.IdPIssuerUpdate",
+        "source": "integration/test/Test/Spar/IdPIssuerUpdate.hs",
+        "tests": [
+          "testUpdateIdPIssuerThenDelete"
+        ]
+      },
+      {
+        "module": "Test.Spar.MultiIngressCrossIdpSso",
+        "source": "integration/test/Test/Spar/MultiIngressCrossIdpSso.hs",
+        "tests": [
+          "testCrossIdpSsoMigration",
+          "testCrossIngressRequestResponseMismatch",
+          "testCrossTeamIdpLoginRejected",
+          "testIdpNotFoundError",
+          "testNonEmailNameIdRejectedInMultiIngress",
+          "testScimUserLoginsDifferentIdP",
+          "testUnsolicitedSamlResponseRejected"
+        ],
+        "variants": {
+          "testCrossIdpSsoMigration": [
+            "usescim=false",
+            "usescim=true"
+          ]
+        }
+      },
+      {
+        "module": "Test.Spar.MultiIngressIdp",
+        "source": "integration/test/Test/Spar/MultiIngressIdp.hs",
+        "tests": [
+          "testMultiIngressAtMostOneIdPPerDomain",
+          "testMultiIngressIdPIssuerDifferentDomains",
+          "testMultiIngressIdpSimpleCase",
+          "testNonMultiIngressSetupsCanHaveMoreIdPsPerDomain",
+          "testUnconfiguredDomain"
+        ]
+      },
+      {
+        "module": "Test.Spar.MultiIngressSSO",
+        "source": "integration/test/Test/Spar/MultiIngressSSO.hs",
+        "tests": [
+          "testMultiIngressSSODomainBoundIdp",
+          "testMultiIngressSSOGeneralIdp",
+          "testSsoWithoutMultiIngress"
+        ]
+      },
+      {
+        "module": "Test.Spar.STM",
+        "source": "integration/test/Test/Spar/STM.hs",
+        "tests": [
+          "testCreateIdpsAndScimsV7"
+        ]
+      },
+      {
+        "module": "Test.Spar",
+        "source": "integration/test/Test/Spar.hs",
+        "tests": [
+          "testAllowUpdatesBySCIMWhenE2EIdEnabled",
+          "testCheckAdminGetTeamId",
+          "testCheckAdminGetTeamIdV7",
+          "testIdpUpdate",
+          "testNoPasswordResetForSAMLUser",
+          "testScimLoginNoSamlEmailValidation",
+          "testScimReinviteAfterRevoke",
+          "testScimUpdateEmailAddressAndExternalId",
+          "testScimUpdateEmailAddress",
+          "testScimUserChangeNameOnRegisteringIgnoredV16",
+          "testScimUserIsNotAllowedToChangeName",
+          "testScimUserIsNotAllowedToChangeNameOnRegistering",
+          "testSparCreateScimTokenAssocImplicitly",
+          "testSparCreateScimTokenNoName",
+          "testSparCreateScimTokenWithName",
+          "testSparCreateTwoScimTokensForOneIdp",
+          "testSparEmulateSPInitiatedLogin",
+          "testSparExpiredIdpCertStillWorks",
+          "testSparExternalIdDifferentFromEmail",
+          "testSparExternalIdDifferentFromEmailWithIdp",
+          "testSparExternalIdUpdateToANonEmail",
+          "testSparMigrateFromExternalIdOnlyToEmail",
+          "testSparPatchEmailSubAttrRemoveNull",
+          "testSparPatchEmailValuePath",
+          "testSparPatchEmailValuePathInPlace",
+          "testSparRejectsMultiplePrimaryEmails",
+          "testSparSPInitiatedLoginWithUtf8",
+          "testSparScimCreateGetSearchUserGroup",
+          "testSparScimDeleteUserGroup",
+          "testSparScimEmailMetaRoundTrip",
+          "testSparScimEmailTypeNonWorkEcho",
+          "testSparScimGroupSearchOnlyReturnsScimGroups",
+          "testSparScimInvalidatesPendingEmail",
+          "testSparScimTokenLimit",
+          "testSparScimUpdateUserGroup",
+          "testSparScimUpdateUserGroupRejectsInvalidMembers",
+          "testSparUserCreationInvitationTimeout",
+          "testSsoLoginAndEmailVerification",
+          "testSsoLoginNoSamlEmailValidation",
+          "testTeamInvitationUsedAfterScimUserDeleted",
+          "testTeamInvitationWhenScimAccountExists",
+          "testTeamInvitationWhenScimInvitationExpired",
+          "testTeamInvitationWhenScimInvitationPending"
+        ],
+        "variants": {
+          "testAllowUpdatesBySCIMWhenE2EIdEnabled": [
+            "sso-enabled=false",
+            "sso-enabled=true"
+          ],
+          "testScimLoginNoSamlEmailValidation": [
+            "requireexternalemailverification=false",
+            "requireexternalemailverification=true"
+          ],
+          "testScimUpdateEmailAddress": [
+            "extidisemail=false][requireexternalemailverification=false",
+            "extidisemail=false][requireexternalemailverification=true",
+            "extidisemail=true][requireexternalemailverification=false",
+            "extidisemail=true][requireexternalemailverification=true"
+          ],
+          "testSparMigrateFromExternalIdOnlyToEmail": [
+            "mailunchanged=false",
+            "mailunchanged=true"
+          ],
+          "testSsoLoginNoSamlEmailValidation": [
+            "requireexternalemailverification=false",
+            "requireexternalemailverification=true"
+          ]
+        }
+      },
+      {
+        "module": "Test.Auth",
+        "source": "integration/test/Test/Auth.hs",
+        "tests": [
+          "testSetCookieLabelOnSsoFlow"
+        ]
+      },
+      {
+        "module": "Test.DomainVerification",
+        "source": "integration/test/Test/DomainVerification.hs",
+        "tests": [
+          "testGetDomainRegistrationUserExistsSso",
+          "testScimAndSamlWithRegisteredEmailDomain",
+          "testScimOnlyWithRegisteredEmailDomain",
+          "testSsoLoginNoEmailVerification",
+          "testUpdateTeamInviteSSO",
+          "testVerificationRequiredIfEmailDomainRedirectNotSso"
+        ]
+      },
+      {
+        "module": "Test.EnterpriseLogin",
+        "source": "integration/test/Test/EnterpriseLogin.hs",
+        "tests": [
+          "testDomainRegistrationUnAuthorizeFailureWhenSso"
+        ]
+      },
+      {
+        "module": "Test.FeatureFlags.SSO",
+        "source": "integration/test/Test/FeatureFlags/SSO.hs",
+        "tests": [
+          "testSSODisabledByDefault",
+          "testSSOEnabledByDefault"
+        ]
+      },
+      {
+        "module": "Test.FeatureFlags",
+        "source": "integration/test/Test/FeatureFlags.hs",
+        "tests": [
+          "testNonMemberAccess"
+        ],
+        "variants": {
+          "testNonMemberAccess": [
+            "feature=validateSAMLemails"
+          ]
+        }
+      },
+      {
+        "module": "Test.Register",
+        "source": "integration/test/Test/Register.hs",
+        "tests": [
+          "testDisallowRegistrationWhenEmailDomainIsTakenByATeamWithSSO"
+        ]
+      },
+      {
+        "module": "Test.SystemSettings",
+        "source": "integration/test/Test/SystemSettings.hs",
+        "tests": [
+          "testGetSettingsInternalSsoIdpChangeDetection"
+        ],
+        "variants": {
+          "testGetSettingsInternalSsoIdpChangeDetection": [
+            "sso-idp-change-detection=just[bool=false]",
+            "sso-idp-change-detection=just[bool=true]",
+            "sso-idp-change-detection=nothing"
+          ]
+        }
+      }
+    ]
+  }
+}

@@ -122,3 +122,9 @@ qualification has not passed. A partial run selecting only Go worker executed
 gundeck40:38 passed,2 failed, owned cleanup0; exact failure evidence is retained
 in the worker plan. Existing event coverage does not qualify scheduled jobs,
 migrations or durable switchback.
+
+## Spar original parity profile
+
+`--service spar` runs101 unchanged original executions:86 Spar module cases plus15 related cross-service SSO/SCIM cases from actual pinned discovery. The explicit spar-tests.json catalogue retains all original boolean variants, assertions and required XML checks. Use prepare without selections for an all-Haskell baseline; add an identified Spar candidate or repeated --select arguments for substitution.
+
+`proxy-cargohold-cannon-gundeck-federator-background-worker-spar` requires exactly seven identified Go candidates and runs the existing124 peer executions plus Spar101 (225 executions). Missing, duplicate, foreign or ambiguous selections fail; source/fixtures/candidate mounts remain read-only and dependencies/cleanup remain owned. Adding a profile does not claim a suite passed or change Haskell defaults.

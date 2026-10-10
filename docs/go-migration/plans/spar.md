@@ -25,3 +25,7 @@ No candidate exists yet. Rollback is existing Haskell selection; later actual sw
 ## Inventory checkpoint
 
 [Source inventory](../services/spar/inventory.md) and [actual compiled discovery](../services/spar/test-discovery.json) complete:86 Spar executions plus15 related discovered cases. Scope/variants/binary identities retained; discovery is not test execution. Spar uses RollingUpdate, not background-worker Recreate. Expired signing certificates remain accepted by an explicit original test; preserve this inherited policy while enforcing signature/request/team/replay trust boundaries. Next freeze exact wire/storage contract and original selection under protected task, extend owned harness and execute baseline; no candidate yet.
+
+## Original harness increment
+
+Protected spar-contract task now adds an explicit101 original-case catalogue (86 core +15 related), Spar replacement support and an exact seven-Go mixed profile. All27 Docker harness tests pass, including actual discovered variant names, seven-selection negative cases and strict read-only Spar mount isolation. Existing test assertions/required catalogue entries are unchanged. Next build the small runner layer from a clean source and execute the all-Haskell Spar baseline in the owned environment; no baseline pass yet.
