@@ -2,12 +2,16 @@
   "schema_version": 1,
   "service": "spar",
   "reference_path": "services/spar",
-  "stage": "registered",
+  "stage": "inventoried",
   "oracle_paths": [
     "services/spar",
     "docs/go-migration/services/spar/contract.md",
     "docs/go-migration/services/spar/oracle"
   ],
-  "gates": {},
+  "gates": {
+    "inventory": [
+      "spar-inventory"
+    ]
+  },
   "compatibility": null
 }

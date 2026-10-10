@@ -4,7 +4,7 @@
   "title": "Spar inventory gate",
   "service": "framework",
   "kind": "framework",
-  "status": "active",
+  "status": "done",
   "owner": "codex",
   "branch": "go-migration",
   "depends_on": [
@@ -22,7 +22,18 @@
       "required_evidence": "Completed discovery task with actual source boundary and pinned original executable list; registered\u2192inventoried only, compatibility null, Haskell defaults unchanged."
     }
   ],
-  "evidence": [],
-  "review": null,
-  "handoff": "Reuse completed source/discovery evidence. No candidate yet; preserve source schemas/assertions/defaults and finite acceptance."
+  "evidence": [
+    {
+      "criterion": "gate",
+      "result": "pass",
+      "command": "Publish registered\u2192inventoried gate from completed source/discovery task;86 original Spar and15 related discovered cases (not executed); delegated inventory review complete, compatibility null/Haskell default unchanged.",
+      "revision": "bf1cad5d20f2b20834c17ec26bceff4741754d9a",
+      "artifact": "docs/go-migration/services/spar/inventory-review.md"
+    }
+  ],
+  "review": {
+    "by": "codex (self-review delegated by user)",
+    "artifact": "docs/go-migration/services/spar/inventory-review.md"
+  },
+  "handoff": "Inventoried gate complete; protected Spar contract and owned original baseline queued. No candidate availability/compatibility."
 }
