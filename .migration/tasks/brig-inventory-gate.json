@@ -4,7 +4,7 @@
   "title": "Publish Brig inventoried milestone",
   "service": "framework",
   "kind": "framework",
-  "status": "active",
+  "status": "done",
   "owner": "codex",
   "branch": "go-migration",
   "depends_on": [
@@ -22,7 +22,18 @@
       "required_evidence": "Done brig-inventory source/discovery/self-review pins linked; legal one-stage transition, Haskell default, no compatibility/test pass claim."
     }
   ],
-  "evidence": [],
-  "review": null,
-  "handoff": "Queued next whole-service Brig phase; Haskell reference/default, finite original validation and no deployment."
+  "evidence": [
+    {
+      "criterion": "gate",
+      "result": "pass",
+      "command": "Advance registered-to-inventoried using done source19/full configured inventory, actual compiled310 discovery and delegated same-author review; no candidate compatibility/test-pass claim, Haskell default. Scoped legal transition check passes.",
+      "revision": "0d3801f4a23f8285ded94c41178476024f3ed242",
+      "artifact": "docs/go-migration/services/brig/inventory-review.md"
+    }
+  ],
+  "review": {
+    "by": "codex (same-author self-review explicitly delegated by user)",
+    "artifact": "docs/go-migration/services/brig/inventory-review.md"
+  },
+  "handoff": "Brig inventoried only; protected contract/baseline next. Haskell supported/default and compatibility null."
 }

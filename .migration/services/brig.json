@@ -2,12 +2,16 @@
   "schema_version": 1,
   "service": "brig",
   "reference_path": "services/brig",
-  "stage": "registered",
+  "stage": "inventoried",
   "oracle_paths": [
     "services/brig",
     "docs/go-migration/services/brig/contract.md",
     "docs/go-migration/services/brig/oracle"
   ],
-  "gates": {},
+  "gates": {
+    "inventory": [
+      "brig-inventory"
+    ]
+  },
   "compatibility": null
 }
