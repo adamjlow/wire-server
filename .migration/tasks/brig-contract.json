@@ -4,9 +4,9 @@
   "title": "Freeze whole Brig contract and original Docker baseline",
   "service": "brig",
   "kind": "contract-change",
-  "status": "queued",
-  "owner": null,
-  "branch": null,
+  "status": "active",
+  "owner": "codex",
+  "branch": "go-brig-contract",
   "depends_on": [
     "brig-inventory-gate"
   ],
@@ -38,5 +38,5 @@
   ],
   "evidence": [],
   "review": null,
-  "handoff": "Queued next whole-service Brig phase; Haskell reference/default, finite original validation and no deployment."
+  "handoff": "Protected whole Brig contract/original baseline claimed on separate branch; freeze310/535 assertions and concrete protocol/state gaps, add owned Brig harness support and execute native baseline. No candidate/Haskell policy/default change."
 }
