@@ -9,46 +9,32 @@ Haskell removal or contract/security exception is authorized.
 Reference: f6636ed53315fa7b0fc4c8aa39c0bb30c98b6d5e. Current optional compiler:
 Go 1.26.9, GOTOOLCHAIN=local/GOWORK=off. Existing five Go peers and their exact
 [patched artifact tuple](../qualifications/go-patched-20261009/README.md) are the
-starting mixed-deployment baseline. The service is inventoried and its finite
-reference contract is frozen with explicit baseline limitations. Go construction
-now includes a runnable notification pusher and Cassandra dead-user watcher, plus
-connected background-job consumption, conversation-storage/notification adapters
-and all seven migration families. Scheduled adminless/meetings jobs are connected
-to their domain adapters, pools, listener, cron and reapers; whole-process
-qualification remains incomplete.
-Whole-service parity is not yet claimed; the task record owns current status.
+starting mixed-deployment baseline. The complete service now passes the finite acceptance matrix. See the
+[final same-author review](../../../go/services/background-worker/REVIEW.md)
+for exact artifacts, scope, reused evidence and limitations.
 
-## Current validation checkpoint (2026-10-10)
+## Final validation checkpoint (2026-10-10)
 
-A concrete success-response ACK/retry gap discovered during durable switchback
-is now repaired to source Post200/JSON/object acceptance. Current full Go checks
-pass. The shipping executable changed;89f24e7a receipts below are historical for
-that binary, and current exact mixed124/image/operations/switchback must pass
-before whole-service approval. See [repair evidence](../../../go/services/background-worker/evidence/notification-response-20261010/).
+Candidate source `5a24af6f27c622f62ce8cdab35923d6acc765a2d`, static worker SHA256
+`9a3157e2f61a3406e4923b1a5e569f2ad0f03e50ccdad25b4c7f43d22f3bc658`,
+image `sha256:965c576532a1dc0c3a7a31be9cfa6267e2185f93847e9a0ef7379e3f1aecf68d`.
+All production code remains unchanged after that source revision.
 
-The previous qualified worker at clean89f24e7a with five qualified Go peers and the
-remaining Haskell services passes all124 original executions, including all47
-worker cases: [strict XML/artifact/cleanup evidence](../../../go/services/background-worker/evidence/six-go-original124-20261010/).
-The actual catalogues contain120 distinct functions, with four repeated Events
-cases; the earlier119 count is a metadata error whose protected correction is
-separately scoped. Original assertions remain unchanged. Earlier failing runs
-are historical evidence, superseded by the passing final full run for this binary.
+- [Current original integration receipts](../../../go/services/background-worker/evidence/final-original124-20261010/): all124 executions pass with six identified Go services and remaining Haskell peers; worker47, proxy5, cargohold27, gundeck40 and federator5. There are120 distinct functions/four Events overlaps. Strict named XML, no errors/skips/failures; process/controller/owned cleanup0 and no remaining resources.
+- [Current Go checks and response repair](../../../go/services/background-worker/evidence/notification-response-20261010/): pinned format/tidy/verify/vet/unit/race/build/vulnerability/license pass. Actual switchback exposed a concrete notification ACK mismatch; source Post200/JSON/object acceptance was repaired with failing-before/passing-after retry tests.
+- [Current operations](../../../go/services/background-worker/evidence/operations-final-20261010/): 100health/concurrency8 plus10jobs in0.597s, counters/ACK/busy0, sampledRSS/CPU/latency. Exact nonroot image/default mounts/trusted broker TLS and loaded SIGTERM0/.0577s preserve both unsent notifications; cleanup0.
+- [Actual durable switchback](../../../go/services/background-worker/evidence/switchback-final-20261010/): same Rabbit/PG/Cassandra Haskell→Go→Haskell state, native attempt1 reclaimed as Go attempt2/newowner, real scheduled effects, partial migration continuation, return-native new migration/job and both notifications ACK. The first native worker cannot stop cleanly with the deliberately held SQL lock: declared5s forced137 proves crash/reclaim, not clean reference shutdown. Go and returning native exit0; cleanup0.
+- [Optional selector](../qualifications/background-worker-selector-20261010/): default byte identity, only worker image changes, Recreate/default mounts preserved, six fail-closed cases; separate completed contract task.
+- Static supported OpenSSL3.5.9/helper/CA/licenses and bot code/tests are unchanged from successful exact-image TLS/security/lifecycle proof; [input audit](../../../go/services/background-worker/evidence/final-original124-20261010/input-audit.json) records reuse. No native GHC/Cabal/Nix rebuild or native14 unit execution is claimed; unchanged Haskell retains upstream CI.
 
-The optional nonroot image packages that exact executable and patched static
-OpenSSL3.5.9 with verified CA and license notices. Its bot TLS checks pass.
-The [declared operations smoke](../../../go/services/background-worker/evidence/operations-image-20261010/)
-now passes100 health requests/concurrency8 and ten jobs within30s, records actual
-RSS/CPU/latency, and proves loaded SIGTERM exits0 with both unsent notifications
-preserved. Both default config mounts and real verified broker TLS operate in
-the private owned image namespace; mandatory cleanup succeeds with no resources
-remaining. These checks reuse unchanged successful service/original-suite evidence.
+Implementation is complete and self-approved within the user's delegation.
+Separately scoped verification/selection/service records publish legal availability
+and exact compatibility. Haskell remains supported/default. No remote push,
+production switch or extra speculative tests follow from qualification.
 
-Goal/task remain active, service implementing and compatibility null. Remaining
-acceptance: actual durable Haskell-Go-Haskell same-state Rabbit/PG/Cassandra
-switchback with scheduled jobs/inflight lease/migration continuation, separately
-scoped optional selector/count metadata, and final delegated same-author review
-and legal availability/compatibility publication. Haskell remains supported and
-default; no push or production switch is authorized.
+Everything below is historical construction evidence or the original execution
+plan. Its outstanding-work statements describe those dated artifacts, not the
+current candidate. Current decisions are above, in REVIEW.md and machine records.
 
 ## Earlier construction checkpoint (2026-10-10)
 
@@ -201,7 +187,7 @@ original124 tests must still pass before qualification. Proceed to the early
 runnable worker and whole contracted implementation; do not repeat broad baselines
 without a concrete change. Final switchback remains outstanding.
 
-## Current implementation and retained validation
+## Historical implementation and retained validation
 
 The runnable notification pusher, dead-user watcher and Rabbit background-job
 consumer implement source delivery, TLS, retry/ACK and group synchronization

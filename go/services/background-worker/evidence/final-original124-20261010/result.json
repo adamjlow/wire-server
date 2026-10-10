@@ -1,0 +1,77 @@
+{
+  "result": "pass",
+  "candidate_revision": "5a24af6f27c622f62ce8cdab35923d6acc765a2d",
+  "candidate_sha256": "9a3157e2f61a3406e4923b1a5e569f2ad0f03e50ccdad25b4c7f43d22f3bc658",
+  "suites": {
+    "proxy": {
+      "result": "pass",
+      "cases": 5,
+      "xml_sha256": "2e63eeb3ba906e4ca088d45f33c5b57126a0dae89e1aa0a1fef3f0c81181be60"
+    },
+    "cargohold": {
+      "result": "pass",
+      "cases": 27,
+      "xml_sha256": "3649bc2408a93a3e3099ab0ef9d7befe5a67111ffb3be717b504e71b2f0c3c34"
+    },
+    "gundeck": {
+      "result": "pass",
+      "cases": 40,
+      "xml_sha256": "e49269aa9be32097f0c6c75046ea4f54c53b8608b40ab926e798152f1e81e6bb"
+    },
+    "federator": {
+      "result": "pass",
+      "cases": 5,
+      "xml_sha256": "6f817694bc2c134894fb83a5b60e4ab15722e05615567bf9dfdffcbb7ba83400"
+    },
+    "background-worker": {
+      "result": "pass",
+      "cases": 47,
+      "xml_sha256": "a7908cd366566483bb164ae52a17fa25fd3745557ce633f8df814ccd6fee8f2d"
+    }
+  },
+  "executions": 124,
+  "distinct_assertions": 120,
+  "duplicate_functions": {
+    "Events.testEventsDeadLettered": 2,
+    "Events.testEventsDeadLetteredWithReconnect": 2,
+    "Events.testTransientEventsDoNotTriggerDeadLetters": 2,
+    "Events.testBackendPusherRecoversFromQueueDeletion": 2
+  },
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "controller_exit_code": 0,
+  "runner_exit_code": 0,
+  "cleanup_exit_code": 0,
+  "post_cleanup": {
+    "containers": [],
+    "networks": [],
+    "volumes": []
+  },
+  "monitor": {
+    "samples": 199,
+    "runner_fd_high_water": 1627,
+    "runner_threads_high_water": 545,
+    "memory_peak_bytes": 1205342208,
+    "sample_interval_seconds": 5,
+    "caveat": "Sampled fixture observations, not a capacity comparison or operations benchmark."
+  },
+  "log_artifacts": {
+    "environment.json": {
+      "path": "/home/operator/.cache/wire-migration/background-worker-20261009/six-go-response-original124/environment.json",
+      "sha256": "cdc0e0c25a829010f6fdcdc8c2623c5ec94e3253d5199dfbf10ee1389121562b",
+      "bytes": 4442
+    },
+    "baseline-proxy-cargohold-cannon-gundeck-federator-background-worker.log": {
+      "path": "/home/operator/.cache/wire-migration/background-worker-20261009/six-go-response-original124/baseline-proxy-cargohold-cannon-gundeck-federator-background-worker.log",
+      "sha256": "c8bc999817aab928418032cbc74d52b7479d6cb0b50e61e6682de167776d3907",
+      "bytes": 1011172
+    },
+    "dependencies.log": {
+      "path": "/home/operator/.cache/wire-migration/background-worker-20261009/six-go-response-original124/dependencies.log",
+      "sha256": "d2c3d84058600440ac06b0eda7ff016a79c2a6cfec6eaa4684674ff4552c12b0",
+      "bytes": 172945
+    }
+  },
+  "interpretation": "Current exact worker5a24 plus five unchanged patched Go peers and Haskell remainder pass all124 original executions. No assertion change, failure waiver or skipped case."
+}

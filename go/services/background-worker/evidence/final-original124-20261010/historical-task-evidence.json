@@ -1,0 +1,82 @@
+{
+  "note": "Historical task checkpoints retained verbatim. Final task evidence lists current completed acceptance only; historical failures are not rewritten as passes.",
+  "evidence": [
+    {
+      "criterion": "service",
+      "result": "blocked",
+      "command": "Early static process matches actual retained Haskell health200/empty, unstarted readiness500, SIGTERM exit0; real HTTP2/source notification expectation tests and early Go checks pass. Whole service is incomplete: DLQ, group-sync, scheduled jobs, all migrations, final tests/image/selector/operations/switchback not executed. No compatibility claim.",
+      "revision": "bdfb252dc3e1a87c14eb282ef6982e3d3194548b",
+      "artifact": "go/services/background-worker/evidence/early-20261009/process-comparison.json"
+    },
+    {
+      "criterion": "service",
+      "result": "fail",
+      "command": "Owned original gundeck40 with only Go background-worker: strict XML40 cases,38 pass,2 fail; cleanup_exit_code0. Failed federation version-header mismatch corrected in6198c021681272d66c57b32633594a4487847b81; missing background-jobs queue reflects unfinished consumer. Full qualification remains incomplete.",
+      "revision": "5d7b3df25546ca9ea7a33d7eab0e4a173e3af2e9",
+      "artifact": "go/services/background-worker/evidence/watcher-20261009/original-result.json"
+    },
+    {
+      "criterion": "service",
+      "result": "blocked",
+      "command": "Original unchanged gundeck40 now40/40 pass with only Go worker/Haskell peers, exact clean static binary and owned cleanup0 plus empty post-cleanup labels. This passes limited notification/DLQ/queue lifecycle comparison; whole scheduled worker, seven migrations, final124/ops/switchback/image remain unfinished, so full service criterion is not passed.",
+      "revision": "00557161c5218fba7ce290ba57536561298a35e3",
+      "artifact": "go/services/background-worker/evidence/jobs-original-20261009/original-result.json"
+    },
+    {
+      "criterion": "service",
+      "result": "blocked",
+      "command": "Unchanged original MLS conversation migration1/1 pass on exact clean static Go worker/Haskell peers after native counter decimal formatting repair; five storage phases, enabled local/remote copy+cleanup, PostgreSQL-only final shared history. Strict XML no skip/error, controller0/runner0/cleanup0 and empty owned labels. Limited conversation qualification; whole scheduled service/final124/operations/switchback/image remain incomplete.",
+      "revision": "309733bb48febdb8708e6b1c5aadb94cb03fe8ab",
+      "artifact": "go/services/background-worker/evidence/conversation-original-20261009/original-result.json"
+    },
+    {
+      "criterion": "quality",
+      "result": "fail",
+      "command": "Exact clean current static worker/Haskell peers executes original47:44 pass,3 user failures,0 errors/skips; native CQL/ES/PG connections close, cause unproved. Actual runner1/controller2, cleanup0 and empty project resources. Default runner softFD1024 observed; scaled original proxy probe reproduces caught EMFILE/EOF but actual high-water missing. No waiver or final qualification.",
+      "revision": "12107801eab254cc61c87b88b8f9d2291cbd0558",
+      "artifact": "go/services/background-worker/evidence/current-original47-20261010/result.json"
+    },
+    {
+      "criterion": "quality",
+      "result": "fail",
+      "command": "Same clean12107801e candidate, bounded runner/DefaultSelector fixture: original47 has46 pass,one retained phase1 SCIM deletion GET500 instead404,no errors/skips; all adminless/meetings/handles/reindex pass. ObservedFDpeak1702 exceedsold1024;cleanup0/noownedresources. No baseline waiver or final qualification.",
+      "revision": "12107801eab254cc61c87b88b8f9d2291cbd0558",
+      "artifact": "docs/go-migration/qualifications/background-worker-harness-fd/result.json"
+    },
+    {
+      "criterion": "service",
+      "result": "blocked",
+      "command": "Matched repaired Docker originalusers2: both allHaskell and unchanged12107801e Go/Haskell peers pass2/2, strictXML no failure/error/skip; mainuserallfivephases and reindexpass, process/controller/cleanup0 and noownedresources. Priorwhole47SCIM500 retainednotreproduced/no waiver; final124/ops/switchback/image stillpending.",
+      "revision": "12107801eab254cc61c87b88b8f9d2291cbd0558",
+      "artifact": "go/services/background-worker/evidence/user-reference-pair-20261010/result.json"
+    },
+    {
+      "criterion": "quality",
+      "result": "pass",
+      "command": "Exact clean89f24e7a static Go1.26.9 worker plus five qualified Go peers/Haskell remainder: original124/124 allpass,120 distinct functions,four Events overlaps,strict names/XML,no failures/errors/skips; all47 worker casespass. Selected hashes/build/runtime/dependency identities retained,controller/runner/cleanup0,no ownedresources. Prior119 metadata errorcorrectedwithout changing assertions; primary protected doc update separatelyscoped. Existing unchanged productioncode format/tidy/verify/vet/unit/race/build/security/license evidence retained, final exact staticbuild recorded.",
+      "revision": "89f24e7a0045f7176e066daa194144554ac171bd",
+      "artifact": "go/services/background-worker/evidence/six-go-original124-20261010/result.json"
+    },
+    {
+      "criterion": "operations",
+      "result": "blocked",
+      "command": "Declared finite smoke passes100health/concurrency8+10jobs0.610s,countersACKbusy0,actualRSS/CPU/latency. Exactimage/defaultmounts/UID65534/trustedRabbitCA pass; loadedh2c oneunacked/oneready SIGTERMexit0/0.0595s thenbothready,cleanup0/noownedresources. Actual whole durable Haskell-Go-Haskell switchback/selector/finalreview stillpending; operations criterion notcomplete.",
+      "revision": "89f24e7a0045f7176e066daa194144554ac171bd",
+      "artifact": "go/services/background-worker/evidence/operations-image-20261010/result.json"
+    },
+    {
+      "criterion": "operations",
+      "result": "blocked",
+      "command": "Current5a24 exactimage965c actualsame-stateHaskell-Go-Haskell switchbackpass: initialnativeboundedSIGTERM5s/forced137 retainsclaim1,Go newownerclaim2 archivesACK/removesmeetingcode+conversationjob,partialuserCQL/pendingcleanup preservesPG,row/newHaskellmigration+meetingjob2 pass. Notifications firstactualnative/Goattempts thenbothHaskellACK,durablequeuedstatepreserved;Go0/0.0488s,returnnative0/0.0921s,cleanup0/noownedresources. Currentops/original124/selector/finalreview stillpending.",
+      "revision": "5a24af6f27c622f62ce8cdab35923d6acc765a2d",
+      "artifact": "go/services/background-worker/evidence/switchback-final-20261010/result.json"
+    },
+    {
+      "criterion": "operations",
+      "result": "blocked",
+      "command": "Current5a24 image965c declared100health/8+10jobs pass0.597s,counters/ACK/busy0,actualRSS/CPU/latency, defaultmounts/UID65534/trustedCA; loadedSIGTERM0/.0577s bothunsentready,cleanup0/no resources. Samecurrentdurableswitchbackpass and separatelyscopedselector/counttaskdone. Originalcurrent124/finalreview stillpending; no wholeapproval.",
+      "revision": "5a24af6f27c622f62ce8cdab35923d6acc765a2d",
+      "artifact": "go/services/background-worker/evidence/operations-final-20261010/result.json"
+    }
+  ]
+}

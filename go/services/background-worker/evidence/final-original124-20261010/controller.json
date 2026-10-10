@@ -1,0 +1,8 @@
+{
+  "project": "wire-e2e-22d056ce3954400c92d21b2355b003ad",
+  "controller_exit_code": 0,
+  "elapsed_seconds": 1020.546,
+  "monitor_file": "/home/operator/.cache/wire-migration/background-worker-20261009/six-go-response-monitor.jsonl",
+  "sample_interval_seconds": 5,
+  "monitoring": "readonly /proc and cgroup; no application environment or command lines"
+}

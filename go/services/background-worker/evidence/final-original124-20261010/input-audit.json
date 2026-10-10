@@ -1,0 +1,23 @@
+{
+  "result": "input-audit-pass",
+  "candidate_revision": "5a24af6f27c622f62ce8cdab35923d6acc765a2d",
+  "candidate_sha256": "9a3157e2f61a3406e4923b1a5e569f2ad0f03e50ccdad25b4c7f43d22f3bc658",
+  "image_id": "sha256:965c576532a1dc0c3a7a31be9cfa6267e2185f93847e9a0ef7379e3f1aecf68d",
+  "rootfs_manifest_differences": {
+    "background-worker": {
+      "before": "706fed84952a9ee80dc1c9ac7b670d7417114cfe93b835d6d5fe94e58e2628d6",
+      "after": "9a3157e2f61a3406e4923b1a5e569f2ad0f03e50ccdad25b4c7f43d22f3bc658"
+    }
+  },
+  "reused_bot_source_hashes": {
+    "go/services/background-worker/bot_dhe_test.go": "10239caff52d50ee5dcc583bb5a0a1a9df6ca209a8b54daf2baa0e96fbe39581",
+    "go/services/background-worker/bots.go": "c4eb732e10240359ea3840ee598de5f83f1da8c10720a2daa773c62d9af933c2",
+    "go/services/background-worker/bot_dhe.go": "bf92de291673717a50ba3515da56a786c41c38dbc8461cac55cbf62f84058841",
+    "go/services/background-worker/bots_test.go": "c73c20dd331e301783ae12be3c87d7850fe39a26705314f68fd7034ed20e3aa9"
+  },
+  "bot_reuse": "All bot source/tests equal earlier exact-image tested89f24e7a; compiler/dependencies/helper/CA/Dockerfile/licenses unchanged. Notification-response repair cannot execute on bot path. Existing successful real DHE/pin/date/cancel/transcript/reaping evidence reused, no fresh unrelated TLS test.",
+  "haskell_source_changes": [],
+  "native_local_tools_available": false,
+  "native_rebuild_claimed": false,
+  "remaining": "current original124/final review/gates"
+}

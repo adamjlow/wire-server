@@ -1,0 +1,3 @@
+# Final original Haskell integration qualification
+
+Current source5a24af6f27c622f62ce8cdab35923d6acc765a2d, workerSHA9a3157 and five identified patched peers pass all124 executions (120 distinct functions). Each XML was independently checked against unchanged source catalogue, zero failures/errors/skips and exact six selected hashes. Controller/runner/cleanup all exit0; exact owned project containers/networks/volumes absent. See result.json, environment.json, retained XML and suite receipts. Raw external logs are hashed in result.json. Input-audit.json explains unchanged bot/helper proof reuse and unrun native builds. Haskell remains default; no production switch or publication.
