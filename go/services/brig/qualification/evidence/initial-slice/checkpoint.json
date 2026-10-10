@@ -1,0 +1,20 @@
+{
+  "result": "partial-implementation",
+  "candidate_revision": "fe5d234e6d94ac33f20e7a39e7d66decfe338eb3",
+  "qualified_scope": [
+    "module formatting/tidy/verify/vet/race/build/vulnerability/license checks",
+    "six actual native/Go CLI help/subcommand-help/missing-config observations in owned nonroot network-none Docker"
+  ],
+  "not_qualified": [
+    "actual initialized-backend startup and health native comparison",
+    "whole public24/internal/federation/docs service",
+    "native-compatible migrations/CLI execution",
+    "full background/config/storage/auth behavior",
+    "native-issued/Go-issued trust/state interchange",
+    "original535 eight-Go/Haskell matrix",
+    "operations/durable switchback/optional image/selector"
+  ],
+  "initial_probe_failure": "Four-case initial probe wrongly required subcommand flags in native top-level help. Retained unchanged failed report. Corrected only the candidate-owned probe and added actual subcommand help; original compiled assertions/protected checker untouched.",
+  "native_baseline": "309pass/1failed SCIM migration retained; not waived, not repaired in Haskell",
+  "remaining": "Complete whole Brig acceptance; Galley only after goal actually achieved."
+}
