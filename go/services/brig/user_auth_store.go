@@ -1,0 +1,161 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+package brig
+
+import (
+	"context"
+	"encoding/binary"
+	"errors"
+	"time"
+
+	"github.com/apache/cassandra-gocql-driver/v2"
+	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5/pgxpool"
+)
+
+// Native stores use text in PostgreSQL and UTF-8 blobs in Cassandra for the
+// same encoded password. Do not decode/re-encode or upgrade it on a read.
+type userAuthentication struct {
+	Password *string
+	Status   int32
+}
+
+func (userAuthentication) String() string { return "<UserAuthentication>" }
+
+type userAuthStore struct {
+	cassandra   *gocql.Session
+	postgres    *pgxpool.Pool
+	mode        string
+	acquisition time.Duration
+}
+
+func (s userAuthStore) withPostgres(ctx context.Context, action func(*pgx.Conn) error) error {
+	acquire, cancel := context.WithTimeout(ctx, s.acquisition)
+	lease, err := s.postgres.Acquire(acquire)
+	cancel()
+	if err != nil {
+		return userStorageError(err)
+	}
+	defer lease.Release()
+	return action(lease.Conn())
+}
+
+func userStorageError(err error) error {
+	if err != nil {
+		return errors.New("user storage operation failed")
+	}
+	return nil
+}
+
+// This UUID folding is the native Wire.MigrationLock.hashUUID contract, not
+// the Hashable String/Text algorithms used by schema migrations/jobs.
+func userMigrationLockKey(user gocql.UUID) int64 {
+	first, second := binary.BigEndian.Uint64(user[:8]), binary.BigEndian.Uint64(user[8:])
+	return int64(first ^ (second >> 32) ^ (second << 32))
+}
+
+func (s userAuthStore) withUserBackend(ctx context.Context, user gocql.UUID, action func(bool) error) error {
+	switch s.mode {
+	case "cassandra":
+		return action(false)
+	case "postgresql":
+		return action(true)
+	case "migration-to-postgresql":
+		return s.withMigrationLock(ctx, user, func() error {
+			var inPostgres bool
+			err := s.withPostgres(ctx, func(conn *pgx.Conn) error {
+				return conn.QueryRow(ctx, `SELECT EXISTS (SELECT 1 FROM wire_user WHERE id=$1::uuid UNION ALL SELECT 1 FROM deleted_user WHERE id=$1::uuid)`, user.String()).Scan(&inPostgres)
+			})
+			if err != nil {
+				return userStorageError(err)
+			}
+			return action(inPostgres)
+		})
+	default:
+		return errors.New("invalid user storage mode")
+	}
+}
+
+func (s userAuthStore) withMigrationLock(ctx context.Context, user gocql.UUID, action func() error) error {
+	return s.withMigrationLockTimeout(ctx, user, 500*time.Millisecond, action)
+}
+
+func (s userAuthStore) withMigrationLockTimeout(ctx context.Context, user gocql.UUID, wait time.Duration, action func() error) error {
+	// The native shared lock spans the backend lookup and complete action.
+	// A canceled/failed lease is closed before reuse to release session locks.
+	lockCtx, stop := context.WithTimeout(ctx, wait)
+	lease, err := s.postgres.Acquire(lockCtx)
+	if err != nil {
+		stop()
+		return userStorageError(err)
+	}
+	key := userMigrationLockKey(user)
+	_, err = lease.Exec(lockCtx, `SELECT pg_advisory_lock_shared($1::bigint)`, key)
+	stop()
+	if err != nil {
+		closeCtx, cancel := context.WithTimeout(context.Background(), time.Second)
+		_ = lease.Conn().Close(closeCtx)
+		cancel()
+		lease.Release()
+		return userStorageError(err)
+	}
+	defer func() {
+		unlock, cancel := context.WithTimeout(context.Background(), time.Second)
+		defer cancel()
+		if _, err := lease.Exec(unlock, `SELECT pg_advisory_unlock_shared($1::bigint)`, key); err != nil {
+			_ = lease.Conn().Close(unlock)
+		}
+		lease.Release()
+	}()
+	return action()
+}
+
+func (s userAuthStore) authentication(ctx context.Context, user gocql.UUID) (*userAuthentication, error) {
+	var result *userAuthentication
+	err := s.withUserBackend(ctx, user, func(postgres bool) error {
+		var record userAuthentication
+		var status *int32
+		var err error
+		if postgres {
+			err = s.withPostgres(ctx, func(conn *pgx.Conn) error {
+				return conn.QueryRow(ctx, `SELECT password,account_status FROM wire_user WHERE id=$1::uuid`, user.String()).Scan(&record.Password, &status)
+			})
+		} else {
+			var password []byte
+			err = s.cassandra.Query(`SELECT password,status FROM user WHERE id=?`, user).
+				WithContext(ctx).Consistency(gocql.LocalQuorum).RetryPolicy(&gocql.SimpleRetryPolicy{NumRetries: 1}).Scan(&password, &status)
+			if password != nil {
+				x := string(password)
+				record.Password = &x
+			}
+		}
+		if errors.Is(err, pgx.ErrNoRows) || errors.Is(err, gocql.ErrNotFound) {
+			return nil
+		}
+		if err != nil {
+			return userStorageError(err)
+		}
+		if status != nil {
+			if *status < 0 || *status > 4 {
+				return errors.New("invalid stored account status")
+			}
+			record.Status = *status
+		}
+		result = &record
+		return nil
+	})
+	return result, err
+}
+
+func (s userAuthStore) setPassword(ctx context.Context, user gocql.UUID, encoded string) error {
+	return s.withUserBackend(ctx, user, func(postgres bool) error {
+		if postgres {
+			err := s.withPostgres(ctx, func(conn *pgx.Conn) error {
+				_, err := conn.Exec(ctx, `UPDATE wire_user SET password=$2::text WHERE id=$1::uuid`, user.String(), encoded)
+				return err
+			})
+			return userStorageError(err)
+		}
+		return userStorageError(s.cassandra.Query(`UPDATE user SET password=? WHERE id=?`, []byte(encoded), user).
+			WithContext(ctx).Consistency(gocql.LocalQuorum).RetryPolicy(&gocql.SimpleRetryPolicy{NumRetries: 5}).Exec())
+	})
+}
