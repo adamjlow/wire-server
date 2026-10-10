@@ -33,7 +33,7 @@ original124 tests must all pass. Never skip a case or widen an expected status.
 
 Final original selection is six Go services and remaining Haskell peers. The
 combined profile runs existing 77 plus worker 47 assertions (124 executions,
-119 distinct functions because five notification cases overlap). Every selected
+120 distinct functions because four notification cases overlap). Every selected
 binary hash, full build revision, runner/dependency identity, XML, process status
 and cleanup status is retained. Earlier unchanged service quality evidence is
 reused; no full Haskell rebuild is claimed locally.
