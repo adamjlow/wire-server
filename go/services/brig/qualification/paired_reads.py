@@ -170,6 +170,9 @@ def inside():
                 report['forced_owned_process_stop'] = True
                 report['result'] = 'failed'
         report['owned_process_exit_codes'] = exits
+        if any(code != 0 for code in exits):
+            report['result'] = 'failed'
+            report.setdefault('failure', 'owned peer/process exit was nonzero')
         for log in logs:
             log.close()
         for server in servers:

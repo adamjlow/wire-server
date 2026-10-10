@@ -77,7 +77,7 @@ func TestReauthenticationRejectsPasswordBeforeVerification(t *testing.T) {
 	}
 	response = httptest.NewRecorder()
 	authenticationHTTPError(response, passwordRateExceeded{1999999})
-	if response.Code != 429 || response.Header().Get("Retry-After") != "1" {
+	if response.Code != 429 || response.Header().Get("Retry-After") != "1" || response.Header().Get("Content-Type") != "application/json" {
 		t.Fatal("native retry header truncation changed")
 	}
 }

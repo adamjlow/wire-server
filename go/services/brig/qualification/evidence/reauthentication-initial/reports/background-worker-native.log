@@ -1,0 +1,4 @@
+{"time":"2026-10-10T23:32:29.921073129Z","level":"info","context":{"pool":"conversations","worker_id":"19035719-34f3-468a-9655-f651140cc7b6"},"message":{"text":"No listen connection, running poll-only"}}
+{"time":"2026-10-10T23:32:29.921392577Z","level":"info","context":{"pool":"meetings","worker_id":"1cc9adff-7b37-4dce-972b-742d30b158d8"},"message":{"text":"No listen connection, running poll-only"}}
+{"time":"2026-10-10T23:32:29.922759184Z","level":"info","context":{"pool":"meetings","worker_id":"1cc9adff-7b37-4dce-972b-742d30b158d8"},"message":{"text":"Cron schedules initialized: 1 schedule(s) upserted"}}
+{"time":"2026-10-10T23:32:29.932938044Z","level":"info","context":{"pool":"meetings","worker_id":"1cc9adff-7b37-4dce-972b-742d30b158d8"},"message":{"text":"Cron scheduler started with 1 schedule(s)"}}

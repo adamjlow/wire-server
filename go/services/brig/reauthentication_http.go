@@ -70,26 +70,35 @@ type reauthenticationBody struct {
 	Action   *string `json:"action"`
 }
 
+func authenticationWireError(w http.ResponseWriter, code int, label, message string) {
+	// Native authentication errors use Wai.Error's application/json media type,
+	// while ordinary business read responses use JSON with charset=utf-8.
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(code)
+	_ = json.NewEncoder(w).Encode(map[string]any{"code": code, "label": label, "message": message})
+}
+
 func authenticationHTTPError(w http.ResponseWriter, err error) {
+	emit := func(code int, label, message string) { authenticationWireError(w, code, label, message) }
 	var throttled passwordRateExceeded
 	if errors.As(err, &throttled) {
 		w.Header().Set("Retry-After", strconv.FormatUint(throttled.micros/1000000, 10))
-		wireError(w, 429, "too-many-requests", "Please try again later.")
+		emit(429, "too-many-requests", "Please try again later.")
 		return
 	}
 	switch {
 	case errors.Is(err, authInvalidCredentials):
-		wireError(w, 403, "invalid-credentials", "Authentication failed")
+		emit(403, "invalid-credentials", "Authentication failed")
 	case errors.Is(err, authSuspended):
-		wireError(w, 403, "suspended", "Account suspended")
+		emit(403, "suspended", "Account suspended")
 	case errors.Is(err, authEphemeral):
-		wireError(w, 403, "ephemeral", "Account ephemeral")
+		emit(403, "ephemeral", "Account ephemeral")
 	case errors.Is(err, authPendingInvitation):
-		wireError(w, 403, "pending-activation", "Account pending activation")
+		emit(403, "pending-activation", "Account pending activation")
 	case errors.Is(err, authMissingPassword):
-		wireError(w, 403, "missing-auth", "Re-authentication via password required")
+		emit(403, "missing-auth", "Re-authentication via password required")
 	default:
-		wireError(w, 500, "server-error", "Internal Server Error")
+		emit(500, "server-error", "Internal Server Error")
 	}
 }
 
@@ -163,11 +172,11 @@ func (h reauthenticationHandler) handle(w http.ResponseWriter, r *http.Request, 
 		}
 		if required && !saml {
 			if body.Code == nil {
-				wireError(w, 403, "code-authentication-required", "Verification code required.")
+				authenticationWireError(w, 403, "code-authentication-required", "Verification code required.")
 				return
 			}
 			if record == nil || !record.Activated || record.Email == nil {
-				wireError(w, 403, "code-authentication-failed", "Code authentication failed (no such email).")
+				authenticationWireError(w, 403, "code-authentication-failed", "Code authentication failed (no such email).")
 				return
 			}
 			matched, err := h.verifyCode(r.Context(), *record.Email, *body.Action, *body.Code)
@@ -176,7 +185,7 @@ func (h reauthenticationHandler) handle(w http.ResponseWriter, r *http.Request, 
 				return
 			}
 			if !matched {
-				wireError(w, 403, "code-authentication-failed", "Code authentication failed (no such code).")
+				authenticationWireError(w, 403, "code-authentication-failed", "Code authentication failed (no such code).")
 				return
 			}
 		}
