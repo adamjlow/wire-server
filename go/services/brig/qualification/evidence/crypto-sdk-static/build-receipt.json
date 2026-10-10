@@ -1,0 +1,15 @@
+{
+  "source_revision": "39b14ac6c8afb08d94666a49c29c286604548f46",
+  "binary_sha256": "f8cc6e8fa5356999267d968d964973ffb593a0f05c1f93191455ed108f89cb1c",
+  "unit_binary_sha256": "cbe99362ec14446b50c7c1aa476ac58deb19e75edfc9746179ef43833c792590",
+  "sdk_image": "sha256:f2f47f614f5dbefa4ef1bc2cbf2f24cf95dfa0d65e3e73c8878a74630baaae30",
+  "toolchain": "go1.26.9",
+  "build_command": "CGO_ENABLED=1 go build -trimpath -buildvcs=false -tags=netgo,osusergo -ldflags='-linkmode external -extldflags \"-static -lz -lzstd\"' ./cmd/brig",
+  "sdk_archives_manifest_sha256": "07173839615bf3c6d83058fb88319bd292d232bf9584f84fbf17cb5652e198b5",
+  "go_checks": "pass",
+  "sdk_controller_exit_code": 0,
+  "unchanged_runner_unit_exit_code": 0,
+  "compiler_container_remaining": false,
+  "unit_container_remaining": false,
+  "network_cleanup_exit_code": 0
+}
