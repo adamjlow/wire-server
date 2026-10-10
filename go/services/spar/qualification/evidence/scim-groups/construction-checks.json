@@ -1,0 +1,26 @@
+{
+  "source_revision": "d585ed1b9cf8a7ec307370f5482a7089f9e1d20d",
+  "result": "pass",
+  "scope": "SCIM authentication/group construction and focused HTTP boundary tests only; no original group integration or whole-service qualification claim.",
+  "checks": [
+    "Pinned Go1.26.9 format/tidy/verify/vet/unit/race/build/vulnerability/license",
+    "Unauthorized/invalid bearer requests never reach Brig",
+    "Token-derived team, pagination/filter translation and native group metadata",
+    "Actual creation account/group HTTP envelopes and native managedBy guard",
+    "Wrong-team/wire-managed/missing added-member rejection before group mutation",
+    "Unicode group-name bounds and case-folded fields preserving values"
+  ],
+  "go_check_log_sha256": "59c6bd8ce5c5d48f4a7fb89089e28ad518d5f1484a9d36a35ab9c0606475e3da",
+  "original_group_execution": {
+    "result": "not-run",
+    "reason": "Unchanged original group scenarios require SCIM user provisioning, which is not implemented yet."
+  },
+  "review": "Delegated same-author construction review against native hscim, Spar.Scim.Group and ScimSubsystem/Brig RPC sources; whole-service review incomplete.",
+  "unresolved": [
+    "SCIM users/invitations/model/validation/stores, config/schema metadata and internal cleanup",
+    "Full filter/parser/body/header/routing/content negotiation and peer error details",
+    "Exact inherited undefined PATCH diagnostic",
+    "Remaining SAML importer/Base64/cookie/mobile/diagnostic/error/RIPEMD160/SDK traversal gaps",
+    "Original SCIM/group execution, final225/state/ops/durable switchback/image/selector"
+  ]
+}

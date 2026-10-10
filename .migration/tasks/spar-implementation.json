@@ -112,8 +112,15 @@
       "command": "Two unchanged original SP-initiated emulation/UTF8 login tests against exact Go Spar and Haskell peers; strict two-name XML/no failures/errors/skips, selected artifact identities, runner0/owned cleanup0 and independently empty project resources. Construction only, final225 outstanding.",
       "revision": "a26bd211c0b7f3f4e75b6757b90b97688512a149",
       "artifact": "go/services/spar/qualification/evidence/login-original/result.json"
+    },
+    {
+      "criterion": "quality",
+      "result": "pass",
+      "command": "Pinned Go1.26.9 checks and finite SCIM token/team/auth/group RPC/member-guard/pagination/serialization tests. Construction only; original groups not executed because SCIM user provisioning is pending.",
+      "revision": "d585ed1b9cf8a7ec307370f5482a7089f9e1d20d",
+      "artifact": "go/services/spar/qualification/evidence/scim-groups/construction-checks.json"
     }
   ],
   "review": null,
-  "handoff": "Progress: sourcea26bd211c0b7f3f4e75b6757b90b97688512a149 wired signed SSO login and now passes two unchanged original tests Spar.testSparEmulateSPInitiatedLogin and Spar.testSparSPInitiatedLoginWithUtf8 with actual Haskell peers, native published runner, real Brig sessions/storage, strict XML and exact artifact hashes. Runner0/owned cleanup0/independently empty project resources. Full pinned Go checks pass; construction login evidence retained. Task-owned completed background-worker .test binaries losslessly archived with original/compressed hashes to recover floor; root capacity now2179121152B, still tight. Next implement SCIM users/groups/internal cleanup, batch original SAML/SCIM scenarios when runnable, resolve importer/Base64/cookie/mobile/diagnostic/error-Show/RIPEMD160/SDK traversal gaps, then full225/state/ops/durable switchback/image/selector. Existing native101 and prior IdP/token/delete evidence retained; compatibility null and whole-service review incomplete. Haskell/oracle/defaults unchanged."
+  "handoff": "Progress: sourced585ed1b9cf8a7ec307370f5482a7089f9e1d20d adds SCIM authentication and Brig-backed group create/get/list/update/delete and inherited PATCH-error handling, token-authoritative team scoping, managedBy/team/additional-member checks, createdAt/v1 metadata and pagination/filter translation. Pinned Go1.26.9 checks incl race/vulnerability/license pass; focused actual HTTP boundary/auth/guard/serialization tests pass. Original group scenarios unrun until SCIM user provisioning is implemented, no whole-service claim. Previous exact sourcea26bd211 login2 originals with real Haskell peers/runner0/cleanup0 and native101/prior IdP/token/delete evidence retained. Next SCIM users/invitations/model/validation/stores/config/schema/internal cleanup, then batch originals. Resolve parser/body/header/negotiation/peer-error/PATCH details plus remaining SAML importer/Base64/cookie/mobile/diagnostic/error-Show/RIPEMD160/SDK traversal gaps; final225/state/ops/switchback/image/selector incomplete. Haskell/oracles/defaults unchanged; compatibility null. Docker floor recovered via lossless task-owned completed .test archives, capacity still tight."
 }
