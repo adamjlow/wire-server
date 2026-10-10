@@ -1,7 +1,7 @@
 # Inherited Spar concerns
 
-This candidate remains under construction. Preserve reference behavior and record
-concerns; no Haskell repair or security-policy change is part of this migration.
+The optional candidate has completed its finite parity qualification and delegated
+same-author [review](REVIEW.md). Preserve reference behavior and record concerns; no Haskell repair or security-policy change is part of this migration.
 The frozen contract already records signing-certificate date/fingerprint policy,
 login debug data exposure and replay read/write races.
 
@@ -13,8 +13,8 @@ IdP belongs to the requesting admin's team, despite the nearby comment describin
 that requirement. The outer admin check applies to the requesting user's team.
 Potential effects include changing another team's replacement/provisioning state
 if its IdP UUID is known. This is a source-level concern, not a demonstrated
-exploit; the complete authentication effects still need qualification. The Go
-construction follows that source sequence. Do not silently add an ownership
+exploit; the complete native authentication effects do not establish an exploit. Go
+follows that source sequence; original authentication/team cases pass. Do not silently add an ownership
 policy or infer approval for a security exception from parity/self-review.
 
 XML metadata parsing uses namespace-aware standard Go decoding, rejects multiple
@@ -23,10 +23,10 @@ external entities. Configured fingerprints remain SHA1 certificate fingerprints
 as in the source; they do not replace mandatory SAML signature validation. An
 empty allowlist is permitted for single ingress but rejected for multi ingress.
 Expired certificates remain valid stored signing-key material, matching the
-original fixture/test. Connected signed login passes two unchanged original
-scenarios; whole-service trust qualification remains pending.
+original fixture/test. Connected signed login and the full101 original Spar executions pass; finite
+paired trust controls and durable switchback are recorded in the completion review.
 
-The source's user_v2 key case-folds the unqualified subject and ignores NameID qualifiers and team. The Go mapping store preserves that key and UID-guarded deletion, including copy-on-lookup legacy migration. IdP purge must check Brig's team for every mapping before deleting accounts; issuer-wide deletion alone would cross a team boundary for shared version-2 issuers. Connected signed login now enforces request-to-issuer and assertion-replay checks. Two original login scenarios and finite judge/security tests pass; the final whole-service security/state matrix remains pending. Existing read/check/write replay and UID-delete races remain source concerns for the final review.
+The source's user_v2 key case-folds the unqualified subject and ignores NameID qualifiers and team. The Go mapping store preserves that key and UID-guarded deletion, including copy-on-lookup legacy migration. IdP purge must check Brig's team for every mapping before deleting accounts; issuer-wide deletion alone would cross a team boundary for shared version-2 issuers. Connected signed login now enforces request-to-issuer and assertion-replay checks. Original101, finite judge/security controls and actual102-action switchback pass. Existing read/check/write replay and UID-delete races remain source concerns.
 
 Native certToCreds requires RSA/SHA256 certificate algorithm but imposes no RSA modulus minimum. Original SAML tests call mkSignCredsWithCert Nothing96 (RSA.generate's byte size:768 bits; the fixture exponent is17). Go1.26.9's VerifyPKCS1v15 enforces1024 bits by default, a demonstrated mismatch. Under the user's explicit instruction to mirror the current backend and record serious concerns, Spar alone uses //go:debug rsa1024min=0 to retain existing configured-key acceptance; this preserves the native policy rather than adding a minimum or changing Haskell/original fixtures. Every digest, signature, configured-key, issuer and replay check remains mandatory. It does not alter peer services or approve deployment/hardening. Small RSA keys are a serious inherited weakness: a reviewed future policy should require modern key sizes, with deliberate fixture/contract updates. The compatibility test proves default rejection, native-policy acceptance and rejection of a wrapped assertion even with a legacy key. Same-author implementation review is not an independent security audit.
 
@@ -43,8 +43,8 @@ ADFS whitespace repair is retried only after unmodified verification fails.
 Actual native/Go comparison passes twelve signed cases plus nine paired tamper
 controls, including an assertion with over1,000 nodes, without any session or
 cookie. Native matching diagnostics establish the missing-request boundary for
-accepted signatures. This supplements earlier original tests; it does not
-establish whole-service state/operations or final225 qualification.
+accepted signatures. These relevant inputs remain byte-identical in final40; the completion review
+links the separate current state/operations and final225 qualification.
 
 Native form parsing enforces the pinned65336-byte URL/text parameter limits,
 32-byte part names,10 files,32 part header lines and8190-byte header lines.

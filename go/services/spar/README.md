@@ -8,7 +8,9 @@ actual native error/media/body responses preserved.
 
 The current executable passes Go quality/security checks, actual native protocol
 comparisons, durable Haskell→Go→Haskell switchback and optional container operations.
-Final mixed-stack qualification and availability approval are still pending.
+All225 original mixed-stack executions pass in three owned batches with the
+same seven Go executables and Haskell remainder. See [completion review](REVIEW.md)
+for exact pins, retained failures and delegated same-author approval.
 See the [plan](../../../docs/go-migration/plans/spar.md) and
 [frozen contract](../../../docs/go-migration/services/spar/contract.md).
 
@@ -31,8 +33,7 @@ Qualification builds local images; it does not publish or deploy them.
 The owned Docker harness runs unchanged compiled Haskell integration assertions;
 no native toolchain/dependency installation or manual testing is required. Current
 evidence is under `qualification/evidence`, including retained failures. Exact
-artifact/source pins and finite test scope belong to each receipt: an earlier
-101-test construction pass does not qualify a later executable. Final intended
+artifact/source pins and finite test scope belong to each receipt: proof reuse requires unchanged relevant inputs. The qualified
 profile is `proxy-cargohold-cannon-gundeck-federator-background-worker-spar` (225 tests).
 Native unit binaries and a full Haskell rebuild are unavailable in this environment;
 no native build or unit-test pass is claimed. No Haskell source was changed.

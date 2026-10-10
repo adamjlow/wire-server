@@ -1,0 +1,9 @@
+{
+  "result": "pass",
+  "kind": "owned-native-Nginx-orphan-supervision",
+  "uid": 65534,
+  "pid": 1,
+  "signals": [],
+  "scope": "Adopted native nginx workers only; original service/test code, assertions and deadlines unchanged.",
+  "original_exit_code": 0
+}
