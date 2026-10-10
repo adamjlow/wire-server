@@ -1,0 +1,50 @@
+ Container wire-e2e-c7c0b6b1039f46c5922db0b65b1047d7-redis-cluster-run-0a423e4bc93d Creating 
+ Container wire-e2e-c7c0b6b1039f46c5922db0b65b1047d7-redis-cluster-run-0a423e4bc93d Created 
+Warning: Using a password with '-a' or '-u' option on the command line interface may not be safe.
+>>> Performing hash slots allocation on 6 nodes...
+Master[0] -> Slots 0 - 5460
+Master[1] -> Slots 5461 - 10922
+Master[2] -> Slots 10923 - 16383
+Adding replica 172.20.0.35:6377 to 172.20.0.31:6373
+Adding replica 172.20.0.36:6378 to 172.20.0.32:6374
+Adding replica 172.20.0.34:6376 to 172.20.0.33:6375
+M: 6a94b6387d8905ada2ea6d1b52366b9650cce0b8 172.20.0.31:6373
+   slots:[0-5460] (5461 slots) master
+M: 31b7e48c23f88f19e7b001695b06c394a25d83d0 172.20.0.32:6374
+   slots:[5461-10922] (5462 slots) master
+M: 91b017f0fc111e865d49af7147c03e0dbf8f39b7 172.20.0.33:6375
+   slots:[10923-16383] (5461 slots) master
+S: 9a9f7c0974e382d7bd2cade7fc87e29b31a61072 172.20.0.34:6376
+   replicates 91b017f0fc111e865d49af7147c03e0dbf8f39b7
+S: 5436af2961bf56e3f83cad146b898db7e724a598 172.20.0.35:6377
+   replicates 6a94b6387d8905ada2ea6d1b52366b9650cce0b8
+S: a11901f9b0e5af30fe6b1be491323776c466e187 172.20.0.36:6378
+   replicates 31b7e48c23f88f19e7b001695b06c394a25d83d0
+>>> Nodes configuration updated
+>>> Assign a different config epoch to each node
+>>> Sending CLUSTER MEET messages to join the cluster
+Waiting for the cluster to join
+...
+>>> Performing Cluster Check (using node 172.20.0.31:6373)
+M: 6a94b6387d8905ada2ea6d1b52366b9650cce0b8 172.20.0.31:6373
+   slots:[0-5460] (5461 slots) master
+   1 additional replica(s)
+S: a11901f9b0e5af30fe6b1be491323776c466e187 172.20.0.36:6378
+   slots: (0 slots) slave
+   replicates 31b7e48c23f88f19e7b001695b06c394a25d83d0
+M: 91b017f0fc111e865d49af7147c03e0dbf8f39b7 172.20.0.33:6375
+   slots:[10923-16383] (5461 slots) master
+   1 additional replica(s)
+S: 5436af2961bf56e3f83cad146b898db7e724a598 172.20.0.35:6377
+   slots: (0 slots) slave
+   replicates 6a94b6387d8905ada2ea6d1b52366b9650cce0b8
+S: 9a9f7c0974e382d7bd2cade7fc87e29b31a61072 172.20.0.34:6376
+   slots: (0 slots) slave
+   replicates 91b017f0fc111e865d49af7147c03e0dbf8f39b7
+M: 31b7e48c23f88f19e7b001695b06c394a25d83d0 172.20.0.32:6374
+   slots:[5461-10922] (5462 slots) master
+   1 additional replica(s)
+[OK] All nodes agree about slots configuration.
+>>> Check for open slots...
+>>> Check slots coverage...
+[OK] All 16384 slots covered.

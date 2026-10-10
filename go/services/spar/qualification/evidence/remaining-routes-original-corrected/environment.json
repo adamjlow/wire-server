@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "project": "wire-e2e-c7c0b6b1039f46c5922db0b65b1047d7",
+  "source_revision": "98c8a3c495d2b67b52fd443456ca3fd88afb59a9",
+  "runner_image_id": "sha256:099b30651813ecbe4192514cde0b096174bbfd34672529c9b21e8c7766077268",
+  "runner_revision": "890a4742e936a2e8078f1a0d39b8bb36616a385f",
+  "candidate": {
+    "path": "/dev/shm/wire-migration-spar-20261010/spar-remaining-routes-corrected",
+    "sha256": "75171de62079df104e301643e070e94d41477afd200c5f72270e936a421e6cc5",
+    "source_revision": "98c8a3c495d2b67b52fd443456ca3fd88afb59a9"
+  },
+  "peer_candidates": {},
+  "result": "pass",
+  "e2e_executed": false,
+  "compose_sha256": "da74e989c9b717397ca142c3bc2f5269be59a1ac555e0080a62881341086c145",
+  "files_sha256": {
+    "fixtures/configs.json": "8cc34c41cc248ae804d822a60fb610b0adead84c3e79663eb33243ef70c99876",
+    "fixtures/integration.json": "d8834dad54e1f851e689ac00691cd527aac69e0e9ce00baf149835433812c73c",
+    "fixtures/peers.json": "ca8438ea9464138dc0c75868b62eb8b12113343dada8336524c3ea467dd3a490"
+  },
+  "kind": "original-Go-Spar-token-tests",
+  "process_exit_code": 0,
+  "cleanup_exit_code": 0,
+  "post_cleanup": {
+    "containers": [],
+    "networks": [],
+    "volumes": []
+  }
+}

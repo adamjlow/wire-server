@@ -1,0 +1,164 @@
+{
+  "result": "pass",
+  "source_revision": "98c8a3c495d2b67b52fd443456ca3fd88afb59a9",
+  "binary_sha256": "75171de62079df104e301643e070e94d41477afd200c5f72270e936a421e6cc5",
+  "original_executions": 13,
+  "required_names": [
+    "Spar.GetByEmail.testGetSsoCodeByEmailDisabledMultiIngress",
+    "Spar.GetByEmail.testGetSsoCodeByEmailDisabledRegular",
+    "Spar.GetByEmail.testGetSsoCodeByEmailNonSSOUser",
+    "Spar.GetByEmail.testGetSsoCodeByEmailRegular[requireexternalemailverification=false][idpscimtoken=false]",
+    "Spar.GetByEmail.testGetSsoCodeByEmailRegular[requireexternalemailverification=false][idpscimtoken=true]",
+    "Spar.GetByEmail.testGetSsoCodeByEmailRegular[requireexternalemailverification=true][idpscimtoken=false]",
+    "Spar.GetByEmail.testGetSsoCodeByEmailRegular[requireexternalemailverification=true][idpscimtoken=true]",
+    "Spar.GetByEmail.testGetSsoCodeByEmailWithMultiIngress[requireexternalemailverification=false][idpscimtoken=false]",
+    "Spar.GetByEmail.testGetSsoCodeByEmailWithMultiIngress[requireexternalemailverification=false][idpscimtoken=true]",
+    "Spar.GetByEmail.testGetSsoCodeByEmailWithMultiIngress[requireexternalemailverification=true][idpscimtoken=false]",
+    "Spar.GetByEmail.testGetSsoCodeByEmailWithMultiIngress[requireexternalemailverification=true][idpscimtoken=true]",
+    "Spar.testSparUserCreationInvitationTimeout",
+    "Spar.testTeamInvitationWhenScimInvitationExpired"
+  ],
+  "xml_sha256": "fe9d7411619d96043f3aa5badf3598619acf57c5acf6eba4d43b651856b77808",
+  "checks": [
+    "Exact13 unchanged original names/variants with no failures/errors/skips",
+    "Pinned Go1.26.9 format/tidy/verify/vet/unit/race/build/vulnerability/license",
+    "Runner0/cleanup0 and independent empty owned resources",
+    "Finite cleanup/team/order/disabled-discovery/no-mutation and native notification codec regression tests"
+  ],
+  "project": "wire-e2e-c7c0b6b1039f46c5922db0b65b1047d7",
+  "independent_post_cleanup": {
+    "containers": [],
+    "networks": [],
+    "volumes": []
+  },
+  "log_receipts": {
+    "controller.log": {
+      "path": "/home/operator/.cache/wire-migration/spar-20261010/remaining-routes-original-corrected/controller.log",
+      "sha256": "09aa1ab2fedb0c6efe5d9bc37ae19f666010d27d0970e2e53402af98ee31c414",
+      "size": 957630
+    },
+    "proxy-1.log": {
+      "path": "/home/operator/.cache/wire-migration/spar-20261010/remaining-routes-original-corrected/reports/proxy-1.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    "nginz-0.log": {
+      "path": "/home/operator/.cache/wire-migration/spar-20261010/remaining-routes-original-corrected/reports/nginz-0.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    "cargohold-1.log": {
+      "path": "/home/operator/.cache/wire-migration/spar-20261010/remaining-routes-original-corrected/reports/cargohold-1.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    "federator-1.log": {
+      "path": "/home/operator/.cache/wire-migration/spar-20261010/remaining-routes-original-corrected/reports/federator-1.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    "spar-1.log": {
+      "path": "/home/operator/.cache/wire-migration/spar-20261010/remaining-routes-original-corrected/reports/spar-1.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    "brig-1.log": {
+      "path": "/home/operator/.cache/wire-migration/spar-20261010/remaining-routes-original-corrected/reports/brig-1.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    "proxy-0.log": {
+      "path": "/home/operator/.cache/wire-migration/spar-20261010/remaining-routes-original-corrected/reports/proxy-0.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    "cannon-1.log": {
+      "path": "/home/operator/.cache/wire-migration/spar-20261010/remaining-routes-original-corrected/reports/cannon-1.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    "galley-1.log": {
+      "path": "/home/operator/.cache/wire-migration/spar-20261010/remaining-routes-original-corrected/reports/galley-1.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    "stern-0.log": {
+      "path": "/home/operator/.cache/wire-migration/spar-20261010/remaining-routes-original-corrected/reports/stern-0.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    "wire-server-enterprise-1.log": {
+      "path": "/home/operator/.cache/wire-migration/spar-20261010/remaining-routes-original-corrected/reports/wire-server-enterprise-1.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    "background-worker-0.log": {
+      "path": "/home/operator/.cache/wire-migration/spar-20261010/remaining-routes-original-corrected/reports/background-worker-0.log",
+      "sha256": "c8519901036e5146746280497bbd59c23b482046489f865fc6a21b8523fd99fa",
+      "size": 1027
+    },
+    "spar-0.log": {
+      "path": "/home/operator/.cache/wire-migration/spar-20261010/remaining-routes-original-corrected/reports/spar-0.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    "galley-0.log": {
+      "path": "/home/operator/.cache/wire-migration/spar-20261010/remaining-routes-original-corrected/reports/galley-0.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    "stern-1.log": {
+      "path": "/home/operator/.cache/wire-migration/spar-20261010/remaining-routes-original-corrected/reports/stern-1.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    "cargohold-0.log": {
+      "path": "/home/operator/.cache/wire-migration/spar-20261010/remaining-routes-original-corrected/reports/cargohold-0.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    "brig-0.log": {
+      "path": "/home/operator/.cache/wire-migration/spar-20261010/remaining-routes-original-corrected/reports/brig-0.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    "cannon-0.log": {
+      "path": "/home/operator/.cache/wire-migration/spar-20261010/remaining-routes-original-corrected/reports/cannon-0.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    "background-worker-1.log": {
+      "path": "/home/operator/.cache/wire-migration/spar-20261010/remaining-routes-original-corrected/reports/background-worker-1.log",
+      "sha256": "23b71574ec69c9246668c36a9fdedb5980bb818ee2262318db9fe8ae2d88ced3",
+      "size": 1028
+    },
+    "gundeck-1.log": {
+      "path": "/home/operator/.cache/wire-migration/spar-20261010/remaining-routes-original-corrected/reports/gundeck-1.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    "gundeck-0.log": {
+      "path": "/home/operator/.cache/wire-migration/spar-20261010/remaining-routes-original-corrected/reports/gundeck-0.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    "federator-0.log": {
+      "path": "/home/operator/.cache/wire-migration/spar-20261010/remaining-routes-original-corrected/reports/federator-0.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    "nginz-1.log": {
+      "path": "/home/operator/.cache/wire-migration/spar-20261010/remaining-routes-original-corrected/reports/nginz-1.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    "wire-server-enterprise-0.log": {
+      "path": "/home/operator/.cache/wire-migration/spar-20261010/remaining-routes-original-corrected/reports/wire-server-enterprise-0.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    }
+  },
+  "setup_correction": "During this fresh run, initial redis-cluster creator was observed Exited1/connection refused and zero assigned slots. Before originals began, used exact protected environment.run sequence to create owned synthetic cluster with ready nodes; all16384 slots covered. Candidate/source/fixtures remained fixed. Module helper now follows this sequence automatically; shared harness unchanged.",
+  "review": "Delegated same-author construction review against native cleanup/discovery/notification source, not independent whole-service review.",
+  "scope": "11 original email discovery variants and2 invitation expiration scenarios with actual Go Spar/Haskell peers. Full101/225, bounded remaining trust/state/operations/switchback/image/selector qualification still outstanding."
+}

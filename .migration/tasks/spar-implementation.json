@@ -140,8 +140,22 @@
       "command": "Pinned Go1.26.9 quality checks and33 actual native/Go HTTP comparisons (22 public SCIM metadata plus11 startup/settings); both SIGTERM0, runner0/cleanup0/independently empty resources. Construction increment only; final225 remains pending.",
       "revision": "b55621aece1d3d219b1ae3ceb350f5e15e9d6d61",
       "artifact": "go/services/spar/qualification/evidence/scim-metadata-native/construction-checks.json"
+    },
+    {
+      "criterion": "quality",
+      "result": "fail",
+      "command": "Initial13 original remaining-route executions:7pass/6fail (native IdP JSON version mismatch; native WebSocket presence failed with uninitialized Redis). Runner1/cleanup0, retained without waived assertions.",
+      "revision": "e7a5bdfd3caa3f8e4a76c671b36e0efb03f2615b",
+      "artifact": "go/services/spar/qualification/evidence/remaining-routes-original-initial/construction-checks.json"
+    },
+    {
+      "criterion": "quality",
+      "result": "pass",
+      "command": "Pinned Go1.26.9 quality and13 unchanged original discovery/invitation executions against corrected exact Spar/Haskell peers. Native enum codec fixed and existing owned Redis cluster initialized before originals; strict names/variants/no errors/skips, runner0/cleanup0/independently empty resources. Construction only.",
+      "revision": "98c8a3c495d2b67b52fd443456ca3fd88afb59a9",
+      "artifact": "go/services/spar/qualification/evidence/remaining-routes-original-corrected/construction-checks.json"
     }
   ],
   "review": null,
-  "handoff": "Public SCIM metadata increment sourceb55621aece1d3d219b1ae3ceb350f5e15e9d6d61 passes pinned Go quality and33 actual native/Go responses, exact native constants/headers/errors and both clean shutdowns. Owned Docker cleanup and independent resource check pass. Prior17 original SCIM user,5 group,2 login and IdP/token/delete evidence retained, as is native101 baseline. Next internal pending-user/team cleanup and V15 SSO email discovery; remaining finite protocol/trust/ETag/URI gaps, final225 seven-Go profile, operations smoke, durable Haskell-Go-Haskell switchback, optional image/selector and legal review/availability gates outstanding. Whole-service goal active, compatibility null, Haskell default. Native unit executable/build unavailable, not a pass. No new dependencies/protected source/oracle changes."
+  "handoff": "Source98c8a3c495d2b67b52fd443456ca3fd88afb59a9 implements pending-user/team cleanup and V15 feature-gated SSO email discovery, preserving native guards/order/responses and real peers.13 original discovery/invitation executions and pinned Go1.26.9 quality pass; failed initial run retained. Corrected native IdP JSON version codec for Brig notification, while storage/query versions unchanged; semantic native golden and notification regression pass. Redis construction helper now uses protected environment.run ready-node/explicit cluster sequence; successful corrected run initialized same owned cluster before originals, all16384 slots.33 metadata native/Go comparisons and prior17 SCIM user/5 group/2 login plus token/IdP/delete originals and native101 baseline retained. Next existing full225 seven-Go profile to identify remaining concrete surface failures, then finite remaining trust/state/protocol/ETag/URI, operations smoke, populated internal cleanup and durable Haskell-Go-Haskell switchback, optional image/selector and legal exact review/availability gates. Haskell/oracles/shared harness/defaults unchanged; compatibility null; goal active. Native unit executable/build unavailable, not a pass."
 }

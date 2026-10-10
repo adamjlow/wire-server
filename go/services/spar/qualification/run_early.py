@@ -5,6 +5,7 @@ import json
 from pathlib import Path
 import subprocess
 import sys
+import time
 
 ROOT=Path(__file__).resolve().parents[4]
 sys.path.insert(0,str(ROOT/'tools/parity/docker'))
@@ -34,8 +35,19 @@ def main():
     compose=['docker','compose','-p',record['project'],'-f',str(compose_path)]
     code=1
     try:
-        dependencies=['cassandra'] if args.suite=='early' else [name for name in spec['services'] if name!='runner']
+        dependencies=['cassandra'] if args.suite=='early' else [name for name in spec['services'] if name not in ('runner','redis-cluster')]
         subprocess.run([*compose,'up','--detach',*dependencies],check=True,timeout=120,capture_output=True)
+        if args.suite!='early':
+            # Same dependency sequence as protected environment.run: creation
+            # before Redis nodes are ready silently leaves native presence broken.
+            deadline=time.monotonic()+90
+            while True:
+                ping=subprocess.run([*compose,'exec','-T','redis-node-1','redis-cli','--tls','--cacert','/usr/local/etc/redis/ca.pem','-a','very-secure-redis-cluster-password','-h','172.20.0.36','-p','6378','ping'],timeout=10,capture_output=True)
+                if ping.returncode==0:break
+                if time.monotonic()>deadline:raise ValueError('Redis nodes unavailable')
+                time.sleep(1)
+            with (output/'redis-cluster-bootstrap.log').open('w')as log:
+                subprocess.run([*compose,'run','--rm','--no-deps','redis-cluster'],stdout=log,stderr=subprocess.STDOUT,check=True,timeout=90)
         with (output/'controller.log').open('w')as log:
             result=subprocess.run([*compose,'run','--rm','--no-deps','runner'],stdout=log,stderr=subprocess.STDOUT,timeout=240 if args.suite=='early' else 900)
         code=result.returncode;record['process_exit_code']=code
