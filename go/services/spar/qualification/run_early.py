@@ -17,25 +17,25 @@ import environment
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     for name in ('output','runner-receipt','candidate','candidate-receipt'):parser.add_argument('--'+name,type=Path,required=True)
-    parser.add_argument('--suite',choices=('early','middleware','forms','signatures','tokens','idps','delete','login','scim-groups','scim-users','remaining-routes','switchback'),default='early')
+    parser.add_argument('--suite',choices=('early','middleware','forms','signatures','tokens','idps','delete','login','scim-groups','scim-users','remaining-routes','switchback','group-patch'),default='early')
     parser.add_argument('--signature-fixtures',type=Path)
     parser.add_argument('--switchback-fixtures',type=Path)
     args=parser.parse_args()
     if args.suite=='signatures' and args.signature_fixtures is None:parser.error('signature fixtures executable required')
-    if args.suite=='switchback' and args.switchback_fixtures is None:parser.error('switchback fixtures executable required')
+    if args.suite in ('switchback','group-patch') and args.switchback_fixtures is None:parser.error('switchback fixtures executable required')
     selected=environment.identified_candidate(args.candidate,args.candidate_receipt)
     record=environment.prepare(args.output,args.runner_receipt)
     output=args.output.resolve();compose_path=output/'compose.json';spec=json.loads(compose_path.read_text())
-    if args.suite in ('early','middleware','forms','signatures'):
+    if args.suite in ('early','middleware','forms','signatures','group-patch'):
         spec['services']={name:service for name,service in spec['services'].items() if name in ('cassandra','runner')}
         spec['networks']={'demo_wire':spec['networks']['demo_wire']}
     runner=spec['services']['runner']
-    if args.suite in ('early','middleware','forms','signatures'):runner['networks']=['demo_wire']
+    if args.suite in ('early','middleware','forms','signatures','group-patch'):runner['networks']=['demo_wire']
     runner['entrypoint']=['/nix/store/60m4rxhg2fldqaak400c0lry96ijrzqn-python3-3.13.13/bin/python3']
-    runner['command']=['/source/go/services/spar/qualification/'+('early.py' if args.suite in ('early','middleware','forms','signatures') else 'switchback.py' if args.suite=='switchback' else 'tokens.py')]
+    runner['command']=['/source/go/services/spar/qualification/'+('group_patch.py' if args.suite=='group-patch' else 'early.py' if args.suite in ('early','middleware','forms','signatures','group-patch') else 'switchback.py' if args.suite=='switchback' else 'tokens.py')]
     if args.suite=='middleware':runner['command']+=['--middleware']
     if args.suite=='forms':runner['command']+=['--forms']
-    if args.suite in ('signatures','switchback'):
+    if args.suite in ('signatures','switchback','group-patch'):
         if args.suite=='signatures':runner['command']+=['--signatures']
         # Use the existing approved read-only /fixtures mount. Do not broaden
         # protected isolation rules to introduce another arbitrary host bind.
@@ -46,21 +46,21 @@ def main():
         shutil.copy2(fixture_executable.resolve(strict=True),fixture_dir/('signature-fixtures.test' if args.suite=='signatures' else 'switchback-fixtures.test'))
         for volume in runner['volumes']:
             if volume['type']=='bind' and volume['target']=='/fixtures':volume['source']=str(fixture_dir)
-    if args.suite not in ('early','middleware','forms','signatures','switchback'):runner['command']+=['--suite',args.suite]
+    if args.suite not in ('early','middleware','forms','signatures','switchback','group-patch'):runner['command']+=['--suite',args.suite]
     runner['volumes'].append({'type':'bind','source':selected['path'],'target':'/candidate/spar','read_only':True})
     environment.validate_isolation(spec)
     compose_path.write_text(json.dumps(spec,indent=2)+'\n')
-    if args.suite in ('signatures','switchback'):
+    if args.suite in ('signatures','switchback','group-patch'):
         fixture_receipt=json.loads(args.candidate_receipt.read_text())['fixture_executable' if args.suite=='signatures' else 'switchback_fixture_executable']
         if fixture_receipt['sha256']!=hashlib.sha256(fixture_executable.read_bytes()).hexdigest():raise ValueError('signature fixture executable receipt mismatch')
         record['signature_fixture_executable' if args.suite=='signatures' else 'switchback_fixture_executable']=fixture_receipt
-    record.update(kind='native-Go-native-Spar-switchback' if args.suite=='switchback' else 'early-native-Go-Spar-process' if args.suite in ('early','middleware','forms','signatures') else 'original-Go-Spar-token-tests',candidate=selected,compose_sha256=hashlib.sha256(compose_path.read_bytes()).hexdigest())
+    record.update(kind='native-Go-Spar-unsupported-group-PATCH' if args.suite=='group-patch' else 'native-Go-native-Spar-switchback' if args.suite=='switchback' else 'early-native-Go-Spar-process' if args.suite in ('early','middleware','forms','signatures','group-patch') else 'original-Go-Spar-token-tests',candidate=selected,compose_sha256=hashlib.sha256(compose_path.read_bytes()).hexdigest())
     compose=['docker','compose','-p',record['project'],'-f',str(compose_path)]
     code=1
     try:
-        dependencies=['cassandra'] if args.suite in ('early','middleware','forms','signatures') else [name for name in spec['services'] if name not in ('runner','redis-cluster')]
+        dependencies=['cassandra'] if args.suite in ('early','middleware','forms','signatures','group-patch') else [name for name in spec['services'] if name not in ('runner','redis-cluster')]
         subprocess.run([*compose,'up','--detach',*dependencies],check=True,timeout=120,capture_output=True)
-        if args.suite not in ('early','middleware','forms','signatures'):
+        if args.suite not in ('early','middleware','forms','signatures','group-patch'):
             # Same dependency sequence as protected environment.run: creation
             # before Redis nodes are ready silently leaves native presence broken.
             deadline=time.monotonic()+90
@@ -72,7 +72,7 @@ def main():
             with (output/'redis-cluster-bootstrap.log').open('w')as log:
                 subprocess.run([*compose,'run','--rm','--no-deps','redis-cluster'],stdout=log,stderr=subprocess.STDOUT,check=True,timeout=90)
         with (output/'controller.log').open('w')as log:
-            result=subprocess.run([*compose,'run','--rm','--no-deps','runner'],stdout=log,stderr=subprocess.STDOUT,timeout=240 if args.suite in ('early','middleware','forms','signatures') else 900)
+            result=subprocess.run([*compose,'run','--rm','--no-deps','runner'],stdout=log,stderr=subprocess.STDOUT,timeout=240 if args.suite in ('early','middleware','forms','signatures','group-patch') else 900)
         code=result.returncode;record['process_exit_code']=code
         observed=json.loads((output/'reports/result.json').read_text());record['result']=observed['result']
         if code!=0 or observed['result']!='pass':code=1
@@ -85,7 +85,7 @@ def main():
         record['post_cleanup']=remaining
         if cleanup.returncode!=0 or any(remaining.values()):record['result']='fail';code=1
         (output/'environment.json').write_text(json.dumps(record,indent=2)+'\n')
-        if args.suite in ('signatures','switchback'):shutil.rmtree(fixture_dir)
+        if args.suite in ('signatures','switchback','group-patch'):shutil.rmtree(fixture_dir)
     print(json.dumps({'result':record['result'],'process_exit_code':record.get('process_exit_code'),'cleanup_exit_code':record['cleanup_exit_code'],'project':record['project']},indent=2));return code
 
 if __name__=='__main__':raise SystemExit(main())

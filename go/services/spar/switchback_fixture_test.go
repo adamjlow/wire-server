@@ -75,6 +75,7 @@ func runSwitchbackFixture(t *testing.T) {
 		var input struct {
 			Action, Team, IdP, User, External, Token, TokenID, Issuer string
 			Requests, Assertions                                      []string
+			NoIdP                                                     bool
 		}
 		decoder := json.NewDecoder(http.MaxBytesReader(w, r.Body, 100<<10))
 		decoder.DisallowUnknownFields()
@@ -108,6 +109,9 @@ func runSwitchbackFixture(t *testing.T) {
 			}
 			if err == nil {
 				info := tokenInfo{Team: activeTeam, ID: tokenID, CreatedAt: time.Now().UTC().Truncate(time.Millisecond), IdP: &activeIdP, Description: "synthetic legacy switchback", Name: tokenID.String()}
+				if input.NoIdP {
+					info.IdP = nil
+				}
 				legacyToken = input.Token
 				batch := store.batch(r.Context())
 				for _, table := range []string{"team_provisioning_by_token", "team_provisioning_by_team"} {
