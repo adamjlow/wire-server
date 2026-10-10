@@ -1,0 +1,31 @@
+{
+  "source_revision": "a26bd211c0b7f3f4e75b6757b90b97688512a149",
+  "result": "pass",
+  "scope": "Connected SAML handler construction tests with actual signature verification and mocked persistent/peer boundaries only. No new original Haskell integration or real session execution claim.",
+  "checks": [
+    "Pinned Go1.26.9 format/tidy/verify/vet/unit/race/build/vulnerability/license",
+    "Verified signed HTTP login reaches stored mapping and backend-session boundary",
+    "Tampered/replayed/wrong-audience HTTP responses cannot reach identity/session effects",
+    "Unsolicited signed response redirects through initiation",
+    "Provisioning guard, wrong-team and create/mapping/email/session failure boundaries",
+    "Old-issuer migration insert-new/Brig-update/delete-old ordering and failed-update state retention",
+    "Module-owned qualification helpers parse; migration state/scope check passes"
+  ],
+  "build_receipt": "build.json",
+  "review": "Delegated same-author construction review against native App.hs/API.hs/SP.hs/XML.hs and Brig/Galley RPC sources; whole-service review incomplete.",
+  "original_login_execution": {
+    "result": "not-run",
+    "reason": "Root disk2060242944B below owned harness2GiB startup floor; capacity was inspected, no Docker run launched.",
+    "selected": [
+      "Spar.testSparEmulateSPInitiatedLogin",
+      "Spar.testSparSPInitiatedLoginWithUtf8"
+    ]
+  },
+  "unresolved": [
+    "Native diagnostic debug body/exact error messages and Show UserRef",
+    "Complete assertion/outer/status importer, lenient Base64 edges and cookie/mobile URI rendering",
+    "RIPEMD160 and SDK namespace traversal limit",
+    "Actual original SAML execution and SCIM users/groups/internal cleanup",
+    "Final225, finite state/security gaps, ops, durable switchback, image and selector"
+  ]
+}

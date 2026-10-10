@@ -98,8 +98,15 @@
       "command": "Pinned Go1.26.9 checks, verified original Microsoft assertion parsing, finite request/issuer/replay/audience/recipient/time/consumption and Brig session-cookie protocol tests. Internal construction only; no original login or final225 execution claim.",
       "revision": "e6276d9fd8a5801a95824ef85c6d8f3cfdd8404f",
       "artifact": "go/services/spar/qualification/evidence/assertion-judge/construction-checks.json"
+    },
+    {
+      "criterion": "quality",
+      "result": "pass",
+      "command": "Pinned Go1.26.9 checks and connected signed-login security/provisioning/migration tests at exact clean source; static binary identity retained. Construction only, original login tests not run due inspected owned Docker disk floor.",
+      "revision": "a26bd211c0b7f3f4e75b6757b90b97688512a149",
+      "artifact": "go/services/spar/qualification/evidence/finalize-login/construction-checks.json"
     }
   ],
   "review": null,
-  "handoff": "Progress: sourcee6276d9fd8a5801a95824ef85c6d8f3cfdd8404f adds parsed verified assertions, issuer-bound request/replay/time/audience/recipient judgement and Brig persist=true SSO session RPC with backend-only first Set-Cookie field. Pinned Go1.26.9 format/tidy/verify/vet/unit/race/build/vulnerability/license pass; original Microsoft assertion fixture parses. Native fatal/ordinary storage effects and accumulated denial precedence preserved. These boundaries are not wired to finalize-login. Next complete actual login/user provision/migration/email/verdict/cookie flow, resolve malformed-importer/exact conflicting-ref rendering and RIPEMD160/SDK traversal-limit gaps, then batch original SAML tests through existing owned Docker harness. Continue SCIM users/groups/internal cleanup. Existing native101 and six IdP/token plus one delete originals retained; no new original execution in this increment. Final225/state/ops/switchback/image/selector and whole-service review incomplete; compatibility null. Haskell source, oracle and defaults unchanged."
+  "handoff": "Progress: sourcea26bd211c0b7f3f4e75b6757b90b97688512a149 connects finalize-login through configured IdP keys, signature-verified assertion parsing/judgement, request/issuer/replay/time/audience/recipient checks, unsolicited redirect, stored verdict format, actual Brig account/provision/migration/email/session effects and web/mobile rendering. Pinned Go1.26.9 checks incl race/vulnerability/license pass; exact clean static artifact /dev/shm/wire-migration-spar-20261010/spar-finalize-login and cache spar-finalize-login-build.json retained. Connected signed-input and finite provisioning/cross-team/partial-failure tests pass with mocked storage/peers; no new original login execution claimed. Own helpers add login suite selecting two unchanged originals. Root disk2060242944B below harness2GiB floor; do not evade floor/prune shared resources. Next qualify/fix original login suite when owned capacity allows, implement SCIM users/groups/internal cleanup, and resolve full importer/Base64/cookie/mobile/diagnostic-body/error-Show/RIPEMD160/SDK traversal gaps. Existing native101 and prior original IdP/token/delete receipts remain valid. Full225/state/ops/switchback/image/selector and whole-service review incomplete, compatibility null; Haskell/oracle/defaults unchanged."
 }
