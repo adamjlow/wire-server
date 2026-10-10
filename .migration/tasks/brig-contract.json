@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "id": "brig-contract",
+  "title": "Freeze whole Brig contract and original Docker baseline",
+  "service": "brig",
+  "kind": "contract-change",
+  "status": "queued",
+  "owner": null,
+  "branch": null,
+  "depends_on": [
+    "brig-inventory-gate"
+  ],
+  "write_paths": [
+    ".migration/tasks/brig-contract.json",
+    "docs/go-migration/plans/brig.md",
+    "docs/go-migration/services/brig/contract.md",
+    "docs/go-migration/services/brig/oracle",
+    "tools/parity/docker",
+    "changelog.d/5-internal/brig-contract"
+  ],
+  "plan": "docs/go-migration/plans/brig.md",
+  "acceptance_criteria": [
+    {
+      "id": "contract",
+      "description": "Freeze complete observable Brig service and finite uncovered trust/state/operations matrix.",
+      "required_evidence": "Source-cited all configured public/internal/federation/docs/version/config/CLI/schema/queues/search/storage-mode/lifecycle contract, frozen route/model/query/signature/hash inputs and native expected fixtures. Preserve existing native security policy; finite focused gaps/100 concurrency8 resource/drain and actual durable switchback expectations declared before candidate work."
+    },
+    {
+      "id": "originals",
+      "description": "Reuse unchanged compiled original assertions and execute finite original baseline.",
+      "required_evidence": "Freeze actual310 Brig names/variants from discovery and explicit535 eight-Go/Haskell profile with strict selection/identities/names/XML/no skips. Only concrete owned-harness Brig provisioning/replacement extensions; actual all-Haskell310 baseline complete passing suites or retained exact original failure with corresponding bounded diagnosis and explicit unsatisfied acceptance. Pin runner/native/config/reference, exit codes and owned cleanup; no native unit/build pass or candidate support inferred."
+    },
+    {
+      "id": "review",
+      "description": "Review protected harness/contract changes under user delegation.",
+      "required_evidence": "Same-author review accurately labelled and explicit user authorization applied; assertions/normalization/deadlines/Haskell sources and default behavior unchanged. Existing harness checks and scope/migration checks pass; retain failures and finite remaining gaps."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": "Queued next whole-service Brig phase; Haskell reference/default, finite original validation and no deployment."
+}

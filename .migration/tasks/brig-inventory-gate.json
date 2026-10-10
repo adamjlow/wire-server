@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "id": "brig-inventory-gate",
+  "title": "Publish Brig inventoried milestone",
+  "service": "framework",
+  "kind": "framework",
+  "status": "queued",
+  "owner": null,
+  "branch": null,
+  "depends_on": [
+    "brig-inventory"
+  ],
+  "write_paths": [
+    ".migration/tasks/brig-inventory-gate.json",
+    ".migration/services/brig.json"
+  ],
+  "plan": "docs/go-migration/plans/brig.md",
+  "acceptance_criteria": [
+    {
+      "id": "gate",
+      "description": "Advance registered Brig to inventoried with reviewed discovery.",
+      "required_evidence": "Done brig-inventory source/discovery/self-review pins linked; legal one-stage transition, Haskell default, no compatibility/test pass claim."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": "Queued next whole-service Brig phase; Haskell reference/default, finite original validation and no deployment."
+}
