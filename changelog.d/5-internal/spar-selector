@@ -1,0 +1,1 @@
+Add an optional image-only Spar Helm post-render selector preserving Haskell defaults and RollingUpdate; no chart default or deployment changes.

@@ -1,0 +1,7 @@
+# Spar selector review
+
+Reviewed by codex, same author, under the user's continuing instruction to review and self-approve migrations. This is delegated self-review, not independent approval. The whole-service Spar goal explicitly includes optional selection; no production deployment, push or contract exception is authorized here.
+
+The committed bounded CLI returns the render verbatim without an image argument. With an image argument it identifies exactly one source Spar Deployment and container, requires RollingUpdate/default config mount and no unexpected command/args/preStop overrides, and replaces only the existing image line. Unexpected image syntax, absent/duplicate Deployment, wrong strategy/container/config mount fail closed before any stdout. The unchanged source chart remains upstream-owned.
+
+Actual Helm3.22.0 render of byte-verified cached source files and pinned synthetic values passes default byte identity, exactly one image change to the qualified local image, all six declared negative CLI cases with exit2/empty stdout, and preservation of all remaining bytes (config/probes/environment/peers/rolling strategy). Evidence docs/go-migration/qualifications/spar-selector-20261010/result.json identifies exact source/script/image/render hashes. This accepts the optional selector only; final service qualification is still the separate active Spar implementation task. A local image ID is used for proof; operators need an explicitly published registry image for their deployments.

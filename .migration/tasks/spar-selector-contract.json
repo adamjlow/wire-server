@@ -4,7 +4,7 @@
   "title": "Optional Spar image-only Helm selection preserving native defaults",
   "service": "spar",
   "kind": "contract-change",
-  "status": "active",
+  "status": "done",
   "owner": "codex",
   "branch": "go-spar-selector",
   "depends_on": [
@@ -26,7 +26,18 @@
       "required_evidence": "Actual unchanged Helm source chart render; no-option byte identity, exactly one Spar image changed, config mounts/probes/env/strategy identical; finite malformed/missing/duplicate/container/config/strategy negatives fail closed. Exact qualified optional image, bounded CLI; source/reference/originalassertions/defaults untouched, no push/deploy; user-delegated same-author review accurately labelled."
     }
   ],
-  "evidence": [],
-  "review": null,
-  "handoff": "Queued separately protected selector work authorized by wholeSpargoal; serialized after implementation imageproof and before final225. Runtime implementation remains separately active."
+  "evidence": [
+    {
+      "criterion": "selection",
+      "result": "pass",
+      "command": "Byte-verify cached source chart, actual pinned Helm3.22.0 render, committed bounded selector CLI: default bytes identical, one Spar image difference, six negatives exit2/empty stdout. RollingUpdate/config/probes/env/peers unchanged. Same-author user-delegated review; no publication/deployment/default changes.",
+      "revision": "2be0b7622441d3d91ce6f9c668f884bb7e364320",
+      "artifact": "docs/go-migration/qualifications/spar-selector-20261010/result.json"
+    }
+  ],
+  "review": {
+    "by": "codex (self-review delegated by user)",
+    "artifact": ".migration/reviews/spar-selector.md"
+  },
+  "handoff": "Protected selector proof complete: actual unchanged source Helm render defaultbyteidentity/oneSparimage andsix fail-closed CLInegatives. Same-author delegation recorded; no deployment/push/default/originalreference changes. Final225/wholeSparverification remains separately active."
 }
