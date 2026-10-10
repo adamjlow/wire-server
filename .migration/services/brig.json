@@ -2,7 +2,7 @@
   "schema_version": 1,
   "service": "brig",
   "reference_path": "services/brig",
-  "stage": "contracted",
+  "stage": "implementing",
   "oracle_paths": [
     "services/brig",
     "docs/go-migration/services/brig/contract.md",
@@ -14,6 +14,9 @@
     ],
     "contract": [
       "brig-contract"
+    ],
+    "plan": [
+      "brig-inventory"
     ]
   },
   "compatibility": null

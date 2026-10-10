@@ -1,10 +1,21 @@
 {
   "schema_version": 1,
-  "status": "active",
+  "status": "done",
   "owner": "codex",
   "branch": "go-migration",
-  "evidence": [],
-  "review": null,
+  "evidence": [
+    {
+      "criterion": "gates",
+      "result": "pass",
+      "command": "Publish inventoried\u2192contracted\u2192implementing in adjacent updates using done full inventory/executable plan/protected contract. Native310 actual309pass/1failure retained as declared; no native green or Go qualification claim. Immutable gates/Haskell default/compatibility null preserved; scoped transition checks pass. Same-author review explicitly delegated by user.",
+      "revision": "7feafa6c37f033eb17ad29bf5904ab4d65fcac54",
+      "artifact": "docs/go-migration/services/brig/oracle/contract-review.md"
+    }
+  ],
+  "review": {
+    "by": "codex (same-author self-review explicitly delegated by user)",
+    "artifact": "docs/go-migration/services/brig/oracle/contract-review.md"
+  },
   "plan": "docs/go-migration/plans/brig.md",
   "id": "brig-implementation-gates",
   "title": "Publish Brig contracted and implementing gates",
@@ -24,5 +35,5 @@
       "required_evidence": "Completed inventory and protected whole contract with executable finite plan and retained baseline failure; preserve immutable gates/Haskell default/compatibility null. Source requirements remain whole-service; user delegated self-review is labelled honestly."
     }
   ],
-  "handoff": "Claim then publish one adjacent stage per commit; native310 remains309pass/1failure and final535 acceptance unsatisfied, no candidate claim."
+  "handoff": "Whole Go Brig implementation can be claimed. Compatibility null; no candidate exists and native green/final535 parity remain unsatisfied. Preserve complete contract; Galley after actual goal achievement."
 }
