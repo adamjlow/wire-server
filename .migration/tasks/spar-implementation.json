@@ -161,8 +161,15 @@
       "command": "Initial full225 seven-Go profile executes124 peer tests (123pass/1native Nginx port-release timeout), stops before Spar101. Exact seven hashes in each receipt, owned cleanup0/independently empty resources; full225 remains required.",
       "revision": "98c8a3c495d2b67b52fd443456ca3fd88afb59a9",
       "artifact": "go/services/spar/qualification/evidence/seven-go-original225-initial/construction-checks.json"
+    },
+    {
+      "criterion": "quality",
+      "result": "fail",
+      "command": "Exact seven-Go Spar original101 executes101 required names:99pass/2error-format failures (cross-team404 missing native base64 debug pre; unsolicited500 HTML vsJSON server-error), no skips. Seven hashes verified, runner1/cleanup0/independently empty resources. No oracle/Haskell changes.",
+      "revision": "98c8a3c495d2b67b52fd443456ca3fd88afb59a9",
+      "artifact": "go/services/spar/qualification/evidence/seven-go-spar-original101-initial/construction-checks.json"
     }
   ],
   "review": null,
-  "handoff": "Initial seven-Go full225 profile at controllerceccae81f with Spar98c8a3c49 executes124 peer originals:123pass/1fail native ModService NginzHttp2 port10099 not released during domain-registration migration restart. Spar101 not reached. Exact seven Go hashes and cleanup0/empty resources proven; failure retained. Do not repair Haskell or waive assertion. Next original101 Spar surface via existing service=spar mode with same seven binaries, then fix concrete Spar failures and finite middleware/gzip/metrics, SAML trust/RIPemd160/SDK traversal/multi-reference, protocol/ETag/URI/state/operations/durable switchback/image/selector/legal gates. Final exact full225 still required. Prior33 metadata comparisons,13 discovery/invitation,17SCIMusers,5groups,2login and token/IdP/delete/native101baseline retained. Haskell/defaults/oracles/shared harness unchanged, compatibility null, goal active."
+  "handoff": "Seven-Go Spar original101 at controller3d5c8e2e9/Spar98c8a3c49:99pass/2fail, exact101 names/no skips/seven hashes/runner1/cleanup0/independently empty resources. Failure artifacts retained. Fix native finalize-login error projection: cross-team IdP rejection404 needs base64 pre diagnostic with IdpNotFound; unsolicited unknown-request500 must expose JSON server-error, not HTML. Preserve actual trust/rejection and no session effects; native baseline passes assertions. Earlier full225 at ceccae81f executed124 peer originals:123pass/1native Nginx port10099 restart-release timeout and stopped before Spar; retained without Haskell/runner/oracle repairs. Next these two concrete wire formats plus remaining source middleware/gzip/metrics and finite SAML RIPEMD160/SDK namespace/multi-reference/trust, protocol/ETag/URI/state, populated cleanup, operations, actual durable Haskell-Go-Haskell switchback, optional nonroot image/selector/legal exact verification/review/availability gates. Final exact full225 still required. Prior33 metadata comparisons/13 discovery-invitation/17SCIMusers/5groups/2login/IdP-token-delete pass evidence retained. Haskell/defaults/protected oracles unchanged, compatibility null, goal active. Native unit executable/build unavailable, not a pass."
 }
