@@ -1,0 +1,14 @@
+{
+  "result": "pass",
+  "original": "/home/operator/.cache/wire-migration/cannon-qualified-20261008-3",
+  "original_sha256": "d9b31f435b19e43e8b8bd596311ffe03994f7027f23cfc63cfcad8fddeed4232",
+  "original_size": 13254971,
+  "original_mode": 509,
+  "archive": "/home/operator/.cache/wire-migration/cannon-qualified-20261008-3.completed-artifact.gz",
+  "archive_sha256": "31aff730f4ee2e45fdcea32d714ff30ca93de0f075f349442134b783ce0c0645",
+  "archive_size": 7036331,
+  "build_info": "/home/operator/.cache/wire-migration/cannon-qualified-20261008-3: go1.26.8\n\tpath\tgithub.com/adamjlow/wire-server/go/services/cannon/cmd/cannon\n\tmod\tgithub.com/adamjlow/wire-server/go/services/cannon\t(devel)\t\n\tdep\tgithub.com/apache/cassandra-gocql-driver/v2\tv2.1.2\th1:lu/p0Db2av18enHJvWJQoChLssI0P+AR06STq4VdvCc=\n\tdep\tgithub.com/gorilla/websocket\tv1.5.3\th1:saDtZ6Pbx/0u+bgYQ3q96pZgCzfhKXGPqt7kZ72aNNg=\n\tdep\tgithub.com/rabbitmq/amqp091-go\tv1.15.0\th1:LEQL4/yp48/Wigt6A6XOu18RQRo8ZHtB5I/KZJn+gkw=\n\tdep\tgo.yaml.in/yaml/v3\tv3.0.4\th1:tfq32ie2Jv2UxXFdLJdh3jXuOzWiL1fo0bu/FbuKpbc=\n\tdep\tgopkg.in/inf.v0\tv0.9.1\th1:73M5CoZyi3ZLMOyDlQh031Cx6N9NDJ2Vvfl76EDAgDc=\n\tbuild\t-buildmode=exe\n\tbuild\t-compiler=gc\n\tbuild\tCGO_ENABLED=0\n\tbuild\tGOARCH=amd64\n\tbuild\tGOOS=linux\n\tbuild\tGOAMD64=v1\n\tbuild\tvcs=git\n\tbuild\tvcs.revision=411f525e421d15e673870ace345462c4c4f80372\n\tbuild\tvcs.time=2026-10-08T17:30:12Z\n\tbuild\tvcs.modified=false\n",
+  "restoration": "gzip -dc ARCHIVE > ORIGINAL; restore original_mode; verify original_sha256",
+  "recovered_bytes": 6218640,
+  "selected_cannon_unchanged": "ced2d1923a1c456a5e4025b10d699707f1e302115bfd17ffea1e092552da39fa"
+}
