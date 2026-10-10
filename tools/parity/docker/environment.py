@@ -241,7 +241,7 @@ def prepare(output, receipt_path, candidate=None, candidate_receipt=None, peers=
     return record
 
 
-def run(output,service):
+def run(output,service,reap_orphan_nginx=False):
     output=output.resolve(strict=True)
     record=json.loads((output/'environment.json').read_text())
     if output.is_relative_to(ROOT):raise ValueError('environment must be outside checkout')
@@ -279,6 +279,10 @@ def run(output,service):
         if shutil.disk_usage(output).free<2*1024**3:raise ValueError('insufficient disk after dependency pull')
     record['dependencies']={name:spec['services'][name]['image'] for name in DEPENDENCIES}
     spec['services']['runner']['command']=['environment','--service',service]
+    if reap_orphan_nginx:
+        supervisor=ROOT/'tools/parity/docker/orphan_nginx.py'
+        record['orphan_nginx_supervisor']={'source_sha256':hashlib.sha256(supervisor.read_bytes()).hexdigest(),'scope':'Adopted native nginx workers only; original assertions and timeouts unchanged.'}
+        spec['services']['runner']['entrypoint']=['/nix/store/60m4rxhg2fldqaak400c0lry96ijrzqn-python3-3.13.13/bin/python3','/source/tools/parity/docker/orphan_nginx.py']
     peers=record.get('peer_candidates',{})
     if service=='proxy-cargohold' and (set(peers)!= {'proxy','cargohold'} or record.get('candidate') is not None):
         raise ValueError('combined run requires two unambiguous identified candidates')
@@ -370,9 +374,10 @@ def main():
     prep=sub.add_parser('prepare');prep.add_argument('--output',type=Path,required=True);prep.add_argument('--receipt',type=Path,required=True);prep.add_argument('--candidate',type=Path);prep.add_argument('--candidate-receipt',type=Path)
     prep.add_argument('--select',nargs=3,action='append',default=[],metavar=('SERVICE','BINARY','RECEIPT'))
     execute=sub.add_parser('run');execute.add_argument('--output',type=Path,required=True);execute.add_argument('--service',choices=('proxy','cargohold','cannon','gundeck','proxy-cargohold','proxy-cargohold-cannon','proxy-cargohold-cannon-gundeck','gundeck-reference','federator','proxy-cargohold-cannon-gundeck-federator','background-worker','background-worker-mls','background-worker-users','proxy-cargohold-cannon-gundeck-federator-background-worker','spar','proxy-cargohold-cannon-gundeck-federator-background-worker-spar'),required=True)
+    execute.add_argument('--reap-orphan-nginx',action='store_true',help='Supervise adopted native nginx workers inside the owned nonroot runner.')
     args=parser.parse_args()
     try:
-        result=prepare(args.output,args.receipt,args.candidate,args.candidate_receipt,args.select) if args.command=='prepare' else run(args.output,args.service)
+        result=prepare(args.output,args.receipt,args.candidate,args.candidate_receipt,args.select) if args.command=='prepare' else run(args.output,args.service,args.reap_orphan_nginx)
         print(json.dumps(result,indent=2));return 0
     except (OSError,ValueError,KeyError,subprocess.SubprocessError) as error:
         print(json.dumps({'result':'failed','error':str(error)[:600],'e2e_executed':False}));return 2
