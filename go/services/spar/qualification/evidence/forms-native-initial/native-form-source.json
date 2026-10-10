@@ -1,0 +1,14 @@
+{
+  "servant-multipart-0.12.1": {
+    "url": "https://hackage-content.haskell.org/package/servant-multipart-0.12.1/servant-multipart-0.12.1.tar.gz",
+    "archive_sha256": "c5236fa4922a869947988d52ab9f5b0a19abf57bb0467e2eb34560f8c79aa5dc",
+    "source_sha256": "cff380bd028c60635d4bbb055e715978b1c738e5597da44fdf97881bd063a86f",
+    "source_path": "/home/operator/.cache/wire-migration/spar-20261010/servant-multipart-0.12.1.hs"
+  },
+  "wai-extra-3.1.18": {
+    "url": "https://hackage-content.haskell.org/package/wai-extra-3.1.18/wai-extra-3.1.18.tar.gz",
+    "archive_sha256": "ee63740b8dd478b01196f8968603b1bc0ee00aa5502d17edae579abfd0f150f7",
+    "source_sha256": "f6aa87856e6ff1385b720a945d64a059923a9eeea9051009f9af997179a4d0c7",
+    "source_path": "/home/operator/.cache/wire-migration/spar-20261010/wai-extra-3.1.18.hs"
+  }
+}

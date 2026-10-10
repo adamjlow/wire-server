@@ -1,0 +1,449 @@
+{
+  "result": "fail",
+  "source_revision": "4611db495146dd5857232fba5d712a13d3b05482",
+  "candidate": {
+    "path": "/dev/shm/wire-migration-spar-20261010/spar-signature-headers-corrected",
+    "sha256": "d0e3be2e5b12bf70cccc1ae5a3b2bea625125e9fe51e1407a914410bc6758569",
+    "source_revision": "a0326a44be902501529b25b41afcadd3339bf3d9"
+  },
+  "existing_checks": 33,
+  "form_checks": 20,
+  "form_differences": {
+    "multipart-size-65335": {
+      "native": {
+        "status": 400,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "body": {
+          "code": 400,
+          "label": "client-error",
+          "message": "Invalid Request"
+        }
+      },
+      "go": {
+        "status": 400,
+        "headers": {
+          "content-type": "text/html",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "body": {
+          "html_title": "wire:sso:error:bad-response-xml"
+        }
+      }
+    },
+    "multipart-size-65336": {
+      "native": {
+        "status": 400,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "body": {
+          "code": 400,
+          "label": "client-error",
+          "message": "Invalid Request"
+        }
+      },
+      "go": {
+        "status": 400,
+        "headers": {
+          "content-type": "text/html",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "body": {
+          "html_title": "wire:sso:error:bad-response-xml"
+        }
+      }
+    },
+    "url-size-65337": {
+      "native": {
+        "status": 500,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "body": {
+          "code": 500,
+          "label": "server-error",
+          "message": "Internal Server Error"
+        }
+      },
+      "go": {
+        "status": 400,
+        "headers": {
+          "content-type": "text/html",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "body": {
+          "html_title": "wire:sso:error:bad-response-xml"
+        }
+      }
+    },
+    "multipart-size-65337": {
+      "native": {
+        "status": 400,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "body": {
+          "code": 400,
+          "label": "client-error",
+          "message": "Invalid Request"
+        }
+      },
+      "go": {
+        "status": 400,
+        "headers": {
+          "content-type": "text/html",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "body": {
+          "html_title": "wire:sso:error:bad-response-xml"
+        }
+      }
+    },
+    "url-encoded-raw-size": {
+      "native": {
+        "status": 500,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "body": {
+          "code": 500,
+          "label": "server-error",
+          "message": "Internal Server Error"
+        }
+      },
+      "go": {
+        "status": 400,
+        "headers": {
+          "content-type": "text/html",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "body": {
+          "html_title": "wire:sso:error:bad-response-xml"
+        }
+      }
+    },
+    "multipart-name-33": {
+      "native": {
+        "status": 500,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "body": {
+          "code": 500,
+          "label": "server-error",
+          "message": "Internal Server Error"
+        }
+      },
+      "go": {
+        "status": 400,
+        "headers": {
+          "content-type": "text/html",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "body": {
+          "html_title": "wire:sso:error:bad-response-xml"
+        }
+      }
+    },
+    "multipart-files-11": {
+      "native": {
+        "status": 500,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "body": {
+          "code": 500,
+          "label": "server-error",
+          "message": "Internal Server Error"
+        }
+      },
+      "go": {
+        "status": 400,
+        "headers": {
+          "content-type": "text/html",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "body": {
+          "html_title": "wire:sso:error:bad-response-xml"
+        }
+      }
+    },
+    "multipart-headers-33": {
+      "native": {
+        "status": 500,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "body": {
+          "code": 500,
+          "label": "server-error",
+          "message": "Internal Server Error"
+        }
+      },
+      "go": {
+        "status": 400,
+        "headers": {
+          "content-type": "text/html",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "body": {
+          "html_title": "wire:sso:error:bad-response-xml"
+        }
+      }
+    },
+    "multipart-header-bytes-8191": {
+      "native": {
+        "status": 400,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "body": {
+          "code": 400,
+          "label": "client-error",
+          "message": "Invalid Request"
+        }
+      },
+      "go": {
+        "status": 400,
+        "headers": {
+          "content-type": "text/html",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "body": {
+          "html_title": "wire:sso:error:bad-response-xml"
+        }
+      }
+    },
+    "url-invalid-utf8": {
+      "native": {
+        "status": 500,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": null,
+          "pragma": null,
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "body": {
+          "code": 500,
+          "label": "server-error",
+          "message": "Internal Server Error"
+        }
+      },
+      "go": {
+        "status": 400,
+        "headers": {
+          "content-type": "text/html",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "body": {
+          "html_title": "wire:sso:error:bad-response-xml"
+        }
+      }
+    },
+    "url-semicolon": {
+      "native": {
+        "status": 400,
+        "headers": {
+          "content-type": "text/html",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "body": {
+          "html_title": "wire:sso:error:bad-response-xml"
+        }
+      },
+      "go": {
+        "status": 400,
+        "headers": {
+          "content-type": "text/html",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "body": {
+          "html_title": "wire:sso:error:bad-response-saml"
+        }
+      }
+    },
+    "unsupported-json": {
+      "native": {
+        "status": 400,
+        "headers": {
+          "content-type": null,
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "body": "The content type of the request body is not in application/x-www-form-urlencoded or multipart/form-data"
+      },
+      "go": {
+        "status": 400,
+        "headers": {
+          "content-type": "text/html",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "body": {
+          "html_title": "wire:sso:error:bad-response-saml"
+        }
+      }
+    },
+    "missing-multipart-boundary": {
+      "native": {
+        "status": 400,
+        "headers": {
+          "content-type": null,
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "body": "The content type of the request body is not in application/x-www-form-urlencoded or multipart/form-data"
+      },
+      "go": {
+        "status": 400,
+        "headers": {
+          "content-type": "text/html",
+          "cache-control": "no-cache, no-store",
+          "pragma": "no-cache",
+          "request-id": null,
+          "allow": null,
+          "set-cookie": null
+        },
+        "body": {
+          "html_title": "wire:sso:error:bad-response-saml"
+        }
+      }
+    }
+  },
+  "runner_exit_code": 1,
+  "cleanup_exit_code": 0,
+  "independent_post_cleanup": {
+    "containers": [],
+    "networks": [],
+    "volumes": []
+  },
+  "artifacts": {
+    "result.json": {
+      "raw_sha256": "4e1d9010b32cad09245239dcd9bc9d8efe1a0812fa9a35a5df4c079ce959f2c5",
+      "retained": "go/services/spar/qualification/evidence/forms-native-initial/result.json.gz",
+      "sha256": "e9118bba6c14f88571c6d716a36b0f1563ad037b22d22ccdb94a46676dd306c5"
+    },
+    "native-form-replies.json": {
+      "raw_sha256": "982936a7adf4f057257c28851e00747f41345b7ad73f707c2080dfe4c1b20cfd",
+      "retained": "go/services/spar/qualification/evidence/forms-native-initial/native-form-replies.json.gz",
+      "sha256": "b22218c3821460e5a134ba15c07346d6147b070f2b847efd53876f2ad393237c"
+    },
+    "go-form-replies.json": {
+      "raw_sha256": "21b6cb56bafc62817521808ceb43b5cc4b6a4473bbe7261bced0cc310eea6655",
+      "retained": "go/services/spar/qualification/evidence/forms-native-initial/go-form-replies.json.gz",
+      "sha256": "99d6176a24a2942f53c167a952e3c43b850a33c19a0f09a8ecee8fc92455c35f"
+    },
+    "native.log": {
+      "raw_sha256": "83ccfcdb4ad890a4d3cfec286d72cd0ef4ea9e819b728dbb88fe4f2c88b250c1",
+      "retained": "go/services/spar/qualification/evidence/forms-native-initial/native.log.gz",
+      "sha256": "59ca17984d353d011ce7058c52fd89aa6748ceff9a858251a72f66342f5b0442"
+    }
+  },
+  "analysis": "All20 actual native/Go probes execute;13 differ in limits/encoding/type/semicolon projection, existing33 match. Native multipart wrapTillBound counts incoming chunk/read-ahead before matching delimiters, so near-limit single fields can raise InvalidRequest400 even with total decodedparams<=65336. Preserve pinned streaming parser guard instead of inventing an atomic decoded limit. Raw exceptions and status/header/body observations retained; no originals/reference/harness edits."
+}

@@ -218,16 +218,20 @@ func serveSAMLFinalize(w http.ResponseWriter, r *http.Request, c Config, s samlF
 		samlFailurePage(w, err, r.PostForm)
 		return true
 	}
-	if strings.HasPrefix(r.Header.Get("Content-Type"), "multipart/form-data") {
-		err = r.ParseMultipartForm(32 << 20)
-		if r.MultipartForm != nil {
-			defer r.MultipartForm.RemoveAll()
-		}
-	} else {
-		err = r.ParseForm()
-	}
+	r.PostForm, err = parseSAMLForm(r)
 	if err != nil {
-		samlFailurePage(w, &apiError{400, "bad-response-saml", "Bad response: SAMLResponse form field missing from HTTP body"}, r.PostForm)
+		switch {
+		case errors.Is(err, errSAMLFormType):
+			w.Header()["Content-Type"] = nil
+			w.WriteHeader(400)
+			_, _ = w.Write([]byte("The content type of the request body is not in application/x-www-form-urlencoded or multipart/form-data"))
+		case errors.Is(err, errSAMLFormWire):
+			w.Header().Del("Cache-Control")
+			w.Header().Del("Pragma")
+			wireError(w, 400, "client-error", "Invalid Request")
+		default:
+			samlFinalizeServerError(w)
+		}
 		return true
 	}
 	values, ok := r.PostForm["SAMLResponse"]
