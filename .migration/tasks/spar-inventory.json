@@ -4,7 +4,7 @@
   "title": "Inventory full Spar service boundary and reusable original tests",
   "service": "spar",
   "kind": "discovery",
-  "status": "active",
+  "status": "done",
   "owner": "codex",
   "branch": "go-migration",
   "depends_on": [
@@ -31,7 +31,25 @@
       "required_evidence": "Actual pinned nonroot network-none Docker original --list/help and executable identities; map source tests and compiled variants, native unit availability and finite baseline/harness needs."
     }
   ],
-  "evidence": [],
-  "review": null,
-  "handoff": "Inventory and runnable reference comparison first; freeze protected oracle separately before additive implementation."
+  "evidence": [
+    {
+      "criterion": "inventory",
+      "result": "pass",
+      "command": "Review actual Spar entrypoint/options/runtime, all public/internal SAML/IdP/SCIM route and handler groups, shared interpreters/Cassandra effects/schema23/TTL/token conversion, Brig/Galley contracts and RollingUpdate chart. Complete service boundary, inherited concerns and finite contract/fixture/security gaps recorded; no candidate claim.",
+      "revision": "cd6c5f63572c2602edf32f2a7f8a0be143df1089",
+      "artifact": "docs/go-migration/services/spar/inventory.md"
+    },
+    {
+      "criterion": "tests",
+      "result": "pass",
+      "command": "Actual pinned nonroot network-none Docker integration --list/Spar --help plus executable probes:86 core cases all match local hashed source base functions;15 related functions discovered, exact compiled variants/binary identities retained, schema binary present, native unit spec/GHC/Cabal/Nix absent. No suite/backend executed; owned --rm resource absent. Scoped check/framework32 pass.",
+      "revision": "cd6c5f63572c2602edf32f2a7f8a0be143df1089",
+      "artifact": "docs/go-migration/services/spar/test-discovery.json"
+    }
+  ],
+  "review": {
+    "by": "codex (self-review delegated by user)",
+    "artifact": "docs/go-migration/services/spar/inventory-review.md"
+  },
+  "handoff": "Source boundary and actual original discovery complete; publish inventoried gate in scoped coordination, freeze detailed contract/catalogue and extend existing private runner for actual baseline. Candidate implementation/compatibility unavailable. First runnable slice early; preserve inherited behaviour and finite acceptance."
 }
