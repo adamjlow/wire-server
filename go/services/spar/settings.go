@@ -79,7 +79,8 @@ func serveSettings(w http.ResponseWriter, r *http.Request, store settingsStore) 
 		}
 		if err = store.setDefaultSSO(r.Context(), id); err != nil {
 			if errors.Is(err, errIdPNotFound) {
-				wireError(w, 404, "not-found", "Could not find IdP.")
+				w.WriteHeader(http.StatusNotFound)
+				_ = json.NewEncoder(w).Encode(map[string]any{"code": 404, "label": "not-found", "message": "Could not find IdP."})
 			} else {
 				wireError(w, 500, "server-error", "Server Error")
 			}
