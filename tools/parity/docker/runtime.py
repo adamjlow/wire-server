@@ -4,7 +4,7 @@ import hashlib
 import json
 import os
 from pathlib import Path
-import select
+import selectors
 import shutil
 import socket
 import socketserver
@@ -42,18 +42,20 @@ class Forward(socketserver.BaseRequestHandler):
             with socket.create_connection(self.server.destination,timeout=10) as remote:
                 self.request.settimeout(60);remote.settimeout(60)
                 peers={self.request:remote,remote:self.request}
-                while peers:
-                    readable,_,_=select.select(list(peers),[],[],self.poll_interval)
-                    # Database pools and HTTP/2 peers legitimately remain idle
-                    # beyond a minute. Poll for readiness; EOF, not inactivity,
-                    # ends a tunnel. Owned container teardown bounds its life.
-                    if not readable:continue
-                    for source in readable:
-                        data=source.recv(65536)
-                        if data:peers[source].sendall(data)
-                        else:
-                            peers[source].shutdown(socket.SHUT_WR)
-                            del peers[source]
+                with selectors.DefaultSelector() as ready:
+                    for source in peers:ready.register(source,selectors.EVENT_READ)
+                    while peers:
+                        # Database pools and HTTP/2 peers legitimately remain idle
+                        # beyond a minute. EOF, not inactivity, ends a tunnel.
+                        # The selector also supports descriptors above FD_SETSIZE.
+                        for key,_ in ready.select(self.poll_interval):
+                            source=key.fileobj
+                            data=source.recv(65536)
+                            if data:peers[source].sendall(data)
+                            else:
+                                peers[source].shutdown(socket.SHUT_WR)
+                                ready.unregister(source)
+                                del peers[source]
         except OSError:
             # Readiness probes and peers retry temporary closed connections.
             return

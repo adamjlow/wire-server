@@ -161,6 +161,7 @@ def private_compose(upstream, project, output, image):
         'command':['environment','--service','proxy'],'user':'65534:65534',
         'environment':SYNTHETIC_ENV,'extra_hosts':['localhost.:127.0.0.1'],'read_only':True,'cap_drop':['ALL'],
         'security_opt':['no-new-privileges:true'],'mem_limit':'12g','cpus':4,'pids_limit':4096,
+        'ulimits':{'nofile':{'soft':8192,'hard':8192}},
         'tmpfs':['/tmp:rw,nosuid,nodev,size=2g,mode=1777'],
         'networks':['demo_wire','redis','coredns'],
         'volumes':[{'type':'bind','source':str(ROOT),'target':'/source','read_only':True},
