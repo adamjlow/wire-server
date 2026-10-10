@@ -1,0 +1,74 @@
+{
+  "result": "pass",
+  "source_revision": "b5e8a043118874bd882ddc83ccc0105baaa7ddd8",
+  "candidate": {
+    "path": "/dev/shm/wire-migration-spar-20261010/spar-middleware-corrected",
+    "sha256": "9fbb1bc9b9ec7595c07418a42fe1860a1a1e7820b03348ae929bbfdc9187fbc3",
+    "source_revision": "b5e8a043118874bd882ddc83ccc0105baaa7ddd8"
+  },
+  "build": {
+    "schema_version": 1,
+    "result": "built",
+    "source_revision": "b5e8a043118874bd882ddc83ccc0105baaa7ddd8",
+    "binary_sha256": "9fbb1bc9b9ec7595c07418a42fe1860a1a1e7820b03348ae929bbfdc9187fbc3",
+    "binary": "/dev/shm/wire-migration-spar-20261010/spar-middleware-corrected",
+    "compiler": "go1.26.9",
+    "target": "linux/amd64",
+    "CGO_ENABLED": "0",
+    "build_flags": [
+      "-trimpath"
+    ],
+    "build_info": "/dev/shm/wire-migration-spar-20261010/spar-middleware-corrected: go1.26.9\n\tpath\tgithub.com/adamjlow/wire-server/go/services/spar/cmd/spar\n\tmod\tgithub.com/adamjlow/wire-server/go/services/spar\t(devel)\t\n\tdep\tgithub.com/apache/cassandra-gocql-driver/v2\tv2.1.2\th1:lu/p0Db2av18enHJvWJQoChLssI0P+AR06STq4VdvCc=\n\tdep\tgithub.com/beevik/etree\tv1.7.0\th1:xjBk9O4p4x7D1YajePjfLzdaFC4/uYUENA7P0pv6gXA=\n\tdep\tgithub.com/jonboulle/clockwork\tv0.5.0\th1:Hyh9A8u51kptdkR+cqRpT1EebBwTn1oK9YfGYbdFz6I=\n\tdep\tgithub.com/russellhaering/goxmldsig\tv1.6.1\th1:SB7R5ttvrGIDB2juJAK/i7DQ2Ivr7agG+ohfNJjwyYU=\n\tdep\tgo.yaml.in/yaml/v3\tv3.0.5\th1:N6y/pJk8buWs9NY5ERU2HSMfm+IuD/OtfdAnq6kESPw=\n\tdep\tgolang.org/x/text\tv0.42.0\th1:JbOZXgfeCPU9gacVtYliJqOhD+zhrEqK4LfdpmlUZqI=\n\tdep\tgopkg.in/inf.v0\tv0.9.1\th1:73M5CoZyi3ZLMOyDlQh031Cx6N9NDJ2Vvfl76EDAgDc=\n\tbuild\t-buildmode=exe\n\tbuild\t-compiler=gc\n\tbuild\t-trimpath=true\n\tbuild\tDefaultGODEBUG=rsa1024min=0\n\tbuild\tCGO_ENABLED=0\n\tbuild\tGOARCH=amd64\n\tbuild\tGOOS=linux\n\tbuild\tGOAMD64=v1\n\tbuild\tvcs=git\n\tbuild\tvcs.revision=b5e8a043118874bd882ddc83ccc0105baaa7ddd8\n\tbuild\tvcs.time=2026-10-10T13:46:01Z\n\tbuild\tvcs.modified=false\n",
+    "quality_log": {
+      "path": "/home/operator/.cache/wire-migration/spar-20261010/middleware-corrected-go-check.log",
+      "sha256": "3c1883198ab23354924b8c17fd21110a5f8219c984b2362887b648d402f37d33"
+    },
+    "scope": "Corrected native gzip/metrics behavior; actual comparison pending."
+  },
+  "existing_process_checks": 33,
+  "middleware_checks": 11,
+  "differences": {},
+  "middleware_differences": {},
+  "native_stop_exit_code": 0,
+  "go_stop_exit_code": 0,
+  "runner_exit_code": 0,
+  "cleanup_exit_code": 0,
+  "independent_post_cleanup": {
+    "containers": [],
+    "networks": [],
+    "volumes": []
+  },
+  "logs": {
+    "/home/operator/.cache/wire-migration/spar-20261010/middleware-native-corrected/reports/result.json": {
+      "sha256": "a315d326cff8903891a66b2516ae9ac5a576ad7d4503870088aaf206be3560f5",
+      "size": 439727
+    },
+    "/home/operator/.cache/wire-migration/spar-20261010/middleware-native-corrected/controller.log": {
+      "sha256": "14ca45f7b2d4c4513e6fbd7bee29366098e12d03792731b8c098b7748e596487",
+      "size": 173
+    },
+    "/home/operator/.cache/wire-migration/spar-20261010/middleware-native-corrected/reports/schema.log": {
+      "sha256": "ba1e1b112a24077d3611e7cb307dcdc39ee9fdd61794f65fa96c621b1d9e5e31",
+      "size": 7747
+    },
+    "/home/operator/.cache/wire-migration/spar-20261010/middleware-native-corrected/reports/native.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    "/home/operator/.cache/wire-migration/spar-20261010/middleware-native-corrected/reports/go.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    "/home/operator/.cache/wire-migration/spar-20261010/middleware-corrected-go-check.log": {
+      "sha256": "3c1883198ab23354924b8c17fd21110a5f8219c984b2362887b648d402f37d33",
+      "size": 1237
+    }
+  },
+  "review": {
+    "kind": "delegated-same-author",
+    "scope": "Spar middleware increment",
+    "result": "pass",
+    "reason": "Real native comparison and regression tests verify lazy body handling, gzip case/trailer/error behavior, no invalid-body storage mutations, metrics method/cache ordering and normalized concurrent request counts; no payload or capture IDs in metric labels. Native behavior retained, no protected Haskell/oracle/harness edits. GC diagnostics describe Go and are not claimed as identical native cycle measurements. Whole-service review pending."
+  },
+  "scope": "Original33 actual process HTTP replies plus declared6 gzip/readback and4 metrics probes; exact response/state/header checks, error code/label (incidental parser text excluded), normalized histogram count/name checks (latency/GC values are runtime-specific and startup health poll count excluded). Not original e2e or full operations qualification."
+}
