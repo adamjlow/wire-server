@@ -4,9 +4,9 @@
   "title": "Background-worker verification",
   "service": "background-worker",
   "kind": "verification",
-  "status": "queued",
-  "owner": null,
-  "branch": null,
+  "status": "active",
+  "owner": "codex",
+  "branch": "go-migration",
   "depends_on": [
     "background-worker-implementation"
   ],
