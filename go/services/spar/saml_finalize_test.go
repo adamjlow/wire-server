@@ -5,8 +5,10 @@ import (
 	"context"
 	"crypto/x509"
 	"encoding/base64"
+	"encoding/json"
 	"net/http/httptest"
 	"net/url"
+	"regexp"
 	"strings"
 	"testing"
 	"time"
@@ -17,22 +19,27 @@ import (
 type finalizeBoundary struct {
 	*loginBoundary
 	*judgeMemory
-	idp    idpConfig
-	format verdictFormat
+	idp            idpConfig
+	format         verdictFormat
+	missingVerdict bool
+	missingIdP     bool
 }
 
 func (b *finalizeBoundary) idpByIssuer(_ context.Context, issuer string, version int, _ gocql.UUID) (*idpConfig, error) {
-	if issuer != b.idp.Metadata.Issuer || version != 1 {
+	if b.missingIdP || issuer != b.idp.Metadata.Issuer || version != 1 {
 		return nil, errIdPNotFound
 	}
 	return &b.idp, nil
 }
 func (b *finalizeBoundary) getVerdict(context.Context, string) (*verdictFormat, error) {
+	if b.missingVerdict {
+		return nil, nil
+	}
 	return &b.format, nil
 }
 
 func TestFinalizeVerifiedSessionAndSecurityDenials(t *testing.T) {
-	for _, kind := range []string{"valid", "wrong-audience", "replay", "unsolicited", "tampered"} {
+	for _, kind := range []string{"valid", "wrong-audience", "replay", "unsolicited", "unknown-request", "unknown-idp", "tampered"} {
 		t.Run(kind, func(t *testing.T) {
 			now := time.Now().UTC()
 			issued := now.Add(-time.Minute).Format(time.RFC3339Nano)
@@ -59,6 +66,11 @@ func TestFinalizeVerifiedSessionAndSecurityDenials(t *testing.T) {
 			b.accounts[user] = &brigAccount{ID: user, Team: &b.team}
 			idp.Metadata = idpMetadata{Issuer: issuer, Certificates: []*x509.Certificate{cert}}
 			boundary := &finalizeBoundary{loginBoundary: b, judgeMemory: &judgeMemory{issuer: &issuer, alive: kind == "replay"}, idp: idp}
+			if kind == "unknown-request" {
+				boundary.judgeMemory.issuer = nil
+				boundary.missingVerdict = true
+			}
+			boundary.missingIdP = kind == "unknown-idp"
 			ttl := TTL(3600)
 			config := Config{SAML: SAMLConfig{DomainConfig: DomainConfig{SSOURI: "https://synthetic.example/sso"}}, MaxAssertionTTL: &ttl}
 			form := url.Values{"SAMLResponse": {base64.StdEncoding.EncodeToString(data)}}
@@ -79,6 +91,25 @@ func TestFinalizeVerifiedSessionAndSecurityDenials(t *testing.T) {
 				if kind == "unsolicited" {
 					if w.Code != 303 || !strings.HasPrefix(w.Header().Get("Location"), "/sso/initiate-login/") {
 						t.Fatal("unsolicited grant/redirect mismatch")
+					}
+				} else if kind == "unknown-request" {
+					var body struct {
+						Label string `json:"label"`
+					}
+					if w.Code != 500 || w.Header().Get("Content-Type") != "" || json.Unmarshal(w.Body.Bytes(), &body) != nil || body.Label != "server-error" {
+						t.Fatal("missing verdict must use the ordinary wire error boundary", w.Code, w.Body.String())
+					}
+				} else if kind == "unknown-idp" {
+					if w.Code != 404 || w.Header().Get("Content-Type") != "text/html" {
+						t.Fatal("unknown IdP error projection", w.Code, w.Body.String())
+					}
+					match := regexp.MustCompile(`<pre>([A-Za-z0-9+/=]+)</pre>`).FindStringSubmatch(w.Body.String())
+					if len(match) != 2 {
+						t.Fatal("missing native diagnostic block")
+					}
+					debug, err := base64.StdEncoding.DecodeString(match[1])
+					if err != nil || !strings.Contains(string(debug), "CustomError (IdpDbError IdpNotFound)") || !strings.Contains(string(debug), form.Get("SAMLResponse")) {
+						t.Fatal("diagnostic lost lookup cause or supplied form")
 					}
 				} else if kind == "tampered" {
 					if w.Code != 400 || !strings.Contains(w.Body.String(), "bad-response-signature") {

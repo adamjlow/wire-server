@@ -8,6 +8,8 @@ import (
 	"errors"
 	"net/http"
 	"net/url"
+	"sort"
+	"strconv"
 	"strings"
 	"time"
 
@@ -75,10 +77,10 @@ func samlResponse(ctx context.Context, s samlFinalizeStore, encoded string, team
 	}
 	idp, err := s.idpByIssuer(ctx, issuer, version, tid)
 	if err != nil {
-		return nil, nil, false, idpError(err)
+		return nil, nil, false, errors.Join(idpError(err), err)
 	}
 	if idp == nil {
-		return nil, nil, false, idpError(errIdPNotFound)
+		return nil, nil, false, errors.Join(idpError(errIdPNotFound), errIdPNotFound)
 	}
 	verified, err := verifiedAssertions(data, idp.Metadata.Certificates)
 	if err != nil {
@@ -148,7 +150,7 @@ func samlSubstitute(uri, name, value string) string {
 	return strings.ReplaceAll(strings.ReplaceAll(uri, "%24"+name, value), "$"+name, value)
 }
 
-func samlFailurePage(w http.ResponseWriter, err error) {
+func samlFailurePage(w http.ResponseWriter, err error, inputs url.Values) {
 	var api *apiError
 	var ttl *ttlError
 	if errors.As(err, &ttl) {
@@ -157,9 +159,28 @@ func samlFailurePage(w http.ResponseWriter, err error) {
 	if !errors.As(err, &api) {
 		api = &apiError{500, "server-error", "Server Error"}
 	}
+	// Native error pages include client-supplied form inputs in a base64 debug
+	// block. Preserve that response contract without logging the assertion.
+	// Retain the actual lookup cause: the public HTTP error deliberately hides it.
+	diagnostic := api.Message
+	if errors.Is(err, errIdPNotFound) {
+		diagnostic = "CustomError (IdpDbError IdpNotFound)"
+	}
+	fields := make([]string, 0, len(inputs))
+	for name := range inputs {
+		fields = append(fields, name)
+	}
+	sort.Strings(fields)
+	var values []string
+	for _, name := range fields {
+		for _, value := range inputs[name] {
+			values = append(values, "Input {iName = "+strconv.Quote(name)+", iValue = "+strconv.Quote(value)+"}")
+		}
+	}
+	debug := base64.StdEncoding.EncodeToString([]byte("(" + diagnostic + ",[" + strings.Join(values, ",") + "])"))
 	w.Header().Set("Content-Type", "text/html")
 	w.WriteHeader(api.Code)
-	_, _ = w.Write([]byte(samlHTML("<head>\n  <title>wire:sso:error:" + nativeXMLEscape(api.Label, false) + "</title>\n</head>\n</body>\n  sorry, something went wrong :(<br>\n</body>")))
+	_, _ = w.Write([]byte(samlHTML("<head>\n  <title>wire:sso:error:" + nativeXMLEscape(api.Label, false) + "</title>\n</head>\n</body>\n  sorry, something went wrong :(<br>\n  please copy the following debug information to your clipboard and provide it when opening an issue in our customer support.<br><br>\n  <pre>" + debug + "</pre>\n</body>")))
 }
 
 func serveSAMLFinalize(w http.ResponseWriter, r *http.Request, c Config, s samlFinalizeStore, p samlLoginPeers) bool {
@@ -183,7 +204,7 @@ func serveSAMLFinalize(w http.ResponseWriter, r *http.Request, c Config, s samlF
 	host := r.Header.Get("Z-Host")
 	uri, err := responseURI(c, host, team)
 	if err != nil {
-		samlFailurePage(w, err)
+		samlFailurePage(w, err, r.PostForm)
 		return true
 	}
 	if strings.HasPrefix(r.Header.Get("Content-Type"), "multipart/form-data") {
@@ -195,17 +216,17 @@ func serveSAMLFinalize(w http.ResponseWriter, r *http.Request, c Config, s samlF
 		err = r.ParseForm()
 	}
 	if err != nil {
-		samlFailurePage(w, &apiError{400, "bad-response-saml", "Bad response: SAMLResponse form field missing from HTTP body"})
+		samlFailurePage(w, &apiError{400, "bad-response-saml", "Bad response: SAMLResponse form field missing from HTTP body"}, r.PostForm)
 		return true
 	}
 	values, ok := r.PostForm["SAMLResponse"]
 	if !ok || len(values) == 0 {
-		samlFailurePage(w, &apiError{400, "bad-response-saml", "Bad response: SAMLResponse form field missing from HTTP body"})
+		samlFailurePage(w, &apiError{400, "bad-response-saml", "Bad response: SAMLResponse form field missing from HTTP body"}, r.PostForm)
 		return true
 	}
 	assertions, idp, success, err := samlResponse(r.Context(), s, values[0], team)
 	if err != nil {
-		samlFailurePage(w, err)
+		samlFailurePage(w, err, r.PostForm)
 		return true
 	}
 	verdict, err := judgeSAML(r.Context(), s, assertions, success, uri, uri, *c.MaxAssertionTTL, time.Now)
@@ -213,7 +234,7 @@ func serveSAMLFinalize(w http.ResponseWriter, r *http.Request, c Config, s samlF
 		err = checkIdPCertificates(c, idp.Metadata)
 	}
 	if err != nil {
-		samlFailurePage(w, err)
+		samlFailurePage(w, err, r.PostForm)
 		return true
 	}
 	for _, reason := range verdict.Reasons {
@@ -227,22 +248,22 @@ func serveSAMLFinalize(w http.ResponseWriter, r *http.Request, c Config, s samlF
 	for _, assertion := range assertions {
 		id, err := assertion.requestID()
 		if err != nil {
-			samlFailurePage(w, &apiError{400, "server-error-unsupported-saml", "The IdP needs to provide an InResponseTo attribute in the assertion: missing or incoherent requestIDs"})
+			samlFailurePage(w, &apiError{400, "server-error-unsupported-saml", "The IdP needs to provide an InResponseTo attribute in the assertion: missing or incoherent requestIDs"}, r.PostForm)
 			return true
 		}
 		if request != "" && request != *id {
-			samlFailurePage(w, &apiError{500, "server-error", "AuthRequest seems to have disappeared (could not find verdict format)."})
+			domainError(w, &apiError{500, "server-error", "AuthRequest seems to have disappeared (could not find verdict format)."})
 			return true
 		}
 		request = *id
 	}
 	format, err := s.getVerdict(r.Context(), request)
 	if err != nil {
-		samlFailurePage(w, err)
+		domainError(w, err)
 		return true
 	}
 	if format == nil {
-		samlFailurePage(w, &apiError{500, "server-error", "AuthRequest seems to have disappeared (could not find verdict format)."})
+		domainError(w, &apiError{500, "server-error", "AuthRequest seems to have disappeared (could not find verdict format)."})
 		return true
 	}
 	var uid gocql.UUID
@@ -269,7 +290,7 @@ func serveSAMLFinalize(w http.ResponseWriter, r *http.Request, c Config, s samlF
 		}
 	}
 	if err = samlRenderVerdict(w, *format, uid, cookie, label, reasons); err != nil {
-		samlFailurePage(w, err)
+		samlFailurePage(w, err, r.PostForm)
 	}
 	return true
 }
