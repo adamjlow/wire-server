@@ -4,9 +4,9 @@
   "title": "Supervise orphan native Nginx workers in owned Docker tests",
   "service": "framework",
   "kind": "contract-change",
-  "status": "queued",
-  "owner": null,
-  "branch": null,
+  "status": "active",
+  "owner": "codex",
+  "branch": "go-e2e-nginx-orphans",
   "depends_on": [
     "spar-contract"
   ],
