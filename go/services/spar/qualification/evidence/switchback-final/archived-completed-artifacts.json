@@ -1,0 +1,74 @@
+{
+  "result": "pass",
+  "kind": "lossless-archive-completed-superseded-construction",
+  "selected_artifacts_before": {
+    "/home/operator/.cache/wire-migration/go-patched-20261009/proxy": "abf252dbe14cdb44777c994387a3a99df7e0906fbd21c514ee698d3644da7594",
+    "/home/operator/.cache/wire-migration/go-patched-20261009/cargohold": "1838097eef9dba908c76ce893dbecd4224a2e1ac78c9ad126c8a56033dd655e1",
+    "/home/operator/.cache/wire-migration/go-patched-20261009/cannon": "ced2d1923a1c456a5e4025b10d699707f1e302115bfd17ffea1e092552da39fa",
+    "/home/operator/.cache/wire-migration/go-patched-20261009/gundeck": "a50512ef30d7fa9ddf92c2c1933e69769d6691e08cdfbe9f7c4f2d266071f46c",
+    "/home/operator/.cache/wire-migration/federator-20261009-5": "fbe1d6d62762e79da64a15a6e06af9ce7448ab2ace0ca33530ec261aa46a4595",
+    "/home/operator/.cache/wire-migration/background-worker-20261009/worker-response-5a24": "9a3157e2f61a3406e4923b1a5e569f2ad0f03e50ccdad25b4c7f43d22f3bc658",
+    "/dev/shm/wire-migration-spar-20261010/spar-group-patch-corrected": "9fabe438a2b52f723d698168350d90cb1157dc43f130803e841a7b224a884d42"
+  },
+  "archives": [
+    {
+      "original": "/home/operator/.cache/wire-migration/background-worker-20261009/current-original47-worker",
+      "original_sha256": "ea1e1ef8c5107ccf9a9aaa7cfaa56d7ae5a92d7b494a29db48b6a1d1353c97ab",
+      "original_mode": 509,
+      "original_size": 21385140,
+      "archive": "/home/operator/.cache/wire-migration/background-worker-20261009/current-original47-worker.completed-artifact.gz",
+      "archive_sha256": "84b2ed982e6fdeac36758005b054794903aec51bdd0322278fa18a4873bcc709",
+      "archive_size": 10253651,
+      "build_info": "/home/operator/.cache/wire-migration/background-worker-20261009/current-original47-worker: go1.26.9\n\tpath\tgithub.com/adamjlow/wire-server/go/services/background-worker/cmd/background-worker\n\tmod\tgithub.com/adamjlow/wire-server/go/services/background-worker\t(devel)\t\n\tdep\tgithub.com/apache/cassandra-gocql-driver/v2\tv2.1.2\th1:lu/p0Db2av18enHJvWJQoChLssI0P+AR06STq4VdvCc=\n\tdep\tgithub.com/jackc/pgpassfile\tv1.0.0\th1:/6Hmqy13Ss2zCq62VdNG8tM1wchn8zjSGOBJ6icpsIM=\n\tdep\tgithub.com/jackc/pgservicefile\tv0.0.0-20240606120523-5a60cdf6a761\th1:iCEnooe7UlwOQYpKFhBabPMi4aNAfoODPEFNiAnClxo=\n\tdep\tgithub.com/jackc/pgx/v5\tv5.11.0\th1:IzBBtyK9AHqf98cctWFifYSci2hgQR/cd56wB4p+ogg=\n\tdep\tgithub.com/jackc/puddle/v2\tv2.2.2\th1:PR8nw+E/1w0GLuRFSmiioY6UooMp6KJv0/61nB7icHo=\n\tdep\tgithub.com/klauspost/cpuid/v2\tv2.2.10\th1:tBs3QSyvjDyFTq3uoc/9xFpCuOsJQFNPiAhYdw2skhE=\n\tdep\tgithub.com/rabbitmq/amqp091-go\tv1.15.0\th1:LEQL4/yp48/Wigt6A6XOu18RQRo8ZHtB5I/KZJn+gkw=\n\tdep\tgithub.com/zeebo/xxh3\tv1.1.0\th1:s7DLGDK45Dyfg7++yxI0khrfwq9661w9EN78eP/UZVs=\n\tdep\tgo.yaml.in/yaml/v3\tv3.0.5\th1:N6y/pJk8buWs9NY5ERU2HSMfm+IuD/OtfdAnq6kESPw=\n\tdep\tgolang.org/x/net\tv0.60.0\th1:79p50tfZlm0J9YfoDsSi639qSXNGVwEzOPLCxM2FsYU=\n\tdep\tgolang.org/x/sync\tv0.23.0\th1:KameEIfc1IkluZyXWLn39Wd4tURc6GbCiISGiZm2bQk=\n\tdep\tgolang.org/x/text\tv0.42.0\th1:JbOZXgfeCPU9gacVtYliJqOhD+zhrEqK4LfdpmlUZqI=\n\tdep\tgopkg.in/inf.v0\tv0.9.1\th1:73M5CoZyi3ZLMOyDlQh031Cx6N9NDJ2Vvfl76EDAgDc=\n\tbuild\t-buildmode=exe\n\tbuild\t-compiler=gc\n\tbuild\t-trimpath=true\n\tbuild\tCGO_ENABLED=0\n\tbuild\tGOARCH=amd64\n\tbuild\tGOOS=linux\n\tbuild\tGOAMD64=v1\n\tbuild\tvcs=git\n\tbuild\tvcs.revision=12107801eab254cc61c87b88b8f9d2291cbd0558\n\tbuild\tvcs.time=2026-10-10T01:08:37Z\n\tbuild\tvcs.modified=false\n",
+      "restoration": "gzip -dc /home/operator/.cache/wire-migration/background-worker-20261009/current-original47-worker.completed-artifact.gz > /home/operator/.cache/wire-migration/background-worker-20261009/current-original47-worker; chmod 775 /home/operator/.cache/wire-migration/background-worker-20261009/current-original47-worker; verify original_sha256",
+      "recovered_bytes": 11131489
+    },
+    {
+      "original": "/home/operator/.cache/wire-migration/background-worker-20261009/switchback-storage",
+      "original_sha256": "749a25fd370a1febf04ec52895a2faf1be90b78579a21f49fb4fd935c989b011",
+      "original_mode": 509,
+      "original_size": 15235808,
+      "archive": "/home/operator/.cache/wire-migration/background-worker-20261009/switchback-storage.completed-artifact.gz",
+      "archive_sha256": "c661d22e214dc338ede7d88e2eff426e0814a6401f60f1e0fa28bff870425267",
+      "archive_size": 7285576,
+      "build_info": "/home/operator/.cache/wire-migration/background-worker-20261009/switchback-storage: go1.26.9\n\tpath\tgithub.com/adamjlow/wire-server/go/services/background-worker/qualification/storage\n\tmod\tgithub.com/adamjlow/wire-server/go/services/background-worker\t(devel)\t\n\tdep\tgithub.com/apache/cassandra-gocql-driver/v2\tv2.1.2\th1:lu/p0Db2av18enHJvWJQoChLssI0P+AR06STq4VdvCc=\n\tdep\tgithub.com/jackc/pgpassfile\tv1.0.0\th1:/6Hmqy13Ss2zCq62VdNG8tM1wchn8zjSGOBJ6icpsIM=\n\tdep\tgithub.com/jackc/pgservicefile\tv0.0.0-20240606120523-5a60cdf6a761\th1:iCEnooe7UlwOQYpKFhBabPMi4aNAfoODPEFNiAnClxo=\n\tdep\tgithub.com/jackc/pgx/v5\tv5.11.0\th1:IzBBtyK9AHqf98cctWFifYSci2hgQR/cd56wB4p+ogg=\n\tdep\tgolang.org/x/text\tv0.42.0\th1:JbOZXgfeCPU9gacVtYliJqOhD+zhrEqK4LfdpmlUZqI=\n\tdep\tgopkg.in/inf.v0\tv0.9.1\th1:73M5CoZyi3ZLMOyDlQh031Cx6N9NDJ2Vvfl76EDAgDc=\n\tbuild\t-buildmode=exe\n\tbuild\t-compiler=gc\n\tbuild\t-trimpath=true\n\tbuild\tCGO_ENABLED=0\n\tbuild\tGOARCH=amd64\n\tbuild\tGOOS=linux\n\tbuild\tGOAMD64=v1\n\tbuild\tvcs=git\n\tbuild\tvcs.revision=094895ad40bd5e95a0ff7d6ad524bad6210327c5\n\tbuild\tvcs.time=2026-10-10T02:51:32Z\n\tbuild\tvcs.modified=true\n",
+      "restoration": "gzip -dc /home/operator/.cache/wire-migration/background-worker-20261009/switchback-storage.completed-artifact.gz > /home/operator/.cache/wire-migration/background-worker-20261009/switchback-storage; chmod 775 /home/operator/.cache/wire-migration/background-worker-20261009/switchback-storage; verify original_sha256",
+      "recovered_bytes": 7950232
+    },
+    {
+      "original": "/home/operator/.cache/wire-migration/cargohold-supplemental-20261008-10",
+      "original_sha256": "d3591c8f7cbbb5ecbbf9c1425feb29c2b1867e270156337a0cf639eee43f7467",
+      "original_mode": 509,
+      "original_size": 16761567,
+      "archive": "/home/operator/.cache/wire-migration/cargohold-supplemental-20261008-10.completed-artifact.gz",
+      "archive_sha256": "90da1ef9359d7242b5823c9452f647ca9bdf1f8b6661e007f114ca2aad10abfc",
+      "archive_size": 8485952,
+      "build_info": "/home/operator/.cache/wire-migration/cargohold-supplemental-20261008-10: go1.26.8\n\tpath\tgithub.com/adamjlow/wire-server/go/services/cargohold/cmd/cargohold\n\tmod\tgithub.com/adamjlow/wire-server/go/services/cargohold\t(devel)\t\n\tdep\tgithub.com/aws/aws-sdk-go-v2\tv1.47.1\th1:uOIZnp4PK3ZhKI0dNrJrhTEsLxbpXHTAJlwoS1pvAtw=\n\tdep\tgithub.com/aws/aws-sdk-go-v2/aws/protocol/eventstream\tv1.7.20\th1:GPRlPwz40I2B2VrBEASOA3Bi77NyeqejNLkifosX0rs=\n\tdep\tgithub.com/aws/aws-sdk-go-v2/config\tv1.33.7\th1:vgG8uuhm7vNsxr6BsXNG+Ciesh9iLdNPzarAAu/dB6A=\n\tdep\tgithub.com/aws/aws-sdk-go-v2/credentials\tv1.20.7\th1:mit8rRVnmt+wvT4U6putiWSlwe3eKD2n6ElgyfcP/Mw=\n\tdep\tgithub.com/aws/aws-sdk-go-v2/feature/ec2/imds\tv1.20.1\th1:8gALAAmacnIXh+z6VkdDanv4/IkG5APdg4DZLDTmLog=\n\tdep\tgithub.com/aws/aws-sdk-go-v2/internal/configsources\tv1.5.4\th1:CLq4+8UHCI+ZZYl/EuJxXovaIVN2xeeT8JV+dsApQ5E=\n\tdep\tgithub.com/aws/aws-sdk-go-v2/internal/endpoints/v2\tv2.8.4\th1:dD4MR81I7YkpEBRk6UP9rocC2QnT3qVuXwzlYTtfGEs=\n\tdep\tgithub.com/aws/aws-sdk-go-v2/internal/v4a\tv1.5.4\th1:7Wo47d/xn/7KttCSBd8EGYeZ7ULRFRkUHr6vkZPBzVQ=\n\tdep\tgithub.com/aws/aws-sdk-go-v2/service/internal/accept-encoding\tv1.13.19\th1:bAdDl/HkGCcGPoe25ToSHEw23VIxt6CT5fLcg111BKg=\n\tdep\tgithub.com/aws/aws-sdk-go-v2/service/internal/checksum\tv1.11.5\th1:/TYsZXdA8UTa+WCtCYSAJIr1vwl0+eho6TUgJGwFFO8=\n\tdep\tgithub.com/aws/aws-sdk-go-v2/service/internal/presigned-url\tv1.14.4\th1:29SvnfGhXjTl8ONxFwbj2rs6lbhiFXD2CgFQmbT/bXY=\n\tdep\tgithub.com/aws/aws-sdk-go-v2/service/internal/s3shared\tv1.20.4\th1:pPiWfgeNxqluKEph7hvU88kuGKBPOWzO+Dk9t2zqqNs=\n\tdep\tgithub.com/aws/aws-sdk-go-v2/service/s3\tv1.114.1\th1:9T6eO8/WXhij4PQaa2WaYsdekSCmT9Hw66Pw0S8do0Q=\n\tdep\tgithub.com/aws/aws-sdk-go-v2/service/signin\tv1.10.2\th1:vrPP4O9VABnquYrDHfU+Fu0Fp6TuzaqPUu9Fh7VBBVY=\n\tdep\tgithub.com/aws/aws-sdk-go-v2/service/sso\tv1.38.2\th1:I8F/K5ahKJ4npqeGBBmMPftQy3/o1A55VRq2eUcP9Ts=\n\tdep\tgithub.com/aws/aws-sdk-go-v2/service/ssooidc\tv1.43.2\th1:i5nn7Ri5CgFfNRzwlUiZOIIUA+5Vgg+unNEC0PzF1+s=\n\tdep\tgithub.com/aws/aws-sdk-go-v2/service/sts\tv1.51.2\th1:AWSPqynwEJV8J2pl/p7aizCf7a23/NGHR+rK/KLOxi4=\n\tdep\tgithub.com/aws/smithy-go\tv1.28.1\th1:R/nXH00c8qcfCzQVELtRw+eLQWtzv+VAIEFJ1/xxXlQ=\n\tdep\tgo.yaml.in/yaml/v3\tv3.0.4\th1:tfq32ie2Jv2UxXFdLJdh3jXuOzWiL1fo0bu/FbuKpbc=\n\tdep\tgolang.org/x/net\tv0.59.0\th1:5zfYln+w5XCxwrnMMJPufRgNoXEaGxl0wo5GqPXyues=\n\tdep\tgolang.org/x/text\tv0.42.0\th1:JbOZXgfeCPU9gacVtYliJqOhD+zhrEqK4LfdpmlUZqI=\n\tbuild\t-buildmode=exe\n\tbuild\t-compiler=gc\n\tbuild\tCGO_ENABLED=0\n\tbuild\tGOARCH=amd64\n\tbuild\tGOOS=linux\n\tbuild\tGOAMD64=v1\n\tbuild\tvcs=git\n\tbuild\tvcs.revision=68a36b9137ce26566b2db91902469e8159885656\n\tbuild\tvcs.time=2026-10-08T12:27:20Z\n\tbuild\tvcs.modified=false\n",
+      "restoration": "gzip -dc /home/operator/.cache/wire-migration/cargohold-supplemental-20261008-10.completed-artifact.gz > /home/operator/.cache/wire-migration/cargohold-supplemental-20261008-10; chmod 775 /home/operator/.cache/wire-migration/cargohold-supplemental-20261008-10; verify original_sha256",
+      "recovered_bytes": 8275615
+    },
+    {
+      "original": "/home/operator/.cache/wire-migration/cannon-parity-fixture-20261008-1",
+      "original_sha256": "0d2b0fa3b054000ccb0b1c24b14fcc25119b8fa1c0166d010646db7b9ed1c875",
+      "original_mode": 509,
+      "original_size": 11358218,
+      "archive": "/home/operator/.cache/wire-migration/cannon-parity-fixture-20261008-1.completed-artifact.gz",
+      "archive_sha256": "0c6de6e6bbf11a854318ff48ca93a8d176d5ffbdbb59f9e8bb41e0555264dc36",
+      "archive_size": 6020565,
+      "build_info": "/home/operator/.cache/wire-migration/cannon-parity-fixture-20261008-1: go1.26.8\n\tpath\tgithub.com/adamjlow/wire-server/go/services/cannon/cmd/parity-fixture\n\tmod\tgithub.com/adamjlow/wire-server/go/services/cannon\t(devel)\t\n\tdep\tgithub.com/apache/cassandra-gocql-driver/v2\tv2.1.2\th1:lu/p0Db2av18enHJvWJQoChLssI0P+AR06STq4VdvCc=\n\tdep\tgithub.com/gorilla/websocket\tv1.5.3\th1:saDtZ6Pbx/0u+bgYQ3q96pZgCzfhKXGPqt7kZ72aNNg=\n\tdep\tgithub.com/rabbitmq/amqp091-go\tv1.15.0\th1:LEQL4/yp48/Wigt6A6XOu18RQRo8ZHtB5I/KZJn+gkw=\n\tdep\tgo.yaml.in/yaml/v3\tv3.0.4\th1:tfq32ie2Jv2UxXFdLJdh3jXuOzWiL1fo0bu/FbuKpbc=\n\tdep\tgopkg.in/inf.v0\tv0.9.1\th1:73M5CoZyi3ZLMOyDlQh031Cx6N9NDJ2Vvfl76EDAgDc=\n\tbuild\t-buildmode=exe\n\tbuild\t-compiler=gc\n\tbuild\tCGO_ENABLED=0\n\tbuild\tGOARCH=amd64\n\tbuild\tGOOS=linux\n\tbuild\tGOAMD64=v1\n\tbuild\tvcs=git\n\tbuild\tvcs.revision=d094cbd31cdd7795904b5be5eb4eb9358604bbfa\n\tbuild\tvcs.time=2026-10-08T16:29:35Z\n\tbuild\tvcs.modified=false\n",
+      "restoration": "gzip -dc /home/operator/.cache/wire-migration/cannon-parity-fixture-20261008-1.completed-artifact.gz > /home/operator/.cache/wire-migration/cannon-parity-fixture-20261008-1; chmod 775 /home/operator/.cache/wire-migration/cannon-parity-fixture-20261008-1; verify original_sha256",
+      "recovered_bytes": 5337653
+    }
+  ],
+  "selected_artifacts_after": {
+    "/home/operator/.cache/wire-migration/go-patched-20261009/proxy": "abf252dbe14cdb44777c994387a3a99df7e0906fbd21c514ee698d3644da7594",
+    "/home/operator/.cache/wire-migration/go-patched-20261009/cargohold": "1838097eef9dba908c76ce893dbecd4224a2e1ac78c9ad126c8a56033dd655e1",
+    "/home/operator/.cache/wire-migration/go-patched-20261009/cannon": "ced2d1923a1c456a5e4025b10d699707f1e302115bfd17ffea1e092552da39fa",
+    "/home/operator/.cache/wire-migration/go-patched-20261009/gundeck": "a50512ef30d7fa9ddf92c2c1933e69769d6691e08cdfbe9f7c4f2d266071f46c",
+    "/home/operator/.cache/wire-migration/federator-20261009-5": "fbe1d6d62762e79da64a15a6e06af9ce7448ab2ace0ca33530ec261aa46a4595",
+    "/home/operator/.cache/wire-migration/background-worker-20261009/worker-response-5a24": "9a3157e2f61a3406e4923b1a5e569f2ad0f03e50ccdad25b4c7f43d22f3bc658",
+    "/dev/shm/wire-migration-spar-20261010/spar-group-patch-corrected": "9fabe438a2b52f723d698168350d90cb1157dc43f130803e841a7b224a884d42"
+  },
+  "recovered_bytes": 32694989,
+  "free_bytes": 2154303488
+}
