@@ -2,7 +2,7 @@
   "schema_version": 1,
   "service": "background-worker",
   "reference_path": "services/background-worker",
-  "stage": "implementing",
+  "stage": "verified",
   "oracle_paths": [
     "services/background-worker",
     "docs/go-migration/services/background-worker/contract.md",
@@ -17,7 +17,24 @@
     ],
     "plan": [
       "background-worker-inventory"
+    ],
+    "parity": [
+      "background-worker-verification"
+    ],
+    "security": [
+      "background-worker-verification"
+    ],
+    "operations": [
+      "background-worker-verification"
+    ],
+    "rollback": [
+      "background-worker-verification"
     ]
   },
-  "compatibility": null
+  "compatibility": {
+    "upstream_revision": "f6636ed53315fa7b0fc4c8aa39c0bb30c98b6d5e",
+    "reference_revision": "f6636ed53315fa7b0fc4c8aa39c0bb30c98b6d5e",
+    "candidate_revision": "5a24af6f27c622f62ce8cdab35923d6acc765a2d",
+    "verification_task": "background-worker-verification"
+  }
 }
