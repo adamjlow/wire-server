@@ -39,6 +39,7 @@ type brigReadHandlers struct {
 	clientActivity     *clientActivityService
 	prekeys            *prekeyClaimService
 	publicClients      *publicClientService
+	mlsClients         *mlsClientReads
 }
 
 func readJSON(w http.ResponseWriter, r *http.Request, body any) {
@@ -75,6 +76,9 @@ func routeParseError(w http.ResponseWriter, message string) {
 }
 
 func (b brigReadHandlers) handle(w http.ResponseWriter, r *http.Request, path string) bool {
+	if b.mlsClients != nil && b.mlsClients.handle(w, r, path) {
+		return true
+	}
 	if b.publicClients != nil && b.publicClients.handle(w, r, path) {
 		return true
 	}

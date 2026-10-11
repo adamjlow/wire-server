@@ -42,7 +42,6 @@ func NewHandler(c Config) http.Handler {
 func newHandler(c Config, business *brigReadHandlers) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		r = r.Clone(r.Context())
-		r.Header.Del("X-Wire-API-Version")
 		path := r.URL.Path
 		segments := strings.Split(strings.TrimPrefix(path, "/"), "/")
 		first := segments[0]
@@ -53,6 +52,7 @@ func newHandler(c Config, business *brigReadHandlers) http.Handler {
 			}
 		}
 		if looksVersion {
+			r.Header.Del("X-Wire-API-Version")
 			if len(segments) > 1 && (segments[1] == "i" || segments[1] == "api-internal") {
 				wireError(w, 404, "unsupported-version", "Internal APIs (`/i/...`) are not under version control")
 				return
@@ -221,6 +221,7 @@ func Run(ctx context.Context, c Config) error {
 	}
 	federationRead.useCassandra(cassandra)
 	business.federationConfig = &federationRead
+	business.mlsClients = &mlsClientReads{ids: (clientStore{cassandra}).ids, get: (clientStore{cassandra}).get, packages: (clientStore{cassandra}).mlsPackages, remove: (clientStore{cassandra}).deleteMLSPackages, now: time.Now, maximum: c.Settings.KeyPackageMaximumLifetime}
 	business.clients = &clientReadHandlers{store: clientStore{cassandra}}
 	business.clientActivity = &clientActivityService{update: (clientStore{cassandra}).updateLastActive, now: time.Now}
 	business.clientUpdate = &clientUpdateService{store: clientStore{cassandra}, consumable: c.Settings.ConsumableNotifications, setup: business.peers.setupConsumableClient}

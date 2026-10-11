@@ -145,13 +145,13 @@ func TestFederationPrekeyHTTP2NegotiationAndTypedResponse(t *testing.T) {
 		w.Header().Set("Content-Type", "application/json")
 		if strings.HasSuffix(r.URL.Path, "/api-version") {
 			negotiations.Add(1)
-			if string(body) != "[]" || r.Header.Get("Wire-Federation-Version") != "" {
+			if string(body) != "[]" || r.Header.Get("X-Wire-API-Version") != "" {
 				t.Error("negotiation must be unversioned unit input")
 			}
 			_, _ = io.WriteString(w, `{"supported":[0,1],"supported_versions":[0,2,4,999]}`)
 			return
 		}
-		if r.URL.Path != "/rpc/remote.example/brig/claim-prekey" || r.Header.Get("Wire-Federation-Version") != "4" || r.Header.Get("Accept") != "application/json" {
+		if r.URL.Path != "/rpc/remote.example/brig/claim-prekey" || r.Header.Get("X-Wire-API-Version") != "4" || r.Header.Get("Accept") != "application/json" {
 			t.Errorf("incorrect RPC: %s %v", r.URL, r.Header)
 		}
 		var pair []string

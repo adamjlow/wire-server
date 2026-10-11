@@ -133,7 +133,7 @@ func (s prekeyFederationClient) request(ctx context.Context, domain, path, reque
 	req.Header.Set("Wire-Origin-Request-Id", requestID)
 	// Native streaming negotiation bypasses the versioned RunClient instance.
 	if version != nil {
-		req.Header.Set("Wire-Federation-Version", strconv.Itoa(*version))
+		req.Header.Set("X-Wire-API-Version", strconv.Itoa(*version))
 		req.Header.Set("Accept", "application/json")
 	}
 	req.Header.Set("Content-Type", "application/json")

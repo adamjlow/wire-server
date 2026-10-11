@@ -771,3 +771,19 @@ runner0/cleanup0/independent namespace empty; no original suite/new native build
 claim. [Evidence](../../../go/services/brig/qualification/evidence/public-user-clients/README.md).
 MLS read RPCs, malformed-parser details and previous fidelity gaps
 remain unfinished; this does not publish compatibility or whole acceptance.
+
+### MLS client read/count candidate wiring (qualification pending)
+
+Native internal list/single and federation V0/V1 list/V3 single contracts wired.
+Counting reads actual CQL key-package rows, fully decodes native TLS presentation
+syntax, retains malformed rows, removes decoded unusable source/lifetime rows
+with retry5 before metadata lookup, and selects the suite's signature key.
+Missing client returns requested ID/mlsFalse, not404; no upload-time cryptographic
+validation added to counting. Maximum lifetime uses exact picosecond arithmetic.
+The versioned RPC exposed a prior candidate bug: native header is
+X-Wire-API-Version, not Wire-Federation-Version, and unprefixed requests preserve
+the header. Both corrected, native branches/regressions added. Historical prekey
+proof never validated a versioned RPC; keep that scope explicit. Full pinned
+checks plus ten actual native/Go MLS read controls pending. Positive/expired/
+malformed real CQL package side-effects still need direct qualification, and
+upload/claim/count public APIs remain unfinished; no whole-service claim.

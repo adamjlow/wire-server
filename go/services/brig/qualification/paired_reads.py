@@ -344,6 +344,22 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             assert [r['status'] for r in native_public_client_controls]==[200,200,404,200,404,200,200,200,404,200,200,200,200,200], 'native public client reference changed'
             assert native_public_client_controls[7]['json']==[], 'native remote failure did not become empty client list'
             assert set(native_public_client_controls[11]['json']['qualified_user_map'])=={local_domain,remote_domain}, 'native public client bulk remote omission changed'
+            mls_cases=[
+                ('GET','/i/mls/clients/'+lifecycle_user+'?ciphersuite=0x1',{}),
+                ('GET','/i/mls/client/'+lifecycle_user+'/'+lifecycle_id+'?ciphersuite=0x1',{}),
+                ('GET','/i/mls/client/'+lifecycle_user+'/f?ciphersuite=0x1',{}),
+                ('GET','/i/mls/client/'+lifecycle_user+'/'+lifecycle_id+'?ciphersuite=0x2',{}),
+                ('GET','/i/mls/clients/'+lifecycle_user+'?ciphersuite=0x3',{}),
+                ('POST','/federation/get-mls-clients',{'Wire-Origin-Domain':remote_domain,'X-Wire-API-Version':'0'},{'user_id':lifecycle_user,'signature_scheme':'ecdsa_secp384r1_sha384'}),
+                ('POST','/federation/get-mls-clients',{'Wire-Origin-Domain':remote_domain,'X-Wire-API-Version':'1'},{'user_id':lifecycle_user,'cipher_suite':1}),
+                ('POST','/federation/get-mls-client',{'Wire-Origin-Domain':remote_domain,'X-Wire-API-Version':'3'},{'user_id':lifecycle_user,'client_id':lifecycle_id,'cipher_suite':1}),
+                ('POST','/federation/get-mls-client',{'Wire-Origin-Domain':remote_domain,'X-Wire-API-Version':'3'},{'user_id':lifecycle_user,'client_id':'f','cipher_suite':1}),
+                ('POST','/federation/get-mls-client',{'Wire-Origin-Domain':remote_domain,'X-Wire-API-Version':'3'},{'user_id':lifecycle_user,'client_id':lifecycle_id,'cipher_suite':3})]
+            native_mls_controls=[request(*case)[0] for case in mls_cases]
+            report['mls_client_native_controls']=native_mls_controls
+            assert [r['status'] for r in native_mls_controls]==[200,200,200,200,400,200,200,200,200,400], 'native MLS client reference changed'
+            assert native_mls_controls[1]['json']['mls_signature_key']=='AQI=' and native_mls_controls[1]['json']['mls'] is False, 'native MLS signature/count reference changed'
+            assert native_mls_controls[2]['json']=={'id':'f','mls':False}, 'native missing MLS client reference changed'
             restaged,_=request('POST','/v19/clients',lifecycle_headers,{**native_body,'mls_public_keys':{}})
             report['prekey_native_restage']=restaged
             assert restaged['status']==201, 'native prekey reference restage failed'
@@ -618,6 +634,11 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             public_client_mismatches=[{'case':i,'fields':[k for k in fields(ref) if ref.get(k)!=actual.get(k)]} for i,(ref,actual) in enumerate(zip(native_public_client_controls,go_public_client_controls)) if not same(ref,actual)]
             report['public_client_mismatches']=public_client_mismatches
             assert not public_client_mismatches, 'native public client responses mismatch'
+            go_mls_controls=[request(*case)[0] for case in mls_cases]
+            report['mls_client_go_controls']=go_mls_controls
+            mls_client_mismatches=[{'case':i,'fields':[k for k in fields(ref) if ref.get(k)!=actual.get(k)]} for i,(ref,actual) in enumerate(zip(native_mls_controls,go_mls_controls)) if not same(ref,actual)]
+            report['mls_client_mismatches']=mls_client_mismatches
+            assert not mls_client_mismatches, 'native MLS client responses mismatch'
             go_created,_=request('POST','/v19/clients',lifecycle_headers,{**new_body,'password':password})
             report['client_lifecycle_go_created']=go_created
             assert go_created['status']==201 and go_created['location']==go_created['json']['id'], 'Go client creation failed'
