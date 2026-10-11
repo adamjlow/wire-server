@@ -1842,3 +1842,15 @@ Go must prove hidden reads and rejected writes on actual email-null storage,
 not only a fake missing account;14 comparisons total. This changes observer only;
 reuse sourceb26 artifact/full quality after exact production/tagged inputs diff.
 No new provider assertion replaces original protected tests.
+
+Observer96197a6f6 captures all14 native/Go controls but stops before comparison:
+shared same() closure was assigned later in the lifecycle branch. Move its
+unchanged status/media/body comparator before first use. Captured responses
+independently reveal four read404 media differences: native typed GET errors use
+JSON charset while provider PUT exceptions use bare application/json. Correct
+only Go read404 responses, add the observed media regression, and rerun the same
+14-control matrix plus unchanged original22/switchback. All25 exits0, runner1/
+cleanup0/independent empty retained. Failed controller metadata mislabeled reused
+production as built at observer961; actual passing production/full quality is
+sourceb26a7ec24/SHAa5257b6d, original SDK receipt retained. This failed run is not
+qualified; next controller must identify actual artifact build source correctly.

@@ -146,3 +146,23 @@ func TestProviderSecondFactorPeerFailsClosed(t *testing.T) {
 		}
 	}
 }
+
+func TestMissingProviderReadAndWriteMediaTypes(t *testing.T) {
+	id, _ := gocql.ParseUUID("11111111-2222-3333-4444-555555555555")
+	h := providerAccountHTTP{lookup: func(context.Context, gocql.UUID) (*providerAccount, error) { return nil, nil }, secondFactorEnabled: func(context.Context, string) (bool, error) { return false, nil }}
+	for _, method := range []string{http.MethodGet, http.MethodHead, http.MethodPut} {
+		r := httptest.NewRequest(method, "/provider", strings.NewReader(`{}`))
+		r.Header.Set("Z-Provider", id.String())
+		r.Header.Set("Z-Type", "provider")
+		r.Header.Set("Content-Type", "application/json")
+		w := httptest.NewRecorder()
+		h.handle(w, r, r.URL.Path)
+		media := "application/json;charset=utf-8"
+		if method == http.MethodPut {
+			media = "application/json"
+		}
+		if w.Code != 404 || w.Header().Get("Content-Type") != media {
+			t.Fatal("native provider read/write error projection", method, w.Code, w.Header())
+		}
+	}
+}

@@ -92,7 +92,11 @@ func (h providerAccountHTTP) handle(w http.ResponseWriter, r *http.Request, path
 	if err != nil {
 		registrationHTTPError(w, err)
 	} else if account == nil {
-		authenticationWireError(w, 404, "not-found", "Provider not found.")
+		if r.Method == http.MethodPut {
+			authenticationWireError(w, 404, "not-found", "Provider not found.")
+		} else {
+			wireError(w, 404, "not-found", "Provider not found.")
+		}
 	} else if r.Method == http.MethodPut {
 		if h.update == nil {
 			registrationHTTPError(w, errors.New("provider update unavailable"))

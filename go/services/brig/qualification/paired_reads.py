@@ -38,6 +38,8 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
     original_failures = []
     service_conversations = {}
     service_clients = {}
+    fields=lambda record: ('status','content_type','json' if 'json' in record else 'body')
+    same=lambda ref,actual: all(ref.get(k)==actual.get(k) for k in fields(ref))
     if stomp_internal_events:
         import stomp_broker
 
@@ -1050,8 +1052,6 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
         report['mismatches'] = mismatches
         assert not mismatches, 'paired response mismatches'
         if client_lifecycle_contract:
-            fields=lambda record: ('status','content_type','json' if 'json' in record else 'body')
-            same=lambda ref,actual: all(ref.get(k)==actual.get(k) for k in fields(ref))
             go_connection_controls=[request(*case)[0] for case in connection_cases]
             go_connection_pages=[request(*case)[0] for case in connection_page_cases]
             report['connections_go_controls']=go_connection_controls
