@@ -14,7 +14,10 @@ import (
 )
 
 func TestTeamSizePrimaryIndexAndNativeLegacyQuery(t *testing.T) {
-	team := gocql.MustParseUUID("00000000-0000-4000-8000-000000000001")
+	team, err := gocql.ParseUUID("00000000-0000-4000-8000-000000000001")
+	if err != nil {
+		t.Fatal(err)
+	}
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if r.Method != "POST" || r.URL.Path != "/primary/user/_search" || r.Header.Get("Request-Id") != "synthetic-size" || r.Header.Get("Content-Type") != "application/json" {
 			t.Error("incorrect native search request", r.Method, r.URL.Path)

@@ -1,0 +1,1 @@
+Initial source26ee7612a SDK vet failed: test used unavailable gocql.MustParseUUID. No executable or success claim; controller1, cleanup0, owned resources empty. Correct test to actual pinned driver ParseUUID, then rerun checks.

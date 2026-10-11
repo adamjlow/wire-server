@@ -1,0 +1,5 @@
+all modules verified
+# github.com/adamjlow/wire-server/go/services/brig
+# [github.com/adamjlow/wire-server/go/services/brig]
+vet: ./team_size_test.go:17:16: undefined: gocql.MustParseUUID
+Candidate checks failed: go vet failed (exit 1)
