@@ -15,18 +15,23 @@ var errPrekeyConsent = errors.New("missing legalhold consent")
 var errPrekeyOldConsent = errors.New("missing legalhold consent old clients")
 
 type prekeyClaimService struct {
-	domain  string
-	claim   func(context.Context, gocql.UUID, string) (*uncheckedPrekey, error)
-	clients func(context.Context, gocql.UUID) ([]storedClient, error)
-	lookup  func(context.Context, gocql.UUID, string) (*storedClient, error)
-	remove  func(context.Context, gocql.UUID, *string, storedClient) error
-	guard   func(context.Context, gocql.UUID, map[string][]string, string) error
+	domain   string
+	maxUsers int
+	claim    func(context.Context, gocql.UUID, string) (*uncheckedPrekey, error)
+	clients  func(context.Context, gocql.UUID) ([]storedClient, error)
+	lookup   func(context.Context, gocql.UUID, string) (*storedClient, error)
+	remove   func(context.Context, gocql.UUID, *string, storedClient) error
+	guard    func(context.Context, gocql.UUID, map[string][]string, string) error
 }
 
 func (s prekeyClaimService) single(ctx context.Context, protectee, user gocql.UUID, id, requestID string) (*uncheckedPrekey, error) {
 	if err := s.guard(ctx, protectee, map[string][]string{user.String(): {id}}, requestID); err != nil {
 		return nil, err
 	}
+	return s.claimOrClean(ctx, user, id)
+}
+
+func (s prekeyClaimService) claimOrClean(ctx context.Context, user gocql.UUID, id string) (*uncheckedPrekey, error) {
 	key, err := s.claim(ctx, user, id)
 	if err != nil || key != nil {
 		return key, err
@@ -79,6 +84,9 @@ func prekeyClaimHTTPError(w http.ResponseWriter, err error) {
 }
 
 func (s prekeyClaimService) handle(w http.ResponseWriter, r *http.Request, path string) bool {
+	if s.handleMulti(w, r, path) {
+		return true
+	}
 	parts := strings.Split(strings.Trim(path, "/"), "/")
 	if len(parts) < 3 || parts[0] != "users" {
 		return false

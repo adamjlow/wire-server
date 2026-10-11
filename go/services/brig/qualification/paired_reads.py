@@ -275,6 +275,13 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             report['prekey_native_claim_controls']=native_claim_controls
             assert [r['status'] for r in native_claim_controls]==[200,200,200,200,404], 'native claim reference changed'
             assert [r['json']['prekey']['id'] for r in native_claim_controls[:3]]==[7,65535,65535], 'native ordinary/last resort selection changed'
+            local_domain=peers['brig']['optSettings']['setFederationDomain']
+            local_multi={lifecycle_user:[lifecycle_id,'f',lifecycle_id]}
+            oversized={str(uuid.uuid4()):[] for _ in range(peers['brig']['optSettings']['setMaxConvSize']+1)}
+            multi_cases=[('POST','/v1/users/prekeys',lifecycle_headers,local_multi),('POST','/v3/users/list-prekeys',lifecycle_headers,{local_domain:local_multi}),('POST','/v19/users/list-prekeys',lifecycle_headers,{local_domain:local_multi}),('POST','/v19/users/list-prekeys',lifecycle_headers,{}),('POST','/v19/users/list-prekeys',lifecycle_headers,{local_domain:oversized})]
+            native_multi_controls=[request(*case)[0] for case in multi_cases]
+            report['prekey_native_multi_controls']=native_multi_controls
+            assert [r['status'] for r in native_multi_controls]==[200,200,200,200,403], 'native multi-user controls changed'
             restaged,_=request('POST','/v19/clients',lifecycle_headers,{**native_body,'mls_public_keys':{}})
             report['prekey_native_restage']=restaged
             assert restaged['status']==201, 'native prekey reference restage failed'
@@ -536,6 +543,9 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             report['prekey_go_claim_controls']=go_claim_controls
             assert all(same(ref,actual) for ref,actual in zip(native_claim_controls,go_claim_controls)), 'native prekey claim/bundle response mismatch'
             assert request('GET',lifecycle_path+'/prekeys',lifecycle_headers)[0]['json']==[65535], 'Go did not consume only the ordinary prekey'
+            go_multi_controls=[request(*case)[0] for case in multi_cases]
+            report['prekey_go_multi_controls']=go_multi_controls
+            assert all(same(ref,actual) for ref,actual in zip(native_multi_controls,go_multi_controls)), 'native multi-user prekey response mismatch'
             go_created,_=request('POST','/v19/clients',lifecycle_headers,{**new_body,'password':password})
             report['client_lifecycle_go_created']=go_created
             assert go_created['status']==201 and go_created['location']==go_created['json']['id'], 'Go client creation failed'

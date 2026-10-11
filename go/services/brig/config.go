@@ -75,6 +75,7 @@ type Config struct {
 		} `yaml:"authSettings"`
 	} `yaml:"zauth"`
 	Settings struct {
+		MaxConversationSize     *uint16                   `yaml:"setMaxConvSize"`
 		MaxPermanentClients     *int                      `yaml:"setUserMaxPermClients"`
 		ConsumableNotifications bool                      `yaml:"setConsumableNotifications"`
 		PropertyMaxKeyLen       *int64                    `yaml:"setPropertyMaxKeyLen"`
