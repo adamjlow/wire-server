@@ -25,6 +25,8 @@ func registrationHTTPError(w http.ResponseWriter, err error) {
 	var rate passwordRateExceeded
 	var admission registrationAdmissionError
 	switch {
+	case errors.Is(err, errSESMailInvalidDomain):
+		authenticationWireError(w, 400, "invalid-email", "Invalid e-mail address.")
 	case errors.Is(err, errRegistrationRestricted):
 		authenticationWireError(w, 403, "user-creation-restricted", "This instance does not allow creation of personal users or teams.")
 	case errors.Is(err, errRegistrationEphemeralDisabled):
