@@ -1,0 +1,10 @@
+all modules verified
+2026/10/11 04:05:41 session refresh notification failed
+--- FAIL: TestMailNativeRepositoryTemplates (0.04s)
+    mail_test.go:77: team activation content escaping changed
+2026/10/11 04:05:42 session refresh notification failed
+FAIL
+FAIL	github.com/adamjlow/wire-server/go/services/brig	1.286s
+?   	github.com/adamjlow/wire-server/go/services/brig/cmd/brig	[no test files]
+FAIL
+Candidate checks failed: go test failed (exit 1)

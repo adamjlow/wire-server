@@ -69,12 +69,16 @@ func TestMailNativeRepositoryTemplates(t *testing.T) {
 		t.Fatal("activation processing headers changed")
 	}
 	team := registrationTeam{Name: "Synthetic <Team>"}
+	renderer.teamActivationURL, err = compileMailTemplate("https://example.com/team/$key/$code")
+	if err != nil {
+		t.Fatal(err)
+	}
 	message, err = renderer.activation(created, registrationOrigin{Team: &team})
 	if err != nil {
 		t.Fatal(err)
 	}
-	if !strings.Contains(message.plain, team.Name) || !strings.Contains(message.html, "Synthetic &lt;Team&gt;") {
-		t.Fatal("team activation content escaping changed")
+	if !strings.Contains(message.plain, "A new Wire team was created") || !strings.Contains(message.html, "https://example.com/team/synthetic-key/123456") {
+		t.Fatal("native team template or team activation URL changed")
 	}
 	renderer.memberWelcomeURL = "https://example.com/$literal"
 	teamID, err := gocql.ParseUUID("10000000-0000-0000-0000-000000000001")
@@ -85,7 +89,7 @@ func TestMailNativeRepositoryTemplates(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if welcome.toName != nil || !strings.Contains(welcome.plain, "https://example.com/$literal") || !strings.Contains(welcome.plain, "10000000-0000-0000-0000-000000000001") || welcome.headers[0][1] != "Welcome" {
+	if !strings.Contains(welcome.plain, team.Name) || !strings.Contains(welcome.html, "Synthetic &lt;Team&gt;") || welcome.toName != nil || !strings.Contains(welcome.plain, "https://example.com/$literal") || !strings.Contains(welcome.plain, "10000000-0000-0000-0000-000000000001") || welcome.headers[0][1] != "Welcome" {
 		t.Fatal("welcome recipient/literal URL/team/purpose changed")
 	}
 	if len(warnings) != 0 {
