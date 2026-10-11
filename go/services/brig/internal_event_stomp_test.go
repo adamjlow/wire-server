@@ -7,6 +7,8 @@ import (
 	"errors"
 	"io"
 	"net"
+	"net/http"
+	"net/http/httptest"
 	"os"
 	"path/filepath"
 	"strconv"
@@ -137,7 +139,7 @@ func TestInternalStompAcknowledgementAfterCallback(t *testing.T) {
 					t.Error("failed callback acknowledged")
 				}
 			})
-			p := internalDeletionProcessor{get: func(context.Context, gocql.UUID) (*storedUser, error) {
+			p := internalDeletionProcessor{deleteUser: func(context.Context, storedUser, string) error { return nil }, get: func(context.Context, gocql.UUID) (*storedUser, error) {
 				close(called)
 				if !success {
 					return nil, errors.New("synthetic failure")
@@ -149,6 +151,56 @@ func TestInternalStompAcknowledgementAfterCallback(t *testing.T) {
 				t.Fatal("consumer terminated without cancellation or failure")
 			}
 		})
+	}
+}
+
+func TestInternalStompRejectsUntrustedTLS(t *testing.T) {
+	server := httptest.NewTLSServer(http.HandlerFunc(func(http.ResponseWriter, *http.Request) { t.Error("STOMP TLS verification bypassed") }))
+	defer server.Close()
+	address := server.Listener.Addr().(*net.TCPAddr)
+	q := internalStompQueue{host: "127.0.0.1", port: address.Port, tls: true, destination: "synthetic", user: "synthetic", pass: "synthetic"}
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+	defer cancel()
+	if q.send(ctx, []byte(`{}`)) == nil {
+		t.Fatal("untrusted broker certificate accepted")
+	}
+}
+
+func TestInternalStompFiveAdditionalAttempts(t *testing.T) {
+	listener, err := net.Listen("tcp", "127.0.0.1:0")
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer listener.Close()
+	done := make(chan int, 1)
+	go func() {
+		attempts := 0
+		defer func() { done <- attempts }()
+		for attempts < 6 {
+			c, err := listener.Accept()
+			if err != nil {
+				return
+			}
+			attempts++
+			_ = c.SetDeadline(time.Now().Add(time.Second))
+			r := stompTestHandshake(t, c)
+			if r != nil {
+				_, _ = r.Read()
+				_ = frame.NewWriter(c).Write(frame.New(frame.ERROR, "message", "synthetic broker refusal"))
+			}
+			_ = c.Close()
+		}
+	}()
+	address := listener.Addr().(*net.TCPAddr)
+	q := internalStompQueue{host: "127.0.0.1", port: address.Port, destination: "/queue/brig", user: "test:operator", pass: "synthetic\\password"}
+	ctx, cancel := context.WithTimeout(context.Background(), 4*time.Second)
+	defer cancel()
+	if q.enqueue(ctx, []byte(`{}`)) == nil {
+		t.Fatal("broker refusal accepted")
+	}
+	_ = listener.Close()
+	if attempts := <-done; attempts != 6 {
+		t.Fatalf("native attempts: got %d, want 6", attempts)
 	}
 }
 

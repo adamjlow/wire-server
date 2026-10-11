@@ -1461,3 +1461,8 @@ processing. Focused protocol tests include raw CONNECT credentials, receipt mism
 callback failure retention, idle cancellation, malformed/oversized frames and actual
 native parser keys/YAML credentials. These controls are not actual ActiveMQ or
 whole-service qualification; the native broker comparison remains required.
+
+Initial SDK source73242a402 failed two candidate tests: the YAML Node decoding
+strategy did not preserve required fields, and the successful-callback fixture
+omitted its mandatory cleanup dependency. Correct the candidate decoder and fixture;
+retain the failed receipt/log. Add finite six-attempt and untrusted-TLS controls.

@@ -30,9 +30,12 @@ type internalStompConfig struct {
 
 func (c *internalStompConfig) UnmarshalYAML(node *yaml.Node) error {
 	type plain internalStompConfig
-	var fields map[string]*yaml.Node
-	if node.Decode(&fields) != nil {
+	if node.Kind != yaml.MappingNode {
 		return errors.New("invalid internal STOMP configuration")
+	}
+	fields := make(map[string]*yaml.Node)
+	for i := 0; i+1 < len(node.Content); i += 2 {
+		fields[node.Content[i].Value] = node.Content[i+1]
 	}
 	for _, key := range []string{"stomHost", "stomPort", "stomTls"} {
 		if fields[key] == nil || fields[key].Tag == "!!null" {
