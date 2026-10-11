@@ -26,7 +26,7 @@ def checked(args, timeout=30):
     return result.stdout.strip()
 
 
-def inside(gundeck_path=None, access_switchback=False, login_contract=False, activation_contract=False, registration_contract=False, saml_registration_contract=False, public_registration_contract=False, password_reset_contract=False, password_change_contract=False, ses_feedback_contract=False, properties_contract=False):
+def inside(gundeck_path=None, access_switchback=False, login_contract=False, activation_contract=False, registration_contract=False, saml_registration_contract=False, public_registration_contract=False, password_reset_contract=False, password_change_contract=False, ses_feedback_contract=False, properties_contract=False, client_update_contract=False):
     registration_contract = registration_contract or saml_registration_contract
     if os.getuid() != 65534 or os.environ.get('WIRE_E2E_DISPOSABLE') != '1':
         raise ValueError('owned nonroot Docker runner required')
@@ -252,6 +252,46 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             activation_pair = stage_email(activation_email)
             report['native_activation_reference'] = native_activation
             report['native_activation_repeat_reference'] = native_repeat
+        if client_update_contract:
+            import base64
+            seed=base64.b64decode('pQABAQcCoQBYIDXdN8VlKb5lbgPmoDPLPyqNIEyShG4oT/DlW0peRRZUA6EAoQBYILLf1TIwSB62q69Ojs/X1tzJ+dYHNAw4QbW/7TC5vSZqBPY=')
+            assert seed[:5]==bytes([0xa5,0,1,1,7]), 'synthetic native prekey fixture changed'
+            last_key=base64.b64encode(seed[:4]+bytes([0x19,0xff,0xff])+seed[5:]).decode()
+            replacement_key=base64.b64encode(seed[:2]+bytes([2])+seed[3:]).decode()
+            report['client_update_native_setup']=[]
+            def client_actor(name):
+                actor,_=request('POST','/i/users',body={'name':'Synthetic client update '+name})
+                assert actor['status']==201, 'native client update actor setup failed'
+                uid=actor['json']['id'];headers={'Z-User':uid,'Z-Connection':'synthetic-update-device'}
+                client,_=request('POST','/v19/clients',headers,{'type':'permanent','lastkey':{'id':65535,'key':last_key},'prekeys':[],'capabilities':['legalhold-implicit-consent'],'mls_public_keys':{'ed25519':'AQI='},'label':'synthetic-initial'})
+                report['client_update_native_setup'].append({'actor':actor,'client':client})
+                assert client['status']==201, 'native client fixture creation failed'
+                return uid,client['json']['id'],headers
+            update_user,update_id,update_headers=client_actor('shared state')
+            reference_user,reference_id,reference_headers=client_actor('positive reference')
+            assert update_id==reference_id, 'native prekey-text client ID derivation changed'
+            update_path='/v19/clients/'+update_id
+            update_cases=[
+                ('PUT','/v19/clients/f',update_headers,{}),
+                ('PUT',update_path,update_headers,{'label':'partial-before-prekey','prekeys':[{'id':7,'key':'invalid'}]}),
+                ('GET',update_path,update_headers),
+                ('PUT',update_path,update_headers,{'label':'partial-before-removal','capabilities':[]}),
+                ('GET',update_path,update_headers),
+                ('PUT',update_path,update_headers,{'label':'updated-label','capabilities':['legalhold-implicit-consent']}),
+                ('PUT',update_path,update_headers,{'label':'partial-before-duplicate','mls_public_keys':{'ed25519':'AQI='}}),
+                ('GET',update_path,update_headers),
+            ]
+            native_updates=[request(*case)[0] for case in update_cases]
+            report['native_client_update_controls']=native_updates
+            assert [r['status'] for r in native_updates]==[404,400,200,409,200,200,400,200], 'native client update contract changed'
+            positive_update={'label':'go-owned-client','capabilities':['legalhold-implicit-consent','consumable-notifications'],'prekeys':[{'id':7,'key':replacement_key}],'mls_public_keys':{'ecdsa_secp256r1_sha256':'AQID'}}
+            native_positive,_=request('PUT','/v19/clients/'+reference_id,reference_headers,positive_update)
+            report['native_client_update_positive']=native_positive
+            assert native_positive['status']==200, 'native positive client update failed'
+            native_claim,_=request('GET','/v19/users/'+reference_user+'/prekeys/'+reference_id,reference_headers)
+            report['native_client_update_claim_reference']=native_claim
+            assert native_claim['status']==200 and native_claim['json']['prekey']=={'id':7,'key':replacement_key}, 'native updated prekey claim failed'
+            report['client_update_consumable_config']=peers['brig']['optSettings']['consumableNotifications']
         if properties_contract:
             actor,_=request('POST','/i/users',body={'name':'Synthetic property state'})
             report['property_actor_setup']=actor
@@ -440,6 +480,36 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
                 mismatches.append({'case': index, 'path': cases[index][1], 'fields': [key for key in fields if native.get(key) != go.get(key)]})
         report['mismatches'] = mismatches
         assert not mismatches, 'paired response mismatches'
+        if client_update_contract:
+            fields=lambda record: ('status','content_type','json' if 'json' in record else 'body')
+            go_updates=[request(*case)[0] for case in update_cases]
+            report['go_client_update_controls']=go_updates
+            mismatches=[{'case':i,'fields':[k for k in fields(ref) if ref.get(k)!=actual.get(k)]} for i,(ref,actual) in enumerate(zip(native_updates,go_updates)) if any(ref.get(k)!=actual.get(k) for k in fields(ref))]
+            report['client_update_mismatches']=mismatches
+            go_positive,_=request('PUT',update_path,update_headers,positive_update)
+            report['go_client_update_positive']=go_positive
+            assert all(native_positive.get(k)==go_positive.get(k) for k in fields(native_positive)), 'native positive update response mismatch'
+            go_state=[request('GET',update_path,update_headers)[0],request('GET',update_path+'/prekeys',update_headers)[0]]
+            report['go_client_update_state']=go_state
+            assert go_state[0]['status']==200 and go_state[0]['json']['label']=='go-owned-client', 'Go label not persisted'
+            assert set(go_state[0]['json']['capabilities'])==set(positive_update['capabilities']), 'Go capability update not persisted'
+            assert go_state[0]['json']['mls_public_keys']=={'ed25519':'AQI=','ecdsa_secp256r1_sha256':'AQID'}, 'Go MLS LWT update not persisted'
+            assert go_state[1]['status']==200 and go_state[1]['json']==[7,65535], 'Go prekeys not persisted'
+            active.terminate();report['go_client_update_stop_exit_code']=active.wait(timeout=35)
+            assert report['go_client_update_stop_exit_code']==0, 'Go client update stop failed'
+            with socket.socket() as check:
+                assert check.connect_ex(('127.0.0.1',8082))!=0, 'Go client update listener remains'
+            log=open('/reports/brig-native-client-update-switchback.log','w');logs.append(log)
+            active=subprocess.Popen([str(native_brig_path),'-c',str(runtime.WORK/'brig-static-0.json')],cwd=runtime.WORK/'services/brig',stdout=log,stderr=subprocess.STDOUT)
+            processes.append(active);ready(active)
+            native_state=[request('GET',update_path,update_headers)[0],request('GET',update_path+'/prekeys',update_headers)[0]]
+            report['native_reads_go_client_update']=native_state
+            assert all(all(ref.get(k)==actual.get(k) for k in fields(ref)) for ref,actual in zip(go_state,native_state)), 'native lost Go client update state'
+            native_claim,_=request('GET','/v19/users/'+update_user+'/prekeys/'+update_id,update_headers)
+            report['native_claims_go_updated_prekey']=native_claim
+            assert native_claim['status']==200 and native_claim['json']['prekey']=={'id':7,'key':replacement_key}, 'native could not consume Go updated prekey'
+            report['client_update_switchback']={'same_initialized_stores':True,'native_accepts_go_client_state':True,'native_claims_go_updated_prekey':True}
+            assert not mismatches, 'native client update responses mismatch'
         if properties_contract:
             fields=lambda record: ('status','content_type','json' if 'json' in record else 'body')
             go_property_state=[request('GET','/properties/native-durable',property_headers)[0],request('GET','/properties-values',property_headers)[0]]
@@ -1010,6 +1080,7 @@ def main():
     parser.add_argument('--password-change-contract', action='store_true')
     parser.add_argument('--ses-feedback-contract', action='store_true')
     parser.add_argument('--properties-contract', action='store_true')
+    parser.add_argument('--client-update-contract', action='store_true')
     args = parser.parse_args()
     if (args.registration_contract or args.saml_registration_contract) and (args.activation_contract or args.access_switchback or args.login_contract):
         parser.error('registration observation runs separately from credential/activation observations')
@@ -1023,8 +1094,10 @@ def main():
         parser.error('SES feedback observation runs separately')
     if args.properties_contract and any((args.registration_contract,args.saml_registration_contract,args.activation_contract,args.access_switchback,args.login_contract,args.public_registration_contract,args.password_reset_contract,args.password_change_contract,args.ses_feedback_contract)):
         parser.error('properties observation runs separately')
+    if args.client_update_contract and any((args.registration_contract,args.saml_registration_contract,args.activation_contract,args.access_switchback,args.login_contract,args.public_registration_contract,args.password_reset_contract,args.password_change_contract,args.ses_feedback_contract,args.properties_contract)):
+        parser.error('client update observation runs separately')
     if args.in_container:
-        return inside(args.gundeck_path, args.access_switchback, args.login_contract, args.activation_contract, args.registration_contract, args.saml_registration_contract, args.public_registration_contract, args.password_reset_contract, args.password_change_contract, args.ses_feedback_contract, args.properties_contract)
+        return inside(args.gundeck_path, args.access_switchback, args.login_contract, args.activation_contract, args.registration_contract, args.saml_registration_contract, args.public_registration_contract, args.password_reset_contract, args.password_change_contract, args.ses_feedback_contract, args.properties_contract, args.client_update_contract)
     if args.binary is None or args.build_receipt is None or args.output is None:
         parser.error('identified binary, receipt and new output required')
     sys.path.insert(0, str(ROOT / 'tools/parity/docker'))
@@ -1070,6 +1143,8 @@ def main():
         runner['command'].append('--ses-feedback-contract')
     if args.properties_contract:
         runner['command'].append('--properties-contract')
+    if args.client_update_contract:
+        runner['command'].append('--client-update-contract')
     if args.gundeck_binary:
         runner['command'] += ['--gundeck-path', '/candidate/gundeck']
         runner['volumes'].append({'type': 'bind', 'source': str(args.gundeck_binary.resolve(strict=True)),
