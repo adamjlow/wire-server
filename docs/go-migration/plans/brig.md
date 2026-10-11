@@ -1358,3 +1358,13 @@ logged. Reuse existing localized templates, HTML escaping and real mail delivery
 Finite tests cover exhausted/pending codes, wrong-code TTL retention, throttle
 ordering, send failure and native template headers. Public binding and real-store
 qualification remain separate evidence; unit success alone is not API parity.
+
+Code/mail source41b8e552c/servicefbabaafb passes pinned full Go checks and static
+original-runner units; controllers terminal0 and independent owned audits empty.
+[Retained evidence](../../../go/services/brig/qualification/evidence/deletion-codes/README.md)
+includes earlier pre-null-throttle hardening build. Native throttle default is
+300 seconds from twoFACodeGenerationDelaySecs; startup binding must honor
+set2FACodeGenerationDelaySecs. Actual scope1 stores/delivery/public HTTP remain
+unqualified; next execute native-schema code/throttle controls and attach complete
+verification/deletion pipeline. Root space must be recovered losslessly from
+owned superseded artifacts before the full backend, retaining the2GiB guard.

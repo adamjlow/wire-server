@@ -185,6 +185,13 @@
       "command": "Scoped sourcecf3527476/servicef62dafc4 full pinned Go/static checks pass. Incoming federation deletion HTTP admission/order/qualified-event/EmptyResponse negatives pass; tagged0ff22b0b native-schema17-local CQL raw statuses0..11/duplicates/read order/exact-row removal/other-user/domain preservation/invalid status rejection pass, prior store controls retained. SDK/store terminal0/cleanup0/independent empty. No actual native HTTP/e2e/new original/full535 or service gate proof.",
       "revision": "cf35274768d7df12577431e10309797428484353",
       "artifact": "go/services/brig/qualification/evidence/remote-deletion/README.md"
+    },
+    {
+      "criterion": "quality",
+      "result": "pass",
+      "command": "Scoped deletion-code/mail core: full pinned Go1.26.9 checks, static original-runner units; native pending/exhausted precedence, retry TTL, throttle/send cleanup and template headers controls pass. SDK/static/cleanup0, independent owned resources empty. Scope1 stores compiled only; no real-store/public deletion/e2e/full535 claim.",
+      "revision": "41b8e552cd608aed3e2a2b49edc04b3b0b7d95c6",
+      "artifact": "go/services/brig/qualification/evidence/deletion-codes/README.md"
     }
   ],
   "review": null,

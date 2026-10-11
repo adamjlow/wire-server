@@ -1,0 +1,16 @@
+{
+  "sdk_controller_exit_code": 0,
+  "static_units_exit_code": 0,
+  "independent_owned_container_audit": [],
+  "independent_owned_network_audit": [],
+  "prefixes": [
+    "brig-deletion-codes-sdk-",
+    "brig-deletion-codes-throttle-sdk-"
+  ],
+  "cache_maintenance": {
+    "cutoff_epoch": 1791726890.82145,
+    "files": 8244,
+    "bytes": 769114222,
+    "scope": "idle owned compiler cache only; no retained artifacts removed"
+  }
+}

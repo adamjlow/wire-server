@@ -1,0 +1,1089 @@
+=== RUN   TestAccessRenewalHTTPClientCanonicalizationAndCookieSecurity
+--- PASS: TestAccessRenewalHTTPClientCanonicalizationAndCookieSecurity (0.00s)
+=== RUN   TestAccessRenewalHTTPRejectsBadClientBeforeCredentials
+--- PASS: TestAccessRenewalHTTPRejectsBadClientBeforeCredentials (0.00s)
+=== RUN   TestAccessRenewalClientAndInactivityOrdering
+--- PASS: TestAccessRenewalClientAndInactivityOrdering (0.00s)
+=== RUN   TestAccessRenewalUsesReplacementAndPreservesConnection
+--- PASS: TestAccessRenewalUsesReplacementAndPreservesConnection (0.00s)
+=== RUN   TestAccessTokenValidationAndLogoutExpiredAccess
+--- PASS: TestAccessTokenValidationAndLogoutExpiredAccess (0.00s)
+=== RUN   TestAccessMultipleCookiesFirstSuccessAndStorageFailure
+--- PASS: TestAccessMultipleCookiesFirstSuccessAndStorageFailure (0.00s)
+=== RUN   TestAccessCredentialPrecedenceCookieParsingAndKindPartition
+--- PASS: TestAccessCredentialPrecedenceCookieParsingAndKindPartition (0.00s)
+=== RUN   TestLogoutHTTPMissingCredentialsAndSecretSafeErrors
+--- PASS: TestLogoutHTTPMissingCredentialsAndSecretSafeErrors (0.00s)
+=== RUN   TestDeletionCodeOrderingAndFailure
+--- PASS: TestDeletionCodeOrderingAndFailure (0.00s)
+=== RUN   TestDeletionCodeVerificationRetainsRemainingTTL
+--- PASS: TestDeletionCodeVerificationRetainsRemainingTTL (0.00s)
+=== RUN   TestDeletionMailNativeTemplates
+--- PASS: TestDeletionMailNativeTemplates (0.01s)
+=== RUN   TestDeletionEventsOrderingAndWireContract
+=== RUN   TestDeletionEventsOrderingAndWireContract/rescind-best-effort
+=== RUN   TestDeletionEventsOrderingAndWireContract/persistent-failure
+--- PASS: TestDeletionEventsOrderingAndWireContract (0.00s)
+    --- PASS: TestDeletionEventsOrderingAndWireContract/rescind-best-effort (0.00s)
+    --- PASS: TestDeletionEventsOrderingAndWireContract/persistent-failure (0.00s)
+=== RUN   TestDeletionNotificationBounds
+--- PASS: TestDeletionNotificationBounds (0.00s)
+=== RUN   TestNativeTeamMemberDecode
+--- PASS: TestNativeTeamMemberDecode (0.00s)
+=== RUN   TestDeletionGroupsAdmissionPagesAndFailure
+=== RUN   TestDeletionGroupsAdmissionPagesAndFailure/#00
+=== RUN   TestDeletionGroupsAdmissionPagesAndFailure/absent
+=== RUN   TestDeletionGroupsAdmissionPagesAndFailure/member
+=== RUN   TestDeletionGroupsAdmissionPagesAndFailure/page
+=== RUN   TestDeletionGroupsAdmissionPagesAndFailure/remove
+--- PASS: TestDeletionGroupsAdmissionPagesAndFailure (0.00s)
+    --- PASS: TestDeletionGroupsAdmissionPagesAndFailure/#00 (0.00s)
+    --- PASS: TestDeletionGroupsAdmissionPagesAndFailure/absent (0.00s)
+    --- PASS: TestDeletionGroupsAdmissionPagesAndFailure/member (0.00s)
+    --- PASS: TestDeletionGroupsAdmissionPagesAndFailure/page (0.00s)
+    --- PASS: TestDeletionGroupsAdmissionPagesAndFailure/remove (0.00s)
+=== RUN   TestDeletionOwnerNativeStatus
+=== RUN   TestDeletionOwnerNativeStatus/200
+=== RUN   TestDeletionOwnerNativeStatus/204
+=== RUN   TestDeletionOwnerNativeStatus/403
+=== RUN   TestDeletionOwnerNativeStatus/404
+=== RUN   TestDeletionOwnerNativeStatus/500
+--- PASS: TestDeletionOwnerNativeStatus (0.00s)
+    --- PASS: TestDeletionOwnerNativeStatus/200 (0.00s)
+    --- PASS: TestDeletionOwnerNativeStatus/204 (0.00s)
+    --- PASS: TestDeletionOwnerNativeStatus/403 (0.00s)
+    --- PASS: TestDeletionOwnerNativeStatus/404 (0.00s)
+    --- PASS: TestDeletionOwnerNativeStatus/500 (0.00s)
+=== RUN   TestDeletionPeerOrderAndFailures
+=== RUN   TestDeletionPeerOrderAndFailures/assets-best-effort
+=== RUN   TestDeletionPeerOrderAndFailures/gundeck-retry-exhausted
+=== RUN   TestDeletionPeerOrderAndFailures/galley-forbidden
+--- PASS: TestDeletionPeerOrderAndFailures (0.70s)
+    --- PASS: TestDeletionPeerOrderAndFailures/assets-best-effort (0.00s)
+    --- PASS: TestDeletionPeerOrderAndFailures/gundeck-retry-exhausted (0.70s)
+    --- PASS: TestDeletionPeerOrderAndFailures/galley-forbidden (0.00s)
+=== RUN   TestDeletionPeerValidationAndCancellation
+--- PASS: TestDeletionPeerValidationAndCancellation (0.00s)
+=== RUN   TestRemoteDeletionAdmissionBeforeEffects
+--- PASS: TestRemoteDeletionAdmissionBeforeEffects (0.00s)
+=== RUN   TestRemoteDeletionReadsPushesBeforeDeletes
+=== RUN   TestRemoteDeletionReadsPushesBeforeDeletes/#00
+=== RUN   TestRemoteDeletionReadsPushesBeforeDeletes/lookup
+=== RUN   TestRemoteDeletionReadsPushesBeforeDeletes/delete
+--- PASS: TestRemoteDeletionReadsPushesBeforeDeletes (0.00s)
+    --- PASS: TestRemoteDeletionReadsPushesBeforeDeletes/#00 (0.00s)
+    --- PASS: TestRemoteDeletionReadsPushesBeforeDeletes/lookup (0.00s)
+    --- PASS: TestRemoteDeletionReadsPushesBeforeDeletes/delete (0.00s)
+=== RUN   TestAccountDeletionAdmissionDoesNotMutate
+--- PASS: TestAccountDeletionAdmissionDoesNotMutate (0.00s)
+=== RUN   TestAccountDeletionStopsAtFailedPhaseAndReplayKeepsOrder
+--- PASS: TestAccountDeletionStopsAtFailedPhaseAndReplayKeepsOrder (0.00s)
+=== RUN   TestSuspendedAccountDeletionUsesPasswordWithoutReauthenticationStatus
+--- PASS: TestSuspendedAccountDeletionUsesPasswordWithoutReauthenticationStatus (0.00s)
+=== RUN   TestInactivityCreationThresholdAndDisabledPolicy
+=== RUN   TestInactivityCreationThresholdAndDisabledPolicy/disabled
+=== RUN   TestInactivityCreationThresholdAndDisabledPolicy/empty
+=== RUN   TestInactivityCreationThresholdAndDisabledPolicy/equal
+=== RUN   TestInactivityCreationThresholdAndDisabledPolicy/young_session
+=== RUN   TestInactivityCreationThresholdAndDisabledPolicy/young_persistent
+=== RUN   TestInactivityCreationThresholdAndDisabledPolicy/expired_but_young
+=== RUN   TestInactivityCreationThresholdAndDisabledPolicy/old_but_unexpired
+--- PASS: TestInactivityCreationThresholdAndDisabledPolicy (0.00s)
+    --- PASS: TestInactivityCreationThresholdAndDisabledPolicy/disabled (0.00s)
+    --- PASS: TestInactivityCreationThresholdAndDisabledPolicy/empty (0.00s)
+    --- PASS: TestInactivityCreationThresholdAndDisabledPolicy/equal (0.00s)
+    --- PASS: TestInactivityCreationThresholdAndDisabledPolicy/young_session (0.00s)
+    --- PASS: TestInactivityCreationThresholdAndDisabledPolicy/young_persistent (0.00s)
+    --- PASS: TestInactivityCreationThresholdAndDisabledPolicy/expired_but_young (0.00s)
+    --- PASS: TestInactivityCreationThresholdAndDisabledPolicy/old_but_unexpired (0.00s)
+=== RUN   TestAccountStatusFailureOrderingAndMissingAccount
+=== RUN   TestAccountStatusFailureOrderingAndMissingAccount/exists
+=== RUN   TestAccountStatusFailureOrderingAndMissingAccount/revoke
+=== RUN   TestAccountStatusFailureOrderingAndMissingAccount/status
+=== RUN   TestAccountStatusFailureOrderingAndMissingAccount/index
+--- PASS: TestAccountStatusFailureOrderingAndMissingAccount (0.00s)
+    --- PASS: TestAccountStatusFailureOrderingAndMissingAccount/exists (0.00s)
+    --- PASS: TestAccountStatusFailureOrderingAndMissingAccount/revoke (0.00s)
+    --- PASS: TestAccountStatusFailureOrderingAndMissingAccount/status (0.00s)
+    --- PASS: TestAccountStatusFailureOrderingAndMissingAccount/index (0.00s)
+=== RUN   TestAccountLookupNativeArmsFiltersAndOrdering
+--- PASS: TestAccountLookupNativeArmsFiltersAndOrdering (0.00s)
+=== RUN   TestAccountLookupPartitionsBeforeQueueAndPreservesPendingControl
+--- PASS: TestAccountLookupPartitionsBeforeQueueAndPreservesPendingControl (0.00s)
+=== RUN   TestAccountLookupQueryValidationBeforeDependencies
+--- PASS: TestAccountLookupQueryValidationBeforeDependencies (0.00s)
+=== RUN   TestActivationAPIOrdering
+=== RUN   TestActivationAPIOrdering/first
+=== RUN   TestActivationAPIOrdering/email
+=== RUN   TestActivationAPIOrdering/repeat
+=== RUN   TestActivationAPIOrdering/dryrun
+=== RUN   TestActivationAPIOrdering/internal
+=== RUN   TestActivationAPIOrdering/badcode
+=== RUN   TestActivationAPIOrdering/blocked
+=== RUN   TestActivationAPIOrdering/mutation
+=== RUN   TestActivationAPIOrdering/indexfailure
+=== RUN   TestActivationAPIOrdering/journalfailure
+--- PASS: TestActivationAPIOrdering (0.00s)
+    --- PASS: TestActivationAPIOrdering/first (0.00s)
+    --- PASS: TestActivationAPIOrdering/email (0.00s)
+    --- PASS: TestActivationAPIOrdering/repeat (0.00s)
+    --- PASS: TestActivationAPIOrdering/dryrun (0.00s)
+    --- PASS: TestActivationAPIOrdering/internal (0.00s)
+    --- PASS: TestActivationAPIOrdering/badcode (0.00s)
+    --- PASS: TestActivationAPIOrdering/blocked (0.00s)
+    --- PASS: TestActivationAPIOrdering/mutation (0.00s)
+    --- PASS: TestActivationAPIOrdering/indexfailure (0.00s)
+    --- PASS: TestActivationAPIOrdering/journalfailure (0.00s)
+=== RUN   TestActivationAPIRequiresSideEffectsBeforeMutation
+--- PASS: TestActivationAPIRequiresSideEffectsBeforeMutation (0.00s)
+=== RUN   TestActivationEventReusesNativeGolden
+--- PASS: TestActivationEventReusesNativeGolden (0.00s)
+=== RUN   TestEmailActivationEventContainsOnlyNativeIdentity
+--- PASS: TestEmailActivationEventContainsOnlyNativeIdentity (0.00s)
+=== RUN   TestRegistrationActivationEventUsesCreationSnapshot
+--- PASS: TestRegistrationActivationEventUsesCreationSnapshot (0.00s)
+=== RUN   TestActivationPushBestEffortAndJournalFailure
+2026/10/11 14:07:38 session refresh notification failed
+--- PASS: TestActivationPushBestEffortAndJournalFailure (0.00s)
+=== RUN   TestDecodeActivateValidatesBothTargetsAndRequiredFields
+--- PASS: TestDecodeActivateValidatesBothTargetsAndRequiredFields (0.00s)
+=== RUN   TestActivationHTTPDryrunAndInvalidCode
+=== RUN   TestActivationHTTPDryrunAndInvalidCode/dryrun
+=== RUN   TestActivationHTTPDryrunAndInvalidCode/code
+=== RUN   TestActivationHTTPDryrunAndInvalidCode/domain
+--- PASS: TestActivationHTTPDryrunAndInvalidCode (0.00s)
+    --- PASS: TestActivationHTTPDryrunAndInvalidCode/dryrun (0.00s)
+    --- PASS: TestActivationHTTPDryrunAndInvalidCode/code (0.00s)
+    --- PASS: TestActivationHTTPDryrunAndInvalidCode/domain (0.00s)
+=== RUN   TestInternalActivationPairHTTPValidatesBeforeStorage
+--- PASS: TestInternalActivationPairHTTPValidatesBeforeStorage (0.00s)
+=== RUN   TestActivateBindingTeamNativeRequests
+=== RUN   TestActivateBindingTeamNativeRequests/team
+=== RUN   TestActivateBindingTeamNativeRequests/no-team
+=== RUN   TestActivateBindingTeamNativeRequests/forbidden
+=== RUN   TestActivateBindingTeamNativeRequests/server-failure
+--- PASS: TestActivateBindingTeamNativeRequests (0.70s)
+    --- PASS: TestActivateBindingTeamNativeRequests/team (0.00s)
+    --- PASS: TestActivateBindingTeamNativeRequests/no-team (0.00s)
+    --- PASS: TestActivateBindingTeamNativeRequests/forbidden (0.00s)
+    --- PASS: TestActivateBindingTeamNativeRequests/server-failure (0.70s)
+=== RUN   TestActivationFirstClaimsBeforeMakingIdentityVisible
+--- PASS: TestActivationFirstClaimsBeforeMakingIdentityVisible (0.00s)
+=== RUN   TestActivationRepeatedLinkDoesNotMutateOrInvalidateReset
+--- PASS: TestActivationRepeatedLinkDoesNotMutateOrInvalidateReset (0.00s)
+=== RUN   TestActivationEmailAliasOnlyUpdatesProfile
+--- PASS: TestActivationEmailAliasOnlyUpdatesProfile (0.00s)
+=== RUN   TestActivationNewKeyInvalidatesResetBeforeClaimAndReleasesOldAfterUpdate
+--- PASS: TestActivationNewKeyInvalidatesResetBeforeClaimAndReleasesOldAfterUpdate (0.00s)
+=== RUN   TestActivationRejectsInactiveAndMissingAccountsWithoutMutation
+--- PASS: TestActivationRejectsInactiveAndMissingAccountsWithoutMutation (0.00s)
+=== RUN   TestActivationStoreFailuresCannotReleaseOldIdentity
+--- PASS: TestActivationStoreFailuresCannotReleaseOldIdentity (0.00s)
+=== RUN   TestActivationKeyUsesFullPaddedHashAndNativeEmailAliases
+--- PASS: TestActivationKeyUsesFullPaddedHashAndNativeEmailAliases (0.00s)
+=== RUN   TestNativeCassandraTTLHalfEvenAndHistoricalInt32Wrap
+--- PASS: TestNativeCassandraTTLHalfEvenAndHistoricalInt32Wrap (0.00s)
+=== RUN   TestAppIDNativeFullRowValidation
+--- PASS: TestAppIDNativeFullRowValidation (0.00s)
+=== RUN   TestAppIDEndpointPreservesRowsAndPropagatesErrors
+--- PASS: TestAppIDEndpointPreservesRowsAndPropagatesErrors (0.00s)
+=== RUN   TestAuthenticationStatusAndWrongPasswordNeverUpgrade
+--- PASS: TestAuthenticationStatusAndWrongPasswordNeverUpgrade (0.00s)
+=== RUN   TestAuthenticationUpgradeThrottlingAndWriteFailure
+--- PASS: TestAuthenticationUpgradeThrottlingAndWriteFailure (0.10s)
+=== RUN   TestReauthenticationPasswordlessSAMLAndEphemeral
+--- PASS: TestReauthenticationPasswordlessSAMLAndEphemeral (0.00s)
+=== RUN   TestPasswordValidationAndCanceledQueue
+--- PASS: TestPasswordValidationAndCanceledQueue (0.01s)
+=== RUN   TestBackendNotificationsAdmissionAndCancellation
+--- PASS: TestBackendNotificationsAdmissionAndCancellation (0.00s)
+=== RUN   TestNativeBlacklistResponseBodiesAndMedia
+--- PASS: TestNativeBlacklistResponseBodiesAndMedia (0.00s)
+=== RUN   TestClientActivityNativeEpochWeek
+--- PASS: TestClientActivityNativeEpochWeek (0.00s)
+=== RUN   TestClientActivityInternalCallback
+--- PASS: TestClientActivityInternalCallback (0.00s)
+=== RUN   TestInternalClientSetsUseNativeNumericIDsAndAllRecordFields
+--- PASS: TestInternalClientSetsUseNativeNumericIDsAndAllRecordFields (0.00s)
+=== RUN   TestInternalFullClientsExposeLatestSchemaAndEveryRequestedUser
+--- PASS: TestInternalFullClientsExposeLatestSchemaAndEveryRequestedUser (0.00s)
+=== RUN   TestInternalClientValidationBeforeStoreAndErrorsNotPartialSuccess
+--- PASS: TestInternalClientValidationBeforeStoreAndErrorsNotPartialSuccess (0.00s)
+=== RUN   TestInternalClientBulkNativeConcurrencyAndCancellation
+--- PASS: TestInternalClientBulkNativeConcurrencyAndCancellation (0.00s)
+=== RUN   TestClientDeletionPublicRouteAndAdmission
+=== RUN   TestClientDeletionPublicRouteAndAdmission/temporary
+=== RUN   TestClientDeletionPublicRouteAndAdmission/null_password
+=== RUN   TestClientDeletionPublicRouteAndAdmission/first_password_wins
+=== RUN   TestClientDeletionPublicRouteAndAdmission/legalhold
+=== RUN   TestClientDeletionPublicRouteAndAdmission/missing
+=== RUN   TestClientDeletionPublicRouteAndAdmission/permanent_missing_auth
+=== RUN   TestClientDeletionPublicRouteAndAdmission/short_password
+=== RUN   TestClientDeletionPublicRouteAndAdmission/missing_connection
+--- PASS: TestClientDeletionPublicRouteAndAdmission (0.00s)
+    --- PASS: TestClientDeletionPublicRouteAndAdmission/temporary (0.00s)
+    --- PASS: TestClientDeletionPublicRouteAndAdmission/null_password (0.00s)
+    --- PASS: TestClientDeletionPublicRouteAndAdmission/first_password_wins (0.00s)
+    --- PASS: TestClientDeletionPublicRouteAndAdmission/legalhold (0.00s)
+    --- PASS: TestClientDeletionPublicRouteAndAdmission/missing (0.00s)
+    --- PASS: TestClientDeletionPublicRouteAndAdmission/permanent_missing_auth (0.00s)
+    --- PASS: TestClientDeletionPublicRouteAndAdmission/short_password (0.00s)
+    --- PASS: TestClientDeletionPublicRouteAndAdmission/missing_connection (0.00s)
+=== RUN   TestClientDeletionNativeDynamoLockKeyAndLocalMode
+--- PASS: TestClientDeletionNativeDynamoLockKeyAndLocalMode (0.00s)
+=== RUN   TestPinnedAmazonkaDynamoServiceRetryPolicy
+=== RUN   TestPinnedAmazonkaDynamoServiceRetryPolicy/server
+=== RUN   TestPinnedAmazonkaDynamoServiceRetryPolicy/gateway
+=== RUN   TestPinnedAmazonkaDynamoServiceRetryPolicy/timeout_service
+=== RUN   TestPinnedAmazonkaDynamoServiceRetryPolicy/limit_status
+=== RUN   TestPinnedAmazonkaDynamoServiceRetryPolicy/status_throttle
+=== RUN   TestPinnedAmazonkaDynamoServiceRetryPolicy/throughput
+=== RUN   TestPinnedAmazonkaDynamoServiceRetryPolicy/header_throttle
+=== RUN   TestPinnedAmazonkaDynamoServiceRetryPolicy/explicit_empty_code
+=== RUN   TestPinnedAmazonkaDynamoServiceRetryPolicy/code_precedence
+=== RUN   TestPinnedAmazonkaDynamoServiceRetryPolicy/wrong_message
+=== RUN   TestPinnedAmazonkaDynamoServiceRetryPolicy/message_fallback
+=== RUN   TestPinnedAmazonkaDynamoServiceRetryPolicy/malformed_server_response
+=== RUN   TestPinnedAmazonkaDynamoServiceRetryPolicy/array_server_response
+=== RUN   TestPinnedAmazonkaDynamoServiceRetryPolicy/unselected_server_status
+=== RUN   TestPinnedAmazonkaDynamoServiceRetryPolicy/single_suffix
+=== RUN   TestPinnedAmazonkaDynamoServiceRetryPolicy/transaction
+--- PASS: TestPinnedAmazonkaDynamoServiceRetryPolicy (0.00s)
+    --- PASS: TestPinnedAmazonkaDynamoServiceRetryPolicy/server (0.00s)
+    --- PASS: TestPinnedAmazonkaDynamoServiceRetryPolicy/gateway (0.00s)
+    --- PASS: TestPinnedAmazonkaDynamoServiceRetryPolicy/timeout_service (0.00s)
+    --- PASS: TestPinnedAmazonkaDynamoServiceRetryPolicy/limit_status (0.00s)
+    --- PASS: TestPinnedAmazonkaDynamoServiceRetryPolicy/status_throttle (0.00s)
+    --- PASS: TestPinnedAmazonkaDynamoServiceRetryPolicy/throughput (0.00s)
+    --- PASS: TestPinnedAmazonkaDynamoServiceRetryPolicy/header_throttle (0.00s)
+    --- PASS: TestPinnedAmazonkaDynamoServiceRetryPolicy/explicit_empty_code (0.00s)
+    --- PASS: TestPinnedAmazonkaDynamoServiceRetryPolicy/code_precedence (0.00s)
+    --- PASS: TestPinnedAmazonkaDynamoServiceRetryPolicy/wrong_message (0.00s)
+    --- PASS: TestPinnedAmazonkaDynamoServiceRetryPolicy/message_fallback (0.00s)
+    --- PASS: TestPinnedAmazonkaDynamoServiceRetryPolicy/malformed_server_response (0.00s)
+    --- PASS: TestPinnedAmazonkaDynamoServiceRetryPolicy/array_server_response (0.00s)
+    --- PASS: TestPinnedAmazonkaDynamoServiceRetryPolicy/unselected_server_status (0.00s)
+    --- PASS: TestPinnedAmazonkaDynamoServiceRetryPolicy/single_suffix (0.00s)
+    --- PASS: TestPinnedAmazonkaDynamoServiceRetryPolicy/transaction (0.00s)
+=== RUN   TestClientDeletionDynamoRetriesActualSignedRequests
+=== RUN   TestClientDeletionDynamoRetriesActualSignedRequests/eventual_success
+=== RUN   TestClientDeletionDynamoRetriesActualSignedRequests/bounded_exhaustion
+--- PASS: TestClientDeletionDynamoRetriesActualSignedRequests (0.85s)
+    --- PASS: TestClientDeletionDynamoRetriesActualSignedRequests/eventual_success (0.08s)
+    --- PASS: TestClientDeletionDynamoRetriesActualSignedRequests/bounded_exhaustion (0.78s)
+=== RUN   TestClientDeletionNativeOrderAndPartialFailures
+=== RUN   TestClientDeletionNativeOrderAndPartialFailures/missing
+=== RUN   TestClientDeletionNativeOrderAndPartialFailures/legalhold
+=== RUN   TestClientDeletionNativeOrderAndPartialFailures/permanent_reauth
+=== RUN   TestClientDeletionNativeOrderAndPartialFailures/permanent_delete
+=== RUN   TestClientDeletionNativeOrderAndPartialFailures/temporary_skips_auth
+=== RUN   TestClientDeletionNativeOrderAndPartialFailures/revoke_failure
+=== RUN   TestClientDeletionNativeOrderAndPartialFailures/queue_failure_after_revoke
+=== RUN   TestClientDeletionNativeOrderAndPartialFailures/store_failure_after_enqueue
+--- PASS: TestClientDeletionNativeOrderAndPartialFailures (0.00s)
+    --- PASS: TestClientDeletionNativeOrderAndPartialFailures/missing (0.00s)
+    --- PASS: TestClientDeletionNativeOrderAndPartialFailures/legalhold (0.00s)
+    --- PASS: TestClientDeletionNativeOrderAndPartialFailures/permanent_reauth (0.00s)
+    --- PASS: TestClientDeletionNativeOrderAndPartialFailures/permanent_delete (0.00s)
+    --- PASS: TestClientDeletionNativeOrderAndPartialFailures/temporary_skips_auth (0.00s)
+    --- PASS: TestClientDeletionNativeOrderAndPartialFailures/revoke_failure (0.00s)
+    --- PASS: TestClientDeletionNativeOrderAndPartialFailures/queue_failure_after_revoke (0.00s)
+    --- PASS: TestClientDeletionNativeOrderAndPartialFailures/store_failure_after_enqueue (0.00s)
+=== RUN   TestClientRegistrationAdmissionPrecedence
+=== RUN   TestClientRegistrationAdmissionPrecedence/auth_before_capacity_and_key
+=== RUN   TestClientRegistrationAdmissionPrecedence/capacity_before_key
+=== RUN   TestClientRegistrationAdmissionPrecedence/same_ID_upsert_bypasses_auth_and_capacity
+=== RUN   TestClientRegistrationAdmissionPrecedence/other_type_does_not_require_auth
+=== RUN   TestClientRegistrationAdmissionPrecedence/temporary_replacement_still_requires_auth
+--- PASS: TestClientRegistrationAdmissionPrecedence (0.00s)
+    --- PASS: TestClientRegistrationAdmissionPrecedence/auth_before_capacity_and_key (0.00s)
+    --- PASS: TestClientRegistrationAdmissionPrecedence/capacity_before_key (0.00s)
+    --- PASS: TestClientRegistrationAdmissionPrecedence/same_ID_upsert_bypasses_auth_and_capacity (0.00s)
+    --- PASS: TestClientRegistrationAdmissionPrecedence/other_type_does_not_require_auth (0.00s)
+    --- PASS: TestClientRegistrationAdmissionPrecedence/temporary_replacement_still_requires_auth (0.00s)
+=== RUN   TestClientRegistrationReplacementAndPartialFailure
+--- PASS: TestClientRegistrationReplacementAndPartialFailure (0.00s)
+=== RUN   TestClientRegistrationInternalReauthenticationPolicy
+--- PASS: TestClientRegistrationInternalReauthenticationPolicy (0.00s)
+=== RUN   TestNativeClientRegistrationPeerRequests
+--- PASS: TestNativeClientRegistrationPeerRequests (0.00s)
+=== RUN   TestClientRegistrationRequiredAndVersionedFields
+=== RUN   TestClientRegistrationRequiredAndVersionedFields/minimal
+=== RUN   TestClientRegistrationRequiredAndVersionedFields/missing_prekeys
+=== RUN   TestClientRegistrationRequiredAndVersionedFields/null_prekeys
+=== RUN   TestClientRegistrationRequiredAndVersionedFields/first_null_prekeys
+=== RUN   TestClientRegistrationRequiredAndVersionedFields/missing_lastkey
+=== RUN   TestClientRegistrationRequiredAndVersionedFields/wrong_last_ID
+=== RUN   TestClientRegistrationRequiredAndVersionedFields/unknown_type
+=== RUN   TestClientRegistrationRequiredAndVersionedFields/legalhold_decoded_before_public_policy
+=== RUN   TestClientRegistrationRequiredAndVersionedFields/v6_array
+=== RUN   TestClientRegistrationRequiredAndVersionedFields/v6_nested_object_is_read_only
+=== RUN   TestClientRegistrationRequiredAndVersionedFields/v7_new_capability_rejected
+=== RUN   TestClientRegistrationRequiredAndVersionedFields/v8_new_capability_accepted
+=== RUN   TestClientRegistrationRequiredAndVersionedFields/short_password
+=== RUN   TestClientRegistrationRequiredAndVersionedFields/null_optional_fields
+=== RUN   TestClientRegistrationRequiredAndVersionedFields/bad_code
+=== RUN   TestClientRegistrationRequiredAndVersionedFields/unknown_class
+=== RUN   TestClientRegistrationRequiredAndVersionedFields/bad_MLS
+=== RUN   TestClientRegistrationRequiredAndVersionedFields/trailing
+--- PASS: TestClientRegistrationRequiredAndVersionedFields (0.00s)
+    --- PASS: TestClientRegistrationRequiredAndVersionedFields/minimal (0.00s)
+    --- PASS: TestClientRegistrationRequiredAndVersionedFields/missing_prekeys (0.00s)
+    --- PASS: TestClientRegistrationRequiredAndVersionedFields/null_prekeys (0.00s)
+    --- PASS: TestClientRegistrationRequiredAndVersionedFields/first_null_prekeys (0.00s)
+    --- PASS: TestClientRegistrationRequiredAndVersionedFields/missing_lastkey (0.00s)
+    --- PASS: TestClientRegistrationRequiredAndVersionedFields/wrong_last_ID (0.00s)
+    --- PASS: TestClientRegistrationRequiredAndVersionedFields/unknown_type (0.00s)
+    --- PASS: TestClientRegistrationRequiredAndVersionedFields/legalhold_decoded_before_public_policy (0.00s)
+    --- PASS: TestClientRegistrationRequiredAndVersionedFields/v6_array (0.00s)
+    --- PASS: TestClientRegistrationRequiredAndVersionedFields/v6_nested_object_is_read_only (0.00s)
+    --- PASS: TestClientRegistrationRequiredAndVersionedFields/v7_new_capability_rejected (0.00s)
+    --- PASS: TestClientRegistrationRequiredAndVersionedFields/v8_new_capability_accepted (0.00s)
+    --- PASS: TestClientRegistrationRequiredAndVersionedFields/short_password (0.00s)
+    --- PASS: TestClientRegistrationRequiredAndVersionedFields/null_optional_fields (0.00s)
+    --- PASS: TestClientRegistrationRequiredAndVersionedFields/bad_code (0.00s)
+    --- PASS: TestClientRegistrationRequiredAndVersionedFields/unknown_class (0.00s)
+    --- PASS: TestClientRegistrationRequiredAndVersionedFields/bad_MLS (0.00s)
+    --- PASS: TestClientRegistrationRequiredAndVersionedFields/trailing (0.00s)
+=== RUN   TestClientRegistrationNativeCompositionAndFailureOrder
+=== RUN   TestClientRegistrationNativeCompositionAndFailureOrder/failure-
+=== RUN   TestClientRegistrationNativeCompositionAndFailureOrder/failure-setup
+=== RUN   TestClientRegistrationNativeCompositionAndFailureOrder/failure-delete-old
+=== RUN   TestClientRegistrationNativeCompositionAndFailureOrder/failure-galley
+=== RUN   TestClientRegistrationNativeCompositionAndFailureOrder/failure-event
+=== RUN   TestClientRegistrationNativeCompositionAndFailureOrder/failure-mail
+--- PASS: TestClientRegistrationNativeCompositionAndFailureOrder (0.00s)
+    --- PASS: TestClientRegistrationNativeCompositionAndFailureOrder/failure- (0.00s)
+    --- PASS: TestClientRegistrationNativeCompositionAndFailureOrder/failure-setup (0.00s)
+    --- PASS: TestClientRegistrationNativeCompositionAndFailureOrder/failure-delete-old (0.00s)
+    --- PASS: TestClientRegistrationNativeCompositionAndFailureOrder/failure-galley (0.00s)
+    --- PASS: TestClientRegistrationNativeCompositionAndFailureOrder/failure-event (0.00s)
+    --- PASS: TestClientRegistrationNativeCompositionAndFailureOrder/failure-mail (0.00s)
+=== RUN   TestClientRegistrationVerificationAndPublicPolicy
+=== RUN   TestClientRegistrationVerificationAndPublicPolicy/missing_account
+=== RUN   TestClientRegistrationVerificationAndPublicPolicy/public_legalhold
+=== RUN   TestClientRegistrationVerificationAndPublicPolicy/required_code
+=== RUN   TestClientRegistrationVerificationAndPublicPolicy/failed_code
+=== RUN   TestClientRegistrationVerificationAndPublicPolicy/SAML_bypass
+=== RUN   TestClientRegistrationVerificationAndPublicPolicy/disabled_bypass
+--- PASS: TestClientRegistrationVerificationAndPublicPolicy (0.00s)
+    --- PASS: TestClientRegistrationVerificationAndPublicPolicy/missing_account (0.00s)
+    --- PASS: TestClientRegistrationVerificationAndPublicPolicy/public_legalhold (0.00s)
+    --- PASS: TestClientRegistrationVerificationAndPublicPolicy/required_code (0.00s)
+    --- PASS: TestClientRegistrationVerificationAndPublicPolicy/failed_code (0.00s)
+    --- PASS: TestClientRegistrationVerificationAndPublicPolicy/SAML_bypass (0.00s)
+    --- PASS: TestClientRegistrationVerificationAndPublicPolicy/disabled_bypass (0.00s)
+=== RUN   TestPublicClientRegistrationResponseAndConfiguredLimit
+--- PASS: TestPublicClientRegistrationResponseAndConfiguredLimit (0.00s)
+=== RUN   TestClientUpdateNativeConsumableConfigurationKey
+--- PASS: TestClientUpdateNativeConsumableConfigurationKey (0.00s)
+=== RUN   TestClientUpdateNativeOrderAndPartialWrites
+=== RUN   TestClientUpdateNativeOrderAndPartialWrites/missing
+=== RUN   TestClientUpdateNativeOrderAndPartialWrites/remove_after_label
+=== RUN   TestClientUpdateNativeOrderAndPartialWrites/setup_before_capabilities
+=== RUN   TestClientUpdateNativeOrderAndPartialWrites/setup_failure_keeps_label
+=== RUN   TestClientUpdateNativeOrderAndPartialWrites/malformed_after_caps
+=== RUN   TestClientUpdateNativeOrderAndPartialWrites/prekey_store_failure
+=== RUN   TestClientUpdateNativeOrderAndPartialWrites/duplicate_after_prekeys
+--- PASS: TestClientUpdateNativeOrderAndPartialWrites (0.00s)
+    --- PASS: TestClientUpdateNativeOrderAndPartialWrites/missing (0.00s)
+    --- PASS: TestClientUpdateNativeOrderAndPartialWrites/remove_after_label (0.00s)
+    --- PASS: TestClientUpdateNativeOrderAndPartialWrites/setup_before_capabilities (0.00s)
+    --- PASS: TestClientUpdateNativeOrderAndPartialWrites/setup_failure_keeps_label (0.00s)
+    --- PASS: TestClientUpdateNativeOrderAndPartialWrites/malformed_after_caps (0.00s)
+    --- PASS: TestClientUpdateNativeOrderAndPartialWrites/prekey_store_failure (0.00s)
+    --- PASS: TestClientUpdateNativeOrderAndPartialWrites/duplicate_after_prekeys (0.00s)
+=== RUN   TestClientUpdateRequestNativeVersionsAndTypes
+--- PASS: TestClientUpdateRequestNativeVersionsAndTypes (0.00s)
+=== RUN   TestClientUpdateActualGundeckSetupAndHTTP
+--- PASS: TestClientUpdateActualGundeckSetupAndHTTP (0.10s)
+=== RUN   TestClientProjectionOriginalGolden
+--- PASS: TestClientProjectionOriginalGolden (0.00s)
+=== RUN   TestClientVersionedCapabilitiesAndPublicKeys
+--- PASS: TestClientVersionedCapabilitiesAndPublicKeys (0.00s)
+=== RUN   TestClientIDNativeHexBoundsAndLeadingZeros
+--- PASS: TestClientIDNativeHexBoundsAndLeadingZeros (0.00s)
+=== RUN   TestClientReadsLegacyNotFoundAndVersioning
+--- PASS: TestClientReadsLegacyNotFoundAndVersioning (0.00s)
+=== RUN   TestConferenceCallingNativeNullFallbackAndStoredPrecedence
+--- PASS: TestConferenceCallingNativeNullFallbackAndStoredPrecedence (0.00s)
+=== RUN   TestSigningKeysUseNativeURLAlphabet
+--- PASS: TestSigningKeysUseNativeURLAlphabet (0.00s)
+=== RUN   TestOriginalConfigPreservesTemplatesAndStorageModes
+--- PASS: TestOriginalConfigPreservesTemplatesAndStorageModes (0.00s)
+=== RUN   TestPostgresOptionValuesCannotOverrideTLSOrLeakSecrets
+--- PASS: TestPostgresOptionValuesCannotOverrideTLSOrLeakSecrets (0.00s)
+=== RUN   TestSigningKeysRejectInvalidMaterialWithoutDisclosure
+--- PASS: TestSigningKeysRejectInvalidMaterialWithoutDisclosure (0.00s)
+=== RUN   TestLocalConnectionAdmissionAndDurableEffects
+--- PASS: TestLocalConnectionAdmissionAndDurableEffects (0.00s)
+=== RUN   TestRemoteConnectionReactionAndAdmissionOrder
+--- PASS: TestRemoteConnectionReactionAndAdmissionOrder (0.00s)
+=== RUN   TestLocalConnectionUpdateEffectsAndHistory
+--- PASS: TestLocalConnectionUpdateEffectsAndHistory (0.00s)
+=== RUN   TestConnectionOriginAbsentAndEmpty
+--- PASS: TestConnectionOriginAbsentAndEmpty (0.00s)
+=== RUN   TestConnectionHistoryAndNullableConversation
+--- PASS: TestConnectionHistoryAndNullableConversation (0.00s)
+=== RUN   TestConnectionPagingTableBoundariesAndAdmission
+--- PASS: TestConnectionPagingTableBoundariesAndAdmission (0.00s)
+=== RUN   TestConnectionAbsentNativeMedia
+--- PASS: TestConnectionAbsentNativeMedia (0.00s)
+=== RUN   TestDomainRegistrationGuard
+--- PASS: TestDomainRegistrationGuard (0.00s)
+=== RUN   TestNativeEmailDomainGrammar
+--- PASS: TestNativeEmailDomainGrammar (0.00s)
+=== RUN   TestDomainRegistrationTypedVersusSemanticFailures
+--- PASS: TestDomainRegistrationTypedVersusSemanticFailures (0.00s)
+=== RUN   TestFederationReadNativeConfigAndMerge
+--- PASS: TestFederationReadNativeConfigAndMerge (0.00s)
+=== RUN   TestFederationReadStoredFailuresAndHTTP
+--- PASS: TestFederationReadStoredFailuresAndHTTP (0.00s)
+=== RUN   TestFederationVersionOriginAndUnitInput
+--- PASS: TestFederationVersionOriginAndUnitInput (0.00s)
+=== RUN   TestInternalDeletionSQSNativeStandardMessageAndIntegrity
+--- PASS: TestInternalDeletionSQSNativeStandardMessageAndIntegrity (0.00s)
+=== RUN   TestClientDeletionSQSNullableConnectionAndChecksum
+--- PASS: TestClientDeletionSQSNullableConnectionAndChecksum (0.00s)
+=== RUN   TestPublicLoginSignedResponseAndCookie
+--- PASS: TestPublicLoginSignedResponseAndCookie (0.00s)
+=== RUN   TestLoginParserValidatesBothIdentifiersAndExactFieldNames
+--- PASS: TestLoginParserValidatesBothIdentifiersAndExactFieldNames (0.00s)
+=== RUN   TestLoginErrorsPreserveRetryHeadersAndNeverLeakStorageDetail
+--- PASS: TestLoginErrorsPreserveRetryHeadersAndNeverLeakStorageDetail (0.00s)
+=== RUN   TestLoginInvalidQueryPrecedesBodyAndAuthentication
+--- PASS: TestLoginInvalidQueryPrecedesBodyAndAuthentication (0.00s)
+=== RUN   TestLoginFailedBudgetBlocksBeforePasswordAndDoesNotIssue
+--- PASS: TestLoginFailedBudgetBlocksBeforePasswordAndDoesNotIssue (0.00s)
+=== RUN   TestLoginSuspendedAndUnresolvedAccountsDoNotConsumeRetries
+--- PASS: TestLoginSuspendedAndUnresolvedAccountsDoNotConsumeRetries (0.00s)
+=== RUN   TestLoginVerificationFailureConsumesBudgetBeforeSession
+--- PASS: TestLoginVerificationFailureConsumesBudgetBeforeSession (0.00s)
+=== RUN   TestLoginSuccessPreservesBudgetAndIssuesVerifiableSession
+--- PASS: TestLoginSuccessPreservesBudgetAndIssuesVerifiableSession (0.00s)
+=== RUN   TestLoginStorageFailureCannotBeDisguisedAsBadCredentials
+--- PASS: TestLoginStorageFailureCannotBeDisguisedAsBadCredentials (0.00s)
+=== RUN   TestLoginEmailKeyTrustedDomainCaseRule
+--- PASS: TestLoginEmailKeyTrustedDomainCaseRule (0.00s)
+=== RUN   TestRegistrationMailSESFirstActualCallbacksAndFeedbackDiscovery
+--- PASS: TestRegistrationMailSESFirstActualCallbacksAndFeedbackDiscovery (0.01s)
+=== RUN   TestRegistrationMailInvalidSESFallsBackToSMTP
+--- PASS: TestRegistrationMailInvalidSESFallsBackToSMTP (0.01s)
+=== RUN   TestSMTPNativeWord16PortNotation
+--- PASS: TestSMTPNativeWord16PortNotation (0.00s)
+=== RUN   TestNativeNewClientMailCalendarsAndTemplate
+--- PASS: TestNativeNewClientMailCalendarsAndTemplate (0.01s)
+=== RUN   TestSESMailActualSignedDeliveryAndStableRetry
+--- PASS: TestSESMailActualSignedDeliveryAndStableRetry (0.10s)
+=== RUN   TestSESMailResponseRetryAndErrorContracts
+=== RUN   TestSESMailResponseRetryAndErrorContracts/success
+=== RUN   TestSESMailResponseRetryAndErrorContracts/empty-required-text
+=== RUN   TestSESMailResponseRetryAndErrorContracts/missing-message-id
+=== RUN   TestSESMailResponseRetryAndErrorContracts/wrong-response
+=== RUN   TestSESMailResponseRetryAndErrorContracts/malformed
+=== RUN   TestSESMailResponseRetryAndErrorContracts/domain
+=== RUN   TestSESMailResponseRetryAndErrorContracts/prefix-case
+=== RUN   TestSESMailResponseRetryAndErrorContracts/domain-500
+=== RUN   TestSESMailResponseRetryAndErrorContracts/no-blanket-500-retry
+=== RUN   TestSESMailResponseRetryAndErrorContracts/no-new-throttle-code
+=== RUN   TestSESMailResponseRetryAndErrorContracts/native-throttle-budget
+=== RUN   TestSESMailResponseRetryAndErrorContracts/response-timeout-budget
+=== RUN   TestSESMailResponseRetryAndErrorContracts/connection-timeout-no-retry
+=== RUN   TestSESMailResponseRetryAndErrorContracts/connection-failure-no-retry
+=== RUN   TestSESMailResponseRetryAndErrorContracts/cancellation-no-retry
+--- PASS: TestSESMailResponseRetryAndErrorContracts (0.00s)
+    --- PASS: TestSESMailResponseRetryAndErrorContracts/success (0.00s)
+    --- PASS: TestSESMailResponseRetryAndErrorContracts/empty-required-text (0.00s)
+    --- PASS: TestSESMailResponseRetryAndErrorContracts/missing-message-id (0.00s)
+    --- PASS: TestSESMailResponseRetryAndErrorContracts/wrong-response (0.00s)
+    --- PASS: TestSESMailResponseRetryAndErrorContracts/malformed (0.00s)
+    --- PASS: TestSESMailResponseRetryAndErrorContracts/domain (0.00s)
+    --- PASS: TestSESMailResponseRetryAndErrorContracts/prefix-case (0.00s)
+    --- PASS: TestSESMailResponseRetryAndErrorContracts/domain-500 (0.00s)
+    --- PASS: TestSESMailResponseRetryAndErrorContracts/no-blanket-500-retry (0.00s)
+    --- PASS: TestSESMailResponseRetryAndErrorContracts/no-new-throttle-code (0.00s)
+    --- PASS: TestSESMailResponseRetryAndErrorContracts/native-throttle-budget (0.00s)
+    --- PASS: TestSESMailResponseRetryAndErrorContracts/response-timeout-budget (0.00s)
+    --- PASS: TestSESMailResponseRetryAndErrorContracts/connection-timeout-no-retry (0.00s)
+    --- PASS: TestSESMailResponseRetryAndErrorContracts/connection-failure-no-retry (0.00s)
+    --- PASS: TestSESMailResponseRetryAndErrorContracts/cancellation-no-retry (0.00s)
+=== RUN   TestSESMailConfigRequiredShape
+--- PASS: TestSESMailConfigRequiredShape (0.00s)
+=== RUN   TestSMTPActualDeliveryModesAndLOGIN
+=== RUN   TestSMTPActualDeliveryModesAndLOGIN/plain
+=== RUN   TestSMTPActualDeliveryModesAndLOGIN/tls
+=== RUN   TestSMTPActualDeliveryModesAndLOGIN/ssl
+--- PASS: TestSMTPActualDeliveryModesAndLOGIN (0.01s)
+    --- PASS: TestSMTPActualDeliveryModesAndLOGIN/plain (0.00s)
+    --- PASS: TestSMTPActualDeliveryModesAndLOGIN/tls (0.00s)
+    --- PASS: TestSMTPActualDeliveryModesAndLOGIN/ssl (0.00s)
+=== RUN   TestSMTPPoolBoundAndIdleRetirement
+--- PASS: TestSMTPPoolBoundAndIdleRetirement (1.00s)
+=== RUN   TestSMTPFailuresCancellationAndTLSVerification
+=== RUN   TestSMTPFailuresCancellationAndTLSVerification/untrusted-ssl
+=== RUN   TestSMTPFailuresCancellationAndTLSVerification/untrusted-starttls
+=== RUN   TestSMTPFailuresCancellationAndTLSVerification/mail-rejection
+=== RUN   TestSMTPFailuresCancellationAndTLSVerification/cancellation
+=== RUN   TestSMTPFailuresCancellationAndTLSVerification/missing-envelope
+--- PASS: TestSMTPFailuresCancellationAndTLSVerification (0.01s)
+    --- PASS: TestSMTPFailuresCancellationAndTLSVerification/untrusted-ssl (0.01s)
+    --- PASS: TestSMTPFailuresCancellationAndTLSVerification/untrusted-starttls (0.00s)
+    --- PASS: TestSMTPFailuresCancellationAndTLSVerification/mail-rejection (0.00s)
+    --- PASS: TestSMTPFailuresCancellationAndTLSVerification/cancellation (0.00s)
+    --- PASS: TestSMTPFailuresCancellationAndTLSVerification/missing-envelope (0.00s)
+=== RUN   TestSMTPNativeGreetingAndAuthenticationFailures
+=== RUN   TestSMTPNativeGreetingAndAuthenticationFailures/2
+=== RUN   TestSMTPNativeGreetingAndAuthenticationFailures/3
+--- PASS: TestSMTPNativeGreetingAndAuthenticationFailures (0.00s)
+    --- PASS: TestSMTPNativeGreetingAndAuthenticationFailures/2 (0.00s)
+    --- PASS: TestSMTPNativeGreetingAndAuthenticationFailures/3 (0.00s)
+=== RUN   TestSMTPNativeConfigAndSecretText
+--- PASS: TestSMTPNativeConfigAndSecretText (0.00s)
+=== RUN   TestSMTPSTARTTLSCancellationDuringHandshake
+--- PASS: TestSMTPSTARTTLSCancellationDuringHandshake (0.00s)
+=== RUN   TestMailTemplateGrammarAndEscaping
+--- PASS: TestMailTemplateGrammarAndEscaping (0.00s)
+=== RUN   TestMailNativeRepositoryTemplates
+--- PASS: TestMailNativeRepositoryTemplates (0.01s)
+=== RUN   TestMailLocaleAndPerFileFallback
+--- PASS: TestMailLocaleAndPerFileFallback (0.00s)
+=== RUN   TestMailMIMEHeadersAndDecodedBodies
+--- PASS: TestMailMIMEHeadersAndDecodedBodies (0.00s)
+=== RUN   TestNativeMigrationInputs
+--- PASS: TestNativeMigrationInputs (0.00s)
+=== RUN   TestMLSCountDecodeLifetimeAndDeleteBeforeLookup
+--- PASS: TestMLSCountDecodeLifetimeAndDeleteBeforeLookup (0.00s)
+=== RUN   TestMLSMaximumLifetimeExactSeconds
+--- PASS: TestMLSMaximumLifetimeExactSeconds (0.00s)
+=== RUN   TestMLSFederationVersionsAndMissingClient
+--- PASS: TestMLSFederationVersionsAndMissingClient (0.00s)
+=== RUN   TestPublicMLSCountFeatureAndVersions
+--- PASS: TestPublicMLSCountFeatureAndVersions (0.00s)
+=== RUN   TestMLSDeleteAdmissionAndNativeStorageEffects
+--- PASS: TestMLSDeleteAdmissionAndNativeStorageEffects (0.00s)
+=== RUN   TestMLSRemoteSetValidationUsesNativeOrder
+--- PASS: TestMLSRemoteSetValidationUsesNativeOrder (0.00s)
+=== RUN   TestMLSClaimAdmissionSelfSkipAndConsumeOnce
+--- PASS: TestMLSClaimAdmissionSelfSkipAndConsumeOnce (0.00s)
+=== RUN   TestMLSProcessGatePreventsDuplicateClaimAndCancelsWait
+--- PASS: TestMLSProcessGatePreventsDuplicateClaimAndCancelsWait (0.00s)
+=== RUN   TestMLSIncomingFederationDisabledAndAdmissionNull
+--- PASS: TestMLSIncomingFederationDisabledAndAdmissionNull (0.00s)
+=== RUN   TestMLSSignedUploadValidationAndAtomicAdmission
+--- PASS: TestMLSSignedUploadValidationAndAtomicAdmission (0.03s)
+=== RUN   TestMLSReplaceDeletesBeforeUploadValidation
+--- PASS: TestMLSReplaceDeletesBeforeUploadValidation (0.00s)
+=== RUN   TestPasswordChangeNativeErrorMedia
+=== RUN   TestPasswordChangeNativeErrorMedia/no-identity
+=== RUN   TestPasswordChangeNativeErrorMedia/invalid-credentials
+=== RUN   TestPasswordChangeNativeErrorMedia/password-must-differ
+--- PASS: TestPasswordChangeNativeErrorMedia (0.00s)
+    --- PASS: TestPasswordChangeNativeErrorMedia/no-identity (0.00s)
+    --- PASS: TestPasswordChangeNativeErrorMedia/invalid-credentials (0.00s)
+    --- PASS: TestPasswordChangeNativeErrorMedia/password-must-differ (0.00s)
+=== RUN   TestPasswordChangeNativeOrderAndCookieRules
+=== RUN   TestPasswordChangeNativeOrderAndCookieRules/inactive
+=== RUN   TestPasswordChangeNativeOrderAndCookieRules/first
+=== RUN   TestPasswordChangeNativeOrderAndCookieRules/missing-old
+=== RUN   TestPasswordChangeNativeOrderAndCookieRules/wrong-old
+=== RUN   TestPasswordChangeNativeOrderAndCookieRules/same
+=== RUN   TestPasswordChangeNativeOrderAndCookieRules/success
+=== RUN   TestPasswordChangeNativeOrderAndCookieRules/rate
+=== RUN   TestPasswordChangeNativeOrderAndCookieRules/write-failure
+=== RUN   TestPasswordChangeNativeOrderAndCookieRules/revoke-failure
+--- PASS: TestPasswordChangeNativeOrderAndCookieRules (0.00s)
+    --- PASS: TestPasswordChangeNativeOrderAndCookieRules/inactive (0.00s)
+    --- PASS: TestPasswordChangeNativeOrderAndCookieRules/first (0.00s)
+    --- PASS: TestPasswordChangeNativeOrderAndCookieRules/missing-old (0.00s)
+    --- PASS: TestPasswordChangeNativeOrderAndCookieRules/wrong-old (0.00s)
+    --- PASS: TestPasswordChangeNativeOrderAndCookieRules/same (0.00s)
+    --- PASS: TestPasswordChangeNativeOrderAndCookieRules/success (0.00s)
+    --- PASS: TestPasswordChangeNativeOrderAndCookieRules/rate (0.00s)
+    --- PASS: TestPasswordChangeNativeOrderAndCookieRules/write-failure (0.00s)
+    --- PASS: TestPasswordChangeNativeOrderAndCookieRules/revoke-failure (0.00s)
+=== RUN   TestPasswordChangeSchemaAndHEADRouting
+--- PASS: TestPasswordChangeSchemaAndHEADRouting (0.00s)
+=== RUN   TestPasswordResetRequestSchemaAndLegacyRoutes
+--- PASS: TestPasswordResetRequestSchemaAndLegacyRoutes (0.00s)
+=== RUN   TestPasswordResetActualSMTPNativeTemplate
+--- PASS: TestPasswordResetActualSMTPNativeTemplate (0.01s)
+=== RUN   TestPasswordResetPrivacyAndMailFailurePersistence
+=== RUN   TestPasswordResetPrivacyAndMailFailurePersistence/missing
+=== RUN   TestPasswordResetPrivacyAndMailFailurePersistence/disallowed
+=== RUN   TestPasswordResetPrivacyAndMailFailurePersistence/saml
+=== RUN   TestPasswordResetPrivacyAndMailFailurePersistence/pending
+--- PASS: TestPasswordResetPrivacyAndMailFailurePersistence (0.00s)
+    --- PASS: TestPasswordResetPrivacyAndMailFailurePersistence/missing (0.00s)
+    --- PASS: TestPasswordResetPrivacyAndMailFailurePersistence/disallowed (0.00s)
+    --- PASS: TestPasswordResetPrivacyAndMailFailurePersistence/saml (0.00s)
+    --- PASS: TestPasswordResetPrivacyAndMailFailurePersistence/pending (0.00s)
+=== RUN   TestPasswordResetAttemptsAndExpiryBoundaries
+=== RUN   TestPasswordResetAttemptsAndExpiryBoundaries/correct-at-expiry
+=== RUN   TestPasswordResetAttemptsAndExpiryBoundaries/incorrect-at-expiry
+=== RUN   TestPasswordResetAttemptsAndExpiryBoundaries/incorrect-before-expiry
+=== RUN   TestPasswordResetAttemptsAndExpiryBoundaries/last-attempt
+=== RUN   TestPasswordResetAttemptsAndExpiryBoundaries/missing-attempts
+=== RUN   TestPasswordResetAttemptsAndExpiryBoundaries/correct-expired
+--- PASS: TestPasswordResetAttemptsAndExpiryBoundaries (0.00s)
+    --- PASS: TestPasswordResetAttemptsAndExpiryBoundaries/correct-at-expiry (0.00s)
+    --- PASS: TestPasswordResetAttemptsAndExpiryBoundaries/incorrect-at-expiry (0.00s)
+    --- PASS: TestPasswordResetAttemptsAndExpiryBoundaries/incorrect-before-expiry (0.00s)
+    --- PASS: TestPasswordResetAttemptsAndExpiryBoundaries/last-attempt (0.00s)
+    --- PASS: TestPasswordResetAttemptsAndExpiryBoundaries/missing-attempts (0.00s)
+    --- PASS: TestPasswordResetAttemptsAndExpiryBoundaries/correct-expired (0.00s)
+=== RUN   TestPasswordResetMutationOrderAndSecurityFailures
+=== RUN   TestPasswordResetMutationOrderAndSecurityFailures/success
+=== RUN   TestPasswordResetMutationOrderAndSecurityFailures/same
+=== RUN   TestPasswordResetMutationOrderAndSecurityFailures/saml
+=== RUN   TestPasswordResetMutationOrderAndSecurityFailures/rate
+=== RUN   TestPasswordResetMutationOrderAndSecurityFailures/write
+=== RUN   TestPasswordResetMutationOrderAndSecurityFailures/delete
+--- PASS: TestPasswordResetMutationOrderAndSecurityFailures (0.00s)
+    --- PASS: TestPasswordResetMutationOrderAndSecurityFailures/success (0.00s)
+    --- PASS: TestPasswordResetMutationOrderAndSecurityFailures/same (0.00s)
+    --- PASS: TestPasswordResetMutationOrderAndSecurityFailures/saml (0.00s)
+    --- PASS: TestPasswordResetMutationOrderAndSecurityFailures/rate (0.00s)
+    --- PASS: TestPasswordResetMutationOrderAndSecurityFailures/write (0.00s)
+    --- PASS: TestPasswordResetMutationOrderAndSecurityFailures/delete (0.00s)
+=== RUN   TestPasswordResetKeyAndRandomCodeNativeEncoding
+--- PASS: TestPasswordResetKeyAndRandomCodeNativeEncoding (0.00s)
+=== RUN   TestScryptPublishedVectorAndNativeFixedLengthVerification
+--- PASS: TestScryptPublishedVectorAndNativeFixedLengthVerification (0.00s)
+=== RUN   TestNativePasswordGenerationFormatsAndVerificationStatus
+--- PASS: TestNativePasswordGenerationFormatsAndVerificationStatus (0.10s)
+=== RUN   TestArgonHistoricalVariantsAndVersions
+--- PASS: TestArgonHistoricalVariantsAndVersions (0.00s)
+=== RUN   TestArgonFullLaneCountAndOmittedVersion
+--- PASS: TestArgonFullLaneCountAndOmittedVersion (0.01s)
+=== RUN   TestPasswordMalformedParametersDoNotAllocateOrDisclose
+--- PASS: TestPasswordMalformedParametersDoNotAllocateOrDisclose (0.00s)
+=== RUN   TestNativePrekeyFixtureAndClientID
+--- PASS: TestNativePrekeyFixtureAndClientID (0.00s)
+=== RUN   TestPrekeyCBORSchemaAndNativeIntegerTruncation
+--- PASS: TestPrekeyCBORSchemaAndNativeIntegerTruncation (0.00s)
+=== RUN   TestPrekeyMapDecodeNormalizationAndLimits
+--- PASS: TestPrekeyMapDecodeNormalizationAndLimits (0.00s)
+=== RUN   TestMultiPrekeyChunksOrderAndMissingNull
+--- PASS: TestMultiPrekeyChunksOrderAndMissingNull (0.00s)
+=== RUN   TestPrekeyClaimGuardAndMissingCleanupOrder
+=== RUN   TestPrekeyClaimGuardAndMissingCleanupOrder/key
+=== RUN   TestPrekeyClaimGuardAndMissingCleanupOrder/missing_client
+=== RUN   TestPrekeyClaimGuardAndMissingCleanupOrder/cleanup
+=== RUN   TestPrekeyClaimGuardAndMissingCleanupOrder/guard_failure
+=== RUN   TestPrekeyClaimGuardAndMissingCleanupOrder/claim_failure
+=== RUN   TestPrekeyClaimGuardAndMissingCleanupOrder/cleanup_failure
+--- PASS: TestPrekeyClaimGuardAndMissingCleanupOrder (0.00s)
+    --- PASS: TestPrekeyClaimGuardAndMissingCleanupOrder/key (0.00s)
+    --- PASS: TestPrekeyClaimGuardAndMissingCleanupOrder/missing_client (0.00s)
+    --- PASS: TestPrekeyClaimGuardAndMissingCleanupOrder/cleanup (0.00s)
+    --- PASS: TestPrekeyClaimGuardAndMissingCleanupOrder/guard_failure (0.00s)
+    --- PASS: TestPrekeyClaimGuardAndMissingCleanupOrder/claim_failure (0.00s)
+    --- PASS: TestPrekeyClaimGuardAndMissingCleanupOrder/cleanup_failure (0.00s)
+=== RUN   TestPrekeyLegalholdActualHTTP
+--- PASS: TestPrekeyLegalholdActualHTTP (0.70s)
+=== RUN   TestPrekeyLocalRoutes
+--- PASS: TestPrekeyLocalRoutes (0.00s)
+=== RUN   TestNativeRandomPrekeyExcludesLastResort
+--- PASS: TestNativeRandomPrekeyExcludesLastResort (0.00s)
+=== RUN   TestNativeOptimisticClaimOrderingAndExhaustion
+--- PASS: TestNativeOptimisticClaimOrderingAndExhaustion (0.00s)
+=== RUN   TestNativeDynamoPrekeyVersionAndConditionalWrite
+--- PASS: TestNativeDynamoPrekeyVersionAndConditionalWrite (0.00s)
+=== RUN   TestFederationRemotePoolJoinsFailuresAfterLocalEffects
+--- PASS: TestFederationRemotePoolJoinsFailuresAfterLocalEffects (0.00s)
+=== RUN   TestFederationPrekeyHTTP2NegotiationAndTypedResponse
+--- PASS: TestFederationPrekeyHTTP2NegotiationAndTypedResponse (0.00s)
+=== RUN   TestFederationVersionsAndIntegerBounds
+--- PASS: TestFederationVersionsAndIntegerBounds (0.00s)
+=== RUN   TestFederationRemoteFailureAndPartialMap
+--- PASS: TestFederationRemoteFailureAndPartialMap (0.00s)
+=== RUN   TestIncomingFederationPrekeyNullableAndAdmission
+--- PASS: TestIncomingFederationPrekeyNullableAndAdmission (0.00s)
+=== RUN   TestSelfProfileNativeGoldenJSON
+--- PASS: TestSelfProfileNativeGoldenJSON (0.00s)
+=== RUN   TestStoredProfileDoesNotExposeUnactivatedIdentity
+--- PASS: TestStoredProfileDoesNotExposeUnactivatedIdentity (0.00s)
+=== RUN   TestPropertyMutationPrecedenceAndNotification
+=== RUN   TestPropertyMutationPrecedenceAndNotification/key_first
+=== RUN   TestPropertyMutationPrecedenceAndNotification/count_before_JSON
+=== RUN   TestPropertyMutationPrecedenceAndNotification/size_before_JSON
+=== RUN   TestPropertyMutationPrecedenceAndNotification/parse_before_write
+=== RUN   TestPropertyMutationPrecedenceAndNotification/existing_at_limit
+=== RUN   TestPropertyMutationPrecedenceAndNotification/store_failure
+--- PASS: TestPropertyMutationPrecedenceAndNotification (0.00s)
+    --- PASS: TestPropertyMutationPrecedenceAndNotification/key_first (0.00s)
+    --- PASS: TestPropertyMutationPrecedenceAndNotification/count_before_JSON (0.00s)
+    --- PASS: TestPropertyMutationPrecedenceAndNotification/size_before_JSON (0.00s)
+    --- PASS: TestPropertyMutationPrecedenceAndNotification/parse_before_write (0.00s)
+    --- PASS: TestPropertyMutationPrecedenceAndNotification/existing_at_limit (0.00s)
+    --- PASS: TestPropertyMutationPrecedenceAndNotification/store_failure (0.00s)
+=== RUN   TestPropertyRawReadsAndInvalidStoredMap
+--- PASS: TestPropertyRawReadsAndInvalidStoredMap (0.00s)
+=== RUN   TestPropertyHeadersEscapedKeysAndDeletionEvents
+--- PASS: TestPropertyHeadersEscapedKeysAndDeletionEvents (0.00s)
+=== RUN   TestPropertyCapturedNativeParserAndMedia
+--- PASS: TestPropertyCapturedNativeParserAndMedia (0.00s)
+=== RUN   TestPublicClientsRemoteOmissionAndLocalProjection
+--- PASS: TestPublicClientsRemoteOmissionAndLocalProjection (0.00s)
+=== RUN   TestPublicClientRouteVersionsAuthenticationAndProjection
+--- PASS: TestPublicClientRouteVersionsAuthenticationAndProjection (0.00s)
+=== RUN   TestPublicProfilePrivacyPendingAndExpiry
+--- PASS: TestPublicProfilePrivacyPendingAndExpiry (0.00s)
+=== RUN   TestRemoteProfileRequiredFieldsAndTypedAdmission
+--- PASS: TestRemoteProfileRequiredFieldsAndTypedAdmission (0.00s)
+=== RUN   TestPasswordBucketNativeDecayAndRejectedAttempts
+--- PASS: TestPasswordBucketNativeDecayAndRejectedAttempts (0.00s)
+=== RUN   TestPasswordRateMaskExceptionsNamespacesAndLRU
+--- PASS: TestPasswordRateMaskExceptionsNamespacesAndLRU (0.00s)
+=== RUN   TestPasswordRateConcurrentBurst
+--- PASS: TestPasswordRateConcurrentBurst (0.00s)
+=== RUN   TestReadRoutesRejectInvalidIdentityBeforeStorageAccess
+--- PASS: TestReadRoutesRejectInvalidIdentityBeforeStorageAccess (0.00s)
+=== RUN   TestReauthenticationVerificationEnforcement
+=== RUN   TestReauthenticationVerificationEnforcement/required_missing
+=== RUN   TestReauthenticationVerificationEnforcement/incorrect_code
+=== RUN   TestReauthenticationVerificationEnforcement/correct_code
+=== RUN   TestReauthenticationVerificationEnforcement/unverified_email
+=== RUN   TestReauthenticationVerificationEnforcement/missing_email
+=== RUN   TestReauthenticationVerificationEnforcement/feature_disabled
+=== RUN   TestReauthenticationVerificationEnforcement/SAML_exemption
+=== RUN   TestReauthenticationVerificationEnforcement/no_action
+--- PASS: TestReauthenticationVerificationEnforcement (0.00s)
+    --- PASS: TestReauthenticationVerificationEnforcement/required_missing (0.00s)
+    --- PASS: TestReauthenticationVerificationEnforcement/incorrect_code (0.00s)
+    --- PASS: TestReauthenticationVerificationEnforcement/correct_code (0.00s)
+    --- PASS: TestReauthenticationVerificationEnforcement/unverified_email (0.00s)
+    --- PASS: TestReauthenticationVerificationEnforcement/missing_email (0.00s)
+    --- PASS: TestReauthenticationVerificationEnforcement/feature_disabled (0.00s)
+    --- PASS: TestReauthenticationVerificationEnforcement/SAML_exemption (0.00s)
+    --- PASS: TestReauthenticationVerificationEnforcement/no_action (0.00s)
+=== RUN   TestReauthenticationRejectsPasswordBeforeVerification
+--- PASS: TestReauthenticationRejectsPasswordBeforeVerification (0.00s)
+=== RUN   TestStoredSAMLIdentityDoesNotConfuseSCIMOrInactiveUsers
+--- PASS: TestStoredSAMLIdentityDoesNotConfuseSCIMOrInactiveUsers (0.00s)
+=== RUN   TestEmailVerificationKeyNativeTrustedDomainRules
+--- PASS: TestEmailVerificationKeyNativeTrustedDomainRules (0.00s)
+=== RUN   TestInternalRegistrationRejectsInvalidRequestsBeforeDependencies
+--- PASS: TestInternalRegistrationRejectsInvalidRequestsBeforeDependencies (0.00s)
+=== RUN   TestRegistrationStageDiagnosticsPreserveErrorsAndRedactDetails
+--- PASS: TestRegistrationStageDiagnosticsPreserveErrorsAndRedactDetails (0.00s)
+=== RUN   TestRegistrationIdentityOwnershipAndBlockListOrder
+=== RUN   TestRegistrationIdentityOwnershipAndBlockListOrder/unused
+=== RUN   TestRegistrationIdentityOwnershipAndBlockListOrder/missing
+=== RUN   TestRegistrationIdentityOwnershipAndBlockListOrder/deleted
+=== RUN   TestRegistrationIdentityOwnershipAndBlockListOrder/unactivated
+=== RUN   TestRegistrationIdentityOwnershipAndBlockListOrder/activated-without-identity
+=== RUN   TestRegistrationIdentityOwnershipAndBlockListOrder/occupied
+=== RUN   TestRegistrationIdentityOwnershipAndBlockListOrder/blocked
+--- PASS: TestRegistrationIdentityOwnershipAndBlockListOrder (0.00s)
+    --- PASS: TestRegistrationIdentityOwnershipAndBlockListOrder/unused (0.00s)
+    --- PASS: TestRegistrationIdentityOwnershipAndBlockListOrder/missing (0.00s)
+    --- PASS: TestRegistrationIdentityOwnershipAndBlockListOrder/deleted (0.00s)
+    --- PASS: TestRegistrationIdentityOwnershipAndBlockListOrder/unactivated (0.00s)
+    --- PASS: TestRegistrationIdentityOwnershipAndBlockListOrder/activated-without-identity (0.00s)
+    --- PASS: TestRegistrationIdentityOwnershipAndBlockListOrder/occupied (0.00s)
+    --- PASS: TestRegistrationIdentityOwnershipAndBlockListOrder/blocked (0.00s)
+=== RUN   TestRegistrationInvitationGuardsRunBeforeAccountMutation
+=== RUN   TestRegistrationInvitationGuardsRunBeforeAccountMutation/missing-identity
+=== RUN   TestRegistrationInvitationGuardsRunBeforeAccountMutation/missing-code
+=== RUN   TestRegistrationInvitationGuardsRunBeforeAccountMutation/wrong-email
+=== RUN   TestRegistrationInvitationGuardsRunBeforeAccountMutation/not-allowed
+=== RUN   TestRegistrationInvitationGuardsRunBeforeAccountMutation/other-team
+=== RUN   TestRegistrationInvitationGuardsRunBeforeAccountMutation/at-limit
+=== RUN   TestRegistrationInvitationGuardsRunBeforeAccountMutation/allowed-team
+=== RUN   TestRegistrationInvitationGuardsRunBeforeAccountMutation/lookup-failure
+=== RUN   TestRegistrationInvitationGuardsRunBeforeAccountMutation/domain-failure
+=== RUN   TestRegistrationInvitationGuardsRunBeforeAccountMutation/size-failure
+=== RUN   TestRegistrationInvitationGuardsRunBeforeAccountMutation/admission-failure
+--- PASS: TestRegistrationInvitationGuardsRunBeforeAccountMutation (0.00s)
+    --- PASS: TestRegistrationInvitationGuardsRunBeforeAccountMutation/missing-identity (0.00s)
+    --- PASS: TestRegistrationInvitationGuardsRunBeforeAccountMutation/missing-code (0.00s)
+    --- PASS: TestRegistrationInvitationGuardsRunBeforeAccountMutation/wrong-email (0.00s)
+    --- PASS: TestRegistrationInvitationGuardsRunBeforeAccountMutation/not-allowed (0.00s)
+    --- PASS: TestRegistrationInvitationGuardsRunBeforeAccountMutation/other-team (0.00s)
+    --- PASS: TestRegistrationInvitationGuardsRunBeforeAccountMutation/at-limit (0.00s)
+    --- PASS: TestRegistrationInvitationGuardsRunBeforeAccountMutation/allowed-team (0.00s)
+    --- PASS: TestRegistrationInvitationGuardsRunBeforeAccountMutation/lookup-failure (0.00s)
+    --- PASS: TestRegistrationInvitationGuardsRunBeforeAccountMutation/domain-failure (0.00s)
+    --- PASS: TestRegistrationInvitationGuardsRunBeforeAccountMutation/size-failure (0.00s)
+    --- PASS: TestRegistrationInvitationGuardsRunBeforeAccountMutation/admission-failure (0.00s)
+=== RUN   TestRegistrationInvitationActivationOrderingAndSCIMIdentity
+=== RUN   TestRegistrationInvitationActivationOrderingAndSCIMIdentity/ordinary
+=== RUN   TestRegistrationInvitationActivationOrderingAndSCIMIdentity/scim
+=== RUN   TestRegistrationInvitationActivationOrderingAndSCIMIdentity/legacy-scim-name
+=== RUN   TestRegistrationInvitationActivationOrderingAndSCIMIdentity/claim-denied
+=== RUN   TestRegistrationInvitationActivationOrderingAndSCIMIdentity/member-denied
+=== RUN   TestRegistrationInvitationActivationOrderingAndSCIMIdentity/scim-name
+=== RUN   TestRegistrationInvitationActivationOrderingAndSCIMIdentity/claim-error
+=== RUN   TestRegistrationInvitationActivationOrderingAndSCIMIdentity/member-error
+=== RUN   TestRegistrationInvitationActivationOrderingAndSCIMIdentity/activation-error
+=== RUN   TestRegistrationInvitationActivationOrderingAndSCIMIdentity/event-error
+=== RUN   TestRegistrationInvitationActivationOrderingAndSCIMIdentity/pending-error
+=== RUN   TestRegistrationInvitationActivationOrderingAndSCIMIdentity/delete-error
+--- PASS: TestRegistrationInvitationActivationOrderingAndSCIMIdentity (0.00s)
+    --- PASS: TestRegistrationInvitationActivationOrderingAndSCIMIdentity/ordinary (0.00s)
+    --- PASS: TestRegistrationInvitationActivationOrderingAndSCIMIdentity/scim (0.00s)
+    --- PASS: TestRegistrationInvitationActivationOrderingAndSCIMIdentity/legacy-scim-name (0.00s)
+    --- PASS: TestRegistrationInvitationActivationOrderingAndSCIMIdentity/claim-denied (0.00s)
+    --- PASS: TestRegistrationInvitationActivationOrderingAndSCIMIdentity/member-denied (0.00s)
+    --- PASS: TestRegistrationInvitationActivationOrderingAndSCIMIdentity/scim-name (0.00s)
+    --- PASS: TestRegistrationInvitationActivationOrderingAndSCIMIdentity/claim-error (0.00s)
+    --- PASS: TestRegistrationInvitationActivationOrderingAndSCIMIdentity/member-error (0.00s)
+    --- PASS: TestRegistrationInvitationActivationOrderingAndSCIMIdentity/activation-error (0.00s)
+    --- PASS: TestRegistrationInvitationActivationOrderingAndSCIMIdentity/event-error (0.00s)
+    --- PASS: TestRegistrationInvitationActivationOrderingAndSCIMIdentity/pending-error (0.00s)
+    --- PASS: TestRegistrationInvitationActivationOrderingAndSCIMIdentity/delete-error (0.00s)
+=== RUN   TestRegistrationGalleyNativeRequestsAndCurrency
+--- PASS: TestRegistrationGalleyNativeRequestsAndCurrency (0.00s)
+=== RUN   TestRegistrationSSOJoinNativeMemberBodyAndRejection
+=== RUN   TestRegistrationSSOJoinNativeMemberBodyAndRejection/200
+=== RUN   TestRegistrationSSOJoinNativeMemberBodyAndRejection/403
+--- PASS: TestRegistrationSSOJoinNativeMemberBodyAndRejection (0.00s)
+    --- PASS: TestRegistrationSSOJoinNativeMemberBodyAndRejection/200 (0.00s)
+    --- PASS: TestRegistrationSSOJoinNativeMemberBodyAndRejection/403 (0.00s)
+=== RUN   TestRegistrationInvitationMembershipPermissionsAndMetadata
+--- PASS: TestRegistrationInvitationMembershipPermissionsAndMetadata (0.00s)
+=== RUN   TestRegistrationAdmissionErrorPassesNativePolicyRejection
+--- PASS: TestRegistrationAdmissionErrorPassesNativePolicyRejection (0.00s)
+=== RUN   TestPublicRegistrationHTTPRejectionsBeforeEffects
+--- PASS: TestPublicRegistrationHTTPRejectionsBeforeEffects (0.00s)
+=== RUN   TestPublicRegistrationHTTPActualMailAndSession
+=== RUN   TestPublicRegistrationHTTPActualMailAndSession/true
+=== RUN   TestPublicRegistrationHTTPActualMailAndSession/false
+--- PASS: TestPublicRegistrationHTTPActualMailAndSession (0.01s)
+    --- PASS: TestPublicRegistrationHTTPActualMailAndSession/true (0.01s)
+    --- PASS: TestPublicRegistrationHTTPActualMailAndSession/false (0.01s)
+=== RUN   TestPublicRegistrationNativePolicyBeforeCreation
+=== RUN   TestPublicRegistrationNativePolicyBeforeCreation/ephemeral
+=== RUN   TestPublicRegistrationNativePolicyBeforeCreation/restricted-personal
+=== RUN   TestPublicRegistrationNativePolicyBeforeCreation/restricted-creator
+=== RUN   TestPublicRegistrationNativePolicyBeforeCreation/allowed-member
+=== RUN   TestPublicRegistrationNativePolicyBeforeCreation/disabled-ephemeral
+=== RUN   TestPublicRegistrationNativePolicyBeforeCreation/allowlisted
+=== RUN   TestPublicRegistrationNativePolicyBeforeCreation/empty-allowlist
+=== RUN   TestPublicRegistrationNativePolicyBeforeCreation/exact-domain-case
+--- PASS: TestPublicRegistrationNativePolicyBeforeCreation (0.00s)
+    --- PASS: TestPublicRegistrationNativePolicyBeforeCreation/ephemeral (0.00s)
+    --- PASS: TestPublicRegistrationNativePolicyBeforeCreation/restricted-personal (0.00s)
+    --- PASS: TestPublicRegistrationNativePolicyBeforeCreation/restricted-creator (0.00s)
+    --- PASS: TestPublicRegistrationNativePolicyBeforeCreation/allowed-member (0.00s)
+    --- PASS: TestPublicRegistrationNativePolicyBeforeCreation/disabled-ephemeral (0.00s)
+    --- PASS: TestPublicRegistrationNativePolicyBeforeCreation/allowlisted (0.00s)
+    --- PASS: TestPublicRegistrationNativePolicyBeforeCreation/empty-allowlist (0.00s)
+    --- PASS: TestPublicRegistrationNativePolicyBeforeCreation/exact-domain-case (0.00s)
+=== RUN   TestPublicRegistrationMailAndCookieOrder
+=== RUN   TestPublicRegistrationMailAndCookieOrder/ephemeral
+=== RUN   TestPublicRegistrationMailAndCookieOrder/activation
+=== RUN   TestPublicRegistrationMailAndCookieOrder/creator-activation
+=== RUN   TestPublicRegistrationMailAndCookieOrder/verified-creator
+=== RUN   TestPublicRegistrationMailAndCookieOrder/invited-member
+=== RUN   TestPublicRegistrationMailAndCookieOrder/creation-failure
+=== RUN   TestPublicRegistrationMailAndCookieOrder/activation-failure
+=== RUN   TestPublicRegistrationMailAndCookieOrder/welcome-failure
+=== RUN   TestPublicRegistrationMailAndCookieOrder/cookie-failure
+--- PASS: TestPublicRegistrationMailAndCookieOrder (0.00s)
+    --- PASS: TestPublicRegistrationMailAndCookieOrder/ephemeral (0.00s)
+    --- PASS: TestPublicRegistrationMailAndCookieOrder/activation (0.00s)
+    --- PASS: TestPublicRegistrationMailAndCookieOrder/creator-activation (0.00s)
+    --- PASS: TestPublicRegistrationMailAndCookieOrder/verified-creator (0.00s)
+    --- PASS: TestPublicRegistrationMailAndCookieOrder/invited-member (0.00s)
+    --- PASS: TestPublicRegistrationMailAndCookieOrder/creation-failure (0.00s)
+    --- PASS: TestPublicRegistrationMailAndCookieOrder/activation-failure (0.00s)
+    --- PASS: TestPublicRegistrationMailAndCookieOrder/welcome-failure (0.00s)
+    --- PASS: TestPublicRegistrationMailAndCookieOrder/cookie-failure (0.00s)
+=== RUN   TestPublicRegistrationUsesUnrestrictedNativeCookieAndLabelRevocation
+--- PASS: TestPublicRegistrationUsesUnrestrictedNativeCookieAndLabelRevocation (0.00s)
+=== RUN   TestRegistrationReusesOriginalNativeRequestGoldens
+=== RUN   TestRegistrationReusesOriginalNativeRequestGoldens/testObject_NewUser_user_1.json
+=== RUN   TestRegistrationReusesOriginalNativeRequestGoldens/testObject_NewUser_user_2.json
+=== RUN   TestRegistrationReusesOriginalNativeRequestGoldens/testObject_NewUser_user_3.json
+=== RUN   TestRegistrationReusesOriginalNativeRequestGoldens/testObject_NewUser_user_4.json
+=== RUN   TestRegistrationReusesOriginalNativeRequestGoldens/testObject_NewUser_user_5.json
+=== RUN   TestRegistrationReusesOriginalNativeRequestGoldens/testObject_NewUser_user_6.json
+=== RUN   TestRegistrationReusesOriginalNativeRequestGoldens/testObject_NewUser_user_7.json
+=== RUN   TestRegistrationReusesOriginalNativeRequestGoldens/testObject_NewUser_user_8.json
+=== RUN   TestRegistrationReusesOriginalNativeRequestGoldens/testObject_NewUserPublic_user_1.json
+--- PASS: TestRegistrationReusesOriginalNativeRequestGoldens (0.01s)
+    --- PASS: TestRegistrationReusesOriginalNativeRequestGoldens/testObject_NewUser_user_1.json (0.00s)
+    --- PASS: TestRegistrationReusesOriginalNativeRequestGoldens/testObject_NewUser_user_2.json (0.00s)
+    --- PASS: TestRegistrationReusesOriginalNativeRequestGoldens/testObject_NewUser_user_3.json (0.00s)
+    --- PASS: TestRegistrationReusesOriginalNativeRequestGoldens/testObject_NewUser_user_4.json (0.00s)
+    --- PASS: TestRegistrationReusesOriginalNativeRequestGoldens/testObject_NewUser_user_5.json (0.00s)
+    --- PASS: TestRegistrationReusesOriginalNativeRequestGoldens/testObject_NewUser_user_6.json (0.00s)
+    --- PASS: TestRegistrationReusesOriginalNativeRequestGoldens/testObject_NewUser_user_7.json (0.00s)
+    --- PASS: TestRegistrationReusesOriginalNativeRequestGoldens/testObject_NewUser_user_8.json (0.00s)
+    --- PASS: TestRegistrationReusesOriginalNativeRequestGoldens/testObject_NewUserPublic_user_1.json (0.00s)
+=== RUN   TestRegistrationOriginAndPublicRestrictions
+--- PASS: TestRegistrationOriginAndPublicRestrictions (0.00s)
+=== RUN   TestRegistrationRejectsMalformedFieldsBeforeOriginSelection
+--- PASS: TestRegistrationRejectsMalformedFieldsBeforeOriginSelection (0.00s)
+=== RUN   TestRegistrationPreservesNativeCanonicalizationAndDefaults
+--- PASS: TestRegistrationPreservesNativeCanonicalizationAndDefaults (0.00s)
+=== RUN   TestRegistrationReusesNativeEmailAndSSOContracts
+--- PASS: TestRegistrationReusesNativeEmailAndSSOContracts (0.00s)
+=== RUN   TestRegistrationNativeCreationOrderingAndFailures
+=== RUN   TestRegistrationNativeCreationOrderingAndFailures/ephemeral
+=== RUN   TestRegistrationNativeCreationOrderingAndFailures/legacy-invitation
+=== RUN   TestRegistrationNativeCreationOrderingAndFailures/identified
+=== RUN   TestRegistrationNativeCreationOrderingAndFailures/preverified
+=== RUN   TestRegistrationNativeCreationOrderingAndFailures/creator
+=== RUN   TestRegistrationNativeCreationOrderingAndFailures/owner-error
+=== RUN   TestRegistrationNativeCreationOrderingAndFailures/blocked
+=== RUN   TestRegistrationNativeCreationOrderingAndFailures/domain
+=== RUN   TestRegistrationNativeCreationOrderingAndFailures/hash
+=== RUN   TestRegistrationNativeCreationOrderingAndFailures/self
+=== RUN   TestRegistrationNativeCreationOrderingAndFailures/feature
+=== RUN   TestRegistrationNativeCreationOrderingAndFailures/activation
+--- PASS: TestRegistrationNativeCreationOrderingAndFailures (0.00s)
+    --- PASS: TestRegistrationNativeCreationOrderingAndFailures/ephemeral (0.00s)
+    --- PASS: TestRegistrationNativeCreationOrderingAndFailures/legacy-invitation (0.00s)
+    --- PASS: TestRegistrationNativeCreationOrderingAndFailures/identified (0.00s)
+    --- PASS: TestRegistrationNativeCreationOrderingAndFailures/preverified (0.00s)
+    --- PASS: TestRegistrationNativeCreationOrderingAndFailures/creator (0.00s)
+    --- PASS: TestRegistrationNativeCreationOrderingAndFailures/owner-error (0.00s)
+    --- PASS: TestRegistrationNativeCreationOrderingAndFailures/blocked (0.00s)
+    --- PASS: TestRegistrationNativeCreationOrderingAndFailures/domain (0.00s)
+    --- PASS: TestRegistrationNativeCreationOrderingAndFailures/hash (0.00s)
+    --- PASS: TestRegistrationNativeCreationOrderingAndFailures/self (0.00s)
+    --- PASS: TestRegistrationNativeCreationOrderingAndFailures/feature (0.00s)
+    --- PASS: TestRegistrationNativeCreationOrderingAndFailures/activation (0.00s)
+=== RUN   TestRegistrationUnavailableOriginsDoNotPersistPartialAccounts
+--- PASS: TestRegistrationUnavailableOriginsDoNotPersistPartialAccounts (0.00s)
+=== RUN   TestRegistrationSAMLAndSCIMOriginOrdering
+=== RUN   TestRegistrationSAMLAndSCIMOriginOrdering/saml
+=== RUN   TestRegistrationSAMLAndSCIMOriginOrdering/saml-email
+=== RUN   TestRegistrationSAMLAndSCIMOriginOrdering/scim
+=== RUN   TestRegistrationSAMLAndSCIMOriginOrdering/join-denied
+=== RUN   TestRegistrationSAMLAndSCIMOriginOrdering/join-error
+=== RUN   TestRegistrationSAMLAndSCIMOriginOrdering/activation-error
+=== RUN   TestRegistrationSAMLAndSCIMOriginOrdering/event-error
+=== RUN   TestRegistrationSAMLAndSCIMOriginOrdering/name-error
+--- PASS: TestRegistrationSAMLAndSCIMOriginOrdering (0.00s)
+    --- PASS: TestRegistrationSAMLAndSCIMOriginOrdering/saml (0.00s)
+    --- PASS: TestRegistrationSAMLAndSCIMOriginOrdering/saml-email (0.00s)
+    --- PASS: TestRegistrationSAMLAndSCIMOriginOrdering/scim (0.00s)
+    --- PASS: TestRegistrationSAMLAndSCIMOriginOrdering/join-denied (0.00s)
+    --- PASS: TestRegistrationSAMLAndSCIMOriginOrdering/join-error (0.00s)
+    --- PASS: TestRegistrationSAMLAndSCIMOriginOrdering/activation-error (0.00s)
+    --- PASS: TestRegistrationSAMLAndSCIMOriginOrdering/event-error (0.00s)
+    --- PASS: TestRegistrationSAMLAndSCIMOriginOrdering/name-error (0.00s)
+=== RUN   TestRegistrationAccountDefaultsAndEphemeralExpiry
+--- PASS: TestRegistrationAccountDefaultsAndEphemeralExpiry (0.00s)
+=== RUN   TestRegistrationCreationViewPreservesUnactivatedIdentityAndEmptyProtocols
+--- PASS: TestRegistrationCreationViewPreservesUnactivatedIdentityAndEmptyProtocols (0.00s)
+=== RUN   TestSearchICUTransliterationAndConcurrentIsolation
+--- PASS: TestSearchICUTransliterationAndConcurrentIsolation (0.07s)
+=== RUN   TestIndexDocumentSuspendedVisibilityAndTombstoneNulls
+--- PASS: TestIndexDocumentSuspendedVisibilityAndTombstoneNulls (0.00s)
+=== RUN   TestIndexVersionNativeBloodhoundBounds
+--- PASS: TestIndexVersionNativeBloodhoundBounds (0.00s)
+=== RUN   TestSearchUpsertVersionConflictAndAdditionalWriteOrdering
+--- PASS: TestSearchUpsertVersionConflictAndAdditionalWriteOrdering (0.00s)
+=== RUN   TestSearchSyncMissingUserUnversionedAndStoreFailure
+--- PASS: TestSearchSyncMissingUserUnversionedAndStoreFailure (0.00s)
+=== RUN   TestIndexTeamFeatureAndPermissionRole
+=== RUN   TestIndexTeamFeatureAndPermissionRole/8191
+=== RUN   TestIndexTeamFeatureAndPermissionRole/5951
+=== RUN   TestIndexTeamFeatureAndPermissionRole/1587
+=== RUN   TestIndexTeamFeatureAndPermissionRole/1025
+=== RUN   TestIndexTeamFeatureAndPermissionRole/3
+=== RUN   TestIndexTeamFeatureAndPermissionRole/1073750015
+--- PASS: TestIndexTeamFeatureAndPermissionRole (0.00s)
+    --- PASS: TestIndexTeamFeatureAndPermissionRole/8191 (0.00s)
+    --- PASS: TestIndexTeamFeatureAndPermissionRole/5951 (0.00s)
+    --- PASS: TestIndexTeamFeatureAndPermissionRole/1587 (0.00s)
+    --- PASS: TestIndexTeamFeatureAndPermissionRole/1025 (0.00s)
+    --- PASS: TestIndexTeamFeatureAndPermissionRole/3 (0.00s)
+    --- PASS: TestIndexTeamFeatureAndPermissionRole/1073750015 (0.00s)
+=== RUN   TestLivenessAndVersionSurface
+--- PASS: TestLivenessAndVersionSurface (0.00s)
+=== RUN   TestSESNativeMailboxGrammar
+--- PASS: TestSESNativeMailboxGrammar (0.00s)
+=== RUN   TestSESFeedbackSchemaAndPolicy
+--- PASS: TestSESFeedbackSchemaAndPolicy (0.00s)
+=== RUN   TestSESFeedbackAcknowledgementAndFailure
+=== RUN   TestSESFeedbackAcknowledgementAndFailure/Permanent
+=== RUN   TestSESFeedbackAcknowledgementAndFailure/Complaint
+=== RUN   TestSESFeedbackAcknowledgementAndFailure/Transient
+=== RUN   TestSESFeedbackAcknowledgementAndFailure/Undetermined
+=== RUN   TestSESFeedbackAcknowledgementAndFailure/missing-body
+=== RUN   TestSESFeedbackAcknowledgementAndFailure/malformed
+=== RUN   TestSESFeedbackAcknowledgementAndFailure/no-receipt
+=== RUN   TestSESFeedbackAcknowledgementAndFailure/callback-failure
+=== RUN   TestSESFeedbackAcknowledgementAndFailure/delete-failure
+--- PASS: TestSESFeedbackAcknowledgementAndFailure (0.00s)
+    --- PASS: TestSESFeedbackAcknowledgementAndFailure/Permanent (0.00s)
+    --- PASS: TestSESFeedbackAcknowledgementAndFailure/Complaint (0.00s)
+    --- PASS: TestSESFeedbackAcknowledgementAndFailure/Transient (0.00s)
+    --- PASS: TestSESFeedbackAcknowledgementAndFailure/Undetermined (0.00s)
+    --- PASS: TestSESFeedbackAcknowledgementAndFailure/missing-body (0.00s)
+    --- PASS: TestSESFeedbackAcknowledgementAndFailure/malformed (0.00s)
+    --- PASS: TestSESFeedbackAcknowledgementAndFailure/no-receipt (0.00s)
+    --- PASS: TestSESFeedbackAcknowledgementAndFailure/callback-failure (0.00s)
+    --- PASS: TestSESFeedbackAcknowledgementAndFailure/delete-failure (0.00s)
+=== RUN   TestSESFeedbackBatchFailureCancelsAndJoinsSiblings
+--- PASS: TestSESFeedbackBatchFailureCancelsAndJoinsSiblings (0.00s)
+=== RUN   TestSESFeedbackReceiveAndCancellation
+--- PASS: TestSESFeedbackReceiveAndCancellation (0.00s)
+=== RUN   TestSessionRenewalBindingOverlapAndSuccessor
+--- PASS: TestSessionRenewalBindingOverlapAndSuccessor (0.00s)
+=== RUN   TestSessionLimitsLabelsAndRevocation
+--- PASS: TestSessionLimitsLabelsAndRevocation (0.00s)
+=== RUN   TestTokenIssuanceAndAccessRenewal
+--- PASS: TestTokenIssuanceAndAccessRenewal (0.00s)
+=== RUN   TestCookieThrottleNativeRoundingAndSampleDeviation
+--- PASS: TestCookieThrottleNativeRoundingAndSampleDeviation (0.00s)
+=== RUN   TestSessionRefreshSendsNativeChunkedDirectEventWithoutRetry
+2026/10/11 14:07:42 session refresh notification failed
+--- PASS: TestSessionRefreshSendsNativeChunkedDirectEventWithoutRetry (0.00s)
+=== RUN   TestCookieEvictionPreservesNativePriorities
+--- PASS: TestCookieEvictionPreservesNativePriorities (0.00s)
+=== RUN   TestUserMigrationLockUUIDFolding
+--- PASS: TestUserMigrationLockUUIDFolding (0.00s)
+=== RUN   TestTeamSizePrimaryIndexAndNativeLegacyQuery
+--- PASS: TestTeamSizePrimaryIndexAndNativeLegacyQuery (0.00s)
+=== RUN   TestTeamSizeNativeMissingMalformedAndNaturalCounts
+=== RUN   TestTeamSizeNativeMissingMalformedAndNaturalCounts/{}
+=== RUN   TestTeamSizeNativeMissingMalformedAndNaturalCounts/{"aggregations":{"regulars":{"doc_count":-1},"apps":{"doc_count":"secret"}}}
+=== RUN   TestTeamSizeNativeMissingMalformedAndNaturalCounts/{"aggregations":{"regulars":{"doc_count":1.5},"apps":{"other":4}}}
+=== RUN   TestTeamSizeNativeMissingMalformedAndNaturalCounts/{"aggregations":{"regulars":{"doc_count":18446744073709551616},"apps":{"doc_count":1}}}
+=== RUN   TestTeamSizeNativeMissingMalformedAndNaturalCounts/{"aggregations":{"regulars":{"doc_count":3e1},"apps":{"doc_count":20.0e-1}}}
+=== RUN   TestTeamSizeNativeMissingMalformedAndNaturalCounts/{"aggregations":{"regulars":{"doc_count":1.8446744073709551616e19},"apps":{"doc_count":0e-99}}}
+=== RUN   TestTeamSizeNativeMissingMalformedAndNaturalCounts/{"aggregations":{"regulars":{"doc_count":1e-99},"apps":{"doc_count":-1e1}}}
+--- PASS: TestTeamSizeNativeMissingMalformedAndNaturalCounts (0.00s)
+    --- PASS: TestTeamSizeNativeMissingMalformedAndNaturalCounts/{} (0.00s)
+    --- PASS: TestTeamSizeNativeMissingMalformedAndNaturalCounts/{"aggregations":{"regulars":{"doc_count":-1},"apps":{"doc_count":"secret"}}} (0.00s)
+    --- PASS: TestTeamSizeNativeMissingMalformedAndNaturalCounts/{"aggregations":{"regulars":{"doc_count":1.5},"apps":{"other":4}}} (0.00s)
+    --- PASS: TestTeamSizeNativeMissingMalformedAndNaturalCounts/{"aggregations":{"regulars":{"doc_count":18446744073709551616},"apps":{"doc_count":1}}} (0.00s)
+    --- PASS: TestTeamSizeNativeMissingMalformedAndNaturalCounts/{"aggregations":{"regulars":{"doc_count":3e1},"apps":{"doc_count":20.0e-1}}} (0.00s)
+    --- PASS: TestTeamSizeNativeMissingMalformedAndNaturalCounts/{"aggregations":{"regulars":{"doc_count":1.8446744073709551616e19},"apps":{"doc_count":0e-99}}} (0.00s)
+    --- PASS: TestTeamSizeNativeMissingMalformedAndNaturalCounts/{"aggregations":{"regulars":{"doc_count":1e-99},"apps":{"doc_count":-1e1}}} (0.00s)
+=== RUN   TestTeamSizeHTTPReadAndErrorPropagation
+--- PASS: TestTeamSizeHTTPReadAndErrorPropagation (0.00s)
+=== RUN   TestUserStorageDiagnosticsExcludePrivateValues
+--- PASS: TestUserStorageDiagnosticsExcludePrivateValues (0.00s)
+=== RUN   TestMigratingBatchUsesRequestedOrderAndPostgresTombstones
+--- PASS: TestMigratingBatchUsesRequestedOrderAndPostgresTombstones (0.00s)
+=== RUN   TestUserJournalNativeProto
+--- PASS: TestUserJournalNativeProto (0.00s)
+=== RUN   TestUserJournalSQSDiscoveryAndStableFIFOFields
+--- PASS: TestUserJournalSQSDiscoveryAndStableFIFOFields (0.10s)
+=== RUN   TestCanonicalSignedTokenFields
+=== RUN   TestCanonicalSignedTokenFields/a
+=== RUN   TestCanonicalSignedTokenFields/la
+=== RUN   TestCanonicalSignedTokenFields/u
+=== RUN   TestCanonicalSignedTokenFields/lu
+=== RUN   TestCanonicalSignedTokenFields/p
+=== RUN   TestCanonicalSignedTokenFields/b
+--- PASS: TestCanonicalSignedTokenFields (0.00s)
+    --- PASS: TestCanonicalSignedTokenFields/a (0.00s)
+    --- PASS: TestCanonicalSignedTokenFields/la (0.00s)
+    --- PASS: TestCanonicalSignedTokenFields/u (0.00s)
+    --- PASS: TestCanonicalSignedTokenFields/lu (0.00s)
+    --- PASS: TestCanonicalSignedTokenFields/p (0.00s)
+    --- PASS: TestCanonicalSignedTokenFields/b (0.00s)
+=== RUN   TestZAuthCanonicalVerificationAndSecurityBoundaries
+--- PASS: TestZAuthCanonicalVerificationAndSecurityBoundaries (0.00s)
+=== RUN   TestZAuthUnknownTagAndEmptyClient
+--- PASS: TestZAuthUnknownTagAndEmptyClient (0.00s)
+PASS
