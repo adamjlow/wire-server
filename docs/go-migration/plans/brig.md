@@ -660,3 +660,18 @@ claims are possible under contention/failures. Preserve this contract now;
 stronger atomic/exclusive claims would be a separate behavior/security change.
 New-client mail/cookie/temporary/legalhold/worker and whole535/eight-Go/all-entity
 three-mode/ops/image/selector/review qualification remain pending.
+
+### Prekey claim store and locking core
+
+[Evidence](../../../go/services/brig/qualification/evidence/prekey-claim-core/README.md)
+records sourced11e2709c/service36b79ae0 and full Go/static checks. Actual CQL
+selection/removal, global random lock and signed Dynamo get/conditional-put core
+are implemented with finite selection/order/exhaustion/request tests. Constructor
+is not public-handler-bound; no new original/native/CQL claim run is claimed.
+Next real Galley legalhold guard -> local claim -> native no-prekeys cleanup,
+public qualified/unqualified/version routes, remote federation and bundles/multi
+with bounded concurrency; bind logs/metrics and qualify both native strategies.
+Native SDK exception/typed-response/Read Word32 corners remain explicit limits.
+Current SHM compiler-cache headroom ~100MiB: before another SDK build revalidate
+owned caches/completed outputs and relocate or trim only disposable owned
+artifacts after terminal/audit, preserving receipts/bytes/paths and native state.
