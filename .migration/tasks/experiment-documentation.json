@@ -4,9 +4,9 @@
   "title": "Document experimental scope, remaining services, Go layout and validation options",
   "service": "framework",
   "kind": "framework",
-  "status": "queued",
-  "owner": null,
-  "branch": null,
+  "status": "active",
+  "owner": "codex",
+  "branch": "go-migration; serialized experiment-documentation in /home/operator/wire-server",
   "depends_on": [],
   "write_paths": [
     ".migration/tasks/experiment-documentation.json",
