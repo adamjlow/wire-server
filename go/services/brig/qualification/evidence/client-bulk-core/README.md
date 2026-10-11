@@ -1,0 +1,7 @@
+# Internal bulk client lookup core
+
+Sourcefc0063a69e8308c2a21f278ca0381db317055deb; candidate829a963e44110796015e30009a9103cbcf022227477398c23f4a5e9b6a91c6d8, compiled normal units7189f9ac87e600323e606246fe735e174bcc211607965a739736d86835439401, native store checks d2c683f55279c6a084e3013ae89791eacf944af84538d237c3e62c475144ec96.
+
+Pinned Go1.26.9 format/tidy/verify/vet/unit/race/build/vulnerability/license checks PASS; static normal units executed in original identified Haskell runner PASS. Native-schema store checks PASS, preserving all previous assertions: real populated/empty full-client map, actual ID-only Cassandra lookup ignores malformed orphan MLS key, full lookup rejects that malformed data. Native schema0/test0; independent owned cleanup empty. Existing static OpenSSL/glibc linker warnings retained in external compiler log; Go vulnerability checks do not establish all C library safety.
+
+Source review and focused units cover native numeric Word64 ID ordering, full-record set equality, latest internal capability schema, each requested user retained, duplicate users, invalid JSON/UUID before dependencies, generic storage errors and native16/50 concurrency/cancellation. Real SAML mixed witness recorded separately. Exact malformed-body/Accept/media responses and complete Brig clients/write/prekey/MLS/DPoP APIs remain pending; no complete-service claim. No Haskell/original oracle/schema/deadline/security-policy changes.

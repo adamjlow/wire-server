@@ -1,0 +1,7 @@
+# SAML rejoin and durable native switchback
+
+Sourcefc0063a69e8308c2a21f278ca0381db317055deb; candidate829a963e44110796015e30009a9103cbcf022227477398c23f4a5e9b6a91c6d8; identified Go Gundeck a50512ef30d7fa9ddf92c2c1933e69769d6691e08cdfbe9f7c4f2d266071f46c from c1120238f8ecd7480742156df6c5dd2d2ec41f56; all other managed peers native. Native Brig/reference/runner and configuration identities retained in report/controller receipt and external manifests.
+
+PASS: all17 original finite read/reauthentication comparisons exact, mismatches empty. Original native binding-team/SAML creation and changed-profile/password predecessor staging succeeded. Go SAML recreation/rejoin returned exact201/media/JSON/Location, restored profile/conference feature and password acceptance/rejection; original native Brig then consumed that same durable state and rejected the predecessor password. No dynamic-field normalization, changed assertions, artificial state repair or deadline changes. All13 managed process exits0, runner0, cleanup0; independently owned containers/networks/volumes empty. Prior failures retained separately.
+
+This is an owned executable SAML rejoin/mutation witness, not execution of the original compiled e2e suites. It proves the real original Galley to Go Gundeck to Go Brig callback now succeeds; not fresh-member insertion, push delivery/payload/journal consumption, invitation/public/email activation, all storage-mode API rollout or whole Brig availability. Remaining implementation and final finite gates still required; Galley follows actual Brig completion.
