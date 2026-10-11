@@ -993,3 +993,16 @@ First local-update SDK attempt source1bfce37f3 stopped at vet: duplicate
 galleyVersion declaration. Reuse the already validated native maximum version
 selection used by registration. No backend ran; failed compiler receipt retained,
 network cleanup0/independent empty. Retry only corrected candidate.
+
+Qualified source1af9e686d/servicee8fed1e2: pinned Go/static checks and focused
+local transition/effect/history/failure/optional-header units pass. Four actual
+native/Go update controls exact403/204/403/403; seven Go transitions, nine actual
+Gundeck HTTP-delivered connection events, native identical final pair readback
+and existing accept200. Prior cursors/signed/raw/client/prekey witnesses and14
+original MLS cases pass strict XML. All25exits0/runner0/cleanup0/independent empty.
+[Evidence](../../../go/services/brig/qualification/evidence/connection-local-update/README.md).
+First duplicate declaration compiler failure retained, no backend ran on it.
+Next remote profile/team federation admission, local/remote connection actions,
+Galley upsert/deterministic conversation IDs and incoming RPCs, then original
+connection tests. Actual positive MLS/cancel/team/LH/app/limit/parser witnesses
+remain finite gaps; no whole Brig or service gate claim.

@@ -1,0 +1,7 @@
+all modules verified
+# github.com/adamjlow/wire-server/go/services/brig
+./server.go:298:16: no new variables on left side of :=
+# github.com/adamjlow/wire-server/go/services/brig
+# [github.com/adamjlow/wire-server/go/services/brig]
+vet: ./server.go:298:16: no new variables on left side of :=
+Candidate checks failed: go vet failed (exit 1)
