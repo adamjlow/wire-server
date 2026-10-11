@@ -15,6 +15,7 @@ import (
 )
 
 type sessionNotification struct {
+	payload   []byte
 	user      gocql.UUID
 	requestID string
 }
@@ -39,7 +40,13 @@ func newSessionNotifications(ctx context.Context, peer brigPeers) *sessionNotifi
 				case <-n.ctx.Done():
 					return
 				case event := <-n.pending:
-					if err := peer.sessionRefresh(n.ctx, event.user, event.requestID); err != nil {
+					var err error
+					if event.payload != nil {
+						err = peer.pushSelfEvent(n.ctx, event.payload, event.requestID)
+					} else {
+						err = peer.sessionRefresh(n.ctx, event.user, event.requestID)
+					}
+					if err != nil {
 						log.Print("session refresh notification failed")
 					}
 				}
@@ -60,6 +67,16 @@ func (n *sessionNotifications) submit(ctx context.Context, user gocql.UUID, requ
 	return nil
 }
 
+func (n *sessionNotifications) submitPush(ctx context.Context, payload []byte, requestID string) {
+	select {
+	case n.pending <- sessionNotification{payload: payload, requestID: requestID}:
+	case <-ctx.Done():
+		log.Print("user notification canceled")
+	case <-n.ctx.Done():
+		log.Print("user notification unavailable")
+	}
+}
+
 func (p brigPeers) sessionRefresh(ctx context.Context, user gocql.UUID, requestID string) error {
 	body, err := json.Marshal([]any{map[string]any{
 		"recipients": []any{map[string]any{"user_id": user.String(), "route": "direct", "clients": []string{}}},
@@ -68,6 +85,10 @@ func (p brigPeers) sessionRefresh(ctx context.Context, user gocql.UUID, requestI
 	if err != nil {
 		return errors.New("session refresh encoding failed")
 	}
+	return p.pushSelfEvent(ctx, body, requestID)
+}
+
+func (p brigPeers) pushSelfEvent(ctx context.Context, body []byte, requestID string) error {
 	// Native GundeckAPIAccess streams chunked JSON and explicitly does not retry.
 	request, err := http.NewRequestWithContext(ctx, http.MethodPost, "http://"+p.gundeck.Address()+"/i/push/v2", io.NopCloser(bytes.NewReader(body)))
 	if err != nil {

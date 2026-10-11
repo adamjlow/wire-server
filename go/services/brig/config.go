@@ -45,6 +45,7 @@ type PostgresPoolConfig struct {
 	Idleness    Duration `yaml:"idlenessTimeout"`
 }
 type Config struct {
+	AWS              *brigAWSConfig     `yaml:"aws"`
 	Elasticsearch    *searchIndexConfig `yaml:"elasticsearch"`
 	PostgresPool     PostgresPoolConfig `yaml:"postgresqlPool"`
 	Brig             Endpoint           `yaml:"brig"`
