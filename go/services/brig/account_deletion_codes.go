@@ -105,6 +105,39 @@ func (s accountDeletionCodes) verify(ctx context.Context, key, supplied string) 
 	return nil, nil
 }
 
+var errDeleteUserInvalidCode = errors.New("invalid deletion verification code")
+
+type accountDeletionVerification struct {
+	codes   accountDeletionCodes
+	get     func(context.Context, gocql.UUID) (*storedUser, error)
+	execute func(context.Context, storedUser, string) error
+}
+
+func (s accountDeletionVerification) complete(ctx context.Context, key, supplied, requestID string) error {
+	if s.get == nil || s.execute == nil || s.codes.remove == nil {
+		return errors.New("account deletion verification dependencies unavailable")
+	}
+	code, err := s.codes.verify(ctx, key, supplied)
+	if err != nil {
+		return err
+	}
+	if code == nil || code.account == nil {
+		return errDeleteUserInvalidCode
+	}
+	user, err := s.get(ctx, *code.account)
+	if err != nil {
+		return err
+	}
+	// Native getAccountNoFilter includes deletion tombstones. Verification must
+	// replay cleanup for those accounts; a missing account still consumes the code.
+	if user != nil {
+		if err := s.execute(ctx, *user, requestID); err != nil {
+			return err
+		}
+	}
+	return s.codes.remove(ctx, key)
+}
+
 func (s verificationCodeStore) deletionLookup(ctx context.Context, key string) (*deletionVerificationCode, error) {
 	var value, email *string
 	var ttl, retries *int32

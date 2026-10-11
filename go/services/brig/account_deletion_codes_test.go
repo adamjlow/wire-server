@@ -127,3 +127,62 @@ func TestDeletionMailNativeTemplates(t *testing.T) {
 		t.Fatal("native processing headers")
 	}
 }
+
+func TestDeletionVerificationCleanupBeforeCodeRemoval(t *testing.T) {
+	ctx := context.Background()
+	id := gocql.TimeUUID()
+	deleted := int32(2)
+	row := deletionVerificationCode{account: &id, value: "synthetic-code", retries: 1}
+	var steps []string
+	failure := errors.New("synthetic cleanup failure")
+	fail := false
+	missing := false
+	s := accountDeletionVerification{
+		codes: accountDeletionCodes{
+			lookup: func(context.Context, string) (*deletionVerificationCode, error) {
+				steps = append(steps, "verify")
+				return &row, nil
+			},
+			insert: func(context.Context, deletionVerificationCode) error { t.Fatal("correct code rewritten"); return nil },
+			remove: func(context.Context, string) error { steps = append(steps, "remove-code"); return nil },
+		},
+		get: func(_ context.Context, user gocql.UUID) (*storedUser, error) {
+			steps = append(steps, "get")
+			if user != id {
+				t.Fatal("wrong account")
+			}
+			if missing {
+				return nil, nil
+			}
+			return &storedUser{ID: id, Status: &deleted}, nil
+		},
+		execute: func(_ context.Context, user storedUser, rid string) error {
+			steps = append(steps, "cleanup")
+			if user.Status == nil || *user.Status != 2 || rid != "synthetic-request" {
+				t.Fatal("tombstone/request identity")
+			}
+			if fail {
+				return failure
+			}
+			return nil
+		},
+	}
+	if err := s.complete(ctx, "synthetic-key", row.value, "synthetic-request"); err != nil || !reflect.DeepEqual(steps, []string{"verify", "get", "cleanup", "remove-code"}) {
+		t.Fatal(steps, err)
+	}
+	steps = nil
+	fail = true
+	if err := s.complete(ctx, "synthetic-key", row.value, "synthetic-request"); !errors.Is(err, failure) || !reflect.DeepEqual(steps, []string{"verify", "get", "cleanup"}) {
+		t.Fatal("cleanup failure consumed code", steps, err)
+	}
+	steps = nil
+	missing = true
+	if err := s.complete(ctx, "synthetic-key", row.value, "synthetic-request"); err != nil || !reflect.DeepEqual(steps, []string{"verify", "get", "remove-code"}) {
+		t.Fatal("missing account", steps, err)
+	}
+	steps = nil
+	row.account = nil
+	if err := s.complete(ctx, "synthetic-key", row.value, "synthetic-request"); !errors.Is(err, errDeleteUserInvalidCode) || !reflect.DeepEqual(steps, []string{"verify"}) {
+		t.Fatal("unbound code accepted", steps, err)
+	}
+}

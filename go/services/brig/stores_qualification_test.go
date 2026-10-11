@@ -1047,6 +1047,7 @@ func TestOwnedDurableStores(t *testing.T) {
 		t.Fatal("pending activation row remains", err)
 	}
 	qualifyAccountDeletionStores(t, ctx, stores, newRecord)
+	qualifyDeletionCodeStores(t, ctx, cassandra)
 	qualifyDeletionGroupStores(t, ctx, stores)
 	qualifyRemoteDeletionStores(t, ctx, connectionStore{cassandra: cassandra, domain: "example.com"})
 

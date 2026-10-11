@@ -1368,3 +1368,11 @@ set2FACodeGenerationDelaySecs. Actual scope1 stores/delivery/public HTTP remain
 unqualified; next execute native-schema code/throttle controls and attach complete
 verification/deletion pipeline. Root space must be recovered losslessly from
 owned superseded artifacts before the full backend, retaining the2GiB guard.
+
+Verification completion must getAccountNoFilter, replay cleanup even on deletion
+tombstones, and remove scope1 only after cleanup succeeds; a missing account still
+consumes the verified code, while a code without account UUID fails. Test that
+failure prefix and request identity in ordinary units. Extend the existing
+native-schema store control with scope1 TTL/account/retry/wrapping, successful
+verification retaining rows, throttle TTL, independent other-scope retention and
+null stored TTL rejection. No original assertions or native sources change.
