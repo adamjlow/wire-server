@@ -1315,3 +1315,22 @@ stops with configured Brig. Next verification-code/mail bindings, incoming remot
 deletion notification and actual internal replay; attach complete deletion engine
 and rerun original22 with separated profile actor. Resource recovery before full
 backend remains required; never lower2GiB guard or discard retained evidence.
+
+### Incoming remote account deletion
+
+Bind POST/federation/on-user-deleted-connections to actual Cassandra status reads
+and row deletes. Require origin-domain header, JSON object with exact required
+user/connections keys, UUIDs and1..1000 locals before any effect. Preserve native
+bounded16 per-local lookups using right_user IN [deleted], LocalQuorum/x1 reads,
+raw Accepted only, direct qualified remote user.delete fanout before bounded16
+non-retried exact-row deletes, and EmptyResponse JSON. Use parameterized queries,
+bounded recipients/concurrency/context, scrub store errors and trust only the same
+Federator-supplied origin boundary as native (no new backend auth policy).
+Reuse existing async push transport/chunking. Add finite malformed admission,
+ordered read/notify/delete/failure tests and native-schema controls preserving
+other remote users/domains and excluding legalhold history. No public self-delete,
+real native HTTP/e2e or full-service claim from these checks alone.
+
+Retain native whole-JSON parsing/body allocation rather than add an unreviewed
+HTTP size-contract change. Recipient count and worker bounds limit fanout; request
+body limits remain an inherited gateway/deployment concern, not newly fixed here.

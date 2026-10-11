@@ -299,6 +299,7 @@ func Run(ctx context.Context, c Config) error {
 		mail: mailDelivery.newClient, domain: c.Settings.Domain, locale: c.Settings.DefaultLocale,
 	}
 	notifications := newSessionNotifications(ctx, business.peers)
+	business.remoteDeletion = &remoteAccountDeletion{statuses: connectionStorage.remoteDeletionAccepted, remove: connectionStorage.removeRemoteDeletedUser, notify: notifications.submitPush}
 	business.localConnections.notify = notifications.submitPush
 	business.publicProfiles = &publicProfileService{domain: c.Settings.Domain, locale: c.Settings.DefaultLocale, emailVisibility: c.Settings.EmailVisibility, get: business.users.get, legalhold: business.peers.connectionLegalhold, enqueueDeletion: internalQueue.enqueueUserDeletion, now: time.Now, app: func(ctx context.Context, user, team gocql.UUID, requestID string) (*publicAppInfo, error) {
 		owner, err := business.users.get(ctx, user)

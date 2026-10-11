@@ -1048,5 +1048,6 @@ func TestOwnedDurableStores(t *testing.T) {
 	}
 	qualifyAccountDeletionStores(t, ctx, stores, newRecord)
 	qualifyDeletionGroupStores(t, ctx, stores)
+	qualifyRemoteDeletionStores(t, ctx, connectionStore{cassandra: cassandra, domain: "example.com"})
 
 }
