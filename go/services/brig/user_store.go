@@ -96,25 +96,32 @@ func (s userStore) getCassandra(ctx context.Context, user gocql.UUID) (*storedUs
 	if err != nil {
 		return nil, userStorageError(err)
 	}
+	if err := decodeCassandraUser(&record, pictures, sso); err != nil {
+		return nil, err
+	}
+	return &record, nil
+}
+
+func decodeCassandraUser(record *storedUser, pictures [][]byte, sso *string) error {
 	for _, picture := range pictures {
 		var object map[string]json.RawMessage
 		if json.Unmarshal(picture, &object) != nil || object == nil {
-			return nil, errors.New("invalid stored picture")
+			return errors.New("invalid stored picture")
 		}
 		record.Picture = append(record.Picture, json.RawMessage(picture))
 	}
 	if sso != nil {
 		if !json.Valid([]byte(*sso)) {
-			return nil, errors.New("invalid stored SSO identity")
+			return errors.New("invalid stored SSO identity")
 		}
 		record.SSO = json.RawMessage(*sso)
 	}
 	for _, asset := range record.Assets {
 		if asset.Type != 0 || (asset.Size != nil && *asset.Size != 0 && *asset.Size != 1) {
-			return nil, errors.New("invalid stored asset")
+			return errors.New("invalid stored asset")
 		}
 	}
-	return &record, nil
+	return nil
 }
 
 func (s userStore) getPostgres(ctx context.Context, user gocql.UUID) (*storedUser, error) {

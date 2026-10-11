@@ -793,4 +793,62 @@ func TestOwnedDurableStores(t *testing.T) {
 	if _, err := stores["cassandra"].teamAppIDs(ctx, appTeam); err == nil {
 		t.Fatal("app IDs bypassed native full-row description validation")
 	}
+	for mode, store := range stores {
+		first, second, missing := user(), user(), user()
+		firstRow, secondRow := newRecord(first), newRecord(second)
+		team := user()
+		handle := "synthetic-batch-handle"
+		firstRow.Team, firstRow.Handle = &team, &handle
+		if err := store.create(ctx, firstRow, nil, nil); err != nil {
+			t.Fatal(err)
+		}
+		if err := store.create(ctx, secondRow, nil, nil); err != nil {
+			t.Fatal(err)
+		}
+		batch, err := store.getMany(ctx, []gocql.UUID{second, missing, first})
+		if err != nil || len(batch) != 2 {
+			t.Fatal(mode, "native multi-user read", len(batch), err)
+		}
+		seen := map[gocql.UUID]storedUser{}
+		for _, row := range batch {
+			seen[row.ID] = row
+		}
+		row, found := seen[first]
+		if !found || row.Team == nil || *row.Team != team || row.Handle == nil || *row.Handle != handle || len(row.Assets) != 1 || row.Assets[0].Key != firstRow.Assets[0].Key {
+			t.Fatal(mode, "native batch projection lost/swapped team, handle or assets")
+		}
+		if mode == "migration-to-postgresql" && (batch[0].ID != second || batch[1].ID != first) {
+			t.Fatal("migration batch did not preserve request order")
+		}
+		if mode == "postgresql" && batch[0].ID.String() > batch[1].ID.String() {
+			t.Fatal("PostgreSQL batch did not preserve native Map order")
+		}
+		if empty, err := store.getMany(ctx, nil); err != nil || empty == nil || len(empty) != 0 {
+			t.Fatal(mode, "empty batch", err)
+		}
+	}
+	shared, cassOnly := user(), user()
+	if err := stores["cassandra"].create(ctx, newRecord(shared), nil, nil); err != nil {
+		t.Fatal(err)
+	}
+	if err := stores["cassandra"].create(ctx, newRecord(cassOnly), nil, nil); err != nil {
+		t.Fatal(err)
+	}
+	pgRow := newRecord(shared)
+	pgRow.Name = "Synthetic preferred PostgreSQL row"
+	if err := stores["postgresql"].create(ctx, pgRow, nil, nil); err != nil {
+		t.Fatal(err)
+	}
+	if batch, err := stores["migration-to-postgresql"].getMany(ctx, []gocql.UUID{cassOnly, shared}); err != nil || len(batch) != 2 || batch[0].ID != cassOnly || batch[1].Name != pgRow.Name {
+		t.Fatal("native batch PostgreSQL priority/Cassandra fallback", err)
+	}
+	if _, err := postgres.Exec(ctx, `INSERT INTO deleted_user(id,created_at) VALUES($1::uuid,now())`, shared.String()); err != nil {
+		t.Fatal(err)
+	}
+	for _, mode := range []string{"postgresql", "migration-to-postgresql"} {
+		batch, err := stores[mode].getMany(ctx, []gocql.UUID{shared})
+		if err != nil || len(batch) != 1 || batch[0].Status == nil || *batch[0].Status != 2 || batch[0].Name != "default" || batch[0].Email != nil || len(batch[0].Assets) != 0 {
+			t.Fatal(mode, "native batch deletion tombstone failed", err)
+		}
+	}
 }

@@ -6,6 +6,7 @@ import (
 	"encoding/binary"
 	"errors"
 	"fmt"
+	"sort"
 	"time"
 
 	"github.com/apache/cassandra-gocql-driver/v2"
@@ -87,6 +88,10 @@ func (s userAuthStore) withMigrationLock(ctx context.Context, user gocql.UUID, a
 }
 
 func (s userAuthStore) withMigrationLockTimeout(ctx context.Context, user gocql.UUID, wait time.Duration, action func() error) error {
+	return s.withUserMigrationLocks(ctx, []gocql.UUID{user}, wait, action)
+}
+
+func (s userAuthStore) withUserMigrationLocks(ctx context.Context, users []gocql.UUID, wait time.Duration, action func() error) error {
 	// The native shared lock spans the backend lookup and complete action.
 	// A canceled/failed lease is closed before reuse to release session locks.
 	lockCtx, stop := context.WithTimeout(ctx, wait)
@@ -95,8 +100,13 @@ func (s userAuthStore) withMigrationLockTimeout(ctx context.Context, user gocql.
 		stop()
 		return userStorageError(err)
 	}
-	key := userMigrationLockKey(user)
-	_, err = lease.Exec(lockCtx, `SELECT pg_advisory_lock_shared($1::bigint)`, key)
+	keys := make([]int64, len(users))
+	for i, user := range users {
+		keys[i] = userMigrationLockKey(user)
+	}
+	// Native sorts folded lock IDs (not UUIDs) before acquiring the full set.
+	sort.Slice(keys, func(i, j int) bool { return keys[i] < keys[j] })
+	_, err = lease.Exec(lockCtx, `SELECT pg_advisory_lock_shared(lock_id) FROM unnest($1::bigint[]) AS locks(lock_id)`, keys)
 	stop()
 	if err != nil {
 		closeCtx, cancel := context.WithTimeout(context.Background(), time.Second)
@@ -108,7 +118,7 @@ func (s userAuthStore) withMigrationLockTimeout(ctx context.Context, user gocql.
 	defer func() {
 		unlock, cancel := context.WithTimeout(context.Background(), time.Second)
 		defer cancel()
-		if _, err := lease.Exec(unlock, `SELECT pg_advisory_unlock_shared($1::bigint)`, key); err != nil {
+		if _, err := lease.Exec(unlock, `SELECT pg_advisory_unlock_shared(lock_id) FROM unnest($1::bigint[]) AS locks(lock_id)`, keys); err != nil {
 			_ = lease.Conn().Close(unlock)
 		}
 		lease.Release()
