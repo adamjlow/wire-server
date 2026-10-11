@@ -26,7 +26,7 @@ def checked(args, timeout=30):
     return result.stdout.strip()
 
 
-def inside(gundeck_path=None, access_switchback=False, login_contract=False, activation_contract=False, registration_contract=False, saml_registration_contract=False, public_registration_contract=False, password_reset_contract=False, password_change_contract=False, ses_feedback_contract=False, properties_contract=False, client_update_contract=False, client_registration_contract=False, client_lifecycle_contract=False, store_fixture_path=None, mls_upload_originals=False):
+def inside(gundeck_path=None, access_switchback=False, login_contract=False, activation_contract=False, registration_contract=False, saml_registration_contract=False, public_registration_contract=False, password_reset_contract=False, password_change_contract=False, ses_feedback_contract=False, properties_contract=False, client_update_contract=False, client_registration_contract=False, client_lifecycle_contract=False, store_fixture_path=None, mls_upload_originals=False, stomp_internal_events=False):
     registration_contract = registration_contract or saml_registration_contract
     if os.getuid() != 65534 or os.environ.get('WIRE_E2E_DISPOSABLE') != '1':
         raise ValueError('owned nonroot Docker runner required')
@@ -36,6 +36,8 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
     report = {'result': 'failed', 'e2e_executed': False, 'scope': __doc__, 'records': []}
     active = None
     original_failures = []
+    if stomp_internal_events:
+        import stomp_broker
 
     def request(method, path, headers=None, body=None, raw_body=None, port=8082):
         connection = http.client.HTTPConnection('127.0.0.1', port, timeout=15)
@@ -142,6 +144,9 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
         return actor_id
 
     def enqueue_replay(actor_id):
+        if stomp_internal_events:
+            stomp_broker.send(json.dumps({'type': 'user.delete', 'user': actor_id}).encode())
+            return
         internal_sqs('send-message', '--queue-url', internal_queue_url,
             '--message-body', json.dumps({'type': 'user.delete', 'user': actor_id}))
 
@@ -149,11 +154,15 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
         deadline = time.monotonic()+30
         while True:
             status = request('GET', '/i/users/'+actor_id+'/status')[0]
-            attributes = internal_sqs('get-queue-attributes', '--queue-url',
-                internal_queue_url, '--attribute-names',
-                'ApproximateNumberOfMessages', 'ApproximateNumberOfMessagesNotVisible')['Attributes']
+            if stomp_internal_events:
+                snapshot = stomp_broker.queue_state()
+                attributes = {key: snapshot[key] for key in ('QueueSize', 'InFlightCount')}
+            else:
+                attributes = internal_sqs('get-queue-attributes', '--queue-url',
+                    internal_queue_url, '--attribute-names',
+                    'ApproximateNumberOfMessages', 'ApproximateNumberOfMessagesNotVisible')['Attributes']
             if status['status'] == 200 and status['json'] == {'status': 'deleted'} and all(
-                    int(attributes[k]) == 0 for k in ('ApproximateNumberOfMessages', 'ApproximateNumberOfMessagesNotVisible')):
+                    int(value) == 0 for value in attributes.values()):
                 break
             assert time.monotonic() < deadline, 'queued account cleanup not completed and acknowledged'
             time.sleep(0.2)
@@ -167,6 +176,13 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
         runtime.stage()
         runtime.initialize()
         peers = json.loads(Path('/fixtures/peers.json').read_text())['0']
+        if stomp_internal_events:
+            stomp_broker.wait_ready()
+            peers['brig']['internalEvents'] = {'queueType': 'stomp', 'queueName': stomp_broker.QUEUE}
+            peers['brig']['stomp'] = {'stomHost': 'activemq', 'stomPort': 61613, 'stomTls': False}
+            peers['brig']['optSettings']['setStomp'] = '/fixtures/stomp-credentials.json'
+            report['internal_transport'] = {'type': 'stomp', 'broker_image': stomp_broker.IMAGE,
+                'broker_image_id': stomp_broker.IMAGE_ID, 'synthetic_authentication': True}
         # Direct Brig HTTP needs its configured native peers, but no Nginx or
         # second backend. Original end-to-end suites remain separate/full.
         for name, config in peers.items():
@@ -762,12 +778,15 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
         native_records = [request(*case)[0] for case in cases]
         report['records'].append({'implementation': 'haskell', 'observations': native_records})
         if client_lifecycle_contract:
-            internal_queue_url = internal_sqs('get-queue-url', '--queue-name',
-                peers['brig']['internalEvents']['queueName'])['QueueUrl']
+            if not stomp_internal_events:
+                internal_queue_url = internal_sqs('get-queue-url', '--queue-name',
+                    peers['brig']['internalEvents']['queueName'])['QueueUrl']
             native_replay_actor = create_replay_actor()
             enqueue_replay(native_replay_actor)
             report['internal_queue_native_replay'] = await_replay(native_replay_actor)
             pending_replay_actor = create_replay_actor()
+            if stomp_internal_events:
+                report['stomp_native_failure_redelivery'] = stomp_broker.failure_probe()
         active.terminate()
         report['native_stop_exit_code'] = active.wait(timeout=35)
         assert report['native_stop_exit_code'] == 0, 'native Brig did not stop cleanly'
@@ -775,6 +794,8 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
         with socket.socket() as check:
             assert check.connect_ex(('127.0.0.1', 8082)) != 0, 'native listener remains'
         if client_lifecycle_contract:
+            if stomp_internal_events:
+                report['stomp_native_failure_cleanup'] = stomp_broker.drain_failure()
             # Enqueue only after native ownership ends: Go must consume durable
             # work for an account/properties created by the Haskell process.
             enqueue_replay(pending_replay_actor)
@@ -980,10 +1001,14 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             go_deleted_state=[request('GET',lifecycle_path,lifecycle_headers)[0],request('GET',lifecycle_path+'/prekeys',lifecycle_headers)[0]]
             report['client_lifecycle_go_deleted_state']=go_deleted_state
             assert go_deleted_state[0]['status']==404 and go_deleted_state[1]['json']==[], 'Go deletion retained client/prekeys'
+            if stomp_internal_events:
+                report['stomp_go_failure_redelivery'] = stomp_broker.failure_probe()
             active.terminate();report['client_lifecycle_go_stop_exit_code']=active.wait(timeout=35)
             assert report['client_lifecycle_go_stop_exit_code']==0, 'Go lifecycle stop failed'
             with socket.socket() as check:
                 assert check.connect_ex(('127.0.0.1',8082))!=0, 'Go lifecycle listener remains'
+            if stomp_internal_events:
+                report['stomp_go_failure_cleanup'] = stomp_broker.drain_failure()
             log=open('/reports/brig-native-client-lifecycle-switchback.log','w');logs.append(log)
             active=subprocess.Popen([str(native_brig_path),'-c',str(runtime.WORK/'brig-static-0.json')],cwd=runtime.WORK/'services/brig',stdout=log,stderr=subprocess.STDOUT)
             processes.append(active);ready(active)
@@ -1658,6 +1683,7 @@ def main():
     parser.add_argument('--client-registration-contract', action='store_true')
     parser.add_argument('--client-lifecycle-contract', action='store_true')
     parser.add_argument('--mls-upload-originals', action='store_true')
+    parser.add_argument('--stomp-internal-events', action='store_true')
     args = parser.parse_args()
     if (args.registration_contract or args.saml_registration_contract) and (args.activation_contract or args.access_switchback or args.login_contract):
         parser.error('registration observation runs separately from credential/activation observations')
@@ -1679,8 +1705,10 @@ def main():
         parser.error('client lifecycle observation runs separately')
     if args.mls_upload_originals and not args.client_lifecycle_contract:
         parser.error('MLS upload originals require client lifecycle observation')
+    if args.stomp_internal_events and not args.client_lifecycle_contract:
+        parser.error('STOMP qualification requires durable client/queue lifecycle observation')
     if args.in_container:
-        return inside(args.gundeck_path, args.access_switchback, args.login_contract, args.activation_contract, args.registration_contract, args.saml_registration_contract, args.public_registration_contract, args.password_reset_contract, args.password_change_contract, args.ses_feedback_contract, args.properties_contract, args.client_update_contract, args.client_registration_contract, args.client_lifecycle_contract, args.store_fixture_path, args.mls_upload_originals)
+        return inside(args.gundeck_path, args.access_switchback, args.login_contract, args.activation_contract, args.registration_contract, args.saml_registration_contract, args.public_registration_contract, args.password_reset_contract, args.password_change_contract, args.ses_feedback_contract, args.properties_contract, args.client_update_contract, args.client_registration_contract, args.client_lifecycle_contract, args.store_fixture_path, args.mls_upload_originals, args.stomp_internal_events)
     if args.binary is None or args.build_receipt is None or args.output is None:
         parser.error('identified binary, receipt and new output required')
     sys.path.insert(0, str(ROOT / 'tools/parity/docker'))
@@ -1734,6 +1762,11 @@ def main():
         runner['command'].append('--client-lifecycle-contract')
     if args.mls_upload_originals:
         runner['command'].append('--mls-upload-originals')
+    if args.stomp_internal_events:
+        import stomp_broker
+        stomp_broker.prepare(spec, output)
+        assert checked(['docker', 'image', 'inspect', stomp_broker.IMAGE, '--format', '{{.Id}}']) == stomp_broker.IMAGE_ID
+        runner['command'].append('--stomp-internal-events')
     if args.gundeck_binary:
         runner['command'] += ['--gundeck-path', '/candidate/gundeck']
         runner['volumes'].append({'type': 'bind', 'source': str(args.gundeck_binary.resolve(strict=True)),
@@ -1767,6 +1800,8 @@ def main():
         # the one-off cluster job with detached services does not establish
         # completed cluster initialization before native/Go peer startup.
         checked(command + ['up', '-d', *[name for name in environment.DEPENDENCIES if name != 'redis-cluster']], timeout=240)
+        if args.stomp_internal_events:
+            checked(command + ['up', '-d', 'activemq'], timeout=90)
         deadline = time.monotonic() + 90
         while True:
             try:
@@ -1792,6 +1827,13 @@ def main():
     except Exception as error:
         result['failure'] = str(error)
     finally:
+        if args.stomp_internal_events:
+            try:
+                captured = subprocess.run(command + ['logs', 'activemq'], capture_output=True, text=True, timeout=30)
+                (output / 'activemq.log').write_text(captured.stdout+captured.stderr)
+                result['broker_log_capture_exit_code'] = captured.returncode
+            except subprocess.TimeoutExpired:
+                result['broker_log_capture_failed'] = True
         cleanup = subprocess.run(command + ['down', '--volumes', '--remove-orphans'], capture_output=True, text=True, timeout=120)
         result['cleanup_exit_code'] = cleanup.returncode
         result['remaining_resources'] = {kind: checked(['docker', kind, 'ls', *(['-a'] if kind == 'container' else []), '-q', '--filter', 'label=com.docker.compose.project=' + record['project']])

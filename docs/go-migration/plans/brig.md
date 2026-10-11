@@ -1479,3 +1479,26 @@ retains the initial failures, exact artifact identities, new dependency license 
 maintenance receipts. Same-author review under existing delegation accepts this
 increment only. Actual native ActiveMQ, service-delete and final535/eight-Go gates
 remain required; no default or service-stage changes and no new push.
+
+Actual STOMP qualification plan: pin Apache's official ActiveMQ6.3.2 amd64
+manifest sha256:1cacfbd9c08ad437c5e1177a9f1217e7c7ada62a64065128acd1a81866a03711
+(inspected registry manifest). Provision only a task-owned nonroot broker with
+private Docker networking, no host ports, bounded memory/CPU, read-only fixtures
+and disposable tmpfs data. Use synthetic credentials and normal verified TLS;
+never expose management outside the private namespace. Reuse the unchanged22
+original executions and native-Go-native account/property queue replay with a
+transport-specific enqueue/queue-state observer; do not change original assertions.
+Add a finite actual broker redelivery/acknowledgement control on a separate queue.
+Exact producer/consumer executable and broker identities, native results, original
+XML and independent cleanup must be retained. Reuse previously passing production
+checks only when executable inputs are identical; observer/environment changes
+require rerunning their actual backend qualification. No whole535/stage claim.
+
+The owned broker smoke passed authenticated STOMP1.2 persistent enqueue and
+read-only authenticated Jolokia QueueSize/Dispatch/Enqueue/InFlight/Dequeue reads,
+with nonroot/read-only/caps-none/private-network/tmpfs constraints and empty cleanup.
+Initial direct-JAR console command, missing Spring property resolution, premature
+management readiness and missing Jolokia policy location attempts are retained;
+correct only the disposable fixture. Original broker POST/auth/read-only JMX policy
+is preserved; only management binding/IP admission is widened within the private
+namespace, with no host ports. No production broker configuration is changed.
