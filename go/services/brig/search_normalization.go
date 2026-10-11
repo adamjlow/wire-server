@@ -4,7 +4,7 @@
 package brig
 
 /*
-#cgo LDFLAGS: -l:libicui18n.a -l:libicuuc.a -l:libicudata.a -l:libstdc++.a -lm
+#cgo LDFLAGS: -L/opt/brig-cxx/usr/lib/gcc/x86_64-linux-gnu/14 -l:libicui18n.a -l:libicuuc.a -l:libicudata.a -l:libstdc++.a -lm
 #include <unicode/utrans.h>
 #include <unicode/ustring.h>
 #include <stdlib.h>

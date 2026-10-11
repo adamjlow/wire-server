@@ -1,0 +1,11 @@
+{
+  "stage": "pre-Go-check compiler archive assertion",
+  "unit_or_state_tests_executed": false,
+  "reason": "GCC built-in archive path precedes LIBRARY_PATH",
+  "actual_archive_path": "/usr/lib/gcc/x86_64-linux-gnu/14/libstdc++.a",
+  "fixed_package_source": "gcc-14",
+  "fixed_package_version": "14.4.0-3",
+  "fixed_deb_sha256": "0ad42a2a8cd966b5cb95e8e72429052aa3fbf422d64d7f69448d9c48bb1cd5db",
+  "correction": "explicit -L fixed archive path in cgo flags, -B fixed path for compiler preflight",
+  "owned_cleanup": "successful and empty"
+}
