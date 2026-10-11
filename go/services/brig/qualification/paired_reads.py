@@ -259,6 +259,9 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             property_user=actor['json']['id']
             property_headers={'Z-User':property_user,'Z-Connection':'synthetic-property-connection'}
             raw_property=' \n{"x":1,"x":2,"large":9007199254740993}\t'
+            property_settings=peers['brig']['optSettings']
+            property_max_key=property_settings.get('setPropertyMaxKeyLen',1024)
+            property_max_value=property_settings.get('setPropertyMaxValueLen',524288)
             property_cases=[
                 ('GET','/properties/missing',property_headers),
                 ('PUT','/properties/raw',property_headers,None,raw_property),
@@ -271,13 +274,15 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
                 ('PUT','/properties/a%2Fb',property_headers,True),
                 ('GET','/properties/a%2Fb',property_headers),
                 ('PUT','/properties/bad',property_headers,None,'{'),
+                ('PUT','/properties/'+('k'*(property_max_key+1)),property_headers,True),
+                ('PUT','/properties/too-large',property_headers,None,' '*property_max_value+'0'),
                 ('DELETE','/properties/raw',property_headers),
                 ('GET','/properties/raw',property_headers),
                 ('DELETE','/properties',property_headers),
             ]
             native_properties=[request(*case)[0] for case in property_cases]
             report['native_properties']=native_properties
-            assert [r['status'] for r in native_properties]==[404,200,200,200,200,200,400,400,200,200,400,200,404,200], 'native property contract changed'
+            assert [r['status'] for r in native_properties]==[404,200,200,200,200,200,400,400,200,200,400,403,403,200,404,200], 'native property contract changed'
             assert native_properties[2]['body']==raw_property, 'native raw bytes changed'
             staged,_=request('PUT','/properties/native-durable',property_headers,None,raw_property)
             assert staged['status']==200, 'native durable property setup failed'

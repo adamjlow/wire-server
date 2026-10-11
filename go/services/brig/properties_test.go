@@ -110,7 +110,7 @@ func TestPropertyMutationPrecedenceAndNotification(t *testing.T) {
 					t.Fatal(p)
 				}
 				event := p["payload"].([]any)[0].(map[string]any)
-				if event["type"] != "user.properties-set" || event["value"].(map[string]any)["x"] != float64(2) {
+				if event["type"] != "user.properties-set" || event["value"].(map[string]any)["x"] != float64(1) {
 					t.Fatal(event)
 				}
 				rcpt := p["recipients"].([]any)[0].(map[string]any)
@@ -189,6 +189,42 @@ func TestPropertyHeadersEscapedKeysAndDeletionEvents(t *testing.T) {
 	for _, raw := range []string{`"\ud800"`, `"\udc00"`, "true false", string([]byte{'"', 0xff, '"'})} {
 		if _, err := parsePropertyValue([]byte(raw)); err == nil {
 			t.Fatal("accepted malformed JSON")
+		}
+	}
+}
+
+func TestPropertyCapturedNativeParserAndMedia(t *testing.T) {
+	value, err := parsePropertyValue([]byte(`{"x":{"a":1,"a":2},"x":3,"list":[{"k":true,"k":false}],"empty":[]}`))
+	if err != nil {
+		t.Fatal(err)
+	}
+	object := value.(map[string]any)
+	if object["x"].(map[string]any)["a"] != json.Number("1") || object["list"].([]any)[0].(map[string]any)["k"] != true {
+		t.Fatal(object)
+	}
+	_, err = parsePropertyValue([]byte(" \n{\t"))
+	w := httptest.NewRecorder()
+	propertyHTTPError(w, err)
+	if w.Code != 400 || w.Header().Get("Content-Type") != "application/json" || !strings.Contains(w.Body.String(), "Unexpected end-of-input, expecting record key literal or }") {
+		t.Fatal(w.Code, w.Header(), w.Body.String())
+	}
+	s := newPropertyService(Config{}, &testProperties{rows: map[string][]byte{}}, nil)
+	for _, tc := range []struct {
+		method, path, body, media string
+		status                    int
+	}{
+		{"GET", "/properties/missing", "", "text/plain;charset=utf-8", 404},
+		{"PUT", "/properties/key", "null", "", 200},
+		{"DELETE", "/properties/key", "", "", 200},
+	} {
+		r := httptest.NewRequest(tc.method, tc.path, strings.NewReader(tc.body))
+		r.Header.Set("Z-User", gocql.TimeUUID().String())
+		r.Header.Set("Z-Connection", "synthetic")
+		r.Header.Set("Content-Type", "application/json")
+		w := httptest.NewRecorder()
+		s.handle(w, r, tc.path)
+		if w.Code != tc.status || w.Header().Get("Content-Type") != tc.media || w.Body.Len() != 0 {
+			t.Fatal(w.Code, w.Header(), w.Body.String())
 		}
 	}
 }

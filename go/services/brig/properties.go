@@ -54,15 +54,81 @@ func parsePropertyValue(raw []byte) (any, error) {
 	}
 	decoder := json.NewDecoder(bytes.NewReader(raw))
 	decoder.UseNumber()
-	var value any
-	if decoder.Decode(&value) != nil {
-		return nil, errPropertyInvalid
+	value, err := decodePropertyValue(decoder, 0)
+	if err != nil {
+		return nil, err
 	}
 	var extra any
 	if decoder.Decode(&extra) != io.EOF {
 		return nil, errPropertyInvalid
 	}
 	return value, nil
+}
+
+type propertyJSONError struct{ message string }
+
+func (e propertyJSONError) Error() string        { return e.message }
+func (e propertyJSONError) Is(target error) bool { return target == errPropertyInvalid }
+
+// The pinned native Aeson parser keeps the first occurrence of duplicate keys.
+// Use tokens rather than Go's object decoder, which overwrites earlier keys.
+func decodePropertyValue(decoder *json.Decoder, depth int) (any, error) {
+	if depth > 10000 {
+		return nil, errPropertyInvalid
+	}
+	token, err := decoder.Token()
+	if err != nil {
+		return nil, errPropertyInvalid
+	}
+	delimiter, compound := token.(json.Delim)
+	if !compound {
+		return token, nil
+	}
+	switch delimiter {
+	case '{':
+		object := map[string]any{}
+		for decoder.More() {
+			keyToken, err := decoder.Token()
+			if err == io.EOF {
+				return nil, propertyJSONError{"Unexpected end-of-input, expecting record key literal or }"}
+			}
+			key, ok := keyToken.(string)
+			if err != nil || !ok {
+				return nil, errPropertyInvalid
+			}
+			value, err := decodePropertyValue(decoder, depth+1)
+			if err != nil {
+				return nil, err
+			}
+			if _, exists := object[key]; !exists {
+				object[key] = value
+			}
+		}
+		end, err := decoder.Token()
+		if err == io.EOF {
+			return nil, propertyJSONError{"Unexpected end-of-input, expecting record key literal or }"}
+		}
+		if err != nil || end != json.Delim('}') {
+			return nil, errPropertyInvalid
+		}
+		return object, nil
+	case '[':
+		array := []any{}
+		for decoder.More() {
+			value, err := decodePropertyValue(decoder, depth+1)
+			if err != nil {
+				return nil, err
+			}
+			array = append(array, value)
+		}
+		end, err := decoder.Token()
+		if err != nil || end != json.Delim(']') {
+			return nil, errPropertyInvalid
+		}
+		return array, nil
+	default:
+		return nil, errPropertyInvalid
+	}
 }
 
 func (s propertyService) set(ctx context.Context, user gocql.UUID, key string, raw []byte, connection, requestID string) error {
@@ -118,7 +184,12 @@ func propertyHTTPError(w http.ResponseWriter, err error) {
 	case errors.Is(err, errPropertyCount):
 		wireError(w, 403, "too-many-properties", "Too many properties")
 	case errors.Is(err, errPropertyInvalid):
-		wireError(w, 400, "bad-request", "Invalid JSON")
+		message := "Invalid JSON"
+		var parseError propertyJSONError
+		if errors.As(err, &parseError) {
+			message = parseError.message
+		}
+		authenticationWireError(w, 400, "bad-request", message)
 	default:
 		wireError(w, 500, "internal-server-error", "Internal Server Error")
 	}
@@ -157,7 +228,7 @@ func (s propertyService) handle(w http.ResponseWriter, r *http.Request, path str
 	}
 	key := strings.TrimPrefix(path, "/properties/")
 	if keyPath && !validPropertyKey(key) {
-		routeParseError(w, "Error parsing URL piece failed: Invalid printable ASCII characters")
+		routeParseError(w, "Invalid printable ASCII characters")
 		return true
 	}
 	ctx := r.Context()
@@ -169,6 +240,7 @@ func (s propertyService) handle(w http.ResponseWriter, r *http.Request, path str
 				return true
 			}
 			if !exists {
+				w.Header().Set("Content-Type", "text/plain;charset=utf-8")
 				w.WriteHeader(404)
 				return true
 			}
@@ -240,7 +312,6 @@ func (s propertyService) handle(w http.ResponseWriter, r *http.Request, path str
 		propertyHTTPError(w, err)
 		return true
 	}
-	w.Header().Set("Content-Type", "application/json;charset=utf-8")
 	w.WriteHeader(200)
 	return true
 }
