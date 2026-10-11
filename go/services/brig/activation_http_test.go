@@ -73,3 +73,45 @@ func TestActivationHTTPDryrunAndInvalidCode(t *testing.T) {
 		})
 	}
 }
+
+func TestInternalActivationPairHTTPValidatesBeforeStorage(t *testing.T) {
+	h := activationHTTP{lookupPair: func(context.Context, string) (map[string]string, error) {
+		t.Fatal("invalid request reached storage")
+		return nil, nil
+	}}
+	for _, c := range []struct {
+		method, path string
+		status       int
+	}{
+		{"POST", "/i/users/activation-code?email=synthetic@example.com", 405},
+		{"GET", "/i/users/activation-code", 400},
+		{"GET", "/i/users/activation-code?email=not-an-address", 400},
+	} {
+		w := httptest.NewRecorder()
+		h.handleInternalPair(w, httptest.NewRequest(c.method, c.path, nil))
+		if w.Code != c.status {
+			t.Fatal("wrong internal pair rejection", w.Code)
+		}
+	}
+	for _, found := range []bool{false, true} {
+		h.lookupPair = func(_ context.Context, email string) (map[string]string, error) {
+			if email != "synthetic@example.com" {
+				t.Fatal("email parser changed")
+			}
+			if !found {
+				return nil, nil
+			}
+			return map[string]string{"key": "synthetic-key", "code": "123456"}, nil
+		}
+		w := httptest.NewRecorder()
+		h.handleInternalPair(w, httptest.NewRequest("GET", "/i/users/activation-code?email=synthetic@example.com", nil))
+		if found {
+			var pair map[string]string
+			if w.Code != 200 || json.Unmarshal(w.Body.Bytes(), &pair) != nil || len(pair) != 2 || pair["code"] != "123456" {
+				t.Fatal("pair response changed")
+			}
+		} else if w.Code != 404 || !strings.Contains(w.Body.String(), "Activation key not found.") {
+			t.Fatal("missing pair contract changed")
+		}
+	}
+}

@@ -15,10 +15,11 @@ import (
 )
 
 type activationHTTP struct {
-	service   activationAPI
-	syncIndex func(context.Context, gocql.UUID, string) error
-	events    activationEvents
-	peers     brigPeers
+	service    activationAPI
+	lookupPair func(context.Context, string) (map[string]string, error)
+	syncIndex  func(context.Context, gocql.UUID, string) error
+	events     activationEvents
+	peers      brigPeers
 }
 
 type activateRequest struct {
@@ -170,4 +171,35 @@ func (h activationHTTP) handle(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	readJSON(w, r, map[string]any{"email": result.email, "first": result.first})
+}
+
+func (h activationHTTP) handleInternalPair(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet && r.Method != http.MethodHead {
+		w.WriteHeader(http.StatusMethodNotAllowed)
+		return
+	}
+	values, present := r.URL.Query()["email"]
+	if !present || len(values) == 0 {
+		routeParseError(w, "Query parameter email is required")
+		return
+	}
+	email, err := canonicalRegistrationEmail(values[0])
+	if err != nil {
+		routeParseError(w, "Error parsing query parameter email failed: Invalid email")
+		return
+	}
+	if h.lookupPair == nil {
+		authenticationWireError(w, 500, "server-error", "Internal Server Error")
+		return
+	}
+	pair, err := h.lookupPair(r.Context(), email)
+	if err != nil {
+		authenticationWireError(w, 500, "server-error", "Internal Server Error")
+		return
+	}
+	if pair == nil {
+		authenticationWireError(w, 404, "not-found", "Activation key not found.")
+		return
+	}
+	readJSON(w, r, pair)
 }

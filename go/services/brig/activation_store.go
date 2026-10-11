@@ -139,3 +139,23 @@ func (s activationStore) verify(ctx context.Context, key, code string) (*activat
 	}
 	return nil, errInvalidActivationCode
 }
+
+// Native LookupActivationCode reads only user and code, independently of the
+// activation verifier's scope/retry/TTL projection.
+func (s activationStore) lookupPair(ctx context.Context, email string) (map[string]string, error) {
+	key, err := activationEmailKey(email)
+	if err != nil {
+		return nil, err
+	}
+	var user *gocql.UUID
+	var code *string
+	err = s.cassandra.Query(`SELECT user,code FROM activation_keys WHERE key=?`, key).
+		WithContext(ctx).Consistency(gocql.LocalQuorum).RetryPolicy(&gocql.SimpleRetryPolicy{NumRetries: 1}).Scan(&user, &code)
+	if errors.Is(err, gocql.ErrNotFound) {
+		return nil, nil
+	}
+	if err != nil || code == nil || !validActivationValue(*code) {
+		return nil, errors.New("activation pair read failed")
+	}
+	return map[string]string{"key": key, "code": *code}, nil
+}

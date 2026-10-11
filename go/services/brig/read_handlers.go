@@ -80,6 +80,10 @@ func (b brigReadHandlers) handle(w http.ResponseWriter, r *http.Request, path st
 		b.accounts.handle(w, r)
 		return true
 	}
+	if path == "/i/users/activation-code" && b.activation != nil {
+		b.activation.handleInternalPair(w, r)
+		return true
+	}
 	if path == "/activate" && b.activation != nil {
 		b.activation.handle(w, r)
 		return true
