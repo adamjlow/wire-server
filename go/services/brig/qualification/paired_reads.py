@@ -548,7 +548,7 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             report['client_lifecycle_native_reads_go']=native_go_state
             report['client_lifecycle_native_reads_deletion']=native_deleted_state
             assert all(same(ref,actual) for ref,actual in zip(go_created_state,native_go_state)), 'native lost Go-created client state'
-            assert all(same(ref,actual) for ref,actual in zip(go_deleted_state,native_deleted_state)), 'native lost Go deletion state'
+            assert all(same(ref,actual) for ref,actual in zip(go_deleted_state,native_deleted_state)), 'native deletion response mismatch'
             claim,_=request('GET','/v19/users/'+peers['brig']['optSettings']['setFederationDomain']+'/'+lifecycle_user+'/prekeys/'+go_id,lifecycle_headers)
             report['client_lifecycle_native_claims_go_prekey']=claim
             assert claim['status']==200 and claim['json']['prekey']=={'id':7,'key':ordinary_key}, 'native cannot consume Go-created prekey'

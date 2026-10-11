@@ -73,6 +73,8 @@ func (h clientReadHandlers) handle(w http.ResponseWriter, r *http.Request, path 
 		if len(segments) == 3 {
 			authenticationWireError(w, 404, "client-not-found", "Client not found")
 		} else {
+			// Native Maybe Client uses an empty text/plain response for Nothing.
+			w.Header().Set("Content-Type", "text/plain;charset=utf-8")
 			w.WriteHeader(http.StatusNotFound)
 		}
 		return true

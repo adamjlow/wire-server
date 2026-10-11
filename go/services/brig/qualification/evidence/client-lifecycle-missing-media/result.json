@@ -1,0 +1,41 @@
+{
+  "result": "failed",
+  "source_revision": "e39a1005ea410999b948e63c9acfe8ba47c207db",
+  "build": {
+    "source_revision": "e39a1005ea410999b948e63c9acfe8ba47c207db",
+    "sdk_image": "sha256:2f9e4393295d7270538dd1c666ab1345eaec06b2c2f8c217283ba6565caee399",
+    "runner_image": "sha256:f487c90fd364aac9daee5a1ce6e60fdba0ab74ab0c671ab0de0198e8f05659a9",
+    "result": "pass",
+    "sdk_controller_exit_code": 0,
+    "unchanged_runner_unit_exit_code": 0,
+    "binary_sha256": "4447e62db1110dcceab9fb1fd423eb8e4f60a680f75eb3c98eecbec0d1472446",
+    "unit_binary_sha256": "b0d136d7a7d1b53cd1a84aee5b73343580b855d9d21c9bbb36dfcf7e78199f6b",
+    "store_binary_sha256": "1cedf1e45faa8fcae1f99eab129ddcb89b0f55c682b40fe28d46ac432a767579",
+    "toolchain": "go1.26.9",
+    "sdk_archives_manifest_sha256": "875560a1f32f1ad76a866a7f792a6b392f64c5555e8f55f270f60869079f9af2",
+    "go_checks": "inherited full Go checks from identical sourcec2d03121a production and normal-unit artifacts; guarded scope, tagged-test vet/build and actual normal static units; actual new store assertions require separate execution",
+    "baseline_source_revision": "c2d03121a1be7f86402d6a03aabd3a901f1891a8",
+    "network_cleanup_exit_code": 0,
+    "remaining_owned_containers": "",
+    "remaining_owned_networks": ""
+  },
+  "project": "wire-e2e-6da9f68f7eee40d4a80a45ee3f00a785",
+  "compose_sha256": "60e49230101de53b33aa6bc1e61208189b2e7335d9fc3ec54c2293f564177a74",
+  "runner_image": "sha256:f487c90fd364aac9daee5a1ce6e60fdba0ab74ab0c671ab0de0198e8f05659a9",
+  "e2e_executed": false,
+  "peer_candidates": {
+    "gundeck": {
+      "path": "/home/operator/.cache/wire-migration/go-patched-20261009/gundeck",
+      "sha256": "a50512ef30d7fa9ddf92c2c1933e69769d6691e08cdfbe9f7c4f2d266071f46c",
+      "source_revision": "c1120238f8ecd7480742156df6c5dd2d2ec41f56"
+    }
+  },
+  "redis_cluster_initialization_completed": true,
+  "runner_exit_code": 1,
+  "cleanup_exit_code": 0,
+  "remaining_resources": {
+    "container": "",
+    "network": "",
+    "volume": ""
+  }
+}
