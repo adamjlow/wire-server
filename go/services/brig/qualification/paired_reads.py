@@ -227,6 +227,28 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             peer_exits = [process.wait(timeout=35) for process in peer_processes]
             report['activation_quiesced_peer_exit_codes'] = peer_exits
             assert all(code == 0 for code in peer_exits), 'activation peers did not quiesce cleanly'
+            # Keep required profile/notification dependencies live without
+            # restarting background clients that held idle Brig connections.
+            restarted_peers = []
+            for name in ('galley', 'gundeck'):
+                executable = gundeck_path if name == 'gundeck' and gundeck_path else str(runtime.WORK / 'dist' / name)
+                log = open('/reports/' + name + '-activation-restarted.log', 'w')
+                logs.append(log)
+                process = subprocess.Popen([executable, '-c', str(runtime.WORK / (name + '-static-0.json'))],
+                                           cwd=runtime.WORK / 'services' / name, stdout=log, stderr=subprocess.STDOUT)
+                processes.append(process)
+                restarted_peers.append((process, peers[name][name]['port']))
+            deadline = time.monotonic() + 120
+            for process, port in restarted_peers:
+                while True:
+                    assert process.poll() is None, 'required activation peer exited'
+                    try:
+                        with socket.create_connection(('127.0.0.1', port), timeout=1):
+                            break
+                    except OSError:
+                        assert time.monotonic() < deadline, 'required activation peer readiness failed'
+                        time.sleep(0.5)
+            report['activation_required_peers_restarted'] = ['galley', 'gundeck']
             login, cookie = request('POST', '/login?persist=true', body={'email': original_email,
                 'password': 'Synthetic-password-2026!', 'label': 'synthetic-activation-handoff'})
             assert login['status'] == 200 and cookie, 'native fresh activation session setup failed'
@@ -284,7 +306,7 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
                 'native_released_old_email_login_status': old_login['status'],
                 'profile_exactly_matches': True, 'key_and_code_recorded': False,
                 'handoff_actor': user, 'response_reference_actor_distinct': True,
-                'notification_peers_quiesced_for_short_expiry': True}
+                'required_profile_and_notification_peers_live': True}
         if access_switchback:
             # The fixture has a ten-second inactivity policy. Password checks
             # deliberately precede this separate account/session handoff; do

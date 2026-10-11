@@ -1,0 +1,5 @@
+# Retained missing-profile-peer witness failure
+
+Source `1c11e5ee951b10e6144c51483a6734daa111e6aa`, candidate `52ef6876c3b01a942b76b5016c039e60081a9ad16d0de2be9cce9dc80ace0956`. Full Go checks/static units pass; all20 paired responses match, native/Go fresh dryrun200/empty matches, actual Go activation200 and repeat204 match original positive/repeat responses exactly. Native-to-Go handoff0.5166s preserves4-second expiry. The subsequent profile check fails because all peers were quiesced and Go /self requires Galley feature lookup (candidate log confirms lookup failure). Thus this is not a completed state/switchback pass. All14 exits0/no forced, runner1/cleanup0/independent resources empty.
+
+Restart the same identified Galley/Gundeck services after original peer quiescence but before fresh code issuance. Keep every response/profile/new-login/old-key/repeat/clean-exit assertion, original4-second expiry and fixture configuration intact. Proper dependencies are part of the requested real-backend contract, not a waived failure. Whole Brig remains incomplete.
