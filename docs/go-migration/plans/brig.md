@@ -988,3 +988,8 @@ peer retries. Finite proof uses real API creation, repeated local updates and
 notifications, native readback/continuation, original MLS regressions and focused
 negative/effect-order checks. Remote actions remain required next; no successful
 stub or relaxed native oracle is introduced.
+
+First local-update SDK attempt source1bfce37f3 stopped at vet: duplicate
+galleyVersion declaration. Reuse the already validated native maximum version
+selection used by registration. No backend ran; failed compiler receipt retained,
+network cleanup0/independent empty. Retry only corrected candidate.

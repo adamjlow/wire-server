@@ -295,10 +295,6 @@ func Run(ctx context.Context, c Config) error {
 	}
 	notifications := newSessionNotifications(ctx, business.peers)
 	business.localConnections.notify = notifications.submitPush
-	galleyVersion := 19
-	for galleyVersion >= 0 && disabledVersion(c, galleyVersion) {
-		galleyVersion--
-	}
 	business.connectionUpdates = &connectionUpdateService{local: *business.localConnections, mls: c.Settings.EnableMLS, accept: business.peers.acceptConnectionOptional, block: business.peers.blockConnectionConversation, unblock: func(ctx context.Context, self, conv gocql.UUID, domain string, connection *string, requestID string) (int, error) {
 		return business.peers.unblockConnectionConversation(ctx, self, conv, domain, connection, requestID, galleyVersion)
 	}, established: business.peers.connectionMLSEstablished}
