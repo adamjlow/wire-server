@@ -7,6 +7,7 @@ require (
 	github.com/aws/aws-sdk-go-v2 v1.47.2
 	github.com/aws/aws-sdk-go-v2/config v1.33.8
 	github.com/jackc/pgx/v5 v5.11.0
+	github.com/rabbitmq/amqp091-go v1.15.0
 	go.yaml.in/yaml/v3 v3.0.5
 	golang.org/x/sync v0.23.0
 )

@@ -196,6 +196,11 @@ func Run(ctx context.Context, c Config) error {
 		return err
 	}
 	defer postgres.Close()
+	backendNotifications, err := newBrigNotificationQueue(ctx, c)
+	if err != nil {
+		return err
+	}
+	defer backendNotifications.close()
 	if err = runPostgresMigrations(ctx, postgres, time.Duration(c.PostgresPool.Acquisition)); err != nil {
 		return err
 	}

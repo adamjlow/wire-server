@@ -56,6 +56,7 @@ type Config struct {
 	Spar             Endpoint              `yaml:"spar"`
 	Gundeck          Endpoint              `yaml:"gundeck"`
 	Federator        *Endpoint             `yaml:"federatorInternal"`
+	Rabbit           *brigRabbitConfig     `yaml:"rabbitmq"`
 	Enterprise       *Endpoint             `yaml:"wireServerEnterprise"`
 	Cassandra        CassandraConfig       `yaml:"cassandra"`
 	Postgres         map[string]string     `yaml:"postgresql"`

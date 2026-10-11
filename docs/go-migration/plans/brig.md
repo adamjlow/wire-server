@@ -1251,3 +1251,22 @@ Then verification/mail/internal replay and incoming remote-deletion HTTP; bind f
 engine and rerun retained original failure. Final535/all-entity/operations/image
 acceptance unchanged. Root1.3GiB below backend2GiB floor; before full backend recover
 space through verified lossless idle owned artifacts rather than changing guards.
+
+### Concrete federation queue transport
+
+Use amqp091-go1.15.0, the same approved pin as the other Go candidates, to speak
+AMQP091 to native backend-notifications queues; standard library cannot provide
+that protocol. Add no other dependency and run the pinned vulnerability/license
+checks. Parse native rabbitmq host/port/vHost/TLS/CA options; credentials come only
+from RABBITMQ_USERNAME/PASSWORD, never logs/config dumps. Require verified TLS1.2+
+and reject the native insecure verification bypass without changing policy.
+Startup when federator is configured creates an independently reconnecting channel;
+shutdown cancels it and waits. Enqueue waits1s for channel and retries three times
+with1s delay, declaring durable/nonexclusive/nonautodelete quorum queues with
+single-active-consumer and publishing persistent application/json to the default
+exchange. Native uses no publisher confirms; retain that delivery contract and
+record its inherited ambiguity on failure/retry. Canceling blocked AMQP operations
+closes their connection to bound shutdown; reconnect restores future availability.
+Use an owned broker qualification (synthetic env credentials/private network/no
+host ports), inspect delivery mode/body/queue arguments, and prove reconnect.
+No backend/public deletion/whole-service claim from queue-only qualification.
