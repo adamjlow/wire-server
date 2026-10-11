@@ -156,6 +156,11 @@ func (s prekeyDynamoLock) requestOnce(ctx context.Context, operation string, bod
 		return nil, false, errors.New("invalid prekey lock response")
 	}
 	if response.StatusCode >= 200 && response.StatusCode < 300 || response.StatusCode == 304 {
+		// Pinned Amazonka receiveJSON decodes an object even for PutItem.
+		// A successful HTTP status with an invalid body is SerializeError.
+		if _, err := registrationObject(raw); err != nil {
+			return nil, false, errors.New("invalid prekey lock response")
+		}
 		return raw, false, nil
 	}
 	return nil, nativeDynamoServiceRetry(response.StatusCode, response.Header, raw), errors.New("prekey lock request rejected")

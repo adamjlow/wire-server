@@ -78,6 +78,7 @@ func TestNativeDynamoPrekeyVersionAndConditionalWrite(t *testing.T) {
 	calls := []string{}
 	versionText := "4294967295"
 	reject := false
+	malformed := ""
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		target := r.Header.Get("X-Amz-Target")
 		calls = append(calls, target)
@@ -93,6 +94,10 @@ func TestNativeDynamoPrekeyVersionAndConditionalWrite(t *testing.T) {
 				t.Error("consistent read/key changed")
 			}
 			_ = json.NewEncoder(w).Encode(map[string]any{"Item": map[string]any{"version": map[string]string{"N": versionText}}})
+			return
+		}
+		if malformed != "" {
+			_, _ = w.Write([]byte(malformed))
 			return
 		}
 		if reject {
@@ -139,6 +144,13 @@ func TestNativeDynamoPrekeyVersionAndConditionalWrite(t *testing.T) {
 	reject = true
 	if store.advance(context.Background(), user, "a", nil) || len(calls) != 5 {
 		t.Fatal("conditional failure became success/retry")
+	}
+	reject = false
+	for _, body := range []string{"not-json", "[]", "null", "{} {}"} {
+		malformed = body
+		if store.advance(context.Background(), user, "a", nil) {
+			t.Fatal("native SerializeError became successful conditional write")
+		}
 	}
 	yes := true
 	local, err := newPrekeyClaimStore(Config{RandomPrekeys: &yes}, clientStore{}, nil)
