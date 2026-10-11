@@ -1502,3 +1502,22 @@ management readiness and missing Jolokia policy location attempts are retained;
 correct only the disposable fixture. Original broker POST/auth/read-only JMX policy
 is preserved; only management binding/IP admission is widened within the private
 namespace, with no host ports. No production broker configuration is changed.
+
+At source574040dde/service42ea8a76, full Go/static checks produce byte-identical
+service/unit/store executables to the prior STOMP implementation. Actual pinned
+authenticated ActiveMQ6.3.2 native-Go-native account/property queue replay passes,
+including enqueue after native ownership ends, Go ACK and native tombstone/property
+reads on the same state. Native and Go malformed-event redelivery increments broker
+DispatchCount without DequeueCount; fixture cleanup ACK occurs only after each owner
+stops. All22 original executions and prior durable client/prekey/raw+signed MLS
+controls pass; all25 exits0, runner/cleanup0 and independent resource audit empty.
+[Actual ActiveMQ evidence](../../../go/services/brig/qualification/evidence/internal-stomp-activemq/README.md)
+retains setup/preflight failures and exact artifacts. Haskell/defaults unchanged.
+The final observer edit restores explicit required counter keys for the SQS path;
+actual passing STOMP snapshots contain all required counters. No assertion loosened.
+Remaining STOMP config concerns: yaml.v3 scalar decoding coerces numeric Text fields
+and truncates fractional Int fields; enforce native Aeson type/integrality before
+whole-service release. Trusted positive TLS and optimistic-Dynamo/STOMP combination
+remain required coverage. Provider/service-delete and final whole-Brig gates remain
+incomplete. Same-author review accepts only this finite plaintext/random-prekey
+increment. No new push or milestone advancement.

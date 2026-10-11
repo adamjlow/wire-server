@@ -156,13 +156,15 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             status = request('GET', '/i/users/'+actor_id+'/status')[0]
             if stomp_internal_events:
                 snapshot = stomp_broker.queue_state()
-                attributes = {key: snapshot[key] for key in ('QueueSize', 'InFlightCount')}
+                required_counts = ('QueueSize', 'InFlightCount')
+                attributes = {key: snapshot[key] for key in required_counts}
             else:
+                required_counts = ('ApproximateNumberOfMessages', 'ApproximateNumberOfMessagesNotVisible')
                 attributes = internal_sqs('get-queue-attributes', '--queue-url',
                     internal_queue_url, '--attribute-names',
                     'ApproximateNumberOfMessages', 'ApproximateNumberOfMessagesNotVisible')['Attributes']
             if status['status'] == 200 and status['json'] == {'status': 'deleted'} and all(
-                    int(value) == 0 for value in attributes.values()):
+                    int(attributes[key]) == 0 for key in required_counts):
                 break
             assert time.monotonic() < deadline, 'queued account cleanup not completed and acknowledged'
             time.sleep(0.2)

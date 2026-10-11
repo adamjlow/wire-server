@@ -1,0 +1,127 @@
+activemq-1  | Java Runtime: Eclipse Adoptium 25.0.4 /opt/java/openjdk
+activemq-1  |   Heap sizes: current=63360k  free=61571k  max=253440k
+activemq-1  |     JVM args: -Xms64m -Xmx256m -Dactivemq.home=/opt/apache-activemq -Dactivemq.base=/tmp/base -Dactivemq.conf=/tmp/base/conf -Dactivemq.data=/tmp/base/data -Djava.io.tmpdir=/tmp/base/tmp -Djava.security.auth.login.config=/tmp/base/conf/login.config
+activemq-1  | Extensions classpath:
+activemq-1  |   [/tmp/base/lib,/opt/apache-activemq/lib,/tmp/base/lib/camel,/tmp/base/lib/optional,/tmp/base/lib/web,/tmp/base/lib/extra,/opt/apache-activemq/lib/camel,/opt/apache-activemq/lib/optional,/opt/apache-activemq/lib/web,/opt/apache-activemq/lib/extra]
+activemq-1  | ACTIVEMQ_HOME: /opt/apache-activemq
+activemq-1  | ACTIVEMQ_BASE: /tmp/base
+activemq-1  | ACTIVEMQ_CONF: /tmp/base/conf
+activemq-1  | ACTIVEMQ_DATA: /tmp/base/data
+activemq-1  | Loading message broker from: xbean:/tmp/base/conf/activemq.xml
+activemq-1  |  INFO | Using Persistence Adapter: KahaDBPersistenceAdapter[/tmp/base/data/kahadb]
+activemq-1  |  INFO | Starting Persistence Adapter: KahaDBPersistenceAdapter[/tmp/base/data/kahadb]
+activemq-1  |  INFO | Starting KahaDBStore
+activemq-1  |  INFO | Opening MessageDatabase
+activemq-1  |  INFO | Starting Temp Data Store
+activemq-1  |  INFO | PListStore:[/tmp/base/data/wire-owned/tmp_storage] started
+activemq-1  |  INFO | Starting Job Scheduler Store
+activemq-1  |  INFO | Persistence Adapter successfully started
+activemq-1  |  INFO | Apache ActiveMQ 6.3.2 (wire-owned, ID:792132404baf-34079-1791732110971-0:1) is starting
+activemq-1  |  INFO | Listening for connections at: stomp://792132404baf:61613?maximumConnections=32&wireFormat.maxFrameSize=4194304
+activemq-1  |  INFO | Connector stomp started
+activemq-1  |  INFO | Apache ActiveMQ 6.3.2 (wire-owned, ID:792132404baf-34079-1791732110971-0:1) started
+activemq-1  |  INFO | For help or more information please see: http://activemq.apache.org
+activemq-1  |  WARN | jolokia-agent: Error while accessing access restrictor at ${jolokia.conf}. Denying all access to MBeans for security reasons. Exception: no protocol: ${jolokia.conf}
+activemq-1  | java.net.MalformedURLException: no protocol: ${jolokia.conf}
+activemq-1  | 	at java.base/java.net.URL.<init>(Unknown Source)
+activemq-1  | 	at java.base/java.net.URL.<init>(Unknown Source)
+activemq-1  | 	at java.base/java.net.URL.<init>(Unknown Source)
+activemq-1  | 	at org.jolokia.server.core.restrictor.RestrictorFactory.lookupPolicyRestrictor(RestrictorFactory.java:126)
+activemq-1  | 	at org.jolokia.server.core.restrictor.RestrictorFactory.createRestrictor(RestrictorFactory.java:63)
+activemq-1  | 	at org.jolokia.server.core.http.AgentServlet.createRestrictor(AgentServlet.java:316)
+activemq-1  | 	at org.jolokia.server.core.http.AgentServlet.init(AgentServlet.java:173)
+activemq-1  | 	at org.eclipse.jetty.ee11.servlet.ServletHolder$Wrapper.init(ServletHolder.java:1295)
+activemq-1  | 	at org.eclipse.jetty.ee11.servlet.ServletHolder.initServlet(ServletHolder.java:642)
+activemq-1  | 	at org.eclipse.jetty.ee11.servlet.ServletHolder.initialize(ServletHolder.java:429)
+activemq-1  | 	at org.eclipse.jetty.ee11.servlet.ServletHandler.lambda$initialize$1(ServletHandler.java:667)
+activemq-1  | 	at org.eclipse.jetty.util.ExceptionUtil.call(ExceptionUtil.java:400)
+activemq-1  | 	at org.eclipse.jetty.util.ExceptionUtil$MultiException.callAndCatch(ExceptionUtil.java:330)
+activemq-1  | 	at org.eclipse.jetty.ee11.servlet.ServletHandler.lambda$initialize$0(ServletHandler.java:664)
+activemq-1  | 	at java.base/java.util.stream.SortedOps$SizedRefSortingSink.end(Unknown Source)
+activemq-1  | 	at java.base/java.util.stream.AbstractPipeline.copyInto(Unknown Source)
+activemq-1  | 	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(Unknown Source)
+activemq-1  | 	at java.base/java.util.stream.StreamSpliterators$WrappingSpliterator.forEachRemaining(Unknown Source)
+activemq-1  | 	at java.base/java.util.stream.Streams$ConcatSpliterator.forEachRemaining(Unknown Source)
+activemq-1  | 	at java.base/java.util.stream.ReferencePipeline$Head.forEach(Unknown Source)
+activemq-1  | 	at org.eclipse.jetty.ee11.servlet.ServletHandler.initialize(ServletHandler.java:687)
+activemq-1  | 	at org.eclipse.jetty.ee11.servlet.ServletContextHandler.startContext(ServletContextHandler.java:1353)
+activemq-1  | 	at org.eclipse.jetty.ee11.webapp.WebAppContext.startWebapp(WebAppContext.java:1329)
+activemq-1  | 	at org.eclipse.jetty.ee11.webapp.WebAppContext.startContext(WebAppContext.java:1288)
+activemq-1  | 	at org.eclipse.jetty.ee11.servlet.ServletContextHandler.lambda$doStart$0(ServletContextHandler.java:1072)
+activemq-1  | 	at org.eclipse.jetty.server.handler.ContextHandler$ScopedContext.call(ContextHandler.java:1665)
+activemq-1  | 	at org.eclipse.jetty.ee11.servlet.ServletContextHandler.doStart(ServletContextHandler.java:1069)
+activemq-1  | 	at org.eclipse.jetty.ee11.webapp.WebAppContext.doStart(WebAppContext.java:507)
+activemq-1  | 	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:92)
+activemq-1  | 	at org.eclipse.jetty.util.component.ContainerLifeCycle.start(ContainerLifeCycle.java:170)
+activemq-1  | 	at org.eclipse.jetty.util.component.ContainerLifeCycle.doStart(ContainerLifeCycle.java:121)
+activemq-1  | 	at org.eclipse.jetty.server.Handler$Abstract.doStart(Handler.java:545)
+activemq-1  | 	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:92)
+activemq-1  | 	at org.eclipse.jetty.util.component.ContainerLifeCycle.start(ContainerLifeCycle.java:170)
+activemq-1  | 	at org.eclipse.jetty.util.component.ContainerLifeCycle.doStart(ContainerLifeCycle.java:121)
+activemq-1  | 	at org.eclipse.jetty.server.Handler$Abstract.doStart(Handler.java:545)
+activemq-1  | 	at org.eclipse.jetty.security.SecurityHandler.doStart(SecurityHandler.java:404)
+activemq-1  | 	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:92)
+activemq-1  | 	at org.eclipse.jetty.util.component.ContainerLifeCycle.start(ContainerLifeCycle.java:170)
+activemq-1  | 	at org.eclipse.jetty.util.component.ContainerLifeCycle.doStart(ContainerLifeCycle.java:121)
+activemq-1  | 	at org.eclipse.jetty.server.Handler$Abstract.doStart(Handler.java:545)
+activemq-1  | 	at org.eclipse.jetty.server.handler.ConditionalHandler.doStart(ConditionalHandler.java:372)
+activemq-1  | 	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:92)
+activemq-1  | 	at org.eclipse.jetty.util.component.ContainerLifeCycle.start(ContainerLifeCycle.java:170)
+activemq-1  | 	at org.eclipse.jetty.util.component.ContainerLifeCycle.doStart(ContainerLifeCycle.java:121)
+activemq-1  | 	at org.eclipse.jetty.server.Handler$Abstract.doStart(Handler.java:545)
+activemq-1  | 	at org.eclipse.jetty.server.handler.StatisticsHandler.doStart(StatisticsHandler.java:63)
+activemq-1  | 	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:92)
+activemq-1  | 	at org.eclipse.jetty.util.component.ContainerLifeCycle.start(ContainerLifeCycle.java:170)
+activemq-1  | 	at org.eclipse.jetty.util.component.ContainerLifeCycle.doStart(ContainerLifeCycle.java:121)
+activemq-1  | 	at org.eclipse.jetty.server.Handler$Abstract.doStart(Handler.java:545)
+activemq-1  | 	at org.eclipse.jetty.server.handler.ConditionalHandler.doStart(ConditionalHandler.java:372)
+activemq-1  | 	at org.eclipse.jetty.server.handler.ThreadLimitHandler.doStart(ThreadLimitHandler.java:102)
+activemq-1  | 	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:92)
+activemq-1  | 	at org.eclipse.jetty.util.component.ContainerLifeCycle.start(ContainerLifeCycle.java:170)
+activemq-1  | 	at org.eclipse.jetty.util.component.ContainerLifeCycle.doStart(ContainerLifeCycle.java:121)
+activemq-1  | 	at org.eclipse.jetty.server.Handler$Abstract.doStart(Handler.java:545)
+activemq-1  | 	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:92)
+activemq-1  | 	at org.eclipse.jetty.util.component.ContainerLifeCycle.start(ContainerLifeCycle.java:170)
+activemq-1  | 	at org.eclipse.jetty.util.component.ContainerLifeCycle.doStart(ContainerLifeCycle.java:121)
+activemq-1  | 	at org.eclipse.jetty.server.Handler$Abstract.doStart(Handler.java:545)
+activemq-1  | 	at org.eclipse.jetty.server.handler.ConditionalHandler.doStart(ConditionalHandler.java:372)
+activemq-1  | 	at org.eclipse.jetty.server.handler.DoSHandler.doStart(DoSHandler.java:240)
+activemq-1  | 	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:92)
+activemq-1  | 	at org.eclipse.jetty.util.component.ContainerLifeCycle.start(ContainerLifeCycle.java:170)
+activemq-1  | 	at org.eclipse.jetty.server.Server.start(Server.java:689)
+activemq-1  | 	at org.eclipse.jetty.util.component.ContainerLifeCycle.doStart(ContainerLifeCycle.java:121)
+activemq-1  | 	at org.eclipse.jetty.server.Handler$Abstract.doStart(Handler.java:545)
+activemq-1  | 	at org.eclipse.jetty.server.Server.doStart(Server.java:630)
+activemq-1  | 	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:92)
+activemq-1  | 	at org.apache.activemq.spring.jetty.JettyServerBean.afterPropertiesSet(JettyServerBean.java:169)
+activemq-1  | 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1862)
+activemq-1  | 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1811)
+activemq-1  | 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:603)
+activemq-1  | 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:525)
+activemq-1  | 	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:333)
+activemq-1  | 	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:371)
+activemq-1  | 	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:331)
+activemq-1  | 	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:196)
+activemq-1  | 	at org.springframework.beans.factory.support.DefaultListableBeanFactory.instantiateSingleton(DefaultListableBeanFactory.java:1225)
+activemq-1  | 	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingleton(DefaultListableBeanFactory.java:1191)
+activemq-1  | 	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:1121)
+activemq-1  | 	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:994)
+activemq-1  | 	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:621)
+activemq-1  | 	at org.apache.xbean.spring.context.ResourceXmlApplicationContext.<init>(ResourceXmlApplicationContext.java:64)
+activemq-1  | 	at org.apache.xbean.spring.context.ResourceXmlApplicationContext.<init>(ResourceXmlApplicationContext.java:52)
+activemq-1  | 	at org.apache.activemq.xbean.XBeanBrokerFactory$1.<init>(XBeanBrokerFactory.java:122)
+activemq-1  | 	at org.apache.activemq.xbean.XBeanBrokerFactory.createApplicationContext(XBeanBrokerFactory.java:122)
+activemq-1  | 	at org.apache.activemq.xbean.XBeanBrokerFactory.createBroker(XBeanBrokerFactory.java:87)
+activemq-1  | 	at org.apache.activemq.broker.BrokerFactory.createBroker(BrokerFactory.java:73)
+activemq-1  | 	at org.apache.activemq.broker.BrokerFactory.createBroker(BrokerFactory.java:56)
+activemq-1  | 	at org.apache.activemq.console.command.StartCommand.runTask(StartCommand.java:87)
+activemq-1  | 	at org.apache.activemq.console.command.AbstractCommand.execute(AbstractCommand.java:63)
+activemq-1  | 	at org.apache.activemq.console.command.ShellCommand.runTask(ShellCommand.java:154)
+activemq-1  | 	at org.apache.activemq.console.command.AbstractCommand.execute(AbstractCommand.java:63)
+activemq-1  | 	at org.apache.activemq.console.command.ShellCommand.main(ShellCommand.java:104)
+activemq-1  | 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(Unknown Source)
+activemq-1  | 	at java.base/java.lang.reflect.Method.invoke(Unknown Source)
+activemq-1  | 	at org.apache.activemq.console.Main.runTaskClass(Main.java:262)
+activemq-1  | 	at org.apache.activemq.console.Main.main(Main.java:115)
+activemq-1  |  INFO | Jetty Server listening on:  http://0.0.0.0:8161/
+activemq-1  | 

@@ -1,0 +1,10 @@
+{
+  "project": "wire-e2e-ef06001b76014f75ada68c92c9eaa132",
+  "result": "failed",
+  "up_exit_code": 0,
+  "smoke_exit_code": 1,
+  "cleanup_exit_code": 0,
+  "remaining_containers": "",
+  "remaining_networks": "",
+  "remaining_volumes": ""
+}

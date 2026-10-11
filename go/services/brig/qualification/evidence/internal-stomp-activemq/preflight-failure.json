@@ -1,0 +1,8 @@
+{
+  "source_revision": "574040ddebe2cb1a73dbbf9214a0437bc03d0b3b",
+  "result": "failed",
+  "failure": "owned dependency disk floor unmet",
+  "e2e_executed": false,
+  "controller_exit_code": 1,
+  "recovery": "Identical-artifact hardlink maintenance initially failed to write its receipt into a root-owned directory; original executable was restored. Corrected receipt location, verified and retained all bytes/paths; fresh namespace passed unchanged disk floor."
+}

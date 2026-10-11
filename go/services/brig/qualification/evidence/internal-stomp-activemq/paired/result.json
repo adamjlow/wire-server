@@ -1,0 +1,41 @@
+{
+  "result": "pass",
+  "source_revision": "574040ddebe2cb1a73dbbf9214a0437bc03d0b3b",
+  "build": {
+    "source_revision": "574040ddebe2cb1a73dbbf9214a0437bc03d0b3b",
+    "sdk_image": "sha256:2f9e4393295d7270538dd1c666ab1345eaec06b2c2f8c217283ba6565caee399",
+    "runner_image": "sha256:f487c90fd364aac9daee5a1ce6e60fdba0ab74ab0c671ab0de0198e8f05659a9",
+    "result": "pass",
+    "sdk_controller_exit_code": 0,
+    "unchanged_runner_unit_exit_code": 0,
+    "binary_sha256": "42ea8a7641445628d976dea7480fec13885f60f82d0344567a886b79d2b3da5d",
+    "unit_binary_sha256": "97fd060c01db9c9161aaf5b3399990770acb65fffb3db23005b6f7017cbf4157",
+    "store_binary_sha256": "c331fa2719f9d13a8cfcd8c35735deb2d7242cccf82b4c972d80e55f95d41f58",
+    "toolchain": "go1.26.9",
+    "sdk_archives_manifest_sha256": "875560a1f32f1ad76a866a7f792a6b392f64c5555e8f55f270f60869079f9af2",
+    "go_checks": "pass",
+    "network_cleanup_exit_code": 0,
+    "remaining_owned_containers": "",
+    "remaining_owned_networks": ""
+  },
+  "project": "wire-e2e-34d8163e766a445f9e3da23fe535e9fc",
+  "compose_sha256": "8109e0e16336b705cc463c7bdbe8ca68e21a21ec1e239ab61796a0e32c3c8f5a",
+  "runner_image": "sha256:f487c90fd364aac9daee5a1ce6e60fdba0ab74ab0c671ab0de0198e8f05659a9",
+  "e2e_executed": true,
+  "peer_candidates": {
+    "gundeck": {
+      "path": "/home/operator/.cache/wire-migration/go-patched-20261009/gundeck",
+      "sha256": "a50512ef30d7fa9ddf92c2c1933e69769d6691e08cdfbe9f7c4f2d266071f46c",
+      "source_revision": "c1120238f8ecd7480742156df6c5dd2d2ec41f56"
+    }
+  },
+  "redis_cluster_initialization_completed": true,
+  "runner_exit_code": 0,
+  "broker_log_capture_exit_code": 0,
+  "cleanup_exit_code": 0,
+  "remaining_resources": {
+    "container": "",
+    "network": "",
+    "volume": ""
+  }
+}

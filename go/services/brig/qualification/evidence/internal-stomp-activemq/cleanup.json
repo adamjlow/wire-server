@@ -1,0 +1,39 @@
+{
+  "project": "wire-e2e-34d8163e766a445f9e3da23fe535e9fc",
+  "independent_resources": {
+    "container": {
+      "command": [
+        "docker",
+        "ps",
+        "-aq",
+        "--filter",
+        "label=com.docker.compose.project=wire-e2e-34d8163e766a445f9e3da23fe535e9fc"
+      ],
+      "output": ""
+    },
+    "network": {
+      "command": [
+        "docker",
+        "network",
+        "ls",
+        "-q",
+        "--filter",
+        "label=com.docker.compose.project=wire-e2e-34d8163e766a445f9e3da23fe535e9fc"
+      ],
+      "output": ""
+    },
+    "volume": {
+      "command": [
+        "docker",
+        "volume",
+        "ls",
+        "-q",
+        "--filter",
+        "label=com.docker.compose.project=wire-e2e-34d8163e766a445f9e3da23fe535e9fc"
+      ],
+      "output": ""
+    }
+  },
+  "sdk_remaining_containers": "",
+  "sdk_remaining_networks": ""
+}

@@ -1,0 +1,22 @@
+ Container wire-e2e-0942563fe3424877bd45565a303804c3-runner-run-f4302d44e785 Creating 
+ Container wire-e2e-0942563fe3424877bd45565a303804c3-runner-run-f4302d44e785 Created 
+Traceback (most recent call last):
+  File "/source/go/services/brig/qualification/stomp_broker.py", line 181, in wait_ready
+    management({'type': 'version'})
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/source/go/services/brig/qualification/stomp_broker.py", line 169, in management
+    assert data['status'] == 200, 'owned broker statistics read failed'
+           ^^^^^^^^^^^^^^^^^^^^^
+AssertionError: owned broker statistics read failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+    import sys,json;sys.path.insert(0,'/source/go/services/brig/qualification');import stomp_broker as s;s.wait_ready();s.send(b'{}');print(json.dumps(s.queue_state()))
+                                                                                                         ~~~~~~~~~~~~^^
+  File "/source/go/services/brig/qualification/stomp_broker.py", line 184, in wait_ready
+    assert time.monotonic() < deadline, 'owned ActiveMQ readiness failed'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: owned ActiveMQ readiness failed
+

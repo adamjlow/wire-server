@@ -1,0 +1,29 @@
+ Container wire-e2e-ef06001b76014f75ada68c92c9eaa132-runner-run-9d62487f2d62 Creating 
+ Container wire-e2e-ef06001b76014f75ada68c92c9eaa132-runner-run-9d62487f2d62 Created 
+Traceback (most recent call last):
+  File "/source/go/services/brig/qualification/stomp_broker.py", line 174, in wait_ready
+    with connection():
+         ~~~~~~~~~~^^
+  File "/usr/lib/python3.13/contextlib.py", line 141, in __enter__
+    return next(self.gen)
+  File "/source/go/services/brig/qualification/stomp_broker.py", line 125, in connection
+    with socket.create_connection(('activemq', 61613), timeout=3) as sock:
+         ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/socket.py", line 864, in create_connection
+    raise exceptions[0]
+  File "/usr/lib/python3.13/socket.py", line 849, in create_connection
+    sock.connect(sa)
+    ~~~~~~~~~~~~^^^^
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+    import sys,json;sys.path.insert(0,'/source/go/services/brig/qualification');import stomp_broker as s;s.wait_ready();s.send(b'{}');print(json.dumps(s.queue_state()))
+                                                                                                         ~~~~~~~~~~~~^^
+  File "/source/go/services/brig/qualification/stomp_broker.py", line 177, in wait_ready
+    assert time.monotonic() < deadline, 'owned ActiveMQ readiness failed'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: owned ActiveMQ readiness failed
+

@@ -1,0 +1,38 @@
+{
+  "purpose": "Replace verified byte-identical historical executables with hardlinks to current immutable qualified executables; retain original paths/ownership/mode",
+  "files": [
+    {
+      "original": "/artifacts/internal-stomp-corrected-sdk-check/brig",
+      "identical_source": "/artifacts/internal-stomp-broker-sdk-check/brig",
+      "sha256": "42ea8a7641445628d976dea7480fec13885f60f82d0344567a886b79d2b3da5d",
+      "original_size": 69799768,
+      "original_uid": 65534,
+      "original_gid": 65534,
+      "original_mode": "0o755",
+      "original_mtime_ns": 1791730934939530140,
+      "identical_source_mtime_ns": 1791732381523110372
+    },
+    {
+      "original": "/artifacts/internal-stomp-corrected-sdk-check/brig.test",
+      "identical_source": "/artifacts/internal-stomp-broker-sdk-check/brig.test",
+      "sha256": "97fd060c01db9c9161aaf5b3399990770acb65fffb3db23005b6f7017cbf4157",
+      "original_size": 67812832,
+      "original_uid": 65534,
+      "original_gid": 65534,
+      "original_mode": "0o755",
+      "original_mtime_ns": 1791730940496431355,
+      "identical_source_mtime_ns": 1791732387085015258
+    },
+    {
+      "original": "/artifacts/internal-stomp-corrected-sdk-check/stores.test",
+      "identical_source": "/artifacts/internal-stomp-broker-sdk-check/stores.test",
+      "sha256": "c331fa2719f9d13a8cfcd8c35735deb2d7242cccf82b4c972d80e55f95d41f58",
+      "original_size": 72827128,
+      "original_uid": 65534,
+      "original_gid": 65534,
+      "original_mode": "0o755",
+      "original_mtime_ns": 1791730944462360904,
+      "identical_source_mtime_ns": 1791732391096946672
+    }
+  ]
+}

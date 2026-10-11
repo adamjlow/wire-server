@@ -1,0 +1,30 @@
+ Container wire-e2e-3ce156933665490b8cb195e870cc80e9-runner-run-01d2515cb113 Creating 
+ Container wire-e2e-3ce156933665490b8cb195e870cc80e9-runner-run-01d2515cb113 Created 
+Traceback (most recent call last):
+  File "/source/go/services/brig/qualification/stomp_broker.py", line 174, in wait_ready
+    with connection():
+         ~~~~~~~~~~^^
+  File "/usr/lib/python3.13/contextlib.py", line 141, in __enter__
+    return next(self.gen)
+  File "/source/go/services/brig/qualification/stomp_broker.py", line 125, in connection
+    with socket.create_connection(('activemq', 61613), timeout=3) as sock:
+         ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/socket.py", line 840, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+               ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/socket.py", line 977, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno -3] Temporary failure in name resolution
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+    import sys,json;sys.path.insert(0,'/source/go/services/brig/qualification');import stomp_broker as s;s.wait_ready();s.send(b'{}');print(json.dumps(s.queue_state()))
+                                                                                                         ~~~~~~~~~~~~^^
+  File "/source/go/services/brig/qualification/stomp_broker.py", line 177, in wait_ready
+    assert time.monotonic() < deadline, 'owned ActiveMQ readiness failed'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: owned ActiveMQ readiness failed
+
