@@ -1,0 +1,9 @@
+=== RUN   TestOwnedDurableStores
+=== RUN   TestOwnedDurableStores/deletion-cassandra
+=== RUN   TestOwnedDurableStores/deletion-postgresql
+=== RUN   TestOwnedDurableStores/deletion-migration-to-postgresql
+--- PASS: TestOwnedDurableStores (2.02s)
+    --- PASS: TestOwnedDurableStores/deletion-cassandra (0.01s)
+    --- PASS: TestOwnedDurableStores/deletion-postgresql (0.00s)
+    --- PASS: TestOwnedDurableStores/deletion-migration-to-postgresql (0.01s)
+PASS

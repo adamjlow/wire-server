@@ -178,6 +178,13 @@
       "command": "Production source367d55f64/service439c6379 full pinned Go/static units and new amqp091-go1.15.0 vulnerability/license checks pass. Fixture revisionf1a0acc7a/tagged61920cf4 actual owned Rabbit payload/persistence/content type/manual consumer/reconnect and durable quorum/single-active arguments pass; three broker fixture failures and initial tidy failure retained. Reused unchanged production quality with exact input comparison; terminal/cleanup/independent namespaces empty. Publisher bound to startup lifecycle, deletion API/replay still incomplete; no whole535 or service gate claim.",
       "revision": "f1a0acc7a4342d2134d956ea2d56673ffe51be85",
       "artifact": "go/services/brig/qualification/evidence/backend-notifications/README.md"
+    },
+    {
+      "criterion": "quality",
+      "result": "pass",
+      "command": "Scoped sourcecf3527476/servicef62dafc4 full pinned Go/static checks pass. Incoming federation deletion HTTP admission/order/qualified-event/EmptyResponse negatives pass; tagged0ff22b0b native-schema17-local CQL raw statuses0..11/duplicates/read order/exact-row removal/other-user/domain preservation/invalid status rejection pass, prior store controls retained. SDK/store terminal0/cleanup0/independent empty. No actual native HTTP/e2e/new original/full535 or service gate proof.",
+      "revision": "cf35274768d7df12577431e10309797428484353",
+      "artifact": "go/services/brig/qualification/evidence/remote-deletion/README.md"
     }
   ],
   "review": null,

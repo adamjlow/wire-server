@@ -1,0 +1,19 @@
+{
+  "sdk_terminal_exit": 0,
+  "store_terminal_exit": 0,
+  "independent_prefix_audits": [
+    {
+      "prefix": "brig-remote-deletion-sdk-",
+      "containers": [],
+      "networks": [],
+      "volumes": []
+    },
+    {
+      "prefix": "wire-brig-stores-eec48054e1c34c5d88764376f3bc4cd8",
+      "containers": [],
+      "networks": [],
+      "volumes": []
+    }
+  ],
+  "cache_maintenance_scope": "Only idle owned regular nonsymlink UID/GID65534 compiler cache entries older10min; no retained artifact removed"
+}

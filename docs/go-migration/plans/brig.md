@@ -1334,3 +1334,18 @@ real native HTTP/e2e or full-service claim from these checks alone.
 Retain native whole-JSON parsing/body allocation rather than add an unreviewed
 HTTP size-contract change. Recipient count and worker bounds limit fanout; request
 body limits remain an inherited gateway/deployment concern, not newly fixed here.
+
+Incoming remote deletion sourcecf3527476/servicef62dafc4 passes full pinned Go and
+static controls. Tagged0ff22b0b actual native-schema stores pass17-local relations,
+duplicate/order guards and exact deletion preserving other users/domains, plus
+prior three-mode/account/group/client tests. Controllers terminal0 and independent
+owned resource audits empty. [Evidence/review](../../../go/services/brig/qualification/evidence/remote-deletion/README.md).
+Endpoint is bound; no actual native HTTP/e2e/final535 claim. Next scope1 deletion
+verification-code creation/retry/TTL/email/cleanup and POST/delete flow, internal
+queue replay/ensure deletion and complete engine startup binding; then restore
+backend space with verified lossless owned artifacts and rerun retained original22
+plus affected account/MLS originals. Native workflow uses createCode Retries3/
+Timeout600/accountUUID, pending-code TTL rejection, deletion mail key/code/name/
+locale and code removal on send exception. Successful verification retains row
+until account cleanup finishes then removes it; already-deleted accounts must
+still replay cleanup internally. Keep source contracts and assertions unchanged.
