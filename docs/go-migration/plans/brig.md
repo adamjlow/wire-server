@@ -1642,11 +1642,13 @@ native-Go-native service/bot queue work and affected original22 regression.
 Rerun the unchanged original22 plus existing actual authenticated STOMP and
 native-Go-native client/prekey/MLS/user queue witnesses against serviceb8256ee1.
 This is affected-backend regression, not yet service/bot queue replay or the
-whole535 gate. The observer now mounts the checksum-identified tagged fixture
-read-only, just like candidate services, instead of duplicating its large binary
-in each historical output. Keep immutable inputs for the lifetime of the owned
-run; no assertion, reference fixture, isolation limit or disk floor is changed.
+whole535 gate. A proposed direct fixture file mount failed the unchanged
+isolation validator before any backend started; retain that failure and restore
+the existing copied fixture under the approved read-only directory mount.
+No assertion, reference fixture, isolation limit or disk floor changes.
 Reuse pinned Go quality only after comparing all production inputs with the
 qualified a73fd44e7 tree; record the original build revision in derived receipts.
 Inactive historical artifacts are losslessly gzip-archived with original hash,
 size/mode/owner and decompression verification recorded before removing raw bytes.
+Only byte-identical unused duplicate module-cache files are pruned; primary
+compiler inputs are retained. No live SDK or backend owns these old artifacts.
