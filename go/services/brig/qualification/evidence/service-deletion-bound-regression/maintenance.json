@@ -1,0 +1,26 @@
+[
+  {
+    "artifact": "/home/operator/.cache/wire-migration/brig-20261010/bound-backend-lossless-maintenance.json",
+    "sha256": "dc0ed897c4452d1adb282356459a4eaa59a9c96672a4325f6db7d5f7602814ee",
+    "files": 24,
+    "scope": "identified inactive historical binaries SHA-verified after decompression"
+  },
+  {
+    "artifact": "/home/operator/.cache/wire-migration/brig-20261010/bound-backend-additional-archives.json",
+    "sha256": "09f281a4f0f1999f1eb242c371bd4582ffc96f8da1aa8c68d2a4308c18c06724",
+    "files": 8,
+    "scope": "identified inactive historical binaries SHA-verified after decompression"
+  },
+  {
+    "artifact": "/home/operator/.cache/wire-migration/brig-20261010/bound-backend-early-artifact-archives.json",
+    "sha256": "4c6d9c0932eb9b936794a1d7f165c5a6b819dcde879700d2ed209c352c0f0e09",
+    "files": 12,
+    "scope": "identified inactive historical binaries SHA-verified after decompression"
+  },
+  {
+    "artifact": "/home/operator/.cache/wire-migration/brig-20261010/verified-duplicate-module-cache-prune.json",
+    "sha256": "dd5c3dcb7135c9a09d19ec7bce0287b487492383b502a9c77e573a8dc6bdb7e2",
+    "files": 4788,
+    "scope": "unused module cache: exact bytes retained in primary compiler module cache"
+  }
+]

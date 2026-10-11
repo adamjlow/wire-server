@@ -1,1 +1,5 @@
 Extend the optional Go Brig implementation with native-compatible properties, client/prekey and MLS operations, account and queued service/bot deletion with typed Galley responses, and internal SQS/STOMP queue processing. Validate scoped APIs and durable Haskell-Go-Haskell state with unchanged original tests, including authenticated ActiveMQ replay and malformed-message redelivery. Whole-service qualification remains in progress; Haskell remains supported and default.
+Current bound Brig executable also passes the affected 22 original executions,
+authenticated STOMP controls and native-Go-native client/prekey/MLS/user queue
+regression in the owned backend; full service/bot queue and Brig qualification
+remain pending. Retain rejected direct fixture mount and restore approved mount.

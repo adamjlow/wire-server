@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/home/operator/wire-server/go/services/brig/qualification/paired_reads.py", line 1853, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/home/operator/wire-server/go/services/brig/qualification/paired_reads.py", line 1792, in main
+    environment.validate_isolation(spec)
+  File "/home/operator/wire-server/tools/parity/docker/environment.py", line 225, in validate_isolation
+    raise ValueError('unsafe mount')
+ValueError: unsafe mount

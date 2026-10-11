@@ -1,0 +1,11 @@
+{
+  "project": "wire-e2e-1df12424ec9b47beab49a9d48c42cee9",
+  "source_revision": "3875d4627",
+  "result": "failed",
+  "stage": "isolation preflight",
+  "e2e_executed": false,
+  "failure": "unsafe mount; direct fixture mount rejected before backend start; existing directory mount restored",
+  "containers": "",
+  "networks": "",
+  "volumes": ""
+}

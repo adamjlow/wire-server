@@ -1652,3 +1652,10 @@ Inactive historical artifacts are losslessly gzip-archived with original hash,
 size/mode/owner and decompression verification recorded before removing raw bytes.
 Only byte-identical unused duplicate module-cache files are pruned; primary
 compiler inputs are retained. No live SDK or backend owns these old artifacts.
+
+At observer8d7286e2a, current serviceb8256ee1/store6087a61b passes all22 unchanged
+original executions and actual authenticated STOMP/native-Go-native client,
+prekey/raw+signed MLS/user-property queue witnesses. All25 managed exits0,
+runner/cleanup0 and independent owned resources empty. [Regression evidence](../../../go/services/brig/qualification/evidence/service-deletion-bound-regression/README.md)
+retains failed direct-mount preflight and exact unchanged-build reuse basis.
+Service/bot queue replay is still next; this does not satisfy whole535/eight-Go.
