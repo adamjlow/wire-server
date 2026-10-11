@@ -10,7 +10,7 @@ native→Go→native reset-code/password/cookie witness at ee047a9b5, plus actua
 native-schema reset/KDF/cookie composition in all three storage modes at5de8f0e54.
 Both use the identical executable998d2267... with full Go checks at7ca1dfbfb.
 These are scoped supplemental checks, not original535/full-service acceptance.
- Latest source a261c531c has full pinned Go checks and
+ Earlier signup source a261c531c has full pinned Go checks and
 static original-runner units PASS. Public signup now has an actual native→Go→native
 witness: fresh Go labeled signup, activation, exact durable profile/cookie reads,
 and native acceptance of its cookie/password. All17 original paired observations
