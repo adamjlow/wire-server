@@ -1,0 +1,12 @@
+{
+  "wire.migration.observation": {
+    "remaining_containers": "",
+    "remaining_networks": "",
+    "remaining_volumes": ""
+  },
+  "wire-migration-task=brig-implementation": {
+    "remaining_containers": "",
+    "remaining_networks": "",
+    "remaining_volumes": ""
+  }
+}
