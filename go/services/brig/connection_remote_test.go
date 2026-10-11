@@ -35,7 +35,8 @@ func TestRemoteConnectionReactionAndAdmissionOrder(t *testing.T) {
 			return nil, errors.New("peer unavailable")
 		}
 		if path == "get-users-by-ids" {
-			return json.RawMessage(`[{"type":"regular"}]`), nil
+			raw, err := json.Marshal([]publicUserProfile{{QualifiedID: qualifiedUserID{target.String(), "b.example"}, Name: "Synthetic", Legalhold: "no_consent", Type: "regular"}})
+			return raw, err
 		}
 		return json.RawMessage(`{"tag":"NewConnectionResponseOk","contents":"RemoteConnect"}`), nil
 	}, upsert: func(_ context.Context, _, _ gocql.UUID, _ string, _ gocql.UUID, _ string, remote, included bool, _ string) error {

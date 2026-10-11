@@ -295,6 +295,24 @@ func Run(ctx context.Context, c Config) error {
 	}
 	notifications := newSessionNotifications(ctx, business.peers)
 	business.localConnections.notify = notifications.submitPush
+	business.publicProfiles = &publicProfileService{domain: c.Settings.Domain, locale: c.Settings.DefaultLocale, emailVisibility: c.Settings.EmailVisibility, get: business.users.get, legalhold: business.peers.connectionLegalhold, enqueueDeletion: internalQueue.enqueueUserDeletion, now: time.Now, app: func(ctx context.Context, user, team gocql.UUID, requestID string) (*publicAppInfo, error) {
+		owner, err := business.users.get(ctx, user)
+		if err != nil {
+			return nil, err
+		}
+		if owner == nil {
+			return nil, errPublicProfileAppOwner
+		}
+		_, missing, err := business.peers.galleyRPC(ctx, http.MethodGet, "/i/teams/"+team.String()+"/members/"+user.String(), requestID, nil, true, &user)
+		if err != nil {
+			return nil, err
+		}
+		if missing {
+			return nil, errPublicProfileAppPermission
+		}
+		return business.users.publicApp(ctx, user, team)
+	}}
+
 	business.remoteConnections = &connectionRemoteService{local: *business.localConnections, mls: c.Settings.EnableMLS, call: federationClient.call, allowed: func(ctx context.Context, domain string, team *gocql.UUID) (bool, error) {
 		return federationRead.connectionAllowed(ctx, domain, team, cassandra)
 	}, upsert: func(ctx context.Context, self, target gocql.UUID, domain string, conv gocql.UUID, convDomain string, remote, included bool, requestID string) error {

@@ -1032,3 +1032,24 @@ Next incoming profiles with full typed outgoing profile decoding (current admiss
 uses type/team only), app injection/visibility/pending/expiry/deletion/LH semantics;
 then actual native-initiated reciprocal connections/incoming action and unchanged
 original connection suites. Whole goal remains active and no gate is advanced.
+
+### Incoming federation profiles continuation
+
+Implement native V18 get-users-by-ids public projection with input order and
+native bound8 reads, pending-invitation omission, strict expired-before-now delete
+queue effect, team-member legalhold, configured email visibility with no viewer,
+and sequential app injection after reads. Public output must exclude password,
+SSO/unvalidated email/account-only fields. AppStore stays native PostgreSQL in all
+user modes and enforces native membership/errors. Add native required-field and
+optional typed validation for outgoing profile admission; reject malformed peer
+profiles before connection effects. Compare native/Go regular/identityless/missing/
+duplicate/empty profile RPCs, then native-initiated reciprocal remote action and
+unchanged original connection cases alongside MLS. Preserve privacy/security policy.
+
+Finite qualification for this continuation selects the existing14 MLS originals
+plus eight unchanged Connection variants: remote-own/remote-other conversation
+membership, cancel, ignored/blocked reconnect and sent transitions, and limit16.
+Five native/Go federation controls cover empty, regular, identityless, missing,
+and ordered duplicate profiles. Native B reconnects to Go A after rescind; Go A
+accepts, native B sees accepted, then native A reads back the same stored state.
+Team/app/LH/error-media variants remain required but unqualified by this slice.

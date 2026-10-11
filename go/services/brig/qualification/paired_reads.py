@@ -335,6 +335,11 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             connection_create_cases=[('POST','/v19/connections/'+local_domain+'/'+connection_writer,connection_write_headers),('POST','/v19/connections/'+local_domain+'/'+str(uuid.uuid4()),connection_write_headers),('POST',connection_create_path,lifecycle_headers)]
             native_connection_create_controls=[request(*case)[0] for case in connection_create_cases]
             report['connections_native_create_controls']=native_connection_create_controls
+            profile_headers={'Wire-Origin-Domain':'b.example.com','X-Wire-API-Version':'3'}
+            profile_cases=[('POST','/federation/get-users-by-ids',profile_headers,ids) for ids in [[],[connection_writer],[lifecycle_user],[str(uuid.uuid4())],[connection_writer,lifecycle_user,connection_recipient,connection_writer]]]
+            native_profile_controls=[request(*case)[0] for case in profile_cases]
+            report['profiles_native_controls']=native_profile_controls
+            assert all(p['status']==200 for p in native_profile_controls), 'native federation profile controls failed'
             update_control_path='/v19/connections/'+local_domain+'/'+connection_targets[0][1]
             connection_update_cases=[('PUT',update_control_path,connection_headers,{'status':'pending'}),('PUT',update_control_path,connection_headers,{'status':'sent'}),('PUT','/v19/connections/'+local_domain+'/'+str(uuid.uuid4()),connection_headers,{'status':'accepted'}),('PUT',update_control_path,connection_headers,{'status':'missing-legalhold-consent'})]
             native_connection_update_controls=[request(*case)[0] for case in connection_update_cases]
@@ -814,7 +819,8 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             if mls_upload_originals:
                 import runner,harness
                 required=['MLS.KeyPackage.'+name for name in ('testDeleteKeyPackages','testKeyPackageUploadNoKey','testUnsupportedCiphersuite','testClaimKeyPackagesEphemeralUser','testKeyPackageClaim','testKeyPackageSelfClaim','testKeyPackageMultipleCiphersuites','testKeyPackageRemoteClaim','testReplaceKeyPackages','testReplaceKeyPackagesV7')]+[f'MLS.KeyPackage.testKeyPackageCount[suite={suite}]' for suite in ('0x0001','0x0002','0x0005','0x0007')]
-                assert set(required).issubset(runner.discover('brig')), 'original MLS upload cases absent'
+                required += ['Connection.'+name+'[domain=other]' for name in ('testCancel','testConnectFromBlocked','testConnectFromIgnored','testConnectionLimits','testSentFromBlocked','testSentFromIgnored')]+['Connection.testConnectWithRemoteUser[domain='+domain+']' for domain in ('otherdomain','owndomain')]
+                assert set(required).issubset(runner.discover('brig')), 'original MLS/connection cases absent'
                 link=runtime.WORK/'dist/brig';link.unlink();link.symlink_to(candidate)
                 xml=Path('/reports/mls-upload-original.xml')
                 with open('/reports/mls-upload-original.log','w') as original_log:
@@ -823,6 +829,9 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
                 report['e2e_attempted']=True;report['e2e_executed']=xml.is_file()
                 if xml.is_file():report['original_mls_upload_tests']['validated_report']=harness.check_xml(xml,required)
                 assert original.returncode==0, 'original compiled MLS upload tests failed'
+            go_profile_controls=[request(*case)[0] for case in profile_cases]
+            report['profiles_go_controls']=go_profile_controls
+            assert all(same(ref,actual) for ref,actual in zip(native_profile_controls,go_profile_controls)), 'native/Go federation profile projection mismatch'
             go_connection_create_controls=[request(*case)[0] for case in connection_create_cases]
             report['connections_go_create_controls']=go_connection_create_controls
             go_connection_update_controls=[request(*case)[0] for case in connection_update_cases]
@@ -885,6 +894,19 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             remote_native_final=request('GET',remote_native_reverse_path,remote_native_headers,port=9082)[0]
             report['connections_remote_native_final']=remote_native_final
             assert remote_native_final['status']==200 and remote_native_final['json']['status']=='cancelled', 'native remote rescind effect missing'
+            remote_reconnect=request('POST',remote_native_reverse_path,remote_native_headers,port=9082)[0]
+            report['connections_native_initiated_reconnect']=remote_reconnect
+            assert remote_reconnect['status']==200 and remote_reconnect['json']['status']=='sent', 'native incoming connection action failed'
+            remote_incoming=request('GET',remote_connection_path,connection_write_headers)[0]
+            report['connections_go_incoming_pending']=remote_incoming
+            assert remote_incoming['status']==200 and remote_incoming['json']['status']=='pending', 'Go incoming pending action missing'
+            remote_accept=request('PUT',remote_connection_path,connection_write_headers,{'status':'accepted'})[0]
+            report['connections_go_incoming_accept']=remote_accept
+            assert remote_accept['status']==200 and remote_accept['json']['status']=='accepted', 'Go incoming accept failed'
+            remote_native_accepted=request('GET',remote_native_reverse_path,remote_native_headers,port=9082)[0]
+            report['connections_remote_native_accepted']=remote_native_accepted
+            assert remote_native_accepted['status']==200 and remote_native_accepted['json']['status']=='accepted', 'native reciprocal accepted effect missing'
+            remote_connection_final=request('GET',remote_connection_path,connection_write_headers)[0]
             go_created,_=request('POST','/v19/clients',lifecycle_headers,{**new_body,'password':password})
             report['client_lifecycle_go_created']=go_created
             assert go_created['status']==201 and go_created['location']==go_created['json']['id'], 'Go client creation failed'

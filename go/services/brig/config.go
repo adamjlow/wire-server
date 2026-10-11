@@ -75,6 +75,7 @@ type Config struct {
 		} `yaml:"authSettings"`
 	} `yaml:"zauth"`
 	Settings struct {
+		EmailVisibility           string                    `yaml:"setEmailVisibility"`
 		UserMaxConnections        int64                     `yaml:"setUserMaxConnections"`
 		EnableMLS                 bool                      `yaml:"setEnableMLS"`
 		KeyPackageMaximumLifetime *mlsLifetimeMaximum       `yaml:"setKeyPackageMaximumLifetime"`

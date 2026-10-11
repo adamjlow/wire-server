@@ -118,12 +118,9 @@ func (s connectionRemoteService) ensureFederates(ctx context.Context, target goc
 	if err != nil {
 		return false, err
 	}
-	var profiles []struct {
-		Team *string `json:"team"`
-		Type string  `json:"type"`
-	}
-	if json.Unmarshal(raw, &profiles) != nil {
-		return false, errors.New("invalid remote connection profiles")
+	profiles, err := decodeRemoteUserProfiles(raw)
+	if err != nil {
+		return false, err
 	}
 	var team *gocql.UUID
 	app := false
