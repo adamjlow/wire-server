@@ -182,6 +182,17 @@ def inside(gundeck_path=None, access_switchback=False):
                 'email': 'synthetic-handoff-' + uuid.uuid4().hex + '@example.com',
                 'password': 'Synthetic-password-2026!'})
             assert created['status'] == 201, 'native handoff account setup failed'
+            # Quiesce peer clients before issuing short-lived inactivity
+            # witnesses. Native Warp otherwise drains their idle connections
+            # for its full shutdown interval. This non-team handoff uses real
+            # Cassandra/Elasticsearch, without a Galley/Gundeck request.
+            peer_processes = [process for process in processes
+                              if process is not active and process.poll() is None]
+            for process in peer_processes:
+                process.terminate()
+            peer_exits = [process.wait(timeout=35) for process in peer_processes]
+            report['quiesced_peer_exit_codes'] = peer_exits
+            assert all(code == 0 for code in peer_exits), 'peer did not quiesce cleanly'
             login, cookie = request('POST', '/login?persist=true', body={
                 'email': created['json']['email'], 'password': 'Synthetic-password-2026!',
                 'label': 'synthetic-paired-device'})
@@ -196,9 +207,12 @@ def inside(gundeck_path=None, access_switchback=False):
             assert reference_access['status'] == 200, 'native renewal baseline failed'
             if replacement:
                 cookie = replacement
+            report['handoff_cookie_observation'] = request('GET', '/cookies', {'Z-User': created['json']['id']})[0]
+            transition_started = time.monotonic()
             active.terminate()
             report['native_credentials_stop_exit_code'] = active.wait(timeout=35)
             assert report['native_credentials_stop_exit_code'] == 0, 'native credential process did not stop cleanly'
+            report['native_credentials_stop_seconds'] = time.monotonic() - transition_started
             with socket.socket() as check:
                 assert check.connect_ex(('127.0.0.1', 8082)) != 0, 'native credential listener remains'
             log = open('/reports/brig-go-credentials.log', 'w')
@@ -207,6 +221,7 @@ def inside(gundeck_path=None, access_switchback=False):
                                       cwd=runtime.WORK / 'services/brig', stdout=log, stderr=subprocess.STDOUT)
             processes.append(active)
             ready(active)
+            report['native_to_go_transition_seconds'] = time.monotonic() - transition_started
             renewed, replacement = request('POST', '/access', {
                 'Cookie': cookie.split(';', 1)[0],
                 'Authorization': 'Bearer ' + reference_access['json']['access_token']})

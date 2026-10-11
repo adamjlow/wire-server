@@ -1,0 +1,32 @@
+{
+  "root": "/home/operator/.cache/wire-migration/brig-20261010/access-switchback-fresh-handoff",
+  "sha256": {
+    "controller.log": "896ee9f531a79efd4bb72558d65032d95fac9a2ec00feee2c342a5f2e6ac7b09",
+    "paired-compose.json": "54a291d0b49c2df1ed0e12bf99a3eefd141434969ebd94231ea19103a974abe0",
+    "environment.json": "69e3dbcb5c01b4b4944bc42a6a4e95b2c0feef37efbe7a5f5f952039239a9d78",
+    "result.json": "b9b873d3009a37da50707141b83961dcb10ba98e02ce51cc0ca84fff7293ddc8",
+    "compose.json": "6d7c5f84711e8a2637c85fbacb6250b14f56c8953a985ffb4123b0f3128e98f5",
+    "redis-cluster-initialization.log": "d938b692b69a9d8820f49955005b04a2496dd6be8262f6a0afa33524e8e08783",
+    "reports/wire-server-enterprise-native.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "reports/federator-native.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "reports/cargohold-native.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "reports/brig-native-credential-setup.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "reports/cannon-native.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "reports/background-worker-native.log": "8fe76e5cba6383a09969f780f261b94922a3ba3a32e70d52f5bad4dcf6538d6a",
+    "reports/paired-reads.json": "1befed75b9f1fc211c3e14a66c6a52db4cdd87c74cedc29548a6f96426c820b3",
+    "reports/brig-go-credentials.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "reports/proxy-native.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "reports/brig-go.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "reports/brig-native.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "reports/stern-native.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "reports/spar-native.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "reports/gundeck-go.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "reports/galley-native.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "fixtures/configs.json": "a72b39e034c0563ea28260de4782ee8122f5b8e015887f835fd30b04ad4b8180",
+    "fixtures/coredns-db.sft": "38b816d19035e42da7b3fbb90f419641b222d38c17d8c09000d773484b1aa03a",
+    "fixtures/coredns-db.example.com": "6405b829e03e3c98f6742245bedffaf2e6ce80bc0f5202ccc5da5dee501c4b9f",
+    "fixtures/peers.json": "1877182efbc07cc70bf12db44905c75d5b6fe15cc849cb8143891db9617883f2",
+    "fixtures/coredns-Corefile": "f86a1dd0ea71d82a8f03c554e5ad80523d70615aa511889b5206179a538094e5",
+    "fixtures/integration.json": "d8834dad54e1f851e689ac00691cd527aac69e0e9ce00baf149835433812c73c"
+  }
+}

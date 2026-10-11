@@ -1,0 +1,47 @@
+>>> Performing hash slots allocation on 6 nodes...
+Master[0] -> Slots 0 - 5460
+Master[1] -> Slots 5461 - 10922
+Master[2] -> Slots 10923 - 16383
+Adding replica 172.20.0.35:6377 to 172.20.0.31:6373
+Adding replica 172.20.0.36:6378 to 172.20.0.32:6374
+Adding replica 172.20.0.34:6376 to 172.20.0.33:6375
+M: 0b5ac91ff0058d51cf49c43dc793b5626db94edf 172.20.0.31:6373
+   slots:[0-5460] (5461 slots) master
+M: 40ed46e5c49c1635cd911acf69264621edabea03 172.20.0.32:6374
+   slots:[5461-10922] (5462 slots) master
+M: 68ece1a041e7aa00ebb246038f8d2575e6ed8e61 172.20.0.33:6375
+   slots:[10923-16383] (5461 slots) master
+S: 61999d49df4e79ab713392afe2d898f7d8205b62 172.20.0.34:6376
+   replicates 68ece1a041e7aa00ebb246038f8d2575e6ed8e61
+S: 514ad66f1177acccf084a1b839461d502f63b7f6 172.20.0.35:6377
+   replicates 0b5ac91ff0058d51cf49c43dc793b5626db94edf
+S: bd33c544ceb2bf40d518abe56f3d53efc2decbf3 172.20.0.36:6378
+   replicates 40ed46e5c49c1635cd911acf69264621edabea03
+>>> Nodes configuration updated
+>>> Assign a different config epoch to each node
+>>> Sending CLUSTER MEET messages to join the cluster
+Waiting for the cluster to join
+.
+>>> Performing Cluster Check (using node 172.20.0.31:6373)
+M: 0b5ac91ff0058d51cf49c43dc793b5626db94edf 172.20.0.31:6373
+   slots:[0-5460] (5461 slots) master
+   1 additional replica(s)
+S: 514ad66f1177acccf084a1b839461d502f63b7f6 172.20.0.35:6377
+   slots: (0 slots) slave
+   replicates 0b5ac91ff0058d51cf49c43dc793b5626db94edf
+S: bd33c544ceb2bf40d518abe56f3d53efc2decbf3 172.20.0.36:6378
+   slots: (0 slots) slave
+   replicates 40ed46e5c49c1635cd911acf69264621edabea03
+M: 68ece1a041e7aa00ebb246038f8d2575e6ed8e61 172.20.0.33:6375
+   slots:[10923-16383] (5461 slots) master
+   1 additional replica(s)
+S: 61999d49df4e79ab713392afe2d898f7d8205b62 172.20.0.34:6376
+   slots: (0 slots) slave
+   replicates 68ece1a041e7aa00ebb246038f8d2575e6ed8e61
+M: 40ed46e5c49c1635cd911acf69264621edabea03 172.20.0.32:6374
+   slots:[5461-10922] (5462 slots) master
+   1 additional replica(s)
+[OK] All nodes agree about slots configuration.
+>>> Check for open slots...
+>>> Check slots coverage...
+[OK] All 16384 slots covered.
