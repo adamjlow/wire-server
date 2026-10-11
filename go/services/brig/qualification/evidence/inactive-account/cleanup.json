@@ -1,0 +1,10 @@
+{
+  "compiler_controller_exit_code": 0,
+  "compiler_network_cleanup_exit_code": 0,
+  "native_store_controller_exit_code": 0,
+  "independent_all_observation_containers": "",
+  "independent_all_observation_networks": "",
+  "independent_all_observation_volumes": "",
+  "independent_brig_task_containers": "",
+  "independent_brig_task_networks": ""
+}
