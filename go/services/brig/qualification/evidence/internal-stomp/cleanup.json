@@ -1,0 +1,39 @@
+{
+  "project": "wire-e2e-cc5b885f98bf45579e3ca10194ba7012",
+  "independent_owned_resources": {
+    "container": {
+      "command": [
+        "docker",
+        "ps",
+        "-aq",
+        "--filter",
+        "name=wire-e2e-cc5b885f98bf45579e3ca10194ba7012"
+      ],
+      "output": ""
+    },
+    "network": {
+      "command": [
+        "docker",
+        "network",
+        "ls",
+        "-q",
+        "--filter",
+        "name=wire-e2e-cc5b885f98bf45579e3ca10194ba7012"
+      ],
+      "output": ""
+    },
+    "volume": {
+      "command": [
+        "docker",
+        "volume",
+        "ls",
+        "-q",
+        "--filter",
+        "label=com.docker.compose.project=wire-e2e-cc5b885f98bf45579e3ca10194ba7012"
+      ],
+      "output": ""
+    }
+  },
+  "sdk_container_audit": "",
+  "sdk_network_audit": ""
+}

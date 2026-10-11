@@ -1,0 +1,53 @@
+{
+  "purpose": "Retain exact superseded SDK and preflight fixture bytes in verified lossless archives",
+  "files": [
+    {
+      "original": "/home/operator/.cache/wire-migration/brig-20261010/internal-events-replay-sdk-check/brig",
+      "archive": "/home/operator/.cache/wire-migration/brig-20261010/internal-events-replay-sdk-check/brig.gz",
+      "original_sha256": "def0fef2b8a58855000e2f7cd92d18b394ec75c8cabfa1e8edc99300e0f8a9a1",
+      "archive_sha256": "195bc2a5ae3116646d5efc6d4d97817634ea0a9eb464a0d76e5d7f4b0c036ea1",
+      "mode": "0o755",
+      "uid": 65534,
+      "gid": 65534,
+      "original_bytes": 69731968,
+      "archive_bytes": 28975078,
+      "restore": "Decompress, verify original SHA256, restore recorded mode/ownership."
+    },
+    {
+      "original": "/home/operator/.cache/wire-migration/brig-20261010/internal-events-replay-sdk-check/brig.test",
+      "archive": "/home/operator/.cache/wire-migration/brig-20261010/internal-events-replay-sdk-check/brig.test.gz",
+      "original_sha256": "536743a6beda9b72eae03237da015f4493434b63cee3bc39be2911fd3bd8d0cf",
+      "archive_sha256": "a4f3295f1ce995f66176a697d2153a6944a442cd3a48e0d807d18c2eb78baaa2",
+      "mode": "0o755",
+      "uid": 65534,
+      "gid": 65534,
+      "original_bytes": 67704192,
+      "archive_bytes": 28595449,
+      "restore": "Decompress, verify original SHA256, restore recorded mode/ownership."
+    },
+    {
+      "original": "/home/operator/.cache/wire-migration/brig-20261010/internal-events-replay-sdk-check/stores.test",
+      "archive": "/home/operator/.cache/wire-migration/brig-20261010/internal-events-replay-sdk-check/stores.test.gz",
+      "original_sha256": "22d8adeb9e2ec93c177cdcc73d4d0891eefa63f24664db630e2d945d73509bcc",
+      "archive_sha256": "b0ca68d2265739ec8035875ba78a4d4cda4c6fb5c81c2e1c5b1d806d9eb809ad",
+      "mode": "0o755",
+      "uid": 65534,
+      "gid": 65534,
+      "original_bytes": 72718768,
+      "archive_bytes": 30307578,
+      "restore": "Decompress, verify original SHA256, restore recorded mode/ownership."
+    },
+    {
+      "original": "/home/operator/.cache/wire-migration/brig-20261010/internal-stomp-sqs-regression-paired/fixtures/brig-stores.test",
+      "archive": "/home/operator/.cache/wire-migration/brig-20261010/internal-stomp-sqs-regression-paired/fixtures/brig-stores.test.gz",
+      "original_sha256": "c331fa2719f9d13a8cfcd8c35735deb2d7242cccf82b4c972d80e55f95d41f58",
+      "archive_sha256": "6d2c224f1b0816044f2f2082a6242bce6d91d2d37168fac900573346324b042d",
+      "mode": "0o555",
+      "uid": 1001,
+      "gid": 37,
+      "original_bytes": 72827128,
+      "archive_bytes": 30366369,
+      "restore": "Decompress, verify original SHA256, restore recorded mode/ownership."
+    }
+  ]
+}

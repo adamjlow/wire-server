@@ -213,6 +213,20 @@
       "command": "Scoped SQS internal user/client consumer: full pinned/static checks and original22 pass; actual native queue cleanup, Haskell-created account/property enqueued after native stop consumed+acknowledged by Go, restarted native reads same tombstone/cleared properties, visible/in-flight0. Prior affected paired/client/raw+signed MLS switchback retained; all25 exits0 runner/cleanup0 independent empty. STOMP/service deletion/full535/all-entity operations not qualified.",
       "revision": "a14fe1243bbc03697ba46da6ea8507639a60f882",
       "artifact": "go/services/brig/qualification/evidence/internal-events/README.md"
+    },
+    {
+      "criterion": "quality",
+      "result": "pass",
+      "command": "Scoped sourceee1c74c40/service42ea8a76: pinned Go format/tidy/verify/vet/unit/race/build/vulnerability/license checks and static original-runner units pass. Bounded STOMP receipt/persistent send, individual success-only ACK, six attempts, TLS trust rejection, cancellation, framing and native configuration controls; unchanged original22 pass with Brig/Gundeck Go and Haskell remainder. Initial candidate unit failures and disk preflight retained. Not actual ActiveMQ or final eight-Go535 qualification.",
+      "revision": "ee1c74c40c0e0aa839a5c52432b8be0c55280d72",
+      "artifact": "go/services/brig/qualification/evidence/internal-stomp/README.md"
+    },
+    {
+      "criterion": "operations",
+      "result": "pass",
+      "command": "Scoped sourceee1c74c40/service42ea8a76: actual native-Go-native SQS deletion/property replay and acknowledgement, existing client/prekey/raw+signed MLS durable switchback and paired contract controls pass. All25 managed process exits0, runner/cleanup0 and independent namespace audit empty. This validates SQS regression after STOMP addition, not actual STOMP broker, whole operations/all-entity/three-selector gates.",
+      "revision": "ee1c74c40c0e0aa839a5c52432b8be0c55280d72",
+      "artifact": "go/services/brig/qualification/evidence/internal-stomp/README.md"
     }
   ],
   "review": null,
@@ -248,5 +262,5 @@
       "required_evidence": "Frozen100request/concurrency8 latency/RSS/CPU/metrics smoke and eight held-body drain/listener close/SIGTERM0 within35s; actual unchanged-schema same-state native-Go-native auth/password/cookie/client/prekey/MLS/property/connection/pending action/OAuth/apps/groups/domain/queue/search and storage-mode witnesses. Trusted nonroot optional source/license image and separately scoped image-only/default-byte-preserving selector. Exact final qualified artifact and user-delegated same-author self-review with serious inherited concerns and unavailable native checks accurately recorded."
     }
   ],
-  "handoff": "Current source a14fe1243 / service def0fef2b8a58855000e2f7cd92d18b394ec75c8cabfa1e8edc99300e0f8a9a1: bound public/internal account deletion, code/mail verification, groups/peers/events and real internal SQS user/client listener. Full pinned Go checks pass; unchanged original22 pass with two Go services and Haskell remainder; actual native-Go-native queued account/property deletion and SQS acknowledgement pass. Scoped evidence is recorded under qualification/evidence/deletion-http and internal-events; owned namespaces terminal and independently empty. STOMP remains planned, not implemented; provider/service.delete, queued-client and email-code end-to-end cases, remaining full-service families and final535/eight-Go/all-entity three-mode/operations/image/selector/legal/security gates remain incomplete. No whole-service stage advancement. User now explicitly authorizes pushing current work to origin/go-migration; publication does not qualify Brig or change Haskell defaults. Experiment README and layout/testing/performance review are already present; Brig must complete before Galley."
+  "handoff": "Latest source ee1c74c40 / service 42ea8a7641445628d976dea7480fec13885f60f82d0344567a886b79d2b3da5d: STOMP internal producer/consumer implemented using bounded synchronous frame sessions, raw CONNECT credentials, persistent SEND/matching receipt, native six attempts/500ms/50ms retries, success-only individual ACK/1s deadline, 1s reconnect and context-owned sockets. Native stomHost/stomPort/stomTls and YAML setStomp credentials supported; Dynamo AWS credentials independent of queue transport. Full pinned Go/static checks and unchanged original22 pass; actual native-Go-native SQS deletion/property replay plus existing durable client/prekey/MLS controls pass. Initial SDK decoder/test-fixture failures and disk-floor preflight retained; all owned resources terminal/independently empty. Next qualify actual ActiveMQ native-Go-native queue behavior, including broker redelivery and supported TLS/configuration; Apache now documents apache/activemq (old activemq-classic repository archived), inspect/pin before use. Historical SDK artifacts and a preflight fixture are SHA-verified lossless gzip archives, restoration metadata retained. Provider/service.delete, actual queued client/email-code deletion, remaining families and final535/eight-Go/all-entity three-mode/operations/image/selector/legal/security gates incomplete. Same-author increment review only; no new push authorization, no stage advancement; complete Brig before Galley."
 }

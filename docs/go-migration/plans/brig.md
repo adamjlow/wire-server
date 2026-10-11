@@ -1466,3 +1466,16 @@ Initial SDK source73242a402 failed two candidate tests: the YAML Node decoding
 strategy did not preserve required fields, and the successful-callback fixture
 omitted its mandatory cleanup dependency. Correct the candidate decoder and fixture;
 retain the failed receipt/log. Add finite six-attempt and untrusted-TLS controls.
+
+At sourceee1c74c40/service42ea8a76, full pinned Go checks and static original-runner
+units pass. All22 unchanged original executions and existing paired/durable client,
+prekey, raw/signed MLS controls pass with Brig/Gundeck Go and Haskell remainder.
+The actual SQS account/property replay passes native-Go-native; all25 process exits0,
+runner/cleanup0 and independently empty owned namespaces. The first backend attempt
+failed its pre-launch disk floor; historical artifacts and fixture were retained in
+SHA-verified lossless archives, and a fresh run passed without weakening the floor.
+[STOMP increment evidence](../../../go/services/brig/qualification/evidence/internal-stomp/README.md)
+retains the initial failures, exact artifact identities, new dependency license and
+maintenance receipts. Same-author review under existing delegation accepts this
+increment only. Actual native ActiveMQ, service-delete and final535/eight-Go gates
+remain required; no default or service-stage changes and no new push.

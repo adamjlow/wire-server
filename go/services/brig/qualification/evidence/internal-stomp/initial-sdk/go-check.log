@@ -1,0 +1,16 @@
+all modules verified
+2026/10/11 15:00:13 session refresh notification failed
+2026/10/11 15:00:15 Internal event body missing
+2026/10/11 15:00:15 Internal event parse failed
+--- FAIL: TestInternalStompAcknowledgementAfterCallback (0.00s)
+    --- FAIL: TestInternalStompAcknowledgementAfterCallback/true (0.00s)
+        internal_event_stomp_test.go:128: missing individual acknowledgement
+        internal_event_stomp_test.go:133: ack preceded callback
+--- FAIL: TestInternalStompNativeConfiguration (0.00s)
+    internal_event_stomp_test.go:196: invalid internal STOMP configuration
+2026/10/11 15:00:19 session refresh notification failed
+FAIL
+FAIL	github.com/adamjlow/wire-server/go/services/brig	6.160s
+?   	github.com/adamjlow/wire-server/go/services/brig/cmd/brig	[no test files]
+FAIL
+Candidate checks failed: go test failed (exit 1)

@@ -1,0 +1,8 @@
+{
+  "source_revision": "ee1c74c40c0e0aa839a5c52432b8be0c55280d72",
+  "result": "failed",
+  "failure": "owned dependency disk floor unmet",
+  "e2e_executed": false,
+  "controller_exit_code": 1,
+  "recovery": "Retained historical binaries and fixture in lossless SHA-verified archives; unchanged disk floor and fresh owned namespace; successful rerun recorded separately."
+}
