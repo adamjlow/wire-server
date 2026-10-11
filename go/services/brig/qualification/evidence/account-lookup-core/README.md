@@ -1,0 +1,9 @@
+# Internal account lookup core
+
+Implementation source17e272104b18af9e82318e629e3fc9d98ce11f1a, corrected owned tagged fixture sourcead09fe4fa233b140a08b679999da3a9fa26a66b0. Candidate51a00499b9c6a1e5bea94dc040e9fc0e9f1253ac1cdd5677a5f1c7ff2e3f19eb, normal unit2fd3e891242d6808c7468773a2a32ea839ca854621c5f93d5403ce2113d7c7ba, taggedstored458214ac272e80f445b35ba63407bfb356d024b2640664ded2604012911b445.
+
+Pinned Go1.26.9 format/tidy/verify/vet/unit/race/build/vulnerability/license checks PASS at17e272. Initial tagged compilation failed on local timestamp name clash; retained account-lookup-initial-build. Owned fixture variable rename alone changes; guarded production/normal-unit binary identity and unchanged SDK libraries reuse actual Go-check trace, then static normal units actually execute in original runner and PASS. No dependencies added.
+
+Actual original-native-schema stores PASS: live/stale/absent invitation references, optional legacy NULL role/name/creator, required timestamp and unknown role rejection, plus all prior three-mode durable assertions. Native schema0/test0, guarded compiler0/static units0/cleanup independently empty. Unit controls establish email versus ID/handle branches, app/identity/pending/deleted filters, cross-arm duplicate retention, all invitation checks before any queue write, failure propagation and query validation before dependencies. SQS standard user.delete payload/signature/queue discovery/mandatory response MD5 tested; no FIFO/base64 fields.
+
+No positive full SAML API, actual SQS stored deletion consumption, exact malformed-query/boolean/list/codecs or complete suite claim. SQS consumer, STOMP and remaining whole-service contracts remain required. Same artifact mixed SAML comparison failed on missing internal full-client lookup; retained separately. Whole Brig stays active/unavailable and Galley follows completion. Haskell/original tests/oracles/schemas/deadlines/policies unchanged.

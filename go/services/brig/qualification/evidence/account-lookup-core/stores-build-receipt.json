@@ -1,0 +1,16 @@
+{
+  "source_revision": "ad09fe4fa233b140a08b679999da3a9fa26a66b0",
+  "sdk_image": "sha256:2f9e4393295d7270538dd1c666ab1345eaec06b2c2f8c217283ba6565caee399",
+  "runner_image": "sha256:f487c90fd364aac9daee5a1ce6e60fdba0ab74ab0c671ab0de0198e8f05659a9",
+  "build_exit_code": 0,
+  "quality_checked_source": "17e272104b18af9e82318e629e3fc9d98ce11f1a",
+  "only_owned_tagged_fixture_changed": true,
+  "result": "pass",
+  "binary_sha256": "d458214ac272e80f445b35ba63407bfb356d024b2640664ded2604012911b445",
+  "unit_binary_sha256": "2fd3e891242d6808c7468773a2a32ea839ca854621c5f93d5403ce2113d7c7ba",
+  "store_binary_sha256": "d458214ac272e80f445b35ba63407bfb356d024b2640664ded2604012911b445",
+  "production_and_normal_unit_executables_identical": true,
+  "go_check_proof_inherited": "/dev/shm/wire-migration-brig-20261010/account-lookup-sdk-check/go-check.log",
+  "unchanged_runner_unit_exit_code": 0,
+  "remaining_owned_containers": ""
+}

@@ -1,0 +1,703 @@
+{
+  "result": "failed",
+  "e2e_executed": false,
+  "scope": "Finite native -> Go read/reauthentication observations on native-created state.",
+  "records": [
+    {
+      "implementation": "haskell",
+      "observations": [
+        {
+          "method": "GET",
+          "path": "/i/status",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": ""
+        },
+        {
+          "method": "HEAD",
+          "path": "/i/status",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "path": "/api-version",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"development\":[19],\"domain\":\"example.com\",\"federation\":true,\"supported\":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18]}",
+          "json": {
+            "development": [
+              19
+            ],
+            "domain": "example.com",
+            "federation": true,
+            "supported": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18
+            ]
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/self",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"accent_id\":0,\"assets\":[],\"email\":\"synthetic-parity-c0172c147ee84dbf85e18ef4723c8c01@example.com\",\"id\":\"d72087cf-5814-409c-af75-b086e7736b1c\",\"locale\":\"en\",\"managed_by\":\"wire\",\"name\":\"Synthetic parity reader\",\"picture\":[],\"qualified_id\":{\"domain\":\"example.com\",\"id\":\"d72087cf-5814-409c-af75-b086e7736b1c\"},\"searchable\":true,\"status\":\"active\",\"supported_protocols\":[\"proteus\"],\"type\":\"regular\"}",
+          "json": {
+            "accent_id": 0,
+            "assets": [],
+            "email": "synthetic-parity-c0172c147ee84dbf85e18ef4723c8c01@example.com",
+            "id": "d72087cf-5814-409c-af75-b086e7736b1c",
+            "locale": "en",
+            "managed_by": "wire",
+            "name": "Synthetic parity reader",
+            "picture": [],
+            "qualified_id": {
+              "domain": "example.com",
+              "id": "d72087cf-5814-409c-af75-b086e7736b1c"
+            },
+            "searchable": true,
+            "status": "active",
+            "supported_protocols": [
+              "proteus"
+            ],
+            "type": "regular"
+          }
+        },
+        {
+          "method": "HEAD",
+          "path": "/self",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "path": "/cookies",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"cookies\":[{\"created\":\"2026-10-11T03:13:11.426Z\",\"expires\":\"2026-10-11T03:15:11Z\",\"id\":2933978198,\"label\":\"synthetic-paired-device\",\"successor\":null,\"type\":\"persistent\"}]}",
+          "json": {
+            "cookies": [
+              {
+                "created": "2026-10-11T03:13:11.426Z",
+                "expires": "2026-10-11T03:15:11Z",
+                "id": 2933978198,
+                "label": "synthetic-paired-device",
+                "successor": null,
+                "type": "persistent"
+              }
+            ]
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/cookies?labels=synthetic-paired-device",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"cookies\":[{\"created\":\"2026-10-11T03:13:11.426Z\",\"expires\":\"2026-10-11T03:15:11Z\",\"id\":2933978198,\"label\":\"synthetic-paired-device\",\"successor\":null,\"type\":\"persistent\"}]}",
+          "json": {
+            "cookies": [
+              {
+                "created": "2026-10-11T03:13:11.426Z",
+                "expires": "2026-10-11T03:15:11Z",
+                "id": 2933978198,
+                "label": "synthetic-paired-device",
+                "successor": null,
+                "type": "persistent"
+              }
+            ]
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/cookies?labels=absent",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"cookies\":[]}",
+          "json": {
+            "cookies": []
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/i/users/d72087cf-5814-409c-af75-b086e7736b1c/status",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"status\":\"active\"}",
+          "json": {
+            "status": "active"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/self",
+          "status": 400,
+          "content_type": null,
+          "body": "Header Z-User is required"
+        },
+        {
+          "method": "GET",
+          "path": "/self",
+          "status": 400,
+          "content_type": null,
+          "body": "Error parsing header Z-User failed: invalid UUID"
+        },
+        {
+          "method": "GET",
+          "path": "/self",
+          "status": 400,
+          "content_type": null,
+          "body": "Error parsing header Z-User failed: invalid UUID"
+        },
+        {
+          "method": "GET",
+          "path": "/v1/self",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"accent_id\":0,\"assets\":[],\"email\":\"synthetic-parity-c0172c147ee84dbf85e18ef4723c8c01@example.com\",\"id\":\"d72087cf-5814-409c-af75-b086e7736b1c\",\"locale\":\"en\",\"managed_by\":\"wire\",\"name\":\"Synthetic parity reader\",\"picture\":[],\"qualified_id\":{\"domain\":\"example.com\",\"id\":\"d72087cf-5814-409c-af75-b086e7736b1c\"},\"searchable\":true,\"status\":\"active\",\"supported_protocols\":[\"proteus\"],\"type\":\"regular\"}",
+          "json": {
+            "accent_id": 0,
+            "assets": [],
+            "email": "synthetic-parity-c0172c147ee84dbf85e18ef4723c8c01@example.com",
+            "id": "d72087cf-5814-409c-af75-b086e7736b1c",
+            "locale": "en",
+            "managed_by": "wire",
+            "name": "Synthetic parity reader",
+            "picture": [],
+            "qualified_id": {
+              "domain": "example.com",
+              "id": "d72087cf-5814-409c-af75-b086e7736b1c"
+            },
+            "searchable": true,
+            "status": "active",
+            "supported_protocols": [
+              "proteus"
+            ],
+            "type": "regular"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/i/users/d72087cf-5814-409c-af75-b086e7736b1c/reauthenticate",
+          "status": 200,
+          "content_type": null,
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "path": "/i/users/d72087cf-5814-409c-af75-b086e7736b1c/reauthenticate",
+          "status": 403,
+          "content_type": "application/json",
+          "body": "{\"code\":403,\"label\":\"invalid-credentials\",\"message\":\"Authentication failed\"}",
+          "json": {
+            "code": 403,
+            "label": "invalid-credentials",
+            "message": "Authentication failed"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/i/users/d72087cf-5814-409c-af75-b086e7736b1c/reauthenticate",
+          "status": 403,
+          "content_type": "application/json",
+          "body": "{\"code\":403,\"label\":\"missing-auth\",\"message\":\"Re-authentication via password required\"}",
+          "json": {
+            "code": 403,
+            "label": "missing-auth",
+            "message": "Re-authentication via password required"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/i/users/d72087cf-5814-409c-af75-b086e7736b1c/reauthenticate",
+          "status": 200,
+          "content_type": null,
+          "body": ""
+        }
+      ]
+    },
+    {
+      "implementation": "go",
+      "observations": [
+        {
+          "method": "GET",
+          "path": "/i/status",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": ""
+        },
+        {
+          "method": "HEAD",
+          "path": "/i/status",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "path": "/api-version",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"development\":[19],\"domain\":\"example.com\",\"federation\":true,\"supported\":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18]}\n",
+          "json": {
+            "development": [
+              19
+            ],
+            "domain": "example.com",
+            "federation": true,
+            "supported": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18
+            ]
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/self",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"qualified_id\":{\"id\":\"d72087cf-5814-409c-af75-b086e7736b1c\",\"domain\":\"example.com\"},\"id\":\"d72087cf-5814-409c-af75-b086e7736b1c\",\"type\":\"regular\",\"email\":\"synthetic-parity-c0172c147ee84dbf85e18ef4723c8c01@example.com\",\"name\":\"Synthetic parity reader\",\"picture\":[],\"assets\":[],\"accent_id\":0,\"status\":\"active\",\"locale\":\"en\",\"managed_by\":\"wire\",\"supported_protocols\":[\"proteus\"],\"searchable\":true}\n",
+          "json": {
+            "qualified_id": {
+              "id": "d72087cf-5814-409c-af75-b086e7736b1c",
+              "domain": "example.com"
+            },
+            "id": "d72087cf-5814-409c-af75-b086e7736b1c",
+            "type": "regular",
+            "email": "synthetic-parity-c0172c147ee84dbf85e18ef4723c8c01@example.com",
+            "name": "Synthetic parity reader",
+            "picture": [],
+            "assets": [],
+            "accent_id": 0,
+            "status": "active",
+            "locale": "en",
+            "managed_by": "wire",
+            "supported_protocols": [
+              "proteus"
+            ],
+            "searchable": true
+          }
+        },
+        {
+          "method": "HEAD",
+          "path": "/self",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "path": "/cookies",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"cookies\":[{\"created\":\"2026-10-11T03:13:11.426Z\",\"expires\":\"2026-10-11T03:15:11Z\",\"id\":2933978198,\"label\":\"synthetic-paired-device\",\"successor\":null,\"type\":\"persistent\"}]}\n",
+          "json": {
+            "cookies": [
+              {
+                "created": "2026-10-11T03:13:11.426Z",
+                "expires": "2026-10-11T03:15:11Z",
+                "id": 2933978198,
+                "label": "synthetic-paired-device",
+                "successor": null,
+                "type": "persistent"
+              }
+            ]
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/cookies?labels=synthetic-paired-device",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"cookies\":[{\"created\":\"2026-10-11T03:13:11.426Z\",\"expires\":\"2026-10-11T03:15:11Z\",\"id\":2933978198,\"label\":\"synthetic-paired-device\",\"successor\":null,\"type\":\"persistent\"}]}\n",
+          "json": {
+            "cookies": [
+              {
+                "created": "2026-10-11T03:13:11.426Z",
+                "expires": "2026-10-11T03:15:11Z",
+                "id": 2933978198,
+                "label": "synthetic-paired-device",
+                "successor": null,
+                "type": "persistent"
+              }
+            ]
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/cookies?labels=absent",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"cookies\":[]}\n",
+          "json": {
+            "cookies": []
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/i/users/d72087cf-5814-409c-af75-b086e7736b1c/status",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"status\":\"active\"}\n",
+          "json": {
+            "status": "active"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/self",
+          "status": 400,
+          "content_type": null,
+          "body": "Header Z-User is required"
+        },
+        {
+          "method": "GET",
+          "path": "/self",
+          "status": 400,
+          "content_type": null,
+          "body": "Error parsing header Z-User failed: invalid UUID"
+        },
+        {
+          "method": "GET",
+          "path": "/self",
+          "status": 400,
+          "content_type": null,
+          "body": "Error parsing header Z-User failed: invalid UUID"
+        },
+        {
+          "method": "GET",
+          "path": "/v1/self",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"qualified_id\":{\"id\":\"d72087cf-5814-409c-af75-b086e7736b1c\",\"domain\":\"example.com\"},\"id\":\"d72087cf-5814-409c-af75-b086e7736b1c\",\"type\":\"regular\",\"email\":\"synthetic-parity-c0172c147ee84dbf85e18ef4723c8c01@example.com\",\"name\":\"Synthetic parity reader\",\"picture\":[],\"assets\":[],\"accent_id\":0,\"status\":\"active\",\"locale\":\"en\",\"managed_by\":\"wire\",\"supported_protocols\":[\"proteus\"],\"searchable\":true}\n",
+          "json": {
+            "qualified_id": {
+              "id": "d72087cf-5814-409c-af75-b086e7736b1c",
+              "domain": "example.com"
+            },
+            "id": "d72087cf-5814-409c-af75-b086e7736b1c",
+            "type": "regular",
+            "email": "synthetic-parity-c0172c147ee84dbf85e18ef4723c8c01@example.com",
+            "name": "Synthetic parity reader",
+            "picture": [],
+            "assets": [],
+            "accent_id": 0,
+            "status": "active",
+            "locale": "en",
+            "managed_by": "wire",
+            "supported_protocols": [
+              "proteus"
+            ],
+            "searchable": true
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/i/users/d72087cf-5814-409c-af75-b086e7736b1c/reauthenticate",
+          "status": 200,
+          "content_type": null,
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "path": "/i/users/d72087cf-5814-409c-af75-b086e7736b1c/reauthenticate",
+          "status": 403,
+          "content_type": "application/json",
+          "body": "{\"code\":403,\"label\":\"invalid-credentials\",\"message\":\"Authentication failed\"}\n",
+          "json": {
+            "code": 403,
+            "label": "invalid-credentials",
+            "message": "Authentication failed"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/i/users/d72087cf-5814-409c-af75-b086e7736b1c/reauthenticate",
+          "status": 403,
+          "content_type": "application/json",
+          "body": "{\"code\":403,\"label\":\"missing-auth\",\"message\":\"Re-authentication via password required\"}\n",
+          "json": {
+            "code": 403,
+            "label": "missing-auth",
+            "message": "Re-authentication via password required"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/i/users/d72087cf-5814-409c-af75-b086e7736b1c/reauthenticate",
+          "status": 200,
+          "content_type": null,
+          "body": ""
+        }
+      ]
+    }
+  ],
+  "native_brig": {
+    "path": "/nix/store/f6l2f0l8l2r6z9jbg937q96k6056iqfn-brig/bin/brig",
+    "sha256": "c45a40da63268712a7cacdbd884287fa3dc93cec179d70323d3f22f7d5cdf1ca"
+  },
+  "go_gundeck_sha256": "a50512ef30d7fa9ddf92c2c1933e69769d6691e08cdfbe9f7c4f2d266071f46c",
+  "native_setup": [
+    {
+      "method": "POST",
+      "path": "/i/users",
+      "status": 201,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"accent_id\":0,\"assets\":[],\"email\":\"synthetic-parity-c0172c147ee84dbf85e18ef4723c8c01@example.com\",\"id\":\"d72087cf-5814-409c-af75-b086e7736b1c\",\"locale\":\"en\",\"managed_by\":\"wire\",\"name\":\"Synthetic parity reader\",\"picture\":[],\"qualified_id\":{\"domain\":\"example.com\",\"id\":\"d72087cf-5814-409c-af75-b086e7736b1c\"},\"searchable\":true,\"status\":\"active\",\"supported_protocols\":[\"proteus\"],\"type\":\"regular\"}",
+      "location": "d72087cf-5814-409c-af75-b086e7736b1c",
+      "json": {
+        "accent_id": 0,
+        "assets": [],
+        "email": "synthetic-parity-c0172c147ee84dbf85e18ef4723c8c01@example.com",
+        "id": "d72087cf-5814-409c-af75-b086e7736b1c",
+        "locale": "en",
+        "managed_by": "wire",
+        "name": "Synthetic parity reader",
+        "picture": [],
+        "qualified_id": {
+          "domain": "example.com",
+          "id": "d72087cf-5814-409c-af75-b086e7736b1c"
+        },
+        "searchable": true,
+        "status": "active",
+        "supported_protocols": [
+          "proteus"
+        ],
+        "type": "regular"
+      }
+    },
+    {
+      "operation": "persistent login",
+      "status": 200,
+      "cookie_issued": true
+    }
+  ],
+  "registration_native_team_setup": {
+    "method": "POST",
+    "path": "/i/users",
+    "status": 201,
+    "content_type": "application/json;charset=utf-8",
+    "body": "{\"accent_id\":0,\"assets\":[],\"email\":\"synthetic-saml-owner-7d76127a5c8f41b0a1df61f15dd0ec03@example.com\",\"id\":\"75d5955c-e6f8-4bb3-9cec-68cc8f30db57\",\"locale\":\"en\",\"managed_by\":\"wire\",\"name\":\"Synthetic SAML team owner\",\"picture\":[],\"qualified_id\":{\"domain\":\"example.com\",\"id\":\"75d5955c-e6f8-4bb3-9cec-68cc8f30db57\"},\"searchable\":true,\"status\":\"active\",\"supported_protocols\":[\"proteus\"],\"team\":\"04197f7a-aba5-4384-bff2-bad7ac046297\",\"type\":\"regular\"}",
+    "location": "75d5955c-e6f8-4bb3-9cec-68cc8f30db57",
+    "json": {
+      "accent_id": 0,
+      "assets": [],
+      "email": "synthetic-saml-owner-7d76127a5c8f41b0a1df61f15dd0ec03@example.com",
+      "id": "75d5955c-e6f8-4bb3-9cec-68cc8f30db57",
+      "locale": "en",
+      "managed_by": "wire",
+      "name": "Synthetic SAML team owner",
+      "picture": [],
+      "qualified_id": {
+        "domain": "example.com",
+        "id": "75d5955c-e6f8-4bb3-9cec-68cc8f30db57"
+      },
+      "searchable": true,
+      "status": "active",
+      "supported_protocols": [
+        "proteus"
+      ],
+      "team": "04197f7a-aba5-4384-bff2-bad7ac046297",
+      "type": "regular"
+    }
+  },
+  "registration_native_reference": {
+    "method": "POST",
+    "path": "/i/users",
+    "status": 201,
+    "content_type": "application/json;charset=utf-8",
+    "body": "{\"accent_id\":0,\"assets\":[],\"id\":\"cd5cfadb-948d-4967-89c6-62c1780fb3fa\",\"locale\":\"en\",\"managed_by\":\"wire\",\"name\":\"Synthetic registration reference\",\"picture\":[],\"qualified_id\":{\"domain\":\"example.com\",\"id\":\"cd5cfadb-948d-4967-89c6-62c1780fb3fa\"},\"searchable\":true,\"sso_id\":{\"subject\":\"<NameID xmlns:samlp=\\\"urn:oasis:names:tc:SAML:2.0:protocol\\\" xmlns:samla=\\\"urn:oasis:names:tc:SAML:2.0:assertion\\\" xmlns:samlm=\\\"urn:oasis:names:tc:SAML:2.0:metadata\\\" xmlns:ds=\\\"http://www.w3.org/2000/09/xmldsig#\\\" xmlns=\\\"urn:oasis:names:tc:SAML:2.0:assertion\\\">synthetic-cd5cfadb-948d-4967-89c6-62c1780fb3fa</NameID>\",\"tenant\":\"<Issuer xmlns:samlp=\\\"urn:oasis:names:tc:SAML:2.0:protocol\\\" xmlns:samla=\\\"urn:oasis:names:tc:SAML:2.0:assertion\\\" xmlns:samlm=\\\"urn:oasis:names:tc:SAML:2.0:metadata\\\" xmlns:ds=\\\"http://www.w3.org/2000/09/xmldsig#\\\" xmlns=\\\"urn:oasis:names:tc:SAML:2.0:assertion\\\">https://synthetic-issuer.example.com</Issuer>\"},\"status\":\"active\",\"supported_protocols\":[],\"team\":\"04197f7a-aba5-4384-bff2-bad7ac046297\",\"type\":\"regular\"}",
+    "location": "cd5cfadb-948d-4967-89c6-62c1780fb3fa",
+    "json": {
+      "accent_id": 0,
+      "assets": [],
+      "id": "cd5cfadb-948d-4967-89c6-62c1780fb3fa",
+      "locale": "en",
+      "managed_by": "wire",
+      "name": "Synthetic registration reference",
+      "picture": [],
+      "qualified_id": {
+        "domain": "example.com",
+        "id": "cd5cfadb-948d-4967-89c6-62c1780fb3fa"
+      },
+      "searchable": true,
+      "sso_id": {
+        "subject": "<NameID xmlns:samlp=\"urn:oasis:names:tc:SAML:2.0:protocol\" xmlns:samla=\"urn:oasis:names:tc:SAML:2.0:assertion\" xmlns:samlm=\"urn:oasis:names:tc:SAML:2.0:metadata\" xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\" xmlns=\"urn:oasis:names:tc:SAML:2.0:assertion\">synthetic-cd5cfadb-948d-4967-89c6-62c1780fb3fa</NameID>",
+        "tenant": "<Issuer xmlns:samlp=\"urn:oasis:names:tc:SAML:2.0:protocol\" xmlns:samla=\"urn:oasis:names:tc:SAML:2.0:assertion\" xmlns:samlm=\"urn:oasis:names:tc:SAML:2.0:metadata\" xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\" xmlns=\"urn:oasis:names:tc:SAML:2.0:assertion\">https://synthetic-issuer.example.com</Issuer>"
+      },
+      "status": "active",
+      "supported_protocols": [],
+      "team": "04197f7a-aba5-4384-bff2-bad7ac046297",
+      "type": "regular"
+    }
+  },
+  "registration_native_reads": [
+    {
+      "method": "GET",
+      "path": "/self",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"accent_id\":0,\"assets\":[],\"id\":\"cd5cfadb-948d-4967-89c6-62c1780fb3fa\",\"locale\":\"en\",\"managed_by\":\"wire\",\"name\":\"Synthetic registration reference\",\"picture\":[],\"qualified_id\":{\"domain\":\"example.com\",\"id\":\"cd5cfadb-948d-4967-89c6-62c1780fb3fa\"},\"searchable\":true,\"sso_id\":{\"subject\":\"<NameID xmlns:samlp=\\\"urn:oasis:names:tc:SAML:2.0:protocol\\\" xmlns:samla=\\\"urn:oasis:names:tc:SAML:2.0:assertion\\\" xmlns:samlm=\\\"urn:oasis:names:tc:SAML:2.0:metadata\\\" xmlns:ds=\\\"http://www.w3.org/2000/09/xmldsig#\\\" xmlns=\\\"urn:oasis:names:tc:SAML:2.0:assertion\\\">synthetic-cd5cfadb-948d-4967-89c6-62c1780fb3fa</NameID>\",\"tenant\":\"<Issuer xmlns:samlp=\\\"urn:oasis:names:tc:SAML:2.0:protocol\\\" xmlns:samla=\\\"urn:oasis:names:tc:SAML:2.0:assertion\\\" xmlns:samlm=\\\"urn:oasis:names:tc:SAML:2.0:metadata\\\" xmlns:ds=\\\"http://www.w3.org/2000/09/xmldsig#\\\" xmlns=\\\"urn:oasis:names:tc:SAML:2.0:assertion\\\">https://synthetic-issuer.example.com</Issuer>\"},\"status\":\"active\",\"supported_protocols\":[\"proteus\"],\"team\":\"04197f7a-aba5-4384-bff2-bad7ac046297\",\"type\":\"regular\"}",
+      "json": {
+        "accent_id": 0,
+        "assets": [],
+        "id": "cd5cfadb-948d-4967-89c6-62c1780fb3fa",
+        "locale": "en",
+        "managed_by": "wire",
+        "name": "Synthetic registration reference",
+        "picture": [],
+        "qualified_id": {
+          "domain": "example.com",
+          "id": "cd5cfadb-948d-4967-89c6-62c1780fb3fa"
+        },
+        "searchable": true,
+        "sso_id": {
+          "subject": "<NameID xmlns:samlp=\"urn:oasis:names:tc:SAML:2.0:protocol\" xmlns:samla=\"urn:oasis:names:tc:SAML:2.0:assertion\" xmlns:samlm=\"urn:oasis:names:tc:SAML:2.0:metadata\" xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\" xmlns=\"urn:oasis:names:tc:SAML:2.0:assertion\">synthetic-cd5cfadb-948d-4967-89c6-62c1780fb3fa</NameID>",
+          "tenant": "<Issuer xmlns:samlp=\"urn:oasis:names:tc:SAML:2.0:protocol\" xmlns:samla=\"urn:oasis:names:tc:SAML:2.0:assertion\" xmlns:samlm=\"urn:oasis:names:tc:SAML:2.0:metadata\" xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\" xmlns=\"urn:oasis:names:tc:SAML:2.0:assertion\">https://synthetic-issuer.example.com</Issuer>"
+        },
+        "status": "active",
+        "supported_protocols": [
+          "proteus"
+        ],
+        "team": "04197f7a-aba5-4384-bff2-bad7ac046297",
+        "type": "regular"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/i/users/cd5cfadb-948d-4967-89c6-62c1780fb3fa/features/conferenceCalling",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"config\":{\"useSFTForOneToOneCalls\":false},\"status\":\"disabled\",\"ttl\":\"unlimited\"}",
+      "json": {
+        "config": {
+          "useSFTForOneToOneCalls": false
+        },
+        "status": "disabled",
+        "ttl": "unlimited"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/i/users/cd5cfadb-948d-4967-89c6-62c1780fb3fa/reauthenticate",
+      "status": 200,
+      "content_type": null,
+      "body": ""
+    },
+    {
+      "method": "GET",
+      "path": "/i/users/cd5cfadb-948d-4967-89c6-62c1780fb3fa/reauthenticate",
+      "status": 403,
+      "content_type": "application/json",
+      "body": "{\"code\":403,\"label\":\"invalid-credentials\",\"message\":\"Authentication failed\"}",
+      "json": {
+        "code": 403,
+        "label": "invalid-credentials",
+        "message": "Authentication failed"
+      }
+    }
+  ],
+  "registration_native_staged_creation": {
+    "method": "POST",
+    "path": "/i/users",
+    "status": 201,
+    "content_type": "application/json;charset=utf-8",
+    "body": "{\"accent_id\":0,\"assets\":[],\"id\":\"cd5cfadb-948d-4967-89c6-62c1780fb3fa\",\"locale\":\"en\",\"managed_by\":\"wire\",\"name\":\"Synthetic registration predecessor\",\"picture\":[],\"qualified_id\":{\"domain\":\"example.com\",\"id\":\"cd5cfadb-948d-4967-89c6-62c1780fb3fa\"},\"searchable\":true,\"sso_id\":{\"subject\":\"<NameID xmlns:samlp=\\\"urn:oasis:names:tc:SAML:2.0:protocol\\\" xmlns:samla=\\\"urn:oasis:names:tc:SAML:2.0:assertion\\\" xmlns:samlm=\\\"urn:oasis:names:tc:SAML:2.0:metadata\\\" xmlns:ds=\\\"http://www.w3.org/2000/09/xmldsig#\\\" xmlns=\\\"urn:oasis:names:tc:SAML:2.0:assertion\\\">synthetic-cd5cfadb-948d-4967-89c6-62c1780fb3fa</NameID>\",\"tenant\":\"<Issuer xmlns:samlp=\\\"urn:oasis:names:tc:SAML:2.0:protocol\\\" xmlns:samla=\\\"urn:oasis:names:tc:SAML:2.0:assertion\\\" xmlns:samlm=\\\"urn:oasis:names:tc:SAML:2.0:metadata\\\" xmlns:ds=\\\"http://www.w3.org/2000/09/xmldsig#\\\" xmlns=\\\"urn:oasis:names:tc:SAML:2.0:assertion\\\">https://synthetic-issuer.example.com</Issuer>\"},\"status\":\"active\",\"supported_protocols\":[],\"team\":\"04197f7a-aba5-4384-bff2-bad7ac046297\",\"type\":\"regular\"}",
+    "location": "cd5cfadb-948d-4967-89c6-62c1780fb3fa",
+    "json": {
+      "accent_id": 0,
+      "assets": [],
+      "id": "cd5cfadb-948d-4967-89c6-62c1780fb3fa",
+      "locale": "en",
+      "managed_by": "wire",
+      "name": "Synthetic registration predecessor",
+      "picture": [],
+      "qualified_id": {
+        "domain": "example.com",
+        "id": "cd5cfadb-948d-4967-89c6-62c1780fb3fa"
+      },
+      "searchable": true,
+      "sso_id": {
+        "subject": "<NameID xmlns:samlp=\"urn:oasis:names:tc:SAML:2.0:protocol\" xmlns:samla=\"urn:oasis:names:tc:SAML:2.0:assertion\" xmlns:samlm=\"urn:oasis:names:tc:SAML:2.0:metadata\" xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\" xmlns=\"urn:oasis:names:tc:SAML:2.0:assertion\">synthetic-cd5cfadb-948d-4967-89c6-62c1780fb3fa</NameID>",
+        "tenant": "<Issuer xmlns:samlp=\"urn:oasis:names:tc:SAML:2.0:protocol\" xmlns:samla=\"urn:oasis:names:tc:SAML:2.0:assertion\" xmlns:samlm=\"urn:oasis:names:tc:SAML:2.0:metadata\" xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\" xmlns=\"urn:oasis:names:tc:SAML:2.0:assertion\">https://synthetic-issuer.example.com</Issuer>"
+      },
+      "status": "active",
+      "supported_protocols": [],
+      "team": "04197f7a-aba5-4384-bff2-bad7ac046297",
+      "type": "regular"
+    }
+  },
+  "registration_native_staging": {
+    "same_actor": true,
+    "profile_changed": true,
+    "reference_password_rejected_status": 403,
+    "predecessor_password_accepted_status": 200
+  },
+  "native_stop_exit_code": 0,
+  "candidate_brig_sha256": "51a00499b9c6a1e5bea94dc040e9fc0e9f1253ac1cdd5677a5f1c7ff2e3f19eb",
+  "mismatches": [],
+  "registration_go_creation": {
+    "method": "POST",
+    "path": "/i/users",
+    "status": 500,
+    "content_type": "application/json",
+    "body": "{\"code\":500,\"label\":\"server-error\",\"message\":\"Internal Server Error\"}\n",
+    "location": null,
+    "json": {
+      "code": 500,
+      "label": "server-error",
+      "message": "Internal Server Error"
+    }
+  },
+  "failure": "registration response mismatch: status,content_type,json,location",
+  "owned_process_exit_codes": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ]
+}
