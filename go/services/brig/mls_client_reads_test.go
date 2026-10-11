@@ -169,3 +169,56 @@ func TestPublicMLSCountFeatureAndVersions(t *testing.T) {
 		t.Fatalf("count calls=%d", calls)
 	}
 }
+
+func TestMLSDeleteAdmissionAndNativeStorageEffects(t *testing.T) {
+	user := gocql.TimeUUID()
+	calls := 0
+	s := mlsClientReads{enabled: true, remove: func(_ context.Context, got gocql.UUID, client string, suite uint16, refs [][]byte) error {
+		calls++
+		if got != user || client != "a" || suite != 1 || len(refs) != 3 || len(refs[0]) != 1 || refs[0][0] != 1 || refs[1][0] != 1 || len(refs[2]) != 0 {
+			t.Fatal("delete changed refs or queried client metadata")
+		}
+		return nil
+	}}
+	body := `{"key_packages":["AQ==","AQ==",""]}`
+	for _, tc := range []struct {
+		version, query, body string
+		enabled              bool
+		status               int
+	}{
+		{"4", "?ciphersuite=1", body, true, 404},
+		{"7", "", body, true, 201},
+		{"19", "?ciphersuite=1", body, true, 201},
+		{"19", "", body, true, 400},
+		{"19", "?ciphersuite=3", body, true, 400},
+		{"19", "?ciphersuite=1", body, false, 400},
+		{"19", "?ciphersuite=1", `{"key_packages":[]}`, true, 400},
+		{"19", "?ciphersuite=1", `{"key_packages":[null]}`, true, 400},
+		{"19", "?ciphersuite=1", `{"key_packages":["!invalid"]}`, true, 400},
+	} {
+		s.enabled = tc.enabled
+		req := httptest.NewRequest("DELETE", "/mls/key-packages/self/0a"+tc.query, strings.NewReader(tc.body))
+		req.Header.Set("X-Wire-API-Version", tc.version)
+		req.Header.Set("Z-User", user.String())
+		req.Header.Set("Content-Type", "application/json")
+		response := httptest.NewRecorder()
+		if !s.handle(response, req, "/mls/key-packages/self/0a") {
+			response.WriteHeader(404)
+		}
+		if response.Code != tc.status {
+			t.Fatalf("version%s status%d want%d", tc.version, response.Code, tc.status)
+		}
+		if tc.status == 201 && (response.Body.Len() != 0 || response.Header().Get("Content-Type") != "") {
+			t.Fatal("native delete success is empty201")
+		}
+	}
+	if calls != 2 {
+		t.Fatal("invalid input reached storage")
+	}
+	// A bounded reference array is required, but each reference is an arbitrary
+	// blob: neither reference length nor duplicate elimination is native policy.
+	oversized := `{"key_packages":[` + strings.Repeat(`"AQ==",`, 1000) + `"AQ=="]}`
+	if _, err := decodeMLSDeleteReferences([]byte(oversized)); err == nil {
+		t.Fatal("accepted more than1000 refs")
+	}
+}

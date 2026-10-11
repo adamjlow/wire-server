@@ -394,6 +394,18 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             assert [r['status'] for r in native_mls_controls]==[200,200,200,200,400,200,200,200,200,400], 'native MLS client reference changed'
             assert native_mls_controls[1]['json']['mls_signature_key']=='AQI=' and native_mls_controls[1]['json']['mls'] is bool(store_fixture_path), 'native MLS signature/count reference changed'
             assert native_mls_controls[2]['json']=={'id':'f','mls':False}, 'native missing MLS client reference changed'
+            if store_fixture_path:
+                delete_path='/mls/key-packages/self/'+lifecycle_id
+                delete_body={'key_packages':['AQ==','AQ==','BQ==','/w==']}
+                mls_delete_cases=[('DELETE','/v4'+delete_path+'?ciphersuite=1',lifecycle_headers,delete_body),('DELETE','/v7'+delete_path,lifecycle_headers,delete_body),('DELETE','/v19'+delete_path+'?ciphersuite=1',lifecycle_headers,delete_body),('DELETE','/v19/mls/key-packages/self/f?ciphersuite=1',lifecycle_headers,delete_body)]
+                native_delete_controls=[request(*case)[0] for case in mls_delete_cases]
+                report['mls_delete_native_controls']=native_delete_controls
+                assert [r['status'] for r in native_delete_controls]==[404,201,201,201], 'native public MLS deletion reference changed'
+                assert mls_row_fixture('read','native-deleted')==[], 'native reference deletion did not remove exact rows'
+                mls_row_fixture('stage','native-delete-restaged')
+                assert same(row_count_native,request(*row_count_case)[0]), 'native delete restage count changed'
+                assert mls_row_fixture('read','native-delete-restored')==native_rows_retained, 'native delete restage bytes changed'
+
             restaged,_=request('POST','/v19/clients',lifecycle_headers,{**native_body,'mls_public_keys':{}})
             report['prekey_native_restage']=restaged
             assert restaged['status']==201, 'native prekey reference restage failed'
@@ -683,6 +695,15 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             mls_client_mismatches=[{'case':i,'fields':[k for k in fields(ref) if ref.get(k)!=actual.get(k)]} for i,(ref,actual) in enumerate(zip(native_mls_controls,go_mls_controls)) if not same(ref,actual)]
             report['mls_client_mismatches']=mls_client_mismatches
             assert not mls_client_mismatches, 'native MLS client responses mismatch'
+            if store_fixture_path:
+                go_delete_controls=[request(*case)[0] for case in mls_delete_cases]
+                report['mls_delete_go_controls']=go_delete_controls
+                assert all(same(ref,actual) for ref,actual in zip(native_delete_controls,go_delete_controls)), 'native/Go public MLS deletion mismatch'
+                assert mls_row_fixture('read','go-deleted')==[], 'Go reference deletion did not remove exact rows'
+                mls_row_fixture('stage','go-delete-restaged')
+                assert same(row_count_native,request(*row_count_case)[0]), 'Go delete restage count changed'
+                assert mls_row_fixture('read','go-delete-restored')==native_rows_retained, 'Go delete restage bytes changed'
+
             go_created,_=request('POST','/v19/clients',lifecycle_headers,{**new_body,'password':password})
             report['client_lifecycle_go_created']=go_created
             assert go_created['status']==201 and go_created['location']==go_created['json']['id'], 'Go client creation failed'

@@ -810,3 +810,14 @@ managed exits0/runner0/cleanup0/independent empty. First unsafe helper mount
 failure retained; use existing read-only generated fixture mount, no isolation
 relaxation. [Evidence](../../../go/services/brig/qualification/evidence/mls-count-rows/README.md).
 Upload/claim/replace/delete and original MLS test execution still unfinished.
+
+### Public MLS reference deletion (qualification pending)
+
+Add native FromV5 deletion route on /mls/key-packages/self/:client with
+optional/default suite1 untilV8 and required suite thereafter. Parse a bounded
+1..1000 JSON reference array, preserve duplicate/arbitrary-length blobs, then
+enforce MLS enablement/suite support and execute native parameterized LQ/retry5
+reference deletion without client/account lookup. Success is empty201. Own
+supplemental observer adds native/Go duplicate/nonexistent/repeated/unknown-client
+controls and exact real row deletion, then restores the same rows to preserve
+the existing switchback witness. No upload/replace/claim completion claim.

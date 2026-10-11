@@ -2,6 +2,9 @@
 package brig
 
 import (
+	"encoding/base64"
+	"encoding/json"
+	"errors"
 	"net/http"
 	"strconv"
 	"strings"
@@ -32,7 +35,7 @@ func mlsSuiteHex(text string) (uint16, bool) {
 	return value, true
 }
 func (s mlsClientReads) handle(w http.ResponseWriter, r *http.Request, path string) bool {
-	if s.handlePublicCount(w, r, path) {
+	if s.handlePublicSelf(w, r, path) {
 		return true
 	}
 	federation := path == "/federation/get-mls-clients" || path == "/federation/get-mls-client"
@@ -164,16 +167,41 @@ func (s mlsClientReads) handle(w http.ResponseWriter, r *http.Request, path stri
 	return true
 }
 
-func (s mlsClientReads) handlePublicCount(w http.ResponseWriter, r *http.Request, path string) bool {
+func decodeMLSDeleteReferences(raw json.RawMessage) ([][]byte, error) {
+	fields, err := registrationObject(raw)
+	if err != nil {
+		return nil, err
+	}
+	var values []json.RawMessage
+	if string(fields["key_packages"]) == "null" || json.Unmarshal(fields["key_packages"], &values) != nil || len(values) < 1 || len(values) > 1000 {
+		return nil, errors.New("invalid MLS key package references")
+	}
+	refs := make([][]byte, 0, len(values))
+	for _, value := range values {
+		var text string
+		if json.Unmarshal(value, &text) != nil || string(value) == "null" || strings.ContainsAny(text, "\r\n") {
+			return nil, errors.New("invalid MLS key package reference")
+		}
+		ref, err := base64.StdEncoding.Strict().DecodeString(text)
+		if err != nil {
+			return nil, errors.New("invalid MLS key package reference")
+		}
+		refs = append(refs, ref)
+	}
+	return refs, nil
+}
+
+func (s mlsClientReads) handlePublicSelf(w http.ResponseWriter, r *http.Request, path string) bool {
 	parts := strings.Split(strings.Trim(path, "/"), "/")
-	if len(parts) != 5 || parts[0] != "mls" || parts[1] != "key-packages" || parts[2] != "self" || parts[4] != "count" {
+	if (len(parts) != 4 && len(parts) != 5) || parts[0] != "mls" || parts[1] != "key-packages" || parts[2] != "self" || len(parts) == 5 && parts[4] != "count" {
 		return false
 	}
 	version, _ := strconv.Atoi(r.Header.Get("X-Wire-API-Version"))
 	if version < 5 {
 		return false
 	}
-	if r.Method != http.MethodGet && r.Method != http.MethodHead {
+	deleting := len(parts) == 4
+	if deleting && r.Method != http.MethodDelete || !deleting && r.Method != http.MethodGet && r.Method != http.MethodHead {
 		w.WriteHeader(405)
 		return true
 	}
@@ -200,12 +228,34 @@ func (s mlsClientReads) handlePublicCount(w http.ResponseWriter, r *http.Request
 			return true
 		}
 	}
+	var refs [][]byte
+	if deleting {
+		if !publicClientContentType(w, r) {
+			return true
+		}
+		raw, err := publicClientJSON(r)
+		if err == nil {
+			refs, err = decodeMLSDeleteReferences(raw)
+		}
+		if err != nil {
+			routeParseError(w, "Invalid MLS key package references")
+			return true
+		}
+	}
 	if !s.enabled {
 		authenticationWireError(w, 400, "mls-not-enabled", "MLS is not configured on this backend. See docs.wire.com for instructions on how to enable it")
 		return true
 	}
 	if mlsClientScheme(suite) == "" {
 		authenticationWireError(w, 400, "mls-protocol-error", "Unknown ciphersuite")
+		return true
+	}
+	if deleting {
+		if err := s.remove(r.Context(), user, client, suite, refs); err != nil {
+			authenticationHTTPError(w, err)
+		} else {
+			w.WriteHeader(http.StatusCreated)
+		}
 		return true
 	}
 	count, err := s.count(r.Context(), user, client, suite)
