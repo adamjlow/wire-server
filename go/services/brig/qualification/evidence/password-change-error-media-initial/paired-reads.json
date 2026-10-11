@@ -1,0 +1,952 @@
+{
+  "result": "failed",
+  "e2e_executed": false,
+  "scope": "Finite native -> Go read/reauthentication observations on native-created state.",
+  "records": [
+    {
+      "implementation": "haskell",
+      "observations": [
+        {
+          "method": "GET",
+          "path": "/i/status",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": ""
+        },
+        {
+          "method": "HEAD",
+          "path": "/i/status",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "path": "/api-version",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"development\":[19],\"domain\":\"example.com\",\"federation\":true,\"supported\":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18]}",
+          "json": {
+            "development": [
+              19
+            ],
+            "domain": "example.com",
+            "federation": true,
+            "supported": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18
+            ]
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/self",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"accent_id\":0,\"assets\":[],\"email\":\"synthetic-parity-db8d1524609745b4bdffcc562fb8442c@example.com\",\"id\":\"3b596b7a-e755-4862-8285-011163f235ca\",\"locale\":\"en\",\"managed_by\":\"wire\",\"name\":\"Synthetic parity reader\",\"picture\":[],\"qualified_id\":{\"domain\":\"example.com\",\"id\":\"3b596b7a-e755-4862-8285-011163f235ca\"},\"searchable\":true,\"status\":\"active\",\"supported_protocols\":[\"proteus\"],\"type\":\"regular\"}",
+          "json": {
+            "accent_id": 0,
+            "assets": [],
+            "email": "synthetic-parity-db8d1524609745b4bdffcc562fb8442c@example.com",
+            "id": "3b596b7a-e755-4862-8285-011163f235ca",
+            "locale": "en",
+            "managed_by": "wire",
+            "name": "Synthetic parity reader",
+            "picture": [],
+            "qualified_id": {
+              "domain": "example.com",
+              "id": "3b596b7a-e755-4862-8285-011163f235ca"
+            },
+            "searchable": true,
+            "status": "active",
+            "supported_protocols": [
+              "proteus"
+            ],
+            "type": "regular"
+          }
+        },
+        {
+          "method": "HEAD",
+          "path": "/self",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "path": "/cookies",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"cookies\":[{\"created\":\"2026-10-11T05:43:24.177Z\",\"expires\":\"2026-10-11T05:45:24Z\",\"id\":2492445153,\"label\":\"synthetic-paired-device\",\"successor\":null,\"type\":\"persistent\"}]}",
+          "json": {
+            "cookies": [
+              {
+                "created": "2026-10-11T05:43:24.177Z",
+                "expires": "2026-10-11T05:45:24Z",
+                "id": 2492445153,
+                "label": "synthetic-paired-device",
+                "successor": null,
+                "type": "persistent"
+              }
+            ]
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/cookies?labels=synthetic-paired-device",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"cookies\":[{\"created\":\"2026-10-11T05:43:24.177Z\",\"expires\":\"2026-10-11T05:45:24Z\",\"id\":2492445153,\"label\":\"synthetic-paired-device\",\"successor\":null,\"type\":\"persistent\"}]}",
+          "json": {
+            "cookies": [
+              {
+                "created": "2026-10-11T05:43:24.177Z",
+                "expires": "2026-10-11T05:45:24Z",
+                "id": 2492445153,
+                "label": "synthetic-paired-device",
+                "successor": null,
+                "type": "persistent"
+              }
+            ]
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/cookies?labels=absent",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"cookies\":[]}",
+          "json": {
+            "cookies": []
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/i/users/3b596b7a-e755-4862-8285-011163f235ca/status",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"status\":\"active\"}",
+          "json": {
+            "status": "active"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/self",
+          "status": 400,
+          "content_type": null,
+          "body": "Header Z-User is required"
+        },
+        {
+          "method": "GET",
+          "path": "/self",
+          "status": 400,
+          "content_type": null,
+          "body": "Error parsing header Z-User failed: invalid UUID"
+        },
+        {
+          "method": "GET",
+          "path": "/self",
+          "status": 400,
+          "content_type": null,
+          "body": "Error parsing header Z-User failed: invalid UUID"
+        },
+        {
+          "method": "GET",
+          "path": "/v1/self",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"accent_id\":0,\"assets\":[],\"email\":\"synthetic-parity-db8d1524609745b4bdffcc562fb8442c@example.com\",\"id\":\"3b596b7a-e755-4862-8285-011163f235ca\",\"locale\":\"en\",\"managed_by\":\"wire\",\"name\":\"Synthetic parity reader\",\"picture\":[],\"qualified_id\":{\"domain\":\"example.com\",\"id\":\"3b596b7a-e755-4862-8285-011163f235ca\"},\"searchable\":true,\"status\":\"active\",\"supported_protocols\":[\"proteus\"],\"type\":\"regular\"}",
+          "json": {
+            "accent_id": 0,
+            "assets": [],
+            "email": "synthetic-parity-db8d1524609745b4bdffcc562fb8442c@example.com",
+            "id": "3b596b7a-e755-4862-8285-011163f235ca",
+            "locale": "en",
+            "managed_by": "wire",
+            "name": "Synthetic parity reader",
+            "picture": [],
+            "qualified_id": {
+              "domain": "example.com",
+              "id": "3b596b7a-e755-4862-8285-011163f235ca"
+            },
+            "searchable": true,
+            "status": "active",
+            "supported_protocols": [
+              "proteus"
+            ],
+            "type": "regular"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/i/users/3b596b7a-e755-4862-8285-011163f235ca/reauthenticate",
+          "status": 200,
+          "content_type": null,
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "path": "/i/users/3b596b7a-e755-4862-8285-011163f235ca/reauthenticate",
+          "status": 403,
+          "content_type": "application/json",
+          "body": "{\"code\":403,\"label\":\"invalid-credentials\",\"message\":\"Authentication failed\"}",
+          "json": {
+            "code": 403,
+            "label": "invalid-credentials",
+            "message": "Authentication failed"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/i/users/3b596b7a-e755-4862-8285-011163f235ca/reauthenticate",
+          "status": 403,
+          "content_type": "application/json",
+          "body": "{\"code\":403,\"label\":\"missing-auth\",\"message\":\"Re-authentication via password required\"}",
+          "json": {
+            "code": 403,
+            "label": "missing-auth",
+            "message": "Re-authentication via password required"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/i/users/3b596b7a-e755-4862-8285-011163f235ca/reauthenticate",
+          "status": 200,
+          "content_type": null,
+          "body": ""
+        }
+      ]
+    },
+    {
+      "implementation": "go",
+      "observations": [
+        {
+          "method": "GET",
+          "path": "/i/status",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": ""
+        },
+        {
+          "method": "HEAD",
+          "path": "/i/status",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "path": "/api-version",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"development\":[19],\"domain\":\"example.com\",\"federation\":true,\"supported\":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18]}\n",
+          "json": {
+            "development": [
+              19
+            ],
+            "domain": "example.com",
+            "federation": true,
+            "supported": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18
+            ]
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/self",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"qualified_id\":{\"id\":\"3b596b7a-e755-4862-8285-011163f235ca\",\"domain\":\"example.com\"},\"id\":\"3b596b7a-e755-4862-8285-011163f235ca\",\"type\":\"regular\",\"email\":\"synthetic-parity-db8d1524609745b4bdffcc562fb8442c@example.com\",\"name\":\"Synthetic parity reader\",\"picture\":[],\"assets\":[],\"accent_id\":0,\"status\":\"active\",\"locale\":\"en\",\"managed_by\":\"wire\",\"supported_protocols\":[\"proteus\"],\"searchable\":true}\n",
+          "json": {
+            "qualified_id": {
+              "id": "3b596b7a-e755-4862-8285-011163f235ca",
+              "domain": "example.com"
+            },
+            "id": "3b596b7a-e755-4862-8285-011163f235ca",
+            "type": "regular",
+            "email": "synthetic-parity-db8d1524609745b4bdffcc562fb8442c@example.com",
+            "name": "Synthetic parity reader",
+            "picture": [],
+            "assets": [],
+            "accent_id": 0,
+            "status": "active",
+            "locale": "en",
+            "managed_by": "wire",
+            "supported_protocols": [
+              "proteus"
+            ],
+            "searchable": true
+          }
+        },
+        {
+          "method": "HEAD",
+          "path": "/self",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "path": "/cookies",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"cookies\":[{\"created\":\"2026-10-11T05:43:24.177Z\",\"expires\":\"2026-10-11T05:45:24Z\",\"id\":2492445153,\"label\":\"synthetic-paired-device\",\"successor\":null,\"type\":\"persistent\"}]}\n",
+          "json": {
+            "cookies": [
+              {
+                "created": "2026-10-11T05:43:24.177Z",
+                "expires": "2026-10-11T05:45:24Z",
+                "id": 2492445153,
+                "label": "synthetic-paired-device",
+                "successor": null,
+                "type": "persistent"
+              }
+            ]
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/cookies?labels=synthetic-paired-device",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"cookies\":[{\"created\":\"2026-10-11T05:43:24.177Z\",\"expires\":\"2026-10-11T05:45:24Z\",\"id\":2492445153,\"label\":\"synthetic-paired-device\",\"successor\":null,\"type\":\"persistent\"}]}\n",
+          "json": {
+            "cookies": [
+              {
+                "created": "2026-10-11T05:43:24.177Z",
+                "expires": "2026-10-11T05:45:24Z",
+                "id": 2492445153,
+                "label": "synthetic-paired-device",
+                "successor": null,
+                "type": "persistent"
+              }
+            ]
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/cookies?labels=absent",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"cookies\":[]}\n",
+          "json": {
+            "cookies": []
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/i/users/3b596b7a-e755-4862-8285-011163f235ca/status",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"status\":\"active\"}\n",
+          "json": {
+            "status": "active"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/self",
+          "status": 400,
+          "content_type": null,
+          "body": "Header Z-User is required"
+        },
+        {
+          "method": "GET",
+          "path": "/self",
+          "status": 400,
+          "content_type": null,
+          "body": "Error parsing header Z-User failed: invalid UUID"
+        },
+        {
+          "method": "GET",
+          "path": "/self",
+          "status": 400,
+          "content_type": null,
+          "body": "Error parsing header Z-User failed: invalid UUID"
+        },
+        {
+          "method": "GET",
+          "path": "/v1/self",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"qualified_id\":{\"id\":\"3b596b7a-e755-4862-8285-011163f235ca\",\"domain\":\"example.com\"},\"id\":\"3b596b7a-e755-4862-8285-011163f235ca\",\"type\":\"regular\",\"email\":\"synthetic-parity-db8d1524609745b4bdffcc562fb8442c@example.com\",\"name\":\"Synthetic parity reader\",\"picture\":[],\"assets\":[],\"accent_id\":0,\"status\":\"active\",\"locale\":\"en\",\"managed_by\":\"wire\",\"supported_protocols\":[\"proteus\"],\"searchable\":true}\n",
+          "json": {
+            "qualified_id": {
+              "id": "3b596b7a-e755-4862-8285-011163f235ca",
+              "domain": "example.com"
+            },
+            "id": "3b596b7a-e755-4862-8285-011163f235ca",
+            "type": "regular",
+            "email": "synthetic-parity-db8d1524609745b4bdffcc562fb8442c@example.com",
+            "name": "Synthetic parity reader",
+            "picture": [],
+            "assets": [],
+            "accent_id": 0,
+            "status": "active",
+            "locale": "en",
+            "managed_by": "wire",
+            "supported_protocols": [
+              "proteus"
+            ],
+            "searchable": true
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/i/users/3b596b7a-e755-4862-8285-011163f235ca/reauthenticate",
+          "status": 200,
+          "content_type": null,
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "path": "/i/users/3b596b7a-e755-4862-8285-011163f235ca/reauthenticate",
+          "status": 403,
+          "content_type": "application/json",
+          "body": "{\"code\":403,\"label\":\"invalid-credentials\",\"message\":\"Authentication failed\"}\n",
+          "json": {
+            "code": 403,
+            "label": "invalid-credentials",
+            "message": "Authentication failed"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/i/users/3b596b7a-e755-4862-8285-011163f235ca/reauthenticate",
+          "status": 403,
+          "content_type": "application/json",
+          "body": "{\"code\":403,\"label\":\"missing-auth\",\"message\":\"Re-authentication via password required\"}\n",
+          "json": {
+            "code": 403,
+            "label": "missing-auth",
+            "message": "Re-authentication via password required"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/i/users/3b596b7a-e755-4862-8285-011163f235ca/reauthenticate",
+          "status": 200,
+          "content_type": null,
+          "body": ""
+        }
+      ]
+    }
+  ],
+  "native_brig": {
+    "path": "/nix/store/f6l2f0l8l2r6z9jbg937q96k6056iqfn-brig/bin/brig",
+    "sha256": "c45a40da63268712a7cacdbd884287fa3dc93cec179d70323d3f22f7d5cdf1ca"
+  },
+  "go_gundeck_sha256": "a50512ef30d7fa9ddf92c2c1933e69769d6691e08cdfbe9f7c4f2d266071f46c",
+  "native_setup": [
+    {
+      "method": "POST",
+      "path": "/i/users",
+      "status": 201,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"accent_id\":0,\"assets\":[],\"email\":\"synthetic-parity-db8d1524609745b4bdffcc562fb8442c@example.com\",\"id\":\"3b596b7a-e755-4862-8285-011163f235ca\",\"locale\":\"en\",\"managed_by\":\"wire\",\"name\":\"Synthetic parity reader\",\"picture\":[],\"qualified_id\":{\"domain\":\"example.com\",\"id\":\"3b596b7a-e755-4862-8285-011163f235ca\"},\"searchable\":true,\"status\":\"active\",\"supported_protocols\":[\"proteus\"],\"type\":\"regular\"}",
+      "location": "3b596b7a-e755-4862-8285-011163f235ca",
+      "json": {
+        "accent_id": 0,
+        "assets": [],
+        "email": "synthetic-parity-db8d1524609745b4bdffcc562fb8442c@example.com",
+        "id": "3b596b7a-e755-4862-8285-011163f235ca",
+        "locale": "en",
+        "managed_by": "wire",
+        "name": "Synthetic parity reader",
+        "picture": [],
+        "qualified_id": {
+          "domain": "example.com",
+          "id": "3b596b7a-e755-4862-8285-011163f235ca"
+        },
+        "searchable": true,
+        "status": "active",
+        "supported_protocols": [
+          "proteus"
+        ],
+        "type": "regular"
+      }
+    },
+    {
+      "operation": "persistent login",
+      "status": 200,
+      "cookie_issued": true
+    }
+  ],
+  "native_change_actor_setup": [
+    {
+      "actor": "same",
+      "response": {
+        "method": "POST",
+        "path": "/i/users",
+        "status": 201,
+        "content_type": "application/json;charset=utf-8",
+        "body": "{\"accent_id\":0,\"assets\":[],\"email\":\"change-same-5dee255aac7042e080cfd4f947d403cd@example.com\",\"id\":\"519e0b8d-664c-4112-a386-99b0967907ef\",\"locale\":\"en\",\"managed_by\":\"wire\",\"name\":\"Synthetic password change same\",\"picture\":[],\"qualified_id\":{\"domain\":\"example.com\",\"id\":\"519e0b8d-664c-4112-a386-99b0967907ef\"},\"searchable\":true,\"status\":\"active\",\"supported_protocols\":[\"proteus\"],\"type\":\"regular\"}",
+        "location": "519e0b8d-664c-4112-a386-99b0967907ef",
+        "json": {
+          "accent_id": 0,
+          "assets": [],
+          "email": "change-same-5dee255aac7042e080cfd4f947d403cd@example.com",
+          "id": "519e0b8d-664c-4112-a386-99b0967907ef",
+          "locale": "en",
+          "managed_by": "wire",
+          "name": "Synthetic password change same",
+          "picture": [],
+          "qualified_id": {
+            "domain": "example.com",
+            "id": "519e0b8d-664c-4112-a386-99b0967907ef"
+          },
+          "searchable": true,
+          "status": "active",
+          "supported_protocols": [
+            "proteus"
+          ],
+          "type": "regular"
+        }
+      }
+    },
+    {
+      "actor": "wrong",
+      "response": {
+        "method": "POST",
+        "path": "/i/users",
+        "status": 201,
+        "content_type": "application/json;charset=utf-8",
+        "body": "{\"accent_id\":0,\"assets\":[],\"email\":\"change-wrong-33bca89108d74ef6a1963154708396a9@example.com\",\"id\":\"27acf814-f40c-4044-bfee-fbd3f04a8649\",\"locale\":\"en\",\"managed_by\":\"wire\",\"name\":\"Synthetic password change wrong\",\"picture\":[],\"qualified_id\":{\"domain\":\"example.com\",\"id\":\"27acf814-f40c-4044-bfee-fbd3f04a8649\"},\"searchable\":true,\"status\":\"active\",\"supported_protocols\":[\"proteus\"],\"type\":\"regular\"}",
+        "location": "27acf814-f40c-4044-bfee-fbd3f04a8649",
+        "json": {
+          "accent_id": 0,
+          "assets": [],
+          "email": "change-wrong-33bca89108d74ef6a1963154708396a9@example.com",
+          "id": "27acf814-f40c-4044-bfee-fbd3f04a8649",
+          "locale": "en",
+          "managed_by": "wire",
+          "name": "Synthetic password change wrong",
+          "picture": [],
+          "qualified_id": {
+            "domain": "example.com",
+            "id": "27acf814-f40c-4044-bfee-fbd3f04a8649"
+          },
+          "searchable": true,
+          "status": "active",
+          "supported_protocols": [
+            "proteus"
+          ],
+          "type": "regular"
+        }
+      }
+    },
+    {
+      "actor": "missing",
+      "response": {
+        "method": "POST",
+        "path": "/i/users",
+        "status": 201,
+        "content_type": "application/json;charset=utf-8",
+        "body": "{\"accent_id\":0,\"assets\":[],\"email\":\"change-missing-58046fe9b71a4f3f913a3aa6f2f2c40d@example.com\",\"id\":\"296545e0-b969-4f10-b483-3a540f6856b2\",\"locale\":\"en\",\"managed_by\":\"wire\",\"name\":\"Synthetic password change missing\",\"picture\":[],\"qualified_id\":{\"domain\":\"example.com\",\"id\":\"296545e0-b969-4f10-b483-3a540f6856b2\"},\"searchable\":true,\"status\":\"active\",\"supported_protocols\":[\"proteus\"],\"type\":\"regular\"}",
+        "location": "296545e0-b969-4f10-b483-3a540f6856b2",
+        "json": {
+          "accent_id": 0,
+          "assets": [],
+          "email": "change-missing-58046fe9b71a4f3f913a3aa6f2f2c40d@example.com",
+          "id": "296545e0-b969-4f10-b483-3a540f6856b2",
+          "locale": "en",
+          "managed_by": "wire",
+          "name": "Synthetic password change missing",
+          "picture": [],
+          "qualified_id": {
+            "domain": "example.com",
+            "id": "296545e0-b969-4f10-b483-3a540f6856b2"
+          },
+          "searchable": true,
+          "status": "active",
+          "supported_protocols": [
+            "proteus"
+          ],
+          "type": "regular"
+        }
+      }
+    },
+    {
+      "actor": "main",
+      "response": {
+        "method": "POST",
+        "path": "/i/users",
+        "status": 201,
+        "content_type": "application/json;charset=utf-8",
+        "body": "{\"accent_id\":0,\"assets\":[],\"email\":\"change-main-c3f1ca67a4e34972a17080de08141541@example.com\",\"id\":\"c46ca568-4804-495a-84a5-e2b141cc4164\",\"locale\":\"en\",\"managed_by\":\"wire\",\"name\":\"Synthetic password change main\",\"picture\":[],\"qualified_id\":{\"domain\":\"example.com\",\"id\":\"c46ca568-4804-495a-84a5-e2b141cc4164\"},\"searchable\":true,\"status\":\"active\",\"supported_protocols\":[\"proteus\"],\"type\":\"regular\"}",
+        "location": "c46ca568-4804-495a-84a5-e2b141cc4164",
+        "json": {
+          "accent_id": 0,
+          "assets": [],
+          "email": "change-main-c3f1ca67a4e34972a17080de08141541@example.com",
+          "id": "c46ca568-4804-495a-84a5-e2b141cc4164",
+          "locale": "en",
+          "managed_by": "wire",
+          "name": "Synthetic password change main",
+          "picture": [],
+          "qualified_id": {
+            "domain": "example.com",
+            "id": "c46ca568-4804-495a-84a5-e2b141cc4164"
+          },
+          "searchable": true,
+          "status": "active",
+          "supported_protocols": [
+            "proteus"
+          ],
+          "type": "regular"
+        }
+      }
+    },
+    {
+      "actor": "first",
+      "response": {
+        "method": "POST",
+        "path": "/i/users",
+        "status": 201,
+        "content_type": "application/json;charset=utf-8",
+        "body": "{\"accent_id\":0,\"assets\":[],\"email\":\"change-first-2ec3f4d3717748d9835a1587cce53568@example.com\",\"id\":\"2c17fa93-ec80-432c-8c86-f8be37a19d35\",\"locale\":\"en\",\"managed_by\":\"wire\",\"name\":\"Synthetic password change first\",\"picture\":[],\"qualified_id\":{\"domain\":\"example.com\",\"id\":\"2c17fa93-ec80-432c-8c86-f8be37a19d35\"},\"searchable\":true,\"status\":\"active\",\"supported_protocols\":[\"proteus\"],\"type\":\"regular\"}",
+        "location": "2c17fa93-ec80-432c-8c86-f8be37a19d35",
+        "json": {
+          "accent_id": 0,
+          "assets": [],
+          "email": "change-first-2ec3f4d3717748d9835a1587cce53568@example.com",
+          "id": "2c17fa93-ec80-432c-8c86-f8be37a19d35",
+          "locale": "en",
+          "managed_by": "wire",
+          "name": "Synthetic password change first",
+          "picture": [],
+          "qualified_id": {
+            "domain": "example.com",
+            "id": "2c17fa93-ec80-432c-8c86-f8be37a19d35"
+          },
+          "searchable": true,
+          "status": "active",
+          "supported_protocols": [
+            "proteus"
+          ],
+          "type": "regular"
+        }
+      }
+    },
+    {
+      "actor": "first-reference",
+      "response": {
+        "method": "POST",
+        "path": "/i/users",
+        "status": 201,
+        "content_type": "application/json;charset=utf-8",
+        "body": "{\"accent_id\":0,\"assets\":[],\"email\":\"change-first-reference-28012483d3c04d39b2f858a27753096b@example.com\",\"id\":\"673da243-f80e-44e5-bbab-703d1bba0ebd\",\"locale\":\"en\",\"managed_by\":\"wire\",\"name\":\"Synthetic password change first-reference\",\"picture\":[],\"qualified_id\":{\"domain\":\"example.com\",\"id\":\"673da243-f80e-44e5-bbab-703d1bba0ebd\"},\"searchable\":true,\"status\":\"active\",\"supported_protocols\":[\"proteus\"],\"type\":\"regular\"}",
+        "location": "673da243-f80e-44e5-bbab-703d1bba0ebd",
+        "json": {
+          "accent_id": 0,
+          "assets": [],
+          "email": "change-first-reference-28012483d3c04d39b2f858a27753096b@example.com",
+          "id": "673da243-f80e-44e5-bbab-703d1bba0ebd",
+          "locale": "en",
+          "managed_by": "wire",
+          "name": "Synthetic password change first-reference",
+          "picture": [],
+          "qualified_id": {
+            "domain": "example.com",
+            "id": "673da243-f80e-44e5-bbab-703d1bba0ebd"
+          },
+          "searchable": true,
+          "status": "active",
+          "supported_protocols": [
+            "proteus"
+          ],
+          "type": "regular"
+        }
+      }
+    },
+    {
+      "actor": "inactive",
+      "response": {
+        "method": "POST",
+        "path": "/i/users",
+        "status": 201,
+        "content_type": "application/json;charset=utf-8",
+        "body": "{\"accent_id\":0,\"assets\":[],\"id\":\"c9076761-4d32-4f59-a93d-912f3fce5188\",\"locale\":\"en\",\"managed_by\":\"scim\",\"name\":\"Synthetic inactive change\",\"picture\":[],\"qualified_id\":{\"domain\":\"example.com\",\"id\":\"c9076761-4d32-4f59-a93d-912f3fce5188\"},\"searchable\":true,\"status\":\"active\",\"supported_protocols\":[\"proteus\"],\"type\":\"regular\"}",
+        "location": "c9076761-4d32-4f59-a93d-912f3fce5188",
+        "json": {
+          "accent_id": 0,
+          "assets": [],
+          "id": "c9076761-4d32-4f59-a93d-912f3fce5188",
+          "locale": "en",
+          "managed_by": "scim",
+          "name": "Synthetic inactive change",
+          "picture": [],
+          "qualified_id": {
+            "domain": "example.com",
+            "id": "c9076761-4d32-4f59-a93d-912f3fce5188"
+          },
+          "searchable": true,
+          "status": "active",
+          "supported_protocols": [
+            "proteus"
+          ],
+          "type": "regular"
+        }
+      }
+    }
+  ],
+  "native_change_actors": {
+    "same": {
+      "user": "519e0b8d-664c-4112-a386-99b0967907ef",
+      "email": "change-same-5dee255aac7042e080cfd4f947d403cd@example.com"
+    },
+    "wrong": {
+      "user": "27acf814-f40c-4044-bfee-fbd3f04a8649",
+      "email": "change-wrong-33bca89108d74ef6a1963154708396a9@example.com"
+    },
+    "missing": {
+      "user": "296545e0-b969-4f10-b483-3a540f6856b2",
+      "email": "change-missing-58046fe9b71a4f3f913a3aa6f2f2c40d@example.com"
+    },
+    "main": {
+      "user": "c46ca568-4804-495a-84a5-e2b141cc4164",
+      "email": "change-main-c3f1ca67a4e34972a17080de08141541@example.com"
+    },
+    "first": {
+      "user": "2c17fa93-ec80-432c-8c86-f8be37a19d35",
+      "email": "change-first-2ec3f4d3717748d9835a1587cce53568@example.com"
+    },
+    "first-reference": {
+      "user": "673da243-f80e-44e5-bbab-703d1bba0ebd",
+      "email": "change-first-reference-28012483d3c04d39b2f858a27753096b@example.com"
+    },
+    "inactive": {
+      "user": "c9076761-4d32-4f59-a93d-912f3fce5188",
+      "email": "change-inactive-b9e46d61cc274d9b80a892244edce725@example.com"
+    }
+  },
+  "native_change_controls": [
+    {
+      "method": "HEAD",
+      "path": "/self/password",
+      "status": 200,
+      "content_type": null,
+      "body": ""
+    },
+    {
+      "method": "HEAD",
+      "path": "/self/password",
+      "status": 404,
+      "content_type": null,
+      "body": ""
+    },
+    {
+      "method": "HEAD",
+      "path": "/self/password",
+      "status": 404,
+      "content_type": null,
+      "body": ""
+    },
+    {
+      "method": "PUT",
+      "path": "/self/password",
+      "status": 403,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"code\":403,\"label\":\"no-identity\",\"message\":\"The user has no verified email\"}",
+      "json": {
+        "code": 403,
+        "label": "no-identity",
+        "message": "The user has no verified email"
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/self/password",
+      "status": 403,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"code\":403,\"label\":\"invalid-credentials\",\"message\":\"Authentication failed\"}",
+      "json": {
+        "code": 403,
+        "label": "invalid-credentials",
+        "message": "Authentication failed"
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/self/password",
+      "status": 403,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"code\":403,\"label\":\"invalid-credentials\",\"message\":\"Authentication failed\"}",
+      "json": {
+        "code": 403,
+        "label": "invalid-credentials",
+        "message": "Authentication failed"
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/self/password",
+      "status": 409,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"code\":409,\"label\":\"password-must-differ\",\"message\":\"For password change, new and old password must be different.\"}",
+      "json": {
+        "code": 409,
+        "label": "password-must-differ",
+        "message": "For password change, new and old password must be different."
+      }
+    }
+  ],
+  "native_first_password": {
+    "method": "PUT",
+    "path": "/self/password",
+    "status": 200,
+    "content_type": null,
+    "body": ""
+  },
+  "native_stop_exit_code": 0,
+  "candidate_brig_sha256": "86cceb800b45a15d5db4318bc0ea7f6beac893cea2cd91b9e4ecb680ca9707af",
+  "mismatches": [],
+  "go_change_controls": [
+    {
+      "method": "HEAD",
+      "path": "/self/password",
+      "status": 200,
+      "content_type": null,
+      "body": ""
+    },
+    {
+      "method": "HEAD",
+      "path": "/self/password",
+      "status": 404,
+      "content_type": null,
+      "body": ""
+    },
+    {
+      "method": "HEAD",
+      "path": "/self/password",
+      "status": 404,
+      "content_type": null,
+      "body": ""
+    },
+    {
+      "method": "PUT",
+      "path": "/self/password",
+      "status": 403,
+      "content_type": "application/json",
+      "body": "{\"code\":403,\"label\":\"no-identity\",\"message\":\"The user has no verified email\"}\n",
+      "json": {
+        "code": 403,
+        "label": "no-identity",
+        "message": "The user has no verified email"
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/self/password",
+      "status": 403,
+      "content_type": "application/json",
+      "body": "{\"code\":403,\"label\":\"invalid-credentials\",\"message\":\"Authentication failed\"}\n",
+      "json": {
+        "code": 403,
+        "label": "invalid-credentials",
+        "message": "Authentication failed"
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/self/password",
+      "status": 403,
+      "content_type": "application/json",
+      "body": "{\"code\":403,\"label\":\"invalid-credentials\",\"message\":\"Authentication failed\"}\n",
+      "json": {
+        "code": 403,
+        "label": "invalid-credentials",
+        "message": "Authentication failed"
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/self/password",
+      "status": 409,
+      "content_type": "application/json",
+      "body": "{\"code\":409,\"label\":\"password-must-differ\",\"message\":\"For password change, new and old password must be different.\"}\n",
+      "json": {
+        "code": 409,
+        "label": "password-must-differ",
+        "message": "For password change, new and old password must be different."
+      }
+    }
+  ],
+  "change_control_mismatches": [
+    {
+      "case": 3,
+      "fields": [
+        "content_type"
+      ]
+    },
+    {
+      "case": 4,
+      "fields": [
+        "content_type"
+      ]
+    },
+    {
+      "case": 5,
+      "fields": [
+        "content_type"
+      ]
+    },
+    {
+      "case": 6,
+      "fields": [
+        "content_type"
+      ]
+    }
+  ],
+  "failure": "native password change responses mismatch",
+  "owned_process_exit_codes": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ]
+}

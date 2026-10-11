@@ -3,6 +3,7 @@ package brig
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"github.com/apache/cassandra-gocql-driver/v2"
 	"net/http/httptest"
@@ -10,6 +11,42 @@ import (
 	"strings"
 	"testing"
 )
+
+func TestPasswordChangeNativeErrorMedia(t *testing.T) {
+	for _, tc := range []struct {
+		label  string
+		status int
+	}{{"no-identity", 403}, {"invalid-credentials", 403}, {"password-must-differ", 409}} {
+		t.Run(tc.label, func(t *testing.T) {
+			current := "synthetic-hash"
+			s := passwordChangeService{
+				activated: func(context.Context, gocql.UUID) (bool, error) { return tc.label != "no-identity", nil },
+				current:   func(context.Context, gocql.UUID) (*string, error) { return &current, nil },
+				hash:      func(context.Context, passwordRateKey, string, int) (string, error) { return "synthetic-new-hash", nil },
+				verify: func(context.Context, passwordRateKey, string, string) (bool, bool, error) {
+					return tc.label == "password-must-differ", false, nil
+				},
+				write: func(context.Context, gocql.UUID, string) error {
+					t.Fatal("rejected request wrote password")
+					return nil
+				},
+				revoke: func(context.Context, gocql.UUID) error { t.Fatal("rejected request revoked cookies"); return nil },
+			}
+			r := httptest.NewRequest("PUT", "/self/password", strings.NewReader(`{"old_password":"synthetic-old-password","new_password":"synthetic-new-password"}`))
+			r.Header.Set("Z-User", "10000000-0000-0000-0000-000000000001")
+			r.Header.Set("Content-Type", "application/json")
+			w := httptest.NewRecorder()
+			s.handle(w, r)
+			var body struct {
+				Code  int    `json:"code"`
+				Label string `json:"label"`
+			}
+			if w.Code != tc.status || w.Header().Get("Content-Type") != "application/json;charset=utf-8" || json.Unmarshal(w.Body.Bytes(), &body) != nil || body.Code != tc.status || body.Label != tc.label {
+				t.Fatal("native password change error contract changed", w.Code, w.Header(), w.Body.String())
+			}
+		})
+	}
+}
 
 func TestPasswordChangeNativeOrderAndCookieRules(t *testing.T) {
 	for _, mode := range []string{"inactive", "first", "missing-old", "wrong-old", "same", "success", "rate", "write-failure", "revoke-failure"} {

@@ -157,11 +157,11 @@ func (s passwordChangeService) handle(w http.ResponseWriter, r *http.Request) {
 	case err == nil:
 		w.WriteHeader(200)
 	case errors.Is(err, errPasswordChangeIdentity):
-		authenticationWireError(w, 403, "no-identity", "The user has no verified email")
+		wireError(w, 403, "no-identity", "The user has no verified email")
 	case errors.Is(err, errPasswordChangeCurrent):
-		authenticationWireError(w, 403, "invalid-credentials", "Authentication failed")
+		wireError(w, 403, "invalid-credentials", "Authentication failed")
 	case errors.Is(err, errPasswordChangeSame):
-		authenticationWireError(w, 409, "password-must-differ", "For password change, new and old password must be different.")
+		wireError(w, 409, "password-must-differ", "For password change, new and old password must be different.")
 	default:
 		registrationHTTPError(w, err)
 	}

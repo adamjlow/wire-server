@@ -1,0 +1,127 @@
+[
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/password-change-switchback-corrected-paired/compose.json",
+    "sha256": "103047263b9ada717f73fe6019267e3db617ec42ad75172b25f09f41069ee984",
+    "bytes": 22140
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/password-change-switchback-corrected-paired/controller.log",
+    "sha256": "a6b685009d80b350616dfb9f8ad73fe5c7565efe95c737e4398fdea28750309d",
+    "bytes": 950018
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/password-change-switchback-corrected-paired/environment.json",
+    "sha256": "96ece5f98eedd28dd1c9aabb2014a4fc4d20472f70947f1a0c2448c1b5f63837",
+    "bytes": 1377
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/password-change-switchback-corrected-paired/fixtures/configs.json",
+    "sha256": "a72b39e034c0563ea28260de4782ee8122f5b8e015887f835fd30b04ad4b8180",
+    "bytes": 25814
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/password-change-switchback-corrected-paired/fixtures/coredns-Corefile",
+    "sha256": "f86a1dd0ea71d82a8f03c554e5ad80523d70615aa511889b5206179a538094e5",
+    "bytes": 140
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/password-change-switchback-corrected-paired/fixtures/coredns-db.example.com",
+    "sha256": "6405b829e03e3c98f6742245bedffaf2e6ce80bc0f5202ccc5da5dee501c4b9f",
+    "bytes": 863
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/password-change-switchback-corrected-paired/fixtures/coredns-db.sft",
+    "sha256": "38b816d19035e42da7b3fbb90f419641b222d38c17d8c09000d773484b1aa03a",
+    "bytes": 277
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/password-change-switchback-corrected-paired/fixtures/integration.json",
+    "sha256": "d8834dad54e1f851e689ac00691cd527aac69e0e9ce00baf149835433812c73c",
+    "bytes": 8278
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/password-change-switchback-corrected-paired/fixtures/peers.json",
+    "sha256": "1877182efbc07cc70bf12db44905c75d5b6fe15cc849cb8143891db9617883f2",
+    "bytes": 74780
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/password-change-switchback-corrected-paired/paired-compose.json",
+    "sha256": "bcbe36021a02b532ee2d9d80f779c5b5da07231a77aba1cdbdbe1a08821aa513",
+    "bytes": 23765
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/password-change-switchback-corrected-paired/redis-cluster-initialization.log",
+    "sha256": "f15a73306c7c68066066b23e6c99725937e44309f0d2c9c303824e84910bb309",
+    "bytes": 2130
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/password-change-switchback-corrected-paired/reports/background-worker-native.log",
+    "sha256": "08a3167118ece44fd24974ec71d50b9c907c8af49ce200afbaaae150ffeb446c",
+    "bytes": 814
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/password-change-switchback-corrected-paired/reports/brig-go.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/password-change-switchback-corrected-paired/reports/brig-native.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/password-change-switchback-corrected-paired/reports/cannon-native.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/password-change-switchback-corrected-paired/reports/cargohold-native.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/password-change-switchback-corrected-paired/reports/federator-native.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/password-change-switchback-corrected-paired/reports/galley-native.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/password-change-switchback-corrected-paired/reports/gundeck-go.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/password-change-switchback-corrected-paired/reports/paired-reads.json",
+    "sha256": "adc7b6fac205ca1b8bfd53960880c62cb22911e008c611cb1ea9e1b0bd0ed383",
+    "bytes": 33580
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/password-change-switchback-corrected-paired/reports/proxy-native.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/password-change-switchback-corrected-paired/reports/spar-native.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/password-change-switchback-corrected-paired/reports/stern-native.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/password-change-switchback-corrected-paired/reports/wire-server-enterprise-native.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/password-change-switchback-corrected-paired/result.json",
+    "sha256": "1e056faff24eaebc20229366b783aa04ea01093ca217346e0ce99d340cea4a4d",
+    "bytes": 2034
+  }
+]
