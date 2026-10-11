@@ -1,0 +1,15 @@
+{
+  "source_revision": "e1a2f6ee760b77dcb3791681b3a86800a006d4be",
+  "sdk_image": "sha256:2f9e4393295d7270538dd1c666ab1345eaec06b2c2f8c217283ba6565caee399",
+  "runner_image": "sha256:f487c90fd364aac9daee5a1ce6e60fdba0ab74ab0c671ab0de0198e8f05659a9",
+  "build_exit_code": 0,
+  "quality_checked_source": "72155bca46c224922bc19b8465240178f51dc336",
+  "only_owned_tagged_fixture_changed": true,
+  "result": "pass",
+  "binary_sha256": "e4103f385d6817534eecd94d917f1f13756a6a4b4fb469f45275bb139df06d52",
+  "unit_binary_sha256": "be0046ada5952d4bdbeaf4730df6b9e49e91613598b87b515c5c59e0ce400bf9",
+  "store_binary_sha256": "a2082e802177cf338ced3ee1d5a9dbbf16962f9e6d01ae40d926cdfd820b48cb",
+  "production_and_normal_unit_executables_identical": true,
+  "go_quality_and_runtime_unit_proof_inherited": "/dev/shm/wire-migration-brig-20261010/account-batch-sdk-check/build-receipt.json",
+  "remaining_owned_containers": ""
+}

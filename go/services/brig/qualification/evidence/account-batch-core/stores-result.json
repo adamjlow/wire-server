@@ -1,0 +1,22 @@
+{
+  "result": "pass",
+  "scope": "Actual candidate store checks on schemas created by native utilities; no API/e2e pass.",
+  "e2e_executed": false,
+  "source_revision": "e1a2f6ee760b77dcb3791681b3a86800a006d4be",
+  "test_binary_sha256": "a2082e802177cf338ced3ee1d5a9dbbf16962f9e6d01ae40d926cdfd820b48cb",
+  "runner_image": "sha256:f487c90fd364aac9daee5a1ce6e60fdba0ab74ab0c671ab0de0198e8f05659a9",
+  "postgres_image": "postgres@sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24",
+  "cassandra_image": "cassandra@sha256:dad4cd7ee4281df4e96944a1faebfebd2e50ee19a9f0a1d42ac0bb17c820dd74",
+  "fixture_sha256": "f7b9560124a3305a40832e104f44066c770cdf4b41aa3c5d23eb217f5454dbe0",
+  "native_schema_binary": {
+    "path": "/nix/store/la2csahfv92mb01c5ckwdvysw4dl7bah-brig-schema/bin/brig-schema",
+    "sha256": "36662dafd83228e66aa176c98f36e277886043ee030dcad30a37a4b8bb59045e"
+  },
+  "native_schema_exit_code": 0,
+  "test_exit_code": 0,
+  "cleanup": {
+    "remaining_containers": "",
+    "remaining_networks": "",
+    "remaining_volumes": ""
+  }
+}
