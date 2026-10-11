@@ -1,0 +1,7 @@
+all modules verified
+# github.com/adamjlow/wire-server/go/services/brig
+./provider_accounts.go:81:2: cannot assign to batch.RetryPolicy (neither addressable nor a map index expression)
+# github.com/adamjlow/wire-server/go/services/brig
+# [github.com/adamjlow/wire-server/go/services/brig]
+vet: ./provider_accounts.go:81:2: cannot assign to batch.RetryPolicy (neither addressable nor a map index expression)
+Candidate checks failed: go vet failed (exit 1)

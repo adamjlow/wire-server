@@ -1,0 +1,5 @@
+all modules verified
+# github.com/adamjlow/wire-server/go/services/brig
+# [github.com/adamjlow/wire-server/go/services/brig]
+vet: ./provider_accounts_test.go:31:14: undefined: gocql.MustParseUUID
+Candidate checks failed: go vet failed (exit 1)

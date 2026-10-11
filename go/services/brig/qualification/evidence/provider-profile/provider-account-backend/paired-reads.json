@@ -1,0 +1,116 @@
+{
+  "result": "failed",
+  "e2e_executed": false,
+  "scope": "Finite native -> Go read/reauthentication observations on native-created state.",
+  "records": [],
+  "prekey_allocation": {
+    "strategy": "optimistic",
+    "table": "integration-brig-prekeys",
+    "owned_dynamo": true
+  },
+  "internal_transport": {
+    "type": "stomp",
+    "broker_image": "apache/activemq@sha256:1cacfbd9c08ad437c5e1177a9f1217e7c7ada62a64065128acd1a81866a03711",
+    "broker_image_id": "sha256:b9972c335fae8deb648f3f048622aaf3540c82d5c42741c9e6dad43af1e18180",
+    "synthetic_authentication": true
+  },
+  "native_brig": {
+    "path": "/nix/store/f6l2f0l8l2r6z9jbg937q96k6056iqfn-brig/bin/brig",
+    "sha256": "c45a40da63268712a7cacdbd884287fa3dc93cec179d70323d3f22f7d5cdf1ca"
+  },
+  "go_gundeck_sha256": "a50512ef30d7fa9ddf92c2c1933e69769d6691e08cdfbe9f7c4f2d266071f46c",
+  "native_setup": [
+    {
+      "method": "POST",
+      "path": "/i/users",
+      "status": 201,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"accent_id\":0,\"assets\":[],\"email\":\"synthetic-parity-841bea1c56b44faabc67e89f46bdbc79@example.com\",\"id\":\"80782853-69e0-4509-9f96-ff70809c7466\",\"locale\":\"en\",\"managed_by\":\"wire\",\"name\":\"Synthetic parity reader\",\"picture\":[],\"qualified_id\":{\"domain\":\"example.com\",\"id\":\"80782853-69e0-4509-9f96-ff70809c7466\"},\"searchable\":true,\"status\":\"active\",\"supported_protocols\":[\"proteus\"],\"type\":\"regular\"}",
+      "location": "80782853-69e0-4509-9f96-ff70809c7466",
+      "json": {
+        "accent_id": 0,
+        "assets": [],
+        "email": "synthetic-parity-841bea1c56b44faabc67e89f46bdbc79@example.com",
+        "id": "80782853-69e0-4509-9f96-ff70809c7466",
+        "locale": "en",
+        "managed_by": "wire",
+        "name": "Synthetic parity reader",
+        "picture": [],
+        "qualified_id": {
+          "domain": "example.com",
+          "id": "80782853-69e0-4509-9f96-ff70809c7466"
+        },
+        "searchable": true,
+        "status": "active",
+        "supported_protocols": [
+          "proteus"
+        ],
+        "type": "regular"
+      }
+    }
+  ],
+  "provider_native_registered": {
+    "method": "POST",
+    "path": "/v19/provider/register",
+    "status": 201,
+    "content_type": "application/json;charset=utf-8",
+    "body": "{\"id\":\"0d392f09-d1a6-4165-a5de-609b0ddf8a6b\"}",
+    "json": {
+      "id": "0d392f09-d1a6-4165-a5de-609b0ddf8a6b"
+    }
+  },
+  "provider_native_unactivated": [
+    {
+      "method": "GET",
+      "path": "/v19/provider",
+      "status": 403,
+      "content_type": null,
+      "body": ""
+    },
+    {
+      "method": "GET",
+      "path": "/v19/providers/0d392f09-d1a6-4165-a5de-609b0ddf8a6b",
+      "status": 404,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"code\":404,\"label\":\"not-found\",\"message\":\"Provider not found.\"}",
+      "json": {
+        "code": 404,
+        "label": "not-found",
+        "message": "Provider not found."
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/v19/provider",
+      "status": 403,
+      "content_type": null,
+      "body": ""
+    }
+  ],
+  "failure": "native unactivated provider became visible",
+  "owned_process_exit_codes": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ]
+}

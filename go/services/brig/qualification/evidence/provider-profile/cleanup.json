@@ -1,0 +1,10 @@
+{
+  "project": "wire-e2e-c1edc9f41a694ba8a8975805c8a16305",
+  "runner_exit_code": 0,
+  "cleanup_exit_code": 0,
+  "independent_audit": {
+    "containers": [],
+    "networks": [],
+    "volumes": []
+  }
+}

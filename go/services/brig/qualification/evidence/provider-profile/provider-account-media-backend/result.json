@@ -1,0 +1,45 @@
+{
+  "result": "failed",
+  "source_revision": "69e6c9381685b26d549585800683ee31e960d735",
+  "build": {
+    "source_revision": "69e6c9381685b26d549585800683ee31e960d735",
+    "sdk_image": "sha256:2f9e4393295d7270538dd1c666ab1345eaec06b2c2f8c217283ba6565caee399",
+    "runner_image": "sha256:f487c90fd364aac9daee5a1ce6e60fdba0ab74ab0c671ab0de0198e8f05659a9",
+    "result": "pass",
+    "sdk_controller_exit_code": 0,
+    "unchanged_runner_unit_exit_code": 0,
+    "binary_sha256": "61d082a916294925d04dd3cb8f1835c51381890c01fee52349b0942b71fbaf8b",
+    "unit_binary_sha256": "d431fda15141f50966a012e81b57f7c850623ce20595ba9df95a0bc8c48f6392",
+    "store_binary_sha256": "5429b13d03867dd94ac6b308f345267206cba06a8fefe5d9a988fed33967a491",
+    "toolchain": "go1.26.9",
+    "sdk_archives_manifest_sha256": "875560a1f32f1ad76a866a7f792a6b392f64c5555e8f55f270f60869079f9af2",
+    "go_checks": "pass",
+    "network_cleanup_exit_code": 0,
+    "remaining_owned_containers": "",
+    "remaining_owned_networks": "",
+    "artifact_build_source_revision": "69e6c9381685b26d549585800683ee31e960d735",
+    "reused_quality": false,
+    "reuse_basis": "Fresh exact-current production, full Go checks and static runner units",
+    "changed_paths": []
+  },
+  "project": "wire-e2e-d0f6c693f735455b9c559e15f8c7120b",
+  "compose_sha256": "801444d3864aae8aafe12c515ab3bbf1852eb0e18731119d80cd1f6578d793bf",
+  "runner_image": "sha256:f487c90fd364aac9daee5a1ce6e60fdba0ab74ab0c671ab0de0198e8f05659a9",
+  "e2e_executed": false,
+  "peer_candidates": {
+    "gundeck": {
+      "path": "/home/operator/.cache/wire-migration/go-patched-20261009/gundeck",
+      "sha256": "a50512ef30d7fa9ddf92c2c1933e69769d6691e08cdfbe9f7c4f2d266071f46c",
+      "source_revision": "c1120238f8ecd7480742156df6c5dd2d2ec41f56"
+    }
+  },
+  "redis_cluster_initialization_completed": true,
+  "runner_exit_code": 1,
+  "broker_log_capture_exit_code": 0,
+  "cleanup_exit_code": 0,
+  "remaining_resources": {
+    "container": "",
+    "network": "",
+    "volume": ""
+  }
+}

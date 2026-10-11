@@ -1863,3 +1863,17 @@ helper using the identical status/media/JSON-or-body comparison; verify positive
 and mismatching controls locally before retry. All25 exits0, runner1/cleanup0 and
 independent empty retained. Production unchanged; reuse exact source69 artifacts/
 quality with actual artifact_build_source_revision preserved in the next receipt.
+
+Final provider observer936aef223/production69e6c9381
+passes [14 provider controls and durable readback](../../../go/services/brig/qualification/evidence/provider-profile/README.md),
+plus all22 unchanged exact original executions and existing real optimistic
+queue/service/Galley/storage controls. All25 managed exits0, runner/cleanup0 and
+independent empty. Full pinned Go/static quality at unchanged production69 reused
+only for observer-only edits, actual build identity retained. Same-author review
+verifies this bounded evidence; all failures retained, no oracle/Haskell changes.
+Next complete provider registration/activation/login/email/password/reset/deletion
+and service/bot public families using existing mail/hash/code/queue/storage
+boundaries; remaining whole Brig contracts and final535/eight-Go/all-entity three
+selectors/operations/image/legal gates remain open. Disk shortage resolved: about
+55GiB free and new SDK/cache output on disk; old shared-memory artifacts retained.
+Do not repeat unchanged provider-profile controls without relevant input changes.

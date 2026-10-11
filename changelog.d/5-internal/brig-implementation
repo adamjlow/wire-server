@@ -18,3 +18,5 @@ expected single queue deliveries, preventing200 decode failure masked by404
 replay, plus durable switchback and22 unchanged originals. Full Brig work remains.
 
 Fix Go Brig startup for optimistic DynamoDB prekeys with STOMP queues; qualify real lock creation/deletion and retain all failed attempts.
+
+Add Go Brig native-schema provider account/profile reads and partial profile updates, preserving activation visibility, provider token-type authorization and global second-factor guard; qualify native/Go responses and durable native readback.
