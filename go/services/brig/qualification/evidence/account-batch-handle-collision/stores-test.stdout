@@ -1,0 +1,4 @@
+=== RUN   TestOwnedDurableStores
+    stores_qualification_test.go:812: ERROR: duplicate key value violates unique constraint "wire_user_handle_key" (SQLSTATE 23505)
+--- FAIL: TestOwnedDurableStores (1.31s)
+FAIL

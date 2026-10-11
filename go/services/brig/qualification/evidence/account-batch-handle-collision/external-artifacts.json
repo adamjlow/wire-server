@@ -1,0 +1,10 @@
+{
+  "/home/operator/.cache/wire-migration/brig-20261010/account-batch-fixed-native-stores/native-schema.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "/home/operator/.cache/wire-migration/brig-20261010/account-batch-fixed-native-stores/test.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "/home/operator/.cache/wire-migration/brig-20261010/account-batch-fixed-native-stores/cassandra.log": "e6f0a27f01c1cade5d15962f351d499ed934ac7dba00807296566851faea4b7d",
+  "/home/operator/.cache/wire-migration/brig-20261010/account-batch-fixed-native-stores/test.stdout": "a955d0e82edfed83cfcb0efc621dbff7d68563e864604da4b3e3e223b0dc89ce",
+  "/home/operator/.cache/wire-migration/brig-20261010/account-batch-fixed-native-stores/native-schema.stdout": "f18daec4c5576effaeee9c866894f742df171f42bce4bf0b599fe2587d1d071f",
+  "/home/operator/.cache/wire-migration/brig-20261010/account-batch-fixed-native-stores/result.json": "689ef8312b63e852eebf36e9bcf7989263d1154ec5b189000d090f10686b1b0c",
+  "/home/operator/.cache/wire-migration/brig-20261010/account-batch-fixed-native-stores/postgres.log": "d86a149a57536e2d9b2e798ee175699207794f8dedaea861201bfdb0b9d5e9d9",
+  "/home/operator/.cache/wire-migration/brig-20261010/account-batch-fixed-native-stores/brig.json": "f7b9560124a3305a40832e104f44066c770cdf4b41aa3c5d23eb217f5454dbe0"
+}

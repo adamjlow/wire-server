@@ -797,7 +797,7 @@ func TestOwnedDurableStores(t *testing.T) {
 		first, second, missing := user(), user(), user()
 		firstRow, secondRow := newRecord(first), newRecord(second)
 		team := user()
-		handle := "synthetic-batch-handle"
+		handle := "synthetic-batch-" + first.String()
 		firstRow.Team, firstRow.Handle = &team, &handle
 		if err := store.create(ctx, firstRow, nil, nil); err != nil {
 			t.Fatal(err)
