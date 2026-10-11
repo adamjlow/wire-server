@@ -427,3 +427,18 @@ Source85bb0c30b970b6c880f2af0acc6b8c6cf26d0a9e/service34ff1c754b7bd3b284e9e21e69
 Preserve native label/cap/prekey partial commits, capability subset/setup-before-write, typed empty200/error media, enum-ordered MLS LocalQuorum/LocalSerial/no-retry LWT and duplicate failure after earlier writes. CBOR codec preserves required/nested/optional shape and ID comparison, unknown/missing/trailing rejection, duplicate-last map fields, nonnegative Int→Word16 wrapping, arbitrary Word protocol and encoded-text SHA256 client ID. Don't claim cryptographic signature/length/version validation native doesn't do. Native Base64/noncanonical/CBOR edge executable comparison and generic malformed/header/version literals remain unqualified; no additional speculative controls now. Whole Brig stays active/unavailable/review unset.
 
 Next real client registration/deletion: native addClient reads account→enforces login verification code→same-type clients/count/upsert→reauth policy→capacity→all-prekey checks→last-first prekey writes→client row→enum-ordered MLS LWT. New response includes request keys/null last_active and millisecond time; legalhold type augment/forbid follows public policy. Then enabled consumable setup, old temporary/legalhold deletion, actual Galley new-client callback, synchronous ClientAdded push (native pushNotifications, not properties' async best effort), optional new-client mail when total>1. execDelete revokes matching cookie-label cookies, enqueues actual native client-deletion record, then deletes clients/prekeys (MLS rows retained by current store) before worker Galley/Gundeck cleanup. Permanent removal requires reauth; temporary doesn't; legalhold manual deletion forbidden. Implement callbacks using existing credential/mail/queue/peer foundations without fake success or embedding native. Hook native last-active internal callback for original Client.testClientLastActive; reuse original compiled capability/version/update cases once POST exists; offline cross-backend client test also needs connections/federation. Preserve final whole535/eight-Go/loaded shutdown/all-entity three-mode/image/default selector/legal/review gates. Galley begins automatically only after actual whole Brig completion.
+
+
+Client registration storage/core slice: preserve native same-type count/upsert
+reauthentication (including temporary replacement), permanent capacity before
+prekey validation, timestamp-before-validation, last-key-first writes, client
+row then ordered MLS LWT and nontransactional failure. Implement a narrowly
+scoped native `upsertClient` core plus actual CQL insert using existing mutation
+and MLS adapters. Its returned replacement list/total feeds future actual
+addClient effects. This is not public POST registration: account/login-code
+admission, legalhold policy/capability augmentation, consumable queue, native
+deletion queue and cleanup, Galley, synchronous events and mail still need
+wiring. Finite precedence/replacement/all-key-validation controls, full pinned
+Go checks and unchanged-runner units planned; native registration/switchback
+and original Client cases follow whole addClient composition. No availability
+claim, stubbed peer effect, oracle/default/schema/security-policy change.
