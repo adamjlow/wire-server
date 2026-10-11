@@ -24,6 +24,13 @@ type mlsClientReads struct {
 	key         func(context.Context, gocql.UUID, string, string) ([]byte, bool, error)
 	insert      func(context.Context, gocql.UUID, string, []validatedMLSPackage) error
 	removeSuite func(context.Context, gocql.UUID, string, uint16) error
+	user        func(context.Context, gocql.UUID) (*storedUser, error)
+	clients     func(context.Context, gocql.UUID) ([]storedClient, error)
+	legalhold   func(context.Context, gocql.UUID, gocql.UUID, string) (string, error)
+	guard       func(context.Context, gocql.UUID, map[string][]string, string) error
+	removeOne   func(context.Context, gocql.UUID, string, uint16, []byte) error
+	claimGate   chan struct{}
+	remote      *prekeyFederationClient
 	domain      string
 	now         func() time.Time
 	maximum     *mlsLifetimeMaximum
@@ -64,7 +71,11 @@ func (s clientStore) deleteMLSPackages(ctx context.Context, user gocql.UUID, cli
 	return s.cassandra.Query(`DELETE FROM mls_key_packages WHERE user = ? AND client = ? AND cipher_suite = ? AND ref IN ?`, user, client, int32(suite), refs).WithContext(ctx).Consistency(gocql.LocalQuorum).RetryPolicy(&gocql.SimpleRetryPolicy{NumRetries: 5}).Exec()
 }
 func (s mlsClientReads) count(ctx context.Context, user gocql.UUID, client string, suite uint16) (int64, error) {
-	var result int64
+	rows, err := s.usablePackages(ctx, user, client, suite)
+	return int64(len(rows)), err
+}
+func (s mlsClientReads) usablePackages(ctx context.Context, user gocql.UUID, client string, suite uint16) ([]mlsPackageRow, error) {
+	result := []mlsPackageRow{}
 	rows, err := s.packages(ctx, user, client, suite)
 	if err != nil {
 		return result, err
@@ -77,7 +88,7 @@ func (s mlsClientReads) count(ctx context.Context, user gocql.UUID, client strin
 			continue
 		} // malformed rows are retained, not counted
 		if lifetime.usable(now, s.maximum) {
-			result++
+			result = append(result, row)
 		} else {
 			expired = append(expired, row.ref)
 		}

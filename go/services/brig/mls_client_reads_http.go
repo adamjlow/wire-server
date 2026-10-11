@@ -37,6 +37,9 @@ func mlsSuiteHex(text string) (uint16, bool) {
 	return value, true
 }
 func (s mlsClientReads) handle(w http.ResponseWriter, r *http.Request, path string) bool {
+	if s.handleClaim(w, r, path) {
+		return true
+	}
 	if s.handlePublicSelf(w, r, path) {
 		return true
 	}

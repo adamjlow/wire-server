@@ -706,7 +706,7 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
 
             if mls_upload_originals:
                 import runner,harness
-                required=['MLS.KeyPackage.testDeleteKeyPackages','MLS.KeyPackage.testKeyPackageUploadNoKey','MLS.KeyPackage.testUnsupportedCiphersuite',*[f'MLS.KeyPackage.testKeyPackageCount[suite={suite}]' for suite in ('0x0001','0x0002','0x0005','0x0007')]]
+                required=['MLS.KeyPackage.'+name for name in ('testDeleteKeyPackages','testKeyPackageUploadNoKey','testUnsupportedCiphersuite','testClaimKeyPackagesEphemeralUser','testKeyPackageClaim','testKeyPackageSelfClaim','testKeyPackageMultipleCiphersuites','testKeyPackageRemoteClaim','testReplaceKeyPackages','testReplaceKeyPackagesV7')]+[f'MLS.KeyPackage.testKeyPackageCount[suite={suite}]' for suite in ('0x0001','0x0002','0x0005','0x0007')]
                 assert set(required).issubset(runner.discover('brig')), 'original MLS upload cases absent'
                 link=runtime.WORK/'dist/brig';link.unlink();link.symlink_to(candidate)
                 xml=Path('/reports/mls-upload-original.xml')

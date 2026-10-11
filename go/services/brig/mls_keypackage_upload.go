@@ -145,6 +145,13 @@ func verifyMLSSignature(suite uint16, key, raw, signature []byte) bool {
 
 func canonicalMLSIdentity(text string, certificate bool) (string, error) {
 	var userText, rest string
+	if !certificate && strings.HasPrefix(text, "history-client:") {
+		user, ok := tokenUUID(strings.TrimPrefix(text, "history-client:"))
+		if !ok {
+			return "", errors.New("Invalid UUID")
+		}
+		return "history-client:" + user, nil
+	}
 	if certificate {
 		if !strings.HasPrefix(text, "wireapp://") {
 			return "", errors.New("No wireapp label found")

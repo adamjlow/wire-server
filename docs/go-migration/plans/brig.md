@@ -864,3 +864,18 @@ original replace cases need claim first. Actual signed-package durable upload/
 replace switchback and native failure-order witness pending. Basic History
 identity-mismatch error and X509/DER/identity/Base64/malformed-error-detail
 variants need alignment/direct evidence before whole acceptance.
+
+### MLS claim and original replacement coverage (checks pending)
+
+Implement native account-status/legalhold-before-client/consent-before-package
+ordering, local self-client skip, process-wide cancellable gate, expiry cleanup
+and random single consumption with separate LQ/retry5 ref equality deletion.
+Incoming federation returns null for disabled MLS and typed admission errors;
+outgoing validates claimed package identity/signatures/lifetime/ref and local
+stored keys when applicable. Preserve qualified/numeric/blob Set semantics.
+Original observer now selects14 unchanged MLS cases including local/self/remote/
+ephemeral/multi-suite claims and replace/V7, plus prior seven tests. Two native
+claim account-deleted/suspended cases depend on unfinished team invitation/account
+deletion APIs and remain in the mandatory whole-service matrix, not waived.
+Basic History identity now parses and produces the native identity mismatch.
+Full checks, actual original execution and final artifact qualification pending.

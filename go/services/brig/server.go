@@ -269,6 +269,13 @@ func Run(ctx context.Context, c Config) error {
 	federationClient, closeFederation := newPrekeyFederationClient(c)
 	defer closeFederation()
 	business.publicClients = &publicClientService{domain: c.Settings.Domain, remote: &federationClient, list: (clientStore{cassandra}).publicClients, warn: func(domain string) { log.Printf("Failed to fetch clients for domain %q", domain) }}
+	business.mlsClients.user = business.users.get
+	business.mlsClients.clients = (clientStore{cassandra}).list
+	business.mlsClients.legalhold = business.peers.mlsUserLegalhold
+	business.mlsClients.guard = business.peers.guardPrekeyLegalhold
+	business.mlsClients.removeOne = (clientStore{cassandra}).deleteMLSOne
+	business.mlsClients.claimGate = make(chan struct{}, 1)
+	business.mlsClients.remote = &federationClient
 	business.prekeys = &prekeyClaimService{remote: &federationClient, domain: c.Settings.Domain, maxUsers: int(*c.Settings.MaxConversationSize), claim: prekeyStore.claim, clients: (clientStore{cassandra}).list, lookup: (clientStore{cassandra}).get, remove: business.clientDeletion.execute, guard: business.peers.guardPrekeyLegalhold, federationGuard: business.peers.guardFederationPrekeyLegalhold}
 	maxPermanent := 7
 	if c.Settings.MaxPermanentClients != nil {
