@@ -178,6 +178,13 @@ def inside(gundeck_path=None, access_switchback=False):
             renewed, replacement = request('POST', '/access', {
                 'Cookie': cookie.split(';', 1)[0],
                 'Authorization': 'Bearer ' + reference_access['json']['access_token']})
+            report['go_renewal_observation'] = {
+                'status': renewed['status'],
+                'content_type': renewed['content_type'],
+                'json': {key: value for key, value in renewed.get('json', {}).items()
+                         if key != 'access_token'},
+                'replacement_cookie_issued': bool(replacement),
+                'observed_at': time.time()}
             assert renewed['status'] == 200, 'Go renewal of native-issued credentials failed'
             native_json, go_json = reference_access['json'], renewed['json']
             assert native_json.keys() == go_json.keys(), 'renewal response field set mismatch'
