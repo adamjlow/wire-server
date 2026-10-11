@@ -53,6 +53,9 @@ func TestTeamSizeNativeMissingMalformedAndNaturalCounts(t *testing.T) {
 		{`{"aggregations":{"regulars":{"doc_count":-1},"apps":{"doc_count":"secret"}}}`, "0", "0", "0"},
 		{`{"aggregations":{"regulars":{"doc_count":1.5},"apps":{"other":4}}}`, "0", "0", "0"},
 		{`{"aggregations":{"regulars":{"doc_count":18446744073709551616},"apps":{"doc_count":1}}}`, "18446744073709551616", "1", "18446744073709551617"},
+		{`{"aggregations":{"regulars":{"doc_count":3e1},"apps":{"doc_count":20.0e-1}}}`, "30", "2", "32"},
+		{`{"aggregations":{"regulars":{"doc_count":1.8446744073709551616e19},"apps":{"doc_count":0e-99}}}`, "18446744073709551616", "0", "18446744073709551616"},
+		{`{"aggregations":{"regulars":{"doc_count":1e-99},"apps":{"doc_count":-1e1}}}`, "0", "0", "0"},
 	} {
 		t.Run(test.body, func(t *testing.T) {
 			server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) { _, _ = w.Write([]byte(test.body)) }))
