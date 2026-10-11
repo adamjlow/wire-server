@@ -1,0 +1,778 @@
+{
+  "result": "pass",
+  "e2e_executed": false,
+  "scope": "Finite native -> Go read/reauthentication observations on native-created state.",
+  "records": [
+    {
+      "implementation": "haskell",
+      "observations": [
+        {
+          "method": "GET",
+          "path": "/i/status",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": ""
+        },
+        {
+          "method": "HEAD",
+          "path": "/i/status",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "path": "/api-version",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"development\":[19],\"domain\":\"example.com\",\"federation\":true,\"supported\":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18]}",
+          "json": {
+            "development": [
+              19
+            ],
+            "domain": "example.com",
+            "federation": true,
+            "supported": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18
+            ]
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/self",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"accent_id\":0,\"assets\":[],\"email\":\"synthetic-parity-50ce3ed55c7c460995bfa6f81688dc45@example.com\",\"id\":\"87e71375-8cf1-4f04-a3c3-dc5f81153e8b\",\"locale\":\"en\",\"managed_by\":\"wire\",\"name\":\"Synthetic parity reader\",\"picture\":[],\"qualified_id\":{\"domain\":\"example.com\",\"id\":\"87e71375-8cf1-4f04-a3c3-dc5f81153e8b\"},\"searchable\":true,\"status\":\"active\",\"supported_protocols\":[\"proteus\"],\"type\":\"regular\"}",
+          "json": {
+            "accent_id": 0,
+            "assets": [],
+            "email": "synthetic-parity-50ce3ed55c7c460995bfa6f81688dc45@example.com",
+            "id": "87e71375-8cf1-4f04-a3c3-dc5f81153e8b",
+            "locale": "en",
+            "managed_by": "wire",
+            "name": "Synthetic parity reader",
+            "picture": [],
+            "qualified_id": {
+              "domain": "example.com",
+              "id": "87e71375-8cf1-4f04-a3c3-dc5f81153e8b"
+            },
+            "searchable": true,
+            "status": "active",
+            "supported_protocols": [
+              "proteus"
+            ],
+            "type": "regular"
+          }
+        },
+        {
+          "method": "HEAD",
+          "path": "/self",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "path": "/cookies",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"cookies\":[{\"created\":\"2026-10-11T01:36:39.098Z\",\"expires\":\"2026-10-11T01:38:39Z\",\"id\":1189200203,\"label\":\"synthetic-paired-device\",\"successor\":null,\"type\":\"persistent\"}]}",
+          "json": {
+            "cookies": [
+              {
+                "created": "2026-10-11T01:36:39.098Z",
+                "expires": "2026-10-11T01:38:39Z",
+                "id": 1189200203,
+                "label": "synthetic-paired-device",
+                "successor": null,
+                "type": "persistent"
+              }
+            ]
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/cookies?labels=synthetic-paired-device",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"cookies\":[{\"created\":\"2026-10-11T01:36:39.098Z\",\"expires\":\"2026-10-11T01:38:39Z\",\"id\":1189200203,\"label\":\"synthetic-paired-device\",\"successor\":null,\"type\":\"persistent\"}]}",
+          "json": {
+            "cookies": [
+              {
+                "created": "2026-10-11T01:36:39.098Z",
+                "expires": "2026-10-11T01:38:39Z",
+                "id": 1189200203,
+                "label": "synthetic-paired-device",
+                "successor": null,
+                "type": "persistent"
+              }
+            ]
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/cookies?labels=absent",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"cookies\":[]}",
+          "json": {
+            "cookies": []
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/i/users/87e71375-8cf1-4f04-a3c3-dc5f81153e8b/status",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"status\":\"active\"}",
+          "json": {
+            "status": "active"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/self",
+          "status": 400,
+          "content_type": null,
+          "body": "Header Z-User is required"
+        },
+        {
+          "method": "GET",
+          "path": "/self",
+          "status": 400,
+          "content_type": null,
+          "body": "Error parsing header Z-User failed: invalid UUID"
+        },
+        {
+          "method": "GET",
+          "path": "/self",
+          "status": 400,
+          "content_type": null,
+          "body": "Error parsing header Z-User failed: invalid UUID"
+        },
+        {
+          "method": "GET",
+          "path": "/v1/self",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"accent_id\":0,\"assets\":[],\"email\":\"synthetic-parity-50ce3ed55c7c460995bfa6f81688dc45@example.com\",\"id\":\"87e71375-8cf1-4f04-a3c3-dc5f81153e8b\",\"locale\":\"en\",\"managed_by\":\"wire\",\"name\":\"Synthetic parity reader\",\"picture\":[],\"qualified_id\":{\"domain\":\"example.com\",\"id\":\"87e71375-8cf1-4f04-a3c3-dc5f81153e8b\"},\"searchable\":true,\"status\":\"active\",\"supported_protocols\":[\"proteus\"],\"type\":\"regular\"}",
+          "json": {
+            "accent_id": 0,
+            "assets": [],
+            "email": "synthetic-parity-50ce3ed55c7c460995bfa6f81688dc45@example.com",
+            "id": "87e71375-8cf1-4f04-a3c3-dc5f81153e8b",
+            "locale": "en",
+            "managed_by": "wire",
+            "name": "Synthetic parity reader",
+            "picture": [],
+            "qualified_id": {
+              "domain": "example.com",
+              "id": "87e71375-8cf1-4f04-a3c3-dc5f81153e8b"
+            },
+            "searchable": true,
+            "status": "active",
+            "supported_protocols": [
+              "proteus"
+            ],
+            "type": "regular"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/i/users/87e71375-8cf1-4f04-a3c3-dc5f81153e8b/reauthenticate",
+          "status": 200,
+          "content_type": null,
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "path": "/i/users/87e71375-8cf1-4f04-a3c3-dc5f81153e8b/reauthenticate",
+          "status": 403,
+          "content_type": "application/json",
+          "body": "{\"code\":403,\"label\":\"invalid-credentials\",\"message\":\"Authentication failed\"}",
+          "json": {
+            "code": 403,
+            "label": "invalid-credentials",
+            "message": "Authentication failed"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/i/users/87e71375-8cf1-4f04-a3c3-dc5f81153e8b/reauthenticate",
+          "status": 403,
+          "content_type": "application/json",
+          "body": "{\"code\":403,\"label\":\"missing-auth\",\"message\":\"Re-authentication via password required\"}",
+          "json": {
+            "code": 403,
+            "label": "missing-auth",
+            "message": "Re-authentication via password required"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/i/users/87e71375-8cf1-4f04-a3c3-dc5f81153e8b/reauthenticate",
+          "status": 200,
+          "content_type": null,
+          "body": ""
+        },
+        {
+          "method": "POST",
+          "path": "/access",
+          "status": 403,
+          "content_type": "application/json",
+          "body": "{\"code\":403,\"label\":\"invalid-credentials\",\"message\":\"Missing cookie and token\"}",
+          "json": {
+            "code": 403,
+            "label": "invalid-credentials",
+            "message": "Missing cookie and token"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/access/logout",
+          "status": 403,
+          "content_type": "application/json",
+          "body": "{\"code\":403,\"label\":\"invalid-credentials\",\"message\":\"Missing cookie and token\"}",
+          "json": {
+            "code": 403,
+            "label": "invalid-credentials",
+            "message": "Missing cookie and token"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/access",
+          "status": 403,
+          "content_type": "application/json",
+          "body": "{\"code\":403,\"label\":\"client-error\",\"message\":\"Failed reading: Invalid zauth token\"}",
+          "json": {
+            "code": 403,
+            "label": "client-error",
+            "message": "Failed reading: Invalid zauth token"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/access",
+          "status": 403,
+          "content_type": "application/json",
+          "body": "{\"code\":403,\"label\":\"invalid-credentials\",\"message\":\"Invalid authorization scheme\"}",
+          "json": {
+            "code": 403,
+            "label": "invalid-credentials",
+            "message": "Invalid authorization scheme"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/login",
+          "status": 403,
+          "content_type": "application/json",
+          "body": "{\"code\":403,\"label\":\"invalid-credentials\",\"message\":\"Authentication failed\"}",
+          "json": {
+            "code": 403,
+            "label": "invalid-credentials",
+            "message": "Authentication failed"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/login",
+          "status": 403,
+          "content_type": "application/json",
+          "body": "{\"code\":403,\"label\":\"invalid-credentials\",\"message\":\"Authentication failed\"}",
+          "json": {
+            "code": 403,
+            "label": "invalid-credentials",
+            "message": "Authentication failed"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/login?persist=invalid-synthetic",
+          "status": 400,
+          "content_type": null,
+          "body": "Error parsing query parameter persist failed: could not parse: `invalid-synthetic'"
+        }
+      ]
+    },
+    {
+      "implementation": "go",
+      "observations": [
+        {
+          "method": "GET",
+          "path": "/i/status",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": ""
+        },
+        {
+          "method": "HEAD",
+          "path": "/i/status",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "path": "/api-version",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"development\":[19],\"domain\":\"example.com\",\"federation\":true,\"supported\":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18]}\n",
+          "json": {
+            "development": [
+              19
+            ],
+            "domain": "example.com",
+            "federation": true,
+            "supported": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18
+            ]
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/self",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"qualified_id\":{\"id\":\"87e71375-8cf1-4f04-a3c3-dc5f81153e8b\",\"domain\":\"example.com\"},\"id\":\"87e71375-8cf1-4f04-a3c3-dc5f81153e8b\",\"type\":\"regular\",\"email\":\"synthetic-parity-50ce3ed55c7c460995bfa6f81688dc45@example.com\",\"name\":\"Synthetic parity reader\",\"picture\":[],\"assets\":[],\"accent_id\":0,\"status\":\"active\",\"locale\":\"en\",\"managed_by\":\"wire\",\"supported_protocols\":[\"proteus\"],\"searchable\":true}\n",
+          "json": {
+            "qualified_id": {
+              "id": "87e71375-8cf1-4f04-a3c3-dc5f81153e8b",
+              "domain": "example.com"
+            },
+            "id": "87e71375-8cf1-4f04-a3c3-dc5f81153e8b",
+            "type": "regular",
+            "email": "synthetic-parity-50ce3ed55c7c460995bfa6f81688dc45@example.com",
+            "name": "Synthetic parity reader",
+            "picture": [],
+            "assets": [],
+            "accent_id": 0,
+            "status": "active",
+            "locale": "en",
+            "managed_by": "wire",
+            "supported_protocols": [
+              "proteus"
+            ],
+            "searchable": true
+          }
+        },
+        {
+          "method": "HEAD",
+          "path": "/self",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "path": "/cookies",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"cookies\":[{\"created\":\"2026-10-11T01:36:39.098Z\",\"expires\":\"2026-10-11T01:38:39Z\",\"id\":1189200203,\"label\":\"synthetic-paired-device\",\"successor\":null,\"type\":\"persistent\"}]}\n",
+          "json": {
+            "cookies": [
+              {
+                "created": "2026-10-11T01:36:39.098Z",
+                "expires": "2026-10-11T01:38:39Z",
+                "id": 1189200203,
+                "label": "synthetic-paired-device",
+                "successor": null,
+                "type": "persistent"
+              }
+            ]
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/cookies?labels=synthetic-paired-device",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"cookies\":[{\"created\":\"2026-10-11T01:36:39.098Z\",\"expires\":\"2026-10-11T01:38:39Z\",\"id\":1189200203,\"label\":\"synthetic-paired-device\",\"successor\":null,\"type\":\"persistent\"}]}\n",
+          "json": {
+            "cookies": [
+              {
+                "created": "2026-10-11T01:36:39.098Z",
+                "expires": "2026-10-11T01:38:39Z",
+                "id": 1189200203,
+                "label": "synthetic-paired-device",
+                "successor": null,
+                "type": "persistent"
+              }
+            ]
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/cookies?labels=absent",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"cookies\":[]}\n",
+          "json": {
+            "cookies": []
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/i/users/87e71375-8cf1-4f04-a3c3-dc5f81153e8b/status",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"status\":\"active\"}\n",
+          "json": {
+            "status": "active"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/self",
+          "status": 400,
+          "content_type": null,
+          "body": "Header Z-User is required"
+        },
+        {
+          "method": "GET",
+          "path": "/self",
+          "status": 400,
+          "content_type": null,
+          "body": "Error parsing header Z-User failed: invalid UUID"
+        },
+        {
+          "method": "GET",
+          "path": "/self",
+          "status": 400,
+          "content_type": null,
+          "body": "Error parsing header Z-User failed: invalid UUID"
+        },
+        {
+          "method": "GET",
+          "path": "/v1/self",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"qualified_id\":{\"id\":\"87e71375-8cf1-4f04-a3c3-dc5f81153e8b\",\"domain\":\"example.com\"},\"id\":\"87e71375-8cf1-4f04-a3c3-dc5f81153e8b\",\"type\":\"regular\",\"email\":\"synthetic-parity-50ce3ed55c7c460995bfa6f81688dc45@example.com\",\"name\":\"Synthetic parity reader\",\"picture\":[],\"assets\":[],\"accent_id\":0,\"status\":\"active\",\"locale\":\"en\",\"managed_by\":\"wire\",\"supported_protocols\":[\"proteus\"],\"searchable\":true}\n",
+          "json": {
+            "qualified_id": {
+              "id": "87e71375-8cf1-4f04-a3c3-dc5f81153e8b",
+              "domain": "example.com"
+            },
+            "id": "87e71375-8cf1-4f04-a3c3-dc5f81153e8b",
+            "type": "regular",
+            "email": "synthetic-parity-50ce3ed55c7c460995bfa6f81688dc45@example.com",
+            "name": "Synthetic parity reader",
+            "picture": [],
+            "assets": [],
+            "accent_id": 0,
+            "status": "active",
+            "locale": "en",
+            "managed_by": "wire",
+            "supported_protocols": [
+              "proteus"
+            ],
+            "searchable": true
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/i/users/87e71375-8cf1-4f04-a3c3-dc5f81153e8b/reauthenticate",
+          "status": 200,
+          "content_type": null,
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "path": "/i/users/87e71375-8cf1-4f04-a3c3-dc5f81153e8b/reauthenticate",
+          "status": 403,
+          "content_type": "application/json",
+          "body": "{\"code\":403,\"label\":\"invalid-credentials\",\"message\":\"Authentication failed\"}\n",
+          "json": {
+            "code": 403,
+            "label": "invalid-credentials",
+            "message": "Authentication failed"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/i/users/87e71375-8cf1-4f04-a3c3-dc5f81153e8b/reauthenticate",
+          "status": 403,
+          "content_type": "application/json",
+          "body": "{\"code\":403,\"label\":\"missing-auth\",\"message\":\"Re-authentication via password required\"}\n",
+          "json": {
+            "code": 403,
+            "label": "missing-auth",
+            "message": "Re-authentication via password required"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/i/users/87e71375-8cf1-4f04-a3c3-dc5f81153e8b/reauthenticate",
+          "status": 200,
+          "content_type": null,
+          "body": ""
+        },
+        {
+          "method": "POST",
+          "path": "/access",
+          "status": 403,
+          "content_type": "application/json",
+          "body": "{\"code\":403,\"label\":\"invalid-credentials\",\"message\":\"Missing cookie and token\"}\n",
+          "json": {
+            "code": 403,
+            "label": "invalid-credentials",
+            "message": "Missing cookie and token"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/access/logout",
+          "status": 403,
+          "content_type": "application/json",
+          "body": "{\"code\":403,\"label\":\"invalid-credentials\",\"message\":\"Missing cookie and token\"}\n",
+          "json": {
+            "code": 403,
+            "label": "invalid-credentials",
+            "message": "Missing cookie and token"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/access",
+          "status": 403,
+          "content_type": "application/json",
+          "body": "{\"code\":403,\"label\":\"client-error\",\"message\":\"Failed reading: Invalid zauth token\"}\n",
+          "json": {
+            "code": 403,
+            "label": "client-error",
+            "message": "Failed reading: Invalid zauth token"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/access",
+          "status": 403,
+          "content_type": "application/json",
+          "body": "{\"code\":403,\"label\":\"invalid-credentials\",\"message\":\"Invalid authorization scheme\"}\n",
+          "json": {
+            "code": 403,
+            "label": "invalid-credentials",
+            "message": "Invalid authorization scheme"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/login",
+          "status": 403,
+          "content_type": "application/json",
+          "body": "{\"code\":403,\"label\":\"invalid-credentials\",\"message\":\"Authentication failed\"}\n",
+          "json": {
+            "code": 403,
+            "label": "invalid-credentials",
+            "message": "Authentication failed"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/login",
+          "status": 403,
+          "content_type": "application/json",
+          "body": "{\"code\":403,\"label\":\"invalid-credentials\",\"message\":\"Authentication failed\"}\n",
+          "json": {
+            "code": 403,
+            "label": "invalid-credentials",
+            "message": "Authentication failed"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/login?persist=invalid-synthetic",
+          "status": 400,
+          "content_type": null,
+          "body": "Error parsing query parameter persist failed: could not parse: `invalid-synthetic'"
+        }
+      ]
+    }
+  ],
+  "native_brig": {
+    "path": "/nix/store/f6l2f0l8l2r6z9jbg937q96k6056iqfn-brig/bin/brig",
+    "sha256": "c45a40da63268712a7cacdbd884287fa3dc93cec179d70323d3f22f7d5cdf1ca"
+  },
+  "go_gundeck_sha256": "a50512ef30d7fa9ddf92c2c1933e69769d6691e08cdfbe9f7c4f2d266071f46c",
+  "native_setup": [
+    {
+      "method": "POST",
+      "path": "/i/users",
+      "status": 201,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"accent_id\":0,\"assets\":[],\"email\":\"synthetic-parity-50ce3ed55c7c460995bfa6f81688dc45@example.com\",\"id\":\"87e71375-8cf1-4f04-a3c3-dc5f81153e8b\",\"locale\":\"en\",\"managed_by\":\"wire\",\"name\":\"Synthetic parity reader\",\"picture\":[],\"qualified_id\":{\"domain\":\"example.com\",\"id\":\"87e71375-8cf1-4f04-a3c3-dc5f81153e8b\"},\"searchable\":true,\"status\":\"active\",\"supported_protocols\":[\"proteus\"],\"type\":\"regular\"}",
+      "json": {
+        "accent_id": 0,
+        "assets": [],
+        "email": "synthetic-parity-50ce3ed55c7c460995bfa6f81688dc45@example.com",
+        "id": "87e71375-8cf1-4f04-a3c3-dc5f81153e8b",
+        "locale": "en",
+        "managed_by": "wire",
+        "name": "Synthetic parity reader",
+        "picture": [],
+        "qualified_id": {
+          "domain": "example.com",
+          "id": "87e71375-8cf1-4f04-a3c3-dc5f81153e8b"
+        },
+        "searchable": true,
+        "status": "active",
+        "supported_protocols": [
+          "proteus"
+        ],
+        "type": "regular"
+      }
+    },
+    {
+      "operation": "persistent login",
+      "status": 200,
+      "cookie_issued": true
+    }
+  ],
+  "native_stop_exit_code": 0,
+  "candidate_brig_sha256": "362d7d9bf6a523e2199a3a48c9f67b9f95062e7fb9b6d44c7dffe50902f10a82",
+  "mismatches": [],
+  "go_reads_stop_exit_code": 0,
+  "quiesced_peer_exit_codes": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "handoff_cookie_observation": {
+    "method": "GET",
+    "path": "/cookies",
+    "status": 200,
+    "content_type": "application/json;charset=utf-8",
+    "body": "{\"cookies\":[{\"created\":\"2026-10-11T01:37:40.589Z\",\"expires\":\"2026-10-11T01:39:40Z\",\"id\":2868106766,\"label\":\"synthetic-revoked-device\",\"successor\":null,\"type\":\"persistent\"},{\"created\":\"2026-10-11T01:37:40.589Z\",\"expires\":\"2026-10-11T01:39:40Z\",\"id\":3979626599,\"label\":\"synthetic-paired-device\",\"successor\":null,\"type\":\"persistent\"}]}",
+    "json": {
+      "cookies": [
+        {
+          "created": "2026-10-11T01:37:40.589Z",
+          "expires": "2026-10-11T01:39:40Z",
+          "id": 2868106766,
+          "label": "synthetic-revoked-device",
+          "successor": null,
+          "type": "persistent"
+        },
+        {
+          "created": "2026-10-11T01:37:40.589Z",
+          "expires": "2026-10-11T01:39:40Z",
+          "id": 3979626599,
+          "label": "synthetic-paired-device",
+          "successor": null,
+          "type": "persistent"
+        }
+      ]
+    }
+  },
+  "native_credentials_stop_exit_code": 0,
+  "native_credentials_stop_seconds": 0.015347789041697979,
+  "native_to_go_transition_seconds": 0.516556435264647,
+  "go_renewal_observation": {
+    "status": 200,
+    "content_type": "application/json;charset=utf-8",
+    "json": {
+      "user": "891d8221-2080-4384-9e4d-a64df7d7b3f8",
+      "token_type": "Bearer",
+      "expires_in": 30
+    },
+    "replacement_cookie_issued": false,
+    "observed_at": 1791682661.398322
+  },
+  "go_login_observation": {
+    "status": 200,
+    "content_type": "application/json;charset=utf-8",
+    "json": {
+      "user": "891d8221-2080-4384-9e4d-a64df7d7b3f8",
+      "token_type": "Bearer",
+      "expires_in": 30
+    },
+    "cookie_issued": true
+  },
+  "go_switchback_stop_exit_code": 0,
+  "native_consumed_go_login": {
+    "status": 200,
+    "json": {
+      "expires_in": 30,
+      "token_type": "Bearer",
+      "user": "891d8221-2080-4384-9e4d-a64df7d7b3f8"
+    }
+  },
+  "access_switchback": {
+    "same_initialized_stores": true,
+    "native_renewal_status": 200,
+    "go_renewal_status": 200,
+    "go_logout_status": 200,
+    "native_consumed_go_credentials_status": 200,
+    "native_rejected_go_revocation_status": 403,
+    "response_fields": [
+      "access_token",
+      "expires_in",
+      "token_type",
+      "user"
+    ],
+    "user_token_type_expires_and_media_match": true,
+    "token_bytes_compared": false,
+    "token_validation": "actual original native HTTP consumed Go-issued credentials"
+  },
+  "owned_process_exit_codes": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ]
+}
