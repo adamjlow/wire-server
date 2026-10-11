@@ -1,0 +1,41 @@
+{
+  "result": "pass",
+  "source_revision": "ee047a9b59645c19e8ca466d96751abf05c9855e",
+  "build": {
+    "source_revision": "ee047a9b59645c19e8ca466d96751abf05c9855e",
+    "sdk_image": "sha256:2f9e4393295d7270538dd1c666ab1345eaec06b2c2f8c217283ba6565caee399",
+    "runner_image": "sha256:f487c90fd364aac9daee5a1ce6e60fdba0ab74ab0c671ab0de0198e8f05659a9",
+    "result": "pass",
+    "sdk_controller_exit_code": 0,
+    "unchanged_runner_unit_exit_code": 0,
+    "binary_sha256": "998d2267b29951d12adb3ba4f4ae19360f0b73e53ea0fead79d5fe23dd34b265",
+    "unit_binary_sha256": "fc70e6ce1e41f914345a65e5cca0d2f5ffd58dec406e170c14575aea70792261",
+    "store_binary_sha256": "22150849be82d16867d63000033beec2e40cc4069da7a94e168d553a26de2146",
+    "toolchain": "go1.26.9",
+    "sdk_archives_manifest_sha256": "875560a1f32f1ad76a866a7f792a6b392f64c5555e8f55f270f60869079f9af2",
+    "go_checks": "inherited full Go checks from identical source7ca1dfbfb production and normal-unit artifacts; guarded scope and actual static units",
+    "baseline_source_revision": "7ca1dfbfb51dda94f7bf62e04f3b4730d4d2022b",
+    "network_cleanup_exit_code": 0,
+    "remaining_owned_containers": "",
+    "remaining_owned_networks": ""
+  },
+  "project": "wire-e2e-f8591d6659ec41548ad7eace7d294c25",
+  "compose_sha256": "b4cc15d0d2d066aedc4276ee3d47dcf605bb0e7fe98fec164260cb2384e90cac",
+  "runner_image": "sha256:f487c90fd364aac9daee5a1ce6e60fdba0ab74ab0c671ab0de0198e8f05659a9",
+  "e2e_executed": false,
+  "peer_candidates": {
+    "gundeck": {
+      "path": "/home/operator/.cache/wire-migration/go-patched-20261009/gundeck",
+      "sha256": "a50512ef30d7fa9ddf92c2c1933e69769d6691e08cdfbe9f7c4f2d266071f46c",
+      "source_revision": "c1120238f8ecd7480742156df6c5dd2d2ec41f56"
+    }
+  },
+  "redis_cluster_initialization_completed": true,
+  "runner_exit_code": 0,
+  "cleanup_exit_code": 0,
+  "remaining_resources": {
+    "container": "",
+    "network": "",
+    "volume": ""
+  }
+}
