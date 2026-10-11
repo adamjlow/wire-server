@@ -5,12 +5,12 @@ It is still being built and is not a selectable whole-service replacement.
 Haskell remains supported and default.
 
 Implemented slices include account/client reads, password and cookie
-authentication, email activation, internal registration (including SAML and team
+authentication, password reset/change, email activation, internal registration (including SAML and team
 invitation acceptance), and their supporting storage, index and queue writes.
 Registration mail template/MIME rendering is implemented separately from delivery;
 SES/SMTP delivery, selection and public `/register` wiring pass focused HTTP,
-verified TLS, socket and cookie controls. Native public-registration comparisons
-and SES feedback consumption remain pending.
+verified TLS, socket and cookie controls. Selected native public-registration
+credential comparisons pass; SES feedback consumption remains pending.
 The process also serves liveness/version responses, applies native PostgreSQL
 migrations and drains HTTP on TERM. Cassandra schemas must be initialized with
 the existing native operator utilities. Go uses the repository's pinned patched
@@ -28,9 +28,11 @@ witnesses do not automatically qualify a newer binary or the complete service.
 
 Public registration policy, mail sequencing and session composition have
 [unit and compiler evidence](qualification/evidence/registration-public-core/README.md).
-Native mail adapters and the live public HTTP endpoint are still pending.
+SES/SMTP adapters and the live public HTTP endpoint also have focused evidence
+and a [native credential switchback](qualification/evidence/registration-public-switchback/README.md).
+Complete registration flows and native delivered-mail comparison remain pending.
 
-Remaining work includes public registration/mail delivery and invitation creation,
+Remaining work includes wider public registration flows and invitation creation,
 SCIM provisioning, client writes/prekey/MLS/DPoP operations, connections,
 properties, OAuth/app/provider/federation families, complete configuration/docs,
 queue consumption/discovery and final service/image/selector qualification.
@@ -57,3 +59,5 @@ Public signup credential switchback at source a261c531c (candidate dfe202c081ed7
 
 
 Password reset now has actual native→Go→native code/password/cookie interoperability at observeree047a9b5, and real native-schema reset/KDF/cookie composition in all three storage modes at5de8f0e54. Production artifact998d2267b29951d12adb3ba4f4ae19360f0b73e53ea0fead79d5fe23dd34b265 remains byte-identical to full qualified7ca1dfbfb; original17 comparisons plus8 native reset controls match, all13 managed processes exit0 and cleanup audited empty. See [API switchback](qualification/evidence/password-reset-switchback/README.md) and [actual stores](qualification/evidence/password-reset-stores/README.md). These supplemental checks do not execute original535 or modern upstream suites and do not establish whole-service availability. Private begin201, attempts/expiry, SAML/current-password/rate policy and native password→code-delete→cookie-delete order retained; precise pending scope and inherited concerns recorded.
+
+Password existence/change passes [native API and credential switchback](qualification/evidence/password-change-switchback/README.md) at source2764b7493/service250ff5580bac410a56253e472bed0000feda002bd8b460405cf1a0fe73059203. Original17 comparisons plus seven native controls match; native accepts first/replacement passwords written by Go and rejects the revoked original cookie. Full Go/static original-runner checks and all13 clean process exits pass. [Actual three-store checks](qualification/evidence/password-change-stores/README.md) passed at0dacd20cc before the final HTTP media-only fix; their older source scope is explicit. Original535/modern Haskell suite execution and final whole-service gates remain pending. Next: SES feedback consumption and existing original blacklist test; Galley begins only after whole Brig completion.
