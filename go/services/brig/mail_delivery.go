@@ -86,3 +86,14 @@ func (d *registrationMailDelivery) close() {
 		d.shutdown()
 	}
 }
+
+func (d *registrationMailDelivery) passwordReset(ctx context.Context, email, key, code, locale string) error {
+	if d == nil || d.sender == nil {
+		return errors.New("mail delivery unavailable")
+	}
+	message, err := d.renderer.passwordReset(email, key, code, locale)
+	if err != nil {
+		return err
+	}
+	return d.sender.send(ctx, message)
+}

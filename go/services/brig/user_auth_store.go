@@ -177,6 +177,32 @@ func (s userAuthStore) setPassword(ctx context.Context, user gocql.UUID, encoded
 	})
 }
 
+// Native LookupHashedPassword has a password-only projection and the existing
+// per-user backend/lock policy; unrelated status columns do not affect it.
+func (s userAuthStore) hashedPassword(ctx context.Context, user gocql.UUID) (*string, error) {
+	var result *string
+	err := s.withUserBackend(ctx, user, func(postgres bool) error {
+		var err error
+		if postgres {
+			err = s.withPostgres(ctx, func(conn *pgx.Conn) error {
+				return conn.QueryRow(ctx, `SELECT password FROM wire_user WHERE id=$1::uuid`, user.String()).Scan(&result)
+			})
+		} else {
+			var encoded []byte
+			err = s.cassandra.Query(`SELECT password FROM user WHERE id=?`, user).WithContext(ctx).Consistency(gocql.LocalQuorum).RetryPolicy(&gocql.SimpleRetryPolicy{NumRetries: 1}).Scan(&encoded)
+			if encoded != nil {
+				value := string(encoded)
+				result = &value
+			}
+		}
+		if errors.Is(err, pgx.ErrNoRows) || errors.Is(err, gocql.ErrNotFound) {
+			return nil
+		}
+		return userStorageError(err)
+	})
+	return result, err
+}
+
 // Native existence includes PostgreSQL deletion tombstones. In migration
 // mode, PostgreSQL is checked first under the shared user migration lock.
 func (s userAuthStore) exists(ctx context.Context, user gocql.UUID) (bool, error) {

@@ -14,6 +14,7 @@ type registrationMailRenderer struct {
 	sender                           string
 	branding                         map[string]string
 	activationURL, teamActivationURL mailTemplate
+	passwordResetURL                 mailTemplate
 	memberWelcomeURL                 string
 	warn                             func(string)
 }
@@ -86,7 +87,7 @@ func newRegistrationMailRenderer(c Config, warn func(string)) (registrationMailR
 		key         string
 		destination *mailTemplate
 	}{
-		{user, "activationUrl", &result.activationURL}, {team, "tActivationUrl", &result.teamActivationURL},
+		{user, "activationUrl", &result.activationURL}, {team, "tActivationUrl", &result.teamActivationURL}, {user, "passwordResetUrl", &result.passwordResetURL},
 	} {
 		value, err := text(url.fields, url.key)
 		if err != nil {
@@ -160,4 +161,18 @@ func (r registrationMailRenderer) welcome(profile selfProfile, team registration
 func (r registrationMailRenderer) render(template localizedMailTemplate, email string, name *string, values map[string]string) brigMail {
 	return brigMail{from: r.sender, fromName: template.sender, to: email, toName: name,
 		subject: template.subject.render(values, false, r.warn), plain: template.plain.render(values, false, r.warn), html: template.html.render(values, true, r.warn)}
+}
+
+func (r registrationMailRenderer) passwordReset(email, key, code, locale string) (brigMail, error) {
+	template, err := r.templates.selectTemplate("user", "password-reset", locale)
+	if err != nil {
+		return brigMail{}, err
+	}
+	urlValues := maps.Clone(r.branding)
+	urlValues["key"], urlValues["code"] = key, code
+	values := maps.Clone(r.branding)
+	values["url"] = r.passwordResetURL.render(urlValues, false, r.warn)
+	result := r.render(template, email, nil, values)
+	result.headers = [][2]string{{"X-Zeta-Purpose", "PasswordReset"}, {"X-Zeta-Key", key}, {"X-Zeta-Code", code}}
+	return result, nil
 }

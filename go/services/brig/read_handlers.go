@@ -13,21 +13,22 @@ import (
 )
 
 type brigReadHandlers struct {
-	config       Config
-	users        userStore
-	sessions     sessionStore
-	peers        brigPeers
-	auth         *reauthenticationHandler
-	access       *accessTokenService
-	renewal      *accessRenewalHTTP
-	login        *loginHTTP
-	activation   *activationHTTP
-	registration *registrationHTTP
-	clients      *clientReadHandlers
-	index        *searchIndexWriter
-	appIDs       func(context.Context, gocql.UUID) ([]string, error)
-	accounts     *accountLookup
-	bulkClients  *clientBulkReads
+	config        Config
+	users         userStore
+	sessions      sessionStore
+	peers         brigPeers
+	auth          *reauthenticationHandler
+	access        *accessTokenService
+	renewal       *accessRenewalHTTP
+	login         *loginHTTP
+	activation    *activationHTTP
+	registration  *registrationHTTP
+	passwordReset *passwordResetHTTP
+	clients       *clientReadHandlers
+	index         *searchIndexWriter
+	appIDs        func(context.Context, gocql.UUID) ([]string, error)
+	accounts      *accountLookup
+	bulkClients   *clientBulkReads
 }
 
 func readJSON(w http.ResponseWriter, r *http.Request, body any) {
@@ -64,6 +65,9 @@ func routeParseError(w http.ResponseWriter, message string) {
 }
 
 func (b brigReadHandlers) handle(w http.ResponseWriter, r *http.Request, path string) bool {
+	if b.passwordReset != nil && b.passwordReset.handle(w, r, path) {
+		return true
+	}
 	if path == "/register" && b.registration != nil {
 		b.registration.handlePublic(w, r)
 		return true

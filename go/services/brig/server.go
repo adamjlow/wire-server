@@ -243,6 +243,31 @@ func Run(ctx context.Context, c Config) error {
 	resets := passwordResetStore{databases: business.users.userAuthStore, mode: c.Migration["passwordReset"]}
 	domains := domainRegistrationStore{databases: business.users.userAuthStore, mode: c.Migration["domainRegistration"], invalidRecord: func() { log.Print("invalid stored domain registration") }}
 	activation := activationService{codes: codes, account: business.users.get, identities: business.users.userAuthStore, deletePasswordReset: resets.deleteForUser}
+	business.passwordReset = &passwordResetHTTP{service: passwordResetService{
+		codes: resets, account: business.users.get, currentPassword: business.users.hashedPassword,
+		setPassword: business.users.setPassword, deleteCookies: business.sessions.deleteAll,
+		verifyPassword: passwords.verify, hashPassword: passwords.hash, mail: mailDelivery.passwordReset,
+		allowDomains: c.Settings.AllowlistDomains, domain: c.Settings.Domain, locale: c.Settings.DefaultLocale,
+		newCode: newPasswordResetCode, now: time.Now,
+		activeEmail: func(ctx context.Context, email string) (*storedUser, error) {
+			id, err := business.users.resolveLogin(ctx, loginIdentifier{email: &email})
+			if err != nil || id == nil {
+				return nil, err
+			}
+			rows, err := business.users.getMany(ctx, []gocql.UUID{*id})
+			if err != nil || len(rows) != 1 {
+				return nil, err
+			}
+			profile, err := rows[0].selfProfile(c.Settings.Domain, c.Settings.DefaultLocale)
+			if err != nil {
+				return nil, err
+			}
+			if profile.Status != "active" {
+				return nil, nil
+			}
+			return &rows[0], nil
+		},
+	}}
 	business.activation = &activationHTTP{lookupPair: codes.lookupPair, service: activationAPI{codes: codes, guardDomain: func(ctx context.Context, email string) error {
 		return guardRegistrationDomain(ctx, email, domains.lookup)
 	}, activate: activation.activateKey, clearUnvalidated: business.users.clearUnvalidatedEmail}, syncIndex: index.sync, events: activationEvents{notifications: notifications, journal: journal, domain: c.Settings.Domain, defaultLocale: c.Settings.DefaultLocale}, peers: business.peers}
