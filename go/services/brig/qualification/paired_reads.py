@@ -132,8 +132,31 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
                 active = process
                 native_brig_path = Path(args[0]).resolve()
                 report['native_brig'] = {'path': str(native_brig_path), 'sha256': hashlib.sha256(native_brig_path.read_bytes()).hexdigest()}
+        extra_ports = set()
+        if ses_feedback_contract:
+            # Original compiled tests require both static federator ingress
+            # services, even when the selected body only uses a dynamic backend.
+            # Match the existing full runtime's native backend-B/NGINX setup.
+            second = json.loads(Path('/fixtures/peers.json').read_text())['1']
+            for name, config in second.items():
+                if name == 'wire-server-enterprise':
+                    continue
+                path = runtime.WORK / (name+'-static-1.json')
+                path.write_text(json.dumps(config))
+                args = [str(runtime.WORK/'dist'/name),'-c',str(path)]
+                if name == 'background-worker':
+                    args += ['--galley-config-file',str(runtime.WORK/'galley-static-1.json')]
+                log = open('/reports/'+name+'-native-static-1.log','w');logs.append(log)
+                processes.append(subprocess.Popen(args,cwd=runtime.WORK/'services'/name,stdout=log,stderr=subprocess.STDOUT))
+                extra_ports.add(config[{'background-worker':'backgroundWorker','wire-server-enterprise':'wireServerEnterprise'}.get(name,name)]['port'])
+            for index in range(2):
+                conf, cwd = runtime.nginz_config(index)
+                log = open('/reports/nginz-'+str(index)+'.log','w');logs.append(log)
+                processes.append(subprocess.Popen(['nginx','-c',str(conf),'-g','daemon off;','-e','/dev/stdout'],cwd=cwd,stdout=log,stderr=subprocess.STDOUT))
+                extra_ports.update((8098+1000*index,8443+1000*index))
         ready(active)
         pending = {config[{'background-worker': 'backgroundWorker', 'wire-server-enterprise': 'wireServerEnterprise'}.get(name, name)]['port'] for name, config in peers.items()}
+        pending.update(extra_ports)
         deadline = time.monotonic() + 120
         while pending and time.monotonic() < deadline:
             assert all(process.poll() is None for process in processes), 'configured native peer exited'
@@ -394,7 +417,8 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             with open('/reports/blacklist-original.log','w') as original_log:
                 original=subprocess.run([runner.binary('integration')['path'],'--config',str(runtime.WORK/'services/integration.yaml'),'--include',case,'--xml',str(xml)],cwd=runtime.WORK,stdout=original_log,stderr=subprocess.STDOUT,timeout=1200)
             report['original_blacklist_test']={'required_tests':[case],'process_exit_code':original.returncode,'integration_binary':runner.binary('integration'),'dynamic_brig_sha256':report['candidate_brig_sha256']}
-            report['e2e_executed']=True
+            report['e2e_attempted']=True
+            report['e2e_executed']=xml.is_file()
             if original.returncode==0:
                 report['original_blacklist_test']['validated_report']=harness.check_xml(xml,[case])
             active.terminate()

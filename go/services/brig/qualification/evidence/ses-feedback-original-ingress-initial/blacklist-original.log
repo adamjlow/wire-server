@@ -1,0 +1,6 @@
+Postgres migrations finished
+integration: Timed out waiting for service Static federator ingress (domain1 <-> domain2) to come up
+HasCallStack backtrace:
+  bracket, called at ./System/IO/Temp.hs:114:3 in temporary-1.3-3LnjW0o5mzDB53MRAQNpby:System.IO.Temp
+
+
