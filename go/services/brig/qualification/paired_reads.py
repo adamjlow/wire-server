@@ -289,6 +289,41 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             assert [r['status'] for r in native_claim_controls]==[200,200,200,200,404], 'native claim reference changed'
             assert [r['json']['prekey']['id'] for r in native_claim_controls[:3]]==[7,65535,65535], 'native ordinary/last resort selection changed'
             local_domain=peers['brig']['optSettings']['setFederationDomain']
+            # Native APIs create actual local/remote rows and conversations.
+            connection_headers={'Z-User':user,'Z-Connection':'synthetic-connection-paging'}
+            connection_targets=[]
+            connection_created=[]
+            for target_port,target_domain in [(8082,local_domain)]*3+[(9082,'b.example.com')]:
+                target,_=request('POST','/i/users',body={'name':'Synthetic connection target','email':'synthetic-connection-'+uuid.uuid4().hex+'@example.com','password':password},port=target_port)
+                assert target['status']==201, 'native connection target setup failed'
+                target_id=target['json']['id']
+                connected,_=request('POST','/v19/connections/'+target_domain+'/'+target_id,connection_headers)
+                connection_created.append(connected)
+                assert connected['status']==201, 'native connection creation failed'
+                connection_targets.append((target_domain,target_id))
+            report['connections_native_created']=connection_created
+            connection_cases=[('GET','/v19/connections/'+d+'/'+u,connection_headers) for d,u in connection_targets]
+            connection_cases += [('GET','/v1/connections/'+connection_targets[0][1],connection_headers),('GET','/v19/connections/'+local_domain+'/'+str(uuid.uuid4()),connection_headers)]
+            connection_cases += [('GET','/v1/connections'+q,connection_headers) for q in ['', '?size=1','?size=2','?size=1&start='+connection_targets[0][1]]]
+            connection_cases += [('POST','/v19/list-connections',connection_headers,{})]
+            native_connection_controls=[request(*case)[0] for case in connection_cases]
+            report['connections_native_controls']=native_connection_controls
+            assert [r['status'] for r in native_connection_controls]==[200]*5+[404]+[200]*5, 'native connection read controls changed'
+            connection_page_cases=[]
+            native_connection_pages=[]
+            connection_cursor=None
+            for page_number in range(8):
+                body={'size':1}
+                if connection_cursor is not None: body['paging_state']=connection_cursor
+                case=('POST','/v19/list-connections',connection_headers,body)
+                page,_=request(*case)
+                connection_page_cases.append(case);native_connection_pages.append(page)
+                assert page['status']==200, 'native connection page failed'
+                if not page['json']['has_more']: break
+                connection_cursor=page['json']['paging_state']
+            else: raise AssertionError('native connection pagination failed to terminate')
+            report['connections_native_pages']=native_connection_pages
+            assert sum(len(p['json']['connections']) for p in native_connection_pages)==4, 'native paged connection rows lost or repeated'
             local_multi={lifecycle_user:[lifecycle_id,'f',lifecycle_id]}
             oversized={str(uuid.uuid4()):[] for _ in range(peers['brig']['optSettings']['setMaxConvSize']+1)}
             multi_cases=[('POST','/v1/users/prekeys',lifecycle_headers,local_multi),('POST','/v3/users/list-prekeys',lifecycle_headers,{local_domain:local_multi}),('POST','/v19/users/list-prekeys',lifecycle_headers,{local_domain:local_multi}),('POST','/v19/users/list-prekeys',lifecycle_headers,{}),('POST','/v19/users/list-prekeys',lifecycle_headers,{local_domain:oversized})]
@@ -687,6 +722,12 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
         if client_lifecycle_contract:
             fields=lambda record: ('status','content_type','json' if 'json' in record else 'body')
             same=lambda ref,actual: all(ref.get(k)==actual.get(k) for k in fields(ref))
+            go_connection_controls=[request(*case)[0] for case in connection_cases]
+            go_connection_pages=[request(*case)[0] for case in connection_page_cases]
+            report['connections_go_controls']=go_connection_controls
+            report['connections_go_native_cursors']=go_connection_pages
+            assert all(same(ref,actual) for ref,actual in zip(native_connection_controls,go_connection_controls)), 'native/Go connection reads mismatch'
+            assert all(same(ref,actual) for ref,actual in zip(native_connection_pages,go_connection_pages)), 'native/Go connection paging or cursor mismatch'
             go_lifecycle_state=[request('GET',lifecycle_path,lifecycle_headers)[0],request('GET',lifecycle_path+'/prekeys',lifecycle_headers)[0]]
             report['client_lifecycle_go_reads_native']=go_lifecycle_state
             assert all(same(ref,actual) for ref,actual in zip(native_lifecycle_state,go_lifecycle_state)), 'Go lost native-created client/prekey state'
@@ -785,6 +826,9 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             log=open('/reports/brig-native-client-lifecycle-switchback.log','w');logs.append(log)
             active=subprocess.Popen([str(native_brig_path),'-c',str(runtime.WORK/'brig-static-0.json')],cwd=runtime.WORK/'services/brig',stdout=log,stderr=subprocess.STDOUT)
             processes.append(active);ready(active)
+            native_connection_switchback=[request(*case)[0] for case in connection_page_cases]
+            report['connections_native_switchback']=native_connection_switchback
+            assert all(same(ref,actual) for ref,actual in zip(go_connection_pages,native_connection_switchback)), 'native cannot use Go connection cursors after switchback'
             native_go_state=[request('GET',go_path,lifecycle_headers)[0],request('GET',go_path+'/prekeys',lifecycle_headers)[0]]
             native_deleted_state=[request('GET',lifecycle_path,lifecycle_headers)[0],request('GET',lifecycle_path+'/prekeys',lifecycle_headers)[0]]
             report['client_lifecycle_native_reads_go']=native_go_state

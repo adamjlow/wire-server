@@ -222,6 +222,8 @@ func Run(ctx context.Context, c Config) error {
 	federationRead.useCassandra(cassandra)
 	business.federationConfig = &federationRead
 	business.mlsClients = &mlsClientReads{domain: c.Settings.Domain, key: (clientStore{cassandra}).mlsPublicKey, insert: (clientStore{cassandra}).insertMLSPackages, removeSuite: (clientStore{cassandra}).deleteMLSSuite, ids: (clientStore{cassandra}).ids, get: (clientStore{cassandra}).get, packages: (clientStore{cassandra}).mlsPackages, remove: (clientStore{cassandra}).deleteMLSPackages, now: time.Now, maximum: c.Settings.KeyPackageMaximumLifetime, enabled: c.Settings.EnableMLS}
+	connectionStorage := connectionStore{cassandra: cassandra, domain: c.Settings.Domain}
+	business.connections = &connectionReads{domain: c.Settings.Domain, get: connectionStorage.get, page: connectionStorage.page}
 	business.clients = &clientReadHandlers{store: clientStore{cassandra}}
 	business.clientActivity = &clientActivityService{update: (clientStore{cassandra}).updateLastActive, now: time.Now}
 	business.clientUpdate = &clientUpdateService{store: clientStore{cassandra}, consumable: c.Settings.ConsumableNotifications, setup: business.peers.setupConsumableClient}

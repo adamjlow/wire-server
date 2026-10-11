@@ -918,3 +918,16 @@ plus prior witnesses; all25 exits0/runner0/cleanup0/independent empty.
 This closes the signed-package state/destructive ordering/remote priority gaps
 for the tested configuration, not all three user modes. Team/account families
 and remaining finite security/version/error/operational acceptance remain open.
+
+### Connection storage and read continuation
+
+Add native shared-schema local/remote connection reads, historical relation
+serialization and both legacy/start and opaque multi-table paging. Bound page
+sizes to1..500, validate UUID/domain/table tags before storage, parameterize CQL
+and preserve native consistency/retries and nullable local conversations.
+Finite proof: native APIs create three local and one remote connection; compare
+individual/legacy reads, absent404, list boundaries and every native size1 cursor
+across local/remote tables against Go, then native switchback. Existing signed
+MLS witnesses and14 unchanged originals remain regressions. Creation/update
+state machines, Galley and notification effects remain required next; no whole
+connection/Brig acceptance is claimed by read support.
