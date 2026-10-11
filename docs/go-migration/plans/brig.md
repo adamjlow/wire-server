@@ -811,7 +811,7 @@ failure retained; use existing read-only generated fixture mount, no isolation
 relaxation. [Evidence](../../../go/services/brig/qualification/evidence/mls-count-rows/README.md).
 Upload/claim/replace/delete and original MLS test execution still unfinished.
 
-### Public MLS reference deletion (qualification pending)
+### Public MLS reference deletion
 
 Add native FromV5 deletion route on /mls/key-packages/self/:client with
 optional/default suite1 untilV8 and required suite thereafter. Parse a bounded
@@ -821,3 +821,21 @@ reference deletion without client/account lookup. Success is empty201. Own
 supplemental observer adds native/Go duplicate/nonexistent/repeated/unknown-client
 controls and exact real row deletion, then restores the same rows to preserve
 the existing switchback witness. No upload/replace/claim completion claim.
+
+Qualification now passes at sourced5f8b972b/servicea623b3ee: four exact
+native/Go controls, actual reference deletion/readback/restoration and prior
+controls plus durable switchback, all25 exits0/runner0/cleanup0/independent empty.
+Native V4 empty405 routing corrected from an inferred404; own observer helper
+ordering fix and both failed attempts retained. No protected oracle changes.
+[Evidence](../../../go/services/brig/qualification/evidence/mls-delete/README.md).
+No original MLS execution until upload is implemented.
+
+Next upload/replace requirements: native validates package signature first, then
+protocol, leaf signature, credential identity/key, source/capability, lifetime
+and local stored MLS key before logged LQ/retry5 insertion. Replace validates
+announced suite set, deletes suites first (pool16), then performs upload
+validation; a rejected replacement can therefore remove prior packages. Retain
+that observable ordering. Serious inherited concern: native X509 credential
+validation parses the first certificate and matches SAN/public key without
+verifying its certificate-chain signature/trust (KeyPackage.hs credentialIdentityAndKey
+FUTUREWORK). Record it; do not add a different acceptance policy during migration.

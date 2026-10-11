@@ -9,3 +9,5 @@ Add public client deletion with native cookie/queue/storage order and configured
 Align client lock deletion retries with the repository-pinned native Amazonka policy; wider native execution qualification remains pending.
 
 Wire public client registration to real native-order account/code, storage, peer, deletion and new-device mail effects; original/native backend qualification remains pending.
+
+Add native MLS package count/read cleanup and public reference deletion, validated by exact Haskell/Go responses and real Cassandra deletion/retention through switchback; whole Brig migration remains in progress.

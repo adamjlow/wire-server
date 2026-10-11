@@ -1,0 +1,1046 @@
+{
+  "result": "failed",
+  "e2e_executed": false,
+  "scope": "Finite native -> Go read/reauthentication observations on native-created state.",
+  "records": [],
+  "native_brig": {
+    "path": "/nix/store/f6l2f0l8l2r6z9jbg937q96k6056iqfn-brig/bin/brig",
+    "sha256": "c45a40da63268712a7cacdbd884287fa3dc93cec179d70323d3f22f7d5cdf1ca"
+  },
+  "go_gundeck_sha256": "a50512ef30d7fa9ddf92c2c1933e69769d6691e08cdfbe9f7c4f2d266071f46c",
+  "native_setup": [
+    {
+      "method": "POST",
+      "path": "/i/users",
+      "status": 201,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"accent_id\":0,\"assets\":[],\"email\":\"synthetic-parity-62e5d23e515e4d5fb84b0fdfbda45646@example.com\",\"id\":\"a9bdd11c-c118-48e6-b5fd-ea53532b0711\",\"locale\":\"en\",\"managed_by\":\"wire\",\"name\":\"Synthetic parity reader\",\"picture\":[],\"qualified_id\":{\"domain\":\"example.com\",\"id\":\"a9bdd11c-c118-48e6-b5fd-ea53532b0711\"},\"searchable\":true,\"status\":\"active\",\"supported_protocols\":[\"proteus\"],\"type\":\"regular\"}",
+      "location": "a9bdd11c-c118-48e6-b5fd-ea53532b0711",
+      "json": {
+        "accent_id": 0,
+        "assets": [],
+        "email": "synthetic-parity-62e5d23e515e4d5fb84b0fdfbda45646@example.com",
+        "id": "a9bdd11c-c118-48e6-b5fd-ea53532b0711",
+        "locale": "en",
+        "managed_by": "wire",
+        "name": "Synthetic parity reader",
+        "picture": [],
+        "qualified_id": {
+          "domain": "example.com",
+          "id": "a9bdd11c-c118-48e6-b5fd-ea53532b0711"
+        },
+        "searchable": true,
+        "status": "active",
+        "supported_protocols": [
+          "proteus"
+        ],
+        "type": "regular"
+      }
+    },
+    {
+      "operation": "persistent login",
+      "status": 200,
+      "cookie_issued": true
+    }
+  ],
+  "client_lifecycle_native_actor": {
+    "method": "POST",
+    "path": "/i/users",
+    "status": 201,
+    "content_type": "application/json;charset=utf-8",
+    "body": "{\"accent_id\":0,\"assets\":[],\"expires_at\":\"2026-10-11T10:40:48.259Z\",\"id\":\"0ec2a064-e469-4aca-bc3a-fca61d0ecc27\",\"locale\":\"en\",\"managed_by\":\"wire\",\"name\":\"Synthetic client lifecycle\",\"picture\":[],\"qualified_id\":{\"domain\":\"example.com\",\"id\":\"0ec2a064-e469-4aca-bc3a-fca61d0ecc27\"},\"searchable\":true,\"status\":\"ephemeral\",\"supported_protocols\":[\"proteus\"],\"type\":\"regular\"}",
+    "location": "0ec2a064-e469-4aca-bc3a-fca61d0ecc27",
+    "json": {
+      "accent_id": 0,
+      "assets": [],
+      "expires_at": "2026-10-11T10:40:48.259Z",
+      "id": "0ec2a064-e469-4aca-bc3a-fca61d0ecc27",
+      "locale": "en",
+      "managed_by": "wire",
+      "name": "Synthetic client lifecycle",
+      "picture": [],
+      "qualified_id": {
+        "domain": "example.com",
+        "id": "0ec2a064-e469-4aca-bc3a-fca61d0ecc27"
+      },
+      "searchable": true,
+      "status": "ephemeral",
+      "supported_protocols": [
+        "proteus"
+      ],
+      "type": "regular"
+    }
+  },
+  "client_lifecycle_native_created": {
+    "method": "POST",
+    "path": "/v19/clients",
+    "status": 201,
+    "content_type": "application/json;charset=utf-8",
+    "body": "{\"capabilities\":[\"legalhold-implicit-consent\"],\"class\":\"desktop\",\"id\":\"afc1c13c3c651593\",\"label\":\"native-durable-client\",\"mls_public_keys\":{\"ed25519\":\"AQI=\"},\"model\":\"synthetic-model\",\"time\":\"2026-10-11T10:40:28.259Z\",\"type\":\"permanent\"}",
+    "location": "afc1c13c3c651593",
+    "json": {
+      "capabilities": [
+        "legalhold-implicit-consent"
+      ],
+      "class": "desktop",
+      "id": "afc1c13c3c651593",
+      "label": "native-durable-client",
+      "mls_public_keys": {
+        "ed25519": "AQI="
+      },
+      "model": "synthetic-model",
+      "time": "2026-10-11T10:40:28.259Z",
+      "type": "permanent"
+    }
+  },
+  "prekey_native_claim_controls": [
+    {
+      "method": "GET",
+      "path": "/v19/users/example.com/0ec2a064-e469-4aca-bc3a-fca61d0ecc27/prekeys/afc1c13c3c651593",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"client\":\"afc1c13c3c651593\",\"prekey\":{\"id\":7,\"key\":\"pQABAQcCoQBYIDXdN8VlKb5lbgPmoDPLPyqNIEyShG4oT/DlW0peRRZUA6EAoQBYILLf1TIwSB62q69Ojs/X1tzJ+dYHNAw4QbW/7TC5vSZqBPY=\"}}",
+      "json": {
+        "client": "afc1c13c3c651593",
+        "prekey": {
+          "id": 7,
+          "key": "pQABAQcCoQBYIDXdN8VlKb5lbgPmoDPLPyqNIEyShG4oT/DlW0peRRZUA6EAoQBYILLf1TIwSB62q69Ojs/X1tzJ+dYHNAw4QbW/7TC5vSZqBPY="
+        }
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v19/users/example.com/0ec2a064-e469-4aca-bc3a-fca61d0ecc27/prekeys/afc1c13c3c651593",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"client\":\"afc1c13c3c651593\",\"prekey\":{\"id\":65535,\"key\":\"pQABARn//wKhAFggNd03xWUpvmVuA+agM8s/Ko0gTJKEbihP8OVbSl5FFlQDoQChAFggst/VMjBIHrarr06Oz9fW3Mn51gc0DDhBtb/tMLm9JmoE9g==\"}}",
+      "json": {
+        "client": "afc1c13c3c651593",
+        "prekey": {
+          "id": 65535,
+          "key": "pQABARn//wKhAFggNd03xWUpvmVuA+agM8s/Ko0gTJKEbihP8OVbSl5FFlQDoQChAFggst/VMjBIHrarr06Oz9fW3Mn51gc0DDhBtb/tMLm9JmoE9g=="
+        }
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v19/users/example.com/0ec2a064-e469-4aca-bc3a-fca61d0ecc27/prekeys/afc1c13c3c651593",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"client\":\"afc1c13c3c651593\",\"prekey\":{\"id\":65535,\"key\":\"pQABARn//wKhAFggNd03xWUpvmVuA+agM8s/Ko0gTJKEbihP8OVbSl5FFlQDoQChAFggst/VMjBIHrarr06Oz9fW3Mn51gc0DDhBtb/tMLm9JmoE9g==\"}}",
+      "json": {
+        "client": "afc1c13c3c651593",
+        "prekey": {
+          "id": 65535,
+          "key": "pQABARn//wKhAFggNd03xWUpvmVuA+agM8s/Ko0gTJKEbihP8OVbSl5FFlQDoQChAFggst/VMjBIHrarr06Oz9fW3Mn51gc0DDhBtb/tMLm9JmoE9g=="
+        }
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v19/users/example.com/0ec2a064-e469-4aca-bc3a-fca61d0ecc27/prekeys",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"clients\":[{\"client\":\"afc1c13c3c651593\",\"prekey\":{\"id\":65535,\"key\":\"pQABARn//wKhAFggNd03xWUpvmVuA+agM8s/Ko0gTJKEbihP8OVbSl5FFlQDoQChAFggst/VMjBIHrarr06Oz9fW3Mn51gc0DDhBtb/tMLm9JmoE9g==\"}}],\"user\":\"0ec2a064-e469-4aca-bc3a-fca61d0ecc27\"}",
+      "json": {
+        "clients": [
+          {
+            "client": "afc1c13c3c651593",
+            "prekey": {
+              "id": 65535,
+              "key": "pQABARn//wKhAFggNd03xWUpvmVuA+agM8s/Ko0gTJKEbihP8OVbSl5FFlQDoQChAFggst/VMjBIHrarr06Oz9fW3Mn51gc0DDhBtb/tMLm9JmoE9g=="
+            }
+          }
+        ],
+        "user": "0ec2a064-e469-4aca-bc3a-fca61d0ecc27"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v19/users/example.com/0ec2a064-e469-4aca-bc3a-fca61d0ecc27/prekeys/f",
+      "status": 404,
+      "content_type": "application/json",
+      "body": "{\"code\":404,\"label\":\"not-found\",\"message\":\"prekey not found\"}",
+      "json": {
+        "code": 404,
+        "label": "not-found",
+        "message": "prekey not found"
+      }
+    }
+  ],
+  "prekey_native_multi_controls": [
+    {
+      "method": "POST",
+      "path": "/v1/users/prekeys",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"0ec2a064-e469-4aca-bc3a-fca61d0ecc27\":{\"afc1c13c3c651593\":{\"id\":65535,\"key\":\"pQABARn//wKhAFggNd03xWUpvmVuA+agM8s/Ko0gTJKEbihP8OVbSl5FFlQDoQChAFggst/VMjBIHrarr06Oz9fW3Mn51gc0DDhBtb/tMLm9JmoE9g==\"},\"f\":null}}",
+      "json": {
+        "0ec2a064-e469-4aca-bc3a-fca61d0ecc27": {
+          "afc1c13c3c651593": {
+            "id": 65535,
+            "key": "pQABARn//wKhAFggNd03xWUpvmVuA+agM8s/Ko0gTJKEbihP8OVbSl5FFlQDoQChAFggst/VMjBIHrarr06Oz9fW3Mn51gc0DDhBtb/tMLm9JmoE9g=="
+          },
+          "f": null
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v3/users/list-prekeys",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"example.com\":{\"0ec2a064-e469-4aca-bc3a-fca61d0ecc27\":{\"afc1c13c3c651593\":{\"id\":65535,\"key\":\"pQABARn//wKhAFggNd03xWUpvmVuA+agM8s/Ko0gTJKEbihP8OVbSl5FFlQDoQChAFggst/VMjBIHrarr06Oz9fW3Mn51gc0DDhBtb/tMLm9JmoE9g==\"},\"f\":null}}}",
+      "json": {
+        "example.com": {
+          "0ec2a064-e469-4aca-bc3a-fca61d0ecc27": {
+            "afc1c13c3c651593": {
+              "id": 65535,
+              "key": "pQABARn//wKhAFggNd03xWUpvmVuA+agM8s/Ko0gTJKEbihP8OVbSl5FFlQDoQChAFggst/VMjBIHrarr06Oz9fW3Mn51gc0DDhBtb/tMLm9JmoE9g=="
+            },
+            "f": null
+          }
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v19/users/list-prekeys",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"qualified_user_client_prekeys\":{\"example.com\":{\"0ec2a064-e469-4aca-bc3a-fca61d0ecc27\":{\"afc1c13c3c651593\":{\"id\":65535,\"key\":\"pQABARn//wKhAFggNd03xWUpvmVuA+agM8s/Ko0gTJKEbihP8OVbSl5FFlQDoQChAFggst/VMjBIHrarr06Oz9fW3Mn51gc0DDhBtb/tMLm9JmoE9g==\"},\"f\":null}}}}",
+      "json": {
+        "qualified_user_client_prekeys": {
+          "example.com": {
+            "0ec2a064-e469-4aca-bc3a-fca61d0ecc27": {
+              "afc1c13c3c651593": {
+                "id": 65535,
+                "key": "pQABARn//wKhAFggNd03xWUpvmVuA+agM8s/Ko0gTJKEbihP8OVbSl5FFlQDoQChAFggst/VMjBIHrarr06Oz9fW3Mn51gc0DDhBtb/tMLm9JmoE9g=="
+              },
+              "f": null
+            }
+          }
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v19/users/list-prekeys",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"qualified_user_client_prekeys\":{}}",
+      "json": {
+        "qualified_user_client_prekeys": {}
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v19/users/list-prekeys",
+      "status": 403,
+      "content_type": "application/json",
+      "body": "{\"code\":403,\"label\":\"too-many-clients\",\"message\":\"Too many clients\"}",
+      "json": {
+        "code": 403,
+        "label": "too-many-clients",
+        "message": "Too many clients"
+      }
+    }
+  ],
+  "prekey_remote_native_actor": {
+    "method": "POST",
+    "path": "/i/users",
+    "status": 201,
+    "content_type": "application/json;charset=utf-8",
+    "body": "{\"accent_id\":0,\"assets\":[],\"expires_at\":\"2026-10-11T10:40:48.498Z\",\"id\":\"c5381bc9-5736-4b2c-b9d1-dc68848a30d8\",\"locale\":\"en\",\"managed_by\":\"wire\",\"name\":\"Synthetic federation prekey actor\",\"picture\":[],\"qualified_id\":{\"domain\":\"b.example.com\",\"id\":\"c5381bc9-5736-4b2c-b9d1-dc68848a30d8\"},\"searchable\":true,\"status\":\"ephemeral\",\"supported_protocols\":[\"proteus\"],\"type\":\"regular\"}",
+    "location": "c5381bc9-5736-4b2c-b9d1-dc68848a30d8",
+    "json": {
+      "accent_id": 0,
+      "assets": [],
+      "expires_at": "2026-10-11T10:40:48.498Z",
+      "id": "c5381bc9-5736-4b2c-b9d1-dc68848a30d8",
+      "locale": "en",
+      "managed_by": "wire",
+      "name": "Synthetic federation prekey actor",
+      "picture": [],
+      "qualified_id": {
+        "domain": "b.example.com",
+        "id": "c5381bc9-5736-4b2c-b9d1-dc68848a30d8"
+      },
+      "searchable": true,
+      "status": "ephemeral",
+      "supported_protocols": [
+        "proteus"
+      ],
+      "type": "regular"
+    }
+  },
+  "prekey_remote_native_client": {
+    "method": "POST",
+    "path": "/v19/clients",
+    "status": 201,
+    "content_type": "application/json;charset=utf-8",
+    "body": "{\"capabilities\":[\"legalhold-implicit-consent\"],\"class\":\"desktop\",\"id\":\"afc1c13c3c651593\",\"label\":\"native-durable-client\",\"mls_public_keys\":{\"ed25519\":\"AQI=\"},\"model\":\"synthetic-model\",\"time\":\"2026-10-11T10:40:28.498Z\",\"type\":\"permanent\"}",
+    "location": "afc1c13c3c651593",
+    "json": {
+      "capabilities": [
+        "legalhold-implicit-consent"
+      ],
+      "class": "desktop",
+      "id": "afc1c13c3c651593",
+      "label": "native-durable-client",
+      "mls_public_keys": {
+        "ed25519": "AQI="
+      },
+      "model": "synthetic-model",
+      "time": "2026-10-11T10:40:28.498Z",
+      "type": "permanent"
+    }
+  },
+  "prekey_native_federation_controls": [
+    {
+      "method": "GET",
+      "path": "/v19/users/b.example.com/c5381bc9-5736-4b2c-b9d1-dc68848a30d8/prekeys/afc1c13c3c651593",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"client\":\"afc1c13c3c651593\",\"prekey\":{\"id\":65535,\"key\":\"pQABARn//wKhAFggNd03xWUpvmVuA+agM8s/Ko0gTJKEbihP8OVbSl5FFlQDoQChAFggst/VMjBIHrarr06Oz9fW3Mn51gc0DDhBtb/tMLm9JmoE9g==\"}}",
+      "json": {
+        "client": "afc1c13c3c651593",
+        "prekey": {
+          "id": 65535,
+          "key": "pQABARn//wKhAFggNd03xWUpvmVuA+agM8s/Ko0gTJKEbihP8OVbSl5FFlQDoQChAFggst/VMjBIHrarr06Oz9fW3Mn51gc0DDhBtb/tMLm9JmoE9g=="
+        }
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v19/users/b.example.com/c5381bc9-5736-4b2c-b9d1-dc68848a30d8/prekeys",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"clients\":[{\"client\":\"afc1c13c3c651593\",\"prekey\":{\"id\":65535,\"key\":\"pQABARn//wKhAFggNd03xWUpvmVuA+agM8s/Ko0gTJKEbihP8OVbSl5FFlQDoQChAFggst/VMjBIHrarr06Oz9fW3Mn51gc0DDhBtb/tMLm9JmoE9g==\"}}],\"user\":\"c5381bc9-5736-4b2c-b9d1-dc68848a30d8\"}",
+      "json": {
+        "clients": [
+          {
+            "client": "afc1c13c3c651593",
+            "prekey": {
+              "id": 65535,
+              "key": "pQABARn//wKhAFggNd03xWUpvmVuA+agM8s/Ko0gTJKEbihP8OVbSl5FFlQDoQChAFggst/VMjBIHrarr06Oz9fW3Mn51gc0DDhBtb/tMLm9JmoE9g=="
+            }
+          }
+        ],
+        "user": "c5381bc9-5736-4b2c-b9d1-dc68848a30d8"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v19/users/b.example.com/c5381bc9-5736-4b2c-b9d1-dc68848a30d8/prekeys/f",
+      "status": 404,
+      "content_type": "application/json",
+      "body": "{\"code\":404,\"label\":\"not-found\",\"message\":\"prekey not found\"}",
+      "json": {
+        "code": 404,
+        "label": "not-found",
+        "message": "prekey not found"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v3/users/list-prekeys",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"b.example.com\":{\"c5381bc9-5736-4b2c-b9d1-dc68848a30d8\":{\"afc1c13c3c651593\":{\"id\":65535,\"key\":\"pQABARn//wKhAFggNd03xWUpvmVuA+agM8s/Ko0gTJKEbihP8OVbSl5FFlQDoQChAFggst/VMjBIHrarr06Oz9fW3Mn51gc0DDhBtb/tMLm9JmoE9g==\"},\"f\":null}},\"example.com\":{\"0ec2a064-e469-4aca-bc3a-fca61d0ecc27\":{\"afc1c13c3c651593\":{\"id\":65535,\"key\":\"pQABARn//wKhAFggNd03xWUpvmVuA+agM8s/Ko0gTJKEbihP8OVbSl5FFlQDoQChAFggst/VMjBIHrarr06Oz9fW3Mn51gc0DDhBtb/tMLm9JmoE9g==\"},\"f\":null}}}",
+      "json": {
+        "b.example.com": {
+          "c5381bc9-5736-4b2c-b9d1-dc68848a30d8": {
+            "afc1c13c3c651593": {
+              "id": 65535,
+              "key": "pQABARn//wKhAFggNd03xWUpvmVuA+agM8s/Ko0gTJKEbihP8OVbSl5FFlQDoQChAFggst/VMjBIHrarr06Oz9fW3Mn51gc0DDhBtb/tMLm9JmoE9g=="
+            },
+            "f": null
+          }
+        },
+        "example.com": {
+          "0ec2a064-e469-4aca-bc3a-fca61d0ecc27": {
+            "afc1c13c3c651593": {
+              "id": 65535,
+              "key": "pQABARn//wKhAFggNd03xWUpvmVuA+agM8s/Ko0gTJKEbihP8OVbSl5FFlQDoQChAFggst/VMjBIHrarr06Oz9fW3Mn51gc0DDhBtb/tMLm9JmoE9g=="
+            },
+            "f": null
+          }
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v19/users/list-prekeys",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"qualified_user_client_prekeys\":{\"b.example.com\":{\"c5381bc9-5736-4b2c-b9d1-dc68848a30d8\":{\"afc1c13c3c651593\":{\"id\":65535,\"key\":\"pQABARn//wKhAFggNd03xWUpvmVuA+agM8s/Ko0gTJKEbihP8OVbSl5FFlQDoQChAFggst/VMjBIHrarr06Oz9fW3Mn51gc0DDhBtb/tMLm9JmoE9g==\"},\"f\":null}},\"example.com\":{\"0ec2a064-e469-4aca-bc3a-fca61d0ecc27\":{\"afc1c13c3c651593\":{\"id\":65535,\"key\":\"pQABARn//wKhAFggNd03xWUpvmVuA+agM8s/Ko0gTJKEbihP8OVbSl5FFlQDoQChAFggst/VMjBIHrarr06Oz9fW3Mn51gc0DDhBtb/tMLm9JmoE9g==\"},\"f\":null}}}}",
+      "json": {
+        "qualified_user_client_prekeys": {
+          "b.example.com": {
+            "c5381bc9-5736-4b2c-b9d1-dc68848a30d8": {
+              "afc1c13c3c651593": {
+                "id": 65535,
+                "key": "pQABARn//wKhAFggNd03xWUpvmVuA+agM8s/Ko0gTJKEbihP8OVbSl5FFlQDoQChAFggst/VMjBIHrarr06Oz9fW3Mn51gc0DDhBtb/tMLm9JmoE9g=="
+              },
+              "f": null
+            }
+          },
+          "example.com": {
+            "0ec2a064-e469-4aca-bc3a-fca61d0ecc27": {
+              "afc1c13c3c651593": {
+                "id": 65535,
+                "key": "pQABARn//wKhAFggNd03xWUpvmVuA+agM8s/Ko0gTJKEbihP8OVbSl5FFlQDoQChAFggst/VMjBIHrarr06Oz9fW3Mn51gc0DDhBtb/tMLm9JmoE9g=="
+              },
+              "f": null
+            }
+          }
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/federation/claim-prekey",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"client\":\"afc1c13c3c651593\",\"prekey\":{\"id\":65535,\"key\":\"pQABARn//wKhAFggNd03xWUpvmVuA+agM8s/Ko0gTJKEbihP8OVbSl5FFlQDoQChAFggst/VMjBIHrarr06Oz9fW3Mn51gc0DDhBtb/tMLm9JmoE9g==\"}}",
+      "json": {
+        "client": "afc1c13c3c651593",
+        "prekey": {
+          "id": 65535,
+          "key": "pQABARn//wKhAFggNd03xWUpvmVuA+agM8s/Ko0gTJKEbihP8OVbSl5FFlQDoQChAFggst/VMjBIHrarr06Oz9fW3Mn51gc0DDhBtb/tMLm9JmoE9g=="
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/federation/claim-prekey",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "null",
+      "json": null
+    },
+    {
+      "method": "POST",
+      "path": "/federation/claim-prekey-bundle",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"clients\":[{\"client\":\"afc1c13c3c651593\",\"prekey\":{\"id\":65535,\"key\":\"pQABARn//wKhAFggNd03xWUpvmVuA+agM8s/Ko0gTJKEbihP8OVbSl5FFlQDoQChAFggst/VMjBIHrarr06Oz9fW3Mn51gc0DDhBtb/tMLm9JmoE9g==\"}}],\"user\":\"0ec2a064-e469-4aca-bc3a-fca61d0ecc27\"}",
+      "json": {
+        "clients": [
+          {
+            "client": "afc1c13c3c651593",
+            "prekey": {
+              "id": 65535,
+              "key": "pQABARn//wKhAFggNd03xWUpvmVuA+agM8s/Ko0gTJKEbihP8OVbSl5FFlQDoQChAFggst/VMjBIHrarr06Oz9fW3Mn51gc0DDhBtb/tMLm9JmoE9g=="
+            }
+          }
+        ],
+        "user": "0ec2a064-e469-4aca-bc3a-fca61d0ecc27"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/federation/claim-multi-prekey-bundle",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"0ec2a064-e469-4aca-bc3a-fca61d0ecc27\":{\"afc1c13c3c651593\":{\"id\":65535,\"key\":\"pQABARn//wKhAFggNd03xWUpvmVuA+agM8s/Ko0gTJKEbihP8OVbSl5FFlQDoQChAFggst/VMjBIHrarr06Oz9fW3Mn51gc0DDhBtb/tMLm9JmoE9g==\"},\"f\":null}}",
+      "json": {
+        "0ec2a064-e469-4aca-bc3a-fca61d0ecc27": {
+          "afc1c13c3c651593": {
+            "id": 65535,
+            "key": "pQABARn//wKhAFggNd03xWUpvmVuA+agM8s/Ko0gTJKEbihP8OVbSl5FFlQDoQChAFggst/VMjBIHrarr06Oz9fW3Mn51gc0DDhBtb/tMLm9JmoE9g=="
+          },
+          "f": null
+        }
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v19/users/unavailable-prekey.invalid/c5381bc9-5736-4b2c-b9d1-dc68848a30d8/prekeys/afc1c13c3c651593",
+      "status": 400,
+      "content_type": "application/json",
+      "body": "{\"code\":400,\"data\":{\"domain\":\"unavailable-prekey.invalid\",\"path\":\"/federation/api-version\",\"type\":\"federation\"},\"label\":\"discovery-failure\",\"message\":\"DNS error: _wire-server-federator._tcp.unavailable-prekey.invalid\"}",
+      "json": {
+        "code": 400,
+        "data": {
+          "domain": "unavailable-prekey.invalid",
+          "path": "/federation/api-version",
+          "type": "federation"
+        },
+        "label": "discovery-failure",
+        "message": "DNS error: _wire-server-federator._tcp.unavailable-prekey.invalid"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v19/users/unavailable-prekey.invalid/c5381bc9-5736-4b2c-b9d1-dc68848a30d8/prekeys",
+      "status": 400,
+      "content_type": "application/json",
+      "body": "{\"code\":400,\"data\":{\"domain\":\"unavailable-prekey.invalid\",\"path\":\"/federation/api-version\",\"type\":\"federation\"},\"label\":\"discovery-failure\",\"message\":\"DNS error: _wire-server-federator._tcp.unavailable-prekey.invalid\"}",
+      "json": {
+        "code": 400,
+        "data": {
+          "domain": "unavailable-prekey.invalid",
+          "path": "/federation/api-version",
+          "type": "federation"
+        },
+        "label": "discovery-failure",
+        "message": "DNS error: _wire-server-federator._tcp.unavailable-prekey.invalid"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v3/users/list-prekeys",
+      "status": 400,
+      "content_type": "application/json",
+      "body": "{\"code\":400,\"data\":{\"domain\":\"unavailable-prekey.invalid\",\"path\":\"/federation/api-version\",\"type\":\"federation\"},\"label\":\"discovery-failure\",\"message\":\"DNS error: _wire-server-federator._tcp.unavailable-prekey.invalid\"}",
+      "json": {
+        "code": 400,
+        "data": {
+          "domain": "unavailable-prekey.invalid",
+          "path": "/federation/api-version",
+          "type": "federation"
+        },
+        "label": "discovery-failure",
+        "message": "DNS error: _wire-server-federator._tcp.unavailable-prekey.invalid"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v19/users/list-prekeys",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"failed_to_list\":[{\"domain\":\"unavailable-prekey.invalid\",\"id\":\"c5381bc9-5736-4b2c-b9d1-dc68848a30d8\"}],\"qualified_user_client_prekeys\":{\"b.example.com\":{\"c5381bc9-5736-4b2c-b9d1-dc68848a30d8\":{\"afc1c13c3c651593\":{\"id\":65535,\"key\":\"pQABARn//wKhAFggNd03xWUpvmVuA+agM8s/Ko0gTJKEbihP8OVbSl5FFlQDoQChAFggst/VMjBIHrarr06Oz9fW3Mn51gc0DDhBtb/tMLm9JmoE9g==\"},\"f\":null}},\"example.com\":{\"0ec2a064-e469-4aca-bc3a-fca61d0ecc27\":{\"afc1c13c3c651593\":{\"id\":65535,\"key\":\"pQABARn//wKhAFggNd03xWUpvmVuA+agM8s/Ko0gTJKEbihP8OVbSl5FFlQDoQChAFggst/VMjBIHrarr06Oz9fW3Mn51gc0DDhBtb/tMLm9JmoE9g==\"},\"f\":null}}}}",
+      "json": {
+        "failed_to_list": [
+          {
+            "domain": "unavailable-prekey.invalid",
+            "id": "c5381bc9-5736-4b2c-b9d1-dc68848a30d8"
+          }
+        ],
+        "qualified_user_client_prekeys": {
+          "b.example.com": {
+            "c5381bc9-5736-4b2c-b9d1-dc68848a30d8": {
+              "afc1c13c3c651593": {
+                "id": 65535,
+                "key": "pQABARn//wKhAFggNd03xWUpvmVuA+agM8s/Ko0gTJKEbihP8OVbSl5FFlQDoQChAFggst/VMjBIHrarr06Oz9fW3Mn51gc0DDhBtb/tMLm9JmoE9g=="
+              },
+              "f": null
+            }
+          },
+          "example.com": {
+            "0ec2a064-e469-4aca-bc3a-fca61d0ecc27": {
+              "afc1c13c3c651593": {
+                "id": 65535,
+                "key": "pQABARn//wKhAFggNd03xWUpvmVuA+agM8s/Ko0gTJKEbihP8OVbSl5FFlQDoQChAFggst/VMjBIHrarr06Oz9fW3Mn51gc0DDhBtb/tMLm9JmoE9g=="
+              },
+              "f": null
+            }
+          }
+        }
+      }
+    }
+  ],
+  "public_client_native_controls": [
+    {
+      "method": "GET",
+      "path": "/v1/users/0ec2a064-e469-4aca-bc3a-fca61d0ecc27/clients",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "[{\"class\":\"desktop\",\"id\":\"afc1c13c3c651593\"}]",
+      "json": [
+        {
+          "class": "desktop",
+          "id": "afc1c13c3c651593"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/v15/users/example.com/0ec2a064-e469-4aca-bc3a-fca61d0ecc27/clients",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "[{\"class\":\"desktop\",\"id\":\"afc1c13c3c651593\"}]",
+      "json": [
+        {
+          "class": "desktop",
+          "id": "afc1c13c3c651593"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/v16/users/example.com/0ec2a064-e469-4aca-bc3a-fca61d0ecc27/clients",
+      "status": 404,
+      "content_type": null,
+      "body": ""
+    },
+    {
+      "method": "GET",
+      "path": "/v19/users/example.com/0ec2a064-e469-4aca-bc3a-fca61d0ecc27/clients/afc1c13c3c651593",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"class\":\"desktop\",\"id\":\"afc1c13c3c651593\"}",
+      "json": {
+        "class": "desktop",
+        "id": "afc1c13c3c651593"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v19/users/example.com/0ec2a064-e469-4aca-bc3a-fca61d0ecc27/clients/f",
+      "status": 404,
+      "content_type": "application/json",
+      "body": "{\"code\":404,\"label\":\"not-found\",\"message\":\"client not found\"}",
+      "json": {
+        "code": 404,
+        "label": "not-found",
+        "message": "client not found"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v15/users/b.example.com/c5381bc9-5736-4b2c-b9d1-dc68848a30d8/clients",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "[{\"class\":\"desktop\",\"id\":\"afc1c13c3c651593\"}]",
+      "json": [
+        {
+          "class": "desktop",
+          "id": "afc1c13c3c651593"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/v19/users/b.example.com/c5381bc9-5736-4b2c-b9d1-dc68848a30d8/clients/afc1c13c3c651593",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"class\":\"desktop\",\"id\":\"afc1c13c3c651593\"}",
+      "json": {
+        "class": "desktop",
+        "id": "afc1c13c3c651593"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v15/users/unavailable-prekey.invalid/c5381bc9-5736-4b2c-b9d1-dc68848a30d8/clients",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "[]",
+      "json": []
+    },
+    {
+      "method": "GET",
+      "path": "/v19/users/unavailable-prekey.invalid/c5381bc9-5736-4b2c-b9d1-dc68848a30d8/clients/afc1c13c3c651593",
+      "status": 404,
+      "content_type": "application/json",
+      "body": "{\"code\":404,\"label\":\"not-found\",\"message\":\"client not found\"}",
+      "json": {
+        "code": 404,
+        "label": "not-found",
+        "message": "client not found"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v1/users/list-clients",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"b.example.com\":{\"c5381bc9-5736-4b2c-b9d1-dc68848a30d8\":[{\"class\":\"desktop\",\"id\":\"afc1c13c3c651593\"}]},\"example.com\":{\"0ec2a064-e469-4aca-bc3a-fca61d0ecc27\":[{\"class\":\"desktop\",\"id\":\"afc1c13c3c651593\"}]}}",
+      "json": {
+        "b.example.com": {
+          "c5381bc9-5736-4b2c-b9d1-dc68848a30d8": [
+            {
+              "class": "desktop",
+              "id": "afc1c13c3c651593"
+            }
+          ]
+        },
+        "example.com": {
+          "0ec2a064-e469-4aca-bc3a-fca61d0ecc27": [
+            {
+              "class": "desktop",
+              "id": "afc1c13c3c651593"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v1/users/list-clients/v2",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"qualified_user_map\":{\"b.example.com\":{\"c5381bc9-5736-4b2c-b9d1-dc68848a30d8\":[{\"class\":\"desktop\",\"id\":\"afc1c13c3c651593\"}]},\"example.com\":{\"0ec2a064-e469-4aca-bc3a-fca61d0ecc27\":[{\"class\":\"desktop\",\"id\":\"afc1c13c3c651593\"}]}}}",
+      "json": {
+        "qualified_user_map": {
+          "b.example.com": {
+            "c5381bc9-5736-4b2c-b9d1-dc68848a30d8": [
+              {
+                "class": "desktop",
+                "id": "afc1c13c3c651593"
+              }
+            ]
+          },
+          "example.com": {
+            "0ec2a064-e469-4aca-bc3a-fca61d0ecc27": [
+              {
+                "class": "desktop",
+                "id": "afc1c13c3c651593"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v19/users/list-clients",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"qualified_user_map\":{\"b.example.com\":{\"c5381bc9-5736-4b2c-b9d1-dc68848a30d8\":[{\"class\":\"desktop\",\"id\":\"afc1c13c3c651593\"}]},\"example.com\":{\"0ec2a064-e469-4aca-bc3a-fca61d0ecc27\":[{\"class\":\"desktop\",\"id\":\"afc1c13c3c651593\"}]}}}",
+      "json": {
+        "qualified_user_map": {
+          "b.example.com": {
+            "c5381bc9-5736-4b2c-b9d1-dc68848a30d8": [
+              {
+                "class": "desktop",
+                "id": "afc1c13c3c651593"
+              }
+            ]
+          },
+          "example.com": {
+            "0ec2a064-e469-4aca-bc3a-fca61d0ecc27": [
+              {
+                "class": "desktop",
+                "id": "afc1c13c3c651593"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/federation/get-user-clients",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"0ec2a064-e469-4aca-bc3a-fca61d0ecc27\":[{\"class\":\"desktop\",\"id\":\"afc1c13c3c651593\"}]}",
+      "json": {
+        "0ec2a064-e469-4aca-bc3a-fca61d0ecc27": [
+          {
+            "class": "desktop",
+            "id": "afc1c13c3c651593"
+          }
+        ]
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/federation/get-user-clients",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{}",
+      "json": {}
+    }
+  ],
+  "mls_rows_native-staged": [
+    {
+      "data": "000100010000000001000000000000010000000000000000000000006acb75ad00000000",
+      "ref": "01"
+    },
+    {
+      "data": "000100010000000001000000000000010000000000000000000000000000000100000000",
+      "ref": "02"
+    },
+    {
+      "data": "00010001000000000100000000000001000000006acb75ad000000006acb83bd00000000",
+      "ref": "03"
+    },
+    {
+      "data": "0001000100000000010000000000000200000000",
+      "ref": "04"
+    },
+    {
+      "data": "00",
+      "ref": "05"
+    }
+  ],
+  "mls_rows_native_count": {
+    "method": "GET",
+    "path": "/v19/mls/key-packages/self/afc1c13c3c651593/count?ciphersuite=0x1",
+    "status": 200,
+    "content_type": "application/json;charset=utf-8",
+    "body": "{\"count\":1}",
+    "json": {
+      "count": 1
+    }
+  },
+  "mls_rows_native-retained": [
+    {
+      "data": "000100010000000001000000000000010000000000000000000000006acb75ad00000000",
+      "ref": "01"
+    },
+    {
+      "data": "00",
+      "ref": "05"
+    }
+  ],
+  "mls_count_native_controls": [
+    {
+      "method": "GET",
+      "path": "/v4/mls/key-packages/self/afc1c13c3c651593/count?ciphersuite=0x1",
+      "status": 404,
+      "content_type": null,
+      "body": ""
+    },
+    {
+      "method": "GET",
+      "path": "/v7/mls/key-packages/self/afc1c13c3c651593/count",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"count\":1}",
+      "json": {
+        "count": 1
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v19/mls/key-packages/self/afc1c13c3c651593/count?ciphersuite=0x1",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"count\":1}",
+      "json": {
+        "count": 1
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v19/mls/key-packages/self/afc1c13c3c651593/count?ciphersuite=0x3",
+      "status": 400,
+      "content_type": "application/json",
+      "body": "{\"code\":400,\"label\":\"mls-protocol-error\",\"message\":\"Unknown ciphersuite\"}",
+      "json": {
+        "code": 400,
+        "label": "mls-protocol-error",
+        "message": "Unknown ciphersuite"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v19/mls/key-packages/self/f/count?ciphersuite=0x1",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"count\":0}",
+      "json": {
+        "count": 0
+      }
+    }
+  ],
+  "mls_client_native_controls": [
+    {
+      "method": "GET",
+      "path": "/i/mls/clients/0ec2a064-e469-4aca-bc3a-fca61d0ecc27?ciphersuite=0x1",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "[{\"id\":\"afc1c13c3c651593\",\"mls\":true,\"mls_signature_key\":\"AQI=\"}]",
+      "json": [
+        {
+          "id": "afc1c13c3c651593",
+          "mls": true,
+          "mls_signature_key": "AQI="
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/i/mls/client/0ec2a064-e469-4aca-bc3a-fca61d0ecc27/afc1c13c3c651593?ciphersuite=0x1",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"id\":\"afc1c13c3c651593\",\"mls\":true,\"mls_signature_key\":\"AQI=\"}",
+      "json": {
+        "id": "afc1c13c3c651593",
+        "mls": true,
+        "mls_signature_key": "AQI="
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/i/mls/client/0ec2a064-e469-4aca-bc3a-fca61d0ecc27/f?ciphersuite=0x1",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"id\":\"f\",\"mls\":false}",
+      "json": {
+        "id": "f",
+        "mls": false
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/i/mls/client/0ec2a064-e469-4aca-bc3a-fca61d0ecc27/afc1c13c3c651593?ciphersuite=0x2",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"id\":\"afc1c13c3c651593\",\"mls\":false}",
+      "json": {
+        "id": "afc1c13c3c651593",
+        "mls": false
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/i/mls/clients/0ec2a064-e469-4aca-bc3a-fca61d0ecc27?ciphersuite=0x3",
+      "status": 400,
+      "content_type": "application/json",
+      "body": "{\"code\":400,\"label\":\"mls-protocol-error\",\"message\":\"Unknown ciphersuite\"}",
+      "json": {
+        "code": 400,
+        "label": "mls-protocol-error",
+        "message": "Unknown ciphersuite"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/federation/get-mls-clients",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "[{\"id\":\"afc1c13c3c651593\",\"mls\":true,\"mls_signature_key\":\"AQI=\"}]",
+      "json": [
+        {
+          "id": "afc1c13c3c651593",
+          "mls": true,
+          "mls_signature_key": "AQI="
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/federation/get-mls-clients",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "[{\"id\":\"afc1c13c3c651593\",\"mls\":true,\"mls_signature_key\":\"AQI=\"}]",
+      "json": [
+        {
+          "id": "afc1c13c3c651593",
+          "mls": true,
+          "mls_signature_key": "AQI="
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/federation/get-mls-client",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"id\":\"afc1c13c3c651593\",\"mls\":true,\"mls_signature_key\":\"AQI=\"}",
+      "json": {
+        "id": "afc1c13c3c651593",
+        "mls": true,
+        "mls_signature_key": "AQI="
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/federation/get-mls-client",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"id\":\"f\",\"mls\":false}",
+      "json": {
+        "id": "f",
+        "mls": false
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/federation/get-mls-client",
+      "status": 400,
+      "content_type": "application/json",
+      "body": "{\"code\":400,\"label\":\"mls-protocol-error\",\"message\":\"Unknown ciphersuite\"}",
+      "json": {
+        "code": 400,
+        "label": "mls-protocol-error",
+        "message": "Unknown ciphersuite"
+      }
+    }
+  ],
+  "mls_delete_native_controls": [
+    {
+      "method": "DELETE",
+      "path": "/v4/mls/key-packages/self/afc1c13c3c651593?ciphersuite=1",
+      "status": 405,
+      "content_type": null,
+      "body": ""
+    },
+    {
+      "method": "DELETE",
+      "path": "/v7/mls/key-packages/self/afc1c13c3c651593",
+      "status": 201,
+      "content_type": null,
+      "body": ""
+    },
+    {
+      "method": "DELETE",
+      "path": "/v19/mls/key-packages/self/afc1c13c3c651593?ciphersuite=1",
+      "status": 201,
+      "content_type": null,
+      "body": ""
+    },
+    {
+      "method": "DELETE",
+      "path": "/v19/mls/key-packages/self/f?ciphersuite=1",
+      "status": 201,
+      "content_type": null,
+      "body": ""
+    }
+  ],
+  "mls_rows_native-deleted": [],
+  "mls_rows_native-delete-restaged": [
+    {
+      "data": "000100010000000001000000000000010000000000000000000000006acb75ad00000000",
+      "ref": "01"
+    },
+    {
+      "data": "000100010000000001000000000000010000000000000000000000000000000100000000",
+      "ref": "02"
+    },
+    {
+      "data": "00010001000000000100000000000001000000006acb75ad000000006acb83bd00000000",
+      "ref": "03"
+    },
+    {
+      "data": "0001000100000000010000000000000200000000",
+      "ref": "04"
+    },
+    {
+      "data": "00",
+      "ref": "05"
+    }
+  ],
+  "failure": "cannot access local variable 'same' where it is not associated with a value",
+  "owned_process_exit_codes": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ]
+}

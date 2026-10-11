@@ -1,0 +1,26 @@
+[
+  {
+    "project": "wire-e2e-c57977aed1ce4aad85acbafac0ae1678",
+    "resources": {
+      "container": "",
+      "network": "",
+      "volume": ""
+    }
+  },
+  {
+    "project": "wire-e2e-f5826a11885f4fa6b81f150e919a20a6",
+    "resources": {
+      "container": "",
+      "network": "",
+      "volume": ""
+    }
+  },
+  {
+    "project": "wire-e2e-31e1b37006154c0aa56a4e2adb6dd19c",
+    "resources": {
+      "container": "",
+      "network": "",
+      "volume": ""
+    }
+  }
+]
