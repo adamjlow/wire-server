@@ -100,12 +100,12 @@ func (s publicRegistration) register(ctx context.Context, request registrationRe
 	if created.profile.Email != nil {
 		if created.activation != nil {
 			if err := s.activationMail(ctx, created, request.Origin); err != nil {
-				return result, err
+				return result, registrationFailure{stage: "activation-mail", cause: err}
 			}
 		}
 		if created.team != nil && (request.Origin.TeamCode != nil || request.Origin.SSOTeam != nil) {
 			if err := s.welcomeMail(ctx, created.profile, *created.team); err != nil {
-				return result, err
+				return result, registrationFailure{stage: "welcome-mail", cause: err}
 			}
 		}
 	}
@@ -119,7 +119,17 @@ func (s publicRegistration) register(ctx context.Context, request registrationRe
 	}
 	cookie, err := s.cookie(ctx, user, typ, request.Label, s.now())
 	if err != nil {
-		return result, err
+		return result, registrationFailure{stage: "cookie", cause: err}
 	}
 	return publicRegistrationResult{profile: created.profile, cookie: cookie}, nil
 }
+
+// Private stage-only diagnostics retain typed HTTP errors via Unwrap without
+// logging addresses, tokens, passwords, request bodies or driver error details.
+type registrationFailure struct {
+	stage string
+	cause error
+}
+
+func (e registrationFailure) Error() string { return "registration failed at " + e.stage }
+func (e registrationFailure) Unwrap() error { return e.cause }

@@ -5,6 +5,7 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
+	"log"
 	"mime"
 	"net/http"
 	"net/netip"
@@ -31,6 +32,10 @@ type registrationHTTP struct {
 func registrationHTTPError(w http.ResponseWriter, err error) {
 	var rate passwordRateExceeded
 	var admission registrationAdmissionError
+	var failure registrationFailure
+	if errors.As(err, &failure) {
+		log.Print("registration failed at ", failure.stage)
+	}
 	switch {
 	case errors.Is(err, errSESMailInvalidDomain):
 		authenticationWireError(w, 400, "invalid-email", "Invalid e-mail address.")
@@ -155,7 +160,7 @@ func (h registrationHTTP) handlePublic(w http.ResponseWriter, r *http.Request) {
 	}
 	ip, err := netip.ParseAddr(values[0])
 	if err != nil || ip.Zone() != "" {
-		routeParseError(w, "Error parsing header X-Forwarded-For failed: Failed parsing bytestring as IpAddr.")
+		routeParseError(w, "Error parsing header X-Forwarded-For failed: Failed reading: Failed parsing bytestring as IpAddr.")
 		return
 	}
 	media, _, err := mime.ParseMediaType(r.Header.Get("Content-Type"))

@@ -54,11 +54,17 @@ type registrationService struct {
 }
 
 // Preserve createUserWith's validation, persistence and partial-failure order.
-func (s registrationService) create(ctx context.Context, request registrationRequest, rate passwordRateKey) (registrationCreation, error) {
-	var result registrationCreation
+func (s registrationService) create(ctx context.Context, request registrationRequest, rate passwordRateKey) (result registrationCreation, err error) {
+	stage := "creation-dependencies"
+	defer func() {
+		if err != nil {
+			err = registrationFailure{stage: stage, cause: err}
+		}
+	}()
 	if s.guardDomain == nil || s.hash == nil || s.createAccount == nil || s.createSelf == nil || s.newCode == nil || s.activate == nil || s.initFeature == nil || s.now == nil {
 		return result, errors.New("registration dependencies unavailable")
 	}
+	stage = "identity"
 	n := request.User
 	if n.Email != nil {
 		if err := s.identity.verify(ctx, *n.Email); err != nil {
@@ -67,6 +73,7 @@ func (s registrationService) create(ctx context.Context, request registrationReq
 	}
 	// The historical non-team invitation_code is parsed and origin-validated,
 	// but createUserWith derives team behavior only from newUserTeam.
+	stage = "invitation"
 	var invitation *storedInvitation
 	var invitationID *gocql.UUID
 	var handle *string
@@ -113,6 +120,7 @@ func (s registrationService) create(ctx context.Context, request registrationReq
 			n.ManagedBy = &managed
 		}
 	}
+	stage = "domain"
 	if n.Email != nil && request.Origin.SSOTeam == nil && invitation == nil {
 		if err := s.guardDomain(ctx, *n.Email); err != nil {
 			return result, err
@@ -128,6 +136,7 @@ func (s registrationService) create(ctx context.Context, request registrationReq
 		}
 		team = &id
 	}
+	stage = "password"
 	var password *string
 	if request.Password != nil {
 		encoded, err := s.hash(ctx, rate, *request.Password, 8)
@@ -136,6 +145,7 @@ func (s registrationService) create(ctx context.Context, request registrationReq
 		}
 		password = &encoded
 	}
+	stage = "account-construction"
 	account, err := n.build(invitationID, team, password, s.locale, s.sessionTTL, s.now())
 	if err != nil {
 		return result, err
@@ -155,9 +165,11 @@ func (s registrationService) create(ctx context.Context, request registrationReq
 	if joinSSO && (s.joinSSO == nil || s.activateStored == nil || s.onAccountActivated == nil || s.teamName == nil) {
 		return result, errors.New("registration SSO dependencies unavailable")
 	}
+	stage = "account-write"
 	if err := s.createAccount(ctx, account); err != nil {
 		return result, err
 	}
+	stage = "self-conversation"
 	if err := s.createSelf(ctx, account.ID); err != nil {
 		return result, err
 	}
@@ -223,6 +235,7 @@ func (s registrationService) create(ctx context.Context, request registrationReq
 		}
 		result.team = &registrationCreatedTeam{ID: *team, Name: name}
 	}
+	stage = "activation-code"
 	if n.Email != nil && invitation == nil {
 		if request.EmailCode == nil {
 			code, err := s.newCode(ctx, *n.Email, s.activationTimeout, &account.ID)
@@ -244,6 +257,7 @@ func (s registrationService) create(ctx context.Context, request registrationReq
 			}
 		}
 	}
+	stage = "feature"
 	if err := s.initFeature(ctx, account.ID); err != nil {
 		return registrationCreation{}, err
 	}

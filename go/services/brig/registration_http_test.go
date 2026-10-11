@@ -2,7 +2,9 @@
 package brig
 
 import (
+	"bytes"
 	"errors"
+	"log"
 	"net/http/httptest"
 	"strings"
 	"testing"
@@ -51,5 +53,27 @@ func TestInternalRegistrationRejectsInvalidRequestsBeforeDependencies(t *testing
 		if w.Code != c.status || !strings.Contains(w.Body.String(), c.label) || strings.Contains(w.Body.String(), "private detail") {
 			t.Fatal("registration error contract or confidentiality changed")
 		}
+	}
+}
+
+func TestRegistrationStageDiagnosticsPreserveErrorsAndRedactDetails(t *testing.T) {
+	var output bytes.Buffer
+	original := log.Writer()
+	log.SetOutput(&output)
+	defer log.SetOutput(original)
+	for _, cause := range []error{errSESMailInvalidDomain, registrationAdmissionError{Code: 403, Label: "native-team-policy", Message: "synthetic rejection"}, errors.New("synthetic private credential")} {
+		failure := registrationFailure{stage: "activation-mail", cause: cause}
+		if !errors.Is(failure, cause) || strings.Contains(failure.Error(), "credential") {
+			t.Fatal("private stage lost cause or exposed details")
+		}
+		plain, wrapped := httptest.NewRecorder(), httptest.NewRecorder()
+		registrationHTTPError(plain, cause)
+		registrationHTTPError(wrapped, failure)
+		if plain.Code != wrapped.Code || plain.Body.String() != wrapped.Body.String() {
+			t.Fatal("stage diagnostics changed HTTP error contract")
+		}
+	}
+	if !strings.Contains(output.String(), "registration failed at activation-mail") || strings.Contains(output.String(), "credential") || strings.Contains(output.String(), "synthetic rejection") {
+		t.Fatal("diagnostics missing or exposed underlying error")
 	}
 }
