@@ -1,0 +1,9 @@
+{
+  "source_revision": "3042cfbd25ce766d308297547fb6283091dd2f85",
+  "sdk_image": "sha256:2f9e4393295d7270538dd1c666ab1345eaec06b2c2f8c217283ba6565caee399",
+  "build_exit_code": 0,
+  "quality_checked_source": "477f1187b9ab776dd2c3506038908b7fee37f040",
+  "compiled_go_inputs_unchanged": true,
+  "binary_sha256": "a2e3adbf4f0df3612d70002bd6879c96717d19d565bc8ceb422133446bde41b6",
+  "matches_previously_quality_checked_executable": true
+}

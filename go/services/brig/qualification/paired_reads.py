@@ -304,7 +304,24 @@ def main():
               'runner_image': IMAGE, 'e2e_executed': False}
     result['peer_candidates'] = record['peer_candidates']
     try:
-        checked(command + ['up', '-d', *environment.DEPENDENCIES], timeout=180)
+        # Use the existing full e2e controller's dependency sequence. Starting
+        # the one-off cluster job with detached services does not establish
+        # completed cluster initialization before native/Go peer startup.
+        checked(command + ['up', '-d', *[name for name in environment.DEPENDENCIES if name != 'redis-cluster']], timeout=240)
+        deadline = time.monotonic() + 90
+        while True:
+            try:
+                checked(command + ['exec', '-T', 'redis-node-1', 'redis-cli', '--tls', '--cacert',
+                                   '/usr/local/etc/redis/ca.pem', '-a', 'very-secure-redis-cluster-password',
+                                   '-h', '172.20.0.36', '-p', '6378', 'ping'], timeout=10)
+                break
+            except RuntimeError:
+                if time.monotonic() > deadline:
+                    raise ValueError('owned Redis nodes unavailable')
+                time.sleep(1)
+        initialized = checked(command + ['run', '--rm', '--no-deps', 'redis-cluster'], timeout=90)
+        (output / 'redis-cluster-initialization.log').write_text(initialized + '\n')
+        result['redis_cluster_initialization_completed'] = True
         with (output / 'controller.log').open('w') as log:
             process = subprocess.run(command + ['run', '--rm', '--no-deps', 'runner'],
                                      stdout=log, stderr=subprocess.STDOUT, timeout=900)

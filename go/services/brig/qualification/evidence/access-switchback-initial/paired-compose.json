@@ -1,0 +1,843 @@
+{
+  "name": "wire-e2e-6adaff4d68dc4cb3bd6aa0e0548e111c",
+  "services": {
+    "fake_dynamodb": {
+      "command": null,
+      "entrypoint": null,
+      "image": "quay.io/wire/dynamodb_local@sha256:e092d4b32889277f9dc0954bf99caaa216bdb621e399d460ac396e41c8c1a9f1",
+      "networks": {
+        "demo_wire": {
+          "aliases": [
+            "dynamodb"
+          ]
+        }
+      },
+      "ulimits": {
+        "nofile": {
+          "soft": 65536,
+          "hard": 65536
+        }
+      },
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "mem_limit": "1g",
+      "pids_limit": 512,
+      "cpus": 2
+    },
+    "fake_sqs": {
+      "command": null,
+      "entrypoint": null,
+      "image": "softwaremill/elasticmq-native@sha256:32d4b42a1f1fd5d311d2f46e388587c87b297364df3d25cc807f1dd361df1153",
+      "networks": {
+        "demo_wire": {
+          "aliases": [
+            "sqs"
+          ]
+        }
+      },
+      "volumes": [
+        {
+          "type": "bind",
+          "source": "/home/operator/wire-server/deploy/dockerephemeral/docker/elasticmq.conf",
+          "target": "/opt/elasticmq.conf",
+          "bind": {},
+          "read_only": true
+        }
+      ],
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "mem_limit": "1g",
+      "pids_limit": 512,
+      "cpus": 2
+    },
+    "fake_localstack": {
+      "command": null,
+      "entrypoint": null,
+      "environment": {
+        "DEBUG": "1",
+        "DEFAULT_REGION": "eu-west-1",
+        "SERVICES": "ses,sns"
+      },
+      "image": "quay.io/wire/localstack@sha256:544be04ed93def3e636cc96550f262c1c8ac7f4d40e17b7c76583590a26e78d3",
+      "networks": {
+        "demo_wire": {
+          "aliases": [
+            "ses",
+            "sns"
+          ]
+        }
+      },
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "mem_limit": "1g",
+      "pids_limit": 512,
+      "cpus": 2
+    },
+    "fake_s3": {
+      "command": [
+        "/garage",
+        "server",
+        "--single-node",
+        "--default-bucket"
+      ],
+      "entrypoint": null,
+      "environment": {
+        "GARAGE_DEFAULT_ACCESS_KEY": "GKdeadbeefcafebabe0000000000000000",
+        "GARAGE_DEFAULT_BUCKET": "dummy-bucket",
+        "GARAGE_DEFAULT_SECRET_KEY": "deadbeefcafebabe0000000000000000deadbeefcafebabe0000000000000000"
+      },
+      "image": "dxflrs/garage@sha256:9c96caa2612d3411acc5b0e6701fb238dbfba33e533a6d7d3d811a4b12d0d020",
+      "networks": {
+        "demo_wire": {
+          "aliases": [
+            "s3"
+          ]
+        }
+      },
+      "volumes": [
+        {
+          "type": "bind",
+          "source": "/home/operator/wire-server/deploy/dockerephemeral/docker/garage.toml",
+          "target": "/etc/garage.toml",
+          "bind": {},
+          "read_only": true
+        }
+      ],
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "mem_limit": "1g",
+      "pids_limit": 512,
+      "cpus": 2
+    },
+    "redis-master": {
+      "command": [
+        "redis-server",
+        "/usr/local/etc/redis/redis.conf"
+      ],
+      "entrypoint": null,
+      "image": "redis@sha256:29e8589c3f9ba699b5f7aa4b3c7733c58852a3626439e619aa0ee78de08c6ca0",
+      "networks": {
+        "demo_wire": null
+      },
+      "volumes": [
+        {
+          "type": "bind",
+          "source": "/home/operator/wire-server/deploy/dockerephemeral/docker/redis-master-mode.conf",
+          "target": "/usr/local/etc/redis/redis.conf",
+          "bind": {},
+          "read_only": true
+        }
+      ],
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "mem_limit": "1g",
+      "pids_limit": 512,
+      "cpus": 2
+    },
+    "elasticsearch": {
+      "command": null,
+      "entrypoint": null,
+      "environment": {
+        "ELASTIC_PASSWORD": "changeme",
+        "JVM_OPTIONS_ES": "-Xmx512m -Xms512m",
+        "bootstrap.system_call_filter": "false",
+        "discovery.type": "single-node",
+        "xpack.ml.enabled": "false",
+        "xpack.security.enabled": "true",
+        "xpack.security.http.ssl.enabled": "true",
+        "xpack.ssl.certificate": "certs/elasticsearch-cert.pem",
+        "xpack.ssl.key": "certs/elasticsearch-key.pem"
+      },
+      "image": "elasticsearch@sha256:deda76957c8cacc5dbf0d535fd14fe365f37d839813099bc32f26390a5e232dc",
+      "networks": {
+        "demo_wire": null
+      },
+      "ulimits": {
+        "nofile": {
+          "soft": 65536,
+          "hard": 65536
+        }
+      },
+      "volumes": [
+        {
+          "type": "bind",
+          "source": "/home/operator/wire-server/deploy/dockerephemeral/docker/elasticsearch-cert.pem",
+          "target": "/usr/share/elasticsearch/config/certs/elasticsearch-cert.pem",
+          "bind": {},
+          "read_only": true
+        },
+        {
+          "type": "bind",
+          "source": "/home/operator/wire-server/deploy/dockerephemeral/docker/elasticsearch-key.pem",
+          "target": "/usr/share/elasticsearch/config/certs/elasticsearch-key.pem",
+          "bind": {},
+          "read_only": true
+        }
+      ],
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "mem_limit": "2g",
+      "pids_limit": 512,
+      "cpus": 2,
+      "tmpfs": [
+        "/usr/share/elasticsearch/data:rw,nosuid,nodev,size=1g,uid=1000,gid=1000"
+      ]
+    },
+    "postgres": {
+      "command": [
+        "postgres",
+        "-c",
+        "max_connections=1000"
+      ],
+      "entrypoint": null,
+      "environment": {
+        "POSTGRES_DB": "backendA",
+        "POSTGRES_PASSWORD": "posty-the-gres",
+        "POSTGRES_USER": "wire-server"
+      },
+      "image": "postgres@sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24",
+      "networks": {
+        "demo_wire": null
+      },
+      "volumes": [
+        {
+          "type": "bind",
+          "source": "/home/operator/wire-server/deploy/dockerephemeral/docker/postgres-initdb",
+          "target": "/docker-entrypoint-initdb.d",
+          "bind": {},
+          "read_only": true
+        }
+      ],
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "mem_limit": "1g",
+      "pids_limit": 512,
+      "cpus": 2
+    },
+    "cassandra": {
+      "command": null,
+      "entrypoint": null,
+      "environment": {
+        "HEAP_NEWSIZE": "200M",
+        "MAX_HEAP_SIZE": "1024M"
+      },
+      "image": "cassandra@sha256:dad4cd7ee4281df4e96944a1faebfebd2e50ee19a9f0a1d42ac0bb17c820dd74",
+      "networks": {
+        "demo_wire": null
+      },
+      "ulimits": {
+        "memlock": 65536,
+        "nofile": 100000,
+        "nproc": 32768
+      },
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "mem_limit": "2g",
+      "pids_limit": 512,
+      "cpus": 2
+    },
+    "rabbitmq": {
+      "command": null,
+      "entrypoint": null,
+      "environment": {
+        "RABBITMQ_USERNAME": "guest",
+        "RABBITMQ_PASSWORD": "alpaca-grapefruit"
+      },
+      "image": "rabbitmq@sha256:5cbd7145b0306399ad68422c3350b6cbd1bb95704b39f5896480e5b6d4238a04",
+      "networks": {
+        "demo_wire": null
+      },
+      "volumes": [
+        {
+          "type": "bind",
+          "source": "/home/operator/wire-server/deploy/dockerephemeral/rabbitmq-config/rabbitmq.conf",
+          "target": "/etc/rabbitmq/conf.d/20-wire.conf",
+          "bind": {},
+          "read_only": true
+        },
+        {
+          "type": "bind",
+          "source": "/home/operator/wire-server/deploy/dockerephemeral/rabbitmq-config/certificates",
+          "target": "/etc/rabbitmq/certificates",
+          "bind": {},
+          "read_only": true
+        }
+      ],
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "mem_limit": "1g",
+      "pids_limit": 512,
+      "cpus": 2
+    },
+    "coredns": {
+      "command": null,
+      "entrypoint": [
+        "/coredns",
+        "-conf",
+        "/fixtures/coredns-Corefile"
+      ],
+      "image": "coredns/coredns@sha256:6e5a02c21641597998b4be7cb5eb1e7b02c0d8d23cce4dd09f4682d463798890",
+      "networks": {
+        "coredns": {
+          "ipv4_address": "172.20.1.2"
+        }
+      },
+      "volumes": [
+        {
+          "type": "bind",
+          "source": "/home/operator/.cache/wire-migration/brig-20261010/access-switchback-initial/fixtures",
+          "target": "/fixtures",
+          "read_only": true
+        }
+      ],
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "mem_limit": "1g",
+      "pids_limit": 512,
+      "cpus": 2
+    },
+    "dns-server": {
+      "command": null,
+      "entrypoint": null,
+      "environment": {
+        "DNS_SERVER_ADMIN_PASSWORD": "admin",
+        "DNS_SERVER_DOMAIN": "localhost",
+        "DNS_SERVER_OPTIONAL_PROTOCOL_DNS_OVER_HTTP": "true"
+      },
+      "hostname": "dns-server",
+      "image": "technitium/dns-server@sha256:1045db38fd2f2e4d9578f9168b7eb4862575469ed0ffc79e03f36bdc772a93b5",
+      "networks": {
+        "demo_wire": null
+      },
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "mem_limit": "1g",
+      "pids_limit": 512,
+      "cpus": 2,
+      "volumes": [
+        {
+          "type": "volume",
+          "source": "dns-server-data",
+          "target": "/etc/dns"
+        }
+      ]
+    },
+    "redis-cluster": {
+      "command": [
+        "redis-cli",
+        "--cluster",
+        "create",
+        "172.20.0.31:6373",
+        "172.20.0.32:6374",
+        "172.20.0.33:6375",
+        "172.20.0.34:6376",
+        "172.20.0.35:6377",
+        "172.20.0.36:6378",
+        "--cluster-replicas",
+        "1",
+        "--cluster-yes",
+        "-a",
+        "very-secure-redis-cluster-password",
+        "--cacert",
+        "/usr/local/etc/redis/ca.pem",
+        "--tls"
+      ],
+      "entrypoint": null,
+      "image": "redis@sha256:29e8589c3f9ba699b5f7aa4b3c7733c58852a3626439e619aa0ee78de08c6ca0",
+      "networks": {
+        "redis": {
+          "ipv4_address": "172.20.0.30"
+        }
+      },
+      "volumes": [
+        {
+          "type": "bind",
+          "source": "/home/operator/wire-server/deploy/dockerephemeral/docker/redis-ca.pem",
+          "target": "/usr/local/etc/redis/ca.pem",
+          "bind": {},
+          "read_only": true
+        }
+      ],
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "mem_limit": "1g",
+      "pids_limit": 512,
+      "cpus": 2
+    },
+    "redis-node-1": {
+      "command": [
+        "redis-server",
+        "/usr/local/etc/redis/redis.conf"
+      ],
+      "entrypoint": null,
+      "image": "redis@sha256:29e8589c3f9ba699b5f7aa4b3c7733c58852a3626439e619aa0ee78de08c6ca0",
+      "networks": {
+        "redis": {
+          "ipv4_address": "172.20.0.31"
+        }
+      },
+      "volumes": [
+        {
+          "type": "volume",
+          "source": "redis-node-1-data",
+          "target": "/var/lib/redis",
+          "volume": {}
+        },
+        {
+          "type": "bind",
+          "source": "/home/operator/wire-server/deploy/dockerephemeral/docker/redis-node-1.conf",
+          "target": "/usr/local/etc/redis/redis.conf",
+          "bind": {},
+          "read_only": true
+        },
+        {
+          "type": "bind",
+          "source": "/home/operator/wire-server/deploy/dockerephemeral/docker/redis-node-1-cert.pem",
+          "target": "/usr/local/etc/redis/cert.pem",
+          "bind": {},
+          "read_only": true
+        },
+        {
+          "type": "bind",
+          "source": "/home/operator/wire-server/deploy/dockerephemeral/docker/redis-node-1-key.pem",
+          "target": "/usr/local/etc/redis/key.pem",
+          "bind": {},
+          "read_only": true
+        },
+        {
+          "type": "bind",
+          "source": "/home/operator/wire-server/deploy/dockerephemeral/docker/redis-ca.pem",
+          "target": "/usr/local/etc/redis/ca.pem",
+          "bind": {},
+          "read_only": true
+        }
+      ],
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "mem_limit": "1g",
+      "pids_limit": 512,
+      "cpus": 2
+    },
+    "redis-node-2": {
+      "command": [
+        "redis-server",
+        "/usr/local/etc/redis/redis.conf"
+      ],
+      "entrypoint": null,
+      "image": "redis@sha256:29e8589c3f9ba699b5f7aa4b3c7733c58852a3626439e619aa0ee78de08c6ca0",
+      "networks": {
+        "redis": {
+          "ipv4_address": "172.20.0.32"
+        }
+      },
+      "volumes": [
+        {
+          "type": "volume",
+          "source": "redis-node-2-data",
+          "target": "/var/lib/redis",
+          "volume": {}
+        },
+        {
+          "type": "bind",
+          "source": "/home/operator/wire-server/deploy/dockerephemeral/docker/redis-node-2.conf",
+          "target": "/usr/local/etc/redis/redis.conf",
+          "bind": {},
+          "read_only": true
+        },
+        {
+          "type": "bind",
+          "source": "/home/operator/wire-server/deploy/dockerephemeral/docker/redis-node-2-cert.pem",
+          "target": "/usr/local/etc/redis/cert.pem",
+          "bind": {},
+          "read_only": true
+        },
+        {
+          "type": "bind",
+          "source": "/home/operator/wire-server/deploy/dockerephemeral/docker/redis-node-2-key.pem",
+          "target": "/usr/local/etc/redis/key.pem",
+          "bind": {},
+          "read_only": true
+        },
+        {
+          "type": "bind",
+          "source": "/home/operator/wire-server/deploy/dockerephemeral/docker/redis-ca.pem",
+          "target": "/usr/local/etc/redis/ca.pem",
+          "bind": {},
+          "read_only": true
+        }
+      ],
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "mem_limit": "1g",
+      "pids_limit": 512,
+      "cpus": 2
+    },
+    "redis-node-3": {
+      "command": [
+        "redis-server",
+        "/usr/local/etc/redis/redis.conf"
+      ],
+      "entrypoint": null,
+      "image": "redis@sha256:29e8589c3f9ba699b5f7aa4b3c7733c58852a3626439e619aa0ee78de08c6ca0",
+      "networks": {
+        "redis": {
+          "ipv4_address": "172.20.0.33"
+        }
+      },
+      "volumes": [
+        {
+          "type": "volume",
+          "source": "redis-node-3-data",
+          "target": "/var/lib/redis",
+          "volume": {}
+        },
+        {
+          "type": "bind",
+          "source": "/home/operator/wire-server/deploy/dockerephemeral/docker/redis-node-3.conf",
+          "target": "/usr/local/etc/redis/redis.conf",
+          "bind": {},
+          "read_only": true
+        },
+        {
+          "type": "bind",
+          "source": "/home/operator/wire-server/deploy/dockerephemeral/docker/redis-node-3-cert.pem",
+          "target": "/usr/local/etc/redis/cert.pem",
+          "bind": {},
+          "read_only": true
+        },
+        {
+          "type": "bind",
+          "source": "/home/operator/wire-server/deploy/dockerephemeral/docker/redis-node-3-key.pem",
+          "target": "/usr/local/etc/redis/key.pem",
+          "bind": {},
+          "read_only": true
+        },
+        {
+          "type": "bind",
+          "source": "/home/operator/wire-server/deploy/dockerephemeral/docker/redis-ca.pem",
+          "target": "/usr/local/etc/redis/ca.pem",
+          "bind": {},
+          "read_only": true
+        }
+      ],
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "mem_limit": "1g",
+      "pids_limit": 512,
+      "cpus": 2
+    },
+    "redis-node-4": {
+      "command": [
+        "redis-server",
+        "/usr/local/etc/redis/redis.conf"
+      ],
+      "entrypoint": null,
+      "image": "redis@sha256:29e8589c3f9ba699b5f7aa4b3c7733c58852a3626439e619aa0ee78de08c6ca0",
+      "networks": {
+        "redis": {
+          "ipv4_address": "172.20.0.34"
+        }
+      },
+      "volumes": [
+        {
+          "type": "volume",
+          "source": "redis-node-4-data",
+          "target": "/var/lib/redis",
+          "volume": {}
+        },
+        {
+          "type": "bind",
+          "source": "/home/operator/wire-server/deploy/dockerephemeral/docker/redis-node-4.conf",
+          "target": "/usr/local/etc/redis/redis.conf",
+          "bind": {},
+          "read_only": true
+        },
+        {
+          "type": "bind",
+          "source": "/home/operator/wire-server/deploy/dockerephemeral/docker/redis-node-4-cert.pem",
+          "target": "/usr/local/etc/redis/cert.pem",
+          "bind": {},
+          "read_only": true
+        },
+        {
+          "type": "bind",
+          "source": "/home/operator/wire-server/deploy/dockerephemeral/docker/redis-node-4-key.pem",
+          "target": "/usr/local/etc/redis/key.pem",
+          "bind": {},
+          "read_only": true
+        },
+        {
+          "type": "bind",
+          "source": "/home/operator/wire-server/deploy/dockerephemeral/docker/redis-ca.pem",
+          "target": "/usr/local/etc/redis/ca.pem",
+          "bind": {},
+          "read_only": true
+        }
+      ],
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "mem_limit": "1g",
+      "pids_limit": 512,
+      "cpus": 2
+    },
+    "redis-node-5": {
+      "command": [
+        "redis-server",
+        "/usr/local/etc/redis/redis.conf"
+      ],
+      "entrypoint": null,
+      "image": "redis@sha256:29e8589c3f9ba699b5f7aa4b3c7733c58852a3626439e619aa0ee78de08c6ca0",
+      "networks": {
+        "redis": {
+          "ipv4_address": "172.20.0.35"
+        }
+      },
+      "volumes": [
+        {
+          "type": "volume",
+          "source": "redis-node-5-data",
+          "target": "/var/lib/redis",
+          "volume": {}
+        },
+        {
+          "type": "bind",
+          "source": "/home/operator/wire-server/deploy/dockerephemeral/docker/redis-node-5.conf",
+          "target": "/usr/local/etc/redis/redis.conf",
+          "bind": {},
+          "read_only": true
+        },
+        {
+          "type": "bind",
+          "source": "/home/operator/wire-server/deploy/dockerephemeral/docker/redis-node-5-cert.pem",
+          "target": "/usr/local/etc/redis/cert.pem",
+          "bind": {},
+          "read_only": true
+        },
+        {
+          "type": "bind",
+          "source": "/home/operator/wire-server/deploy/dockerephemeral/docker/redis-node-5-key.pem",
+          "target": "/usr/local/etc/redis/key.pem",
+          "bind": {},
+          "read_only": true
+        },
+        {
+          "type": "bind",
+          "source": "/home/operator/wire-server/deploy/dockerephemeral/docker/redis-ca.pem",
+          "target": "/usr/local/etc/redis/ca.pem",
+          "bind": {},
+          "read_only": true
+        }
+      ],
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "mem_limit": "1g",
+      "pids_limit": 512,
+      "cpus": 2
+    },
+    "redis-node-6": {
+      "command": [
+        "redis-server",
+        "/usr/local/etc/redis/redis.conf"
+      ],
+      "entrypoint": null,
+      "image": "redis@sha256:29e8589c3f9ba699b5f7aa4b3c7733c58852a3626439e619aa0ee78de08c6ca0",
+      "networks": {
+        "redis": {
+          "ipv4_address": "172.20.0.36"
+        }
+      },
+      "volumes": [
+        {
+          "type": "volume",
+          "source": "redis-node-6-data",
+          "target": "/var/lib/redis",
+          "volume": {}
+        },
+        {
+          "type": "bind",
+          "source": "/home/operator/wire-server/deploy/dockerephemeral/docker/redis-node-6.conf",
+          "target": "/usr/local/etc/redis/redis.conf",
+          "bind": {},
+          "read_only": true
+        },
+        {
+          "type": "bind",
+          "source": "/home/operator/wire-server/deploy/dockerephemeral/docker/redis-node-6-cert.pem",
+          "target": "/usr/local/etc/redis/cert.pem",
+          "bind": {},
+          "read_only": true
+        },
+        {
+          "type": "bind",
+          "source": "/home/operator/wire-server/deploy/dockerephemeral/docker/redis-node-6-key.pem",
+          "target": "/usr/local/etc/redis/key.pem",
+          "bind": {},
+          "read_only": true
+        },
+        {
+          "type": "bind",
+          "source": "/home/operator/wire-server/deploy/dockerephemeral/docker/redis-ca.pem",
+          "target": "/usr/local/etc/redis/ca.pem",
+          "bind": {},
+          "read_only": true
+        }
+      ],
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "mem_limit": "1g",
+      "pids_limit": 512,
+      "cpus": 2
+    },
+    "runner": {
+      "image": "sha256:f487c90fd364aac9daee5a1ce6e60fdba0ab74ab0c671ab0de0198e8f05659a9",
+      "entrypoint": [
+        "/nix/store/60m4rxhg2fldqaak400c0lry96ijrzqn-python3-3.13.13/bin/python3",
+        "/source/go/services/brig/qualification/paired_reads.py"
+      ],
+      "command": [
+        "--in-container",
+        "--access-switchback",
+        "--gundeck-path",
+        "/candidate/gundeck"
+      ],
+      "user": "65534:65534",
+      "environment": {
+        "RABBITMQ_USERNAME": "guest",
+        "RABBITMQ_PASSWORD": "alpaca-grapefruit",
+        "AWS_ACCESS_KEY_ID": "GKdeadbeefcafebabe0000000000000000",
+        "AWS_SECRET_ACCESS_KEY": "deadbeefcafebabe0000000000000000deadbeefcafebabe0000000000000000",
+        "AWS_REGION": "eu-west-1",
+        "AWS_DEFAULT_REGION": "eu-west-1",
+        "AWS_EC2_METADATA_DISABLED": "true",
+        "HOME": "/tmp/home",
+        "WIRE_E2E_DISPOSABLE": "1",
+        "TEST_TIMEOUT_SECONDS": "60",
+        "REDIS_PASSWORD": "very-secure-redis-cluster-password",
+        "REDIS_ADDITIONAL_WRITE_PASSWORD": "very-secure-redis-master-password"
+      },
+      "extra_hosts": [
+        "localhost.:127.0.0.1"
+      ],
+      "read_only": true,
+      "cap_drop": [
+        "ALL"
+      ],
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "mem_limit": "12g",
+      "cpus": 4,
+      "pids_limit": 4096,
+      "ulimits": {
+        "nofile": {
+          "soft": 8192,
+          "hard": 8192
+        }
+      },
+      "tmpfs": [
+        "/tmp:rw,nosuid,nodev,size=2g,mode=1777"
+      ],
+      "networks": [
+        "demo_wire",
+        "redis",
+        "coredns"
+      ],
+      "dns": [
+        "172.20.1.2"
+      ],
+      "volumes": [
+        {
+          "type": "bind",
+          "source": "/home/operator/wire-server",
+          "target": "/source",
+          "read_only": true
+        },
+        {
+          "type": "bind",
+          "source": "/home/operator/.cache/wire-migration/brig-20261010/access-switchback-initial/fixtures",
+          "target": "/fixtures",
+          "read_only": true
+        },
+        {
+          "type": "bind",
+          "source": "/home/operator/.cache/wire-migration/brig-20261010/access-switchback-initial/reports",
+          "target": "/reports"
+        },
+        {
+          "type": "bind",
+          "source": "/home/operator/.cache/wire-migration/go-patched-20261009/gundeck",
+          "target": "/candidate/gundeck",
+          "read_only": true
+        },
+        {
+          "type": "bind",
+          "source": "/dev/shm/wire-migration-brig-20261010/access-switchback-build-corrected/brig",
+          "target": "/candidate/brig",
+          "read_only": true
+        }
+      ]
+    }
+  },
+  "networks": {
+    "demo_wire": {
+      "driver": "bridge",
+      "internal": true,
+      "ipam": {
+        "config": [
+          {
+            "subnet": "172.20.2.0/24"
+          }
+        ]
+      }
+    },
+    "redis": {
+      "driver": "bridge",
+      "internal": true,
+      "ipam": {
+        "config": [
+          {
+            "subnet": "172.20.0.0/24"
+          }
+        ]
+      }
+    },
+    "coredns": {
+      "driver": "bridge",
+      "internal": true,
+      "ipam": {
+        "config": [
+          {
+            "subnet": "172.20.1.0/24"
+          }
+        ]
+      }
+    }
+  },
+  "volumes": {
+    "redis-node-1-data": {},
+    "redis-node-2-data": {},
+    "redis-node-3-data": {},
+    "redis-node-4-data": {},
+    "redis-node-5-data": {},
+    "redis-node-6-data": {},
+    "dns-server-data": {}
+  }
+}

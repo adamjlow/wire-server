@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "project": "wire-e2e-6adaff4d68dc4cb3bd6aa0e0548e111c",
+  "source_revision": "3042cfbd25ce766d308297547fb6283091dd2f85",
+  "runner_image_id": "sha256:f487c90fd364aac9daee5a1ce6e60fdba0ab74ab0c671ab0de0198e8f05659a9",
+  "runner_revision": "3922c9e2edc13983834cab02f693fd7c22bccf42",
+  "candidate": null,
+  "peer_candidates": {
+    "gundeck": {
+      "path": "/home/operator/.cache/wire-migration/go-patched-20261009/gundeck",
+      "sha256": "a50512ef30d7fa9ddf92c2c1933e69769d6691e08cdfbe9f7c4f2d266071f46c",
+      "source_revision": "c1120238f8ecd7480742156df6c5dd2d2ec41f56"
+    }
+  },
+  "result": "prepared",
+  "e2e_executed": false,
+  "compose_sha256": "6c7d8ce4476a8527eaec7224655dce0c7ecf49ba0659077bdd865eb6c57917c4",
+  "files_sha256": {
+    "fixtures/configs.json": "a72b39e034c0563ea28260de4782ee8122f5b8e015887f835fd30b04ad4b8180",
+    "fixtures/coredns-Corefile": "f86a1dd0ea71d82a8f03c554e5ad80523d70615aa511889b5206179a538094e5",
+    "fixtures/coredns-db.example.com": "6405b829e03e3c98f6742245bedffaf2e6ce80bc0f5202ccc5da5dee501c4b9f",
+    "fixtures/coredns-db.sft": "38b816d19035e42da7b3fbb90f419641b222d38c17d8c09000d773484b1aa03a",
+    "fixtures/integration.json": "d8834dad54e1f851e689ac00691cd527aac69e0e9ce00baf149835433812c73c",
+    "fixtures/peers.json": "1877182efbc07cc70bf12db44905c75d5b6fe15cc849cb8143891db9617883f2"
+  }
+}
