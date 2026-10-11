@@ -43,6 +43,17 @@ func qualifyAccountDeletionStores(t *testing.T, ctx context.Context, stores map[
 			if err := s.create(ctx, u, nil, nil); err != nil {
 				t.Fatal(err)
 			}
+			if mode == "cassandra" {
+				// Native CreateUser does not set email_unvalidated. Stage a later
+				// email-change state explicitly, then verify it exists before delete.
+				if err := cassandra.Query(`UPDATE user SET email_unvalidated=? WHERE id=?`, unvalidated, id).WithContext(ctx).Consistency(gocql.LocalQuorum).Exec(); err != nil {
+					t.Fatal(err)
+				}
+				before, err := s.get(ctx, id)
+				if err != nil || before == nil || before.EmailUnvalidated == nil || *before.EmailUnvalidated != unvalidated {
+					t.Fatal("unvalidated-email deletion fixture absent", err)
+				}
+			}
 			if err := s.deleteAccount(ctx, u); err != nil {
 				t.Fatal(err)
 			}

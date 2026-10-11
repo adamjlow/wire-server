@@ -1119,3 +1119,13 @@ update/deletion control, verifying the retry produces exactly one tombstone.
 This is a concrete retry fidelity issue, not a speculative extra gate. Owned
 nonroot cache maintenance removes only regular UID/GID65534 Go cache entries
 older1h (627 files/475569124bytes); retained artifacts untouched.
+
+Source dae7c8987 SDK/static checks pass. First native-schema store run fails only
+Cassandra retained-column expectation: fixture creation does not persist an
+unvalidated email (matching native CreateUser). Stage that later-state field and
+verify it exists before deletion; keep original assertion. PG selector tests,
+actual serialization retry, reassigned email/handle/claims and101-contact cleanup
+completed without additional failures. Terminal runner/cleanup and independent
+owned namespace empty; failed output retained. Tagged-fixture-only correction
+rebuilds that binary; unchanged production/normal-unit/dependency checks reuse
+source dae7c8987 evidence with exact input comparison rather than repeating them.
