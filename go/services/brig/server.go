@@ -243,6 +243,7 @@ func Run(ctx context.Context, c Config) error {
 	resets := passwordResetStore{databases: business.users.userAuthStore, mode: c.Migration["passwordReset"]}
 	domains := domainRegistrationStore{databases: business.users.userAuthStore, mode: c.Migration["domainRegistration"], invalidRecord: func() { log.Print("invalid stored domain registration") }}
 	activation := activationService{codes: codes, account: business.users.get, identities: business.users.userAuthStore, deletePasswordReset: resets.deleteForUser}
+	business.passwordChange = &passwordChangeService{activated: business.users.isActivated, current: business.users.hashedPassword, hash: passwords.hash, verify: passwords.verify, write: business.users.setPassword, revoke: business.sessions.deleteAll}
 	business.passwordReset = &passwordResetHTTP{service: passwordResetService{
 		codes: resets, account: business.users.get, currentPassword: business.users.hashedPassword,
 		setPassword: business.users.setPassword, deleteCookies: business.sessions.deleteAll,

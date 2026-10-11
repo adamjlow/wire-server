@@ -203,6 +203,32 @@ func (s userAuthStore) hashedPassword(ctx context.Context, user gocql.UUID) (*st
 	return result, err
 }
 
+func (s userAuthStore) isActivated(ctx context.Context, user gocql.UUID) (bool, error) {
+	var result bool
+	err := s.withUserBackend(ctx, user, func(postgres bool) error {
+		var err error
+		if postgres {
+			err = s.withPostgres(ctx, func(conn *pgx.Conn) error {
+				return conn.QueryRow(ctx, `SELECT activated FROM wire_user WHERE id=$1::uuid`, user.String()).Scan(&result)
+			})
+		} else {
+			var active *bool
+			err = s.cassandra.Query(`SELECT activated FROM user WHERE id=?`, user).WithContext(ctx).Consistency(gocql.LocalQuorum).RetryPolicy(&gocql.SimpleRetryPolicy{NumRetries: 1}).Scan(&active)
+			if err == nil && active == nil {
+				return errors.New("invalid stored activation flag")
+			}
+			if active != nil {
+				result = *active
+			}
+		}
+		if errors.Is(err, pgx.ErrNoRows) || errors.Is(err, gocql.ErrNotFound) {
+			return nil
+		}
+		return userStorageError(err)
+	})
+	return result, err
+}
+
 // Native existence includes PostgreSQL deletion tombstones. In migration
 // mode, PostgreSQL is checked first under the shared user migration lock.
 func (s userAuthStore) exists(ctx context.Context, user gocql.UUID) (bool, error) {
