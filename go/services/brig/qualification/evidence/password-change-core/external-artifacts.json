@@ -1,0 +1,97 @@
+[
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/password-change-core-sdk-check/argon2-copyright",
+    "sha256": "6059eb2b0f8f23b5c6023b08f68d4df9addd834665d07e5dcc364d4ae80d9b69",
+    "bytes": 8745
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/password-change-core-sdk-check/brig",
+    "sha256": "86cceb800b45a15d5db4318bc0ea7f6beac893cea2cd91b9e4ecb680ca9707af",
+    "bytes": 68118736
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/password-change-core-sdk-check/brig.test",
+    "sha256": "fd725087085241ef2dd98702e282f003930161132c98349d1efeffacb02c68c9",
+    "bytes": 65476088
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/password-change-core-sdk-check/build-receipt.json",
+    "sha256": "dec911ef56b2dd7df7658f225ea2c3626f3dfb27eff0b1e5d19d6493e5fc0eaf",
+    "bytes": 872
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/password-change-core-sdk-check/controller.log",
+    "sha256": "5b2278170b6160b9a369f404cd0d8b492feb291ecfe3b02e76a9f973097a7e22",
+    "bytes": 2878
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/password-change-core-sdk-check/cxx-package.sha256",
+    "sha256": "5abc52f67b0befe6317695d4489a2433b32854cbb6b5916a6f875b2c0e300636",
+    "bytes": 102
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/password-change-core-sdk-check/cxx-package.txt",
+    "sha256": "d41b16dcb551842304cab9549bb3da24fdb859d85d690bd121de7f3cb29cce01",
+    "bytes": 59
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/password-change-core-sdk-check/glibc-copyright",
+    "sha256": "f5788886720a2605a946e81d571e6c8162b09f58d2e2ceb8d36e5768fccd850d",
+    "bytes": 51200
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/password-change-core-sdk-check/go-check.log",
+    "sha256": "6cd4e1162113e33371dcbe36606ee44e56b0491cb29670e129e3987780b5573a",
+    "bytes": 3723
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/password-change-core-sdk-check/icu-copyright",
+    "sha256": "5bbff5f646ce750ac0a347e7f91793279b7422a1119820b5f75d98879c201c68",
+    "bytes": 2214
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/password-change-core-sdk-check/libraries.sha256",
+    "sha256": "875560a1f32f1ad76a866a7f792a6b392f64c5555e8f55f270f60869079f9af2",
+    "bytes": 846
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/password-change-core-sdk-check/libstdc++-copyright",
+    "sha256": "20390f8a6f3b1e4d7cb45dd8652dabb259bbef688cbad839bcdb0b9ba7252f79",
+    "bytes": 69004
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/password-change-core-sdk-check/openssl-copyright",
+    "sha256": "6a7da622fe0637a334d2a8fc470852d2ffb77d9a2b2f930f854e32a41ad6ef35",
+    "bytes": 2543
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/password-change-core-sdk-check/packages.txt",
+    "sha256": "9e9db92065c33bc81e7e8b5ff6f5c0a9a32814690509f59c88718cc418f5e262",
+    "bytes": 3793
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/password-change-core-sdk-check/runtime-units.log",
+    "sha256": "29287d1e6fdfd0eee9ae1c36d399c3fedd221cc6a8c94f4f4f8b4aefef15081a",
+    "bytes": 47335
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/password-change-core-sdk-check/stores-build-receipt.json",
+    "sha256": "d6cca47d6a53ea7b279d178672153aeeccca8d377c1a3840a2ad102712ccfca0",
+    "bytes": 872
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/password-change-core-sdk-check/stores.test",
+    "sha256": "e7360b5f475e14df3b8ccb0c110b452dabad52e6f3c6fb477adfb7fec1b27ba6",
+    "bytes": 70303520
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/password-change-core-sdk-check/zlib-copyright",
+    "sha256": "9e5b96d63773a5d177ba264254390f792be07e41748ebd94730981c6cac31cc6",
+    "bytes": 2927
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/password-change-core-sdk-check/zstd-copyright",
+    "sha256": "5cec9fef4d3fa7e0371fbef4ec3fc416e0105dc2a9922117f84e825cb11f50f8",
+    "bytes": 5332
+  }
+]

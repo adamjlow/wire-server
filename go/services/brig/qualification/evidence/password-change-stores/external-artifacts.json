@@ -1,0 +1,42 @@
+[
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/password-change-stores-actual/brig.json",
+    "sha256": "f7b9560124a3305a40832e104f44066c770cdf4b41aa3c5d23eb217f5454dbe0",
+    "bytes": 7569
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/password-change-stores-actual/cassandra.log",
+    "sha256": "88500141bcefee726190b66dff85c7baab5d5ef95672b23de3f6be2994d94c5a",
+    "bytes": 597661
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/password-change-stores-actual/native-schema.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/password-change-stores-actual/native-schema.stdout",
+    "sha256": "f18daec4c5576effaeee9c866894f742df171f42bce4bf0b599fe2587d1d071f",
+    "bytes": 21319
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/password-change-stores-actual/postgres.log",
+    "sha256": "f1a7a1f19bf4603445b124c0e41429e674a1659d836ca0483e7b06cb95e46bbe",
+    "bytes": 3232
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/password-change-stores-actual/result.json",
+    "sha256": "fdd055a309a0d27e843a554720578802647140db91b8039cbe2f3ff06ededc9c",
+    "bytes": 1063
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/password-change-stores-actual/test.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/password-change-stores-actual/test.stdout",
+    "sha256": "4d572628cad538348f3b8eb8d6f9a39436cfea08600a4a53c3e5bced361c22b1",
+    "bytes": 79
+  }
+]

@@ -1,0 +1,122 @@
+[
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/password-change-switchback-paired/compose.json",
+    "sha256": "0c6bfe29638db3b2b869ebcf88f890d579dc8e948034b6c0a438a9a2ca3054a0",
+    "bytes": 22110
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/password-change-switchback-paired/controller.log",
+    "sha256": "db4d50bf893b92fc6811eda37ddf13d151589c4d7000b2d7ab826f021c952328",
+    "bytes": 957158
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/password-change-switchback-paired/environment.json",
+    "sha256": "6d398c1a6d98bf14ca1921163f6bb3069012c7a99e0565c582eb16824c408cc9",
+    "bytes": 1377
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/password-change-switchback-paired/fixtures/configs.json",
+    "sha256": "a72b39e034c0563ea28260de4782ee8122f5b8e015887f835fd30b04ad4b8180",
+    "bytes": 25814
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/password-change-switchback-paired/fixtures/coredns-Corefile",
+    "sha256": "f86a1dd0ea71d82a8f03c554e5ad80523d70615aa511889b5206179a538094e5",
+    "bytes": 140
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/password-change-switchback-paired/fixtures/coredns-db.example.com",
+    "sha256": "6405b829e03e3c98f6742245bedffaf2e6ce80bc0f5202ccc5da5dee501c4b9f",
+    "bytes": 863
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/password-change-switchback-paired/fixtures/coredns-db.sft",
+    "sha256": "38b816d19035e42da7b3fbb90f419641b222d38c17d8c09000d773484b1aa03a",
+    "bytes": 277
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/password-change-switchback-paired/fixtures/integration.json",
+    "sha256": "d8834dad54e1f851e689ac00691cd527aac69e0e9ce00baf149835433812c73c",
+    "bytes": 8278
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/password-change-switchback-paired/fixtures/peers.json",
+    "sha256": "1877182efbc07cc70bf12db44905c75d5b6fe15cc849cb8143891db9617883f2",
+    "bytes": 74780
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/password-change-switchback-paired/paired-compose.json",
+    "sha256": "7e6056c3be6cb115992292c5cd63af20a35c30d00d0f4c5c00ef0f563530b5a7",
+    "bytes": 23725
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/password-change-switchback-paired/redis-cluster-initialization.log",
+    "sha256": "cc480e618f758ee49666f9bc075373636b7f92c734051e1a30a1e4a1d527e965",
+    "bytes": 2129
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/password-change-switchback-paired/reports/background-worker-native.log",
+    "sha256": "adca2acc7dab1466d915dc148776507196664d92cf6f4ec049cb85484c8fcafb",
+    "bytes": 814
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/password-change-switchback-paired/reports/brig-native.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/password-change-switchback-paired/reports/cannon-native.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/password-change-switchback-paired/reports/cargohold-native.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/password-change-switchback-paired/reports/federator-native.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/password-change-switchback-paired/reports/galley-native.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/password-change-switchback-paired/reports/gundeck-go.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/password-change-switchback-paired/reports/paired-reads.json",
+    "sha256": "08936e7ae7324b6b35a6b4f0b9b3ac932a8a44b95935cf83285fecf4fda82c39",
+    "bytes": 1985
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/password-change-switchback-paired/reports/proxy-native.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/password-change-switchback-paired/reports/spar-native.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/password-change-switchback-paired/reports/stern-native.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/password-change-switchback-paired/reports/wire-server-enterprise-native.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/password-change-switchback-paired/result.json",
+    "sha256": "f6d08e60d3ea442c05b479e9d751c7d4bbc8fd5c63d91d01fd09a172fcaac6d4",
+    "bytes": 2034
+  }
+]

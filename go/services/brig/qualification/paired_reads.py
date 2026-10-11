@@ -195,15 +195,17 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             change_old = 'Synthetic-change-old-password!'
             change_new = 'Synthetic-change-new-password!'
             change_actors = {}
+            report['native_change_actor_setup'] = []
             for name in ('same','wrong','missing','main','first','first-reference','inactive'):
-                email = 'synthetic-change-'+name+'-'+uuid.uuid4().hex+'@example.com'
+                email = 'change-'+name+'-'+uuid.uuid4().hex+'@example.com'
                 body = {'name':'Synthetic password change '+name,'email':email}
                 if name not in ('first','first-reference','inactive'):
                     body['password'] = change_old
                 if name=='inactive':
                     body={'name':'Synthetic inactive change','managed_by':'scim','uuid':str(uuid.uuid4())}
                 actor,_=request('POST','/i/users',body=body)
-                assert actor['status']==201, 'native password change actor setup failed'
+                report['native_change_actor_setup'].append({'actor':name,'response':actor})
+                assert actor['status']==201, 'native password change actor setup failed: '+name
                 change_actors[name]={'user':actor['json']['id'],'email':email}
             report['native_change_actors']=change_actors
             main_change_login, change_cookie=request('POST','/login?persist=true',body={'email':change_actors['main']['email'],'password':change_old,'label':'synthetic-change-original'})
