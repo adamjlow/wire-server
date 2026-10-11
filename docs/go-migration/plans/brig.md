@@ -689,3 +689,19 @@ Next multi-user and remote prekey federation contracts, logging/metrics and
 actual Dynamo/concurrent/no-key/real legalhold controls before whole validation.
 Completed SDK output relocation preserves36 file hashes/owners/modes/logical
 paths and frees~362MiB SHM; receipt links retained, no cache/binary pruning.
+
+### Local multi-user prekey claims/versioned responses
+
+[Evidence](../../../go/services/brig/qualification/evidence/prekey-multi-local/README.md)
+records source7911900d2/serviceea11e4ac: full Go/static checks and actual five
+native/Go multi controls plus previous5 prekey/7 lifecycle/17 paired and durable
+client/prekey/MLS switchback pass. Native Word16 maxConvSize now binds request
+user limit before effects/startup resources; strict maps, nulls, full guard,
+chunks16/concurrency16 and sequential numeric per-user claims preserve source.
+Finite synchronized17-user units prove chunk/order/bound/null/cleanup behavior.
+Prior candidate YAML test fixture failure retained; corrected optSettings key,
+not original oracle/assertions. All13 exits0/runner0/cleanup0/independent empty.
+Next remote single/bundle/multi +incoming federation prekey RPCs, actual h2c
+version negotiation/origin/request-id/typed errors; V3 fail vsV4 partial list,
+remote concurrency8. Both-strategy, metrics/parser/no-key/legalhold and full535
+qualification still pending. No new original suite/native build claimed.
