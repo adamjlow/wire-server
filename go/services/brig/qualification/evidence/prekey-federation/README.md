@@ -40,3 +40,14 @@ User-delegated same-author review accepts only the stated implementation and
 proof, not independent review or final whole approval. Protected Haskell/oracle/
 fixtures/assertions/defaults/security policy unchanged. Registry remains
 implementing, compatibility/review null.
+
+## Subsequent timeout-aligned checks
+
+Source `a6edb1b5f2cd6898dc06b597ce67e2fdbc607a48`, service SHA256
+`1b0ddb3a7c5460c62d5d3cc5e53577ef3dcc5fb51849f3989d6b494a59949a88`,
+now uses native TCP30s connection timeout. Full pinned Go checks and static
+normal units pass; tagged stores compile only. SDK/unit/cleanup exits0 and
+independent exact namespace audit empty. This revised binary was not rerun
+through the backend in this turn; preceding nine live controls retain their
+exact tested source/artifact above. Overall response deadline and body limit
+remain pending fidelity review, alongside the other named gaps.

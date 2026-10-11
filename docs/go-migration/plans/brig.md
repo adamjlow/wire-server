@@ -733,3 +733,7 @@ this retained live evidence names only the tested binary. Detailed failure/error
 serialization, limits/deadlines/alias maps, remote8 bound and all whole-service
 gates remain pending. Cross-federation legalhold bypass and remote unchecked
 identity/prekey text are inherited concerns, preserved rather than repaired.
+
+TCP30s alignment now at sourcea6edb1b5f/service1b0ddb3a with full pinned Go/static
+checks passing and independent SDK cleanup empty. Revised binary not backend
+rerun yet; preserve preceding live proof's exact source/artifact distinction.
