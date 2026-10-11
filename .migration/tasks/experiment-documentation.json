@@ -4,7 +4,7 @@
   "title": "Document experimental scope, remaining services, Go layout and validation options",
   "service": "framework",
   "kind": "framework",
-  "status": "active",
+  "status": "done",
   "owner": "codex",
   "branch": "go-migration; serialized experiment-documentation in /home/operator/wire-server",
   "depends_on": [],
@@ -22,7 +22,18 @@
       "required_evidence": "Review inventory against services Cabal packages, Stern executable, migration registry, Go layout and existing test/performance sources; validate links and migration records without changing runtime/oracle/defaults."
     }
   ],
-  "evidence": [],
-  "review": null,
-  "handoff": "User requested README, six-item audit and push to origin/go-migration. Bounded documentation only; Brig remains active and Galley follows its completion."
+  "evidence": [
+    {
+      "criterion": "documentation",
+      "result": "pass",
+      "command": "Reviewed nine native service packages plus Stern, eight Go modules, original-suite/parity/operations tools and existing MLS/Criterion benchmark sources. make migration-check migration-test: PASS (32 tests); local Markdown links and git diff --check: PASS. Scoped validation against active claim 8f1d2999f: PASS.",
+      "revision": "94012552b56a11ed08b6743c52504f8ec6b4a7a4",
+      "artifact": "docs/go-migration/plans/experiment-review.md"
+    }
+  ],
+  "review": {
+    "by": "codex-user-delegated-self-review",
+    "artifact": "docs/go-migration/plans/experiment-review.md"
+  },
+  "handoff": "Documentation complete under prior explicit delegated same-author review/self-approval. No independent review claimed. User explicitly authorized normal push to origin/go-migration; earlier no-push handoff is superseded. Brig remains active/incomplete, Galley follows whole Brig completion; Stern identified outside catalogue. No runtime/oracle/default changes and no new comparative performance or service qualification claim."
 }

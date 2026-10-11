@@ -53,3 +53,12 @@ Results and tested revision are recorded in
 Review is by the same author under the user's earlier explicit instruction
 to review and self-approve; it is not an independent reviewer. No service
 qualification claim is created by this documentation review.
+
+At documentation revision `94012552b56a11ed08b6743c52504f8ec6b4a7a4`,
+`make migration-check migration-test` passed (32 validator tests), all local
+Markdown targets resolved, and `git diff --check` passed. Task scope validation
+against active claim `8f1d2999f48c18a0cfd419997a50a1bb30438716` passed.
+The documentation matches the inspected source/records and clearly separates
+existing evidence from proposed benchmarking. Same-author review approves this
+bounded documentation change under the user's delegated self-approval; runtime,
+Haskell sources, protected tests, schemas and selectors are unchanged.
