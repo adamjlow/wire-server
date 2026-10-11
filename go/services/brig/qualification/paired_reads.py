@@ -36,8 +36,8 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
     report = {'result': 'failed', 'e2e_executed': False, 'scope': __doc__, 'records': []}
     active = None
 
-    def request(method, path, headers=None, body=None, raw_body=None):
-        connection = http.client.HTTPConnection('127.0.0.1', 8082, timeout=15)
+    def request(method, path, headers=None, body=None, raw_body=None, port=8082):
+        connection = http.client.HTTPConnection('127.0.0.1', port, timeout=15)
         try:
             request_headers = {'Request-Id': 'synthetic-paired-read', **(headers or {})}
             if body is not None:
@@ -136,7 +136,7 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
                 native_brig_path = Path(args[0]).resolve()
                 report['native_brig'] = {'path': str(native_brig_path), 'sha256': hashlib.sha256(native_brig_path.read_bytes()).hexdigest()}
         extra_ports = set()
-        if ses_feedback_contract or properties_contract or client_registration_contract:
+        if ses_feedback_contract or properties_contract or client_registration_contract or client_lifecycle_contract:
             # Original compiled tests require both static federator ingress
             # services, even when the selected body only uses a dynamic backend.
             # Match the existing full runtime's native backend-B/NGINX setup.
@@ -282,6 +282,33 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             native_multi_controls=[request(*case)[0] for case in multi_cases]
             report['prekey_native_multi_controls']=native_multi_controls
             assert [r['status'] for r in native_multi_controls]==[200,200,200,200,403], 'native multi-user controls changed'
+            # Own supplemental observer: native B persists a last-resort-only
+            # client so repeated native/Go outgoing calls compare identical state.
+            remote_actor,_=request('POST','/i/users',body={'name':'Synthetic federation prekey actor','password':password},port=9082)
+            report['prekey_remote_native_actor']=remote_actor
+            assert remote_actor['status']==201, 'native remote actor setup failed'
+            remote_user=remote_actor['json']['id']
+            remote_headers={'Z-User':remote_user,'Z-Connection':'synthetic-federation-prekey'}
+            remote_client,_=request('POST','/v19/clients',remote_headers,{**native_body,'prekeys':[]},port=9082)
+            report['prekey_remote_native_client']=remote_client
+            assert remote_client['status']==201, 'native remote client setup failed'
+            remote_id=remote_client['json']['id']
+            remote_domain=second['brig']['optSettings']['setFederationDomain']
+            remote_path='/v19/users/'+remote_domain+'/'+remote_user+'/prekeys'
+            mixed={local_domain:{lifecycle_user:[lifecycle_id,'f']},remote_domain:{remote_user:[remote_id,'f']}}
+            federation_cases=[
+                ('GET',remote_path+'/'+remote_id,lifecycle_headers),
+                ('GET',remote_path,lifecycle_headers),
+                ('GET',remote_path+'/f',lifecycle_headers),
+                ('POST','/v3/users/list-prekeys',lifecycle_headers,mixed),
+                ('POST','/v19/users/list-prekeys',lifecycle_headers,mixed),
+                ('POST','/federation/claim-prekey',{'Wire-Origin-Domain':remote_domain},[lifecycle_user,lifecycle_id]),
+                ('POST','/federation/claim-prekey',{'Wire-Origin-Domain':remote_domain},[lifecycle_user,'f']),
+                ('POST','/federation/claim-prekey-bundle',{'Wire-Origin-Domain':remote_domain},lifecycle_user),
+                ('POST','/federation/claim-multi-prekey-bundle',{'Wire-Origin-Domain':remote_domain},{lifecycle_user:[lifecycle_id,'f']})]
+            native_federation_controls=[request(*case)[0] for case in federation_cases]
+            report['prekey_native_federation_controls']=native_federation_controls
+            assert [r['status'] for r in native_federation_controls]==[200,200,404,200,200,200,200,200,200], 'native federation reference changed'
             restaged,_=request('POST','/v19/clients',lifecycle_headers,{**native_body,'mls_public_keys':{}})
             report['prekey_native_restage']=restaged
             assert restaged['status']==201, 'native prekey reference restage failed'
@@ -546,6 +573,11 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             go_multi_controls=[request(*case)[0] for case in multi_cases]
             report['prekey_go_multi_controls']=go_multi_controls
             assert all(same(ref,actual) for ref,actual in zip(native_multi_controls,go_multi_controls)), 'native multi-user prekey response mismatch'
+            go_federation_controls=[request(*case)[0] for case in federation_cases]
+            report['prekey_go_federation_controls']=go_federation_controls
+            federation_mismatches=[{'case':i,'fields':[k for k in fields(ref) if ref.get(k)!=actual.get(k)]} for i,(ref,actual) in enumerate(zip(native_federation_controls,go_federation_controls)) if not same(ref,actual)]
+            report['prekey_federation_mismatches']=federation_mismatches
+            assert not federation_mismatches, 'native federation prekey responses mismatch'
             go_created,_=request('POST','/v19/clients',lifecycle_headers,{**new_body,'password':password})
             report['client_lifecycle_go_created']=go_created
             assert go_created['status']==201 and go_created['location']==go_created['json']['id'], 'Go client creation failed'
