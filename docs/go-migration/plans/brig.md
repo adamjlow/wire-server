@@ -1659,3 +1659,28 @@ prekey/raw+signed MLS/user-property queue witnesses. All25 managed exits0,
 runner/cleanup0 and independent owned resources empty. [Regression evidence](../../../go/services/brig/qualification/evidence/service-deletion-bound-regression/README.md)
 retains failed direct-mount preflight and exact unchanged-build reuse basis.
 Service/bot queue replay is still next; this does not satisfy whole535/eight-Go.
+
+### Actual service/bot queue replay fixture
+
+Add a tagged, owned nonroot fixture that attaches source-schema CQL service,
+bot association, whitelist and literal index rows to accounts/clients/prekeys/
+MLS keys/properties created through native HTTP. It reads raw row counts and
+account identity/status independently of candidate cleanup. Parameterized CQL,
+4096-byte synthetic manifest bound,30-second database context and explicit UUID/
+action validation apply; use the native documented public key, no private keys.
+Keep this helper outside normal production/unit builds. Rebuild only its tagged
+executable after exact production/dependency/compiler input comparison; reuse
+existing full quality for unchanged serviceb8256ee1.
+
+Extend only the candidate observer with opt-in --service-deletion-queue requiring
+identified tagged fixture and actual authenticated STOMP. Prove native cleanup,
+Go consumption of native-created durable work after native ownership ends,
+Go metadata-absent replay, native reads of unchanged Go-cleaned state, native
+consumption of Go-created work after Go ownership ends, and native replay.
+Require broker DequeueCount growth and QueueSize/InFlightCount0 as well as real
+rows/effects. Missing conversation deliberately exercises actual Galley404;
+Galley200 decoder proof remains separate. Preserve bot identity/provider/service,
+MLS public-key rows and properties; remove clients/prekeys/service associations,
+all7 tag masks, prefix, service row and both whitelist directions. No ordinary
+user-deletion cascade. Original22/assertions, isolation/disk floor and Haskell
+sources remain unchanged; final whole535/all-entity/three-mode gates remain open.

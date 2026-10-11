@@ -3,3 +3,6 @@ Current bound Brig executable also passes the affected 22 original executions,
 authenticated STOMP controls and native-Go-native client/prekey/MLS/user queue
 regression in the owned backend; full service/bot queue and Brig qualification
 remain pending. Retain rejected direct fixture mount and restore approved mount.
+Add an opt-in owned actual service/bot queue fixture for native and Go cleanup,
+ACK/replay, retained bot identity/MLS/properties and durable switchback. Actual
+backend execution remains required; no whole-service qualification is implied.

@@ -26,7 +26,7 @@ def checked(args, timeout=30):
     return result.stdout.strip()
 
 
-def inside(gundeck_path=None, access_switchback=False, login_contract=False, activation_contract=False, registration_contract=False, saml_registration_contract=False, public_registration_contract=False, password_reset_contract=False, password_change_contract=False, ses_feedback_contract=False, properties_contract=False, client_update_contract=False, client_registration_contract=False, client_lifecycle_contract=False, store_fixture_path=None, mls_upload_originals=False, stomp_internal_events=False):
+def inside(gundeck_path=None, access_switchback=False, login_contract=False, activation_contract=False, registration_contract=False, saml_registration_contract=False, public_registration_contract=False, password_reset_contract=False, password_change_contract=False, ses_feedback_contract=False, properties_contract=False, client_update_contract=False, client_registration_contract=False, client_lifecycle_contract=False, store_fixture_path=None, mls_upload_originals=False, stomp_internal_events=False, service_deletion_queue=False):
     registration_contract = registration_contract or saml_registration_contract
     if os.getuid() != 65534 or os.environ.get('WIRE_E2E_DISPOSABLE') != '1':
         raise ValueError('owned nonroot Docker runner required')
@@ -75,6 +75,67 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
         assert process.returncode==0, 'owned MLS row fixture failed: '+phase
         rows=json.loads(Path(output).read_text())
         report['mls_rows_'+phase]=rows
+        return rows
+
+    def service_row_fixture(action, phase, actor):
+        assert store_fixture_path, 'identified service fixture required'
+        output = '/reports/service-rows-'+phase+'.json'
+        manifest = Path('/reports/service-rows-'+phase+'-input.json')
+        manifest.write_text(json.dumps({**actor, 'Action': action, 'Output': output}))
+        env = {**os.environ, 'BRIG_STORE_CONFIG': str(runtime.WORK/'brig-static-0.json'),
+            'BRIG_SERVICE_ROWS_INPUT': str(manifest)}
+        with open('/reports/service-rows-'+phase+'.log', 'w') as log:
+            process = subprocess.run([store_fixture_path,
+                '-test.run=^TestOwnedServiceDeletionFixture$', '-test.v', '-test.timeout=45s'],
+                env=env, stdout=log, stderr=subprocess.STDOUT, timeout=50)
+        assert process.returncode == 0, 'owned service row fixture failed: '+phase
+        return json.loads(Path(output).read_text())
+
+    def service_actor(phase):
+        actor = request('POST', '/i/users', body={'name': 'Synthetic service queue bot'})[0]
+        assert actor['status'] == 201, 'service bot actor creation failed'
+        uid = actor['json']['id']
+        headers = {'Z-User': uid, 'Z-Connection': 'synthetic-service-queue'}
+        client = request('POST', '/v19/clients', headers,
+            {**native_body, 'label': 'synthetic-service-bot-client'})[0]
+        assert client['status'] == 201, 'service bot native-compatible client creation failed'
+        prop = request('PUT', '/properties/service-bot-witness', headers, {'synthetic': True})[0]
+        assert prop['status'] == 200, 'service bot property creation failed'
+        # A missing conversation exercises the native replay-safe Galley404
+        # path. This does not establish decoded Galley200 membership events.
+        fixture = {'User': uid, **{key: str(uuid.uuid4())
+            for key in ('Provider', 'Service', 'Conversation', 'Team')}}
+        rows = service_row_fixture('stage', phase+'-stage', fixture)
+        assert rows['counts'] == {'service': 1, 'service_user': 1, 'service_team': 1,
+            'whitelist': 1, 'whitelist_rev': 1, 'prefix': 1, 'tags': 7,
+            'user': 1, 'clients': 1, 'prekeys': 2, 'mls_public_keys': 1, 'properties': 1}, 'service bot initial raw rows differ'
+        assert rows['status'] == 0 and rows['provider'] == fixture['Provider'] and rows['service'] == fixture['Service'], 'service bot account association differs'
+        report['service_queue_'+phase+'_created'] = {'actor': actor, 'client': client,
+            'property': prop, 'fixture': fixture, 'rows': rows}
+        return fixture
+
+    def enqueue_service(actor):
+        before = stomp_broker.queue_state()
+        stomp_broker.send(json.dumps({'type': 'service.delete',
+            'provider': actor['Provider'], 'service': actor['Service']}).encode())
+        return before['DequeueCount']
+
+    def await_service(actor, phase, before=None):
+        deadline = time.monotonic()+30
+        while True:
+            rows = service_row_fixture('read', phase, actor)
+            queue = stomp_broker.queue_state()
+            expected = {'service': 0, 'service_user': 0, 'service_team': 0,
+                'whitelist': 0, 'whitelist_rev': 0, 'prefix': 0, 'tags': 0,
+                'user': 1, 'clients': 0, 'prekeys': 0, 'mls_public_keys': 1, 'properties': 1}
+            if rows['counts'] == expected and rows['status'] == 2 and queue['QueueSize'] == 0 and queue['InFlightCount'] == 0 and (before is None or queue['DequeueCount'] > before):
+                break
+            assert time.monotonic() < deadline, 'service bot cleanup not completed and acknowledged: '+phase
+            time.sleep(0.2)
+        assert rows['provider'] == actor['Provider'] and rows['service'] == actor['Service'] and rows['name'] == 'Synthetic service queue bot', 'service deletion lost native bot identity'
+        status = request('GET', '/i/users/'+actor['User']+'/status')[0]
+        assert status['status'] == 200 and status['json'] == {'status': 'deleted'}, 'service bot HTTP status differs'
+        report['service_queue_'+phase] = {'rows': rows, 'queue': queue, 'status': status}
         return rows
 
     def ready(process):
@@ -787,6 +848,10 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             enqueue_replay(native_replay_actor)
             report['internal_queue_native_replay'] = await_replay(native_replay_actor)
             pending_replay_actor = create_replay_actor()
+            if service_deletion_queue:
+                native_service_actor = service_actor('native')
+                native_service_rows = await_service(native_service_actor, 'native-cleanup', enqueue_service(native_service_actor))
+                pending_service_actor = service_actor('native-pending')
             if stomp_internal_events:
                 report['stomp_native_failure_redelivery'] = stomp_broker.failure_probe()
         active.terminate()
@@ -801,6 +866,8 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             # Enqueue only after native ownership ends: Go must consume durable
             # work for an account/properties created by the Haskell process.
             enqueue_replay(pending_replay_actor)
+            if service_deletion_queue:
+                pending_service_dequeue = enqueue_service(pending_service_actor)
         candidate = Path('/candidate/brig')
         report['candidate_brig_sha256'] = hashlib.sha256(candidate.read_bytes()).hexdigest()
         log = open('/reports/brig-go.log', 'w')
@@ -811,6 +878,9 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
         ready(active)
         if client_lifecycle_contract:
             report['internal_queue_go_consumes_native'] = await_replay(pending_replay_actor)
+            if service_deletion_queue:
+                go_service_rows = await_service(pending_service_actor, 'go-consumes-native', pending_service_dequeue)
+                await_service(pending_service_actor, 'go-replays-cleanup', enqueue_service(pending_service_actor))
         go_records = [request(*case)[0] for case in cases]
         report['records'].append({'implementation': 'go', 'observations': go_records})
         mismatches = []
@@ -1003,6 +1073,8 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             go_deleted_state=[request('GET',lifecycle_path,lifecycle_headers)[0],request('GET',lifecycle_path+'/prekeys',lifecycle_headers)[0]]
             report['client_lifecycle_go_deleted_state']=go_deleted_state
             assert go_deleted_state[0]['status']==404 and go_deleted_state[1]['json']==[], 'Go deletion retained client/prekeys'
+            if service_deletion_queue:
+                go_pending_service_actor = service_actor('go-pending')
             if stomp_internal_events:
                 report['stomp_go_failure_redelivery'] = stomp_broker.failure_probe()
             active.terminate();report['client_lifecycle_go_stop_exit_code']=active.wait(timeout=35)
@@ -1011,9 +1083,16 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
                 assert check.connect_ex(('127.0.0.1',8082))!=0, 'Go lifecycle listener remains'
             if stomp_internal_events:
                 report['stomp_go_failure_cleanup'] = stomp_broker.drain_failure()
+            if service_deletion_queue:
+                go_pending_service_dequeue = enqueue_service(go_pending_service_actor)
             log=open('/reports/brig-native-client-lifecycle-switchback.log','w');logs.append(log)
             active=subprocess.Popen([str(native_brig_path),'-c',str(runtime.WORK/'brig-static-0.json')],cwd=runtime.WORK/'services/brig',stdout=log,stderr=subprocess.STDOUT)
             processes.append(active);ready(active)
+            if service_deletion_queue:
+                native_readback = await_service(pending_service_actor, 'native-reads-go')
+                assert native_readback == go_service_rows, 'native switchback service raw state differs'
+                await_service(go_pending_service_actor, 'native-consumes-go', go_pending_service_dequeue)
+                await_service(pending_service_actor, 'native-replays-cleanup', enqueue_service(pending_service_actor))
             native_connection_switchback=[]
             for i,go_page in enumerate(go_connection_pages):
                 body={'size':1}
@@ -1686,6 +1765,7 @@ def main():
     parser.add_argument('--client-lifecycle-contract', action='store_true')
     parser.add_argument('--mls-upload-originals', action='store_true')
     parser.add_argument('--stomp-internal-events', action='store_true')
+    parser.add_argument('--service-deletion-queue', action='store_true')
     args = parser.parse_args()
     if (args.registration_contract or args.saml_registration_contract) and (args.activation_contract or args.access_switchback or args.login_contract):
         parser.error('registration observation runs separately from credential/activation observations')
@@ -1709,8 +1789,10 @@ def main():
         parser.error('MLS upload originals require client lifecycle observation')
     if args.stomp_internal_events and not args.client_lifecycle_contract:
         parser.error('STOMP qualification requires durable client/queue lifecycle observation')
+    if args.service_deletion_queue and (not args.stomp_internal_events or not (args.store_fixture_path if args.in_container else args.store_fixture_binary)):
+        parser.error('service deletion queue proof requires STOMP and identified tagged fixture')
     if args.in_container:
-        return inside(args.gundeck_path, args.access_switchback, args.login_contract, args.activation_contract, args.registration_contract, args.saml_registration_contract, args.public_registration_contract, args.password_reset_contract, args.password_change_contract, args.ses_feedback_contract, args.properties_contract, args.client_update_contract, args.client_registration_contract, args.client_lifecycle_contract, args.store_fixture_path, args.mls_upload_originals, args.stomp_internal_events)
+        return inside(args.gundeck_path, args.access_switchback, args.login_contract, args.activation_contract, args.registration_contract, args.saml_registration_contract, args.public_registration_contract, args.password_reset_contract, args.password_change_contract, args.ses_feedback_contract, args.properties_contract, args.client_update_contract, args.client_registration_contract, args.client_lifecycle_contract, args.store_fixture_path, args.mls_upload_originals, args.stomp_internal_events, args.service_deletion_queue)
     if args.binary is None or args.build_receipt is None or args.output is None:
         parser.error('identified binary, receipt and new output required')
     sys.path.insert(0, str(ROOT / 'tools/parity/docker'))
@@ -1764,6 +1846,8 @@ def main():
         runner['command'].append('--client-lifecycle-contract')
     if args.mls_upload_originals:
         runner['command'].append('--mls-upload-originals')
+    if args.service_deletion_queue:
+        runner['command'].append('--service-deletion-queue')
     if args.stomp_internal_events:
         import stomp_broker
         stomp_broker.prepare(spec, output)
