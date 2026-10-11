@@ -22,6 +22,8 @@ import (
 )
 
 type smtpFixture struct {
+	tlsHold                     <-chan struct{}
+	tlsRequested                chan struct{}
 	ehloFailures                int32
 	listener                    net.Listener
 	mode                        string
@@ -100,6 +102,10 @@ func (f *smtpFixture) serve(conn net.Conn) {
 			_ = wire.PrintfLine("250 AUTH LOGIN")
 		case line == "STARTTLS":
 			_ = wire.PrintfLine("220 start TLS")
+			if f.tlsHold != nil {
+				f.tlsRequested <- struct{}{}
+				<-f.tlsHold
+			}
 			secured := tls.Server(conn, f.tlsConfig)
 			if secured.Handshake() != nil {
 				return
@@ -398,5 +404,35 @@ func TestSMTPNativeConfigAndSecretText(t *testing.T) {
 	}
 	if _, err := readSMTPPassword(path + ".absent"); err == nil || errors.Is(err, os.ErrNotExist) {
 		t.Fatal("missing secret accepted or private filesystem error exposed")
+	}
+}
+
+func TestSMTPSTARTTLSCancellationDuringHandshake(t *testing.T) {
+	release, requested := make(chan struct{}), make(chan struct{}, 1)
+	f := newSMTPFixture(t, "tls", func(f *smtpFixture) { f.tlsHold = release; f.tlsRequested = requested })
+	defer close(release)
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+	result := make(chan error, 1)
+	go func() {
+		sender, err := newSMTPMailSenderRoots(ctx, f.config(), f.roots)
+		if sender != nil {
+			sender.close()
+		}
+		result <- err
+	}()
+	select {
+	case <-requested:
+	case <-time.After(time.Second):
+		t.Fatal("TLS upgrade not reached")
+	}
+	cancel()
+	select {
+	case err := <-result:
+		if err == nil {
+			t.Fatal("canceled STARTTLS initialization succeeded")
+		}
+	case <-time.After(time.Second):
+		t.Fatal("canceled STARTTLS handshake did not release connection")
 	}
 }

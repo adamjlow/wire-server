@@ -140,20 +140,23 @@ func newSMTPMailSenderRoots(ctx context.Context, c smtpMailConfig, roots *x509.C
 }
 
 func (s *smtpMailSender) action(ctx context.Context, c *smtpMailConnection, run func() error) error {
+	// STARTTLS replaces c.net during this action. Capture the original socket
+	// so cancellation cannot race with that replacement; both wrappers use it.
+	socket := c.net
 	deadline := time.Now().Add(15 * time.Second)
 	if d, ok := ctx.Deadline(); ok && d.Before(deadline) {
 		deadline = d
 	}
-	if c.net.SetDeadline(deadline) != nil {
+	if socket.SetDeadline(deadline) != nil {
 		return errors.New("SMTP connection unavailable")
 	}
 	interrupted := make(chan struct{})
-	stop := context.AfterFunc(ctx, func() { _ = c.net.SetDeadline(time.Now()); close(interrupted) })
+	stop := context.AfterFunc(ctx, func() { _ = socket.SetDeadline(time.Now()); close(interrupted) })
 	err := run()
 	if !stop() {
 		<-interrupted
 	}
-	_ = c.net.SetDeadline(time.Time{})
+	_ = socket.SetDeadline(time.Time{})
 	if err != nil || ctx.Err() != nil {
 		return errors.New("SMTP action failed")
 	}
