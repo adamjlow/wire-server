@@ -51,7 +51,7 @@ def main():
                  '-e', 'RABBITMQ_DEFAULT_PASS=synthetic-password',
                  '-e', 'RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS=+S 2:2', RABBIT])
         deadline = time.monotonic() + 90
-        while run(['docker', 'exec', broker, 'rabbitmq-diagnostics', '-q', 'ping'], 10).returncode:
+        while run(['docker', 'exec', broker, 'rabbitmq-diagnostics', '-q', 'check_running'], 10).returncode:
             if checked(['docker', 'inspect', '--format', '{{.State.Running}}', broker]) != 'true':
                 raise RuntimeError('owned broker exited during startup')
             if time.monotonic() > deadline:

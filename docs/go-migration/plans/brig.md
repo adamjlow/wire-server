@@ -1277,3 +1277,11 @@ compilation/security/runtime assertions ran in that attempt. Correct checksum
 ordering only and rerun; retain initial failure. Controller terminal1/cleanup0
 and independent owned resources empty. No dependency version changes beyond the
 planned AMQP pin; goleak checksums are its upstream test dependency.
+
+Publisher source367d55f64 full pinned checks/static units pass. First owned Rabbit
+attempt fails at reader connection before publication: readiness checked only
+Erlang ping, not Rabbit application startup. Preserve failed attempt; change only
+candidate fixture to check_running before test execution, retaining all delivery,
+queue and reconnect assertions. Terminal runner1/cleanup0 and independent owned
+namespace empty. Rebuild tagged executable for corrected fixture revision; Go
+source/dependencies/normal units unchanged, reuse exact367d55f64 quality evidence.
