@@ -4,7 +4,7 @@
 package brig
 
 /*
-#cgo LDFLAGS: -licui18n -licuuc -licudata -lstdc++ -lm
+#cgo LDFLAGS: -Wl,-Bstatic -licui18n -licuuc -licudata -lstdc++ -Wl,-Bdynamic -lm
 #include <unicode/utrans.h>
 #include <unicode/ustring.h>
 #include <stdlib.h>

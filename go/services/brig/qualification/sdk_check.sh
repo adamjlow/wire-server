@@ -3,7 +3,9 @@
 # Run inside the identified, nonroot candidate compiler SDK only.
 set -eu
 test "$(id -u)" = 65534
+test "$(gcc -print-file-name=libstdc++.a)" = /opt/brig-cxx/usr/lib/gcc/x86_64-linux-gnu/14/libstdc++.a
 cp /opt/brig-sdk/packages.txt /opt/brig-sdk/libraries.sha256 /output/
+cp /opt/brig-sdk/cxx-package.txt /opt/brig-sdk/cxx-package.sha256 /output/
 cp /usr/share/doc/libargon2-1/copyright /output/argon2-copyright
 cp /usr/share/doc/libssl3t64/copyright /output/openssl-copyright
 cp /usr/share/doc/zlib1g/copyright /output/zlib-copyright

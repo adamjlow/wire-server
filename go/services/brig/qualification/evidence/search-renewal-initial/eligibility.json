@@ -1,0 +1,10 @@
+{
+  "eligible_for_final": false,
+  "functional_go_and_native_schema_checks": "pass",
+  "reason": "SDK libstdc++14.2.0-19 has two open advisories; use official fixed gcc-14 archive14.4.0-3 and force static ICU/C++ linkage",
+  "sources": [
+    "https://security-tracker.debian.org/tracker/CVE-2026-102010",
+    "https://security-tracker.debian.org/tracker/CVE-2026-95619"
+  ],
+  "owned_cleanup_and_independent_queries": "all empty"
+}
