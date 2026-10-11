@@ -1,0 +1,97 @@
+[
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/team-size-scientific-sdk-check/argon2-copyright",
+    "sha256": "6059eb2b0f8f23b5c6023b08f68d4df9addd834665d07e5dcc364d4ae80d9b69",
+    "bytes": 8745
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/team-size-scientific-sdk-check/brig",
+    "sha256": "f3aaa361465f678b17303a6a0a504cbba79b65de4a322855f052d07ffd26ce3b",
+    "bytes": 67856592
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/team-size-scientific-sdk-check/brig.test",
+    "sha256": "8ef847aee8bb1f302e410900ef41860181ed10df82c27ff4ad93304eeee1f28f",
+    "bytes": 64625888
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/team-size-scientific-sdk-check/build-receipt.json",
+    "sha256": "0f38357a00a6c43ba7185a871878a2530db402e4df307ed57e10f135d177e2e1",
+    "bytes": 872
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/team-size-scientific-sdk-check/controller.log",
+    "sha256": "5b2278170b6160b9a369f404cd0d8b492feb291ecfe3b02e76a9f973097a7e22",
+    "bytes": 2878
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/team-size-scientific-sdk-check/cxx-package.sha256",
+    "sha256": "5abc52f67b0befe6317695d4489a2433b32854cbb6b5916a6f875b2c0e300636",
+    "bytes": 102
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/team-size-scientific-sdk-check/cxx-package.txt",
+    "sha256": "d41b16dcb551842304cab9549bb3da24fdb859d85d690bd121de7f3cb29cce01",
+    "bytes": 59
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/team-size-scientific-sdk-check/glibc-copyright",
+    "sha256": "f5788886720a2605a946e81d571e6c8162b09f58d2e2ceb8d36e5768fccd850d",
+    "bytes": 51200
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/team-size-scientific-sdk-check/go-check.log",
+    "sha256": "efd65104a91d9ee10167b8a09989044612bf6ee26afdfe152c6a3d1944256f13",
+    "bytes": 3723
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/team-size-scientific-sdk-check/icu-copyright",
+    "sha256": "5bbff5f646ce750ac0a347e7f91793279b7422a1119820b5f75d98879c201c68",
+    "bytes": 2214
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/team-size-scientific-sdk-check/libraries.sha256",
+    "sha256": "875560a1f32f1ad76a866a7f792a6b392f64c5555e8f55f270f60869079f9af2",
+    "bytes": 846
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/team-size-scientific-sdk-check/libstdc++-copyright",
+    "sha256": "20390f8a6f3b1e4d7cb45dd8652dabb259bbef688cbad839bcdb0b9ba7252f79",
+    "bytes": 69004
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/team-size-scientific-sdk-check/openssl-copyright",
+    "sha256": "6a7da622fe0637a334d2a8fc470852d2ffb77d9a2b2f930f854e32a41ad6ef35",
+    "bytes": 2543
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/team-size-scientific-sdk-check/packages.txt",
+    "sha256": "9e9db92065c33bc81e7e8b5ff6f5c0a9a32814690509f59c88718cc418f5e262",
+    "bytes": 3793
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/team-size-scientific-sdk-check/runtime-units.log",
+    "sha256": "e85576f8204cfcf996993ac9b22df5dbdd6fbde05ce46aa03d1269e160b283cd",
+    "bytes": 33449
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/team-size-scientific-sdk-check/stores-build-receipt.json",
+    "sha256": "b66ef045ebd440fff9df3c7a37c3a2da5d71f6b13a0cd3b3d5d930282d227848",
+    "bytes": 872
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/team-size-scientific-sdk-check/stores.test",
+    "sha256": "859319536bf1033dd90ca8ce275b7b53be0f9ee40970f97736247bcbc29d02e6",
+    "bytes": 69421760
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/team-size-scientific-sdk-check/zlib-copyright",
+    "sha256": "9e5b96d63773a5d177ba264254390f792be07e41748ebd94730981c6cac31cc6",
+    "bytes": 2927
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/team-size-scientific-sdk-check/zstd-copyright",
+    "sha256": "5cec9fef4d3fa7e0371fbef4ec3fc416e0105dc2a9922117f84e825cb11f50f8",
+    "bytes": 5332
+  }
+]

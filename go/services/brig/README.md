@@ -1,25 +1,34 @@
 # Optional Go Brig (implementation in progress)
 
-This module is an initial runnable slice on existing native-initialized schemas.
-It parses the existing configuration, loads ZAuth keys, checks Cassandra schema94
-and opens PostgreSQL, applies the original PostgreSQL migrations, serves
-liveness/version responses and drains HTTP on TERM.
-The running process now connects self-profile, cookie-list and internal account
-status reads to the native-schema stores. Native HTTP comparison remains pending.
-The existing upstream SelfProfile JSON fixture is reused in module tests.
-Its source-derived ZAuth codec signs/verifies canonical parsed token fields using
-Go's standard Ed25519 implementation. Dependencies use the same pinned versions
-as the existing migrated services; no shared Go framework or dependency fork.
+This module implements optional Brig slices on the existing native schemas.
+It is still being built and is not a selectable whole-service replacement.
+Haskell remains supported and default.
 
-This is not a selectable or qualified whole-service replacement. Business API
-families, served documentation, remaining dependencies, queue
-listeners/discovery/cleanup, storage modes and authentication flows are still
-required. Unimplemented business paths have no successful fallback response.
-The `migrate-postgres` command supports the native database override and explicit
-reset operation. Actual Docker observations of native and Go executables confirm
-fresh-schema equality, ledger interchange, checksum rejection and all three
-nontransactional advisory locks. The current startup slice requires Cassandra
-schemas initialized by existing native operator utilities.
+Implemented slices include account/client reads, password and cookie
+authentication, email activation, internal registration (including SAML and team
+invitation acceptance), and their supporting storage, index and queue writes.
+The process also serves liveness/version responses, applies native PostgreSQL
+migrations and drains HTTP on TERM. Cassandra schemas must be initialized with
+the existing native operator utilities. Go uses the repository's pinned patched
+toolchain and service module; there is no Haskell runtime embedding or dependency
+fork.
+
+Evidence records the exact source and artifact tested. Selected executable
+native→Go→native witnesses cover [email activation](qualification/evidence/activation-switchback/README.md),
+[internal identityless registration](qualification/evidence/registration-switchback/README.md)
+and [SAML rejoin](qualification/evidence/client-bulk-saml-switchback/README.md).
+[Invitation acceptance](qualification/evidence/registration-invitation-core/README.md)
+currently has source, unit and actual native-schema storage evidence;
+its original end-to-end/API witness remains outstanding. Earlier passing
+witnesses do not automatically qualify a newer binary or the complete service.
+
+Remaining work includes public registration/mail/cookies and invitation creation,
+SCIM provisioning, client writes/prekey/MLS/DPoP operations, connections,
+properties, OAuth/app/provider/federation families, complete configuration/docs,
+queue consumption/discovery and final service/image/selector qualification.
+Unimplemented business paths have no successful fallback response.
+The migration utility's fresh-schema/ledger/checksum/advisory-lock observations
+are separately recorded; their scope does not establish the business APIs.
 
 Use the repository's pinned Go1.26.9. From this directory:
 

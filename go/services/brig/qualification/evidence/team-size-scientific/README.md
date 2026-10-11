@@ -1,0 +1,9 @@
+# Native Scientific integer team counts
+
+Source75243a72fda3dbb26ec9c6c6a5ee7bf946136f45, candidatef3aaa361465f678b17303a6a0a504cbba79b65de4a322855f052d07ffd26ce3b, static normal units8ef847aee8bb1f302e410900ef41860181ed10df82c27ff4ad93304eeee1f28f.
+
+Full pinned Go1.26.9 checks PASS, compiled normal units executed in original identified Haskell runner PASS, independent owned cleanup empty. Native Wire/IndexedUserStore/ElasticSearch.hs92,686..689 parses FilterResult doc_count as Natural with parseMaybe fallback0. Integer-valued decimal/exponent numbers must retain their exact count, not fail/default0 or round via float64. Actual mocked HTTP Elasticsearch-response controls now cover3e1 plus20.0e-1 yielding32, beyond-Word64 decimal exponent preserving exact18446744073709551616, zero/negative/fractional/missing/wrong-type defaults and existing typed query/HTTP checks. Native invitation admission consumes the same total, so this closes a known guard/parity gap.
+
+Only count JSON decoding and its focused tests changed from the storage-qualified invitation core at04c621ce6. Native Cassandra/PostgreSQL/invitation/queue code did not change, so those database controls were not redundantly rerun. Tagged binary was compiled by the controller but not executed in this attempt. Earlier storage/SAML witnesses retain their own exact source/artifact scope; no original whole e2e/API/available-service claim for this latest binary.
+
+Inherited resource concern: native arbitrary-precision scientific counts can require substantial work/memory for extreme positive exponents from the trusted Elasticsearch dependency. Preserve the contract for migration; bounded count policy/hardening requires separate work. Static native C-library/linker safety limitations remain documented; Go vulnerability checks alone do not prove them safe.

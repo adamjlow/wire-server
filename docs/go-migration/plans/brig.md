@@ -2,6 +2,24 @@
 
 User-selected goal2026-10-10. Reference/upstream source f6636ed53315fa7b0fc4c8aa39c0bb30c98b6d5e. Work on go-migration; develop tracks upstream. Haskell remains supported/default. Explicit same-author review delegation applies; no independent review claim, production switch, push or Haskell/security-policy repair.
 
+## Current status (2026-10-11)
+
+Brig remains implementing/unavailable; Galley is authorized only after actual
+whole Brig completion. Latest source75243a72f has pinned Go checks and static
+original-runner units PASS. Internal invitation acceptance is implemented with
+native validation/SCIM/claim/membership/activation/cleanup ordering; actual
+native-schema code/deletion/pending checks PASS at04c621ce6. The latest count-only
+fix preserves native integer-valued Scientific team totals without rounding;
+no storage code changed or redundant database rerun was performed.
+
+Selected prior exact artifacts have positive native→Go→native activation,
+identityless internal registration and SAML rejoin witnesses. These are scoped
+observations, not whole-service or original535 e2e acceptance. Public registration,
+invitation setup/SCIM provisioning, client writes and other remaining API
+families, queue consumers, operations and final image/selector/review gates are
+still required. See the module README and per-attempt evidence for precise
+scope, failures, exact artifacts and inherited security concerns.
+
 ## Executable sequence and finite acceptance
 
 1. Inventory actual Brig public/internal/federation routes, account/authentication/session/password and activation flows, clients/prekeys/MLS packages, connections, OAuth/provider/bot/calling/team interactions, queues/search/storage schemas/migration utilities, options and lifecycle. Cite source and map inherited security concerns without hardening the reference policy.
@@ -281,3 +299,5 @@ Implement native internal team-invitation registration: actual Cassandra code→
 Internal invitation source04c621ce6 passes full pinned Go checks/static normal units in original runner and actual unchanged-native-schema code/stale/absent/three-row logged deletion/pending activation removal, retaining all earlier durable assertions. Candidate33fea19e1aa53161dd37a63114c715550109413b990ffe4211671299f3d582d0; evidence registration-invitation-core and retained registration-invitation-initial-wiring. Schema0/test0/cleanup independently empty. No original invitation e2e or API switchback claim; public /register/mail/cookies, native invitation setup/SCIM provisioning and remaining Brig families still required. Reuse original accepted-invitation test unchanged once setup exists. Resolve the already identified native Scientific integer-count codec edge before claiming admission parity; optional/error negative API edges remain final controls. Preserve/document inherited nontransactional partial account/email/membership/cleanup effects, no native repair/new rollback/policy changes.
 
 Close the identified native Natural/Scientific team-size codec gap: decode integer-valued decimal/exponent JSON numbers without float rounding, preserve arbitrary integer counts, nonnegative/zero semantics and native malformed/fractional default0. Focused actual HTTP search-response controls cover3e1/20.0e-1, exact beyond-Word64 decimal exponent and negative/fractional values; full pinned quality/static original-runner units required. Native invitation CQL/storage code unchanged from04c621ce6 actual store PASS, so no redundant database rerun for this JSON-only fix. Extreme arbitrary-precision counts retain native resource-cost risk from a trusted Elasticsearch dependency; record for separate hardening, do not introduce migration-only count limits. Complete API/e2e/whole-service gates remain pending.
+
+Scientific count source75243a72f/candidatef3aaa361465f678b17303a6a0a504cbba79b65de4a322855f052d07ffd26ce3b passes pinned full Go/static original-runner unit checks, evidence team-size-scientific. Decoding-only change; no redundant native-store rerun or wider API/e2e claim. Reconciled module README/current-status plan to distinguish implemented slices and exact prior witnesses from outstanding original535/whole-service work.
