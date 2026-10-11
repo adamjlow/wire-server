@@ -1,0 +1,77 @@
+Postgres migrations finished
+----- Connection.testConnectWithRemoteUser[domain=otherdomain][38;5;9m FAIL[0m (0.27 s; failed at 2026-10-11T12:42:03.649Z) -----
+[38;5;11massertion failure:[0m
+[38;5;9mActual:
+405
+Expected:
+200[0m
+
+[38;5;11mcall stack: [0m
+1. assertFailure at test/Testlib/Assertions.hs:[38;5;11m123[0m
+
+2. shouldMatchWithMsg at test/Testlib/Assertions.hs:[38;5;11m92[0m
+
+3. shouldMatch at test/Testlib/Assertions.hs:[38;5;11m219[0m
+
+4. shouldMatchInt at test/SetupHelpers.hs:[38;5;11m83[0m
+
+5. deleteUser at test/SetupHelpers.hs:[38;5;11m336[0m
+
+6. createOne2OneConversation at test/Test/Connection.hs:[38;5;11m60[0m
+
+
+
+[38;5;11mrequest as command line: 
+[0mcurl -X 'DELETE' 'http://127.0.0.1:8082/v19/self' -H 'Request-Id: Connection.testConnectWithRemoteUser[domain=otherdomain]__DELETE_/v19/self__4' -H 'Content-Type: application/json' -H 'Z-Connection: conn' -H 'Z-User: 1a1ab99c-53cf-4498-a6b4-8a804306eef7' --data-binary '{"password":"hunter2."}'
+[38;5;11mrequest: 
+[0mDELETE http://127.0.0.1:8082/v19/self
+[38;5;11mrequest headers: 
+[0mRequest-Id: Connection.testConnectWithRemoteUser[domain=otherdomain]__DELETE_/v19/self__4
+Content-Type: application/json
+Z-Connection: conn
+Z-User: 1a1ab99c-53cf-4498-a6b4-8a804306eef7
+[38;5;11mrequest body:[0m
+{
+    "password": "hunter2."
+}
+[38;5;6mresponse status: [0m405
+[38;5;6mresponse headers:
+[0mDate: Sun, 11 Oct 2026 12:42:03 GMT
+Content-Length: 0
+[38;5;6mresponse body:[0m
+
+
+Set WIRE_INTEGRATION_TEST_VERBOSITY=1 if you want to see complete trace of the HTTP traffic in curl pseudo-syntax.
+
+Connection.testCancel[domain=other][32m OK[0m (0.45 s)
+Connection.testConnectFromIgnored[domain=other][32m OK[0m (0.63 s)
+Connection.testConnectWithRemoteUser[domain=owndomain][32m OK[0m (0.38 s)
+Connection.testSentFromIgnored[domain=other][32m OK[0m (0.50 s)
+Connection.testConnectFromBlocked[domain=other][32m OK[0m (1.19 s)
+Connection.testSentFromBlocked[domain=other][32m OK[0m (0.57 s)
+MLS.KeyPackage.testClaimKeyPackagesEphemeralUser[32m OK[0m (0.08 s)
+MLS.KeyPackage.testDeleteKeyPackages[32m OK[0m (0.20 s)
+MLS.KeyPackage.testKeyPackageCount[suite=0x0001][32m OK[0m (0.26 s)
+MLS.KeyPackage.testKeyPackageCount[suite=0x0002][32m OK[0m (0.30 s)
+MLS.KeyPackage.testKeyPackageCount[suite=0x0005][32m OK[0m (0.53 s)
+MLS.KeyPackage.testKeyPackageClaim[32m OK[0m (0.88 s)
+MLS.KeyPackage.testKeyPackageCount[suite=0x0007][32m OK[0m (0.41 s)
+MLS.KeyPackage.testKeyPackageMultipleCiphersuites[32m OK[0m (0.21 s)
+MLS.KeyPackage.testKeyPackageUploadNoKey[32m OK[0m (0.12 s)
+MLS.KeyPackage.testKeyPackageRemoteClaim[32m OK[0m (0.29 s)
+MLS.KeyPackage.testKeyPackageSelfClaim[32m OK[0m (0.62 s)
+MLS.KeyPackage.testUnsupportedCiphersuite[32m OK[0m (0.09 s)
+Connection.testConnectionLimits[domain=other][32m OK[0m (2.65 s)
+MLS.KeyPackage.testReplaceKeyPackages[32m OK[0m (0.91 s)
+MLS.KeyPackage.testReplaceKeyPackagesV7[32m OK[0m (1.09 s)
+Attempting to delete federation V0 queues...
+No or incomplete credentials for fed V0 RabbitMQ
+Attempting to delete federation V1 queues...
+No or incomplete credentials for fed V1 RabbitMQ
+Attempting to delete federation V2 queues...
+No or incomplete credentials for fed V2 RabbitMQ
+----------
+22 tests run.
+
+[38;5;9m1 failed test: [0m
+ - Connection.testConnectWithRemoteUser[domain=otherdomain]

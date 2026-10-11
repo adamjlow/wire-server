@@ -1066,3 +1066,22 @@ failure. Full XML/log/result retained. Owned projecteb34583b cleanup terminal0
 and independent container/network/volume audit empty. Observer now accumulates
 original failures, runs independent profile/action/state controls and still fails
 the final run on any original failure; assertions/expected names remain unchanged.
+
+Sourceb653fe615/service91fb27f6: full SDK/static checks pass;5 actual native/Go
+profiles identical; native-initiated reconnect/Go accept/native B accepted and
+native A exact remote readback pass. Original22 still21pass/1failure DELETE/self405.
+Aggregate client switchback exposed observer actor interference: expired lifecycle
+profile lookup correctly enqueued deletion, consumed by native on restart. Separate
+identityless profile actor expires_in3600 now isolates this control; only syntax
+checked, no backend pass claimed. All25 managed exits0, runner1/cleanup0/independent
+empty. Scoped same-author review accepts finite proof, rejects complete matrix pass.
+[Evidence](../../../go/services/brig/qualification/evidence/connection-profiles/README.md).
+
+Next implement native account deletion without a success stub: self auth/team-owner/
+email-code admission, delete unique keys/properties, native account tombstone,
+team invitations/groups, Gundeck/Galley/assets, clients, search index, user-deleted
+events before connection cleanup and cookie revocation. Preserve native effects/
+ordering and all supported user storage modes. Reference APIs include self deletion,
+code verification, internal enqueue/consumer and remote-deleted connections. Reuse
+unchanged connection22 and deletion/account/MLS originals for appropriate surface
+coverage. Retain inherited security concerns, no Haskell fixes or oracle changes.

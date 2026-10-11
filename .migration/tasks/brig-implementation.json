@@ -129,6 +129,20 @@
       "command": "Scoped pinned Go/static/reaction-policy-order units; actual Go remote create201/sent, native B pending with identical independently derived conversation UUID/owner; Go block/reconnect/rescind200 leaves native B cancelled and native A restart exact remote row readback. Prior local/cursor/signed/raw and14 original MLS strict XML pass,25exits0/runner0/cleanup0/independent empty. Incoming profiles/full typed outgoing profile decode/reciprocal original connections/full535 remain unqualified.",
       "revision": "35738642491006242d04fe0a00b21921479eed88",
       "artifact": "go/services/brig/qualification/evidence/connection-remote-actions/README.md"
+    },
+    {
+      "criterion": "quality",
+      "result": "pass",
+      "command": "Scoped sourceb653fe615/service91fb27f6 full pinned Go/static unit checks;5 exact native/Go federation public profiles, actual native-initiated reconnect/Go accept/native B accepted and native A exact remote state readback. Not original22/whole535 pass; both backend failures retained separately.",
+      "revision": "b653fe615974533002e471d4ef5407c56fdbbdcb",
+      "artifact": "go/services/brig/qualification/evidence/connection-profiles/README.md"
+    },
+    {
+      "criterion": "operations",
+      "result": "fail",
+      "command": "Original22:21pass/1failure in both attempts (remote-owned setup needs unimplemented DELETE/self405). Aggregate observer also failed client state readback because public-profile lookup queued expired lifecycle actor deletion, consumed by native restart. All25 managed exits0/runner1/cleanup0 and independent empty. Observer now uses separate expires_in3600 actor; correction not backend-tested.",
+      "revision": "b653fe615974533002e471d4ef5407c56fdbbdcb",
+      "artifact": "go/services/brig/qualification/evidence/connection-profiles/README.md"
     }
   ],
   "review": null,
@@ -164,5 +178,5 @@
       "required_evidence": "Frozen100request/concurrency8 latency/RSS/CPU/metrics smoke and eight held-body drain/listener close/SIGTERM0 within35s; actual unchanged-schema same-state native-Go-native auth/password/cookie/client/prekey/MLS/property/connection/pending action/OAuth/apps/groups/domain/queue/search and storage-mode witnesses. Trusted nonroot optional source/license image and separately scoped image-only/default-byte-preserving selector. Exact final qualified artifact and user-delegated same-author self-review with serious inherited concerns and unavailable native checks accurately recorded."
     }
   ],
-  "handoff": "Latest source357386424/serviced12ea76f remote actions: native reaction algebra/activation/team policy/static precedence/exact CQL/Galley upsert; full pinned Go/static tests. Actual Go create remote201/sent/native B pending, identical deterministic conversation UUID/owner; block/reconnect/rescind200 leaves native B cancelled; native A restart exact Go remote row. Prior local updates/9notifications/cursors/signed/raw witnesses plus14 MLS originals pass,25exits0/runner0/cleanup0/independent empty. Next incoming get-users-by-ids full public profiles/visibility/pending-expiry-delete/LH/app injection and full outgoing profile decoder (current type/team-only concrete gap), then native-initiated reciprocal/incoming action and original connection suites. Whole535/eight-Go/all-entity3mode/ops/image/selector/legal/security incomplete; no gate/push."
+  "handoff": "Incoming federation profiles implemented; sourceb653fe615/service91fb27f6 full pinned Go/static checks pass. Actual5 native/Go public profiles match; native B reconnect->Go pending/accept->native B accepted; native A exact remote readback. Original22 retains21pass/1fail DELETE/self405 in remote-owned ownership retry. Aggregate client switchback additionally fails because profile lookup enqueued expired shared lifecycle actor deletion. Own observer now separate identityless expires_in3600 actor, syntax checked but not backend-qualified. Next implement full native account deletion (auth/team-owner/code admission, key/property/user tombstone/team/group cleanup/Gundeck/Galley/assets/client/search/events/connections/cookies) and rerun unchanged22 with corrected actors; retain full side-effect ordering/shared-schema/three-mode semantics, no success stub. Team-member typed peer decoding/profile variants and whole535/eight-Go/ops/image/selector/legal/security remain incomplete; no gates/push."
 }

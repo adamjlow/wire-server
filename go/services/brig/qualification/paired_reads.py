@@ -336,8 +336,11 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             connection_create_cases=[('POST','/v19/connections/'+local_domain+'/'+connection_writer,connection_write_headers),('POST','/v19/connections/'+local_domain+'/'+str(uuid.uuid4()),connection_write_headers),('POST',connection_create_path,lifecycle_headers)]
             native_connection_create_controls=[request(*case)[0] for case in connection_create_cases]
             report['connections_native_create_controls']=native_connection_create_controls
+            profile_actor=request('POST','/i/users',body={'name':'Synthetic identityless profile','expires_in':3600})[0]
+            assert profile_actor['status']==201, 'native identityless profile actor setup failed'
+            profile_user=profile_actor['json']['id']
             profile_headers={'Wire-Origin-Domain':'b.example.com','X-Wire-API-Version':'3'}
-            profile_cases=[('POST','/federation/get-users-by-ids',profile_headers,ids) for ids in [[],[connection_writer],[lifecycle_user],[str(uuid.uuid4())],[connection_writer,lifecycle_user,connection_recipient,connection_writer]]]
+            profile_cases=[('POST','/federation/get-users-by-ids',profile_headers,ids) for ids in [[],[connection_writer],[profile_user],[str(uuid.uuid4())],[connection_writer,profile_user,connection_recipient,connection_writer]]]
             native_profile_controls=[request(*case)[0] for case in profile_cases]
             report['profiles_native_controls']=native_profile_controls
             assert all(p['status']==200 for p in native_profile_controls), 'native federation profile controls failed'

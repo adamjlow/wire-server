@@ -1,0 +1,8 @@
+{
+  "source_revision": "b653fe615974533002e471d4ef5407c56fdbbdcb",
+  "output": "/home/operator/.cache/wire-migration/brig-20261010/connection-profiles-original22-aggregate-paired",
+  "result": "failed",
+  "e2e_executed": false,
+  "failure": "owned dependency disk floor unmet before backend startup",
+  "resolution": "Verified relocation of previous owned SDK output, with original-path symlink and retained hash/mode/owner receipt"
+}

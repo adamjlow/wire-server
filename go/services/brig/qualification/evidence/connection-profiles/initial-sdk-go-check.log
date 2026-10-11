@@ -1,0 +1,10 @@
+all modules verified
+2026/10/11 12:31:20 session refresh notification failed
+--- FAIL: TestRemoteConnectionReactionAndAdmissionOrder (0.00s)
+    connection_remote_test.go:51: federation rejection caused effects [get-users-by-ids]
+2026/10/11 12:31:24 session refresh notification failed
+FAIL
+FAIL	github.com/adamjlow/wire-server/go/services/brig	4.649s
+?   	github.com/adamjlow/wire-server/go/services/brig/cmd/brig	[no test files]
+FAIL
+Candidate checks failed: go test failed (exit 1)

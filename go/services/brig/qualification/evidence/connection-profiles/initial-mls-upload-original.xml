@@ -1,0 +1,43 @@
+<?xml version='1.0' ?><testsuites name="wire-server"><testsuite name="integration" tests="22" failures="1" time="12.28477537"><testcase name="Connection.testCancel[domain=other]" time="0.42416361" /><testcase name="Connection.testConnectFromBlocked[domain=other]" time="0.851393065" /><testcase name="Connection.testConnectFromIgnored[domain=other]" time="0.696761278" /><testcase name="Connection.testConnectWithRemoteUser[domain=otherdomain]" time="0.220498826"><failure>assertion failure:
+Actual:
+405
+Expected:
+200
+
+call stack: 
+1. assertFailure at test/Testlib/Assertions.hs:123
+
+2. shouldMatchWithMsg at test/Testlib/Assertions.hs:92
+
+3. shouldMatch at test/Testlib/Assertions.hs:219
+
+4. shouldMatchInt at test/SetupHelpers.hs:83
+
+5. deleteUser at test/SetupHelpers.hs:336
+
+6. createOne2OneConversation at test/Test/Connection.hs:60
+
+
+
+request as command line: 
+curl -X &#39;DELETE&#39; &#39;http://127.0.0.1:8082/v19/self&#39; -H &#39;Request-Id: Connection.testConnectWithRemoteUser[domain=otherdomain]__DELETE_/v19/self__4&#39; -H &#39;Content-Type: application/json&#39; -H &#39;Z-Connection: conn&#39; -H &#39;Z-User: 5f8e2bb6-c230-45b3-ac9a-f70902042f75&#39; --data-binary &#39;{&quot;password&quot;:&quot;hunter2.&quot;}&#39;
+request: 
+DELETE http://127.0.0.1:8082/v19/self
+request headers: 
+Request-Id: Connection.testConnectWithRemoteUser[domain=otherdomain]__DELETE_/v19/self__4
+Content-Type: application/json
+Z-Connection: conn
+Z-User: 5f8e2bb6-c230-45b3-ac9a-f70902042f75
+request body:
+{
+    &quot;password&quot;: &quot;hunter2.&quot;
+}
+response status: 405
+response headers:
+Date: Sun, 11 Oct 2026 12:35:42 GMT
+Content-Length: 0
+response body:
+
+
+Set WIRE_INTEGRATION_TEST_VERBOSITY=1 if you want to see complete trace of the HTTP traffic in curl pseudo-syntax.
+</failure></testcase><testcase name="Connection.testConnectWithRemoteUser[domain=owndomain]" time="0.430447639" /><testcase name="Connection.testConnectionLimits[domain=other]" time="2.541076503" /><testcase name="Connection.testSentFromBlocked[domain=other]" time="0.538289472" /><testcase name="Connection.testSentFromIgnored[domain=other]" time="0.548594509" /><testcase name="MLS.KeyPackage.testClaimKeyPackagesEphemeralUser" time="0.074641311" /><testcase name="MLS.KeyPackage.testDeleteKeyPackages" time="0.255993561" /><testcase name="MLS.KeyPackage.testKeyPackageClaim" time="0.729566146" /><testcase name="MLS.KeyPackage.testKeyPackageCount[suite=0x0001]" time="0.311088752" /><testcase name="MLS.KeyPackage.testKeyPackageCount[suite=0x0002]" time="0.292349471" /><testcase name="MLS.KeyPackage.testKeyPackageCount[suite=0x0005]" time="0.39405558" /><testcase name="MLS.KeyPackage.testKeyPackageCount[suite=0x0007]" time="0.359094137" /><testcase name="MLS.KeyPackage.testKeyPackageMultipleCiphersuites" time="0.343233353" /><testcase name="MLS.KeyPackage.testKeyPackageRemoteClaim" time="0.31998269" /><testcase name="MLS.KeyPackage.testKeyPackageSelfClaim" time="0.743099972" /><testcase name="MLS.KeyPackage.testKeyPackageUploadNoKey" time="0.12545756" /><testcase name="MLS.KeyPackage.testReplaceKeyPackages" time="0.975130851" /><testcase name="MLS.KeyPackage.testReplaceKeyPackagesV7" time="1.016164161" /><testcase name="MLS.KeyPackage.testUnsupportedCiphersuite" time="0.093692923" /></testsuite></testsuites>
