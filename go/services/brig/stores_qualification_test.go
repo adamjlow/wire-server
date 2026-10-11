@@ -802,6 +802,15 @@ func TestOwnedDurableStores(t *testing.T) {
 		if err := store.create(ctx, firstRow, nil, nil); err != nil {
 			t.Fatal(err)
 		}
+		// Native account creation deliberately omits handles. Seed the later
+		// handle update before asserting the read projection; do not change it.
+		if mode == "cassandra" {
+			if err := cassandra.Query(`UPDATE user SET handle=? WHERE id=?`, handle, first).WithContext(ctx).Consistency(gocql.LocalQuorum).RetryPolicy(&gocql.SimpleRetryPolicy{NumRetries: 5}).Exec(); err != nil {
+				t.Fatal(err)
+			}
+		} else if _, err := postgres.Exec(ctx, `UPDATE wire_user SET handle=$1 WHERE id=$2::uuid`, handle, first.String()); err != nil {
+			t.Fatal(err)
+		}
 		if err := store.create(ctx, secondRow, nil, nil); err != nil {
 			t.Fatal(err)
 		}

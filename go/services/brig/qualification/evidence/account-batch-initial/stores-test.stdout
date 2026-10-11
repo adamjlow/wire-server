@@ -1,0 +1,4 @@
+=== RUN   TestOwnedDurableStores
+    stores_qualification_test.go:818: cassandra native batch projection lost/swapped team, handle or assets
+--- FAIL: TestOwnedDurableStores (1.27s)
+FAIL
