@@ -415,7 +415,7 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             report['provider_native_registered'] = provider_setup
             assert provider_setup['status'] == 201, 'native provider registration failed'
             provider_id = provider_setup['json']['id']
-            provider_headers = {'Z-Provider': provider_id}
+            provider_headers = {'Z-Provider': provider_id, 'Z-Type': 'provider'}
             provider_user_headers = {'Z-User': user}
             provider_inactive = [request('GET', '/v19/provider', provider_headers)[0],
                 request('GET', '/v19/providers/'+provider_id, provider_user_headers)[0],
@@ -428,18 +428,20 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             report['provider_native_activated'] = activated
             assert activated['status'] == 200, 'native provider activation failed'
             missing_provider = str(uuid.uuid4())
-            provider_cases = [('GET', '/v19/provider', provider_headers),
+            provider_cases = [('GET', '/v19/provider', {'Z-Provider': provider_id}),
+                ('GET', '/v19/provider', {'Z-Provider': provider_id, 'Z-Type': 'user'}),
+                ('GET', '/v19/provider', provider_headers),
                 ('HEAD', '/v19/provider', provider_headers),
                 ('GET', '/v19/providers/'+provider_id, provider_user_headers),
-                ('GET', '/v19/provider', {'Z-Provider': missing_provider}),
+                ('GET', '/v19/provider', {'Z-Provider': missing_provider, 'Z-Type': 'provider'}),
                 ('GET', '/v19/providers/'+missing_provider, provider_user_headers),
-                ('PUT', '/v19/provider', {'Z-Provider': missing_provider}, {'name': 'Synthetic missing'}),
+                ('PUT', '/v19/provider', {'Z-Provider': missing_provider, 'Z-Type': 'provider'}, {'name': 'Synthetic missing'}),
                 ('PUT', '/v19/provider', provider_headers, {'name': None, 'url': None, 'description': None}),
                 ('PUT', '/v19/provider', provider_headers, {'name': 'Synthetic native provider'}),
                 ('GET', '/v19/provider', provider_headers)]
             provider_native_controls = [request(*case)[0] for case in provider_cases]
             report['provider_native_controls'] = provider_native_controls
-            assert [r['status'] for r in provider_native_controls] == [200,200,200,404,404,404,200,200,200], 'native provider read/update reference changed'
+            assert [r['status'] for r in provider_native_controls] == [403,403,200,200,200,404,404,404,200,200,200], 'native provider read/update reference changed'
         registration_body, registration_reference, registration_reads = None, None, None
         if registration_contract:
             actor = str(uuid.uuid4())

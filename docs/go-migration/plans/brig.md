@@ -1826,3 +1826,12 @@ setter syntax. Correct to the pinned driver's RetryPolicy method; retain failed
 SDK receipt/log. No backend ran; SDK cleanup0/owned namespace empty. Owned Go
 cache now has a byte-verified disk copy (9114 files), preserving its original
 shared-memory copy; fresh output/cache use available disk space.
+
+Source99912bb58 full pinned Go/static checks pass, but first backend observation
+stops before activation: provider account requests without Z-Type return empty403,
+while public Z-User profile returns404 for unactivated state. Source native
+ZAuthServant checkType explicitly requires Z-Type `provider`; Go omitted it. Add
+that required type guard and native empty403, correct fixture headers, and add
+missing/wrong-type controls (11 comparisons total). Retain failed backend, all24
+managed exits0/runner1/cleanup0/independent empty. This is an actual security
+boundary correction, not weakening an oracle or changing native policy.

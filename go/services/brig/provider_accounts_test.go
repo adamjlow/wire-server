@@ -65,6 +65,7 @@ func TestProviderAccountGuardAndWriteOrdering(t *testing.T) {
 			}
 			r := httptest.NewRequest(http.MethodPut, "/provider", strings.NewReader(`{"name":"Updated"}`))
 			r.Header.Set("Z-Provider", id.String())
+			r.Header.Set("Z-Type", "provider")
 			r.Header.Set("Content-Type", "application/json")
 			w := httptest.NewRecorder()
 			h.handle(w, r, r.URL.Path)
@@ -100,8 +101,19 @@ func TestProviderPublicProjectionAndHeaderBoundary(t *testing.T) {
 		t.Fatal("storage accessed before header validation")
 		return nil, nil
 	}
+	for _, typ := range []string{"", "user", "bot"} {
+		r := httptest.NewRequest(http.MethodGet, "/provider", nil)
+		r.Header.Set("Z-Provider", id.String())
+		r.Header.Set("Z-Type", typ)
+		w := httptest.NewRecorder()
+		h.handle(w, r, r.URL.Path)
+		if w.Code != 403 || w.Body.Len() != 0 {
+			t.Fatal("native provider token-type boundary differs")
+		}
+	}
 	for _, header := range []string{"", "invalid"} {
 		r := httptest.NewRequest(http.MethodGet, "/provider", nil)
+		r.Header.Set("Z-Type", "provider")
 		if header != "" {
 			r.Header.Set("Z-Provider", header)
 		}

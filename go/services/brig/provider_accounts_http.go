@@ -17,6 +17,11 @@ type providerAccountHTTP struct {
 }
 
 func providerHeader(w http.ResponseWriter, r *http.Request) (gocql.UUID, bool) {
+	// Native ZAuthProvider additionally requires its gateway token type.
+	if r.Header.Get("Z-Type") != "provider" {
+		w.WriteHeader(http.StatusForbidden)
+		return gocql.UUID{}, false
+	}
 	values := r.Header.Values("Z-Provider")
 	if len(values) == 0 {
 		routeParseError(w, "Header Z-Provider is required")
