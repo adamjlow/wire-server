@@ -496,6 +496,17 @@ func TestOwnedDurableStores(t *testing.T) {
 	if exists, err := (blocklistStore{databases: pgOnly.databases, mode: "migration-to-postgresql"}).exists(ctx, pgOnlyEmail); err != nil || exists {
 		t.Fatal("migration blocklist incorrectly read PG", err)
 	}
+	if c.Settings.PasswordRate == nil || c.Settings.PasswordPolicy == nil {
+		t.Fatal("native password configuration missing")
+	}
+	rate, err := newPasswordRateLimiter(*c.Settings.PasswordRate)
+	if err != nil {
+		t.Fatal(err)
+	}
+	passwords, err := newPasswordService(*c.Settings.PasswordPolicy, rate, 1)
+	if err != nil {
+		t.Fatal(err)
+	}
 	for mode, store := range stores {
 		owner := user()
 		if err := store.create(ctx, newRecord(owner), nil, nil); err != nil {
@@ -562,6 +573,51 @@ func TestOwnedDurableStores(t *testing.T) {
 		if mode == "migration-to-postgresql" {
 			if got, err := (passwordResetStore{databases: reset.databases, mode: "postgresql"}).lookup(ctx, key); err != nil || got != nil {
 				t.Fatal("reset dual-delete missed PG", err)
+			}
+		}
+		// Exercise reset with actual configured KDF, native user/reset selectors
+		// and shared Cassandra cookies; no mail callbacks or hash success stubs.
+		if hash, err := store.hashedPassword(ctx, owner); err != nil || hash == nil || *hash != password {
+			t.Fatal(mode, "reset password-only projection", err)
+		}
+		if hash, err := store.hashedPassword(ctx, user()); err != nil || hash != nil {
+			t.Fatal(mode, "missing password-only projection", err)
+		}
+		if err := reset.insert(ctx, key, record, 30); err != nil {
+			t.Fatal(err)
+		}
+		sessions := sessionStore{cassandra}
+		at := time.Now().UTC().Truncate(time.Millisecond)
+		if err := sessions.insert(ctx, owner, sessionCookie{ID: 1, Type: 1, Created: at, Expires: at.Add(time.Minute)}, nil); err != nil {
+			t.Fatal(err)
+		}
+		resetFlow := passwordResetService{codes: reset, account: store.get, currentPassword: store.hashedPassword, setPassword: store.setPassword, deleteCookies: sessions.deleteAll, verifyPassword: passwords.verify, hashPassword: passwords.hash, now: time.Now}
+		if err := resetFlow.complete(ctx, passwordResetRequest{key: &key, code: "wrong-synthetic-reset", password: "Synthetic-reset-store-password!"}); !errors.Is(err, errPasswordResetCode) {
+			t.Fatal(mode, "actual reset wrong-code control", err)
+		}
+		if got, err := reset.lookup(ctx, key); err != nil || got == nil || got.retries == nil || *got.retries != 2 || got.timeout == nil || !got.timeout.Equal(timeout) {
+			t.Fatal(mode, "actual reset retry/logical deadline", err)
+		}
+		if err := resetFlow.complete(ctx, passwordResetRequest{key: &key, code: code, password: "Synthetic-reset-store-password!"}); err != nil {
+			t.Fatal(mode, "actual reset completion", err)
+		}
+		hash, err := store.hashedPassword(ctx, owner)
+		if err != nil || hash == nil || *hash == password {
+			t.Fatal(mode, "actual reset password not replaced", err)
+		}
+		matches, _, err := passwords.verify(ctx, passwordRateKey{kind: "user", id: owner.String()}, *hash, "Synthetic-reset-store-password!")
+		if err != nil || !matches {
+			t.Fatal(mode, "actual reset hash verification", err)
+		}
+		if got, err := reset.lookup(ctx, key); err != nil || got != nil {
+			t.Fatal(mode, "completed reset retained code", err)
+		}
+		if cookies, err := sessions.list(ctx, owner); err != nil || len(cookies) != 0 {
+			t.Fatal(mode, "completed reset retained cookies", err)
+		}
+		if mode == "migration-to-postgresql" {
+			if got, err := (passwordResetStore{databases: reset.databases, mode: "postgresql"}).lookup(ctx, key); err != nil || got != nil {
+				t.Fatal("completed reset retained PG mirror", err)
 			}
 		}
 	}
