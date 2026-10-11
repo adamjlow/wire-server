@@ -1405,3 +1405,16 @@ This is two-Go/Haskell remainder, not final eight-Go535/all-entity qualification
 Next actual internal queue consumer replay and account deletion/code delivery
 finite cases, then remaining Brig contracts/final matrix. Public/internal endpoints
 are real-bound; internal ensure HTTP tested in units only. Keep all goals/gates.
+
+Internal SQS listener: preserve native long poll20/max10, concurrent batch with
+peer cancellation on callback failure, malformed/missing-body retention, and
+DeleteMessage only after callback success. Every event has60-second timeout;
+user events getAccountNoFilter and replay deleteAccount even for a tombstone,
+then native setDeleteThrottleMillis/default100ms delay (also for missing users).
+Client events support legacy object/id and required nullable connection, remove
+Galley then Gundeck with200/204/404 admission and publish client-remove afterward.
+Validate exact keys/UUID/client IDs; scrub bodies, credentials and receipt handles
+from diagnostics. Reuse the already-qualified signed SQS query transport and
+extract the existing batch helper without changing SES semantics. Finite signed
+HTTP/ack/failure/cancellation tests precede actual owned queue replay. STOMP and
+service.delete/provider cleanup remain explicit unfinished contracts.

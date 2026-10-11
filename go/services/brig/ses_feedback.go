@@ -153,6 +153,10 @@ func (l *sesFeedbackListener) listen() {
 }
 
 func (l *sesFeedbackListener) process(ctx context.Context, messages []sqsFeedbackMessage) error {
+	return processSQSBatch(ctx, messages, l.message)
+}
+
+func processSQSBatch(ctx context.Context, messages []sqsFeedbackMessage, handle func(context.Context, sqsFeedbackMessage) error) error {
 	batch, cancel := context.WithCancel(ctx)
 	defer cancel()
 	var workers sync.WaitGroup
@@ -172,7 +176,7 @@ func (l *sesFeedbackListener) process(ctx context.Context, messages []sqsFeedbac
 				message := messages[next]
 				next++
 				mutex.Unlock()
-				if err := l.message(batch, message); err != nil {
+				if err := handle(batch, message); err != nil {
 					mutex.Lock()
 					if failure == nil {
 						failure = err

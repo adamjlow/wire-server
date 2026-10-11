@@ -447,6 +447,15 @@ func Run(ctx context.Context, c Config) error {
 	server := &http.Server{Handler: newHandler(c, &business), ReadHeaderTimeout: 10 * time.Second, IdleTimeout: 60 * time.Second}
 	feedback := startSESFeedback(ctx, mailDelivery.feedback, blocklist, c.Settings.SQSThrottleMillis)
 	defer feedback.close()
+	deleteThrottle := int64(100)
+	if value := c.Settings.Other["setDeleteThrottleMillis"]; value != nil {
+		encoded, err := json.Marshal(value)
+		if err != nil || json.Unmarshal(encoded, &deleteThrottle) != nil {
+			return errors.New("invalid internal deletion throttle configuration")
+		}
+	}
+	internalListener := startInternalEvents(ctx, internalQueue, internalDeletionProcessor{get: business.users.get, deleteUser: deletion.execute, deleteClient: business.peers.deleteQueuedClient, throttle: time.Duration(deleteThrottle) * time.Millisecond}, c.Settings.SQSThrottleMillis)
+	defer internalListener.close()
 	return serve(ctx, server, listener)
 }
 

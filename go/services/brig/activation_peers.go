@@ -9,6 +9,7 @@ import (
 	"io"
 	"net"
 	"net/http"
+	"slices"
 	"time"
 
 	"github.com/apache/cassandra-gocql-driver/v2"
@@ -47,7 +48,7 @@ func (p brigPeers) galleyRPCStatus(ctx context.Context, method, path, requestID 
 	return p.replayableRPCStatus(ctx, p.galley, method, path, requestID, body, allowMissing, allowForbidden, user)
 }
 
-func (p brigPeers) replayableRPCStatus(ctx context.Context, endpoint Endpoint, method, path, requestID string, body []byte, allowMissing, allowForbidden bool, user *gocql.UUID) ([]byte, int, error) {
+func (p brigPeers) replayableRPCStatus(ctx context.Context, endpoint Endpoint, method, path, requestID string, body []byte, allowMissing, allowForbidden bool, user *gocql.UUID, expected ...int) ([]byte, int, error) {
 	for attempt := 0; ; attempt++ {
 		req, err := http.NewRequestWithContext(ctx, method, "http://"+endpoint.Address()+path, bytes.NewReader(body))
 		if err != nil {
@@ -71,7 +72,11 @@ func (p brigPeers) replayableRPCStatus(ctx context.Context, endpoint Endpoint, m
 			if allowMissing && response.StatusCode == 404 {
 				return nil, response.StatusCode, nil
 			}
-			if response.StatusCode >= 200 && response.StatusCode < 300 && (!allowMissing || response.StatusCode == 200) {
+			accepted := response.StatusCode >= 200 && response.StatusCode < 300 && (!allowMissing || response.StatusCode == 200)
+			if len(expected) > 0 {
+				accepted = slices.Contains(expected, response.StatusCode)
+			}
+			if accepted {
 				if readErr == nil && len(raw) <= 4<<20 {
 					return raw, response.StatusCode, nil
 				}
