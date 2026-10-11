@@ -3,10 +3,7 @@ package brig
 
 import (
 	"context"
-	"crypto/sha256"
-	"encoding/base64"
 	"errors"
-	"math"
 	"strings"
 
 	"github.com/apache/cassandra-gocql-driver/v2"
@@ -81,13 +78,10 @@ func (s userAuthStore) cassandraLoginLookup(ctx context.Context, query, key stri
 }
 
 func (s userAuthStore) pendingLoginActivation(ctx context.Context, email string) (bool, error) {
-	key, err := emailUniqueKey(email)
+	encoded, err := activationEmailKey(email)
 	if err != nil {
 		return false, err
 	}
-	digest := sha256.Sum256([]byte(key))
-	// Activation uses the full SHA256; verification uses only its first15 bytes.
-	encoded := base64.URLEncoding.EncodeToString(digest[:])
 	var user *gocql.UUID
 	var code string
 	err = s.cassandra.Query(`SELECT user,code FROM activation_keys WHERE key=?`, encoded).
@@ -122,6 +116,10 @@ func (s userAuthStore) pendingLoginActivation(ctx context.Context, email string)
 		return true, nil
 	}
 	activated, err := emailUniqueKey(*account.Email)
+	if err != nil {
+		return false, err
+	}
+	key, err := emailUniqueKey(email)
 	return activated != key, err
 }
 
@@ -148,11 +146,11 @@ func (s loginBudgetStore) lookup(ctx context.Context, key string) (*loginBudget,
 	return &loginBudget{seconds: float64(ttl), remaining: value}, nil
 }
 func (s loginBudgetStore) insert(ctx context.Context, key string, budget loginBudget) error {
-	rounded := math.RoundToEven(budget.seconds)
-	if math.IsNaN(rounded) || math.IsInf(rounded, 0) || rounded >= float64(math.MaxInt64) || rounded < float64(math.MinInt64) {
-		return errors.New("invalid login budget timeout")
+	ttl, err := cassandraTTL(budget.seconds)
+	if err != nil {
+		return err
 	}
-	err := s.cassandra.Query(`INSERT INTO budget (key,budget) VALUES (?,?) USING TTL ?`, key, budget.remaining, int32(int64(rounded))).
+	err = s.cassandra.Query(`INSERT INTO budget (key,budget) VALUES (?,?) USING TTL ?`, key, budget.remaining, ttl).
 		WithContext(ctx).Consistency(gocql.One).RetryPolicy(&gocql.SimpleRetryPolicy{NumRetries: 5}).Exec()
 	if err != nil {
 		return errors.New("login budget update failed")

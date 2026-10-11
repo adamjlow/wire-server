@@ -7,6 +7,7 @@ import (
 	"context"
 	"crypto/sha256"
 	"encoding/base64"
+	"errors"
 	"os"
 	"strings"
 	"testing"
@@ -362,5 +363,125 @@ func TestOwnedDurableStores(t *testing.T) {
 	nextBudget, err := budgetStore.lookup(ctx, budgetKey)
 	if err != nil || nextBudget == nil || nextBudget.remaining != 1 || nextBudget.seconds > budget.seconds {
 		t.Fatal("budget reset timeout or lost retry", err)
+	}
+	// Activation/email ownership share the unchanged native tables across all
+	// user modes. Reject stealing an active identity and wrong-owner deletion.
+	for mode, store := range stores {
+		owner := user()
+		if err := store.create(ctx, newRecord(owner), nil, nil); err != nil {
+			t.Fatal(err)
+		}
+		if active, err := store.activated(ctx, owner); err != nil || active {
+			t.Fatal(mode, "new user unexpectedly activated", err)
+		}
+		email := "Synthetic+alias-" + mode + "@example.com"
+		if claimed, err := store.claimEmailKey(ctx, email, owner); err != nil || !claimed {
+			t.Fatal(mode, "claim unactivated identity", err)
+		}
+		if err := store.setEmailIdentity(ctx, owner, &email, true); err != nil {
+			t.Fatal(mode, err)
+		}
+		if active, err := store.activated(ctx, owner); err != nil || !active {
+			t.Fatal(mode, "activation not persisted", err)
+		}
+		other := user()
+		if available, err := store.emailKeyAvailable(ctx, email, &other); err != nil || available {
+			t.Fatal(mode, "active email available to other owner", err)
+		}
+		if claimed, err := store.claimEmailKey(ctx, email, other); err != nil || claimed {
+			t.Fatal(mode, "active identity stolen", err)
+		}
+		if err := store.deleteEmailKey(ctx, email, &other); err != nil {
+			t.Fatal(err)
+		}
+		if available, err := store.emailKeyAvailable(ctx, email, &other); err != nil || available {
+			t.Fatal("wrong-owner deletion removed identity", err)
+		}
+		if claimed, err := store.claimEmailKey(ctx, email, owner); err != nil || !claimed {
+			t.Fatal("same-owner claim failed", err)
+		}
+		if err := store.clearUnvalidatedEmail(ctx, owner); err != nil {
+			t.Fatal(err)
+		}
+		account, err := store.get(ctx, owner)
+		if err != nil || account == nil || !account.Activated || account.Email == nil || *account.Email != email || account.EmailUnvalidated != nil {
+			t.Fatal(mode, "activated identity projection changed", err)
+		}
+		if err := store.deleteEmailKey(ctx, email, &owner); err != nil {
+			t.Fatal(err)
+		}
+		if available, err := store.emailKeyAvailable(ctx, email, nil); err != nil || !available {
+			t.Fatal("released email unavailable", err)
+		}
+	}
+	legacyOwner := user()
+	if err := stores["cassandra"].create(ctx, newRecord(legacyOwner), nil, nil); err != nil {
+		t.Fatal(err)
+	}
+	legacyEmail := "synthetic-legacy-activation@example.com"
+	if err := stores["migration-to-postgresql"].setEmailIdentity(ctx, legacyOwner, &legacyEmail, true); err != nil {
+		t.Fatal(err)
+	}
+	if active, err := stores["cassandra"].activated(ctx, legacyOwner); err != nil || !active {
+		t.Fatal("legacy activation migrated user implicitly", err)
+	}
+	activation := activationStore{cassandra}
+	record, err := activation.newCode(ctx, "synthetic-activation@example.com", 60.5, &legacyOwner)
+	if err != nil || len(record.code) != 6 || record.ttl != 60 || record.retries != 3 {
+		t.Fatal("native activation generation shape", err)
+	}
+	gotActivation, err := activation.verify(ctx, record.key, record.code)
+	if err != nil || gotActivation == nil || gotActivation.user == nil || *gotActivation.user != legacyOwner {
+		t.Fatal("generated activation could not be verified", err)
+	}
+	for expected := int32(2); expected >= 0; expected-- {
+		if _, err := activation.verify(ctx, record.key, "wrong-synthetic-code"); !errors.Is(err, errInvalidActivationCode) {
+			t.Fatal("wrong activation accepted", err)
+		}
+		stored, err := activation.lookup(ctx, record.key)
+		if err != nil || stored == nil || stored.retries != expected || stored.ttl > record.ttl || stored.ttl <= 0 {
+			t.Fatal("activation retry reset TTL or deleted too early", err)
+		}
+	}
+	if _, err := activation.verify(ctx, record.key, record.code); err != nil {
+		t.Fatal("native zero-retry correct code rejected", err)
+	}
+	if _, err := activation.verify(ctx, record.key, "wrong-synthetic-code"); !errors.Is(err, errInvalidActivationCode) {
+		t.Fatal(err)
+	}
+	if stored, err := activation.lookup(ctx, record.key); err != nil || stored != nil {
+		t.Fatal("exhausted activation record not revoked", err)
+	}
+	for _, mode := range []string{"cassandra", "postgresql", "migration-to-postgresql"} {
+		blocked := blocklistStore{databases: stores["postgresql"].userAuthStore, mode: mode}
+		email := "synthetic-blocked-" + mode + "@example.com"
+		if exists, err := blocked.exists(ctx, email); err != nil || exists {
+			t.Fatal("new blocklist row exists", err)
+		}
+		if err := blocked.write(ctx, email, false); err != nil {
+			t.Fatal(err)
+		}
+		if exists, err := blocked.exists(ctx, email); err != nil || !exists {
+			t.Fatal("blocklist write missing", err)
+		}
+		if mode == "migration-to-postgresql" {
+			if exists, err := (blocklistStore{databases: blocked.databases, mode: "postgresql"}).exists(ctx, email); err != nil || !exists {
+				t.Fatal("dual-write missed PostgreSQL", err)
+			}
+		}
+		if err := blocked.write(ctx, email, true); err != nil {
+			t.Fatal(err)
+		}
+		if exists, err := blocked.exists(ctx, email); err != nil || exists {
+			t.Fatal("blocklist deletion missing", err)
+		}
+	}
+	pgOnlyEmail := "synthetic-pg-only-blocklist@example.com"
+	pgOnly := blocklistStore{databases: stores["postgresql"].userAuthStore, mode: "postgresql"}
+	if err := pgOnly.write(ctx, pgOnlyEmail, false); err != nil {
+		t.Fatal(err)
+	}
+	if exists, err := (blocklistStore{databases: pgOnly.databases, mode: "migration-to-postgresql"}).exists(ctx, pgOnlyEmail); err != nil || exists {
+		t.Fatal("migration blocklist incorrectly read PG", err)
 	}
 }
