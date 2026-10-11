@@ -1046,6 +1046,7 @@ func TestOwnedDurableStores(t *testing.T) {
 	if err := cassandra.Query(`SELECT count(*) FROM users_pending_activation WHERE user=?`, pendingID).WithContext(ctx).Consistency(gocql.LocalQuorum).Scan(&remaining); err != nil || remaining != 0 {
 		t.Fatal("pending activation row remains", err)
 	}
+	qualifyServiceDeletionStores(t, ctx, cassandra)
 	qualifyServiceBotStores(t, ctx, stores, newRecord)
 	qualifyAccountDeletionStores(t, ctx, stores, newRecord)
 	qualifyDeletionCodeStores(t, ctx, cassandra)

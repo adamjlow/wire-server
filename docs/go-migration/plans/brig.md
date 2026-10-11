@@ -1582,3 +1582,15 @@ records exact artifacts, maintenance and terminal/independent empty cleanup.
 Next: native full service metadata decoding, final whitelist/index deletion and
 typed Galley adapters, then bind and qualify actual queue replay. Core/storage
 remain unbound; no current e2e/whole-service milestone or new push.
+
+Service metadata adapter plan: decode the full native lookupService row before
+returning deletion name/tags (required name/description/HTTPS URL/enabled,
+nonempty tokens/pubkeys, native pubkey type/PEM, assets and tag enums), rather
+than selecting only fields used by cleanup and concealing corrupt metadata.
+Never print tokens, key material, URLs or raw storage errors. Preserve native
+LocalQuorum/retry counts, logged reverse-whitelist cleanup followed by unlogged
+service/prefix/tag-subset deletion, bucket201608 and Unicode lowercase/prefix.
+Native service metadata remains CQL even when users select PG. Test real native
+schema lookup/nullable summary/invalid metadata, all seven subsets of three tags,
+reverse/forward whitelist removal and unrelated-service retention. No Haskell
+repair, new dependencies, altered shared oracle or successful queue stub.
