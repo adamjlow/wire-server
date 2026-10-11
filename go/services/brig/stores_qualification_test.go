@@ -5,6 +5,8 @@ package brig
 
 import (
 	"context"
+	"crypto/sha256"
+	"encoding/base64"
 	"os"
 	"strings"
 	"testing"
@@ -279,5 +281,86 @@ func TestOwnedDurableStores(t *testing.T) {
 	}
 	if _, err := clients.get(ctx, clientOwner, "3"); err == nil {
 		t.Fatal("malformed orphan MLS key hidden by missing client")
+	}
+	// Email identity and activation/budgets remain Cassandra contracts even
+	// when PostgreSQL owns the user. Handle lookup has native PG precedence.
+	handle := "synthetic-login-handle"
+	cassOwner, pgOwner := user(), user()
+	if err := stores["postgresql"].create(ctx, newRecord(pgOwner), nil, nil); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := postgres.Exec(ctx, `UPDATE wire_user SET handle=$1 WHERE id=$2::uuid`, handle, pgOwner.String()); err != nil {
+		t.Fatal(err)
+	}
+	if err := cassandra.Query(`INSERT INTO user_handle (handle,user) VALUES (?,?)`, handle, cassOwner).WithContext(ctx).Consistency(gocql.LocalQuorum).Exec(); err != nil {
+		t.Fatal(err)
+	}
+	email := "Synthetic+ignored@Example.com"
+	if err := cassandra.Query(`INSERT INTO user_keys (key,user) VALUES (?,?)`, "synthetic@example.com", cassOwner).WithContext(ctx).Consistency(gocql.LocalQuorum).Exec(); err != nil {
+		t.Fatal(err)
+	}
+	for mode, store := range stores {
+		got, err := store.resolveLogin(ctx, loginIdentifier{email: &email})
+		if err != nil || got == nil || *got != cassOwner {
+			t.Fatal(mode, "email key did not remain Cassandra", err)
+		}
+		got, err = store.resolveLogin(ctx, loginIdentifier{handle: &handle})
+		want := pgOwner
+		if mode == "cassandra" {
+			want = cassOwner
+		}
+		if err != nil || got == nil || *got != want {
+			t.Fatal(mode, "handle backend precedence changed", err)
+		}
+		missing := "synthetic-missing-handle"
+		if got, err := store.resolveLogin(ctx, loginIdentifier{handle: &missing}); err != nil || got != nil {
+			t.Fatal(mode, "missing handle lookup", err)
+		}
+		pendingEmail := "synthetic-pending-" + mode + "@example.com"
+		digest := sha256.Sum256([]byte(pendingEmail))
+		key := base64.URLEncoding.EncodeToString(digest[:])
+		pendingUser := user()
+		if err := store.create(ctx, newRecord(pendingUser), nil, nil); err != nil {
+			t.Fatal(err)
+		}
+		if err := cassandra.Query(`INSERT INTO activation_keys (key,key_type,key_text,code,user,retries) VALUES (?,?,?,?,?,?)`, key, "email", pendingEmail, "123456", pendingUser, int32(3)).WithContext(ctx).Consistency(gocql.LocalQuorum).Exec(); err != nil {
+			t.Fatal(err)
+		}
+		if pending, err := store.pendingLoginActivation(ctx, pendingEmail); err != nil || !pending {
+			t.Fatal(mode, "unactivated user not pending", err)
+		}
+		if err := store.updateAccountStatus(ctx, pendingUser, 1); err != nil {
+			t.Fatal(err)
+		}
+		if pending, err := store.pendingLoginActivation(ctx, pendingEmail); err != nil || pending {
+			t.Fatal(mode, "suspended user returned pending", err)
+		}
+	}
+	fallback := "synthetic-cassandra-only-handle"
+	if err := cassandra.Query(`INSERT INTO user_handle (handle,user) VALUES (?,?)`, fallback, cassOwner).WithContext(ctx).Consistency(gocql.LocalQuorum).Exec(); err != nil {
+		t.Fatal(err)
+	}
+	if got, err := stores["migration-to-postgresql"].resolveLogin(ctx, loginIdentifier{handle: &fallback}); err != nil || got == nil || *got != cassOwner {
+		t.Fatal("migrating handle did not fall back", err)
+	}
+	budgetStore := loginBudgetStore{cassandra}
+	budgetKey := "login#" + user().String()
+	if got, err := budgetStore.lookup(ctx, budgetKey); err != nil || got != nil {
+		t.Fatal("missing budget", err)
+	}
+	if err := budgetStore.insert(ctx, budgetKey, loginBudget{seconds: 30.5, remaining: 2}); err != nil {
+		t.Fatal(err)
+	}
+	budget, err := budgetStore.lookup(ctx, budgetKey)
+	if err != nil || budget == nil || budget.remaining != 2 || budget.seconds <= 0 || budget.seconds > 30 {
+		t.Fatal("budget value/TTL native rounding", err)
+	}
+	budget.remaining--
+	if err := budgetStore.insert(ctx, budgetKey, *budget); err != nil {
+		t.Fatal(err)
+	}
+	nextBudget, err := budgetStore.lookup(ctx, budgetKey)
+	if err != nil || nextBudget == nil || nextBudget.remaining != 1 || nextBudget.seconds > budget.seconds {
+		t.Fatal("budget reset timeout or lost retry", err)
 	}
 }

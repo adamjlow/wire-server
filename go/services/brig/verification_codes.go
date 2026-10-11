@@ -7,21 +7,16 @@ import (
 	"crypto/subtle"
 	"encoding/base64"
 	"errors"
-	"strings"
 
 	"github.com/apache/cassandra-gocql-driver/v2"
 )
 
 func emailVerificationKey(email string) (string, error) {
-	local, domain, ok := strings.Cut(email, "@")
-	if !ok || local == "" || domain == "" {
-		return "", errors.New("invalid stored email")
+	key, err := emailUniqueKey(email)
+	if err != nil {
+		return "", err
 	}
-	// Native trusted-domain comparison is case sensitive before lowercasing.
-	if domain != "wearezeta.com" && domain != "wire.com" && domain != "simulator.amazonses.com" {
-		local, _, _ = strings.Cut(local, "+")
-	}
-	digest := sha256.Sum256([]byte(strings.ToLower(local) + "@" + strings.ToLower(domain)))
+	digest := sha256.Sum256([]byte(key))
 	return base64.URLEncoding.EncodeToString(digest[:15]), nil
 }
 
