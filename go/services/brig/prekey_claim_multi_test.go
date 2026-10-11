@@ -55,14 +55,14 @@ func TestPrekeyMapDecodeNormalizationAndLimits(t *testing.T) {
 	if guardCalls != 3 {
 		t.Fatal("limit/version failure performed guard/claims")
 	}
-	for _, text := range []string{"settings:\n  setMaxConvSize: 0", "settings:\n  setMaxConvSize: 65535"} {
+	for _, text := range []string{"optSettings:\n  setMaxConvSize: 0", "optSettings:\n  setMaxConvSize: 65535"} {
 		var c Config
 		if yaml.Unmarshal([]byte(text), &c) != nil || c.Settings.MaxConversationSize == nil {
 			t.Fatal("native Word16 configuration lost")
 		}
 	}
 	var c Config
-	if yaml.Unmarshal([]byte("settings:\n  setMaxConvSize: 65536"), &c) == nil {
+	if yaml.Unmarshal([]byte("optSettings:\n  setMaxConvSize: 65536"), &c) == nil {
 		t.Fatal("native Word16 bound not enforced")
 	}
 }

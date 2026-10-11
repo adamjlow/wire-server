@@ -1,0 +1,10 @@
+all modules verified
+2026/10/11 09:17:18 session refresh notification failed
+--- FAIL: TestPrekeyMapDecodeNormalizationAndLimits (0.00s)
+    prekey_claim_multi_test.go:61: native Word16 configuration lost
+2026/10/11 09:17:22 session refresh notification failed
+FAIL
+FAIL	github.com/adamjlow/wire-server/go/services/brig	4.471s
+?   	github.com/adamjlow/wire-server/go/services/brig/cmd/brig	[no test files]
+FAIL
+Candidate checks failed: go test failed (exit 1)

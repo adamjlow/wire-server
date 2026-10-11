@@ -128,6 +128,9 @@ func Run(ctx context.Context, c Config) error {
 	if err := c.Validate(); err != nil {
 		return err
 	}
+	if c.Settings.MaxConversationSize == nil {
+		return errors.New("missing prekey conversation size configuration")
+	}
 	registrationPolicy, err := newRegistrationPolicy(c)
 	if err != nil {
 		return err
@@ -262,9 +265,6 @@ func Run(ctx context.Context, c Config) error {
 		return err
 	}
 	prekeyStore.exhausted = func() { log.Print("PreKeys: Optimistic lock failed") }
-	if c.Settings.MaxConversationSize == nil {
-		return errors.New("missing prekey conversation size configuration")
-	}
 	business.prekeys = &prekeyClaimService{domain: c.Settings.Domain, maxUsers: int(*c.Settings.MaxConversationSize), claim: prekeyStore.claim, clients: (clientStore{cassandra}).list, lookup: (clientStore{cassandra}).get, remove: business.clientDeletion.execute, guard: business.peers.guardPrekeyLegalhold}
 	maxPermanent := 7
 	if c.Settings.MaxPermanentClients != nil {
