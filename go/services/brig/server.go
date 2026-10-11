@@ -265,7 +265,9 @@ func Run(ctx context.Context, c Config) error {
 		return err
 	}
 	prekeyStore.exhausted = func() { log.Print("PreKeys: Optimistic lock failed") }
-	business.prekeys = &prekeyClaimService{domain: c.Settings.Domain, maxUsers: int(*c.Settings.MaxConversationSize), claim: prekeyStore.claim, clients: (clientStore{cassandra}).list, lookup: (clientStore{cassandra}).get, remove: business.clientDeletion.execute, guard: business.peers.guardPrekeyLegalhold}
+	federationClient, closeFederation := newPrekeyFederationClient(c)
+	defer closeFederation()
+	business.prekeys = &prekeyClaimService{remote: &federationClient, domain: c.Settings.Domain, maxUsers: int(*c.Settings.MaxConversationSize), claim: prekeyStore.claim, clients: (clientStore{cassandra}).list, lookup: (clientStore{cassandra}).get, remove: business.clientDeletion.execute, guard: business.peers.guardPrekeyLegalhold, federationGuard: business.peers.guardFederationPrekeyLegalhold}
 	maxPermanent := 7
 	if c.Settings.MaxPermanentClients != nil {
 		maxPermanent = *c.Settings.MaxPermanentClients

@@ -174,30 +174,80 @@ func (s prekeyClaimService) handleMulti(w http.ResponseWriter, r *http.Request, 
 		authenticationWireError(w, 403, "too-many-clients", "Too many clients")
 		return true
 	}
-	for domain := range domains {
-		if domain != "" && domain != s.domain {
-			return false
-		}
-	}
-	result := map[string]userClientPrekeys{}
-	// Empty qualified request has no local group and therefore no guard call;
-	// the legacy empty map still invokes claimLocalMultiPrekeyBundles.
-	for domain, users := range domains {
-		keys, err := s.multiLocal(r.Context(), protectee, users, r.Header.Get("Request-Id"))
+	if !qualified {
+		keys, err := s.multiLocal(r.Context(), protectee, domains[""], r.Header.Get("Request-Id"))
 		if err != nil {
 			prekeyClaimHTTPError(w, err)
-			return true
+		} else {
+			readJSON(w, r, keys)
 		}
-		result[domain] = keys
+		return true
 	}
-	if !qualified {
-		readJSON(w, r, result[""])
+	result, failed, err := s.multiQualified(r.Context(), protectee, domains, r.Header.Get("Request-Id"), version >= 4)
+	if err != nil {
+		prekeyClaimHTTPError(w, err)
 		return true
 	}
 	if version < 4 {
 		readJSON(w, r, result)
 		return true
 	}
-	readJSON(w, r, map[string]any{"qualified_user_client_prekeys": result})
+	response := map[string]any{"qualified_user_client_prekeys": result}
+	if len(failed) > 0 {
+		response["failed_to_list"] = failed
+	}
+	readJSON(w, r, response)
 	return true
+}
+
+func (s prekeyClaimService) multiQualified(ctx context.Context, protectee gocql.UUID, domains map[string]map[string][]string, requestID string, partial bool) (map[string]userClientPrekeys, []map[string]string, error) {
+	result := map[string]userClientPrekeys{}
+	if users, exists := domains[s.domain]; exists {
+		keys, err := s.multiLocal(ctx, protectee, users, requestID)
+		if err != nil {
+			return nil, nil, err
+		}
+		result[s.domain] = keys
+	}
+	remoteDomains := []string{}
+	for domain := range domains {
+		if domain != s.domain {
+			remoteDomains = append(remoteDomains, domain)
+		}
+	}
+	slices.Sort(remoteDomains)
+	failures := make([]error, len(remoteDomains))
+	values := make([]userClientPrekeys, len(remoteDomains))
+	var group errgroup.Group
+	group.SetLimit(8)
+	for i, domain := range remoteDomains {
+		group.Go(func() error {
+			if s.remote == nil {
+				failures[i] = prekeyFederationFailure{code: 400, label: "federation-not-enabled", message: "no federator configured"}
+				return nil
+			}
+			values[i], failures[i] = s.remote.multi(ctx, domain, domains[domain], requestID)
+			return nil
+		})
+	}
+	_ = group.Wait()
+	failed := []map[string]string{}
+	for i, domain := range remoteDomains {
+		if failures[i] == nil {
+			result[domain] = values[i]
+			continue
+		}
+		if !partial {
+			return nil, nil, failures[i]
+		}
+		users := []string{}
+		for user := range domains[domain] {
+			users = append(users, user)
+		}
+		slices.Sort(users)
+		for _, user := range users {
+			failed = append(failed, map[string]string{"domain": domain, "id": user})
+		}
+	}
+	return result, failed, nil
 }

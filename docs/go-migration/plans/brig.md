@@ -705,3 +705,17 @@ Next remote single/bundle/multi +incoming federation prekey RPCs, actual h2c
 version negotiation/origin/request-id/typed errors; V3 fail vsV4 partial list,
 remote concurrency8. Both-strategy, metrics/parser/no-key/legalhold and full535
 qualification still pending. No new original suite/native build claimed.
+
+### Federation prekey candidate wiring (qualification pending)
+
+Outgoing single/bundle/multi requests use stdlib unencrypted HTTP/2, per-call
+version negotiation, origin/request identity and native public versioned
+partial results. Incoming RPCs reuse local claims with real Galley
+`LegalholdPlusFederationNotImplemented` protection; public request limits do not
+apply to these RPCs. Native Galley currently bypasses consent for this tag and
+remote prekey identity/text are trusted; these inherited concerns are preserved.
+Focused actual HTTP/2, typed response, negotiation, V3/V4 failure and incoming
+admission/null tests are added. Full pinned checks and native live federation
+comparisons are pending; malformed-input details, local HTTP/2 transport error
+text, parser aliases, response limits/timeouts and whole-service acceptance
+remain unqualified. This wiring does not publish availability or compatibility.

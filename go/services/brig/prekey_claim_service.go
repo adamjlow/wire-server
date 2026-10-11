@@ -3,6 +3,7 @@ package brig
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"net/http"
 	"strconv"
@@ -15,13 +16,15 @@ var errPrekeyConsent = errors.New("missing legalhold consent")
 var errPrekeyOldConsent = errors.New("missing legalhold consent old clients")
 
 type prekeyClaimService struct {
-	domain   string
-	maxUsers int
-	claim    func(context.Context, gocql.UUID, string) (*uncheckedPrekey, error)
-	clients  func(context.Context, gocql.UUID) ([]storedClient, error)
-	lookup   func(context.Context, gocql.UUID, string) (*storedClient, error)
-	remove   func(context.Context, gocql.UUID, *string, storedClient) error
-	guard    func(context.Context, gocql.UUID, map[string][]string, string) error
+	domain          string
+	maxUsers        int
+	remote          *prekeyFederationClient
+	claim           func(context.Context, gocql.UUID, string) (*uncheckedPrekey, error)
+	clients         func(context.Context, gocql.UUID) ([]storedClient, error)
+	lookup          func(context.Context, gocql.UUID, string) (*storedClient, error)
+	remove          func(context.Context, gocql.UUID, *string, storedClient) error
+	federationGuard func(context.Context, map[string][]string, string) error
+	guard           func(context.Context, gocql.UUID, map[string][]string, string) error
 }
 
 func (s prekeyClaimService) single(ctx context.Context, protectee, user gocql.UUID, id, requestID string) (*uncheckedPrekey, error) {
@@ -73,6 +76,14 @@ func (s prekeyClaimService) bundle(ctx context.Context, protectee, user gocql.UU
 }
 
 func prekeyClaimHTTPError(w http.ResponseWriter, err error) {
+	var federation prekeyFederationFailure
+	if errors.As(err, &federation) {
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(federation.code)
+		_ = json.NewEncoder(w).Encode(federation.wire())
+		return
+	}
+
 	switch {
 	case errors.Is(err, errPrekeyConsent):
 		authenticationWireError(w, 403, "missing-legalhold-consent", "Failed to connect to a user or to invite a user to a group because somebody is under legalhold and somebody else has not granted consent")
@@ -84,7 +95,7 @@ func prekeyClaimHTTPError(w http.ResponseWriter, err error) {
 }
 
 func (s prekeyClaimService) handle(w http.ResponseWriter, r *http.Request, path string) bool {
-	if s.handleMulti(w, r, path) {
+	if s.handleFederation(w, r, path) || s.handleMulti(w, r, path) {
 		return true
 	}
 	parts := strings.Split(strings.Trim(path, "/"), "/")
@@ -134,9 +145,34 @@ func (s prekeyClaimService) handle(w http.ResponseWriter, r *http.Request, path 
 		return true
 	}
 	user, _ := gocql.ParseUUID(canonical)
-	// Remote federation is a separate pending binding, not a local-store lookup.
 	if domain != s.domain {
-		return false
+		if s.remote == nil {
+			prekeyClaimHTTPError(w, prekeyFederationFailure{code: 400, label: "federation-not-enabled", message: "no federator configured"})
+			return true
+		}
+		if len(parts) == index {
+			body, err := s.remote.bundle(r.Context(), domain, user, r.Header.Get("Request-Id"))
+			if err != nil {
+				prekeyClaimHTTPError(w, err)
+			} else {
+				readJSON(w, r, body)
+			}
+			return true
+		}
+		id, err := parseClientID(parts[index])
+		if err != nil {
+			routeParseError(w, "invalid client ID")
+			return true
+		}
+		key, err := s.remote.single(r.Context(), domain, user, id, r.Header.Get("Request-Id"))
+		if err != nil {
+			prekeyClaimHTTPError(w, err)
+		} else if key == nil {
+			authenticationWireError(w, 404, "not-found", "prekey not found")
+		} else {
+			readJSON(w, r, key)
+		}
+		return true
 	}
 	if len(parts) == index {
 		keys, err := s.bundle(r.Context(), protectee, user, r.Header.Get("Request-Id"))

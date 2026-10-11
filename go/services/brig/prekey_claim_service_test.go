@@ -138,7 +138,7 @@ func TestPrekeyLocalRoutes(t *testing.T) {
 	for _, tc := range []struct {
 		path   string
 		status int
-	}{{"/v19/users/example.com/" + user.String() + "/prekeys/000A", 200}, {"/v1/users/" + user.String() + "/prekeys/a", 200}, {"/v2/users/" + user.String() + "/prekeys/a", 404}, {"/v19/users/example.com/" + user.String() + "/prekeys", 200}, {"/v19/users/remote.example/" + user.String() + "/prekeys/a", 404}, {"/v19/users/example.com/invalid/prekeys/a", 400}} {
+	}{{"/v19/users/example.com/" + user.String() + "/prekeys/000A", 200}, {"/v1/users/" + user.String() + "/prekeys/a", 200}, {"/v2/users/" + user.String() + "/prekeys/a", 404}, {"/v19/users/example.com/" + user.String() + "/prekeys", 200}, {"/v19/users/remote.example/" + user.String() + "/prekeys/a", 400}, {"/v19/users/example.com/invalid/prekeys/a", 400}} {
 		w := httptest.NewRecorder()
 		r := httptest.NewRequest("GET", tc.path, nil)
 		r.Header.Set("Z-User", user.String())
