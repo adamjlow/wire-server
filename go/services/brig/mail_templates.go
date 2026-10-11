@@ -102,10 +102,12 @@ var nativeMailFiles = map[string][]string{
 }
 
 func loadMailTemplates(base, defaultLocale string) (mailTemplates, error) {
-	result := mailTemplates{defaultLocale: defaultLocale, groups: map[string]map[string]map[string]localizedMailTemplate{}}
-	if _, err := parseRegistrationLocale(defaultLocale); err != nil {
+	parsedDefault, err := nativeMailLocale(defaultLocale)
+	result := mailTemplates{defaultLocale: parsedDefault, groups: map[string]map[string]map[string]localizedMailTemplate{}}
+	if err != nil {
 		return result, errors.New("invalid default mail locale")
 	}
+	defaultLocale = parsedDefault
 	entries, err := os.ReadDir(base)
 	if err != nil {
 		return result, errors.New("mail templates unavailable")
@@ -128,6 +130,16 @@ func loadMailTemplates(base, defaultLocale string) (mailTemplates, error) {
 		locales := []string{defaultLocale}
 		for _, entry := range entries {
 			if entry.Name() == defaultLocale {
+				continue
+			}
+			baseInfo, err := os.Stat(filepath.Join(base, entry.Name()))
+			if os.IsNotExist(err) {
+				continue
+			}
+			if err != nil {
+				return result, errors.New("mail locale unavailable")
+			}
+			if !baseInfo.IsDir() {
 				continue
 			}
 			info, err := os.Stat(filepath.Join(base, entry.Name(), group))
@@ -183,13 +195,24 @@ func loadMailTemplates(base, defaultLocale string) (mailTemplates, error) {
 				idp.partials = partials
 				templates["idp-config-change"] = idp
 			}
-			result.groups[group][locale] = templates
+			parsed, err := nativeMailLocale(locale)
+			if err != nil {
+				return result, err
+			}
+			result.groups[group][parsed] = templates
 		}
 	}
 	return result, nil
 }
 
 func (t mailTemplates) selectTemplate(group, name, preferred string) (localizedMailTemplate, error) {
+	// Native parseOnly deliberately accepts a valid locale prefix. Catalogue
+	// keys are parsed Locale values, while filesystem paths use directory names.
+	if parsed, err := nativeMailLocale(preferred); err == nil {
+		preferred = parsed
+	} else {
+		preferred = ""
+	}
 	locales := t.groups[group]
 	selected := t.defaultLocale
 	if _, exists := locales[preferred]; exists {
@@ -204,4 +227,16 @@ func (t mailTemplates) selectTemplate(group, name, preferred string) (localizedM
 		return localizedMailTemplate{}, errors.New("mail template unavailable")
 	}
 	return template, nil
+}
+
+func nativeMailLocale(value string) (string, error) {
+	locale, err := parseRegistrationLocale(value)
+	if err != nil {
+		return "", errors.New("invalid mail locale")
+	}
+	canonical := locale.Language
+	if locale.Country != nil {
+		canonical += "-" + *locale.Country
+	}
+	return canonical, nil
 }

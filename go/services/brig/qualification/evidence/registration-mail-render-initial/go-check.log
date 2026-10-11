@@ -1,0 +1,12 @@
+all modules verified
+2026/10/11 04:04:40 session refresh notification failed
+--- FAIL: TestMailNativeRepositoryTemplates (0.00s)
+    mail_test.go:54: mail locale unavailable
+--- FAIL: TestMailLocaleAndPerFileFallback (0.01s)
+    mail_test.go:153: invalid supported locale directory accepted
+2026/10/11 04:04:41 session refresh notification failed
+FAIL
+FAIL	github.com/adamjlow/wire-server/go/services/brig	1.253s
+?   	github.com/adamjlow/wire-server/go/services/brig/cmd/brig	[no test files]
+FAIL
+Candidate checks failed: go test failed (exit 1)

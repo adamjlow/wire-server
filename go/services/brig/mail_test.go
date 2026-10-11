@@ -128,11 +128,13 @@ func TestMailLocaleAndPerFileFallback(t *testing.T) {
 	}
 	write("de/user/email/activation-subject.txt", "Deutsch $name")
 	write("de-DE/user/email/activation.txt", "German country $name")
+	write("README", "regular file is not a locale")
+	write("no-surplus/user/email/activation.txt", "Norwegian prefix $name")
 	templates, err := loadMailTemplates(base, "en")
 	if err != nil {
 		t.Fatal(err)
 	}
-	for _, check := range []struct{ locale, subject, plain string }{{"de-DE", "default N", "German country N"}, {"de-AT", "Deutsch N", "default N"}, {"fr", "default N", "default N"}, {"../../de", "default N", "default N"}} {
+	for _, check := range []struct{ locale, subject, plain string }{{"de-DE", "default N", "German country N"}, {"de-AT", "Deutsch N", "default N"}, {"fr", "default N", "default N"}, {"no", "default N", "Norwegian prefix N"}, {"../../de", "default N", "default N"}} {
 		selected, err := templates.selectTemplate("user", "activation", check.locale)
 		if err != nil {
 			t.Fatal(err)
@@ -148,7 +150,7 @@ func TestMailLocaleAndPerFileFallback(t *testing.T) {
 		t.Fatal("invalid UTF-8 localized file accepted")
 	}
 	write("de/user/email/activation.html", "valid")
-	write("not-a-locale/user/email/activation.html", "valid")
+	write("zz-invalid/user/email/activation.html", "valid")
 	if _, err := loadMailTemplates(base, "en"); err == nil {
 		t.Fatal("invalid supported locale directory accepted")
 	}
