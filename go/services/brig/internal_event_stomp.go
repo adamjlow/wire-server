@@ -29,20 +29,22 @@ type internalStompConfig struct {
 }
 
 func (c *internalStompConfig) UnmarshalYAML(node *yaml.Node) error {
-	type plain internalStompConfig
-	if node.Kind != yaml.MappingNode {
+	fields, err := stompNativeFields(node, 0)
+	if err != nil {
+		return err
+	}
+	host, hOK := fields["stomHost"].(string)
+	tls, tOK := fields["stomTls"].(bool)
+	port, pOK := fields["stomPort"].(json.Number)
+	if !hOK || !tOK || !pOK {
 		return errors.New("invalid internal STOMP configuration")
 	}
-	fields := make(map[string]*yaml.Node)
-	for i := 0; i+1 < len(node.Content); i += 2 {
-		fields[node.Content[i].Value] = node.Content[i+1]
+	n, err := stompNativeInteger(string(port))
+	if err != nil {
+		return errors.New("invalid internal STOMP configuration")
 	}
-	for _, key := range []string{"stomHost", "stomPort", "stomTls"} {
-		if fields[key] == nil || fields[key].Tag == "!!null" {
-			return errors.New("invalid internal STOMP configuration")
-		}
-	}
-	return node.Decode((*plain)(c))
+	c.Host, c.Port, c.TLS = host, n, tls
+	return nil
 }
 
 type internalStompQueue struct {
@@ -69,19 +71,25 @@ func newInternalStompQueue(c Config, destination string) (*internalStompQueue, e
 		return nil, invalid
 	}
 	// Native loadSecret accepts YAML (including JSON), and requires both fields.
-	var credentials struct {
-		User *string `yaml:"user"`
-		Pass *string `yaml:"pass"`
-	}
-	if yaml.Unmarshal(raw, &credentials) != nil || credentials.User == nil || credentials.Pass == nil {
+	var document yaml.Node
+	if yaml.Unmarshal(raw, &document) != nil || len(document.Content) != 1 {
 		return nil, invalid
 	}
-	for _, value := range []string{c.Stomp.Host, destination, *credentials.User, *credentials.Pass} {
+	fields, err := stompNativeFields(document.Content[0], 0)
+	if err != nil {
+		return nil, invalid
+	}
+	user, uOK := fields["user"].(string)
+	pass, pOK := fields["pass"].(string)
+	if !uOK || !pOK {
+		return nil, invalid
+	}
+	for _, value := range []string{c.Stomp.Host, destination, user, pass} {
 		if strings.ContainsAny(value, "\x00\r\n") {
 			return nil, invalid
 		}
 	}
-	return &internalStompQueue{host: c.Stomp.Host, port: c.Stomp.Port, tls: c.Stomp.TLS, destination: destination, user: *credentials.User, pass: *credentials.Pass}, nil
+	return &internalStompQueue{host: c.Stomp.Host, port: c.Stomp.Port, tls: c.Stomp.TLS, destination: destination, user: user, pass: pass}, nil
 }
 
 type internalStompSession struct {

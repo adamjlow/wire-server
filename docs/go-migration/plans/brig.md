@@ -1521,3 +1521,16 @@ whole-service release. Trusted positive TLS and optimistic-Dynamo/STOMP combinat
 remain required coverage. Provider/service-delete and final whole-Brig gates remain
 incomplete. Same-author review accepts only this finite plaintext/random-prekey
 increment. No new push or milestone advancement.
+
+STOMP scalar correction plan: mirror native Data.Yaml scalar classification before
+Aeson Text/Bool/Int admission. Quoted/explicit-string/folded values remain strings;
+plain YAML1.1 yes/no/on/off and null variants retain native meanings; numeric Text
+fields fail, quoted ports fail, fractional ports fail, and integral decimal/exponent
+ports retain exact signed-Int parsing without float truncation or rounding. Leading
+zero decimals follow native scientific parsing, not Go YAML octal interpretation.
+Honor aliases/merges and last duplicate field as native loadSecret does. Bound
+recursive alias/merge traversal, avoid allocations from unbounded exponents, retain
+64KiB secret-file and framing limits, and keep credentials out of errors/logs.
+Reference source inspected: https://raw.githubusercontent.com/snoyberg/yaml/master/yaml/src/Data/Yaml/Internal.hs
+(textToValue/textToScientific/parseM); compiled-native admission controls will
+confirm relevant cases before claiming parity. No Haskell or shared oracle changes.
