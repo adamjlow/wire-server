@@ -45,8 +45,11 @@ func (s activationAPI) run(ctx context.Context, key, code string, dryrun, verify
 		return nil, errors.New("activation dependencies unavailable")
 	}
 	result, err := s.activate(ctx, key, code, override)
-	if err != nil || result == nil {
-		return result, err
+	if err != nil {
+		return nil, err
+	}
+	if result == nil {
+		return nil, nil
 	}
 	if err := s.syncIndex(ctx, result.user); err != nil {
 		return nil, err
