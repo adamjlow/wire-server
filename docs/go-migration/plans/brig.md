@@ -1534,3 +1534,10 @@ recursive alias/merge traversal, avoid allocations from unbounded exponents, ret
 Reference source inspected: https://raw.githubusercontent.com/snoyberg/yaml/master/yaml/src/Data/Yaml/Internal.hs
 (textToValue/textToScientific/parseM); compiled-native admission controls will
 confirm relevant cases before claiming parity. No Haskell or shared oracle changes.
+
+At sourceaadef862b/service51e309c1, full pinned Go checks and static original-runner
+units pass; tagged stores compile only. [Scalar correction evidence](../../../go/services/brig/qualification/evidence/internal-stomp-scalars/README.md) records exact artifacts, retained static linker warnings and terminal/empty cleanup.
+Compiled-native scalar admission and affected backend rerun remain pending; prior
+actual ActiveMQ/original22 evidence retains its older service42ea8a76 tuple.
+The latest user instruction authorizes pushing current work to origin/go-migration.
+Same-author review accepts only this finite increment; whole Brig remains active.
