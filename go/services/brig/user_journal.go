@@ -39,7 +39,8 @@ type userJournal struct {
 func (userJournal) String() string { return "<UserJournal>" }
 
 type journalResponse struct {
-	Queue string `xml:"GetQueueUrlResult>QueueUrl"`
+	Queue string  `xml:"GetQueueUrlResult>QueueUrl"`
+	MD5   *string `xml:"SendMessageResult>MD5OfMessageBody"`
 	Error struct {
 		Code string `xml:"Code"`
 	} `xml:"Error"`
@@ -48,6 +49,13 @@ type journalResponse struct {
 func newUserJournal(ctx context.Context, c *brigAWSConfig, client *http.Client) (*userJournal, error) {
 	if c == nil || c.UserJournalQueue == nil {
 		return nil, nil
+	}
+	return newBrigSQS(ctx, c, *c.UserJournalQueue, client)
+}
+
+func newBrigSQS(ctx context.Context, c *brigAWSConfig, name string, client *http.Client) (*userJournal, error) {
+	if c == nil {
+		return nil, errors.New("queue AWS configuration unavailable")
 	}
 	parsed, err := url.Parse(c.SQSEndpoint)
 	if err != nil || parsed.Hostname() == "" || parsed.Scheme != "http" && parsed.Scheme != "https" {
@@ -60,7 +68,7 @@ func newUserJournal(ctx context.Context, c *brigAWSConfig, client *http.Client) 
 		return nil, errors.New("journal credentials unavailable")
 	}
 	j := &userJournal{client: client, credentials: config.Credentials, region: config.Region, endpoint: endpoint, now: time.Now}
-	result, _, err := j.query(ctx, "GetQueueUrl", url.Values{"QueueName": {*c.UserJournalQueue}})
+	result, _, err := j.query(ctx, "GetQueueUrl", url.Values{"QueueName": {name}})
 	if err != nil {
 		return nil, err
 	}

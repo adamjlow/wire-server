@@ -194,6 +194,10 @@ func Run(ctx context.Context, c Config) error {
 	if err != nil {
 		return err
 	}
+	internalQueue, err := newInternalEventQueue(ctx, c.InternalEvents, c.AWS, peerHTTP)
+	if err != nil {
+		return err
+	}
 	listener, err := net.Listen("tcp", c.Brig.Address())
 	if err != nil {
 		return errors.New("Brig listener initialization failed")
@@ -204,6 +208,7 @@ func Run(ctx context.Context, c Config) error {
 	business.access = &accessTokenService{lookup: business.sessions, sessions: sessionManager{store: business.sessions, issuer: issuer, renewAge: *c.Settings.CookieRenewAge}, keys: public, now: time.Now}
 	business.index = indexWriter
 	business.appIDs = business.users.teamAppIDs
+	business.accounts = &accountLookup{users: business.users.getMany, resolve: business.users.resolveLogin, invitations: (invitationStore{cassandra}).byEmail, enqueueDeletion: internalQueue.enqueueUserDeletion, domain: c.Settings.Domain, locale: c.Settings.DefaultLocale}
 	index := searchIndexService{users: business.users.userAuthStore, team: business.peers.indexTeam, writer: indexWriter}
 	business.renewal = &accessRenewalHTTP{service: accessRenewalService{
 		tokens: *business.access, clients: clientStore{cassandra},

@@ -45,20 +45,21 @@ type PostgresPoolConfig struct {
 	Idleness    Duration `yaml:"idlenessTimeout"`
 }
 type Config struct {
-	AWS              *brigAWSConfig     `yaml:"aws"`
-	Elasticsearch    *searchIndexConfig `yaml:"elasticsearch"`
-	PostgresPool     PostgresPoolConfig `yaml:"postgresqlPool"`
-	Brig             Endpoint           `yaml:"brig"`
-	Cargohold        Endpoint           `yaml:"cargohold"`
-	Galley           Endpoint           `yaml:"galley"`
-	Spar             Endpoint           `yaml:"spar"`
-	Gundeck          Endpoint           `yaml:"gundeck"`
-	Federator        *Endpoint          `yaml:"federatorInternal"`
-	Enterprise       *Endpoint          `yaml:"wireServerEnterprise"`
-	Cassandra        CassandraConfig    `yaml:"cassandra"`
-	Postgres         map[string]string  `yaml:"postgresql"`
-	PostgresPassword *string            `yaml:"postgresqlPassword"`
-	Migration        map[string]string  `yaml:"postgresMigration"`
+	InternalEvents   *internalEventsConfig `yaml:"internalEvents"`
+	AWS              *brigAWSConfig        `yaml:"aws"`
+	Elasticsearch    *searchIndexConfig    `yaml:"elasticsearch"`
+	PostgresPool     PostgresPoolConfig    `yaml:"postgresqlPool"`
+	Brig             Endpoint              `yaml:"brig"`
+	Cargohold        Endpoint              `yaml:"cargohold"`
+	Galley           Endpoint              `yaml:"galley"`
+	Spar             Endpoint              `yaml:"spar"`
+	Gundeck          Endpoint              `yaml:"gundeck"`
+	Federator        *Endpoint             `yaml:"federatorInternal"`
+	Enterprise       *Endpoint             `yaml:"wireServerEnterprise"`
+	Cassandra        CassandraConfig       `yaml:"cassandra"`
+	Postgres         map[string]string     `yaml:"postgresql"`
+	PostgresPassword *string               `yaml:"postgresqlPassword"`
+	Migration        map[string]string     `yaml:"postgresMigration"`
 	ZAuth            struct {
 		PrivateKeys string `yaml:"privateKeys"`
 		PublicKeys  string `yaml:"publicKeys"`

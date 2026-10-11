@@ -860,4 +860,36 @@ func TestOwnedDurableStores(t *testing.T) {
 			t.Fatal(mode, "native batch deletion tombstone failed", err)
 		}
 	}
+	invites := invitationStore{cassandra}
+	inviteEmail := "synthetic-invite-" + user().String() + "@example.com"
+	liveTeam, staleTeam, liveID, staleID := user(), user(), user(), user()
+	created := time.Now().UTC().Truncate(time.Millisecond)
+	// Native by-email lookup reads every reference and ignores missing main
+	// rows. Optional role/name/creator remain valid legacy NULLs.
+	for _, ref := range []struct{ team, id gocql.UUID }{{liveTeam, liveID}, {staleTeam, staleID}} {
+		if err := cassandra.Query(`INSERT INTO team_invitation_email(email,team,invitation,code) VALUES(?,?,?,?)`, inviteEmail, ref.team, ref.id, "synthetic-code").WithContext(ctx).Consistency(gocql.LocalQuorum).Exec(); err != nil {
+			t.Fatal(err)
+		}
+	}
+	if err := cassandra.Query(`INSERT INTO team_invitation(team,id,created_at,email,code) VALUES(?,?,?,?,?)`, liveTeam, liveID, created, inviteEmail, "synthetic-code").WithContext(ctx).Consistency(gocql.LocalQuorum).Exec(); err != nil {
+		t.Fatal(err)
+	}
+	if found, err := invites.byEmail(ctx, inviteEmail); err != nil || len(found) != 1 || found[0].ID != liveID || found[0].Team != liveTeam || found[0].Role != nil || found[0].Name != nil || found[0].CreatedBy != nil || !found[0].CreatedAt.Equal(created) {
+		t.Fatal("native live/stale invitation references or optional decoding", err)
+	}
+	if found, err := invites.byEmail(ctx, "absent-"+inviteEmail); err != nil || found == nil || len(found) != 0 {
+		t.Fatal("absent invitation lookup", err)
+	}
+	if err := cassandra.Query(`UPDATE team_invitation SET role=? WHERE team=? AND id=?`, int32(0), liveTeam, liveID).WithContext(ctx).Consistency(gocql.LocalQuorum).Exec(); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := invites.byEmail(ctx, inviteEmail); err == nil {
+		t.Fatal("unknown stored invitation role accepted")
+	}
+	if err := cassandra.Query(`UPDATE team_invitation SET role=?,created_at=null WHERE team=? AND id=?`, int32(3), liveTeam, liveID).WithContext(ctx).Consistency(gocql.LocalQuorum).Exec(); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := invites.byEmail(ctx, inviteEmail); err == nil {
+		t.Fatal("missing required invitation timestamp accepted")
+	}
 }
