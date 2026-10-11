@@ -1,0 +1,271 @@
+{
+  "initial_copy_failed_before_original_mutation": true,
+  "verified_relocations": [
+    {
+      "logical_path": "/dev/shm/wire-migration-brig-20261010/search-renewal-sdk-check",
+      "physical_path": "/home/operator/.cache/wire-migration/brig-20261010/retired-sdk-outputs/search-renewal-sdk-check",
+      "files": {
+        "stores-build-receipt.json": {
+          "sha256": "f21e9763b3012a8b8630fc398358af92c309bd77cd3f0791366ebf6bb4de1458",
+          "uid": 1001,
+          "gid": 37,
+          "mode": 436,
+          "size": 872
+        },
+        "build-receipt.json": {
+          "sha256": "cc21cc4a7de75d6e659772e92622e2588f66fea65d58c1be1721fcc3547346d5",
+          "uid": 1001,
+          "gid": 37,
+          "mode": 436,
+          "size": 872
+        },
+        "runtime-units.log": {
+          "sha256": "6c3f8651f0bea00346ed82a840ff3634f563df955242339dbe773c4a81841648",
+          "uid": 1001,
+          "gid": 37,
+          "mode": 436,
+          "size": 10977
+        },
+        "stores.test": {
+          "sha256": "de5e658787fc5793f21f69b8cead970d409e65d547a5c15474bce94df0a7be21",
+          "uid": 65534,
+          "gid": 65534,
+          "mode": 493,
+          "size": 65238176
+        },
+        "brig.test": {
+          "sha256": "adb64b4505dea9517a7c47f00a4c84d1d70fdda95781dd608296e5999096b420",
+          "uid": 65534,
+          "gid": 65534,
+          "mode": 493,
+          "size": 60748568
+        },
+        "brig": {
+          "sha256": "4a0fcf73168060783d8c7406e1b84abc047ab2c2c3d3eae2056e98ca8588d7a6",
+          "uid": 65534,
+          "gid": 65534,
+          "mode": 493,
+          "size": 64128240
+        },
+        "go-check.log": {
+          "sha256": "8f66e7abfbd5e25fcd26cf9bb19f7bb269f0ff8f440ff297b8275752a95e1b84",
+          "uid": 65534,
+          "gid": 65534,
+          "mode": 420,
+          "size": 1383
+        },
+        "libstdc++-copyright": {
+          "sha256": "20390f8a6f3b1e4d7cb45dd8652dabb259bbef688cbad839bcdb0b9ba7252f79",
+          "uid": 65534,
+          "gid": 65534,
+          "mode": 420,
+          "size": 69004
+        },
+        "icu-copyright": {
+          "sha256": "5bbff5f646ce750ac0a347e7f91793279b7422a1119820b5f75d98879c201c68",
+          "uid": 65534,
+          "gid": 65534,
+          "mode": 420,
+          "size": 2214
+        },
+        "glibc-copyright": {
+          "sha256": "f5788886720a2605a946e81d571e6c8162b09f58d2e2ceb8d36e5768fccd850d",
+          "uid": 65534,
+          "gid": 65534,
+          "mode": 420,
+          "size": 51200
+        },
+        "zstd-copyright": {
+          "sha256": "5cec9fef4d3fa7e0371fbef4ec3fc416e0105dc2a9922117f84e825cb11f50f8",
+          "uid": 65534,
+          "gid": 65534,
+          "mode": 420,
+          "size": 5332
+        },
+        "zlib-copyright": {
+          "sha256": "9e5b96d63773a5d177ba264254390f792be07e41748ebd94730981c6cac31cc6",
+          "uid": 65534,
+          "gid": 65534,
+          "mode": 420,
+          "size": 2927
+        },
+        "openssl-copyright": {
+          "sha256": "6a7da622fe0637a334d2a8fc470852d2ffb77d9a2b2f930f854e32a41ad6ef35",
+          "uid": 65534,
+          "gid": 65534,
+          "mode": 420,
+          "size": 2543
+        },
+        "argon2-copyright": {
+          "sha256": "6059eb2b0f8f23b5c6023b08f68d4df9addd834665d07e5dcc364d4ae80d9b69",
+          "uid": 65534,
+          "gid": 65534,
+          "mode": 420,
+          "size": 8745
+        },
+        "libraries.sha256": {
+          "sha256": "55eda20cc7b6c25ff663a1a542df63af9026f83dbd1bf24b6a8b3f49f60d805a",
+          "uid": 65534,
+          "gid": 65534,
+          "mode": 420,
+          "size": 722
+        },
+        "packages.txt": {
+          "sha256": "9e9db92065c33bc81e7e8b5ff6f5c0a9a32814690509f59c88718cc418f5e262",
+          "uid": 65534,
+          "gid": 65534,
+          "mode": 420,
+          "size": 3793
+        },
+        "controller.log": {
+          "sha256": "5b2278170b6160b9a369f404cd0d8b492feb291ecfe3b02e76a9f973097a7e22",
+          "uid": 1001,
+          "gid": 37,
+          "mode": 436,
+          "size": 2878
+        }
+      },
+      "bytes_relocated": 190278446
+    },
+    {
+      "logical_path": "/dev/shm/wire-migration-brig-20261010/search-renewal-fixed-corrected-sdk-check",
+      "physical_path": "/home/operator/.cache/wire-migration/brig-20261010/retired-sdk-outputs/search-renewal-fixed-corrected-sdk-check",
+      "files": {
+        "stores-build-receipt.json": {
+          "sha256": "a52c7980644c485dc552df2e4584d2e8eed8bf33e71d95561e2e94c41366392b",
+          "uid": 1001,
+          "gid": 37,
+          "mode": 436,
+          "size": 872
+        },
+        "build-receipt.json": {
+          "sha256": "dee962114a4e35d3d2c6d3db49602586ab3d7b65795e07b17386b1742e84798c",
+          "uid": 1001,
+          "gid": 37,
+          "mode": 436,
+          "size": 872
+        },
+        "runtime-units.log": {
+          "sha256": "f32f41663d56d3a11f884bbc1a389fb9a1f58ef5c3da024d3bcaa16a11d8ffc1",
+          "uid": 1001,
+          "gid": 37,
+          "mode": 436,
+          "size": 10977
+        },
+        "stores.test": {
+          "sha256": "f9025c2a9e60711355e05e66205d323e4dc606f5632ed606ddd45a7315d34cec",
+          "uid": 65534,
+          "gid": 65534,
+          "mode": 493,
+          "size": 65066504
+        },
+        "brig.test": {
+          "sha256": "7ef3ddc0d2cc2c9f765cd07baa511eda03b8dc5b5a1e506f75460d7673197e43",
+          "uid": 65534,
+          "gid": 65534,
+          "mode": 493,
+          "size": 60576736
+        },
+        "brig": {
+          "sha256": "a2e3adbf4f0df3612d70002bd6879c96717d19d565bc8ceb422133446bde41b6",
+          "uid": 65534,
+          "gid": 65534,
+          "mode": 493,
+          "size": 63956448
+        },
+        "go-check.log": {
+          "sha256": "b1ddbabf036bcf5c2dcf4520cf9bf724c942efc7f47b09c8bb8ba661758e43ee",
+          "uid": 65534,
+          "gid": 65534,
+          "mode": 420,
+          "size": 1383
+        },
+        "libstdc++-copyright": {
+          "sha256": "20390f8a6f3b1e4d7cb45dd8652dabb259bbef688cbad839bcdb0b9ba7252f79",
+          "uid": 65534,
+          "gid": 65534,
+          "mode": 420,
+          "size": 69004
+        },
+        "icu-copyright": {
+          "sha256": "5bbff5f646ce750ac0a347e7f91793279b7422a1119820b5f75d98879c201c68",
+          "uid": 65534,
+          "gid": 65534,
+          "mode": 420,
+          "size": 2214
+        },
+        "glibc-copyright": {
+          "sha256": "f5788886720a2605a946e81d571e6c8162b09f58d2e2ceb8d36e5768fccd850d",
+          "uid": 65534,
+          "gid": 65534,
+          "mode": 420,
+          "size": 51200
+        },
+        "zstd-copyright": {
+          "sha256": "5cec9fef4d3fa7e0371fbef4ec3fc416e0105dc2a9922117f84e825cb11f50f8",
+          "uid": 65534,
+          "gid": 65534,
+          "mode": 420,
+          "size": 5332
+        },
+        "zlib-copyright": {
+          "sha256": "9e5b96d63773a5d177ba264254390f792be07e41748ebd94730981c6cac31cc6",
+          "uid": 65534,
+          "gid": 65534,
+          "mode": 420,
+          "size": 2927
+        },
+        "openssl-copyright": {
+          "sha256": "6a7da622fe0637a334d2a8fc470852d2ffb77d9a2b2f930f854e32a41ad6ef35",
+          "uid": 65534,
+          "gid": 65534,
+          "mode": 420,
+          "size": 2543
+        },
+        "argon2-copyright": {
+          "sha256": "6059eb2b0f8f23b5c6023b08f68d4df9addd834665d07e5dcc364d4ae80d9b69",
+          "uid": 65534,
+          "gid": 65534,
+          "mode": 420,
+          "size": 8745
+        },
+        "cxx-package.sha256": {
+          "sha256": "5abc52f67b0befe6317695d4489a2433b32854cbb6b5916a6f875b2c0e300636",
+          "uid": 65534,
+          "gid": 65534,
+          "mode": 420,
+          "size": 102
+        },
+        "cxx-package.txt": {
+          "sha256": "d41b16dcb551842304cab9549bb3da24fdb859d85d690bd121de7f3cb29cce01",
+          "uid": 65534,
+          "gid": 65534,
+          "mode": 420,
+          "size": 59
+        },
+        "libraries.sha256": {
+          "sha256": "875560a1f32f1ad76a866a7f792a6b392f64c5555e8f55f270f60869079f9af2",
+          "uid": 65534,
+          "gid": 65534,
+          "mode": 420,
+          "size": 846
+        },
+        "packages.txt": {
+          "sha256": "9e9db92065c33bc81e7e8b5ff6f5c0a9a32814690509f59c88718cc418f5e262",
+          "uid": 65534,
+          "gid": 65534,
+          "mode": 420,
+          "size": 3793
+        },
+        "controller.log": {
+          "sha256": "5b2278170b6160b9a369f404cd0d8b492feb291ecfe3b02e76a9f973097a7e22",
+          "uid": 1001,
+          "gid": 37,
+          "mode": 436,
+          "size": 2878
+        }
+      },
+      "bytes_relocated": 189763435
+    }
+  ]
+}

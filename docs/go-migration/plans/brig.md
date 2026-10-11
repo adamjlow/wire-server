@@ -675,3 +675,17 @@ Native SDK exception/typed-response/Read Word32 corners remain explicit limits.
 Current SHM compiler-cache headroom ~100MiB: before another SDK build revalidate
 owned caches/completed outputs and relocate or trim only disposable owned
 artifacts after terminal/audit, preserving receipts/bytes/paths and native state.
+
+### Local single/bundle prekey routes wired and live-qualified
+
+[Evidence](../../../go/services/brig/qualification/evidence/prekey-local-api/README.md)
+records source0f1f97878/service6c7de623: full Go/static checks pass; real frozen
+random-mode native/Go ordinary7 consumption, repeated65535, bundle and unknown
+client404 compare exactly. Seven lifecycle controls+unchanged17 paired controls
+and actual client creation/deletion/native-prekey/MLS switchback pass. All13
+exits0/runner0/cleanup0/independent audit empty. Guard/cleanup HTTP and failure
+order units pass. No original suite/current Dynamo live/no-key corruption claim.
+Next multi-user and remote prekey federation contracts, logging/metrics and
+actual Dynamo/concurrent/no-key/real legalhold controls before whole validation.
+Completed SDK output relocation preserves36 file hashes/owners/modes/logical
+paths and frees~362MiB SHM; receipt links retained, no cache/binary pruning.
