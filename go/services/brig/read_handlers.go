@@ -64,6 +64,10 @@ func routeParseError(w http.ResponseWriter, message string) {
 }
 
 func (b brigReadHandlers) handle(w http.ResponseWriter, r *http.Request, path string) bool {
+	if path == "/register" && b.registration != nil {
+		b.registration.handlePublic(w, r)
+		return true
+	}
 	if b.bulkClients != nil && (path == "/i/clients" || path == "/i/clients/full") {
 		b.bulkClients.handle(w, r, path == "/i/clients/full")
 		return true

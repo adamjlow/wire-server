@@ -7,18 +7,25 @@ import (
 	"errors"
 	"mime"
 	"net/http"
+	"net/netip"
+	"strconv"
 	"strings"
+	"time"
 
 	"github.com/apache/cassandra-gocql-driver/v2"
 )
 
 type registrationHTTP struct {
-	service       registrationService
-	peers         brigPeers
-	galleyVersion int
-	activation    *activationHTTP
-	invitations   registrationInvitations
-	index         *searchIndexWriter
+	policy         registrationPolicy
+	mail           *registrationMailDelivery
+	sessions       sessionManager
+	cookieInsecure bool
+	service        registrationService
+	peers          brigPeers
+	galleyVersion  int
+	activation     *activationHTTP
+	invitations    registrationInvitations
+	index          *searchIndexWriter
 }
 
 func registrationHTTPError(w http.ResponseWriter, err error) {
@@ -72,11 +79,26 @@ func (h registrationHTTP) handleInternal(w http.ResponseWriter, r *http.Request)
 		wireError(w, 400, "bad-request", "Invalid registration request")
 		return
 	}
-	if h.activation == nil {
-		registrationHTTPError(w, errors.New("registration activation unavailable"))
+	service, err := h.forRequest(request, r.Header.Get("Request-Id"))
+	if err != nil {
+		registrationHTTPError(w, err)
 		return
 	}
-	requestID := r.Header.Get("Request-Id")
+	profile, err := service.createInternal(r.Context(), request)
+	if err != nil {
+		registrationHTTPError(w, err)
+		return
+	}
+	w.Header().Set("Content-Type", "application/json;charset=utf-8")
+	w.Header().Set("Location", profile.ID)
+	w.WriteHeader(http.StatusCreated)
+	_ = json.NewEncoder(w).Encode(profile)
+}
+
+func (h registrationHTTP) forRequest(request registrationRequest, requestID string) (registrationService, error) {
+	if h.activation == nil {
+		return registrationService{}, errors.New("registration activation unavailable")
+	}
 	service := h.service
 	if request.Origin.TeamCode != nil {
 		resolver := h.invitations
@@ -118,13 +140,63 @@ func (h registrationHTTP) handleInternal(w http.ResponseWriter, r *http.Request)
 		_, err := h.activation.forRequest(requestID, currency).run(ctx, key, code, false, true, override)
 		return err
 	}
-	profile, err := service.createInternal(r.Context(), request)
+	return service, nil
+}
+
+func (h registrationHTTP) handlePublic(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		w.WriteHeader(http.StatusMethodNotAllowed)
+		return
+	}
+	values, present := r.Header["X-Forwarded-For"]
+	if !present || len(values) == 0 {
+		routeParseError(w, "Header X-Forwarded-For is required")
+		return
+	}
+	ip, err := netip.ParseAddr(values[0])
+	if err != nil || ip.Zone() != "" {
+		routeParseError(w, "Error parsing header X-Forwarded-For failed: Failed parsing bytestring as IpAddr.")
+		return
+	}
+	media, _, err := mime.ParseMediaType(r.Header.Get("Content-Type"))
+	if err != nil || !strings.EqualFold(media, "application/json") {
+		w.WriteHeader(http.StatusUnsupportedMediaType)
+		return
+	}
+	request, err := decodeRegistration(r.Body, true)
+	if err != nil {
+		wireError(w, 400, "bad-request", "Invalid registration request")
+		return
+	}
+	if err = h.policy.check(request); err != nil {
+		registrationHTTPError(w, err)
+		return
+	}
+	service, err := h.forRequest(request, r.Header.Get("Request-Id"))
 	if err != nil {
 		registrationHTTPError(w, err)
 		return
 	}
+	version, _ := strconv.Atoi(r.Header.Get("X-Wire-API-Version"))
+	service.preserveSCIMDisplayName = version < 18
+	registration := newPublicRegistration(h.policy, service.create, h.mail.activation, h.mail.welcome, h.sessions, time.Now)
+	result, err := registration.register(r.Context(), request, ip)
+	if err != nil {
+		registrationHTTPError(w, err)
+		return
+	}
+	value, err := result.cookie.token.Encode()
+	if err != nil {
+		registrationHTTPError(w, err)
+		return
+	}
+	cookie := http.Cookie{Name: "zuid", Value: value, Path: "/access", HttpOnly: true, Secure: !h.cookieInsecure}
+	if result.cookie.record.Type == 1 {
+		cookie.Expires = result.cookie.record.Expires
+	}
+	http.SetCookie(w, &cookie)
 	w.Header().Set("Content-Type", "application/json;charset=utf-8")
-	w.Header().Set("Location", profile.ID)
+	w.Header().Set("Location", result.profile.ID)
 	w.WriteHeader(http.StatusCreated)
-	_ = json.NewEncoder(w).Encode(profile)
+	_ = json.NewEncoder(w).Encode(result.profile)
 }

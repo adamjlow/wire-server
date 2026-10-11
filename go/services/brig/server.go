@@ -128,6 +128,15 @@ func Run(ctx context.Context, c Config) error {
 	if err := c.Validate(); err != nil {
 		return err
 	}
+	registrationPolicy, err := newRegistrationPolicy(c)
+	if err != nil {
+		return err
+	}
+	mailDelivery, err := newRegistrationMailDelivery(ctx, c, func(string) { log.Print("mail template variable unavailable") })
+	if err != nil {
+		return err
+	}
+	defer mailDelivery.close()
 	private, public, err := c.signingKeys()
 	if err != nil {
 		return err
@@ -242,7 +251,7 @@ func Run(ctx context.Context, c Config) error {
 		return errors.New("missing native maximum team size")
 	}
 	invites := invitationStore{cassandra}
-	business.registration = &registrationHTTP{service: registrationService{
+	business.registration = &registrationHTTP{policy: registrationPolicy, mail: mailDelivery, sessions: business.access.sessions, cookieInsecure: c.Settings.CookieInsecure, service: registrationService{
 		invitedAccount: func(ctx context.Context, user gocql.UUID) (*selfProfile, error) {
 			profiles, err := business.accounts.lookup(ctx, accountLookupRequest{IDs: []gocql.UUID{user}, IncludePending: true})
 			if err != nil || len(profiles) == 0 {
