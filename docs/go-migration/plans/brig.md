@@ -1180,3 +1180,23 @@ count is still selected). Preserve timestamp millisecond truncation for the next
 cursor and sequential per-group membership deletes; check typed Galley member
 presence first. Then complete notifications/persistent federation/code/mail/replay
 and bind the endpoint before rerunning the original failure.
+
+### Deletion group implementation
+
+Use native PostgreSQL group storage independently of the user selector, with
+parameterized team/user/group UUIDs and no request-derived SQL identifiers.
+Galley member200 requires full TeamMember decoding: UUID, Word64 permission
+sets/copy subset after dropping unknown bits, paired invitation fields and native
+legalhold enums. Parse integral Scientific permissions without float rounding or
+unbounded exponent allocation. Missing404 skips group reads/deletes; peer failure
+stops cleanup. Native READ COMMITTED/read-only page transaction selects metadata
+and channel count, validates name/managed_by and reads the team total before
+commit. Cursor created_at is truncated to milliseconds like native; delete each
+membership sequentially and always fetch another page after the final item.
+Retry native administrative-intervention SQLSTATE57P01/02/03/04 five times with
+pool reset; keep raw database errors until retry classification, then scrub them.
+No new dependency. Finite unit controls cover native member/permission decoding,
+missing membership and failed phases. The existing owned native-schema store
+runner adds17 target-team groups plus one outside team,15+2 pagination, all three
+selectors and preservation of other users/teams; reject invalid full metadata.
+Do not claim actual Galley/public deletion/original-suite or whole service proof.

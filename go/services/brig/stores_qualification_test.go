@@ -1047,5 +1047,6 @@ func TestOwnedDurableStores(t *testing.T) {
 		t.Fatal("pending activation row remains", err)
 	}
 	qualifyAccountDeletionStores(t, ctx, stores, newRecord)
+	qualifyDeletionGroupStores(t, ctx, stores)
 
 }
