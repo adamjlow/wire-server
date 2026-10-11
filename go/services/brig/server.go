@@ -295,6 +295,12 @@ func Run(ctx context.Context, c Config) error {
 	}
 	notifications := newSessionNotifications(ctx, business.peers)
 	business.localConnections.notify = notifications.submitPush
+	business.remoteConnections = &connectionRemoteService{local: *business.localConnections, mls: c.Settings.EnableMLS, call: federationClient.call, allowed: func(ctx context.Context, domain string, team *gocql.UUID) (bool, error) {
+		return federationRead.connectionAllowed(ctx, domain, team, cassandra)
+	}, upsert: func(ctx context.Context, self, target gocql.UUID, domain string, conv gocql.UUID, convDomain string, remote, included bool, requestID string) error {
+		return business.peers.upsertConnectionConversation(ctx, self, target, domain, conv, convDomain, remote, included, requestID, c.Settings.Domain)
+	}, established: business.peers.connectionMLSEstablished}
+
 	business.connectionUpdates = &connectionUpdateService{local: *business.localConnections, mls: c.Settings.EnableMLS, accept: business.peers.acceptConnectionOptional, block: business.peers.blockConnectionConversation, unblock: func(ctx context.Context, self, conv gocql.UUID, domain string, connection *string, requestID string) (int, error) {
 		return business.peers.unblockConnectionConversation(ctx, self, conv, domain, connection, requestID, galleyVersion)
 	}, established: business.peers.connectionMLSEstablished}

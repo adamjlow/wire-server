@@ -1006,3 +1006,16 @@ Next remote profile/team federation admission, local/remote connection actions,
 Galley upsert/deterministic conversation IDs and incoming RPCs, then original
 connection tests. Actual positive MLS/cancel/team/LH/app/limit/parser witnesses
 remain finite gaps; no whole Brig or service gate claim.
+
+### Remote connection action continuation
+
+Implement native local/remote action algebra, remote profile/team federation
+admission, remote reaction parsing, and incoming activation/team admission.
+Preserve static-config precedence and exact per-domain Cassandra restriction
+lookup; no allow-all shortcut. Galley upsert actor/membership and native
+Proteus/MLS deterministic IDs precede inserts/updates and user.connection events.
+Bound peer body decoding and validate UUID/domain/action/tag payloads; parameterize
+CQL and preserve native outgoing version negotiation. No policy/fixture/oracle
+change. Incoming profile RPC is a separate remaining actual prerequisite for
+native peer reciprocal public calls/original connection suites; core/action proof
+must not be advertised as whole federation or Brig acceptance.

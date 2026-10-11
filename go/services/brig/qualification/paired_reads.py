@@ -864,6 +864,27 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
                 assert all(e['connection']['from']==actor for e in events), 'connection notification recipient differs'
                 delivered.append({'user':actor,'events':events})
             report['connections_go_delivered_notifications']=delivered
+            remote_connection_domain,remote_connection_target=connection_targets[-1]
+            remote_connection_path='/v19/connections/'+remote_connection_domain+'/'+remote_connection_target
+            remote_connection_created,_=request('POST',remote_connection_path,connection_write_headers)
+            report['connections_go_remote_created']=remote_connection_created
+            assert remote_connection_created['status']==201 and remote_connection_created['json']['status']=='sent', 'Go remote connection creation failed'
+            remote_native_reverse_path='/v19/connections/'+local_domain+'/'+connection_writer
+            remote_native_headers={'Z-User':remote_connection_target,'Z-Connection':'synthetic-remote-action'}
+            remote_native_reverse=request('GET',remote_native_reverse_path,remote_native_headers,port=9082)[0]
+            report['connections_remote_native_reverse']=remote_native_reverse
+            assert remote_native_reverse['status']==200 and remote_native_reverse['json']['status']=='pending', 'native remote pending row missing'
+            assert remote_native_reverse['json']['qualified_conversation']==remote_connection_created['json']['qualified_conversation'], 'Go deterministic conversation differs from native remote ID'
+            remote_connection_updates=[]
+            for desired,expected in [('blocked','blocked'),('accepted','sent'),('cancelled','cancelled')]:
+                response,_=request('PUT',remote_connection_path,connection_write_headers,{'status':desired})
+                remote_connection_updates.append(response)
+                assert response['status']==200 and response['json']['status']==expected, 'Go remote action transition differs'
+            report['connections_go_remote_updates']=remote_connection_updates
+            remote_connection_final=request('GET',remote_connection_path,connection_write_headers)[0]
+            remote_native_final=request('GET',remote_native_reverse_path,remote_native_headers,port=9082)[0]
+            report['connections_remote_native_final']=remote_native_final
+            assert remote_native_final['status']==200 and remote_native_final['json']['status']=='cancelled', 'native remote rescind effect missing'
             go_created,_=request('POST','/v19/clients',lifecycle_headers,{**new_body,'password':password})
             report['client_lifecycle_go_created']=go_created
             assert go_created['status']==201 and go_created['location']==go_created['json']['id'], 'Go client creation failed'
@@ -893,6 +914,9 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             report['connections_native_switchback']=native_connection_switchback
             native_connection_creation_reads=[request('GET',connection_create_path,connection_write_headers)[0],request('GET',reverse_path,recipient_headers)[0]]
             report['connections_native_reads_go_creation']=native_connection_creation_reads
+            remote_connection_switchback=request('GET',remote_connection_path,connection_write_headers)[0]
+            report['connections_native_reads_go_remote']=remote_connection_switchback
+            assert same(remote_connection_final,remote_connection_switchback), 'native lost Go remote connection state'
             assert all(same(ref,actual) for ref,actual in zip([go_connection_created,go_connection_reverse],native_connection_creation_reads) if ref['status']==200), 'native lost Go reverse connection row'
             forward_read=native_connection_creation_reads[0]
             assert forward_read['status']==200 and forward_read.get('content_type')==go_connection_created.get('content_type') and forward_read['json']==go_connection_created['json'], 'native lost Go created connection row'

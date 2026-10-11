@@ -13,6 +13,8 @@ import (
 
 func connectionHTTPError(w http.ResponseWriter, err error) {
 	switch {
+	case errors.Is(err, errConnectionNotFederating):
+		authenticationWireError(w, 403, "team-not-federating", "The target user is owned by a federated backend, but is not in an allow-listed team")
 	case errors.Is(err, errConnectionInvalidUser):
 		authenticationWireError(w, 400, "invalid-user", "Invalid user")
 	case errors.Is(err, errConnectionNoIdentity):
@@ -26,7 +28,7 @@ func connectionHTTPError(w http.ResponseWriter, err error) {
 	case errors.Is(err, errPrekeyConsent):
 		prekeyClaimHTTPError(w, err)
 	default:
-		authenticationHTTPError(w, err)
+		prekeyClaimHTTPError(w, err)
 	}
 }
 func (s connectionLocalService) handle(w http.ResponseWriter, r *http.Request, path string) bool {
