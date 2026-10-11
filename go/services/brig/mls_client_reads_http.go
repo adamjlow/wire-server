@@ -9,6 +9,8 @@ import (
 	"strconv"
 	"strings"
 
+	"golang.org/x/sync/errgroup"
+
 	"github.com/apache/cassandra-gocql-driver/v2"
 )
 
@@ -205,6 +207,10 @@ func (s mlsClientReads) handlePublicSelf(w http.ResponseWriter, r *http.Request,
 		}
 		return false
 	}
+	if len(parts) == 4 && (r.Method == http.MethodPost || r.Method == http.MethodPut) {
+		s.handlePublicUpload(w, r, parts[3], version)
+		return true
+	}
 	deleting := len(parts) == 4
 	if deleting && r.Method != http.MethodDelete || !deleting && r.Method != http.MethodGet && r.Method != http.MethodHead {
 		w.WriteHeader(405)
@@ -270,4 +276,99 @@ func (s mlsClientReads) handlePublicSelf(w http.ResponseWriter, r *http.Request,
 		readJSON(w, r, map[string]int64{"count": count})
 	}
 	return true
+}
+
+func (s mlsClientReads) handlePublicUpload(w http.ResponseWriter, r *http.Request, clientText string, version int) {
+	user, ok := userHeader(w, r)
+	if !ok {
+		return
+	}
+	client, err := parseClientID(clientText)
+	if err != nil {
+		routeParseError(w, "invalid client ID")
+		return
+	}
+	replacing := r.Method == http.MethodPut
+	suites := map[uint16]bool{1: true}
+	if replacing {
+		values, present := r.URL.Query()["ciphersuites"]
+		if (!present || len(values) == 0) && version >= 8 {
+			routeParseError(w, "Query parameter ciphersuites is required")
+			return
+		}
+		if present && len(values) > 0 {
+			suites = map[uint16]bool{}
+			if values[0] != "" {
+				for _, text := range strings.Split(values[0], ",") {
+					suite, ok := mlsSuiteHex(text)
+					if !ok {
+						routeParseError(w, "Invalid ciphersuites")
+						return
+					}
+					suites[suite] = true
+				}
+			}
+		}
+	}
+	if !publicClientContentType(w, r) {
+		return
+	}
+	raw, err := publicClientJSON(r)
+	var packages []uploadedMLSPackage
+	if err == nil {
+		packages, err = decodeMLSUpload(raw)
+	}
+	if err != nil {
+		routeParseError(w, "Invalid MLS key package upload")
+		return
+	}
+	if !s.enabled {
+		authenticationWireError(w, 400, "mls-not-enabled", "MLS is not configured on this backend. See docs.wire.com for instructions on how to enable it")
+		return
+	}
+	if replacing {
+		for suite := range suites {
+			if mlsClientScheme(suite) == "" {
+				authenticationWireError(w, 400, "mls-protocol-error", "Unknown ciphersuite")
+				return
+			}
+		}
+		packageSuites := map[uint16]bool{}
+		for _, p := range packages {
+			if mlsClientScheme(p.suite) == "" {
+				authenticationWireError(w, 400, "mls-protocol-error", "uploaded key packages contains unsupported cipher suite")
+				return
+			}
+			packageSuites[p.suite] = true
+		}
+		equal := len(suites) == len(packageSuites)
+		for suite := range suites {
+			equal = equal && packageSuites[suite]
+		}
+		if !equal {
+			authenticationWireError(w, 400, "mls-protocol-error", "uploaded key packages for unannounced cipher suites")
+			return
+		}
+		// Native deletes selected suites before upload validation. Join all
+		// mutations; a failure does not roll back completed deletions.
+		var group errgroup.Group
+		group.SetLimit(16)
+		for suite := range suites {
+			group.Go(func() error { return s.removeSuite(r.Context(), user, client, suite) })
+		}
+		if err := group.Wait(); err != nil {
+			authenticationHTTPError(w, err)
+			return
+		}
+	}
+	if err := s.upload(r.Context(), user, client, packages); err != nil {
+		var validation mlsValidationFailure
+		if errors.As(err, &validation) {
+			authenticationWireError(w, 400, validation.label, validation.message)
+		} else {
+			authenticationHTTPError(w, err)
+		}
+		return
+	}
+	w.WriteHeader(http.StatusCreated)
 }

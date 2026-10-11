@@ -839,3 +839,16 @@ that observable ordering. Serious inherited concern: native X509 credential
 validation parses the first certificate and matches SAN/public key without
 verifying its certificate-chain signature/trust (KeyPackage.hs credentialIdentityAndKey
 FUTUREWORK). Record it; do not add a different acceptance policy during migration.
+
+### MLS upload and replacement (checks pending)
+
+Native raw TBS parsing, labelled Ed25519/P256/P384/P521 verification, protocol,
+Basic/X509 identity/key/source/capabilities, lifetime and stored key admission
+implemented using Go standard crypto. All packages validate before logged
+LQ/retry5 insertion. Replace validates announced suite set then deletes suites
+before upload validation; preserve empty uploads/suite sets and side effects.
+Own observer will run seven unchanged original compiled MLS upload/count/delete/
+unsupported tests on four ciphersuites with dynamic Go Brig and native peers.
+Claim and original replace tests (which claim packages) remain subsequent work.
+No acceptance claimed before checks. Native X509 trust omission preserved;
+X509/DER/identity/Base64/error-detail variants need direct contract evidence.

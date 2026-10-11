@@ -17,13 +17,17 @@ type mlsClientInfo struct {
 }
 type mlsPackageRow struct{ ref, data []byte }
 type mlsClientReads struct {
-	ids      func(context.Context, gocql.UUID) ([]string, error)
-	get      func(context.Context, gocql.UUID, string) (*storedClient, error)
-	packages func(context.Context, gocql.UUID, string, uint16) ([]mlsPackageRow, error)
-	remove   func(context.Context, gocql.UUID, string, uint16, [][]byte) error
-	now      func() time.Time
-	maximum  *mlsLifetimeMaximum
-	enabled  bool
+	ids         func(context.Context, gocql.UUID) ([]string, error)
+	get         func(context.Context, gocql.UUID, string) (*storedClient, error)
+	packages    func(context.Context, gocql.UUID, string, uint16) ([]mlsPackageRow, error)
+	remove      func(context.Context, gocql.UUID, string, uint16, [][]byte) error
+	key         func(context.Context, gocql.UUID, string, string) ([]byte, bool, error)
+	insert      func(context.Context, gocql.UUID, string, []validatedMLSPackage) error
+	removeSuite func(context.Context, gocql.UUID, string, uint16) error
+	domain      string
+	now         func() time.Time
+	maximum     *mlsLifetimeMaximum
+	enabled     bool
 }
 
 func mlsClientScheme(suite uint16) string {
