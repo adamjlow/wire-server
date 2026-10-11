@@ -1,0 +1,17 @@
+all modules verified
+ok  	github.com/adamjlow/wire-server/go/services/brig	1.367s
+?   	github.com/adamjlow/wire-server/go/services/brig/cmd/brig	[no test files]
+all modules verified
+No vulnerabilities found.
+W1011 01:24:35.507685     635 library.go:394] module github.com/adamjlow/wire-server/go/services/brig has empty version, defaults to HEAD. The license URL may be incorrect. Please verify!
+github.com/adamjlow/wire-server/go/services/brig,https://github.com/adamjlow/wire-server/blob/HEAD/go/services/brig/LICENSE,AGPL-3.0
+github.com/apache/cassandra-gocql-driver/v2,https://github.com/apache/cassandra-gocql-driver/blob/v2.1.2/LICENSE,Apache-2.0
+github.com/jackc/pgpassfile,https://github.com/jackc/pgpassfile/blob/v1.0.0/LICENSE,MIT
+github.com/jackc/pgservicefile,https://github.com/jackc/pgservicefile/blob/5a60cdf6a761/LICENSE,MIT
+github.com/jackc/pgx/v5,https://github.com/jackc/pgx/blob/v5.11.0/LICENSE,MIT
+github.com/jackc/puddle/v2,https://github.com/jackc/puddle/blob/v2.2.2/LICENSE,MIT
+go.yaml.in/yaml/v3,https://github.com/yaml/go-yaml/blob/v3.0.5/LICENSE,MIT
+golang.org/x/sync/semaphore,https://cs.opensource.google/go/x/sync/+/v0.23.0:LICENSE,BSD-3-Clause
+golang.org/x/text,https://cs.opensource.google/go/x/text/+/v0.42.0:LICENSE,BSD-3-Clause
+gopkg.in/inf.v0,https://github.com/go-inf/inf/blob/v0.9.1/LICENSE,BSD-3-Clause
+Go module checks passed: brig; Go 1.26.9
