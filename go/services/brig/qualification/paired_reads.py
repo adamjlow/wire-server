@@ -26,7 +26,7 @@ def checked(args, timeout=30):
     return result.stdout.strip()
 
 
-def inside(gundeck_path=None, access_switchback=False, login_contract=False, activation_contract=False, registration_contract=False, saml_registration_contract=False, public_registration_contract=False, password_reset_contract=False, password_change_contract=False):
+def inside(gundeck_path=None, access_switchback=False, login_contract=False, activation_contract=False, registration_contract=False, saml_registration_contract=False, public_registration_contract=False, password_reset_contract=False, password_change_contract=False, ses_feedback_contract=False):
     registration_contract = registration_contract or saml_registration_contract
     if os.getuid() != 65534 or os.environ.get('WIRE_E2E_DISPOSABLE') != '1':
         raise ValueError('owned nonroot Docker runner required')
@@ -70,6 +70,41 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
                 pass
             time.sleep(0.5)
         raise AssertionError('Brig readiness failed')
+
+    def sqs(action, *parameters):
+        result = subprocess.run(['aws','sqs',action,'--endpoint-url',ses_endpoint,'--region','eu-west-1',*parameters], capture_output=True, text=True, timeout=30)
+        assert result.returncode == 0, 'owned SQS command failed: '+action
+        return json.loads(result.stdout) if result.stdout.strip() else {}
+
+    def feedback_observations(implementation):
+        actors = []
+        for kind in ('Permanent','Transient','Undetermined','Complaint'):
+            email = 'feedback-'+uuid.uuid4().hex+'@example.com'
+            recipient = {'emailAddress':'Synthetic Recipient <'+email+'>'}
+            if kind == 'Complaint':
+                body = {'notificationType':'Complaint','complaint':{'complainedRecipients':[recipient]}}
+            else:
+                body = {'notificationType':'Bounce','bounce':{'bounceType':kind,'bouncedRecipients':[recipient]}}
+            sqs('send-message','--queue-url',ses_queue,'--message-body',json.dumps(body))
+            actors.append({'kind':kind,'email':email})
+        report[implementation+'_feedback_actors'] = actors
+        deadline = time.monotonic()+30
+        while True:
+            attrs=sqs('get-queue-attributes','--queue-url',ses_queue,'--attribute-names','ApproximateNumberOfMessages','ApproximateNumberOfMessagesNotVisible')['Attributes']
+            if all(int(attrs[k])==0 for k in ('ApproximateNumberOfMessages','ApproximateNumberOfMessagesNotVisible')):
+                break
+            assert time.monotonic()<deadline, 'feedback messages not consumed and acknowledged'
+            time.sleep(0.5)
+        records=[request('GET','/i/users/blacklist?'+urlencode({'email':actor['email']}))[0] for actor in actors]
+        report[implementation+'_feedback_records'] = records
+        assert [r['status'] for r in records]==[200,404,404,200], 'native feedback blocking policy changed'
+        rejected=[]
+        for actor in (actors[0],actors[3]):
+            result,_=request('POST','/register',{'X-Forwarded-For':'127.0.0.42'}, {'name':'Synthetic feedback rejection','email':actor['email'],'password':'Synthetic-feedback-password!'})
+            rejected.append(result)
+        report[implementation+'_feedback_register_rejections']=rejected
+        assert all(r['status']==403 and r['json']['label']=='blacklisted-email' for r in rejected), 'feedback blocklist admission changed'
+        return actors, records, rejected
 
     try:
         servers = runtime.start_forwards()
@@ -191,6 +226,18 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             activation_pair = stage_email(activation_email)
             report['native_activation_reference'] = native_activation
             report['native_activation_repeat_reference'] = native_repeat
+        if ses_feedback_contract:
+            ses_endpoint=peers['brig']['aws']['sqsEndpoint']
+            queue_name=peers['brig']['emailSMS']['email']['sesQueue']
+            ses_queue=sqs('get-queue-url','--queue-name',queue_name)['QueueUrl']
+            report['feedback_queue_name']=queue_name
+            admin_email='feedback-api-'+uuid.uuid4().hex+'@example.com'
+            admin_path='/i/users/blacklist?'+urlencode({'email':admin_email})
+            admin_cases=[('GET',admin_path),('POST',admin_path),('HEAD',admin_path),('GET',admin_path),('DELETE',admin_path),('GET',admin_path),('GET','/i/users/blacklist'),('GET','/i/users/blacklist?email=invalid')]
+            native_admin=[request(*case)[0] for case in admin_cases]
+            report['native_blacklist_api']=native_admin
+            assert [r['status'] for r in native_admin]==[404,200,200,200,200,404,400,400], 'native blacklist routes changed'
+            native_feedback_actors,native_feedback,native_rejections=feedback_observations('native')
         if password_change_contract:
             change_old = 'Synthetic-change-old-password!'
             change_new = 'Synthetic-change-new-password!'
@@ -324,6 +371,45 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
                 mismatches.append({'case': index, 'path': cases[index][1], 'fields': [key for key in fields if native.get(key) != go.get(key)]})
         report['mismatches'] = mismatches
         assert not mismatches, 'paired response mismatches'
+        if ses_feedback_contract:
+            go_admin=[request(*case)[0] for case in admin_cases]
+            report['go_blacklist_api']=go_admin
+            fields=lambda record: ('status','content_type','json' if 'json' in record else 'body')
+            admin_mismatches=[{'case':i,'fields':[k for k in fields(ref) if ref.get(k)!=actual.get(k)]} for i,(ref,actual) in enumerate(zip(native_admin,go_admin)) if any(ref.get(k)!=actual.get(k) for k in fields(ref))]
+            report['blacklist_api_mismatches']=admin_mismatches
+            assert not admin_mismatches, 'native blacklist API mismatch'
+            native_state=[request('GET','/i/users/blacklist?'+urlencode({'email':actor['email']}))[0] for actor in native_feedback_actors]
+            report['go_reads_native_feedback']=native_state
+            assert all(all(ref.get(k)==actual.get(k) for k in fields(ref)) for ref,actual in zip(native_feedback,native_state)), 'Go lost native feedback blocklist state'
+            go_feedback_actors,go_feedback,go_rejections=feedback_observations('go')
+            assert all(all(ref.get(k)==actual.get(k) for k in fields(ref)) for ref,actual in zip(native_feedback+native_rejections,go_feedback+go_rejections)), 'native feedback response mismatch'
+            # Reuse the available original compiled test, not a rewritten test.
+            # The legacy SES-specific service test is source-only in this image.
+            import runner, harness
+            case='Migration.BlockList.testBlockListMigration'
+            assert case in runner.discover('brig'), 'original compiled blocklist migration test absent'
+            link=runtime.WORK/'dist/brig'
+            link.unlink();link.symlink_to(candidate)
+            xml=Path('/reports/blacklist-original.xml')
+            with open('/reports/blacklist-original.log','w') as original_log:
+                original=subprocess.run([runner.binary('integration')['path'],'--config',str(runtime.WORK/'services/integration.yaml'),'--include',case,'--xml',str(xml)],cwd=runtime.WORK,stdout=original_log,stderr=subprocess.STDOUT,timeout=1200)
+            report['original_blacklist_test']={'required_tests':[case],'process_exit_code':original.returncode,'integration_binary':runner.binary('integration'),'dynamic_brig_sha256':report['candidate_brig_sha256']}
+            report['e2e_executed']=True
+            if original.returncode==0:
+                report['original_blacklist_test']['validated_report']=harness.check_xml(xml,[case])
+            active.terminate()
+            report['go_feedback_stop_exit_code']=active.wait(timeout=35)
+            assert report['go_feedback_stop_exit_code']==0, 'Go feedback stop failed'
+            with socket.socket() as check:
+                assert check.connect_ex(('127.0.0.1',8082))!=0, 'Go feedback listener remains'
+            log=open('/reports/brig-native-feedback-switchback.log','w');logs.append(log)
+            active=subprocess.Popen([str(native_brig_path),'-c',str(runtime.WORK/'brig-static-0.json')],cwd=runtime.WORK/'services/brig',stdout=log,stderr=subprocess.STDOUT)
+            processes.append(active);ready(active)
+            native_consumed=[request('GET','/i/users/blacklist?'+urlencode({'email':actor['email']}))[0] for actor in go_feedback_actors]
+            report['native_reads_go_feedback']=native_consumed
+            assert all(all(ref.get(k)==actual.get(k) for k in fields(ref)) for ref,actual in zip(go_feedback,native_consumed)), 'native lost Go feedback blocklist state'
+            report['feedback_switchback']={'native_and_go_consume_and_acknowledge':True,'permanent_and_complaint_block':True,'transient_and_undetermined_do_not_block':True,'native_accepts_go_blocklist_state':True,'same_initialized_stores':True}
+            assert original.returncode==0, 'original compiled blacklist migration test failed'
         if password_change_contract:
             go_change_records=[request(*case)[0] for case in change_cases]
             report['go_change_controls']=go_change_records
@@ -803,6 +889,7 @@ def main():
     parser.add_argument('--public-registration-contract', action='store_true')
     parser.add_argument('--password-reset-contract', action='store_true')
     parser.add_argument('--password-change-contract', action='store_true')
+    parser.add_argument('--ses-feedback-contract', action='store_true')
     args = parser.parse_args()
     if (args.registration_contract or args.saml_registration_contract) and (args.activation_contract or args.access_switchback or args.login_contract):
         parser.error('registration observation runs separately from credential/activation observations')
@@ -812,8 +899,10 @@ def main():
         parser.error('password reset observation runs separately')
     if args.password_change_contract and any((args.registration_contract,args.saml_registration_contract,args.activation_contract,args.access_switchback,args.login_contract,args.public_registration_contract,args.password_reset_contract)):
         parser.error('password change observation runs separately')
+    if args.ses_feedback_contract and any((args.registration_contract,args.saml_registration_contract,args.activation_contract,args.access_switchback,args.login_contract,args.public_registration_contract,args.password_reset_contract,args.password_change_contract)):
+        parser.error('SES feedback observation runs separately')
     if args.in_container:
-        return inside(args.gundeck_path, args.access_switchback, args.login_contract, args.activation_contract, args.registration_contract, args.saml_registration_contract, args.public_registration_contract, args.password_reset_contract, args.password_change_contract)
+        return inside(args.gundeck_path, args.access_switchback, args.login_contract, args.activation_contract, args.registration_contract, args.saml_registration_contract, args.public_registration_contract, args.password_reset_contract, args.password_change_contract, args.ses_feedback_contract)
     if args.binary is None or args.build_receipt is None or args.output is None:
         parser.error('identified binary, receipt and new output required')
     sys.path.insert(0, str(ROOT / 'tools/parity/docker'))
@@ -855,6 +944,8 @@ def main():
         runner['command'].append('--password-reset-contract')
     if args.password_change_contract:
         runner['command'].append('--password-change-contract')
+    if args.ses_feedback_contract:
+        runner['command'].append('--ses-feedback-contract')
     if args.gundeck_binary:
         runner['command'] += ['--gundeck-path', '/candidate/gundeck']
         runner['volumes'].append({'type': 'bind', 'source': str(args.gundeck_binary.resolve(strict=True)),
@@ -893,9 +984,10 @@ def main():
         result['redis_cluster_initialization_completed'] = True
         with (output / 'controller.log').open('w') as log:
             process = subprocess.run(command + ['run', '--rm', '--no-deps', 'runner'],
-                                     stdout=log, stderr=subprocess.STDOUT, timeout=900)
+                                     stdout=log, stderr=subprocess.STDOUT, timeout=1500 if args.ses_feedback_contract else 900)
         result['runner_exit_code'] = process.returncode
         report = json.loads((output / 'reports/paired-reads.json').read_text())
+        result['e2e_executed'] = report.get('e2e_executed', False)
         if process.returncode == 0 and report['result'] == 'pass':
             result['result'] = 'pass'
     except Exception as error:

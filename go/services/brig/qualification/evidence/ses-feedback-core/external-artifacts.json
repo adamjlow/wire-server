@@ -1,0 +1,97 @@
+[
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/ses-feedback-core-sdk-check/argon2-copyright",
+    "sha256": "6059eb2b0f8f23b5c6023b08f68d4df9addd834665d07e5dcc364d4ae80d9b69",
+    "bytes": 8745
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/ses-feedback-core-sdk-check/brig",
+    "sha256": "912791eac4d067597fa82308b5d0b6dfab0ab0ef07469dbc9e7a6b9c7cac6289",
+    "bytes": 68156760
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/ses-feedback-core-sdk-check/brig.test",
+    "sha256": "e96126f6a5db6064fe1c438ec6f8aede89d3ca791e8d4ddc0ad406488898d504",
+    "bytes": 65559584
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/ses-feedback-core-sdk-check/build-receipt.json",
+    "sha256": "7c4224f9430be586353fd3b60adea8e4f47d02fd8b054c12f2636975863e9605",
+    "bytes": 872
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/ses-feedback-core-sdk-check/controller.log",
+    "sha256": "5b2278170b6160b9a369f404cd0d8b492feb291ecfe3b02e76a9f973097a7e22",
+    "bytes": 2878
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/ses-feedback-core-sdk-check/cxx-package.sha256",
+    "sha256": "5abc52f67b0befe6317695d4489a2433b32854cbb6b5916a6f875b2c0e300636",
+    "bytes": 102
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/ses-feedback-core-sdk-check/cxx-package.txt",
+    "sha256": "d41b16dcb551842304cab9549bb3da24fdb859d85d690bd121de7f3cb29cce01",
+    "bytes": 59
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/ses-feedback-core-sdk-check/glibc-copyright",
+    "sha256": "f5788886720a2605a946e81d571e6c8162b09f58d2e2ceb8d36e5768fccd850d",
+    "bytes": 51200
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/ses-feedback-core-sdk-check/go-check.log",
+    "sha256": "7149aa00369acf62d0e15aa84f68f117b856de2bd7196330f011421669f93a07",
+    "bytes": 3723
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/ses-feedback-core-sdk-check/icu-copyright",
+    "sha256": "5bbff5f646ce750ac0a347e7f91793279b7422a1119820b5f75d98879c201c68",
+    "bytes": 2214
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/ses-feedback-core-sdk-check/libraries.sha256",
+    "sha256": "875560a1f32f1ad76a866a7f792a6b392f64c5555e8f55f270f60869079f9af2",
+    "bytes": 846
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/ses-feedback-core-sdk-check/libstdc++-copyright",
+    "sha256": "20390f8a6f3b1e4d7cb45dd8652dabb259bbef688cbad839bcdb0b9ba7252f79",
+    "bytes": 69004
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/ses-feedback-core-sdk-check/openssl-copyright",
+    "sha256": "6a7da622fe0637a334d2a8fc470852d2ffb77d9a2b2f930f854e32a41ad6ef35",
+    "bytes": 2543
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/ses-feedback-core-sdk-check/packages.txt",
+    "sha256": "9e9db92065c33bc81e7e8b5ff6f5c0a9a32814690509f59c88718cc418f5e262",
+    "bytes": 3793
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/ses-feedback-core-sdk-check/runtime-units.log",
+    "sha256": "093e25facfc4c19e1a2770427b3bac4187494eba64a7f902ae3ccdfa2b830060",
+    "bytes": 49607
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/ses-feedback-core-sdk-check/stores-build-receipt.json",
+    "sha256": "4920795cd05d3a66d440b658fa8e56c357f15887dedd70547878dc4b9d8e66f5",
+    "bytes": 872
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/ses-feedback-core-sdk-check/stores.test",
+    "sha256": "cbe6b80d2280b885e7d9c8ad821f9655340a26b6851de3bd9d44128f4d04f7df",
+    "bytes": 70385880
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/ses-feedback-core-sdk-check/zlib-copyright",
+    "sha256": "9e5b96d63773a5d177ba264254390f792be07e41748ebd94730981c6cac31cc6",
+    "bytes": 2927
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/ses-feedback-core-sdk-check/zstd-copyright",
+    "sha256": "5cec9fef4d3fa7e0371fbef4ec3fc416e0105dc2a9922117f84e825cb11f50f8",
+    "bytes": 5332
+  }
+]
