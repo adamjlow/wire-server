@@ -1750,3 +1750,18 @@ membership and one delivery, explicit in evidence. All25 process exits0,
 runner/cleanup0 and independent empty. Earlier404 proof and failures retained.
 Next trusted positive TLS/optimistic-Dynamo STOMP and remaining whole-service
 surface; no webhook or full535/eight-Go/three-selector qualification claim.
+
+### Bounded optimistic-prekey/STOMP control
+
+Reuse the unchanged qualified production executable and tagged storage fixture
+only after exact source/compiler/dependency comparisons. Extend the candidate's
+owned observer with an opt-in optimistic-prekey mode using the existing isolated
+DynamoDB table/loopback forward and synthetic AWS credentials. Native and Go HTTP
+claims must create a real lock row; replenish the consumed ordinary key through
+HTTP to preserve the existing two-prekey fixture. Queued service deletion must
+remove that same row before acknowledgement, including native-Go-native replay.
+Keep all original22 assertions, queue delivery controls and native schemas intact.
+The observer uses fixed AWS CLI arguments, bounded timeouts and parameterized JSON;
+no host/production endpoint, new dependency, TLS bypass or credential capture.
+Stop after this finite combined configuration passes or exposes a concrete
+implementation mismatch; it is not whole-service qualification.

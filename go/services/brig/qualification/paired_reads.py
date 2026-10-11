@@ -26,7 +26,7 @@ def checked(args, timeout=30):
     return result.stdout.strip()
 
 
-def inside(gundeck_path=None, access_switchback=False, login_contract=False, activation_contract=False, registration_contract=False, saml_registration_contract=False, public_registration_contract=False, password_reset_contract=False, password_change_contract=False, ses_feedback_contract=False, properties_contract=False, client_update_contract=False, client_registration_contract=False, client_lifecycle_contract=False, store_fixture_path=None, mls_upload_originals=False, stomp_internal_events=False, service_deletion_queue=False, service_galley_event=False):
+def inside(gundeck_path=None, access_switchback=False, login_contract=False, activation_contract=False, registration_contract=False, saml_registration_contract=False, public_registration_contract=False, password_reset_contract=False, password_change_contract=False, ses_feedback_contract=False, properties_contract=False, client_update_contract=False, client_registration_contract=False, client_lifecycle_contract=False, store_fixture_path=None, mls_upload_originals=False, stomp_internal_events=False, service_deletion_queue=False, service_galley_event=False, optimistic_prekeys=False):
     registration_contract = registration_contract or saml_registration_contract
     if os.getuid() != 65534 or os.environ.get('WIRE_E2E_DISPOSABLE') != '1':
         raise ValueError('owned nonroot Docker runner required')
@@ -37,6 +37,7 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
     active = None
     original_failures = []
     service_conversations = {}
+    service_clients = {}
     if stomp_internal_events:
         import stomp_broker
 
@@ -94,6 +95,16 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
         assert process.returncode == 0, 'owned service row fixture failed: '+phase
         return json.loads(Path(output).read_text())
 
+    def service_prekey_lock(actor):
+        key = {'client': {'S': actor['User']+'.'+service_clients[actor['User']]}}
+        result = subprocess.run(['aws', 'dynamodb', 'get-item',
+            '--endpoint-url', 'http://127.0.0.1:4567', '--region', 'eu-west-1',
+            '--table-name', peers['brig']['aws']['prekeyTable'],
+            '--key', json.dumps(key), '--consistent-read', '--output', 'json'],
+            capture_output=True, text=True, timeout=30)
+        assert result.returncode == 0, 'owned prekey lock read failed'
+        return json.loads(result.stdout).get('Item', {})
+
     def service_actor(phase):
         actor = request('POST', '/i/users', body={'name': 'Synthetic service queue bot'})[0]
         assert actor['status'] == 201, 'service bot actor creation failed'
@@ -143,6 +154,20 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             member = request('GET', path, owner_headers, port=8085)[0]
             assert member['status'] == 200 and any(x['qualified_id']['id'] == uid for x in member['json']['members']['others']), 'native Galley bot member is absent before queue work'
             report['service_galley_'+phase+'_before'] = member
+        service_clients[uid] = client['json']['id']
+        if optimistic_prekeys:
+            lock_before = service_prekey_lock(fixture)
+            assert not lock_before, 'new service client already has a prekey lock'
+            claim_path = '/v19/users/'+peers['brig']['optSettings']['setFederationDomain']+'/'+uid+'/prekeys/'+client['json']['id']
+            claim = request('GET', claim_path, headers)[0]
+            assert claim['status'] == 200 and claim['json']['prekey'] == native_body['prekeys'][0], 'optimistic service prekey claim differs'
+            lock = service_prekey_lock(fixture)
+            assert lock == {'client': {'S': uid+'.'+client['json']['id']}, 'version': {'N': '1'}}, 'HTTP claim did not create native Dynamo lock'
+            replenished = request('PUT', '/v19/clients/'+client['json']['id'],
+                headers, {'prekeys': native_body['prekeys']})[0]
+            assert replenished['status'] == 200, 'service ordinary prekey replenishment failed'
+            report['service_prekey_'+phase+'_claim'] = {'before': lock_before,
+                'claim': claim, 'lock': lock, 'replenished': replenished}
         rows = service_row_fixture('stage', phase+'-stage', fixture)
         if service_galley_event:
             assert rows['counts'].pop('galley_service') == 1, 'native Galley connection row is absent'
@@ -197,6 +222,10 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
                 assert queue['EnqueueCount'] == before['EnqueueCount']+1, 'unexpected extra internal events in service cleanup'
                 report['service_galley_'+phase+'_delivery'] = {'before': before,
                     'after': queue, 'expected_dispatches': expected_dispatches}
+        if optimistic_prekeys:
+            lock = service_prekey_lock(actor)
+            assert not lock, 'acknowledged service bot deletion retained Dynamo lock: '+phase
+            report['service_prekey_'+phase+'_deleted'] = lock
         report['service_queue_'+phase] = {'rows': rows, 'queue': queue, 'status': status}
         return rows
 
@@ -301,6 +330,11 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
         runtime.stage()
         runtime.initialize()
         peers = json.loads(Path('/fixtures/peers.json').read_text())['0']
+        if optimistic_prekeys:
+            peers['brig']['randomPrekeys'] = False
+            peers['brig']['aws']['dynamoDBEndpoint'] = 'http://127.0.0.1:4567'
+            report['prekey_allocation'] = {'strategy': 'optimistic',
+                'table': peers['brig']['aws']['prekeyTable'], 'owned_dynamo': True}
         if stomp_internal_events:
             stomp_broker.wait_ready()
             peers['brig']['internalEvents'] = {'queueType': 'stomp', 'queueName': stomp_broker.QUEUE}
@@ -1829,6 +1863,7 @@ def main():
     parser.add_argument('--stomp-internal-events', action='store_true')
     parser.add_argument('--service-deletion-queue', action='store_true')
     parser.add_argument('--service-galley-event', action='store_true')
+    parser.add_argument('--optimistic-prekeys', action='store_true')
     args = parser.parse_args()
     if (args.registration_contract or args.saml_registration_contract) and (args.activation_contract or args.access_switchback or args.login_contract):
         parser.error('registration observation runs separately from credential/activation observations')
@@ -1856,8 +1891,10 @@ def main():
         parser.error('service deletion queue proof requires STOMP and identified tagged fixture')
     if args.service_galley_event and not args.service_deletion_queue:
         parser.error('live Galley event requires service queue proof')
+    if args.optimistic_prekeys and not args.service_deletion_queue:
+        parser.error('optimistic prekey control requires the owned service queue proof')
     if args.in_container:
-        return inside(args.gundeck_path, args.access_switchback, args.login_contract, args.activation_contract, args.registration_contract, args.saml_registration_contract, args.public_registration_contract, args.password_reset_contract, args.password_change_contract, args.ses_feedback_contract, args.properties_contract, args.client_update_contract, args.client_registration_contract, args.client_lifecycle_contract, args.store_fixture_path, args.mls_upload_originals, args.stomp_internal_events, args.service_deletion_queue, args.service_galley_event)
+        return inside(args.gundeck_path, args.access_switchback, args.login_contract, args.activation_contract, args.registration_contract, args.saml_registration_contract, args.public_registration_contract, args.password_reset_contract, args.password_change_contract, args.ses_feedback_contract, args.properties_contract, args.client_update_contract, args.client_registration_contract, args.client_lifecycle_contract, args.store_fixture_path, args.mls_upload_originals, args.stomp_internal_events, args.service_deletion_queue, args.service_galley_event, args.optimistic_prekeys)
     if args.binary is None or args.build_receipt is None or args.output is None:
         parser.error('identified binary, receipt and new output required')
     sys.path.insert(0, str(ROOT / 'tools/parity/docker'))
@@ -1915,6 +1952,8 @@ def main():
         runner['command'].append('--service-deletion-queue')
     if args.service_galley_event:
         runner['command'].append('--service-galley-event')
+    if args.optimistic_prekeys:
+        runner['command'].append('--optimistic-prekeys')
     if args.stomp_internal_events:
         import stomp_broker
         stomp_broker.prepare(spec, output)
