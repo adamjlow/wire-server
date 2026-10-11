@@ -1,0 +1,12 @@
+{
+  "wire.migration.observation=wire-brig-stores-c3dd58d508e94c7089b60806eec3c90e": {
+    "remaining_containers": "",
+    "remaining_networks": "",
+    "remaining_volumes": ""
+  },
+  "wire-migration-task=brig-implementation": {
+    "remaining_containers": "",
+    "remaining_networks": "",
+    "remaining_volumes": ""
+  }
+}
