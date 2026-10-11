@@ -2,6 +2,7 @@
 package brig
 
 import (
+	"context"
 	"encoding/json"
 	"log"
 	"net/http"
@@ -24,6 +25,7 @@ type brigReadHandlers struct {
 	registration *registrationHTTP
 	clients      *clientReadHandlers
 	index        *searchIndexWriter
+	appIDs       func(context.Context, gocql.UUID) ([]string, error)
 }
 
 func readJSON(w http.ResponseWriter, r *http.Request, body any) {
@@ -84,6 +86,25 @@ func (b brigReadHandlers) handle(w http.ResponseWriter, r *http.Request, path st
 		return true
 	}
 	segments := strings.Split(strings.Trim(path, "/"), "/")
+	if len(segments) == 4 && segments[0] == "i" && segments[1] == "teams" && segments[3] == "apps" && b.appIDs != nil {
+		if r.Method != http.MethodGet && r.Method != http.MethodHead {
+			w.WriteHeader(http.StatusMethodNotAllowed)
+			return true
+		}
+		canonical, valid := tokenUUID(segments[2])
+		if !valid {
+			routeParseError(w, "Error parsing URL piece failed: invalid UUID")
+			return true
+		}
+		team, _ := gocql.ParseUUID(canonical)
+		ids, err := b.appIDs(r.Context(), team)
+		if err != nil {
+			authenticationWireError(w, 500, "server-error", "Internal Server Error")
+			return true
+		}
+		readJSON(w, r, ids)
+		return true
+	}
 	if len(segments) == 4 && segments[0] == "i" && segments[1] == "teams" && segments[3] == "size" {
 		if r.Method != http.MethodGet && r.Method != http.MethodHead {
 			w.WriteHeader(http.StatusMethodNotAllowed)

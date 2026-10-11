@@ -762,4 +762,35 @@ func TestOwnedDurableStores(t *testing.T) {
 			t.Fatal(mode, "native stored SSO projection", err)
 		}
 	}
+	// AppStore is PostgreSQL in all user-storage modes; these callbacks must
+	// return actual team-scoped rows, not an empty membership success fallback.
+	appTeam, otherTeam, firstApp, secondApp, otherApp, creator := user(), user(), user(), user(), user(), user()
+	for _, row := range []struct{ app, team gocql.UUID }{{firstApp, appTeam}, {secondApp, appTeam}, {otherApp, otherTeam}} {
+		if _, err := postgres.Exec(ctx, `INSERT INTO apps(user_id,team_id,metadata,category,description,creator) VALUES($1::uuid,$2::uuid,'{}'::json,'other','',$3::uuid)`, row.app.String(), row.team.String(), creator.String()); err != nil {
+			t.Fatal(err)
+		}
+	}
+	for mode, store := range stores {
+		ids, err := store.teamAppIDs(ctx, appTeam)
+		if err != nil || len(ids) != 2 {
+			t.Fatal(mode, "native app team lookup", ids, err)
+		}
+		seen := map[string]bool{}
+		for _, id := range ids {
+			seen[id] = true
+		}
+		if !seen[firstApp.String()] || !seen[secondApp.String()] || seen[otherApp.String()] {
+			t.Fatal(mode, "app lookup leaked another team", ids)
+		}
+		empty, err := store.teamAppIDs(ctx, user())
+		if err != nil || empty == nil || len(empty) != 0 {
+			t.Fatal(mode, "missing app team must encode empty array", err)
+		}
+	}
+	if _, err := postgres.Exec(ctx, `UPDATE apps SET description=$1 WHERE user_id=$2::uuid`, strings.Repeat("é", 301), firstApp.String()); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := stores["cassandra"].teamAppIDs(ctx, appTeam); err == nil {
+		t.Fatal("app IDs bypassed native full-row description validation")
+	}
 }
