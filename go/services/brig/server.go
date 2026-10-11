@@ -256,6 +256,17 @@ func Run(ctx context.Context, c Config) error {
 			return err
 		}, enqueue: internalQueue.enqueueClientDeletion, remove: deletionStore.remove,
 	}
+	maxPermanent := 7
+	if c.Settings.MaxPermanentClients != nil {
+		maxPermanent = *c.Settings.MaxPermanentClients
+	}
+	business.clientRegistration = &clientRegistrationService{
+		core:    clientRegistrationCore{store: clientStore{cassandra}, maxPermanent: maxPermanent, now: time.Now, reauthenticate: business.auth.passwords.reauthenticate},
+		account: business.users.get, verificationEnabled: business.peers.verificationEnabled, verifyCode: verificationCodeStore{cassandra}.verify,
+		consumable: c.Settings.ConsumableNotifications, setup: business.peers.setupConsumableClient,
+		deleteOld: business.clientDeletion.execute, galley: business.peers.registerGalleyClient, event: business.peers.clientAddedEvent,
+		mail: mailDelivery.newClient, domain: c.Settings.Domain, locale: c.Settings.DefaultLocale,
+	}
 	notifications := newSessionNotifications(ctx, business.peers)
 	defer notifications.close()
 	business.properties = newPropertyService(c, propertyStore{cassandra}, notifications.submitPush)

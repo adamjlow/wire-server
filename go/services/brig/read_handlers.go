@@ -13,28 +13,29 @@ import (
 )
 
 type brigReadHandlers struct {
-	config           Config
-	users            userStore
-	sessions         sessionStore
-	peers            brigPeers
-	auth             *reauthenticationHandler
-	access           *accessTokenService
-	renewal          *accessRenewalHTTP
-	login            *loginHTTP
-	activation       *activationHTTP
-	registration     *registrationHTTP
-	passwordReset    *passwordResetHTTP
-	passwordChange   *passwordChangeService
-	clients          *clientReadHandlers
-	index            *searchIndexWriter
-	appIDs           func(context.Context, gocql.UUID) ([]string, error)
-	accounts         *accountLookup
-	bulkClients      *clientBulkReads
-	blocklist        *blocklistStore
-	federationConfig *federationConfigRead
-	properties       *propertyService
-	clientUpdate     *clientUpdateService
-	clientDeletion   *clientDeletionService
+	config             Config
+	users              userStore
+	sessions           sessionStore
+	peers              brigPeers
+	auth               *reauthenticationHandler
+	access             *accessTokenService
+	renewal            *accessRenewalHTTP
+	login              *loginHTTP
+	activation         *activationHTTP
+	registration       *registrationHTTP
+	passwordReset      *passwordResetHTTP
+	passwordChange     *passwordChangeService
+	clients            *clientReadHandlers
+	index              *searchIndexWriter
+	appIDs             func(context.Context, gocql.UUID) ([]string, error)
+	accounts           *accountLookup
+	bulkClients        *clientBulkReads
+	blocklist          *blocklistStore
+	federationConfig   *federationConfigRead
+	properties         *propertyService
+	clientUpdate       *clientUpdateService
+	clientDeletion     *clientDeletionService
+	clientRegistration *clientRegistrationService
 }
 
 func readJSON(w http.ResponseWriter, r *http.Request, body any) {
@@ -71,6 +72,9 @@ func routeParseError(w http.ResponseWriter, message string) {
 }
 
 func (b brigReadHandlers) handle(w http.ResponseWriter, r *http.Request, path string) bool {
+	if b.clientRegistration != nil && b.clientRegistration.handle(w, r, path) {
+		return true
+	}
 	if b.clientDeletion != nil && b.clientDeletion.handle(w, r, path) {
 		return true
 	}

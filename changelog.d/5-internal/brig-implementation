@@ -7,3 +7,5 @@ Add versioned native client registration decoding and Galley/synchronous Gundeck
 Add public client deletion with native cookie/queue/storage order and configured prekey-lock cleanup; backend lifecycle qualification remains pending.
 
 Align client lock deletion retries with the repository-pinned native Amazonka policy; wider native execution qualification remains pending.
+
+Wire public client registration to real native-order account/code, storage, peer, deletion and new-device mail effects; original/native backend qualification remains pending.

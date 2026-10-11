@@ -576,3 +576,28 @@ real template/SES/SMTP transport; then native registration/delete witness,
 original Client cases/last-active. Owned build space recovered by verified
 completed core directory relocation to own /run/user/1001 namespace,204MB,
 original bytes/owner/mode/logical paths preserved; no pruning/floor changes.
+
+
+Public client registration composition: bind real POST/clients to native
+NoFilter account projections, three account lookup points including Login
+code email/team and SAML reads even when verification disabled, existing
+feature/code stores, native default7/optional setUserMaxPermClients, actual
+reauth/core/CQL/prekeys/MLS, configured consumable setup, old-client deletion
+execute, actual Galley callback and synchronous V6 self-client event. Public
+legalhold rejects before account lookup. NewClient mail when pre-deletion
+total>1 and initial projected account has email; await existing real SES/SMTP
+transport. Native template uses branding/name/label/model/date, N/A null
+defaults, DE/FR weekday/month calendars/English fallback and NewDevice header.
+Created response201/Location clientID/versioned capabilities/no last_active.
+
+Finite validation: exact successful and setup/deletion/Galley/event/mail
+failure order without compensating prior writes, code/feature/SAML/missing
+account/public legalhold admission, versioned public response and native
+permanent-limit YAML mapping, real repository mail templates/date/defaults.
+Full pinned Go checks/static runner units. Actual native registration/
+old-client deletion/mail delivery/state switchback and original Client cases
+are the next required qualification, not established by local callbacks.
+Internal legalhold add/disable/events and original last-active remain pending;
+final whole-service gates unchanged. SDK outputs use a fresh owned runtime
+temporary directory to keep compiler/build space bounded; no fixture,
+deadline, disk floor or protected assertion change.
