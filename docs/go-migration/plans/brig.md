@@ -552,3 +552,27 @@ classification/normalization/backoff/transport controls and full pinned Go
 checks/static runner units. Actual native executable fault-injection/region/
 TLS/timeout/corner serialization comparison still required before wider
 optimistic-mode qualification; no original suites/state claimed here.
+
+
+Dynamo retry source007248825/servicee4372307... PASS full pinned Go/static
+original-runner units including actual signed3-call eventual success and
+6-call saturation. Two containers0/network cleanup0/independent audits empty;
+tagged stores compile only. Evidence client-deletion-native-retries links
+immutable SDK sources/current-reference pin equality and exact source
+policy/status/code/message/header/backoff/connection controls. Single-attempt
+gap is source-aligned; native executable fault injection/default-region/TLS/
+timeout/internal-exception/redirect/response-schema mapping and actual
+Dynamo/client deletion switchback remain pending. No originals executed.
+
+Next whole addClient composition: account lookup and native Login verification
+(no team default disabled; SAML bypass; preserve lookup/code precedence),
+setUserMaxPermClients optional/default7, public legalhold forbid/internal
+implicit capability, bound core/reauth/consumable, old-client execute, actual
+Galley/synchronous V6 event and new-client mail. Mail uses user/new-client
+template with branding/name/label/model/date, absent label/model N/A
+(Data.Id.defRequestId), date `%A %e %B %Y, %H:%M - %Z` with DE/FR
+locale calendars and English fallback, X-Zeta-Purpose NewDevice. Use existing
+real template/SES/SMTP transport; then native registration/delete witness,
+original Client cases/last-active. Owned build space recovered by verified
+completed core directory relocation to own /run/user/1001 namespace,204MB,
+original bytes/owner/mode/logical paths preserved; no pruning/floor changes.

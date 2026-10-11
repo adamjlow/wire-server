@@ -1,0 +1,8 @@
+c4c49ab95ab747ee102233ebb89952fdd7be2eb2a558693d637a40d082c99c6b  /usr/lib/x86_64-linux-gnu/libargon2.a
+45f4929b99cbaa70ed23269fe804a79badb546b4d3c97b8d4eb023088795bde3  /usr/lib/x86_64-linux-gnu/libcrypto.a
+f81da8056ea0ee821570a6289f2f77b65de24756df2ad68730295ad818266579  /usr/lib/x86_64-linux-gnu/libz.a
+a878f0a22598695eb5ff87d684a1b984624b7b10505872dd058595cd067ce275  /usr/lib/x86_64-linux-gnu/libzstd.a
+656449db05bc24402137ce93aee116be366b66f5de6f701e108f27ce0921857b  /usr/lib/x86_64-linux-gnu/libicui18n.a
+c7df0d5b63a7062a596ad8c484a050e1940a89f9c89c9907984b0d026ca5229b  /usr/lib/x86_64-linux-gnu/libicuuc.a
+f62ffb718fbd07e1a5195fd637631358d46882bde564739bbb73dead4b260fc2  /usr/lib/x86_64-linux-gnu/libicudata.a
+fd58c286c29e99494ef24a72288acc0978a81832c6563521d47a7b911fbf7d02  /opt/brig-cxx/usr/lib/gcc/x86_64-linux-gnu/14/libstdc++.a

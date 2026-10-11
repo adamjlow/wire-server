@@ -1,0 +1,31 @@
+{
+  "native_reference": "f6636ed53315fa7b0fc4c8aa39c0bb30c98b6d5e",
+  "amazonka_revision": "b562aa3f24845e34b95748daae671860017426be",
+  "pin_comparison": "Current/reference flake.lock amazonka rev identical; no dependency/reference change",
+  "sources": [
+    {
+      "url": "https://raw.githubusercontent.com/brendanhay/amazonka/b562aa3f24845e34b95748daae671860017426be/lib/amazonka/src/Amazonka/Send.hs",
+      "sha256": "24c4ae33039d24d63bd66b2d82b6e2dbff05a4f079956646893469ea8372d453"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/brendanhay/amazonka/b562aa3f24845e34b95748daae671860017426be/lib/amazonka/src/Amazonka/HTTP.hs",
+      "sha256": "e073e5ccca340a8969ad0fbee11e82e1428a2f14724dc1a7d1b1096157a8f73a"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/brendanhay/amazonka/b562aa3f24845e34b95748daae671860017426be/lib/amazonka/src/Amazonka/Env.hs",
+      "sha256": "46285c61a281b02212c4d48dc62f2a3c96d70a41e2501968464e33cc1acda0e2"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/brendanhay/amazonka/b562aa3f24845e34b95748daae671860017426be/lib/amazonka-core/src/Amazonka/Types.hs",
+      "sha256": "2efa8d988b5cadd5d38e9c77f7213ab86b3d2cd178f29dd4876e8f46d4214d5c"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/brendanhay/amazonka/b562aa3f24845e34b95748daae671860017426be/lib/amazonka-core/src/Amazonka/Error.hs",
+      "sha256": "2cb715e4e11026e62d1fbed089e55eeb0d0fce5e4fd6c943fa9ea06d01491d5f"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/brendanhay/amazonka/b562aa3f24845e34b95748daae671860017426be/lib/services/amazonka-dynamodb/gen/Amazonka/DynamoDB/Types.hs",
+      "sha256": "5375bb4bd248e7b858372457390e7235c0c69ecdd3e2df42c93dc16d66e3c174"
+    }
+  ]
+}
