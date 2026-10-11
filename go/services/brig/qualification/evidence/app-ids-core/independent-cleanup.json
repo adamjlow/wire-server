@@ -1,0 +1,8 @@
+{
+  "label": "wire.migration.observation=wire-brig-stores-b04a910230d047f8870d54295ffa93db",
+  "remaining_resources": {
+    "containers": "",
+    "networks": "",
+    "volumes": ""
+  }
+}

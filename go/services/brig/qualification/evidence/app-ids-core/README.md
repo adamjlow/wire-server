@@ -1,0 +1,7 @@
+# Native team app-ID callback
+
+Implementation source4bc09f7da4df9bc93a5a0d3f546a3bc586c3944b, candidate d80aff56d748944c6419a777f52c52f2f9c0f97b02c7158059ee291af1c1a6de, tagged stores3824aafb08f579612e9ea59029527c7df5fb323b21e73ac54bdef6abf057d6b3. Full Go1.26.9 format/tidy/verify/vet/unit/race/build/vulnerability/license checks PASS; static unit executable PASS in original compiled runner. No new dependencies.
+
+Actual original-native-schema checks PASS: apps read PostgreSQL independently of all three user-storage modes, two apps from requested team returned, another team's app excluded, actual absent team yields nonnull empty slice, stored overlong description rejected despite ID-only projection. Native full-row metadata/category/description/creator decoding preserved. Existing durable store checks unchanged and pass. Native schema0/store0/SDK0/static units0; controller terminal, cleanup empty, independent label audit empty.
+
+Team-size implementation remains quality checked in this artifact. SAML membership witness has not yet passed: original Galley additionally needs internal user lookup; implement real native multi-key/account filters and pending-invitation semantics before next useful SAML comparison. Exact team/app route-parser edge cases and scientific-number aggregation decoder edges remain pending final API controls. This is no API/e2e, fresh member or full-service availability claim. Retained earlier SAML failure and all original contracts/fixtures/deadlines unchanged. Brig stays active; Galley follows actual whole Brig completion.
