@@ -473,3 +473,19 @@ actual HTTP failure/transport controls, full pinned Go checks/static units;
 not public POST or native-stack/state/original Client qualification. Preserve
 whole registration/delete/code/mail/queue composition and final acceptance
 requirements; no fixture/oracle/schema/default changes.
+
+
+Registration schema/peer source5f79e98a1/serviceffcf35a7... passes full pinned
+Go checks and actual peer HTTP/static units in original runner; tagged stores
+compile only; two containers0/network cleanup0/independent audits empty.
+Evidence client-registration-schema-peers records native V6 ClientAdded
+serialization/RouteAny/all-client/synchronous503 propagation, Galley real
+request and finite typed/version/default-policy controls. No public POST/
+original Client/backend registration state claim. Next extend existing
+internalEventQueue user.delete primitive with native client.delete (client
+string/user UUID/required nullable connection, same MD5/retry semantics),
+compose cookie-label revoke→enqueue→actual CQL client/prekey and configured
+Dynamo lock delete, then wire full addClient account/login-code/typed public
+policy/core/consumable/Galley/event/new-client email and remove/last-active.
+Reuse original Client tests and native switchback; final535/eight-Go and
+remaining whole gates unchanged.
