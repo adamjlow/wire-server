@@ -26,7 +26,7 @@ def checked(args, timeout=30):
     return result.stdout.strip()
 
 
-def inside(gundeck_path=None, access_switchback=False, login_contract=False, activation_contract=False, registration_contract=False, saml_registration_contract=False, public_registration_contract=False):
+def inside(gundeck_path=None, access_switchback=False, login_contract=False, activation_contract=False, registration_contract=False, saml_registration_contract=False, public_registration_contract=False, password_reset_contract=False):
     registration_contract = registration_contract or saml_registration_contract
     if os.getuid() != 65534 or os.environ.get('WIRE_E2E_DISPOSABLE') != '1':
         raise ValueError('owned nonroot Docker runner required')
@@ -191,6 +191,39 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             activation_pair = stage_email(activation_email)
             report['native_activation_reference'] = native_activation
             report['native_activation_repeat_reference'] = native_repeat
+        reset_cases = []
+        native_reset_records = []
+        if password_reset_contract:
+            reset_email = 'synthetic-reset-'+uuid.uuid4().hex+'@example.com'
+            reset_account, _ = request('POST','/i/users',body={'name':'Synthetic reset switchback','email':reset_email,'password':'Synthetic-password-2026!'})
+            report['native_reset_account'] = reset_account
+            assert reset_account['status']==201, 'native reset account setup failed'
+            reset_user = reset_account['json']['id']
+            reset_login, reset_cookie = request('POST','/login?persist=true',body={'email':reset_email,'password':'Synthetic-password-2026!','label':'synthetic-reset-original-device'})
+            report['native_reset_login'] = {'status':reset_login['status'],'cookie_issued':bool(reset_cookie)}
+            assert reset_login['status']==200 and reset_cookie, 'native reset session setup failed'
+            # A separate synthetic actor keeps original read/reauth controls
+            # and this finite reset flow within unchanged native rate budgets.
+            reset_password = 'Synthetic-reset-go-password-2026!'
+            native_reset_begin, _ = request('POST','/password-reset',body={'email':reset_email})
+            report['native_reset_begin'] = native_reset_begin
+            assert native_reset_begin['status']==201, 'native reset initiation failed'
+            native_reset_pair, _ = request('GET','/i/users/password-reset-code?'+urlencode({'email':reset_email}))
+            report['native_reset_pair'] = native_reset_pair
+            assert native_reset_pair['status']==200 and set(native_reset_pair['json'])=={'key','code'}, 'native reset pair missing'
+            reset_pair = native_reset_pair['json']
+            reset_cases = [
+                ('POST','/password-reset',{}, {'email':reset_email}),
+                ('POST','/password-reset',{}, {'email':'synthetic-reset-absent-'+uuid.uuid4().hex+'@example.com'}),
+                ('POST','/password-reset',{}, {'phone':'synthetic unsupported phone'}),
+                ('POST','/password-reset/complete',{}, {'key':'unknown-synthetic-key','code':reset_pair['code'],'password':reset_password}),
+                ('POST','/password-reset/complete',{}, {'key':reset_pair['key'],'code':'wrong-synthetic-code','password':reset_password}),
+                ('POST','/password-reset/complete',{}, {**reset_pair,'password':'Synthetic-password-2026!'}),
+                ('POST','/password-reset/complete',{}, {'email':'synthetic-reset-absent@example.com','code':reset_pair['code'],'password':reset_password}),
+                ('POST','/password-reset/complete',{}, {'phone':'+12345678','code':reset_pair['code'],'password':reset_password})]
+            native_reset_records = [request(*case)[0] for case in reset_cases]
+            report['native_reset_controls'] = native_reset_records
+            assert [r['status'] for r in native_reset_records]==[201,201,400,400,400,409,400,400], 'native reset control contract changed'
         public_cases = []
         native_public_errors = []
         if public_registration_contract:
@@ -258,6 +291,71 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
                 mismatches.append({'case': index, 'path': cases[index][1], 'fields': [key for key in fields if native.get(key) != go.get(key)]})
         report['mismatches'] = mismatches
         assert not mismatches, 'paired response mismatches'
+        if password_reset_contract:
+            go_reset_records = [request(*case)[0] for case in reset_cases]
+            report['go_reset_controls'] = go_reset_records
+            reset_mismatches = [
+                {'case':i,'fields':[key for key in ('status','content_type','json' if 'json' in reference else 'body') if reference.get(key)!=actual.get(key)]}
+                for i,(reference,actual) in enumerate(zip(native_reset_records,go_reset_records))
+                if any(reference.get(key)!=actual.get(key) for key in ('status','content_type','json' if 'json' in reference else 'body'))]
+            report['reset_control_mismatches'] = reset_mismatches
+            assert not reset_mismatches, 'native reset control mismatches'
+            go_reset, _ = request('POST','/password-reset/complete',body={'email':reset_email,'code':reset_pair['code'],'password':reset_password})
+            report['go_consumed_native_reset'] = go_reset
+            assert go_reset['status']==200, 'Go rejected native reset code'
+            go_empty_cookies, _ = request('GET','/cookies',{'Z-User':reset_user})
+            report['go_reset_revoked_cookies'] = go_empty_cookies
+            assert go_empty_cookies['status']==200 and go_empty_cookies['json']=={'cookies':[]}, 'Go reset did not revoke original cookies'
+            old_login, _ = request('POST','/login',body={'email':reset_email,'password':'Synthetic-password-2026!'})
+            report['go_reset_old_password'] = old_login
+            assert old_login['status']==403, 'Go reset kept old password'
+            old_cookie, _ = request('POST','/access',{'Cookie':reset_cookie.split(';',1)[0]})
+            report['go_reset_old_cookie'] = old_cookie
+            assert old_cookie['status']==403, 'Go reset kept original cookie'
+            new_login, new_cookie = request('POST','/login?persist=true',body={'email':reset_email,'password':reset_password,'label':'synthetic-reset-device'})
+            report['go_reset_new_password'] = new_login
+            assert new_login['status']==200 and new_cookie and new_login['json']['user']==reset_user, 'Go reset new password rejected'
+            go_reset_begin, _ = request('POST','/password-reset',body={'email':reset_email})
+            report['go_reset_begin'] = go_reset_begin
+            assert go_reset_begin['status']==201, 'Go fresh reset/mail initiation failed'
+            go_reset_pair, _ = request('GET','/i/users/password-reset-code?'+urlencode({'email':reset_email}))
+            report['go_reset_pair'] = go_reset_pair
+            assert go_reset_pair['status']==200 and go_reset_pair['json']['key']==reset_pair['key'] and go_reset_pair['json']['code']!=reset_pair['code'], 'Go reset did not persist fresh random code'
+            reset_reads=[('GET','/self',{'Z-User':reset_user}),('GET','/cookies',{'Z-User':reset_user})]
+            reset_go_reads=[request(*case)[0] for case in reset_reads]
+            report['go_reset_stored_reads']=reset_go_reads
+            active.terminate()
+            report['go_reset_stop_exit_code']=active.wait(timeout=35)
+            assert report['go_reset_stop_exit_code']==0, 'Go reset process did not stop cleanly'
+            with socket.socket() as check:
+                assert check.connect_ex(('127.0.0.1',8082))!=0, 'Go reset listener remains'
+            log=open('/reports/brig-native-reset-switchback.log','w');logs.append(log)
+            active=subprocess.Popen([str(native_brig_path),'-c',str(runtime.WORK/'brig-static-0.json')],cwd=runtime.WORK/'services/brig',stdout=log,stderr=subprocess.STDOUT)
+            processes.append(active);ready(active)
+            native_reset_reads=[request(*case)[0] for case in reset_reads]
+            report['native_reset_consumed_reads']=native_reset_reads
+            for reference,actual in zip(reset_go_reads,native_reset_reads):
+                assert all(reference.get(key)==actual.get(key) for key in ('status','content_type','json')), 'native reset durable profile/cookie mismatch'
+            native_new_login, _ = request('POST','/login',body={'email':reset_email,'password':reset_password})
+            report['native_reset_go_password']=native_new_login
+            assert native_new_login['status']==200 and native_new_login['json']['user']==reset_user, 'native rejected Go reset password'
+            native_old_cookie, _ = request('POST','/access',{'Cookie':reset_cookie.split(';',1)[0]})
+            report['native_reset_revoked_original_cookie']=native_old_cookie
+            assert all(native_old_cookie.get(key)==old_cookie.get(key) for key in ('status','content_type','json')), 'native reset revoked-cookie response differs'
+            native_go_pair, _ = request('GET','/i/users/password-reset-code?'+urlencode({'email':reset_email}))
+            report['native_consumed_go_reset_pair']=native_go_pair
+            assert all(native_go_pair.get(key)==go_reset_pair.get(key) for key in ('status','content_type','json')), 'native rejected Go reset row'
+            final_password='Synthetic-reset-native-final-2026!'
+            native_completion, _ = request('POST','/password-reset/complete',body={**go_reset_pair['json'],'password':final_password})
+            report['native_consumed_go_reset']=native_completion
+            assert native_completion['status']==200, 'native rejected Go reset code'
+            native_revoked_go_cookie, _ = request('POST','/access',{'Cookie':new_cookie.split(';',1)[0]})
+            report['native_reset_revoked_go_cookie']=native_revoked_go_cookie
+            assert native_revoked_go_cookie['status']==403, 'native reset kept Go-issued cookie'
+            final_login, _ = request('POST','/login',body={'email':reset_email,'password':final_password})
+            report['native_final_reset_password']=final_login
+            assert final_login['status']==200 and final_login['json']['user']==reset_user, 'native final reset password rejected'
+            report['password_reset_switchback']={'native_code_consumed_go':True,'go_code_consumed_native':True,'native_accepts_go_reset_password':True,'both_resets_revoke_prior_cookies':True,'same_initialized_stores':True}
         if public_registration_contract:
             go_public_errors = [request(*case)[0] for case in public_cases]
             report['go_public_header_controls'] = go_public_errors
@@ -629,13 +727,16 @@ def main():
     parser.add_argument('--registration-contract', action='store_true')
     parser.add_argument('--saml-registration-contract', action='store_true')
     parser.add_argument('--public-registration-contract', action='store_true')
+    parser.add_argument('--password-reset-contract', action='store_true')
     args = parser.parse_args()
     if (args.registration_contract or args.saml_registration_contract) and (args.activation_contract or args.access_switchback or args.login_contract):
         parser.error('registration observation runs separately from credential/activation observations')
     if args.public_registration_contract and any((args.registration_contract,args.saml_registration_contract,args.activation_contract,args.access_switchback,args.login_contract)):
         parser.error('public registration observation runs separately')
+    if args.password_reset_contract and any((args.registration_contract,args.saml_registration_contract,args.activation_contract,args.access_switchback,args.login_contract,args.public_registration_contract)):
+        parser.error('password reset observation runs separately')
     if args.in_container:
-        return inside(args.gundeck_path, args.access_switchback, args.login_contract, args.activation_contract, args.registration_contract, args.saml_registration_contract, args.public_registration_contract)
+        return inside(args.gundeck_path, args.access_switchback, args.login_contract, args.activation_contract, args.registration_contract, args.saml_registration_contract, args.public_registration_contract, args.password_reset_contract)
     if args.binary is None or args.build_receipt is None or args.output is None:
         parser.error('identified binary, receipt and new output required')
     sys.path.insert(0, str(ROOT / 'tools/parity/docker'))
@@ -673,6 +774,8 @@ def main():
         runner['command'].append('--saml-registration-contract')
     if args.public_registration_contract:
         runner['command'].append('--public-registration-contract')
+    if args.password_reset_contract:
+        runner['command'].append('--password-reset-contract')
     if args.gundeck_binary:
         runner['command'] += ['--gundeck-path', '/candidate/gundeck']
         runner['volumes'].append({'type': 'bind', 'source': str(args.gundeck_binary.resolve(strict=True)),
