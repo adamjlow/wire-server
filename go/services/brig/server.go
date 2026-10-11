@@ -461,7 +461,18 @@ func Run(ctx context.Context, c Config) error {
 			return errors.New("invalid internal deletion throttle configuration")
 		}
 	}
-	internalListener := startInternalEvents(ctx, internalQueue, internalDeletionProcessor{get: business.users.get, deleteUser: deletion.execute, deleteClient: business.peers.deleteQueuedClient, throttle: time.Duration(deleteThrottle) * time.Millisecond}, c.Settings.SQSThrottleMillis)
+	botDeletion := serviceBotDeletion{
+		removeMember: business.peers.removeServiceBotMember, account: business.users.get,
+		clients: clientStore{cassandra}.list, removeClient: deletionStore.remove,
+		removeAssociation: business.users.deleteServiceBot, status: business.users.updateAccountStatus,
+	}
+	serviceMetadata := serviceDeletionStore{cassandra}
+	queuedServiceDeletion := serviceDeletion{
+		lookup: serviceMetadata.lookup, pages: business.users.serviceBotPages,
+		kick: botDeletion.execute, disconnect: business.peers.deleteServiceConnection,
+		remove: serviceMetadata.remove,
+	}
+	internalListener := startInternalEvents(ctx, internalQueue, internalDeletionProcessor{get: business.users.get, deleteUser: deletion.execute, deleteClient: business.peers.deleteQueuedClient, deleteService: queuedServiceDeletion.execute, throttle: time.Duration(deleteThrottle) * time.Millisecond}, c.Settings.SQSThrottleMillis)
 	defer internalListener.close()
 	return serve(ctx, server, listener)
 }

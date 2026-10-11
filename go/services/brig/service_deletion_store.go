@@ -133,11 +133,6 @@ func deletionServiceTagMasks(tags []int64) ([]int64, error) {
 }
 
 func (s serviceDeletionStore) remove(ctx context.Context, provider, service gocql.UUID, record deletionServiceRecord) error {
-	// Validate bounded native tag combinations before creating mutation batches.
-	masks, err := deletionServiceTagMasks(record.tags)
-	if err != nil {
-		return err
-	}
 	iter := s.cassandra.Query(`SELECT team FROM service_whitelist_rev WHERE provider=? AND service=?`, provider, service).WithContext(ctx).Consistency(gocql.LocalQuorum).RetryPolicy(&gocql.SimpleRetryPolicy{NumRetries: 5}).Iter()
 	whitelist := s.cassandra.NewBatch(gocql.LoggedBatch).WithContext(ctx)
 	whitelist.Cons = gocql.LocalQuorum
@@ -156,6 +151,12 @@ func (s serviceDeletionStore) remove(ctx context.Context, provider, service gocq
 	}
 	if err := s.cassandra.ExecuteBatch(whitelist); err != nil {
 		return userStorageError(err)
+	}
+	// Native unfolds tags only after whitelist cleanup has committed. A corrupt
+	// overfull tag set must retain that phase and leave metadata for retry.
+	masks, err := deletionServiceTagMasks(record.tags)
+	if err != nil {
+		return err
 	}
 	metadata := s.cassandra.NewBatch(gocql.UnloggedBatch).WithContext(ctx)
 	metadata.Cons = gocql.LocalQuorum

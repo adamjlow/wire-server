@@ -1604,3 +1604,24 @@ unproven; corrupt>3-tag early failure differs from native unsafeRange timing,
 and very large native whitelist batches retain availability risk. These are
 recorded limitations, not contract exceptions or whole-service claims. Next
 typed Galley Event/RPC adapters, queue binding and actual replay.
+
+Galley deletion adapter plan: preserve DELETE/i/bots body conversation/bot and
+Z-User=bot, no Z-Connection for queued deletion,200/404 admission and native
+three transport/5xx retries.200 decodes the native Event envelope/tagged payload
+before any account/client/store effects;404 ignores body. DELETE/i/services
+uses id/provider JSON and any2xx admission. Keep4MiB peer response limit and
+scrub raw bodies/errors. Implement full tagged-event coverage before callback
+binding; partial decoder work is not a working optional service-delete path.
+Reuse untouched native conversation event goldens as input alongside focused
+malformed/required-field and actual HTTP/header/body/admission/retry controls.
+Also align corrupt>3-tag cleanup failure timing: native removes whitelist before
+unfoldTags fails constructing metadata batch; preserve that committed phase.
+
+All23 native Event tags are now represented, including V2 own-conversation/MLS
+metadata, nullable/default field rules and strict canonical base64 without line
+breaks. Current binding uses real native CQL metadata, configured user/bot
+CQL/PG/migration stores, direct client/prekey/lock deletion, typed Galley calls
+and success-only queue ACK. No stub/native embedding. Reuse14 untouched native
+event goldens plus explicitly converted native V9 conversation inputs for V2
+fields. Compiled-native decoder admission and actual queue replay remain separate
+proofs; units/source-derived decoding alone do not qualify whole Brig.

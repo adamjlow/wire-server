@@ -106,4 +106,16 @@ func qualifyServiceDeletionStores(t *testing.T, ctx context.Context, cassandra *
 	if err := s.remove(ctx, provider, service, *got); err != nil {
 		t.Fatal("metadata replay", err)
 	}
+	// Native corrupt overfull tags fail after whitelist cleanup has committed,
+	// while leaving the service row for retry. Do not silently move that phase.
+	r.tags = []int64{1, 2, 4, 8}
+	write(r)
+	exec(`INSERT INTO service_whitelist (team,provider,service) VALUES (?,?,?)`, teamA, provider, service)
+	exec(`INSERT INTO service_whitelist_rev (provider,service,team) VALUES (?,?,?)`, provider, service, teamA)
+	if err := s.remove(ctx, provider, service, deletionServiceRecord{name: name, tags: r.tags}); err == nil {
+		t.Fatal("overfull native tags accepted")
+	}
+	check(0, `SELECT count(*) FROM service_whitelist WHERE team=? AND provider=? AND service=?`, teamA, provider, service)
+	check(0, `SELECT count(*) FROM service_whitelist_rev WHERE provider=? AND service=?`, provider, service)
+	check(1, `SELECT count(*) FROM service WHERE provider=? AND id=?`, provider, service)
 }
