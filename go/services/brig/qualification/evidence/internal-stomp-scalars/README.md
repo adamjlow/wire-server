@@ -26,3 +26,10 @@ static unit execution passed, which does not establish every dynamic runtime pat
 Same-author review under the user's existing delegation accepts this bounded
 increment only. Brig remains incomplete; no service milestone, Haskell default,
 protected oracle, production switch or whole535/eight-Go qualification changes.
+
+[Compiled-native admission](native-admission.json) now confirms all19 matching
+configuration acceptance/rejection cases in the unchanged pinned Haskell runner,
+nonroot/network-none. Accepted configurations reach a refused isolated dependency
+socket; rejected configurations fail typed parsing. This proves admission only,
+not parsed-port value readback, credential loading or backend startup. Owned CLI
+containers were removed after each observation; independent inventory is empty.

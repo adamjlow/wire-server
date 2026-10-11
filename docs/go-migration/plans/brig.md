@@ -1541,3 +1541,18 @@ Compiled-native scalar admission and affected backend rerun remain pending; prio
 actual ActiveMQ/original22 evidence retains its older service42ea8a76 tuple.
 The latest user instruction authorizes pushing current work to origin/go-migration.
 Same-author review accepts only this finite increment; whole Brig remains active.
+
+Queued service deletion plan: preserve native finishDeleteService ordering: lookup
+service, page bot/conversation records (100 rows, mixed-store pagination as native),
+process each page with at most16 concurrent bot removals, remove Galley service
+connection, then whitelist and service/index storage deletion. Bot removal calls
+Galley first, obtains the account, removes all client/prekey/lock state directly,
+removes the account service association, and marks status Deleted without clearing
+identity or publishing ordinary account-deletion events. Missing service is an
+idempotent no-op; failure must retain the queue message and prevent final metadata
+deletion. Use current pinned Go1.26.9, existing errgroup and storage/peer adapters;
+no new dependency, auth bypass, logging of broker payload or success stub.
+First implement the effect-order/concurrency core with finite failed-phase,
+17-bot saturation/cancellation and replay controls; bind only after real native
+service/bot store and RPC adapters are implemented. This core alone is not a
+working service-delete callback or native/backend qualification.

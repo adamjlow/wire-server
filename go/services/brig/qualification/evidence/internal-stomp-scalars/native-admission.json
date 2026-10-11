@@ -1,0 +1,161 @@
+{
+  "result": "pass",
+  "scope": "Compiled-native STOMP configuration scalar admission only; valid configuration reaches missing isolated socket, not backend startup or numeric value readback.",
+  "runner_image": "sha256:f487c90fd364aac9daee5a1ce6e60fdba0ab74ab0c671ab0de0198e8f05659a9",
+  "native_binary": "/nix/store/f6l2f0l8l2r6z9jbg937q96k6056iqfn-brig/bin/brig",
+  "candidate_source": "aadef862b8944598a50ce140595d02b27ee3c671",
+  "records": [
+    {
+      "case": "ordinary",
+      "expected_admission": true,
+      "native_admission": true,
+      "native_rejection": false,
+      "exit_code": 1,
+      "pass": true
+    },
+    {
+      "case": "integral-decimal",
+      "expected_admission": true,
+      "native_admission": true,
+      "native_rejection": false,
+      "exit_code": 1,
+      "pass": true
+    },
+    {
+      "case": "scientific",
+      "expected_admission": true,
+      "native_admission": true,
+      "native_rejection": false,
+      "exit_code": 1,
+      "pass": true
+    },
+    {
+      "case": "leading-zero",
+      "expected_admission": true,
+      "native_admission": true,
+      "native_rejection": false,
+      "exit_code": 1,
+      "pass": true
+    },
+    {
+      "case": "hex",
+      "expected_admission": true,
+      "native_admission": true,
+      "native_rejection": false,
+      "exit_code": 1,
+      "pass": true
+    },
+    {
+      "case": "max-int",
+      "expected_admission": true,
+      "native_admission": true,
+      "native_rejection": false,
+      "exit_code": 1,
+      "pass": true
+    },
+    {
+      "case": "min-int",
+      "expected_admission": true,
+      "native_admission": true,
+      "native_rejection": false,
+      "exit_code": 1,
+      "pass": true
+    },
+    {
+      "case": "quoted-host",
+      "expected_admission": true,
+      "native_admission": true,
+      "native_rejection": false,
+      "exit_code": 1,
+      "pass": true
+    },
+    {
+      "case": "tagged-host",
+      "expected_admission": true,
+      "native_admission": true,
+      "native_rejection": false,
+      "exit_code": 1,
+      "pass": true
+    },
+    {
+      "case": "numeric-host",
+      "expected_admission": false,
+      "native_admission": false,
+      "native_rejection": true,
+      "exit_code": 1,
+      "pass": true
+    },
+    {
+      "case": "boolean-host",
+      "expected_admission": false,
+      "native_admission": false,
+      "native_rejection": true,
+      "exit_code": 1,
+      "pass": true
+    },
+    {
+      "case": "fractional-port",
+      "expected_admission": false,
+      "native_admission": false,
+      "native_rejection": true,
+      "exit_code": 1,
+      "pass": true
+    },
+    {
+      "case": "quoted-port",
+      "expected_admission": false,
+      "native_admission": false,
+      "native_rejection": true,
+      "exit_code": 1,
+      "pass": true
+    },
+    {
+      "case": "quoted-tls",
+      "expected_admission": false,
+      "native_admission": false,
+      "native_rejection": true,
+      "exit_code": 1,
+      "pass": true
+    },
+    {
+      "case": "numeric-tls",
+      "expected_admission": false,
+      "native_admission": false,
+      "native_rejection": true,
+      "exit_code": 1,
+      "pass": true
+    },
+    {
+      "case": "null-tls",
+      "expected_admission": false,
+      "native_admission": false,
+      "native_rejection": true,
+      "exit_code": 1,
+      "pass": true
+    },
+    {
+      "case": "overflow-port",
+      "expected_admission": false,
+      "native_admission": false,
+      "native_rejection": true,
+      "exit_code": 1,
+      "pass": true
+    },
+    {
+      "case": "binary-port",
+      "expected_admission": false,
+      "native_admission": false,
+      "native_rejection": true,
+      "exit_code": 1,
+      "pass": true
+    },
+    {
+      "case": "underscore-port",
+      "expected_admission": false,
+      "native_admission": false,
+      "native_rejection": true,
+      "exit_code": 1,
+      "pass": true
+    }
+  ]
+}
