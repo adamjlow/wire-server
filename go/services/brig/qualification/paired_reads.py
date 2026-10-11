@@ -403,7 +403,7 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
                 assert [r['status'] for r in native_delete_controls]==[405,201,201,201], 'native public MLS deletion reference changed'
                 assert mls_row_fixture('read','native-deleted')==[], 'native reference deletion did not remove exact rows'
                 mls_row_fixture('stage','native-delete-restaged')
-                assert same(row_count_native,request(*row_count_case)[0]), 'native delete restage count changed'
+                assert row_count_native==request(*row_count_case)[0], 'native delete restage count changed'
                 assert mls_row_fixture('read','native-delete-restored')==native_rows_retained, 'native delete restage bytes changed'
 
             restaged,_=request('POST','/v19/clients',lifecycle_headers,{**native_body,'mls_public_keys':{}})
