@@ -1,0 +1,9 @@
+# Activation account state and password-reset storage checkpoint
+
+Source `12c39e993501002e011207f6a36f0731d5472046`. Full pinned Go1.26.9 checks and static units in the unchanged native runner pass. Exact candidate `e190417aead1e2c575ef5fd8330af751a1a1205a65e011ea17f7f8f518cf3575`; tagged native-schema test `f28b722529dc4618bf4d3d3c370f343cf5a2463bcf045c9bfcdf9a26341dcd71`.
+
+Actual utility-created Cassandra and native PostgreSQL schemas pass first activation, repeated-link no-op, email replacement, reset invalidation and ownership in all three user modes. Password-reset checks cover Cassandra-source migration reads, dual writes/deletes, PostgreSQL expiration, legacy nullable retries/timeout, and rejection of absent required code/user. Existing store assertions remain green. Focused units verify active-only activation, internal user override, canonical identity handling, mutation/error ordering, credential redaction and native reset encodings. Native schema utility, store executable, controller and cleanup exit successfully; independent owned resource lists are empty.
+
+The earlier source `bff1309a73b5e18b1c6c93fbbb946202d8f2a5dd` also passed before the required-field decoder correction. Its external results and exact artifact identities remain separately hashed in external-artifacts.json; they are not relabeled as current-source evidence.
+
+This proves store behavior and core orchestration, not activation/registration HTTP parity or whole Brig completion. Domain preverification, search, notification/journal/team orchestration, registration, remaining service families, original535 suite, operations and final switchback gates remain required. No new dependency, native code repair, protected oracle change or security-policy exception. Existing native nontransactional email-claim race and activation credential logging concerns remain documented. Galley follows whole Brig completion, as authorized by the user.
