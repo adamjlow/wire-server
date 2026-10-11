@@ -143,3 +143,73 @@ func TestServiceDeletionBoundedWorkersAndFailedPageRetainsMetadata(t *testing.T)
 		t.Fatal(err)
 	}
 }
+
+func TestServiceBotDeletionMissingAndPendingAccount(t *testing.T) {
+	for _, pending := range []bool{false, true} {
+		status := int32(4)
+		id := gocql.TimeUUID()
+		removed, marked := false, false
+		s := serviceBotDeletion{
+			removeMember: func(context.Context, deletionServiceBot) error { return nil },
+			account: func(context.Context, gocql.UUID) (*storedUser, error) {
+				if pending {
+					return &storedUser{Status: &status, Provider: &id, Service: &id}, nil
+				}
+				return nil, nil
+			},
+			clients:      func(context.Context, gocql.UUID) ([]storedClient, error) { return []storedClient{{ID: "a"}}, nil },
+			removeClient: func(context.Context, gocql.UUID, string) error { removed = true; return nil },
+			removeAssociation: func(context.Context, gocql.UUID, gocql.UUID, gocql.UUID) error {
+				t.Error("absent/pending account supplied service reference")
+				return nil
+			},
+			status: func(context.Context, gocql.UUID, int32) error { marked = true; return nil },
+		}
+		if err := s.execute(context.Background(), deletionServiceBot{user: id}); err != nil || !removed || !marked {
+			t.Fatal("native missing/pending bot cleanup", err)
+		}
+	}
+}
+
+func TestServiceDeletionCanceledPageRetainsMetadata(t *testing.T) {
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+	entered := make(chan struct{})
+	done := make(chan error, 1)
+	s := serviceDeletion{
+		lookup: func(context.Context, gocql.UUID, gocql.UUID) (*deletionServiceRecord, error) {
+			return &deletionServiceRecord{}, nil
+		},
+		pages: func(_ context.Context, _, _ gocql.UUID, visit func([]deletionServiceBot) error) error {
+			return visit([]deletionServiceBot{{}})
+		},
+		kick: func(work context.Context, _ deletionServiceBot) error {
+			close(entered)
+			<-work.Done()
+			return work.Err()
+		},
+		disconnect: func(context.Context, gocql.UUID, gocql.UUID) error {
+			t.Error("canceled bot disconnected service")
+			return nil
+		},
+		remove: func(context.Context, gocql.UUID, gocql.UUID, deletionServiceRecord) error {
+			t.Error("canceled bot deleted metadata")
+			return nil
+		},
+	}
+	go func() { done <- s.execute(ctx, gocql.UUID{}, gocql.UUID{}) }()
+	select {
+	case <-entered:
+	case <-time.After(5 * time.Second):
+		t.Fatal("bot not started")
+	}
+	cancel()
+	select {
+	case err := <-done:
+		if !errors.Is(err, context.Canceled) {
+			t.Fatal("cancellation lost", err)
+		}
+	case <-time.After(5 * time.Second):
+		t.Fatal("canceled worker not joined")
+	}
+}

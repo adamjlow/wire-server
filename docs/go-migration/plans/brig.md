@@ -1564,3 +1564,11 @@ Compiled-native STOMP scalar admission19/19 is recorded in the scalar evidence;
 valid configurations reach only an isolated refused socket, not backend readiness.
 Whole-service status remains active. Subsequent work is local after the requested
 push05e56dca1; no fresh push authorization inferred.
+
+Bot store adapter uses native page100 Cassandra then page100 PostgreSQL, with
+short terminal CQL+first PG page combined before any effects (up to199 rows).
+Cleanup selects the actual user backend under existing migration locks, deletes
+only bot_conv in PG or logged service_user/service_team CQL rows, retaining user
+identity/status. Finite native-schema controls create101 bots per backend, assert
+exact page sizes/counts for all selectors, delete during mixed pagination, and
+verify association replay plus unchanged account identity/status.
