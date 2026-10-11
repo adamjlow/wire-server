@@ -11,7 +11,9 @@
       "native_admission": true,
       "native_rejection": false,
       "exit_code": 1,
-      "pass": true
+      "pass": true,
+      "stomp_yaml": "{\"stomHost\": \"localhost\", \"stomPort\": 61613, \"stomTls\": false}",
+      "diagnostic": "brig: Network.Socket.connect: <socket: 25>: does not exist (Connection refused)\nHasCallStack backtrace:"
     },
     {
       "case": "integral-decimal",
@@ -19,7 +21,9 @@
       "native_admission": true,
       "native_rejection": false,
       "exit_code": 1,
-      "pass": true
+      "pass": true,
+      "stomp_yaml": "{\"stomHost\": \"localhost\", \"stomPort\": 61613.0, \"stomTls\": yes}",
+      "diagnostic": "brig: Network.Socket.connect: <socket: 25>: does not exist (Connection refused)\nHasCallStack backtrace:"
     },
     {
       "case": "scientific",
@@ -27,7 +31,9 @@
       "native_admission": true,
       "native_rejection": false,
       "exit_code": 1,
-      "pass": true
+      "pass": true,
+      "stomp_yaml": "{\"stomHost\": \"localhost\", \"stomPort\": 6.1613e4, \"stomTls\": OFF}",
+      "diagnostic": "brig: Network.Socket.connect: <socket: 25>: does not exist (Connection refused)\nHasCallStack backtrace:"
     },
     {
       "case": "leading-zero",
@@ -35,7 +41,9 @@
       "native_admission": true,
       "native_rejection": false,
       "exit_code": 1,
-      "pass": true
+      "pass": true,
+      "stomp_yaml": "{\"stomHost\": \"localhost\", \"stomPort\": 061613, \"stomTls\": false}",
+      "diagnostic": "brig: Network.Socket.connect: <socket: 25>: does not exist (Connection refused)\nHasCallStack backtrace:"
     },
     {
       "case": "hex",
@@ -43,7 +51,9 @@
       "native_admission": true,
       "native_rejection": false,
       "exit_code": 1,
-      "pass": true
+      "pass": true,
+      "stomp_yaml": "{\"stomHost\": \"localhost\", \"stomPort\": 0xF0AD, \"stomTls\": false}",
+      "diagnostic": "brig: Network.Socket.connect: <socket: 25>: does not exist (Connection refused)\nHasCallStack backtrace:"
     },
     {
       "case": "max-int",
@@ -51,7 +61,9 @@
       "native_admission": true,
       "native_rejection": false,
       "exit_code": 1,
-      "pass": true
+      "pass": true,
+      "stomp_yaml": "{\"stomHost\": \"localhost\", \"stomPort\": 9223372036854775807.0, \"stomTls\": false}",
+      "diagnostic": "brig: Network.Socket.connect: <socket: 25>: does not exist (Connection refused)\nHasCallStack backtrace:"
     },
     {
       "case": "min-int",
@@ -59,7 +71,9 @@
       "native_admission": true,
       "native_rejection": false,
       "exit_code": 1,
-      "pass": true
+      "pass": true,
+      "stomp_yaml": "{\"stomHost\": \"localhost\", \"stomPort\": -9223372036854775808.0, \"stomTls\": false}",
+      "diagnostic": "brig: Network.Socket.connect: <socket: 25>: does not exist (Connection refused)\nHasCallStack backtrace:"
     },
     {
       "case": "quoted-host",
@@ -67,7 +81,9 @@
       "native_admission": true,
       "native_rejection": false,
       "exit_code": 1,
-      "pass": true
+      "pass": true,
+      "stomp_yaml": "{\"stomHost\": \"123\", \"stomPort\": 61613, \"stomTls\": false}",
+      "diagnostic": "brig: Network.Socket.connect: <socket: 25>: does not exist (Connection refused)\nHasCallStack backtrace:"
     },
     {
       "case": "tagged-host",
@@ -75,7 +91,9 @@
       "native_admission": true,
       "native_rejection": false,
       "exit_code": 1,
-      "pass": true
+      "pass": true,
+      "stomp_yaml": "{\"stomHost\": !!str on, \"stomPort\": 61613, \"stomTls\": false}",
+      "diagnostic": "brig: Network.Socket.connect: <socket: 25>: does not exist (Connection refused)\nHasCallStack backtrace:"
     },
     {
       "case": "numeric-host",
@@ -83,7 +101,9 @@
       "native_admission": false,
       "native_rejection": true,
       "exit_code": 1,
-      "pass": true
+      "pass": true,
+      "stomp_yaml": "{\"stomHost\": 123, \"stomPort\": 61613, \"stomTls\": false}",
+      "diagnostic": "brig: user error (AesonException \"Error in $.stomp.stomHost: parsing Text failed, expected String, but encountered Number\" while attempting to decode /probe/numeric-host.yaml)\n"
     },
     {
       "case": "boolean-host",
@@ -91,7 +111,9 @@
       "native_admission": false,
       "native_rejection": true,
       "exit_code": 1,
-      "pass": true
+      "pass": true,
+      "stomp_yaml": "{\"stomHost\": on, \"stomPort\": 61613, \"stomTls\": false}",
+      "diagnostic": "brig: user error (AesonException \"Error in $.stomp.stomHost: parsing Text failed, expected String, but encountered Boolean\" while attempting to decode /probe/boolean-host.yaml)\n"
     },
     {
       "case": "fractional-port",
@@ -99,7 +121,9 @@
       "native_admission": false,
       "native_rejection": true,
       "exit_code": 1,
-      "pass": true
+      "pass": true,
+      "stomp_yaml": "{\"stomHost\": \"localhost\", \"stomPort\": 61613.5, \"stomTls\": false}",
+      "diagnostic": "brig: user error (AesonException \"Error in $.stomp.stomPort: parsing Int failed, value is either floating or will cause over or underflow 61613.5\" while attempting to decode /probe/fractional-port.yaml)\n"
     },
     {
       "case": "quoted-port",
@@ -107,7 +131,9 @@
       "native_admission": false,
       "native_rejection": true,
       "exit_code": 1,
-      "pass": true
+      "pass": true,
+      "stomp_yaml": "{\"stomHost\": \"localhost\", \"stomPort\": \"61613\", \"stomTls\": false}",
+      "diagnostic": "brig: user error (AesonException \"Error in $.stomp.stomPort: parsing Int failed, expected Number, but encountered String\" while attempting to decode /probe/quoted-port.yaml)\n"
     },
     {
       "case": "quoted-tls",
@@ -115,7 +141,9 @@
       "native_admission": false,
       "native_rejection": true,
       "exit_code": 1,
-      "pass": true
+      "pass": true,
+      "stomp_yaml": "{\"stomHost\": \"localhost\", \"stomPort\": 61613, \"stomTls\": \"false\"}",
+      "diagnostic": "brig: user error (AesonException \"Error in $.stomp.stomTls: expected Bool, but encountered String\" while attempting to decode /probe/quoted-tls.yaml)\n"
     },
     {
       "case": "numeric-tls",
@@ -123,7 +151,9 @@
       "native_admission": false,
       "native_rejection": true,
       "exit_code": 1,
-      "pass": true
+      "pass": true,
+      "stomp_yaml": "{\"stomHost\": \"localhost\", \"stomPort\": 61613, \"stomTls\": 1}",
+      "diagnostic": "brig: user error (AesonException \"Error in $.stomp.stomTls: expected Bool, but encountered Number\" while attempting to decode /probe/numeric-tls.yaml)\n"
     },
     {
       "case": "null-tls",
@@ -131,7 +161,9 @@
       "native_admission": false,
       "native_rejection": true,
       "exit_code": 1,
-      "pass": true
+      "pass": true,
+      "stomp_yaml": "{\"stomHost\": \"localhost\", \"stomPort\": 61613, \"stomTls\": null}",
+      "diagnostic": "brig: user error (AesonException \"Error in $.stomp.stomTls: expected Bool, but encountered Null\" while attempting to decode /probe/null-tls.yaml)\n"
     },
     {
       "case": "overflow-port",
@@ -139,7 +171,9 @@
       "native_admission": false,
       "native_rejection": true,
       "exit_code": 1,
-      "pass": true
+      "pass": true,
+      "stomp_yaml": "{\"stomHost\": \"localhost\", \"stomPort\": 9223372036854775808.0, \"stomTls\": false}",
+      "diagnostic": "brig: user error (AesonException \"Error in $.stomp.stomPort: parsing Int failed, value is either floating or will cause over or underflow 9.223372036854775808e18\" while attempting to decode /probe/overflow-port.yaml)\n"
     },
     {
       "case": "binary-port",
@@ -147,7 +181,9 @@
       "native_admission": false,
       "native_rejection": true,
       "exit_code": 1,
-      "pass": true
+      "pass": true,
+      "stomp_yaml": "{\"stomHost\": \"localhost\", \"stomPort\": 0b111, \"stomTls\": false}",
+      "diagnostic": "brig: user error (AesonException \"Error in $.stomp.stomPort: parsing Int failed, expected Number, but encountered String\" while attempting to decode /probe/binary-port.yaml)\n"
     },
     {
       "case": "underscore-port",
@@ -155,7 +191,10 @@
       "native_admission": false,
       "native_rejection": true,
       "exit_code": 1,
-      "pass": true
+      "pass": true,
+      "stomp_yaml": "{\"stomHost\": \"localhost\", \"stomPort\": 61_613, \"stomTls\": false}",
+      "diagnostic": "brig: user error (AesonException \"Error in $.stomp.stomPort: parsing Int failed, expected Number, but encountered String\" while attempting to decode /probe/underscore-port.yaml)\n"
     }
-  ]
+  ],
+  "independent_owned_container_inventory": "empty"
 }

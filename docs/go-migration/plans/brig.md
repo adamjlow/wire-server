@@ -1556,3 +1556,11 @@ First implement the effect-order/concurrency core with finite failed-phase,
 17-bot saturation/cancellation and replay controls; bind only after real native
 service/bot store and RPC adapters are implemented. This core alone is not a
 working service-delete callback or native/backend qualification.
+
+At source6418916bc/serviceada3a046, pinned Go/static checks and finite core
+phase-failure/17-bot peak16/metadata-retention controls pass. [Core evidence](../../../go/services/brig/qualification/evidence/service-deletion-core/README.md) records exact artifacts. Tagged stores compile only; queue callback remains
+unbound pending real store/RPC adapters and cancellation/native replay controls.
+Compiled-native STOMP scalar admission19/19 is recorded in the scalar evidence;
+valid configurations reach only an isolated refused socket, not backend readiness.
+Whole-service status remains active. Subsequent work is local after the requested
+push05e56dca1; no fresh push authorization inferred.
