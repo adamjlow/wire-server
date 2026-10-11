@@ -7,6 +7,8 @@ Haskell remains supported and default.
 Implemented slices include account/client reads, password and cookie
 authentication, email activation, internal registration (including SAML and team
 invitation acceptance), and their supporting storage, index and queue writes.
+Registration mail template/MIME rendering is implemented separately from delivery;
+SES/SMTP delivery and public `/register` wiring are still pending.
 The process also serves liveness/version responses, applies native PostgreSQL
 migrations and drains HTTP on TERM. Cassandra schemas must be initialized with
 the existing native operator utilities. Go uses the repository's pinned patched
