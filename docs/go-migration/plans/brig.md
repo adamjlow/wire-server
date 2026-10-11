@@ -1058,3 +1058,11 @@ Initial SDK source0bc2d9de9 failed a candidate admission-order test because its
 synthetic profile serialized an empty redundant UUID. The strengthened native
 decoder correctly rejected it before policy effects. Corrected only the candidate
 fixture to include its valid ID; original oracle untouched, failed logs retained.
+
+Sourceed50664ea SDK/static checks pass. Original22 run:21 pass, remote-owned
+connection fixture fails405 DELETE /v19/self when UUID ownership selects a retry.
+This is a genuine pending account-deletion contract, not a connection membership
+failure. Full XML/log/result retained. Owned projecteb34583b cleanup terminal0
+and independent container/network/volume audit empty. Observer now accumulates
+original failures, runs independent profile/action/state controls and still fails
+the final run on any original failure; assertions/expected names remain unchanged.

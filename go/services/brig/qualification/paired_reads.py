@@ -35,6 +35,7 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
     processes, logs, servers = [], [], []
     report = {'result': 'failed', 'e2e_executed': False, 'scope': __doc__, 'records': []}
     active = None
+    original_failures = []
 
     def request(method, path, headers=None, body=None, raw_body=None, port=8082):
         connection = http.client.HTTPConnection('127.0.0.1', port, timeout=15)
@@ -827,8 +828,12 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
                     original=subprocess.run([runner.binary('integration')['path'],'--config',str(runtime.WORK/'services/integration.yaml'),*[arg for name in required for arg in ('--include',name)],'--xml',str(xml)],cwd=runtime.WORK,stdout=original_log,stderr=subprocess.STDOUT,timeout=1200)
                 report['original_mls_upload_tests']={'required_tests':required,'process_exit_code':original.returncode,'integration_binary':runner.binary('integration'),'dynamic_brig_sha256':report['candidate_brig_sha256']}
                 report['e2e_attempted']=True;report['e2e_executed']=xml.is_file()
-                if xml.is_file():report['original_mls_upload_tests']['validated_report']=harness.check_xml(xml,required)
-                assert original.returncode==0, 'original compiled MLS upload tests failed'
+                try:
+                    report['original_mls_upload_tests']['validated_report']=harness.check_xml(xml,required)
+                except Exception as error:
+                    original_failures.append(str(error))
+                if original.returncode != 0: original_failures.append('original compiled MLS/connection tests failed')
+                report['original_mls_upload_tests']['failures']=list(original_failures)
             go_profile_controls=[request(*case)[0] for case in profile_cases]
             report['profiles_go_controls']=go_profile_controls
             assert all(same(ref,actual) for ref,actual in zip(native_profile_controls,go_profile_controls)), 'native/Go federation profile projection mismatch'
@@ -1543,6 +1548,7 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
                 'user_token_type_expires_and_media_match': True,
                 'token_bytes_compared': False,
                 'token_validation': 'actual original native HTTP consumed Go-issued credentials'}
+        assert not original_failures, '; '.join(original_failures)
         report['result'] = 'pass'
     except Exception as error:
         report['failure'] = str(error)
