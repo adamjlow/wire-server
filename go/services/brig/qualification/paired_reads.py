@@ -106,7 +106,7 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
         fixture = {'User': uid, **{key: str(uuid.uuid4())
             for key in ('Provider', 'Service', 'Conversation', 'Team')}}
         rows = service_row_fixture('stage', phase+'-stage', fixture)
-        assert rows['counts'] == {'service': 1, 'service_user': 1, 'service_team': 1,
+        assert rows['counts'] == {'service': 1, 'bot_association': 1, 'team_bot_association': 1,
             'whitelist': 1, 'whitelist_rev': 1, 'prefix': 1, 'tags': 7,
             'user': 1, 'clients': 1, 'prekeys': 2, 'mls_public_keys': 1, 'properties': 1}, 'service bot initial raw rows differ'
         assert rows['status'] == 0 and rows['provider'] == fixture['Provider'] and rows['service'] == fixture['Service'], 'service bot account association differs'
@@ -125,7 +125,7 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
         while True:
             rows = service_row_fixture('read', phase, actor)
             queue = stomp_broker.queue_state()
-            expected = {'service': 0, 'service_user': 0, 'service_team': 0,
+            expected = {'service': 0, 'bot_association': 0, 'team_bot_association': 0,
                 'whitelist': 0, 'whitelist_rev': 0, 'prefix': 0, 'tags': 0,
                 'user': 1, 'clients': 0, 'prekeys': 0, 'mls_public_keys': 1, 'properties': 1}
             if rows['counts'] == expected and rows['status'] == 2 and queue['QueueSize'] == 0 and queue['InFlightCount'] == 0 and (before is None or queue['DequeueCount'] > before):

@@ -1684,3 +1684,13 @@ MLS public-key rows and properties; remove clients/prekeys/service associations,
 all7 tag masks, prefix, service row and both whitelist directions. No ordinary
 user-deletion cascade. Original22/assertions, isolation/disk floor and Haskell
 sources remain unchanged; final whole535/all-entity/three-mode gates remain open.
+
+Initial queue fixture source3d2e3daf4 fails native-cleanup because the configured
+native user backend is PostgreSQL, while the helper wrongly attached CQL-only
+bot associations and synthesized an incomplete CQL user. Native correctly removed
+metadata without finding those bots. All25 process exits0/cleanup0; failure is
+retained, not waived. Correct fixture to use raw parameterized PG wire_user/
+bot_conv for native PostgreSQL/migration writes and CQL only for Cassandra.
+Require the native-created account/name to exist before attaching rows, then
+read its actual selected backend. Metadata/clients/prekeys/MLS/properties stay
+CQL. No native or production Go behavior changes.
