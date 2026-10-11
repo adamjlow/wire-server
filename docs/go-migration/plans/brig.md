@@ -1238,3 +1238,16 @@ Finite tests cover event wire shape, raw legalhold history exclusion, local/remo
 cursor advancement, enqueue failure stopping subsequent effects and best-effort
 rescind behavior. Queue payload/core qualification alone cannot enable public
 DELETE/self; concrete Rabbit publisher/lifecycle remains required before binding.
+
+Event fanout sourcecc80e031b/servicee9433b45 passes full pinned Go/static units;
+SDK controller terminal0 and independently empty owned resources. Required queue
+callback is explicit with no success fallback; concrete Rabbit is still pending.
+[Evidence/review](../../../go/services/brig/qualification/evidence/account-deletion-events/README.md).
+No public/original/live queue claim. Next implement native Rabbit settings/TLS,
+credentials and reconnecting publisher with quorum/single-active durable queues,
+persistent application/json publication and three1s retries; use the same approved
+amqp091-go1.15.0 pin as other candidates, justify and scan dependency changes.
+Then verification/mail/internal replay and incoming remote-deletion HTTP; bind full
+engine and rerun retained original failure. Final535/all-entity/operations/image
+acceptance unchanged. Root1.3GiB below backend2GiB floor; before full backend recover
+space through verified lossless idle owned artifacts rather than changing guards.

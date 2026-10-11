@@ -1,0 +1,8 @@
+{
+  "controller_terminal_exit": 0,
+  "independent_prefix": "brig-account-deletion-events-sdk-",
+  "containers": [],
+  "networks": [],
+  "volumes": [],
+  "cache_maintenance_scope": "No live cache users; regular nonsymlink UID/GID65534 cache entries older10min only, no retained artifacts removed"
+}
