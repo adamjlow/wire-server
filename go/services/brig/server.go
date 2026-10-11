@@ -7,6 +7,7 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"errors"
+	"log"
 	"net"
 	"net/http"
 	"strconv"
@@ -167,13 +168,18 @@ func Run(ctx context.Context, c Config) error {
 	if err = runPostgresMigrations(ctx, postgres, time.Duration(c.PostgresPool.Acquisition)); err != nil {
 		return err
 	}
+	transport := http.DefaultTransport.(*http.Transport).Clone()
+	defer transport.CloseIdleConnections()
+	peerHTTP := &http.Client{Transport: transport, Timeout: 30 * time.Second}
+	journal, err := newUserJournal(ctx, c.AWS, peerHTTP)
+	if err != nil {
+		return err
+	}
 	listener, err := net.Listen("tcp", c.Brig.Address())
 	if err != nil {
 		return errors.New("Brig listener initialization failed")
 	}
-	transport := http.DefaultTransport.(*http.Transport).Clone()
-	defer transport.CloseIdleConnections()
-	business := brigReadHandlers{config: c, users: userStore{userAuthStore{cassandra: cassandra, postgres: postgres, mode: c.Migration["user"], acquisition: time.Duration(c.PostgresPool.Acquisition)}}, sessions: sessionStore{cassandra}, peers: brigPeers{client: &http.Client{Transport: transport, Timeout: 30 * time.Second}, galley: c.Galley, gundeck: c.Gundeck}}
+	business := brigReadHandlers{config: c, users: userStore{userAuthStore{cassandra: cassandra, postgres: postgres, mode: c.Migration["user"], acquisition: time.Duration(c.PostgresPool.Acquisition)}}, sessions: sessionStore{cassandra}, peers: brigPeers{client: peerHTTP, galley: c.Galley, gundeck: c.Gundeck}}
 	business.clients = &clientReadHandlers{store: clientStore{cassandra}}
 	issuer := tokenIssuer{key: private, index: int64(c.ZAuth.Settings.KeyIndex), userTTL: c.ZAuth.Settings.UserTTL, sessionTTL: c.ZAuth.Settings.SessionTTL, accessTTL: c.ZAuth.Settings.AccessTTL, legalUserTTL: c.ZAuth.Settings.LegalHoldUserTTL, legalAccessTTL: c.ZAuth.Settings.LegalHoldAccessTTL}
 	business.access = &accessTokenService{lookup: business.sessions, sessions: sessionManager{store: business.sessions, issuer: issuer, renewAge: *c.Settings.CookieRenewAge}, keys: public, now: time.Now}
@@ -197,6 +203,14 @@ func Run(ctx context.Context, c Config) error {
 	}
 	notifications := newSessionNotifications(ctx, business.peers)
 	defer notifications.close()
+	codes := activationStore{cassandra}
+	resets := passwordResetStore{databases: business.users.userAuthStore, mode: c.Migration["passwordReset"]}
+	domains := domainRegistrationStore{databases: business.users.userAuthStore, mode: c.Migration["domainRegistration"], invalidRecord: func() { log.Print("invalid stored domain registration") }}
+	activation := activationService{codes: codes, account: business.users.get, identities: business.users.userAuthStore, deletePasswordReset: resets.deleteForUser}
+	business.activation = &activationHTTP{service: activationAPI{codes: codes, guardDomain: func(ctx context.Context, email string) error {
+		return guardRegistrationDomain(ctx, email, domains.lookup)
+	}, activate: activation.activateKey, clearUnvalidated: business.users.clearUnvalidatedEmail}, syncIndex: index.sync, events: activationEvents{notifications: notifications, journal: journal, domain: c.Settings.Domain, defaultLocale: c.Settings.DefaultLocale}, peers: business.peers}
+
 	loginSessions := business.access.sessions
 	loginSessions.limit = *c.Settings.CookieLimit
 	loginSessions.throttle = cookieThrottle{stdDev: c.Settings.CookieThrottle.StdDev, retryAfter: c.Settings.CookieThrottle.RetryAfter}
