@@ -88,3 +88,9 @@ Current client activity slice: [four unchanged original Haskell client tests](qu
 pass on sourcec2d03121a with Go Brig/Gundeck and native remainder, alongside full
 Go checks/static units and unchanged17 paired controls. This is scoped evidence;
 Brig is still incomplete and not available for whole-service selection.
+
+[Public client lifecycle switchback](qualification/evidence/client-lifecycle-switchback/README.md)
+now passes at source27b318399: native accepts Go creation/deletion/prekey data
+and MLS retention. A missing-client404 media mismatch was corrected in Go; the
+failed receipt remains retained. This is finite direct-API storage proof, with
+no new original suite/full-service qualification claim.

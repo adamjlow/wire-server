@@ -10,6 +10,13 @@
       "command": "Scoped sourcec2d03121a: full pinned Go checks/static normal units; four unchanged compiled original Client tests including last-active; strict XML4/no failures/errors/skips; unchanged17 paired controls; all25 managed exits0, runner/cleanup0 and independent audit empty. Not whole535/eight-Go final qualification.",
       "revision": "c2d03121a1be7f86402d6a03aabd3a901f1891a8",
       "artifact": "go/services/brig/qualification/evidence/client-activity/README.md"
+    },
+    {
+      "criterion": "operations",
+      "result": "pass",
+      "command": "Scoped source27b318399/serviced109530d: full pinned Go checks/static units; unchanged17 paired controls and seven exact lifecycle admission responses; actual Cassandra native-Go-native creation/deletion/prekey-claim/MLS-retention witness; all13 exits0, runner/cleanup0 and independent audit empty. Prior missing-client media failure retained, fixed only Go. Not final whole-service/all-entity three-mode/535/eight-Go qualification.",
+      "revision": "27b31839939758ba45d8c51ab65417e092a78297",
+      "artifact": "go/services/brig/qualification/evidence/client-lifecycle-switchback/README.md"
     }
   ],
   "review": null,
@@ -45,5 +52,5 @@
       "required_evidence": "Frozen100request/concurrency8 latency/RSS/CPU/metrics smoke and eight held-body drain/listener close/SIGTERM0 within35s; actual unchanged-schema same-state native-Go-native auth/password/cookie/client/prekey/MLS/property/connection/pending action/OAuth/apps/groups/domain/queue/search and storage-mode witnesses. Trusted nonroot optional source/license image and separately scoped image-only/default-byte-preserving selector. Exact final qualified artifact and user-delegated same-author self-review with serious inherited concerns and unavailable native checks accurately recorded."
     }
   ],
-  "handoff": "Active whole Brig replacement remains incomplete/unavailable. Current sourcec2d03121a implements actual native client activity callback, next-epoch-week rounding and IF EXISTS CQL. Full pinned Go checks/static original-runner units pass, tagged stores compile only. Four unchanged original Client cases including last-active and capabilities pass strict XML; unchanged17 paired controls pass; all25 managed exits0, runner/cleanup0 and independent audit empty. Two-Go Brig/Gundeck with native remainder/B, not final eight-Go. Native callback parser/error literals and missing-client live LWT control, original offline-client, registration/deletion durable switchback/new-client mail delivery, internal legalhold augmentation/events and Go deletion consumer/STOMP remain pending alongside other whole families. Full535/eight-Go/ops/all-entity3mode/image/defaultselector/Clegal/security/fullreview pending; native309/310 retained. User six-item audit/docs/push completed at remote1e9e31116; this later activity work remains local, no further push/deploy authorization inferred. Automatic Galley only after actual whole Brig completion."
+  "handoff": "Active whole Brig replacement incomplete/unavailable. Current source27b318399/serviced109530d full Go/static checks pass; real native-Go-native Cassandra public client creation/deletion/prekey claim/retainedMLS witness plus seven exact admission and unchanged17 paired controls pass. All13 managed exits0/runner0/cleanup0/independent audit empty. Previous missing-client GET404 media failure retained; fixed Go header only. Four original Client tests remain c2d03121a evidence, not freshly rerun for current media fix. Next native prekey claim/bundle/multi-user contracts, actual Galley legalhold guard, random/local and best-effort Dynamo strategies, no-key cleanup. Native best-effort contention concern documented, do not repair policy. Mail delivery/cookie/temporary/internal legalhold/worker, offline-client and other whole families remain. Whole535/eight-Go/all-entity3mode/ops/image/defaultselector/Clegal/security/fullreview pending, native309/310 retained. Last authorized remote snapshot1e9e31116; subsequent work local, no new push/deploy authorized. Automatic Galley only after actual whole Brig completion."
 }

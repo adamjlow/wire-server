@@ -1,0 +1,1019 @@
+{
+  "result": "pass",
+  "e2e_executed": false,
+  "scope": "Finite native -> Go read/reauthentication observations on native-created state.",
+  "records": [
+    {
+      "implementation": "haskell",
+      "observations": [
+        {
+          "method": "GET",
+          "path": "/i/status",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": ""
+        },
+        {
+          "method": "HEAD",
+          "path": "/i/status",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "path": "/api-version",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"development\":[19],\"domain\":\"example.com\",\"federation\":true,\"supported\":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18]}",
+          "json": {
+            "development": [
+              19
+            ],
+            "domain": "example.com",
+            "federation": true,
+            "supported": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18
+            ]
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/self",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"accent_id\":0,\"assets\":[],\"email\":\"synthetic-parity-ec34f3a8456b42389a1b1e9dfc62bf0e@example.com\",\"id\":\"77959d08-e4da-488f-9d86-44dc72bfe1b7\",\"locale\":\"en\",\"managed_by\":\"wire\",\"name\":\"Synthetic parity reader\",\"picture\":[],\"qualified_id\":{\"domain\":\"example.com\",\"id\":\"77959d08-e4da-488f-9d86-44dc72bfe1b7\"},\"searchable\":true,\"status\":\"active\",\"supported_protocols\":[\"proteus\"],\"type\":\"regular\"}",
+          "json": {
+            "accent_id": 0,
+            "assets": [],
+            "email": "synthetic-parity-ec34f3a8456b42389a1b1e9dfc62bf0e@example.com",
+            "id": "77959d08-e4da-488f-9d86-44dc72bfe1b7",
+            "locale": "en",
+            "managed_by": "wire",
+            "name": "Synthetic parity reader",
+            "picture": [],
+            "qualified_id": {
+              "domain": "example.com",
+              "id": "77959d08-e4da-488f-9d86-44dc72bfe1b7"
+            },
+            "searchable": true,
+            "status": "active",
+            "supported_protocols": [
+              "proteus"
+            ],
+            "type": "regular"
+          }
+        },
+        {
+          "method": "HEAD",
+          "path": "/self",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "path": "/cookies",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"cookies\":[{\"created\":\"2026-10-11T08:50:28.387Z\",\"expires\":\"2026-10-11T08:52:28Z\",\"id\":3000362092,\"label\":\"synthetic-paired-device\",\"successor\":null,\"type\":\"persistent\"}]}",
+          "json": {
+            "cookies": [
+              {
+                "created": "2026-10-11T08:50:28.387Z",
+                "expires": "2026-10-11T08:52:28Z",
+                "id": 3000362092,
+                "label": "synthetic-paired-device",
+                "successor": null,
+                "type": "persistent"
+              }
+            ]
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/cookies?labels=synthetic-paired-device",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"cookies\":[{\"created\":\"2026-10-11T08:50:28.387Z\",\"expires\":\"2026-10-11T08:52:28Z\",\"id\":3000362092,\"label\":\"synthetic-paired-device\",\"successor\":null,\"type\":\"persistent\"}]}",
+          "json": {
+            "cookies": [
+              {
+                "created": "2026-10-11T08:50:28.387Z",
+                "expires": "2026-10-11T08:52:28Z",
+                "id": 3000362092,
+                "label": "synthetic-paired-device",
+                "successor": null,
+                "type": "persistent"
+              }
+            ]
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/cookies?labels=absent",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"cookies\":[]}",
+          "json": {
+            "cookies": []
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/i/users/77959d08-e4da-488f-9d86-44dc72bfe1b7/status",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"status\":\"active\"}",
+          "json": {
+            "status": "active"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/self",
+          "status": 400,
+          "content_type": null,
+          "body": "Header Z-User is required"
+        },
+        {
+          "method": "GET",
+          "path": "/self",
+          "status": 400,
+          "content_type": null,
+          "body": "Error parsing header Z-User failed: invalid UUID"
+        },
+        {
+          "method": "GET",
+          "path": "/self",
+          "status": 400,
+          "content_type": null,
+          "body": "Error parsing header Z-User failed: invalid UUID"
+        },
+        {
+          "method": "GET",
+          "path": "/v1/self",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"accent_id\":0,\"assets\":[],\"email\":\"synthetic-parity-ec34f3a8456b42389a1b1e9dfc62bf0e@example.com\",\"id\":\"77959d08-e4da-488f-9d86-44dc72bfe1b7\",\"locale\":\"en\",\"managed_by\":\"wire\",\"name\":\"Synthetic parity reader\",\"picture\":[],\"qualified_id\":{\"domain\":\"example.com\",\"id\":\"77959d08-e4da-488f-9d86-44dc72bfe1b7\"},\"searchable\":true,\"status\":\"active\",\"supported_protocols\":[\"proteus\"],\"type\":\"regular\"}",
+          "json": {
+            "accent_id": 0,
+            "assets": [],
+            "email": "synthetic-parity-ec34f3a8456b42389a1b1e9dfc62bf0e@example.com",
+            "id": "77959d08-e4da-488f-9d86-44dc72bfe1b7",
+            "locale": "en",
+            "managed_by": "wire",
+            "name": "Synthetic parity reader",
+            "picture": [],
+            "qualified_id": {
+              "domain": "example.com",
+              "id": "77959d08-e4da-488f-9d86-44dc72bfe1b7"
+            },
+            "searchable": true,
+            "status": "active",
+            "supported_protocols": [
+              "proteus"
+            ],
+            "type": "regular"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/i/users/77959d08-e4da-488f-9d86-44dc72bfe1b7/reauthenticate",
+          "status": 200,
+          "content_type": null,
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "path": "/i/users/77959d08-e4da-488f-9d86-44dc72bfe1b7/reauthenticate",
+          "status": 403,
+          "content_type": "application/json",
+          "body": "{\"code\":403,\"label\":\"invalid-credentials\",\"message\":\"Authentication failed\"}",
+          "json": {
+            "code": 403,
+            "label": "invalid-credentials",
+            "message": "Authentication failed"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/i/users/77959d08-e4da-488f-9d86-44dc72bfe1b7/reauthenticate",
+          "status": 403,
+          "content_type": "application/json",
+          "body": "{\"code\":403,\"label\":\"missing-auth\",\"message\":\"Re-authentication via password required\"}",
+          "json": {
+            "code": 403,
+            "label": "missing-auth",
+            "message": "Re-authentication via password required"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/i/users/77959d08-e4da-488f-9d86-44dc72bfe1b7/reauthenticate",
+          "status": 200,
+          "content_type": null,
+          "body": ""
+        }
+      ]
+    },
+    {
+      "implementation": "go",
+      "observations": [
+        {
+          "method": "GET",
+          "path": "/i/status",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": ""
+        },
+        {
+          "method": "HEAD",
+          "path": "/i/status",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "path": "/api-version",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"development\":[19],\"domain\":\"example.com\",\"federation\":true,\"supported\":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18]}\n",
+          "json": {
+            "development": [
+              19
+            ],
+            "domain": "example.com",
+            "federation": true,
+            "supported": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18
+            ]
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/self",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"qualified_id\":{\"id\":\"77959d08-e4da-488f-9d86-44dc72bfe1b7\",\"domain\":\"example.com\"},\"id\":\"77959d08-e4da-488f-9d86-44dc72bfe1b7\",\"type\":\"regular\",\"email\":\"synthetic-parity-ec34f3a8456b42389a1b1e9dfc62bf0e@example.com\",\"name\":\"Synthetic parity reader\",\"picture\":[],\"assets\":[],\"accent_id\":0,\"status\":\"active\",\"locale\":\"en\",\"managed_by\":\"wire\",\"supported_protocols\":[\"proteus\"],\"searchable\":true}\n",
+          "json": {
+            "qualified_id": {
+              "id": "77959d08-e4da-488f-9d86-44dc72bfe1b7",
+              "domain": "example.com"
+            },
+            "id": "77959d08-e4da-488f-9d86-44dc72bfe1b7",
+            "type": "regular",
+            "email": "synthetic-parity-ec34f3a8456b42389a1b1e9dfc62bf0e@example.com",
+            "name": "Synthetic parity reader",
+            "picture": [],
+            "assets": [],
+            "accent_id": 0,
+            "status": "active",
+            "locale": "en",
+            "managed_by": "wire",
+            "supported_protocols": [
+              "proteus"
+            ],
+            "searchable": true
+          }
+        },
+        {
+          "method": "HEAD",
+          "path": "/self",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "path": "/cookies",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"cookies\":[{\"created\":\"2026-10-11T08:50:28.387Z\",\"expires\":\"2026-10-11T08:52:28Z\",\"id\":3000362092,\"label\":\"synthetic-paired-device\",\"successor\":null,\"type\":\"persistent\"}]}\n",
+          "json": {
+            "cookies": [
+              {
+                "created": "2026-10-11T08:50:28.387Z",
+                "expires": "2026-10-11T08:52:28Z",
+                "id": 3000362092,
+                "label": "synthetic-paired-device",
+                "successor": null,
+                "type": "persistent"
+              }
+            ]
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/cookies?labels=synthetic-paired-device",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"cookies\":[{\"created\":\"2026-10-11T08:50:28.387Z\",\"expires\":\"2026-10-11T08:52:28Z\",\"id\":3000362092,\"label\":\"synthetic-paired-device\",\"successor\":null,\"type\":\"persistent\"}]}\n",
+          "json": {
+            "cookies": [
+              {
+                "created": "2026-10-11T08:50:28.387Z",
+                "expires": "2026-10-11T08:52:28Z",
+                "id": 3000362092,
+                "label": "synthetic-paired-device",
+                "successor": null,
+                "type": "persistent"
+              }
+            ]
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/cookies?labels=absent",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"cookies\":[]}\n",
+          "json": {
+            "cookies": []
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/i/users/77959d08-e4da-488f-9d86-44dc72bfe1b7/status",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"status\":\"active\"}\n",
+          "json": {
+            "status": "active"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/self",
+          "status": 400,
+          "content_type": null,
+          "body": "Header Z-User is required"
+        },
+        {
+          "method": "GET",
+          "path": "/self",
+          "status": 400,
+          "content_type": null,
+          "body": "Error parsing header Z-User failed: invalid UUID"
+        },
+        {
+          "method": "GET",
+          "path": "/self",
+          "status": 400,
+          "content_type": null,
+          "body": "Error parsing header Z-User failed: invalid UUID"
+        },
+        {
+          "method": "GET",
+          "path": "/v1/self",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"qualified_id\":{\"id\":\"77959d08-e4da-488f-9d86-44dc72bfe1b7\",\"domain\":\"example.com\"},\"id\":\"77959d08-e4da-488f-9d86-44dc72bfe1b7\",\"type\":\"regular\",\"email\":\"synthetic-parity-ec34f3a8456b42389a1b1e9dfc62bf0e@example.com\",\"name\":\"Synthetic parity reader\",\"picture\":[],\"assets\":[],\"accent_id\":0,\"status\":\"active\",\"locale\":\"en\",\"managed_by\":\"wire\",\"supported_protocols\":[\"proteus\"],\"searchable\":true}\n",
+          "json": {
+            "qualified_id": {
+              "id": "77959d08-e4da-488f-9d86-44dc72bfe1b7",
+              "domain": "example.com"
+            },
+            "id": "77959d08-e4da-488f-9d86-44dc72bfe1b7",
+            "type": "regular",
+            "email": "synthetic-parity-ec34f3a8456b42389a1b1e9dfc62bf0e@example.com",
+            "name": "Synthetic parity reader",
+            "picture": [],
+            "assets": [],
+            "accent_id": 0,
+            "status": "active",
+            "locale": "en",
+            "managed_by": "wire",
+            "supported_protocols": [
+              "proteus"
+            ],
+            "searchable": true
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/i/users/77959d08-e4da-488f-9d86-44dc72bfe1b7/reauthenticate",
+          "status": 200,
+          "content_type": null,
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "path": "/i/users/77959d08-e4da-488f-9d86-44dc72bfe1b7/reauthenticate",
+          "status": 403,
+          "content_type": "application/json",
+          "body": "{\"code\":403,\"label\":\"invalid-credentials\",\"message\":\"Authentication failed\"}\n",
+          "json": {
+            "code": 403,
+            "label": "invalid-credentials",
+            "message": "Authentication failed"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/i/users/77959d08-e4da-488f-9d86-44dc72bfe1b7/reauthenticate",
+          "status": 403,
+          "content_type": "application/json",
+          "body": "{\"code\":403,\"label\":\"missing-auth\",\"message\":\"Re-authentication via password required\"}\n",
+          "json": {
+            "code": 403,
+            "label": "missing-auth",
+            "message": "Re-authentication via password required"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/i/users/77959d08-e4da-488f-9d86-44dc72bfe1b7/reauthenticate",
+          "status": 200,
+          "content_type": null,
+          "body": ""
+        }
+      ]
+    }
+  ],
+  "native_brig": {
+    "path": "/nix/store/f6l2f0l8l2r6z9jbg937q96k6056iqfn-brig/bin/brig",
+    "sha256": "c45a40da63268712a7cacdbd884287fa3dc93cec179d70323d3f22f7d5cdf1ca"
+  },
+  "go_gundeck_sha256": "a50512ef30d7fa9ddf92c2c1933e69769d6691e08cdfbe9f7c4f2d266071f46c",
+  "native_setup": [
+    {
+      "method": "POST",
+      "path": "/i/users",
+      "status": 201,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"accent_id\":0,\"assets\":[],\"email\":\"synthetic-parity-ec34f3a8456b42389a1b1e9dfc62bf0e@example.com\",\"id\":\"77959d08-e4da-488f-9d86-44dc72bfe1b7\",\"locale\":\"en\",\"managed_by\":\"wire\",\"name\":\"Synthetic parity reader\",\"picture\":[],\"qualified_id\":{\"domain\":\"example.com\",\"id\":\"77959d08-e4da-488f-9d86-44dc72bfe1b7\"},\"searchable\":true,\"status\":\"active\",\"supported_protocols\":[\"proteus\"],\"type\":\"regular\"}",
+      "location": "77959d08-e4da-488f-9d86-44dc72bfe1b7",
+      "json": {
+        "accent_id": 0,
+        "assets": [],
+        "email": "synthetic-parity-ec34f3a8456b42389a1b1e9dfc62bf0e@example.com",
+        "id": "77959d08-e4da-488f-9d86-44dc72bfe1b7",
+        "locale": "en",
+        "managed_by": "wire",
+        "name": "Synthetic parity reader",
+        "picture": [],
+        "qualified_id": {
+          "domain": "example.com",
+          "id": "77959d08-e4da-488f-9d86-44dc72bfe1b7"
+        },
+        "searchable": true,
+        "status": "active",
+        "supported_protocols": [
+          "proteus"
+        ],
+        "type": "regular"
+      }
+    },
+    {
+      "operation": "persistent login",
+      "status": 200,
+      "cookie_issued": true
+    }
+  ],
+  "client_lifecycle_native_actor": {
+    "method": "POST",
+    "path": "/i/users",
+    "status": 201,
+    "content_type": "application/json;charset=utf-8",
+    "body": "{\"accent_id\":0,\"assets\":[],\"expires_at\":\"2026-10-11T08:50:48.387Z\",\"id\":\"a72f0621-3472-4901-94ee-f3bccbf61ba2\",\"locale\":\"en\",\"managed_by\":\"wire\",\"name\":\"Synthetic client lifecycle\",\"picture\":[],\"qualified_id\":{\"domain\":\"example.com\",\"id\":\"a72f0621-3472-4901-94ee-f3bccbf61ba2\"},\"searchable\":true,\"status\":\"ephemeral\",\"supported_protocols\":[\"proteus\"],\"type\":\"regular\"}",
+    "location": "a72f0621-3472-4901-94ee-f3bccbf61ba2",
+    "json": {
+      "accent_id": 0,
+      "assets": [],
+      "expires_at": "2026-10-11T08:50:48.387Z",
+      "id": "a72f0621-3472-4901-94ee-f3bccbf61ba2",
+      "locale": "en",
+      "managed_by": "wire",
+      "name": "Synthetic client lifecycle",
+      "picture": [],
+      "qualified_id": {
+        "domain": "example.com",
+        "id": "a72f0621-3472-4901-94ee-f3bccbf61ba2"
+      },
+      "searchable": true,
+      "status": "ephemeral",
+      "supported_protocols": [
+        "proteus"
+      ],
+      "type": "regular"
+    }
+  },
+  "client_lifecycle_native_created": {
+    "method": "POST",
+    "path": "/v19/clients",
+    "status": 201,
+    "content_type": "application/json;charset=utf-8",
+    "body": "{\"capabilities\":[\"legalhold-implicit-consent\"],\"class\":\"desktop\",\"id\":\"afc1c13c3c651593\",\"label\":\"native-durable-client\",\"mls_public_keys\":{\"ed25519\":\"AQI=\"},\"model\":\"synthetic-model\",\"time\":\"2026-10-11T08:50:28.387Z\",\"type\":\"permanent\"}",
+    "location": "afc1c13c3c651593",
+    "json": {
+      "capabilities": [
+        "legalhold-implicit-consent"
+      ],
+      "class": "desktop",
+      "id": "afc1c13c3c651593",
+      "label": "native-durable-client",
+      "mls_public_keys": {
+        "ed25519": "AQI="
+      },
+      "model": "synthetic-model",
+      "time": "2026-10-11T08:50:28.387Z",
+      "type": "permanent"
+    }
+  },
+  "client_lifecycle_native_state": [
+    {
+      "method": "GET",
+      "path": "/v19/clients/afc1c13c3c651593",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"capabilities\":[\"legalhold-implicit-consent\"],\"class\":\"desktop\",\"id\":\"afc1c13c3c651593\",\"label\":\"native-durable-client\",\"mls_public_keys\":{\"ed25519\":\"AQI=\"},\"model\":\"synthetic-model\",\"time\":\"2026-10-11T08:50:28.387Z\",\"type\":\"permanent\"}",
+      "json": {
+        "capabilities": [
+          "legalhold-implicit-consent"
+        ],
+        "class": "desktop",
+        "id": "afc1c13c3c651593",
+        "label": "native-durable-client",
+        "mls_public_keys": {
+          "ed25519": "AQI="
+        },
+        "model": "synthetic-model",
+        "time": "2026-10-11T08:50:28.387Z",
+        "type": "permanent"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v19/clients/afc1c13c3c651593/prekeys",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "[7,65535]",
+      "json": [
+        7,
+        65535
+      ]
+    }
+  ],
+  "client_lifecycle_native_controls": [
+    {
+      "method": "POST",
+      "path": "/v19/clients",
+      "status": 400,
+      "content_type": "application/json",
+      "body": "{\"code\":400,\"label\":\"client-error\",\"message\":\"LegalHold clients cannot be added manually. LegalHold must be enabled on this user by an admin\"}",
+      "location": null,
+      "json": {
+        "code": 400,
+        "label": "client-error",
+        "message": "LegalHold clients cannot be added manually. LegalHold must be enabled on this user by an admin"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v19/clients",
+      "status": 400,
+      "content_type": "application/json",
+      "body": "{\"code\":400,\"label\":\"invalid-user\",\"message\":\"Invalid user\"}",
+      "location": null,
+      "json": {
+        "code": 400,
+        "label": "invalid-user",
+        "message": "Invalid user"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v19/clients",
+      "status": 403,
+      "content_type": "application/json",
+      "body": "{\"code\":403,\"label\":\"missing-auth\",\"message\":\"Re-authentication via password required\"}",
+      "location": null,
+      "json": {
+        "code": 403,
+        "label": "missing-auth",
+        "message": "Re-authentication via password required"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v19/clients",
+      "status": 403,
+      "content_type": "application/json",
+      "body": "{\"code\":403,\"label\":\"invalid-credentials\",\"message\":\"Authentication failed\"}",
+      "location": null,
+      "json": {
+        "code": 403,
+        "label": "invalid-credentials",
+        "message": "Authentication failed"
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/v19/clients/afc1c13c3c651593",
+      "status": 403,
+      "content_type": "application/json",
+      "body": "{\"code\":403,\"label\":\"missing-auth\",\"message\":\"Re-authentication via password required\"}",
+      "json": {
+        "code": 403,
+        "label": "missing-auth",
+        "message": "Re-authentication via password required"
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/v19/clients/afc1c13c3c651593",
+      "status": 403,
+      "content_type": "application/json",
+      "body": "{\"code\":403,\"label\":\"invalid-credentials\",\"message\":\"Authentication failed\"}",
+      "json": {
+        "code": 403,
+        "label": "invalid-credentials",
+        "message": "Authentication failed"
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/v19/clients/f",
+      "status": 404,
+      "content_type": "application/json",
+      "body": "{\"code\":404,\"label\":\"client-not-found\",\"message\":\"Client not found\"}",
+      "json": {
+        "code": 404,
+        "label": "client-not-found",
+        "message": "Client not found"
+      }
+    }
+  ],
+  "native_stop_exit_code": 0,
+  "candidate_brig_sha256": "d109530d48f490ccc6b1eaf159426ecfaf715dc786116b363cf59a19fdbc7a5b",
+  "mismatches": [],
+  "client_lifecycle_go_reads_native": [
+    {
+      "method": "GET",
+      "path": "/v19/clients/afc1c13c3c651593",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"capabilities\":[\"legalhold-implicit-consent\"],\"class\":\"desktop\",\"id\":\"afc1c13c3c651593\",\"label\":\"native-durable-client\",\"mls_public_keys\":{\"ed25519\":\"AQI=\"},\"model\":\"synthetic-model\",\"time\":\"2026-10-11T08:50:28.387Z\",\"type\":\"permanent\"}\n",
+      "json": {
+        "capabilities": [
+          "legalhold-implicit-consent"
+        ],
+        "class": "desktop",
+        "id": "afc1c13c3c651593",
+        "label": "native-durable-client",
+        "mls_public_keys": {
+          "ed25519": "AQI="
+        },
+        "model": "synthetic-model",
+        "time": "2026-10-11T08:50:28.387Z",
+        "type": "permanent"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v19/clients/afc1c13c3c651593/prekeys",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "[7,65535]\n",
+      "json": [
+        7,
+        65535
+      ]
+    }
+  ],
+  "client_lifecycle_go_controls": [
+    {
+      "method": "POST",
+      "path": "/v19/clients",
+      "status": 400,
+      "content_type": "application/json",
+      "body": "{\"code\":400,\"label\":\"client-error\",\"message\":\"LegalHold clients cannot be added manually. LegalHold must be enabled on this user by an admin\"}\n",
+      "location": null,
+      "json": {
+        "code": 400,
+        "label": "client-error",
+        "message": "LegalHold clients cannot be added manually. LegalHold must be enabled on this user by an admin"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v19/clients",
+      "status": 400,
+      "content_type": "application/json",
+      "body": "{\"code\":400,\"label\":\"invalid-user\",\"message\":\"Invalid user\"}\n",
+      "location": null,
+      "json": {
+        "code": 400,
+        "label": "invalid-user",
+        "message": "Invalid user"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v19/clients",
+      "status": 403,
+      "content_type": "application/json",
+      "body": "{\"code\":403,\"label\":\"missing-auth\",\"message\":\"Re-authentication via password required\"}\n",
+      "location": null,
+      "json": {
+        "code": 403,
+        "label": "missing-auth",
+        "message": "Re-authentication via password required"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v19/clients",
+      "status": 403,
+      "content_type": "application/json",
+      "body": "{\"code\":403,\"label\":\"invalid-credentials\",\"message\":\"Authentication failed\"}\n",
+      "location": null,
+      "json": {
+        "code": 403,
+        "label": "invalid-credentials",
+        "message": "Authentication failed"
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/v19/clients/afc1c13c3c651593",
+      "status": 403,
+      "content_type": "application/json",
+      "body": "{\"code\":403,\"label\":\"missing-auth\",\"message\":\"Re-authentication via password required\"}\n",
+      "json": {
+        "code": 403,
+        "label": "missing-auth",
+        "message": "Re-authentication via password required"
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/v19/clients/afc1c13c3c651593",
+      "status": 403,
+      "content_type": "application/json",
+      "body": "{\"code\":403,\"label\":\"invalid-credentials\",\"message\":\"Authentication failed\"}\n",
+      "json": {
+        "code": 403,
+        "label": "invalid-credentials",
+        "message": "Authentication failed"
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/v19/clients/f",
+      "status": 404,
+      "content_type": "application/json",
+      "body": "{\"code\":404,\"label\":\"client-not-found\",\"message\":\"Client not found\"}\n",
+      "json": {
+        "code": 404,
+        "label": "client-not-found",
+        "message": "Client not found"
+      }
+    }
+  ],
+  "client_lifecycle_mismatches": [],
+  "client_lifecycle_go_created": {
+    "method": "POST",
+    "path": "/v19/clients",
+    "status": 201,
+    "content_type": "application/json;charset=utf-8",
+    "body": "{\"capabilities\":[\"legalhold-implicit-consent\"],\"class\":\"phone\",\"id\":\"7f23a6d36dcdd757\",\"label\":\"go-durable-client\",\"mls_public_keys\":{\"ed25519\":\"AQID\"},\"time\":\"2026-10-11T08:50:59.533Z\",\"type\":\"permanent\"}\n",
+    "location": "7f23a6d36dcdd757",
+    "json": {
+      "capabilities": [
+        "legalhold-implicit-consent"
+      ],
+      "class": "phone",
+      "id": "7f23a6d36dcdd757",
+      "label": "go-durable-client",
+      "mls_public_keys": {
+        "ed25519": "AQID"
+      },
+      "time": "2026-10-11T08:50:59.533Z",
+      "type": "permanent"
+    }
+  },
+  "client_lifecycle_go_created_state": [
+    {
+      "method": "GET",
+      "path": "/v19/clients/7f23a6d36dcdd757",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"capabilities\":[\"legalhold-implicit-consent\"],\"class\":\"phone\",\"id\":\"7f23a6d36dcdd757\",\"label\":\"go-durable-client\",\"mls_public_keys\":{\"ed25519\":\"AQID\"},\"time\":\"2026-10-11T08:50:59.533Z\",\"type\":\"permanent\"}\n",
+      "json": {
+        "capabilities": [
+          "legalhold-implicit-consent"
+        ],
+        "class": "phone",
+        "id": "7f23a6d36dcdd757",
+        "label": "go-durable-client",
+        "mls_public_keys": {
+          "ed25519": "AQID"
+        },
+        "time": "2026-10-11T08:50:59.533Z",
+        "type": "permanent"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v19/clients/7f23a6d36dcdd757/prekeys",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "[7,65535]\n",
+      "json": [
+        7,
+        65535
+      ]
+    }
+  ],
+  "client_lifecycle_go_deleted": {
+    "method": "DELETE",
+    "path": "/v19/clients/afc1c13c3c651593",
+    "status": 200,
+    "content_type": null,
+    "body": ""
+  },
+  "client_lifecycle_go_deleted_state": [
+    {
+      "method": "GET",
+      "path": "/v19/clients/afc1c13c3c651593",
+      "status": 404,
+      "content_type": "text/plain;charset=utf-8",
+      "body": ""
+    },
+    {
+      "method": "GET",
+      "path": "/v19/clients/afc1c13c3c651593/prekeys",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "[]\n",
+      "json": []
+    }
+  ],
+  "client_lifecycle_go_stop_exit_code": 0,
+  "client_lifecycle_native_reads_go": [
+    {
+      "method": "GET",
+      "path": "/v19/clients/7f23a6d36dcdd757",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"capabilities\":[\"legalhold-implicit-consent\"],\"class\":\"phone\",\"id\":\"7f23a6d36dcdd757\",\"label\":\"go-durable-client\",\"mls_public_keys\":{\"ed25519\":\"AQID\"},\"time\":\"2026-10-11T08:50:59.533Z\",\"type\":\"permanent\"}",
+      "json": {
+        "capabilities": [
+          "legalhold-implicit-consent"
+        ],
+        "class": "phone",
+        "id": "7f23a6d36dcdd757",
+        "label": "go-durable-client",
+        "mls_public_keys": {
+          "ed25519": "AQID"
+        },
+        "time": "2026-10-11T08:50:59.533Z",
+        "type": "permanent"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v19/clients/7f23a6d36dcdd757/prekeys",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "[7,65535]",
+      "json": [
+        7,
+        65535
+      ]
+    }
+  ],
+  "client_lifecycle_native_reads_deletion": [
+    {
+      "method": "GET",
+      "path": "/v19/clients/afc1c13c3c651593",
+      "status": 404,
+      "content_type": "text/plain;charset=utf-8",
+      "body": ""
+    },
+    {
+      "method": "GET",
+      "path": "/v19/clients/afc1c13c3c651593/prekeys",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "[]",
+      "json": []
+    }
+  ],
+  "client_lifecycle_native_claims_go_prekey": {
+    "method": "GET",
+    "path": "/v19/users/example.com/a72f0621-3472-4901-94ee-f3bccbf61ba2/prekeys/7f23a6d36dcdd757",
+    "status": 200,
+    "content_type": "application/json;charset=utf-8",
+    "body": "{\"client\":\"7f23a6d36dcdd757\",\"prekey\":{\"id\":7,\"key\":\"pQABAQcCoQBYIDXdN8VlKb5lbgPmoDPLPyqNIEyShG4oT/DlW0peRRZUA6EAoQBYILLf1TIwSB62q69Ojs/X1tzJ+dYHNAw4QbW/7TC5vSZqBPY=\"}}",
+    "json": {
+      "client": "7f23a6d36dcdd757",
+      "prekey": {
+        "id": 7,
+        "key": "pQABAQcCoQBYIDXdN8VlKb5lbgPmoDPLPyqNIEyShG4oT/DlW0peRRZUA6EAoQBYILLf1TIwSB62q69Ojs/X1tzJ+dYHNAw4QbW/7TC5vSZqBPY="
+      }
+    }
+  },
+  "client_lifecycle_native_recreated_deleted": {
+    "method": "POST",
+    "path": "/v19/clients",
+    "status": 201,
+    "content_type": "application/json;charset=utf-8",
+    "body": "{\"capabilities\":[\"legalhold-implicit-consent\"],\"class\":\"desktop\",\"id\":\"afc1c13c3c651593\",\"label\":\"native-durable-client\",\"mls_public_keys\":{},\"model\":\"synthetic-model\",\"time\":\"2026-10-11T08:50:59.663Z\",\"type\":\"permanent\"}",
+    "location": "afc1c13c3c651593",
+    "json": {
+      "capabilities": [
+        "legalhold-implicit-consent"
+      ],
+      "class": "desktop",
+      "id": "afc1c13c3c651593",
+      "label": "native-durable-client",
+      "mls_public_keys": {},
+      "model": "synthetic-model",
+      "time": "2026-10-11T08:50:59.663Z",
+      "type": "permanent"
+    }
+  },
+  "client_lifecycle_native_retained_mls": {
+    "method": "GET",
+    "path": "/v19/clients/afc1c13c3c651593",
+    "status": 200,
+    "content_type": "application/json;charset=utf-8",
+    "body": "{\"capabilities\":[\"legalhold-implicit-consent\"],\"class\":\"desktop\",\"id\":\"afc1c13c3c651593\",\"label\":\"native-durable-client\",\"mls_public_keys\":{\"ed25519\":\"AQI=\"},\"model\":\"synthetic-model\",\"time\":\"2026-10-11T08:50:59.663Z\",\"type\":\"permanent\"}",
+    "json": {
+      "capabilities": [
+        "legalhold-implicit-consent"
+      ],
+      "class": "desktop",
+      "id": "afc1c13c3c651593",
+      "label": "native-durable-client",
+      "mls_public_keys": {
+        "ed25519": "AQI="
+      },
+      "model": "synthetic-model",
+      "time": "2026-10-11T08:50:59.663Z",
+      "type": "permanent"
+    }
+  },
+  "client_lifecycle_switchback": {
+    "same_initialized_stores": true,
+    "native_accepts_go_creation": true,
+    "native_accepts_go_deletion": true,
+    "native_claims_go_created_prekey": true,
+    "native_mls_retention_preserved": true
+  },
+  "owned_process_exit_codes": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ]
+}

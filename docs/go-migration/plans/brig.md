@@ -640,3 +640,23 @@ units pass. Original last-active plus three capability cases all pass strict
 XML, unchanged17 paired controls pass. All25 managed exits0, runner/cleanup0,
 independent audit empty. Native parser literals/missing-client live controls
 and client durable switchback/mail remain pending; whole Brig unavailable.
+
+### Actual public client creation/deletion switchback
+
+[Current evidence](../../../go/services/brig/qualification/evidence/client-lifecycle-switchback/README.md)
+records source27b318399/serviced109530d: full Go/static checks pass, original17
+paired controls plus seven exact lifecycle admission comparisons pass. Native
+reads Go-created client/timestamp/MLS/prekeys, confirms Go deletion, claims
+Go-written key7 and confirms native MLS retention after recreation on identical
+initialized Cassandra. All13 managed exits0, runner/cleanup0, independent audit
+empty. Earlier missing-client404 media mismatch remains failed/retained; fixed
+only Go response, no assertion/native change. No new original suite claim.
+Next implement native prekey claim contracts with actual legalhold guard and
+both random/local and Dynamo best-effort locking, bundle/multi-user and missing
+prekey cleanup. Serious inherited concern: Dynamo withOptLock executes the
+claim before conditional version write, retries the action on failed updates
+(up to11 actions), and returns the last result after exhaustion; duplicate/lost
+claims are possible under contention/failures. Preserve this contract now;
+stronger atomic/exclusive claims would be a separate behavior/security change.
+New-client mail/cookie/temporary/legalhold/worker and whole535/eight-Go/all-entity
+three-mode/ops/image/selector/review qualification remain pending.
