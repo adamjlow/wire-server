@@ -512,7 +512,7 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             assert not mismatches, 'native client update responses mismatch'
         if client_registration_contract:
             import runner,harness
-            required=['Client.testCreateClientWithCapabilities','Client.testUpdateClientWithConsumableNotificationsCapability','Client.testGetClientCapabilitiesV7']
+            required=['Client.testClientLastActive','Client.testCreateClientWithCapabilities','Client.testUpdateClientWithConsumableNotificationsCapability','Client.testGetClientCapabilitiesV7']
             assert set(required).issubset(runner.discover('brig')), 'original client cases absent'
             link=runtime.WORK/'dist/brig';link.unlink();link.symlink_to(candidate)
             xml=Path('/reports/client-registration-original.xml')

@@ -36,6 +36,7 @@ type brigReadHandlers struct {
 	clientUpdate       *clientUpdateService
 	clientDeletion     *clientDeletionService
 	clientRegistration *clientRegistrationService
+	clientActivity     *clientActivityService
 }
 
 func readJSON(w http.ResponseWriter, r *http.Request, body any) {
@@ -72,6 +73,9 @@ func routeParseError(w http.ResponseWriter, message string) {
 }
 
 func (b brigReadHandlers) handle(w http.ResponseWriter, r *http.Request, path string) bool {
+	if b.clientActivity != nil && b.clientActivity.handle(w, r, path) {
+		return true
+	}
 	if b.clientRegistration != nil && b.clientRegistration.handle(w, r, path) {
 		return true
 	}

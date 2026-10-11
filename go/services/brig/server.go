@@ -219,6 +219,7 @@ func Run(ctx context.Context, c Config) error {
 	federationRead.useCassandra(cassandra)
 	business.federationConfig = &federationRead
 	business.clients = &clientReadHandlers{store: clientStore{cassandra}}
+	business.clientActivity = &clientActivityService{update: (clientStore{cassandra}).updateLastActive, now: time.Now}
 	business.clientUpdate = &clientUpdateService{store: clientStore{cassandra}, consumable: c.Settings.ConsumableNotifications, setup: business.peers.setupConsumableClient}
 	business.bulkClients = &clientBulkReads{clients: (clientStore{cassandra}).list, ids: (clientStore{cassandra}).ids}
 	issuer := tokenIssuer{key: private, index: int64(c.ZAuth.Settings.KeyIndex), userTTL: c.ZAuth.Settings.UserTTL, sessionTTL: c.ZAuth.Settings.SessionTTL, accessTTL: c.ZAuth.Settings.AccessTTL, legalUserTTL: c.ZAuth.Settings.LegalHoldUserTTL, legalAccessTTL: c.ZAuth.Settings.LegalHoldAccessTTL}
