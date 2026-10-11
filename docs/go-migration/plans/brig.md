@@ -1053,3 +1053,8 @@ Five native/Go federation controls cover empty, regular, identityless, missing,
 and ordered duplicate profiles. Native B reconnects to Go A after rescind; Go A
 accepts, native B sees accepted, then native A reads back the same stored state.
 Team/app/LH/error-media variants remain required but unqualified by this slice.
+
+Initial SDK source0bc2d9de9 failed a candidate admission-order test because its
+synthetic profile serialized an empty redundant UUID. The strengthened native
+decoder correctly rejected it before policy effects. Corrected only the candidate
+fixture to include its valid ID; original oracle untouched, failed logs retained.

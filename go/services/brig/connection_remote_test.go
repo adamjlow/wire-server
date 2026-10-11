@@ -35,7 +35,7 @@ func TestRemoteConnectionReactionAndAdmissionOrder(t *testing.T) {
 			return nil, errors.New("peer unavailable")
 		}
 		if path == "get-users-by-ids" {
-			raw, err := json.Marshal([]publicUserProfile{{QualifiedID: qualifiedUserID{target.String(), "b.example"}, Name: "Synthetic", Legalhold: "no_consent", Type: "regular"}})
+			raw, err := json.Marshal([]publicUserProfile{{QualifiedID: qualifiedUserID{target.String(), "b.example"}, ID: target.String(), Name: "Synthetic", Legalhold: "no_consent", Type: "regular"}})
 			return raw, err
 		}
 		return json.RawMessage(`{"tag":"NewConnectionResponseOk","contents":"RemoteConnect"}`), nil
