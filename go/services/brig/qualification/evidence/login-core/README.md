@@ -1,0 +1,5 @@
+# Login core checkpoint
+
+Source75b1ef164ad676edc2132ab6472bb37775d4729b. Full pinned Go1.26.9 module checks and unchanged native runner execution of static unit binary pass. Actual native-schema tagged store binary1f6053163b5ebfc9764ee77cfe7d9f33c7342c75826c310acdf2360523d2d830 passes all existing user/auth/client/session/index tests and new three-mode login email/handle/activation and durable retry budget/TTL checks. Original native schema utility0, test0, controller0 and independent observation resources empty. Retained library linker warnings/C library review limitations remain unchanged.
+
+Public login route/configuration and actual async refresh-event wiring are not implemented by this checkpoint. This is login core and actual storage proof, not native login HTTP comparisons, state switchback or original full-suite/end-to-end qualification. Previously recorded access-token switchback qualifies its own older exact executable only; it does not qualify this new final candidate. No protected schema/fixture/assertion changes or native repairs.

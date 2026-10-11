@@ -1,0 +1,33 @@
+{
+  "/dev/shm/wire-migration-brig-20261010/login-core-sdk-check": {
+    "stores-build-receipt.json": "bf52b77c2622904085b918638c5f86e5f546b1d85e05709c0fbe0064e17aa62f",
+    "build-receipt.json": "75227caaf9189d2c2fda22fd27b4719df62eccbc30f26535fce6c846d2742a1b",
+    "runtime-units.log": "61181278e82e91173ff5d4a75019167bfccb6c5977baeff17b21ec2577cfb380",
+    "stores.test": "1f6053163b5ebfc9764ee77cfe7d9f33c7342c75826c310acdf2360523d2d830",
+    "brig.test": "a34e53744560faa1406bec6071a023f55809d0f26df7276753e634ce14ae57f6",
+    "brig": "1d360e2b0d66d3bd51894f023a2380e6a5a9ee8b0789ee1ad80d38bb3b795713",
+    "go-check.log": "9d08c37e0f14e36b1a849b5a64b49949cdefe21b73283b4f8c96aee1ff4cb308",
+    "libstdc++-copyright": "20390f8a6f3b1e4d7cb45dd8652dabb259bbef688cbad839bcdb0b9ba7252f79",
+    "icu-copyright": "5bbff5f646ce750ac0a347e7f91793279b7422a1119820b5f75d98879c201c68",
+    "glibc-copyright": "f5788886720a2605a946e81d571e6c8162b09f58d2e2ceb8d36e5768fccd850d",
+    "zstd-copyright": "5cec9fef4d3fa7e0371fbef4ec3fc416e0105dc2a9922117f84e825cb11f50f8",
+    "zlib-copyright": "9e5b96d63773a5d177ba264254390f792be07e41748ebd94730981c6cac31cc6",
+    "openssl-copyright": "6a7da622fe0637a334d2a8fc470852d2ffb77d9a2b2f930f854e32a41ad6ef35",
+    "argon2-copyright": "6059eb2b0f8f23b5c6023b08f68d4df9addd834665d07e5dcc364d4ae80d9b69",
+    "cxx-package.sha256": "5abc52f67b0befe6317695d4489a2433b32854cbb6b5916a6f875b2c0e300636",
+    "cxx-package.txt": "d41b16dcb551842304cab9549bb3da24fdb859d85d690bd121de7f3cb29cce01",
+    "libraries.sha256": "875560a1f32f1ad76a866a7f792a6b392f64c5555e8f55f270f60869079f9af2",
+    "packages.txt": "9e9db92065c33bc81e7e8b5ff6f5c0a9a32814690509f59c88718cc418f5e262",
+    "controller.log": "5b2278170b6160b9a369f404cd0d8b492feb291ecfe3b02e76a9f973097a7e22"
+  },
+  "/home/operator/.cache/wire-migration/brig-20261010/login-core-native-stores": {
+    "native-schema.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "test.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "cassandra.log": "fcb7c4b96c8733c1d780404d18841945341fdae65a12954fa8cbec7a7a4fecdf",
+    "test.stdout": "6354a9204eca4388409f22418492ce66f1cbdd8118122c236e8abc47f09e9cb8",
+    "native-schema.stdout": "f18daec4c5576effaeee9c866894f742df171f42bce4bf0b599fe2587d1d071f",
+    "result.json": "11c935207d5bc8878ad1e33e3c7d0180ced894a4dfaa75419b733a7a4d1bc0e8",
+    "postgres.log": "e4d269c9c27a95da7e7787a2d6a0120866dbcfd2538fe96b5145813e0de46bfd",
+    "brig.json": "f7b9560124a3305a40832e104f44066c770cdf4b41aa3c5d23eb217f5454dbe0"
+  }
+}

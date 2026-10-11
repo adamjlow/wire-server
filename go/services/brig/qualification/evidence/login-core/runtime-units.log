@@ -1,0 +1,187 @@
+=== RUN   TestAccessRenewalHTTPClientCanonicalizationAndCookieSecurity
+--- PASS: TestAccessRenewalHTTPClientCanonicalizationAndCookieSecurity (0.00s)
+=== RUN   TestAccessRenewalHTTPRejectsBadClientBeforeCredentials
+--- PASS: TestAccessRenewalHTTPRejectsBadClientBeforeCredentials (0.00s)
+=== RUN   TestAccessRenewalClientAndInactivityOrdering
+--- PASS: TestAccessRenewalClientAndInactivityOrdering (0.00s)
+=== RUN   TestAccessRenewalUsesReplacementAndPreservesConnection
+--- PASS: TestAccessRenewalUsesReplacementAndPreservesConnection (0.00s)
+=== RUN   TestAccessTokenValidationAndLogoutExpiredAccess
+--- PASS: TestAccessTokenValidationAndLogoutExpiredAccess (0.00s)
+=== RUN   TestAccessMultipleCookiesFirstSuccessAndStorageFailure
+--- PASS: TestAccessMultipleCookiesFirstSuccessAndStorageFailure (0.00s)
+=== RUN   TestAccessCredentialPrecedenceCookieParsingAndKindPartition
+--- PASS: TestAccessCredentialPrecedenceCookieParsingAndKindPartition (0.00s)
+=== RUN   TestLogoutHTTPMissingCredentialsAndSecretSafeErrors
+--- PASS: TestLogoutHTTPMissingCredentialsAndSecretSafeErrors (0.00s)
+=== RUN   TestInactivityCreationThresholdAndDisabledPolicy
+=== RUN   TestInactivityCreationThresholdAndDisabledPolicy/disabled
+=== RUN   TestInactivityCreationThresholdAndDisabledPolicy/empty
+=== RUN   TestInactivityCreationThresholdAndDisabledPolicy/equal
+=== RUN   TestInactivityCreationThresholdAndDisabledPolicy/young_session
+=== RUN   TestInactivityCreationThresholdAndDisabledPolicy/young_persistent
+=== RUN   TestInactivityCreationThresholdAndDisabledPolicy/expired_but_young
+=== RUN   TestInactivityCreationThresholdAndDisabledPolicy/old_but_unexpired
+--- PASS: TestInactivityCreationThresholdAndDisabledPolicy (0.00s)
+    --- PASS: TestInactivityCreationThresholdAndDisabledPolicy/disabled (0.00s)
+    --- PASS: TestInactivityCreationThresholdAndDisabledPolicy/empty (0.00s)
+    --- PASS: TestInactivityCreationThresholdAndDisabledPolicy/equal (0.00s)
+    --- PASS: TestInactivityCreationThresholdAndDisabledPolicy/young_session (0.00s)
+    --- PASS: TestInactivityCreationThresholdAndDisabledPolicy/young_persistent (0.00s)
+    --- PASS: TestInactivityCreationThresholdAndDisabledPolicy/expired_but_young (0.00s)
+    --- PASS: TestInactivityCreationThresholdAndDisabledPolicy/old_but_unexpired (0.00s)
+=== RUN   TestAccountStatusFailureOrderingAndMissingAccount
+=== RUN   TestAccountStatusFailureOrderingAndMissingAccount/exists
+=== RUN   TestAccountStatusFailureOrderingAndMissingAccount/revoke
+=== RUN   TestAccountStatusFailureOrderingAndMissingAccount/status
+=== RUN   TestAccountStatusFailureOrderingAndMissingAccount/index
+--- PASS: TestAccountStatusFailureOrderingAndMissingAccount (0.00s)
+    --- PASS: TestAccountStatusFailureOrderingAndMissingAccount/exists (0.00s)
+    --- PASS: TestAccountStatusFailureOrderingAndMissingAccount/revoke (0.00s)
+    --- PASS: TestAccountStatusFailureOrderingAndMissingAccount/status (0.00s)
+    --- PASS: TestAccountStatusFailureOrderingAndMissingAccount/index (0.00s)
+=== RUN   TestAuthenticationStatusAndWrongPasswordNeverUpgrade
+--- PASS: TestAuthenticationStatusAndWrongPasswordNeverUpgrade (0.00s)
+=== RUN   TestAuthenticationUpgradeThrottlingAndWriteFailure
+--- PASS: TestAuthenticationUpgradeThrottlingAndWriteFailure (0.11s)
+=== RUN   TestReauthenticationPasswordlessSAMLAndEphemeral
+--- PASS: TestReauthenticationPasswordlessSAMLAndEphemeral (0.00s)
+=== RUN   TestPasswordValidationAndCanceledQueue
+--- PASS: TestPasswordValidationAndCanceledQueue (0.01s)
+=== RUN   TestClientProjectionOriginalGolden
+--- PASS: TestClientProjectionOriginalGolden (0.00s)
+=== RUN   TestClientVersionedCapabilitiesAndPublicKeys
+--- PASS: TestClientVersionedCapabilitiesAndPublicKeys (0.00s)
+=== RUN   TestClientIDNativeHexBoundsAndLeadingZeros
+--- PASS: TestClientIDNativeHexBoundsAndLeadingZeros (0.00s)
+=== RUN   TestClientReadsLegacyNotFoundAndVersioning
+--- PASS: TestClientReadsLegacyNotFoundAndVersioning (0.00s)
+=== RUN   TestConferenceCallingNativeNullFallbackAndStoredPrecedence
+--- PASS: TestConferenceCallingNativeNullFallbackAndStoredPrecedence (0.00s)
+=== RUN   TestSigningKeysUseNativeURLAlphabet
+--- PASS: TestSigningKeysUseNativeURLAlphabet (0.00s)
+=== RUN   TestOriginalConfigPreservesTemplatesAndStorageModes
+--- PASS: TestOriginalConfigPreservesTemplatesAndStorageModes (0.00s)
+=== RUN   TestPostgresOptionValuesCannotOverrideTLSOrLeakSecrets
+--- PASS: TestPostgresOptionValuesCannotOverrideTLSOrLeakSecrets (0.00s)
+=== RUN   TestSigningKeysRejectInvalidMaterialWithoutDisclosure
+--- PASS: TestSigningKeysRejectInvalidMaterialWithoutDisclosure (0.00s)
+=== RUN   TestLoginFailedBudgetBlocksBeforePasswordAndDoesNotIssue
+--- PASS: TestLoginFailedBudgetBlocksBeforePasswordAndDoesNotIssue (0.00s)
+=== RUN   TestLoginSuspendedAndUnresolvedAccountsDoNotConsumeRetries
+--- PASS: TestLoginSuspendedAndUnresolvedAccountsDoNotConsumeRetries (0.00s)
+=== RUN   TestLoginVerificationFailureConsumesBudgetBeforeSession
+--- PASS: TestLoginVerificationFailureConsumesBudgetBeforeSession (0.00s)
+=== RUN   TestLoginSuccessPreservesBudgetAndIssuesVerifiableSession
+--- PASS: TestLoginSuccessPreservesBudgetAndIssuesVerifiableSession (0.00s)
+=== RUN   TestLoginStorageFailureCannotBeDisguisedAsBadCredentials
+--- PASS: TestLoginStorageFailureCannotBeDisguisedAsBadCredentials (0.00s)
+=== RUN   TestLoginEmailKeyTrustedDomainCaseRule
+--- PASS: TestLoginEmailKeyTrustedDomainCaseRule (0.00s)
+=== RUN   TestNativeMigrationInputs
+--- PASS: TestNativeMigrationInputs (0.00s)
+=== RUN   TestScryptPublishedVectorAndNativeFixedLengthVerification
+--- PASS: TestScryptPublishedVectorAndNativeFixedLengthVerification (0.00s)
+=== RUN   TestNativePasswordGenerationFormatsAndVerificationStatus
+--- PASS: TestNativePasswordGenerationFormatsAndVerificationStatus (0.10s)
+=== RUN   TestArgonHistoricalVariantsAndVersions
+--- PASS: TestArgonHistoricalVariantsAndVersions (0.00s)
+=== RUN   TestArgonFullLaneCountAndOmittedVersion
+--- PASS: TestArgonFullLaneCountAndOmittedVersion (0.01s)
+=== RUN   TestPasswordMalformedParametersDoNotAllocateOrDisclose
+--- PASS: TestPasswordMalformedParametersDoNotAllocateOrDisclose (0.00s)
+=== RUN   TestSelfProfileNativeGoldenJSON
+--- PASS: TestSelfProfileNativeGoldenJSON (0.00s)
+=== RUN   TestStoredProfileDoesNotExposeUnactivatedIdentity
+--- PASS: TestStoredProfileDoesNotExposeUnactivatedIdentity (0.00s)
+=== RUN   TestPasswordBucketNativeDecayAndRejectedAttempts
+--- PASS: TestPasswordBucketNativeDecayAndRejectedAttempts (0.00s)
+=== RUN   TestPasswordRateMaskExceptionsNamespacesAndLRU
+--- PASS: TestPasswordRateMaskExceptionsNamespacesAndLRU (0.00s)
+=== RUN   TestPasswordRateConcurrentBurst
+--- PASS: TestPasswordRateConcurrentBurst (0.00s)
+=== RUN   TestReadRoutesRejectInvalidIdentityBeforeStorageAccess
+--- PASS: TestReadRoutesRejectInvalidIdentityBeforeStorageAccess (0.00s)
+=== RUN   TestReauthenticationVerificationEnforcement
+=== RUN   TestReauthenticationVerificationEnforcement/required_missing
+=== RUN   TestReauthenticationVerificationEnforcement/incorrect_code
+=== RUN   TestReauthenticationVerificationEnforcement/correct_code
+=== RUN   TestReauthenticationVerificationEnforcement/unverified_email
+=== RUN   TestReauthenticationVerificationEnforcement/missing_email
+=== RUN   TestReauthenticationVerificationEnforcement/feature_disabled
+=== RUN   TestReauthenticationVerificationEnforcement/SAML_exemption
+=== RUN   TestReauthenticationVerificationEnforcement/no_action
+--- PASS: TestReauthenticationVerificationEnforcement (0.00s)
+    --- PASS: TestReauthenticationVerificationEnforcement/required_missing (0.00s)
+    --- PASS: TestReauthenticationVerificationEnforcement/incorrect_code (0.00s)
+    --- PASS: TestReauthenticationVerificationEnforcement/correct_code (0.00s)
+    --- PASS: TestReauthenticationVerificationEnforcement/unverified_email (0.00s)
+    --- PASS: TestReauthenticationVerificationEnforcement/missing_email (0.00s)
+    --- PASS: TestReauthenticationVerificationEnforcement/feature_disabled (0.00s)
+    --- PASS: TestReauthenticationVerificationEnforcement/SAML_exemption (0.00s)
+    --- PASS: TestReauthenticationVerificationEnforcement/no_action (0.00s)
+=== RUN   TestReauthenticationRejectsPasswordBeforeVerification
+--- PASS: TestReauthenticationRejectsPasswordBeforeVerification (0.00s)
+=== RUN   TestStoredSAMLIdentityDoesNotConfuseSCIMOrInactiveUsers
+--- PASS: TestStoredSAMLIdentityDoesNotConfuseSCIMOrInactiveUsers (0.00s)
+=== RUN   TestEmailVerificationKeyNativeTrustedDomainRules
+--- PASS: TestEmailVerificationKeyNativeTrustedDomainRules (0.00s)
+=== RUN   TestSearchICUTransliterationAndConcurrentIsolation
+--- PASS: TestSearchICUTransliterationAndConcurrentIsolation (0.07s)
+=== RUN   TestIndexDocumentSuspendedVisibilityAndTombstoneNulls
+--- PASS: TestIndexDocumentSuspendedVisibilityAndTombstoneNulls (0.00s)
+=== RUN   TestIndexVersionNativeBloodhoundBounds
+--- PASS: TestIndexVersionNativeBloodhoundBounds (0.00s)
+=== RUN   TestSearchUpsertVersionConflictAndAdditionalWriteOrdering
+--- PASS: TestSearchUpsertVersionConflictAndAdditionalWriteOrdering (0.00s)
+=== RUN   TestSearchSyncMissingUserUnversionedAndStoreFailure
+--- PASS: TestSearchSyncMissingUserUnversionedAndStoreFailure (0.00s)
+=== RUN   TestIndexTeamFeatureAndPermissionRole
+=== RUN   TestIndexTeamFeatureAndPermissionRole/8191
+=== RUN   TestIndexTeamFeatureAndPermissionRole/5951
+=== RUN   TestIndexTeamFeatureAndPermissionRole/1587
+=== RUN   TestIndexTeamFeatureAndPermissionRole/1025
+=== RUN   TestIndexTeamFeatureAndPermissionRole/3
+=== RUN   TestIndexTeamFeatureAndPermissionRole/1073750015
+--- PASS: TestIndexTeamFeatureAndPermissionRole (0.00s)
+    --- PASS: TestIndexTeamFeatureAndPermissionRole/8191 (0.00s)
+    --- PASS: TestIndexTeamFeatureAndPermissionRole/5951 (0.00s)
+    --- PASS: TestIndexTeamFeatureAndPermissionRole/1587 (0.00s)
+    --- PASS: TestIndexTeamFeatureAndPermissionRole/1025 (0.00s)
+    --- PASS: TestIndexTeamFeatureAndPermissionRole/3 (0.00s)
+    --- PASS: TestIndexTeamFeatureAndPermissionRole/1073750015 (0.00s)
+=== RUN   TestLivenessAndVersionSurface
+--- PASS: TestLivenessAndVersionSurface (0.00s)
+=== RUN   TestSessionRenewalBindingOverlapAndSuccessor
+--- PASS: TestSessionRenewalBindingOverlapAndSuccessor (0.00s)
+=== RUN   TestSessionLimitsLabelsAndRevocation
+--- PASS: TestSessionLimitsLabelsAndRevocation (0.00s)
+=== RUN   TestTokenIssuanceAndAccessRenewal
+--- PASS: TestTokenIssuanceAndAccessRenewal (0.00s)
+=== RUN   TestCookieThrottleNativeRoundingAndSampleDeviation
+--- PASS: TestCookieThrottleNativeRoundingAndSampleDeviation (0.00s)
+=== RUN   TestCookieEvictionPreservesNativePriorities
+--- PASS: TestCookieEvictionPreservesNativePriorities (0.00s)
+=== RUN   TestUserMigrationLockUUIDFolding
+--- PASS: TestUserMigrationLockUUIDFolding (0.00s)
+=== RUN   TestUserStorageDiagnosticsExcludePrivateValues
+--- PASS: TestUserStorageDiagnosticsExcludePrivateValues (0.00s)
+=== RUN   TestCanonicalSignedTokenFields
+=== RUN   TestCanonicalSignedTokenFields/a
+=== RUN   TestCanonicalSignedTokenFields/la
+=== RUN   TestCanonicalSignedTokenFields/u
+=== RUN   TestCanonicalSignedTokenFields/lu
+=== RUN   TestCanonicalSignedTokenFields/p
+=== RUN   TestCanonicalSignedTokenFields/b
+--- PASS: TestCanonicalSignedTokenFields (0.00s)
+    --- PASS: TestCanonicalSignedTokenFields/a (0.00s)
+    --- PASS: TestCanonicalSignedTokenFields/la (0.00s)
+    --- PASS: TestCanonicalSignedTokenFields/u (0.00s)
+    --- PASS: TestCanonicalSignedTokenFields/lu (0.00s)
+    --- PASS: TestCanonicalSignedTokenFields/p (0.00s)
+    --- PASS: TestCanonicalSignedTokenFields/b (0.00s)
+=== RUN   TestZAuthCanonicalVerificationAndSecurityBoundaries
+--- PASS: TestZAuthCanonicalVerificationAndSecurityBoundaries (0.00s)
+=== RUN   TestZAuthUnknownTagAndEmptyClient
+--- PASS: TestZAuthUnknownTagAndEmptyClient (0.00s)
+PASS
