@@ -123,6 +123,44 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
         assert all(r['status']==403 and r['json']['label']=='blacklisted-email' for r in rejected), 'feedback blocklist admission changed'
         return actors, records, rejected
 
+    def internal_sqs(action, *parameters):
+        result = subprocess.run(['aws', 'sqs', action, '--endpoint-url',
+            peers['brig']['aws']['sqsEndpoint'], '--region', 'eu-west-1',
+            *parameters], capture_output=True, text=True, timeout=30)
+        assert result.returncode == 0, 'owned internal SQS command failed: '+action
+        return json.loads(result.stdout) if result.stdout.strip() else {}
+
+    def create_replay_actor():
+        actor = request('POST', '/i/users', body={
+            'name': 'Synthetic internal queue replay', 'expires_in': 3600})[0]
+        assert actor['status'] == 201, 'queue replay actor setup failed'
+        actor_id = actor['json']['id']
+        property_result = request('PUT', '/properties/queue-replay',
+            {'Z-User': actor_id, 'Z-Connection': 'synthetic-queue-replay'},
+            {'synthetic': True})[0]
+        assert property_result['status'] == 200, 'queue replay property setup failed'
+        return actor_id
+
+    def enqueue_replay(actor_id):
+        internal_sqs('send-message', '--queue-url', internal_queue_url,
+            '--message-body', json.dumps({'type': 'user.delete', 'user': actor_id}))
+
+    def await_replay(actor_id):
+        deadline = time.monotonic()+30
+        while True:
+            status = request('GET', '/i/users/'+actor_id+'/status')[0]
+            attributes = internal_sqs('get-queue-attributes', '--queue-url',
+                internal_queue_url, '--attribute-names',
+                'ApproximateNumberOfMessages', 'ApproximateNumberOfMessagesNotVisible')['Attributes']
+            if status['status'] == 200 and status['json'] == {'status': 'deleted'} and all(
+                    int(attributes[k]) == 0 for k in ('ApproximateNumberOfMessages', 'ApproximateNumberOfMessagesNotVisible')):
+                break
+            assert time.monotonic() < deadline, 'queued account cleanup not completed and acknowledged'
+            time.sleep(0.2)
+        properties = request('GET', '/properties', {'Z-User': actor_id})[0]
+        assert properties['status'] == 200 and properties['json'] == [], 'queued cleanup retained properties'
+        return {'status': status, 'properties': properties, 'queue_attributes': attributes}
+
     try:
         servers = runtime.start_forwards()
         runtime.wait_dependencies()
@@ -723,12 +761,23 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
                       ('POST', '/activate', {}, {'key': 'synthetic-missing', 'code': '000000', 'dryrun': True})]
         native_records = [request(*case)[0] for case in cases]
         report['records'].append({'implementation': 'haskell', 'observations': native_records})
+        if client_lifecycle_contract:
+            internal_queue_url = internal_sqs('get-queue-url', '--queue-name',
+                peers['brig']['internalEvents']['queueName'])['QueueUrl']
+            native_replay_actor = create_replay_actor()
+            enqueue_replay(native_replay_actor)
+            report['internal_queue_native_replay'] = await_replay(native_replay_actor)
+            pending_replay_actor = create_replay_actor()
         active.terminate()
         report['native_stop_exit_code'] = active.wait(timeout=35)
         assert report['native_stop_exit_code'] == 0, 'native Brig did not stop cleanly'
         # Listener closure is required before transferring process ownership.
         with socket.socket() as check:
             assert check.connect_ex(('127.0.0.1', 8082)) != 0, 'native listener remains'
+        if client_lifecycle_contract:
+            # Enqueue only after native ownership ends: Go must consume durable
+            # work for an account/properties created by the Haskell process.
+            enqueue_replay(pending_replay_actor)
         candidate = Path('/candidate/brig')
         report['candidate_brig_sha256'] = hashlib.sha256(candidate.read_bytes()).hexdigest()
         log = open('/reports/brig-go.log', 'w')
@@ -737,6 +786,8 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
                                   cwd=runtime.WORK / 'services/brig', stdout=log, stderr=subprocess.STDOUT)
         processes.append(active)
         ready(active)
+        if client_lifecycle_contract:
+            report['internal_queue_go_consumes_native'] = await_replay(pending_replay_actor)
         go_records = [request(*case)[0] for case in cases]
         report['records'].append({'implementation': 'go', 'observations': go_records})
         mismatches = []
@@ -1552,6 +1603,8 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
                 'token_bytes_compared': False,
                 'token_validation': 'actual original native HTTP consumed Go-issued credentials'}
         assert not original_failures, '; '.join(original_failures)
+        if client_lifecycle_contract:
+            report['internal_queue_native_switchback'] = await_replay(pending_replay_actor)
         report['result'] = 'pass'
     except Exception as error:
         report['failure'] = str(error)

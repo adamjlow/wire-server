@@ -1418,3 +1418,11 @@ from diagnostics. Reuse the already-qualified signed SQS query transport and
 extract the existing batch helper without changing SES semantics. Finite signed
 HTTP/ack/failure/cancellation tests precede actual owned queue replay. STOMP and
 service.delete/provider cleanup remain explicit unfinished contracts.
+
+Extend the owned lifecycle observer with actual native queue replay and a
+Haskell-created account/property queued only after native listener ownership ends.
+Go must delete it and acknowledge the durable message; restarted native must
+read the same tombstone and cleared properties. Require real queue visible and
+in-flight counts zero; retain existing30-second observation bound and all22
+original assertions plus prior switchback controls. Only synthetic private actors;
+no fixture/original assertion relaxation. Exact qualified source/artifacts required.
