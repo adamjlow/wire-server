@@ -26,7 +26,7 @@ def checked(args, timeout=30):
     return result.stdout.strip()
 
 
-def inside(gundeck_path=None, access_switchback=False, login_contract=False, activation_contract=False, registration_contract=False, saml_registration_contract=False, public_registration_contract=False, password_reset_contract=False):
+def inside(gundeck_path=None, access_switchback=False, login_contract=False, activation_contract=False, registration_contract=False, saml_registration_contract=False, public_registration_contract=False, password_reset_contract=False, password_change_contract=False):
     registration_contract = registration_contract or saml_registration_contract
     if os.getuid() != 65534 or os.environ.get('WIRE_E2E_DISPOSABLE') != '1':
         raise ValueError('owned nonroot Docker runner required')
@@ -191,6 +191,37 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             activation_pair = stage_email(activation_email)
             report['native_activation_reference'] = native_activation
             report['native_activation_repeat_reference'] = native_repeat
+        if password_change_contract:
+            change_old = 'Synthetic-change-old-password!'
+            change_new = 'Synthetic-change-new-password!'
+            change_actors = {}
+            for name in ('same','wrong','missing','main','first','first-reference','inactive'):
+                email = 'synthetic-change-'+name+'-'+uuid.uuid4().hex+'@example.com'
+                body = {'name':'Synthetic password change '+name,'email':email}
+                if name not in ('first','first-reference','inactive'):
+                    body['password'] = change_old
+                if name=='inactive':
+                    body={'name':'Synthetic inactive change','managed_by':'scim','uuid':str(uuid.uuid4())}
+                actor,_=request('POST','/i/users',body=body)
+                assert actor['status']==201, 'native password change actor setup failed'
+                change_actors[name]={'user':actor['json']['id'],'email':email}
+            report['native_change_actors']=change_actors
+            main_change_login, change_cookie=request('POST','/login?persist=true',body={'email':change_actors['main']['email'],'password':change_old,'label':'synthetic-change-original'})
+            assert main_change_login['status']==200 and change_cookie, 'native password change cookie setup failed'
+            change_cases=[
+                ('HEAD','/self/password',{'Z-User':change_actors['main']['user']}),
+                ('HEAD','/self/password',{'Z-User':change_actors['first']['user']}),
+                ('HEAD','/self/password',{'Z-User':str(uuid.uuid4())}),
+                ('PUT','/self/password',{'Z-User':change_actors['inactive']['user']},{'new_password':change_new}),
+                ('PUT','/self/password',{'Z-User':change_actors['missing']['user']},{'new_password':change_new}),
+                ('PUT','/self/password',{'Z-User':change_actors['wrong']['user']},{'old_password':'Synthetic-wrong-password!','new_password':change_new}),
+                ('PUT','/self/password',{'Z-User':change_actors['same']['user']},{'old_password':change_old,'new_password':change_old})]
+            native_change_records=[request(*case)[0] for case in change_cases]
+            report['native_change_controls']=native_change_records
+            assert [r['status'] for r in native_change_records]==[200,404,404,403,403,403,409], 'native password change controls changed'
+            native_first,_=request('PUT','/self/password',{'Z-User':change_actors['first-reference']['user']},{'new_password':change_new})
+            report['native_first_password']=native_first
+            assert native_first['status']==200, 'native first password reference failed'
         reset_cases = []
         native_reset_records = []
         if password_reset_contract:
@@ -291,6 +322,47 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
                 mismatches.append({'case': index, 'path': cases[index][1], 'fields': [key for key in fields if native.get(key) != go.get(key)]})
         report['mismatches'] = mismatches
         assert not mismatches, 'paired response mismatches'
+        if password_change_contract:
+            go_change_records=[request(*case)[0] for case in change_cases]
+            report['go_change_controls']=go_change_records
+            change_mismatches=[{'case':i,'fields':[k for k in ('status','content_type','json' if 'json' in ref else 'body') if ref.get(k)!=actual.get(k)]} for i,(ref,actual) in enumerate(zip(native_change_records,go_change_records)) if any(ref.get(k)!=actual.get(k) for k in ('status','content_type','json' if 'json' in ref else 'body'))]
+            report['change_control_mismatches']=change_mismatches
+            assert not change_mismatches, 'native password change responses mismatch'
+            go_first,_=request('PUT','/self/password',{'Z-User':change_actors['first']['user']},{'new_password':change_new})
+            report['go_first_password']=go_first
+            assert all(go_first.get(k)==native_first.get(k) for k in ('status','content_type','body')), 'native first password response mismatch'
+            changed,_=request('PUT','/self/password',{'Z-User':change_actors['main']['user']},{'old_password':change_old,'new_password':change_new})
+            report['go_changed_password']=changed
+            assert changed['status']==200, 'Go existing password change failed'
+            main_actor=change_actors['main']
+            cookies,_=request('GET','/cookies',{'Z-User':main_actor['user']})
+            report['go_change_revoked_cookies']=cookies
+            assert cookies['status']==200 and cookies['json']=={'cookies':[]}, 'Go password change retained cookies'
+            old_cookie,_=request('POST','/access',{'Cookie':change_cookie.split(';',1)[0]})
+            report['go_change_old_cookie']=old_cookie
+            assert old_cookie['status']==403, 'Go password change kept original cookie'
+            old_login,_=request('POST','/login',body={'email':main_actor['email'],'password':change_old})
+            new_login,_=request('POST','/login',body={'email':main_actor['email'],'password':change_new})
+            report['go_change_password_logins']=[old_login,new_login]
+            assert old_login['status']==403 and new_login['status']==200 and new_login['json']['user']==main_actor['user'], 'Go changed password validation failed'
+            active.terminate()
+            report['go_change_stop_exit_code']=active.wait(timeout=35)
+            assert report['go_change_stop_exit_code']==0, 'Go password change stop failed'
+            with socket.socket() as check:
+                assert check.connect_ex(('127.0.0.1',8082))!=0, 'Go password change listener remains'
+            log=open('/reports/brig-native-change-switchback.log','w');logs.append(log)
+            active=subprocess.Popen([str(native_brig_path),'-c',str(runtime.WORK/'brig-static-0.json')],cwd=runtime.WORK/'services/brig',stdout=log,stderr=subprocess.STDOUT)
+            processes.append(active);ready(active)
+            native_logins=[]
+            for actor in (main_actor,change_actors['first']):
+                login,_=request('POST','/login',body={'email':actor['email'],'password':change_new})
+                assert login['status']==200 and login['json']['user']==actor['user'], 'native rejected Go first/changed password'
+                native_logins.append(login)
+            report['native_change_consumed_passwords']=native_logins
+            native_old_cookie,_=request('POST','/access',{'Cookie':change_cookie.split(';',1)[0]})
+            report['native_change_old_cookie']=native_old_cookie
+            assert all(native_old_cookie.get(k)==old_cookie.get(k) for k in ('status','content_type','json')), 'native changed-cookie revocation mismatch'
+            report['password_change_switchback']={'native_created_accounts':True,'go_first_and_existing_password_written':True,'native_accepts_both_go_passwords':True,'existing_cookie_revoked':True,'same_initialized_stores':True}
         if password_reset_contract:
             go_reset_records = [request(*case)[0] for case in reset_cases]
             report['go_reset_controls'] = go_reset_records
@@ -728,6 +800,7 @@ def main():
     parser.add_argument('--saml-registration-contract', action='store_true')
     parser.add_argument('--public-registration-contract', action='store_true')
     parser.add_argument('--password-reset-contract', action='store_true')
+    parser.add_argument('--password-change-contract', action='store_true')
     args = parser.parse_args()
     if (args.registration_contract or args.saml_registration_contract) and (args.activation_contract or args.access_switchback or args.login_contract):
         parser.error('registration observation runs separately from credential/activation observations')
@@ -735,8 +808,10 @@ def main():
         parser.error('public registration observation runs separately')
     if args.password_reset_contract and any((args.registration_contract,args.saml_registration_contract,args.activation_contract,args.access_switchback,args.login_contract,args.public_registration_contract)):
         parser.error('password reset observation runs separately')
+    if args.password_change_contract and any((args.registration_contract,args.saml_registration_contract,args.activation_contract,args.access_switchback,args.login_contract,args.public_registration_contract,args.password_reset_contract)):
+        parser.error('password change observation runs separately')
     if args.in_container:
-        return inside(args.gundeck_path, args.access_switchback, args.login_contract, args.activation_contract, args.registration_contract, args.saml_registration_contract, args.public_registration_contract, args.password_reset_contract)
+        return inside(args.gundeck_path, args.access_switchback, args.login_contract, args.activation_contract, args.registration_contract, args.saml_registration_contract, args.public_registration_contract, args.password_reset_contract, args.password_change_contract)
     if args.binary is None or args.build_receipt is None or args.output is None:
         parser.error('identified binary, receipt and new output required')
     sys.path.insert(0, str(ROOT / 'tools/parity/docker'))
@@ -776,6 +851,8 @@ def main():
         runner['command'].append('--public-registration-contract')
     if args.password_reset_contract:
         runner['command'].append('--password-reset-contract')
+    if args.password_change_contract:
+        runner['command'].append('--password-change-contract')
     if args.gundeck_binary:
         runner['command'] += ['--gundeck-path', '/candidate/gundeck']
         runner['volumes'].append({'type': 'bind', 'source': str(args.gundeck_binary.resolve(strict=True)),

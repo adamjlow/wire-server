@@ -621,6 +621,50 @@ func TestOwnedDurableStores(t *testing.T) {
 			}
 		}
 	}
+	// Account password changes use the actual activated/password-only reads,
+	// configured hashing and cookie store in all independently selected modes.
+	for mode, store := range stores {
+		actor := user()
+		row := newRecord(actor)
+		row.Password = nil
+		row.Activated = true
+		if err := store.create(ctx, row, nil, nil); err != nil {
+			t.Fatal(err)
+		}
+		if active, err := store.isActivated(ctx, actor); err != nil || !active {
+			t.Fatal(mode, "activated-only projection", err)
+		}
+		if active, err := store.isActivated(ctx, user()); err != nil || active {
+			t.Fatal(mode, "missing activation projection", err)
+		}
+		session := sessionStore{cassandra}
+		at := time.Now().UTC().Truncate(time.Millisecond)
+		if err := session.insert(ctx, actor, sessionCookie{ID: 2, Type: 1, Created: at, Expires: at.Add(time.Minute)}, nil); err != nil {
+			t.Fatal(err)
+		}
+		flow := passwordChangeService{activated: store.isActivated, current: store.hashedPassword, hash: passwords.hash, verify: passwords.verify, write: store.setPassword, revoke: session.deleteAll}
+		first := "Synthetic-first-store-password!"
+		if err := flow.change(ctx, actor, passwordChangeRequest{new: first}); err != nil {
+			t.Fatal(mode, "first password write", err)
+		}
+		if cookies, err := session.list(ctx, actor); err != nil || len(cookies) != 1 {
+			t.Fatal(mode, "first password revoked cookies", err)
+		}
+		if err := flow.change(ctx, actor, passwordChangeRequest{old: &first, new: "Synthetic-changed-store-password!"}); err != nil {
+			t.Fatal(mode, "existing password change", err)
+		}
+		if cookies, err := session.list(ctx, actor); err != nil || len(cookies) != 0 {
+			t.Fatal(mode, "changed password retained cookies", err)
+		}
+		hash, err := store.hashedPassword(ctx, actor)
+		if err != nil || hash == nil {
+			t.Fatal(mode, "changed password missing", err)
+		}
+		valid, _, err := passwords.verify(ctx, passwordRateKey{kind: "user", id: actor.String()}, *hash, "Synthetic-changed-store-password!")
+		if err != nil || !valid {
+			t.Fatal(mode, "changed password not verifiable", err)
+		}
+	}
 	// PG expiration is a query filter, while migrating reads remain Cassandra.
 	resetDB := stores["postgresql"].userAuthStore
 	pgReset := passwordResetStore{databases: resetDB, mode: "postgresql"}
