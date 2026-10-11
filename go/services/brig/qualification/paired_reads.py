@@ -26,7 +26,7 @@ def checked(args, timeout=30):
     return result.stdout.strip()
 
 
-def inside(gundeck_path=None, access_switchback=False, login_contract=False, activation_contract=False):
+def inside(gundeck_path=None, access_switchback=False, login_contract=False, activation_contract=False, registration_contract=False):
     if os.getuid() != 65534 or os.environ.get('WIRE_E2E_DISPOSABLE') != '1':
         raise ValueError('owned nonroot Docker runner required')
     sys.path.insert(0, '/opt/wire-e2e')
@@ -47,6 +47,8 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             data = response.read()
             result = {'method': method, 'path': path, 'status': response.status,
                       'content_type': response.getheader('Content-Type'), 'body': data.decode()}
+            if method == 'POST' and path == '/i/users':
+                result['location'] = response.getheader('Location')
             try:
                 result['json'] = json.loads(data)
             except (ValueError, UnicodeError):
@@ -114,6 +116,34 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
         report['native_setup'] = [created]
         assert created['status'] == 201, 'native account setup failed'
         user = created['json']['id']
+        registration_body, registration_reference, registration_reads = None, None, None
+        if registration_contract:
+            actor = str(uuid.uuid4())
+            registration_password = 'Synthetic-registration-password-A!'
+            predecessor_password = 'Synthetic-registration-password-B!'
+            registration_body = {'name': 'Synthetic registration reference', 'uuid': actor,
+                'managed_by': 'scim', 'password': registration_password, 'supported_protocols': []}
+            registration_reference, _ = request('POST', '/i/users', body=registration_body)
+            assert registration_reference['status'] == 201, 'native registration reference failed'
+            assert registration_reference['json']['id'] == actor and registration_reference['location'] == actor, 'native registration actor/Location changed'
+            registration_cases = [('GET', '/self', {'Z-User': actor}),
+                ('GET', '/i/users/' + actor + '/features/conferenceCalling', {}),
+                ('GET', '/i/users/' + actor + '/reauthenticate', {}, {'password': registration_password}),
+                ('GET', '/i/users/' + actor + '/reauthenticate', {}, {'password': predecessor_password})]
+            registration_reads = [request(*case)[0] for case in registration_cases]
+            assert [record['status'] for record in registration_reads] == [200, 200, 200, 403], 'native registration reference reads failed'
+            staged, _ = request('POST', '/i/users', body={**registration_body,
+                'name': 'Synthetic registration predecessor', 'password': predecessor_password})
+            assert staged['status'] == 201, 'native same-actor registration staging failed'
+            staged_profile, _ = request('GET', '/self', {'Z-User': actor})
+            old_password, _ = request(*registration_cases[2])
+            staged_password, _ = request(*registration_cases[3])
+            assert staged_profile['status'] == 200 and staged_profile['json']['name'] == 'Synthetic registration predecessor', 'native predecessor profile not persisted'
+            assert old_password['status'] == 403 and staged_password['status'] == 200, 'native predecessor password not persisted'
+            report['registration_native_reference'] = registration_reference
+            report['registration_native_reads'] = registration_reads
+            report['registration_native_staging'] = {'same_actor': True, 'profile_changed': True,
+                'reference_password_rejected_status': old_password['status'], 'predecessor_password_accepted_status': staged_password['status']}
         login, cookie = request('POST', '/login?persist=true', body={
             'email': created['json']['email'], 'password': 'Synthetic-password-2026!',
             'label': 'synthetic-paired-device'})
@@ -200,6 +230,42 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
                 mismatches.append({'case': index, 'path': cases[index][1], 'fields': [key for key in fields if native.get(key) != go.get(key)]})
         report['mismatches'] = mismatches
         assert not mismatches, 'paired response mismatches'
+        if registration_contract:
+            def same_registration_response(reference, actual, creation=False):
+                fields = ('status', 'content_type', 'json' if 'json' in reference else 'body')
+                if creation:
+                    fields += ('location',)
+                assert all(reference.get(field) == actual.get(field) for field in fields), 'registration response mismatch: ' + ','.join(field for field in fields if reference.get(field) != actual.get(field))
+
+            go_created, _ = request('POST', '/i/users', body=registration_body)
+            report['registration_go_creation'] = go_created
+            same_registration_response(registration_reference, go_created, True)
+            registration_go_reads = [request(*case)[0] for case in registration_cases]
+            report['registration_go_reads'] = registration_go_reads
+            for reference, actual in zip(registration_reads, registration_go_reads):
+                same_registration_response(reference, actual)
+            active.terminate()
+            report['go_registration_stop_exit_code'] = active.wait(timeout=35)
+            assert report['go_registration_stop_exit_code'] == 0, 'Go registration process did not stop cleanly'
+            with socket.socket() as check:
+                assert check.connect_ex(('127.0.0.1', 8082)) != 0, 'Go registration listener remains'
+            log = open('/reports/brig-native-registration-switchback.log', 'w')
+            logs.append(log)
+            active = subprocess.Popen([str(native_brig_path), '-c', str(runtime.WORK / 'brig-static-0.json')],
+                                      cwd=runtime.WORK / 'services/brig', stdout=log, stderr=subprocess.STDOUT)
+            processes.append(active)
+            ready(active)
+            registration_native_consumed = [request(*case)[0] for case in registration_cases]
+            report['registration_native_consumed'] = registration_native_consumed
+            for reference, actual in zip(registration_reads, registration_native_consumed):
+                same_registration_response(reference, actual)
+            report['registration_switchback'] = {'same_actor_and_initialized_stores': True,
+                'native_creation_then_native_predecessor_then_go_recreation': True,
+                'exact_creation_status_media_json_location': True,
+                'native_consumed_restored_profile_password_and_conference_feature': True,
+                'native_rejected_predecessor_password': True,
+                'dynamic_fields_normalized': False,
+                'scope': 'identityless SCIM-managed internal creation; no invitation/SSO/public/email activation proof'}
         if activation_contract:
             # Native fixture activation codes live four seconds. Establish a
             # fresh account before closing peer clients, then issue its first
@@ -480,9 +546,12 @@ def main():
     parser.add_argument('--access-switchback', action='store_true')
     parser.add_argument('--login-contract', action='store_true')
     parser.add_argument('--activation-contract', action='store_true')
+    parser.add_argument('--registration-contract', action='store_true')
     args = parser.parse_args()
+    if args.registration_contract and (args.activation_contract or args.access_switchback or args.login_contract):
+        parser.error('registration observation runs separately from credential/activation observations')
     if args.in_container:
-        return inside(args.gundeck_path, args.access_switchback, args.login_contract, args.activation_contract)
+        return inside(args.gundeck_path, args.access_switchback, args.login_contract, args.activation_contract, args.registration_contract)
     if args.binary is None or args.build_receipt is None or args.output is None:
         parser.error('identified binary, receipt and new output required')
     sys.path.insert(0, str(ROOT / 'tools/parity/docker'))
@@ -514,6 +583,8 @@ def main():
         runner['command'].append('--login-contract')
     if args.activation_contract:
         runner['command'].append('--activation-contract')
+    if args.registration_contract:
+        runner['command'].append('--registration-contract')
     if args.gundeck_binary:
         runner['command'] += ['--gundeck-path', '/candidate/gundeck']
         runner['volumes'].append({'type': 'bind', 'source': str(args.gundeck_binary.resolve(strict=True)),
