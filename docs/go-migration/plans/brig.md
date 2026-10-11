@@ -1376,3 +1376,13 @@ failure prefix and request identity in ordinary units. Extend the existing
 native-schema store control with scope1 TTL/account/retry/wrapping, successful
 verification retaining rows, throttle TTL, independent other-scope retention and
 null stored TTL rejection. No original assertions or native sources change.
+
+Source0dbc1e258/service993a4339 passes full pinned/static checks and actual
+native-schema scope1 controls; all prior stores remain green in2.06sec, schema/
+test/cleanup0 and independent resource audits empty.
+[Evidence](../../../go/services/brig/qualification/evidence/deletion-verification/README.md).
+Verification completion core implemented but unbound. Next attach public HTTP
+and complete startup engine, honoring native self/delete responses and internal
+ensureAccountDeleted property/client/local-connection/cookie idempotence check;
+actual internal queue replay remains required. Then recover enough root space
+losslessly for the owned backend guard and rerun retained original22 controls.

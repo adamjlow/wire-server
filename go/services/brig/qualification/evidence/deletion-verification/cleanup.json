@@ -1,0 +1,9 @@
+{
+  "sdk_controller_exit_code": 0,
+  "stores_controller_exit_code": 0,
+  "independent_container_audit": [],
+  "independent_network_audit": [],
+  "independent_volume_audit": [],
+  "sdk_prefix": "brig-deletion-verification-sdk-",
+  "stores_prefix": "wire-brig-stores-5814314a524c4568942a34ece95974c1"
+}

@@ -1,0 +1,110 @@
+[
+  {
+    "original_path": "/home/operator/.cache/wire-migration/brig-20261010/deletion-codes-sdk-check/brig",
+    "archive_path": "/home/operator/.cache/wire-migration/brig-20261010/deletion-codes-sdk-check/brig.gz",
+    "original_sha256": "3d28f13acd4c6c21e1a4d9a65f85bdeb90cc5c16d6acbb00cb695d499969e2f3",
+    "archive_sha256": "4ad4edbaf809b0fa8cc55ae4f217cfef6bc18c7cb612a2aa72ba9c7abef521fb",
+    "original_bytes": 69548216,
+    "archive_bytes": 28894548,
+    "uid": 65534,
+    "gid": 65534,
+    "mode": "0o755",
+    "restore": "gzip -dc archive to original path; verify SHA256; restore mode0755 and uid/gid65534 using owned maintenance container if needed"
+  },
+  {
+    "original_path": "/home/operator/.cache/wire-migration/brig-20261010/deletion-codes-sdk-check/brig.test",
+    "archive_path": "/home/operator/.cache/wire-migration/brig-20261010/deletion-codes-sdk-check/brig.test.gz",
+    "original_sha256": "3825f60e52b4b1ca870c62e9c2008773ac0eb7272451170f920b79b937ffe269",
+    "archive_sha256": "211707c8e1e3e8a3ae29d6fb79e9598421654cc6ffe68b72c838ebde800a0599",
+    "original_bytes": 67604576,
+    "archive_bytes": 28550082,
+    "uid": 65534,
+    "gid": 65534,
+    "mode": "0o755",
+    "restore": "gzip -dc archive to original path; verify SHA256; restore mode0755 and uid/gid65534 using owned maintenance container if needed"
+  },
+  {
+    "original_path": "/home/operator/.cache/wire-migration/brig-20261010/deletion-codes-sdk-check/stores.test",
+    "archive_path": "/home/operator/.cache/wire-migration/brig-20261010/deletion-codes-sdk-check/stores.test.gz",
+    "original_sha256": "4a763bfab5584efe86eba9bfe3ca5368bbbaa05ab00f2a8a5d8870c9f981e8a3",
+    "archive_sha256": "68ddd7e660b60b78d41e7a8f69b478775304867ac6bb8a5d7265169703292345",
+    "original_bytes": 72591976,
+    "archive_bytes": 30254250,
+    "uid": 65534,
+    "gid": 65534,
+    "mode": "0o755",
+    "restore": "gzip -dc archive to original path; verify SHA256; restore mode0755 and uid/gid65534 using owned maintenance container if needed"
+  },
+  {
+    "original_path": "/home/operator/.cache/wire-migration/brig-20261010/remote-deletion-sdk-check/brig",
+    "archive_path": "/home/operator/.cache/wire-migration/brig-20261010/remote-deletion-sdk-check/brig.gz",
+    "original_sha256": "f62dafc40434ed949704d141268aaf77fc608291b9d92eb0dc16ba0888118bde",
+    "archive_sha256": "c1b194a91edb352aec9b12762de1b36d2ba919e4d4811f5542af87b32e539aec",
+    "original_bytes": 69547960,
+    "archive_bytes": 28894493,
+    "uid": 65534,
+    "gid": 65534,
+    "mode": "0o755",
+    "restore": "gzip -dc archive to original path; verify SHA256; restore mode0755 and uid/gid65534 using owned maintenance container if needed"
+  },
+  {
+    "original_path": "/home/operator/.cache/wire-migration/brig-20261010/remote-deletion-sdk-check/brig.test",
+    "archive_path": "/home/operator/.cache/wire-migration/brig-20261010/remote-deletion-sdk-check/brig.test.gz",
+    "original_sha256": "0c409edda05a13ebb5ce5d89501b4368f63b1f0b4788ebddb5fe0a015a5467e2",
+    "archive_sha256": "637d60c6de62f17cfd7cef2cf88fc2792f866d57fe42f50d8ce031d988f24a6f",
+    "original_bytes": 67567320,
+    "archive_bytes": 28534512,
+    "uid": 65534,
+    "gid": 65534,
+    "mode": "0o755",
+    "restore": "gzip -dc archive to original path; verify SHA256; restore mode0755 and uid/gid65534 using owned maintenance container if needed"
+  },
+  {
+    "original_path": "/home/operator/.cache/wire-migration/brig-20261010/remote-deletion-sdk-check/stores.test",
+    "archive_path": "/home/operator/.cache/wire-migration/brig-20261010/remote-deletion-sdk-check/stores.test.gz",
+    "original_sha256": "0ff22b0b8423b60e37ea2f5118d46bae14636c7cda24bc0eda8e2ffc6361bcca",
+    "archive_sha256": "7b05b292f66c73ab631ee13289d2c102677517e5c37cb524a90beabc3b074bd7",
+    "original_bytes": 72555840,
+    "archive_bytes": 30242915,
+    "uid": 65534,
+    "gid": 65534,
+    "mode": "0o755",
+    "restore": "gzip -dc archive to original path; verify SHA256; restore mode0755 and uid/gid65534 using owned maintenance container if needed"
+  },
+  {
+    "original_path": "/home/operator/.cache/wire-migration/brig-20261010/backend-notifications-tidy-sdk-check/brig",
+    "archive_path": "/home/operator/.cache/wire-migration/brig-20261010/backend-notifications-tidy-sdk-check/brig.gz",
+    "original_sha256": "439c6379e4136bfdeb3981f1defe060150668aad1455bc0be65a5a98ece6e08b",
+    "archive_sha256": "3bc2aaeaaaa7cfda55e972099505c54235123f3f921a3b883666e92f3585783b",
+    "original_bytes": 69511512,
+    "archive_bytes": 28872409,
+    "uid": 65534,
+    "gid": 65534,
+    "mode": "0o755",
+    "restore": "gzip -dc archive to original path; verify SHA256; restore mode0755 and uid/gid65534 using owned maintenance container if needed"
+  },
+  {
+    "original_path": "/home/operator/.cache/wire-migration/brig-20261010/backend-notifications-tidy-sdk-check/brig.test",
+    "archive_path": "/home/operator/.cache/wire-migration/brig-20261010/backend-notifications-tidy-sdk-check/brig.test.gz",
+    "original_sha256": "5865c4f33ebc6c33ca0a1de1f9d08fc032d0133ff60934ed4508e6fe2f98b715",
+    "archive_sha256": "2e03b6b032234784064215b30aa0d4c95062b4dc64a603514db708590739f9ca",
+    "original_bytes": 67545336,
+    "archive_bytes": 28524230,
+    "uid": 65534,
+    "gid": 65534,
+    "mode": "0o755",
+    "restore": "gzip -dc archive to original path; verify SHA256; restore mode0755 and uid/gid65534 using owned maintenance container if needed"
+  },
+  {
+    "original_path": "/home/operator/.cache/wire-migration/brig-20261010/backend-notifications-tidy-sdk-check/stores.test",
+    "archive_path": "/home/operator/.cache/wire-migration/brig-20261010/backend-notifications-tidy-sdk-check/stores.test.gz",
+    "original_sha256": "81af7a87200582610648cc5dea0bbadf78e4dd8b8e6b52009c671d8d8da3585a",
+    "archive_sha256": "50f788428e942c07fb4914eca8eca5c0f5bcb130ceb1f68e5cb8918b74cdd94f",
+    "original_bytes": 72506680,
+    "archive_bytes": 30216029,
+    "uid": 65534,
+    "gid": 65534,
+    "mode": "0o755",
+    "restore": "gzip -dc archive to original path; verify SHA256; restore mode0755 and uid/gid65534 using owned maintenance container if needed"
+  }
+]

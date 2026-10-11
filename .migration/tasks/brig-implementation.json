@@ -192,6 +192,13 @@
       "command": "Scoped deletion-code/mail core: full pinned Go1.26.9 checks, static original-runner units; native pending/exhausted precedence, retry TTL, throttle/send cleanup and template headers controls pass. SDK/static/cleanup0, independent owned resources empty. Scope1 stores compiled only; no real-store/public deletion/e2e/full535 claim.",
       "revision": "41b8e552cd608aed3e2a2b49edc04b3b0b7d95c6",
       "artifact": "go/services/brig/qualification/evidence/deletion-codes/README.md"
+    },
+    {
+      "criterion": "quality",
+      "result": "pass",
+      "command": "Scoped deletion verification completion: full pinned Go/static units and actual native-schema scope1 TTL/retry/account/throttle/other-scope/null-TTL checks pass; prior user/group/client/deletion controls retained, total stores2.06sec. SDK/schema/test/cleanup0, independent empty. No public HTTP/mail delivery/original22/full535 claim.",
+      "revision": "0dbc1e25879b668fe210b1f1b7f016c18047aa6e",
+      "artifact": "go/services/brig/qualification/evidence/deletion-verification/README.md"
     }
   ],
   "review": null,
