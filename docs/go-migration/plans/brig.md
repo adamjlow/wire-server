@@ -630,3 +630,13 @@ managed exits0, runner0/cleanup0 and independent project audit empty. Two-Go
 Brig/Gundeck with Haskell remainder and native backend B, not final eight-Go.
 Last-active/offline original cases, client durable switchback/mail delivery,
 remaining Brig families and whole535 final qualification remain pending.
+
+### Client activity and four original client cases
+
+[Evidence](../../../go/services/brig/qualification/evidence/client-activity/README.md)
+records sourcec2d03121a/service4447e62d: real internal activity callback follows
+native next-epoch-week rounding and IF EXISTS CQL; full Go checks/static normal
+units pass. Original last-active plus three capability cases all pass strict
+XML, unchanged17 paired controls pass. All25 managed exits0, runner/cleanup0,
+independent audit empty. Native parser literals/missing-client live controls
+and client durable switchback/mail remain pending; whole Brig unavailable.

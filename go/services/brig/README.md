@@ -83,3 +83,8 @@ compiled Client case or native registration/deletion switchback is claimed
 yet. Those are next, followed by last-active and remaining whole-service
 contracts. Earlier update/property receipts retain their own tested source
 identities. Brig remains unavailable; Haskell remains supported/default.
+
+Current client activity slice: [four unchanged original Haskell client tests](qualification/evidence/client-activity/README.md)
+pass on sourcec2d03121a with Go Brig/Gundeck and native remainder, alongside full
+Go checks/static units and unchanged17 paired controls. This is scoped evidence;
+Brig is still incomplete and not available for whole-service selection.
