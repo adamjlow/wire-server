@@ -1,0 +1,10 @@
+{
+  "project": "wire-e2e-dce3ca8341264645ad7bbfc7bcbe6b47",
+  "containers": [],
+  "networks": [],
+  "volumes": [],
+  "sdk_owned_containers": [],
+  "sdk_owned_networks": [],
+  "runner_exit": 0,
+  "cleanup_exit": 0
+}

@@ -5,12 +5,13 @@ User-selected goal2026-10-10. Reference/upstream source f6636ed53315fa7b0fc4c8aa
 ## Current status (2026-10-11)
 
 Brig remains implementing/unavailable; Galley is authorized only after actual
-whole Brig completion. Latest sourcea39a9aac8 has pinned Go checks and static
+whole Brig completion. Latest source2d27afde5 has pinned Go checks and static
 original-runner units PASS. Public registration policy/mail ordering/session
 composition, native localized templates/MIME and actual SES/SMTP delivery
-factory now exist. Run/public HTTP startup wiring and feedback consumption remain
-pending, so the public
-endpoint is not claimed implemented. Internal invitation acceptance is implemented with
+factory are now wired into Run and /register. Unit success controls pass, and
+actual frozen-config mixed startup/SAML switchback passes; native public API/IP/error
+comparisons and feedback consumption remain pending, so full public parity is not
+claimed. Internal invitation acceptance is implemented with
 native validation/SCIM/claim/membership/activation/cleanup ordering; actual
 native-schema code/deletion/pending checks PASS at04c621ce6. The latest count-only
 fix preserves native integer-valued Scientific team totals without rounding;
@@ -335,3 +336,5 @@ Mail delivery sourcea39a9aac8/candidatebc3c03c9500bf508ad8b2a3208c5e1b0c0828bd9f
 ## Live public registration composition
 
 Wire Run to validated native public policy and actual SES/SMTP mail factory with lifecycle cleanup. Route /register to public body validation, required strict X-Forwarded-For IP, IP hashing key, request-scoped existing create/activation/invitation/Galley/index/event hooks, pre18 legacy SCIM display-name handling and native unrestricted new U cookie. Return201 self profile/UUID Location/zuid /access HttpOnly Secure(configurable) cookie; persistent expiry or ephemeral session cookie, no access-token response. Preserve mail completion/failure before cookie. Refactor internal registration through the same request-scoped hook setup without changing its current-version strict behavior. Finite controls exercise early body/header/policy failures and full router→existing create core→actual Galley HTTP→real SMTP activation→actual cryptographic session→profile/cookie response for ordinary and ephemeral registration. In-memory account/session storage in these unit controls is not a durable native API/e2e proof. Exact unusual native IP/error-parser edges remain required native comparisons; no new security policy. Next exact Go/static checks, then actual native mixed startup/API witness. Original invitation test prerequisites still include invitation creation/native fixture setup; no whole-service claim.
+
+Public route source2d27afde5/candidatecabdf28576633e57db3898211843182605903990899e37ad70bc9dd8bcbf68ec passes full pinned Go/static original-runner units and existing exact mixed SAML/17-read regression witness, evidence registration-public-http. Actual frozen mail-factory startup validated; original mixed processes13 all0/no forced stops/cleanup independently empty. No original compiled e2e/public native delivery witness yet. Next extend only owned supplemental observer for native public success/cookie/state and strict header errors without changing original17 assertions or protected fixtures; qualify same executable with source/input identities.
