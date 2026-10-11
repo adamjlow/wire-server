@@ -1,0 +1,30 @@
+{
+  "directory": "/home/operator/.cache/wire-migration/brig-20261010/registration-public-diagnostic-paired",
+  "sha256": {
+    "compose.json": "5168af48cf857090cab927b0c44335b2e46681df6dfa2f0d3f4510d5c2644127",
+    "controller.log": "2fdd687a26a398a79e194a8e1b02b89ace79bca6440c0cb1c8583f77cbc9d063",
+    "environment.json": "ad0ab5f282b219179a40cc954ad6e08bd45014505805ab45b199b3e574ea9724",
+    "fixtures/configs.json": "a72b39e034c0563ea28260de4782ee8122f5b8e015887f835fd30b04ad4b8180",
+    "fixtures/coredns-Corefile": "f86a1dd0ea71d82a8f03c554e5ad80523d70615aa511889b5206179a538094e5",
+    "fixtures/coredns-db.example.com": "6405b829e03e3c98f6742245bedffaf2e6ce80bc0f5202ccc5da5dee501c4b9f",
+    "fixtures/coredns-db.sft": "38b816d19035e42da7b3fbb90f419641b222d38c17d8c09000d773484b1aa03a",
+    "fixtures/integration.json": "d8834dad54e1f851e689ac00691cd527aac69e0e9ce00baf149835433812c73c",
+    "fixtures/peers.json": "1877182efbc07cc70bf12db44905c75d5b6fe15cc849cb8143891db9617883f2",
+    "paired-compose.json": "8286f22b5d61e8a6c7ede65b074d4b10a2cd6de51381b074bc37546e9f3d1e73",
+    "redis-cluster-initialization.log": "31fc337213b3c63c2574d1ffe8d43c6bd27995a5e6dfb2555a9f8340b54092f6",
+    "reports/background-worker-native.log": "79eac2900000d1b26e5db3d7e52fd2d64c991fdacda5bd8031be63b238291295",
+    "reports/brig-go.log": "6bf810b2fd20e906e4612f4a345176c26cd2d415ec45ea17792a40d5dfdef3ed",
+    "reports/brig-native.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "reports/cannon-native.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "reports/cargohold-native.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "reports/federator-native.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "reports/galley-native.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "reports/gundeck-go.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "reports/paired-reads.json": "f81b760b636c5a41c0b6eec467895c0081490f60925f2e8c1d9ec029474c02ba",
+    "reports/proxy-native.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "reports/spar-native.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "reports/stern-native.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "reports/wire-server-enterprise-native.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "result.json": "df22b5b4a81009b5f90045931092975a1088dd4245bef409c859ecd4e022a89f"
+  }
+}

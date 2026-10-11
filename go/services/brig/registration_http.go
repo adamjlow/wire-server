@@ -17,16 +17,17 @@ import (
 )
 
 type registrationHTTP struct {
-	policy         registrationPolicy
-	mail           *registrationMailDelivery
-	sessions       sessionManager
-	cookieInsecure bool
-	service        registrationService
-	peers          brigPeers
-	galleyVersion  int
-	activation     *activationHTTP
-	invitations    registrationInvitations
-	index          *searchIndexWriter
+	policy           registrationPolicy
+	mail             *registrationMailDelivery
+	sessions         sessionManager
+	cookieInsecure   bool
+	refreshSuggested func(context.Context, gocql.UUID, string) error
+	service          registrationService
+	peers            brigPeers
+	galleyVersion    int
+	activation       *activationHTTP
+	invitations      registrationInvitations
+	index            *searchIndexWriter
 }
 
 func registrationHTTPError(w http.ResponseWriter, err error) {
@@ -184,7 +185,12 @@ func (h registrationHTTP) handlePublic(w http.ResponseWriter, r *http.Request) {
 	}
 	version, _ := strconv.Atoi(r.Header.Get("X-Wire-API-Version"))
 	service.preserveSCIMDisplayName = version < 18
-	registration := newPublicRegistration(h.policy, service.create, h.mail.activation, h.mail.welcome, h.sessions, time.Now)
+	sessions := h.sessions
+	if h.refreshSuggested != nil {
+		requestID := r.Header.Get("Request-Id")
+		sessions.refreshSuggested = func(ctx context.Context, user gocql.UUID) error { return h.refreshSuggested(ctx, user, requestID) }
+	}
+	registration := newPublicRegistration(h.policy, service.create, h.mail.activation, h.mail.welcome, sessions, time.Now)
 	result, err := registration.register(r.Context(), request, ip)
 	if err != nil {
 		registrationHTTPError(w, err)

@@ -28,7 +28,7 @@ func TestPublicRegistrationHTTPRejectionsBeforeEffects(t *testing.T) {
 		{"POST", "127.0.0.1", "text/plain", `{}`, 415},
 		{"POST", "127.0.0.1", "application/json", `{"name":"Synthetic","uuid":"10000000-0000-0000-0000-000000000001"}`, 400},
 		{"POST", "127.0.0.1", "application/json", `{"name":"Synthetic","sso_id":{"scim_external_id":"synthetic"}}`, 400},
-		{"POST", "127.0.0.1", "application/json", `{"name":"Synthetic"}`, 403},
+		{"POST", "127.0.0.1", "application/json", `{"name":"Synthetic","label":"synthetic-public-device"}`, 403},
 	} {
 		request := httptest.NewRequest(test.method, "/register", strings.NewReader(test.body))
 		request.Header.Set("Content-Type", test.media)
@@ -82,11 +82,14 @@ func TestPublicRegistrationHTTPActualMailAndSession(t *testing.T) {
 				},
 				initFeature: func(context.Context, gocql.UUID) error { return nil },
 			}
-			registration := registrationHTTP{policy: registrationPolicy{ephemeral: true}, mail: delivery, sessions: sessions, service: service, activation: &activationHTTP{}, peers: brigPeers{client: peer.Client(), galley: Endpoint{Host: host, Port: number}}, galleyVersion: 19}
+			registration := registrationHTTP{policy: registrationPolicy{ephemeral: true}, mail: delivery, sessions: sessions, refreshSuggested: func(context.Context, gocql.UUID, string) error {
+				t.Fatal("fresh signup unexpectedly revoked a session")
+				return nil
+			}, service: service, activation: &activationHTTP{}, peers: brigPeers{client: peer.Client(), galley: Endpoint{Host: host, Port: number}}, galleyVersion: 19}
 			business := brigReadHandlers{registration: &registration}
-			body := `{"name":"Synthetic"}`
+			body := `{"name":"Synthetic","label":"synthetic-public-device"}`
 			if !ephemeral {
-				body = `{"name":"Synthetic","email":"synthetic@example.com","password":"12345678"}`
+				body = `{"name":"Synthetic","email":"synthetic@example.com","password":"12345678","label":"synthetic-public-device"}`
 			}
 			request := httptest.NewRequest("POST", "/v19/register", strings.NewReader(body))
 			request.Header.Set("X-Forwarded-For", "127.0.0.42")
