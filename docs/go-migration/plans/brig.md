@@ -1129,3 +1129,25 @@ completed without additional failures. Terminal runner/cleanup and independent
 owned namespace empty; failed output retained. Tagged-fixture-only correction
 rebuilds that binary; unchanged production/normal-unit/dependency checks reuse
 source dae7c8987 evidence with exact input comparison rather than repeating them.
+
+Qualified production dae7c8987/servicef66e431b full SDK/static checks; source
+66474b799/taggedf10639b1 actual native-schema stores pass in1.85s: three selectors,
+Cassandra migration residence, retained tombstone fields, PG40001 actual retry and
+exactly one tombstone, guarded reassigned ownership/other claims,101-contact pages.
+Failed fixture run retained, corrected only candidate later-state setup. Controllers
+terminal and independent namespace audits empty. Engine remains unbound; no public
+DELETE/self/original22/whole535 pass or gate. Same-author scoped delegated review
+accepts engine/storage increment, not whole service.
+[Evidence](../../../go/services/brig/qualification/evidence/account-deletion-core/README.md).
+Native private-column retention and nontransactional partial deletion/public retry
+limitations are documented there; changing that policy is outside migration scope.
+
+Next real bindings: Galley is-team-owner (native any response except403 is owner),
+password-only verifier, scope1 deletion code and mail; native PostgreSQL user-group
+cleanup; Gundeck cleanup/Galley DELETE i/user/assets; local contact events, persistent
+Rabbit per-domain backend notification bundles and user-delete journal before row
+cleanup; HTTP DELETE/self/verification/internal enqueue, actual internal SQS/STOMP
+replay and incoming remote deletion RPC. Reuse original22 plus affected original
+account/MLS cases and finish all prior signed/client switchbacks with separated
+profile actor. No success stubs, direct RPC replacing a persistent queue, native
+repairs, weakened assertions or expanded speculative validation.

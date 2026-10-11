@@ -1,0 +1,17 @@
+{
+  "brig-account-deletion": {
+    "containers": "",
+    "networks": "",
+    "volumes": ""
+  },
+  "wire-brig-stores-0b476c10613447d3b74077d3e608bf8d": {
+    "containers": "",
+    "networks": "",
+    "volumes": ""
+  },
+  "owned-store-prefix": {
+    "containers": "",
+    "networks": "",
+    "volumes": ""
+  }
+}

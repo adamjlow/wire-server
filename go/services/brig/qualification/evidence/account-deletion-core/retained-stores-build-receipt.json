@@ -1,0 +1,18 @@
+{
+  "result": "pass",
+  "source_revision": "66474b799d55dd77f63601735553880d399a0842",
+  "sdk_image": "sha256:2f9e4393295d7270538dd1c666ab1345eaec06b2c2f8c217283ba6565caee399",
+  "toolchain": "go1.26.9",
+  "sdk_archives_manifest_sha256": "875560a1f32f1ad76a866a7f792a6b392f64c5555e8f55f270f60869079f9af2",
+  "scope": "Tagged store fixture rebuilt only; unchanged production/normal-unit/dependency quality reused with exact path comparison",
+  "reused_quality_revision": "dae7c8987c819ffafde7b766f2e1037fe1e52a4c",
+  "reused_service_sha256": "f66e431bddb27eca312cce9ff9d6ebf766f900b2ce2ec4de21e2dbf5907355ee",
+  "changed_paths": [
+    "docs/go-migration/plans/brig.md",
+    "go/services/brig/account_deletion_stores_qualification_test.go"
+  ],
+  "sdk_controller_exit_code": 0,
+  "binary_sha256": "f10639b126521adf049262eccc0c745def4d613368b63527bdd9362f40c16424",
+  "remaining_owned_containers": "",
+  "remaining_owned_networks": ""
+}

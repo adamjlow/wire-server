@@ -1,0 +1,7 @@
+{
+  "cutoff_epoch": 1791719723.5174131,
+  "files": 627,
+  "bytes": 475569124,
+  "scope": "Only regular nonsymlink UID/GID65534 owned Go cache entries older1h; no retained artifacts",
+  "result": "pass"
+}

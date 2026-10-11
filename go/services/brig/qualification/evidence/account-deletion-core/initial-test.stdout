@@ -1,0 +1,10 @@
+=== RUN   TestOwnedDurableStores
+=== RUN   TestOwnedDurableStores/deletion-cassandra
+    account_deletion_stores_qualification_test.go:54: Cassandra deletion cleared native retained columns
+=== RUN   TestOwnedDurableStores/deletion-postgresql
+=== RUN   TestOwnedDurableStores/deletion-migration-to-postgresql
+--- FAIL: TestOwnedDurableStores (1.83s)
+    --- FAIL: TestOwnedDurableStores/deletion-cassandra (0.01s)
+    --- PASS: TestOwnedDurableStores/deletion-postgresql (0.00s)
+    --- PASS: TestOwnedDurableStores/deletion-migration-to-postgresql (0.01s)
+FAIL
