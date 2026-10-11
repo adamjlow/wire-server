@@ -938,3 +938,15 @@ other10 read controls and5 native cursor pages matched exact JSON/token bytes.
 No original suite ran after failure. All24 managed processes exited0, runner1/
 cleanup0 and independent owned-project audit empty. Preserve failed artifacts;
 correct candidate header and add regression, then repeat exact evidence.
+
+Qualified source2979e82ec/serviceca96ee7c: full pinned Go/static checks; actual
+native-created three local+one remote connection11 reads and5 size1 pages
+match exact media/JSON/opaque native Cassandra tokens. Native restart explicitly
+uses Go cursors for5 identical pages. All14 unchanged MLS originals pass strict
+XML/nofailure/error/skip; signed/raw/client/prekey regressions pass, all25 exits0,
+runner/cleanup0 and independent namespace audit empty. First404-media failure
+retained and corrected only candidate.
+[Evidence](../../../go/services/brig/qualification/evidence/connection-reads/README.md).
+Next: implement complete local creation/update admission and state transitions
+with real Galley conversation/membership effects and Gundeck notifications, then
+remote actions and original connection tests. Read-only proof is not whole Brig.

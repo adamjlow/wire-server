@@ -101,6 +101,13 @@
       "command": "Scoped full pinned Go/static checks and native Set-priority h2c regression; real signed package API upload/claim/failed destructive replacement/successful replacement native-Go-native with exact CQL refs/raw bytes and final native count/claim/readempty. All14 original tests rerun pass, strict XML/no failures/errors/skips; all25 exits0/runner0/cleanup0/independent empty. Not all three user modes/full535/eight-Go whole acceptance.",
       "revision": "dd8edd104f0cc9fc507c85d8acd6db1e7b1cb484",
       "artifact": "go/services/brig/qualification/evidence/mls-signed-state/README.md"
+    },
+    {
+      "criterion": "operations",
+      "result": "pass",
+      "command": "Scoped pinned Go/static checks; native API-created3local+1remote connections,11 exact reads and5 exact native/Go opaque cursor pages, then native restart5pages using Go-issued cursors; all14 original compiled MLS cases strict XML/no failure/error/skip and prior signed/raw/client/prekey witnesses pass. All25 exits0/runner0/cleanup0/independent empty. Initial404-media failure retained; create/update/remote actions/full535/eight-Go remain incomplete.",
+      "revision": "2979e82ec3eeb89cbd37c36d83033c67bcd77dcf",
+      "artifact": "go/services/brig/qualification/evidence/connection-reads/README.md"
     }
   ],
   "review": null,
@@ -136,5 +143,5 @@
       "required_evidence": "Frozen100request/concurrency8 latency/RSS/CPU/metrics smoke and eight held-body drain/listener close/SIGTERM0 within35s; actual unchanged-schema same-state native-Go-native auth/password/cookie/client/prekey/MLS/property/connection/pending action/OAuth/apps/groups/domain/queue/search and storage-mode witnesses. Trusted nonroot optional source/license image and separately scoped image-only/default-byte-preserving selector. Exact final qualified artifact and user-delegated same-author self-review with serious inherited concerns and unavailable native checks accurately recorded."
     }
   ],
-  "handoff": "Latest MLS sourcedd8edd104f0cc9fc507c85d8acd6db1e7b1cb484/servicecf3a62ac qualifies signed API upload/claim/destructive failed replacement/successful replacement actual native-Go-native exact package/ref bytes, final native count1/claim/readempty. Remote native Set normalization now precedes crypto validation; actual h2c reversed/duplicate low-client decoding priority regression passes. Full pinned Go/static checks, all14 original MLS strict XML/no failure/error/skip and prior controls/witnesses pass; all25 exits0/runner0/cleanup0/independent empty. Tagged signer independent of candidate validator, public material only, no direct signed-row injection. Remaining two original team/account MLS cases require unfinished family APIs; three user-mode proof and legalhold/version/X509/DER/Base64/malformed/transport fidelity checks remain. Native X509 trust/process-local claim gate/unconditional delete/destructive replace concerns preserved/documented. Continue other mandatory Brig profile/connection/team/federation/families then full535/eight-Go/all-entity3mode/ops/image/defaultselector/legal/security/whole review. Whole Brig incomplete/unavailable, Galley only after whole achieved. Remote655dd7623 from explicit audit push; continuation commits local only."
+  "handoff": "Latest source2979e82ec/serviceca96ee7c connection reads: native APIs created3local+1remote connections;11 reads and5 opaque cursor pages exact native/Go, native switchback5pages explicitly using Go tokens. Full pinned Go/static checks/all14 original MLS/prior signed and raw switchbacks pass, all25exits0/runner0/cleanup0/independent empty. Initial absent404-media failure retained/corrected only Go. Connection creation/update admission/state/Galley/notification and remote federation actions not implemented. Next implement full writes and reuse original connection tests; whole535/eight-Go/all-entity three-mode/operations/image/selector/full legal/security review remain open. No gate advance or new push."
 }
