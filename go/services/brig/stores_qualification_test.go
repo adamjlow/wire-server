@@ -863,7 +863,7 @@ func TestOwnedDurableStores(t *testing.T) {
 	invites := invitationStore{cassandra}
 	inviteEmail := "synthetic-invite-" + user().String() + "@example.com"
 	liveTeam, staleTeam, liveID, staleID := user(), user(), user(), user()
-	created := time.Now().UTC().Truncate(time.Millisecond)
+	inviteCreated := time.Now().UTC().Truncate(time.Millisecond)
 	// Native by-email lookup reads every reference and ignores missing main
 	// rows. Optional role/name/creator remain valid legacy NULLs.
 	for _, ref := range []struct{ team, id gocql.UUID }{{liveTeam, liveID}, {staleTeam, staleID}} {
@@ -871,10 +871,10 @@ func TestOwnedDurableStores(t *testing.T) {
 			t.Fatal(err)
 		}
 	}
-	if err := cassandra.Query(`INSERT INTO team_invitation(team,id,created_at,email,code) VALUES(?,?,?,?,?)`, liveTeam, liveID, created, inviteEmail, "synthetic-code").WithContext(ctx).Consistency(gocql.LocalQuorum).Exec(); err != nil {
+	if err := cassandra.Query(`INSERT INTO team_invitation(team,id,created_at,email,code) VALUES(?,?,?,?,?)`, liveTeam, liveID, inviteCreated, inviteEmail, "synthetic-code").WithContext(ctx).Consistency(gocql.LocalQuorum).Exec(); err != nil {
 		t.Fatal(err)
 	}
-	if found, err := invites.byEmail(ctx, inviteEmail); err != nil || len(found) != 1 || found[0].ID != liveID || found[0].Team != liveTeam || found[0].Role != nil || found[0].Name != nil || found[0].CreatedBy != nil || !found[0].CreatedAt.Equal(created) {
+	if found, err := invites.byEmail(ctx, inviteEmail); err != nil || len(found) != 1 || found[0].ID != liveID || found[0].Team != liveTeam || found[0].Role != nil || found[0].Name != nil || found[0].CreatedBy != nil || !found[0].CreatedAt.Equal(inviteCreated) {
 		t.Fatal("native live/stale invitation references or optional decoding", err)
 	}
 	if found, err := invites.byEmail(ctx, "absent-"+inviteEmail); err != nil || found == nil || len(found) != 0 {
