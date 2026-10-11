@@ -257,6 +257,12 @@ func Run(ctx context.Context, c Config) error {
 			return err
 		}, enqueue: internalQueue.enqueueClientDeletion, remove: deletionStore.remove,
 	}
+	prekeyStore, err := newPrekeyClaimStore(c, clientStore{cassandra}, internalQueue.sqs)
+	if err != nil {
+		return err
+	}
+	prekeyStore.exhausted = func() { log.Print("PreKeys: Optimistic lock failed") }
+	business.prekeys = &prekeyClaimService{domain: c.Settings.Domain, claim: prekeyStore.claim, clients: (clientStore{cassandra}).list, lookup: (clientStore{cassandra}).get, remove: business.clientDeletion.execute, guard: business.peers.guardPrekeyLegalhold}
 	maxPermanent := 7
 	if c.Settings.MaxPermanentClients != nil {
 		maxPermanent = *c.Settings.MaxPermanentClients

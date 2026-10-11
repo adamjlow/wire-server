@@ -268,6 +268,16 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             report['client_lifecycle_native_created']=first
             assert first['status']==201, 'native client creation failed'
             lifecycle_id=first['json']['id'];lifecycle_path='/v19/clients/'+lifecycle_id
+            claim_path='/v19/users/'+peers['brig']['optSettings']['setFederationDomain']+'/'+lifecycle_user+'/prekeys/'+lifecycle_id
+            bundle_path='/v19/users/'+peers['brig']['optSettings']['setFederationDomain']+'/'+lifecycle_user+'/prekeys'
+            claim_cases=[('GET',claim_path,lifecycle_headers),('GET',claim_path,lifecycle_headers),('GET',claim_path,lifecycle_headers),('GET',bundle_path,lifecycle_headers),('GET',bundle_path+'/f',lifecycle_headers)]
+            native_claim_controls=[request(*case)[0] for case in claim_cases]
+            report['prekey_native_claim_controls']=native_claim_controls
+            assert [r['status'] for r in native_claim_controls]==[200,200,200,200,404], 'native claim reference changed'
+            assert [r['json']['prekey']['id'] for r in native_claim_controls[:3]]==[7,65535,65535], 'native ordinary/last resort selection changed'
+            restaged,_=request('POST','/v19/clients',lifecycle_headers,{**native_body,'mls_public_keys':{}})
+            report['prekey_native_restage']=restaged
+            assert restaged['status']==201, 'native prekey reference restage failed'
             native_lifecycle_state=[request('GET',lifecycle_path,lifecycle_headers)[0],request('GET',lifecycle_path+'/prekeys',lifecycle_headers)[0]]
             report['client_lifecycle_native_state']=native_lifecycle_state
             new_body={'type':'permanent','lastkey':{'id':65535,'key':second_key},'prekeys':[{'id':7,'key':ordinary_key}],'label':'go-durable-client','class':'phone','capabilities':['legalhold-implicit-consent'],'mls_public_keys':{'ed25519':'AQID'}}
@@ -522,6 +532,10 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             lifecycle_mismatches=[{'case':i,'fields':[k for k in fields(ref) if ref.get(k)!=actual.get(k)]} for i,(ref,actual) in enumerate(zip(native_lifecycle_controls,go_lifecycle_controls)) if not same(ref,actual)]
             report['client_lifecycle_mismatches']=lifecycle_mismatches
             assert not lifecycle_mismatches, 'native lifecycle admission responses mismatch'
+            go_claim_controls=[request(*case)[0] for case in claim_cases]
+            report['prekey_go_claim_controls']=go_claim_controls
+            assert all(same(ref,actual) for ref,actual in zip(native_claim_controls,go_claim_controls)), 'native prekey claim/bundle response mismatch'
+            assert request('GET',lifecycle_path+'/prekeys',lifecycle_headers)[0]['json']==[65535], 'Go did not consume only the ordinary prekey'
             go_created,_=request('POST','/v19/clients',lifecycle_headers,{**new_body,'password':password})
             report['client_lifecycle_go_created']=go_created
             assert go_created['status']==201 and go_created['location']==go_created['json']['id'], 'Go client creation failed'

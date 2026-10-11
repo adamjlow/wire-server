@@ -65,7 +65,10 @@ func (p brigPeers) replayableRPCStatus(ctx context.Context, endpoint Endpoint, m
 		if err == nil {
 			raw, readErr := io.ReadAll(io.LimitReader(response.Body, 4<<20+1))
 			response.Body.Close()
-			if allowMissing && response.StatusCode == 404 || allowForbidden && response.StatusCode == 403 {
+			if allowForbidden && response.StatusCode == 403 {
+				return raw, response.StatusCode, nil
+			}
+			if allowMissing && response.StatusCode == 404 {
 				return nil, response.StatusCode, nil
 			}
 			if response.StatusCode >= 200 && response.StatusCode < 300 && (!allowMissing || response.StatusCode == 200) {
