@@ -259,7 +259,14 @@ func Run(ctx context.Context, c Config) error {
 		verificationEnabled: business.peers.verificationEnabled,
 		verifyCode:          verificationCodeStore{cassandra}.verify,
 	}
-	deleteLock, err := clientLockDeletion(c, internalQueue.sqs)
+	prekeyAWS := internalQueue.sqs
+	if prekeyAWS == nil && (c.RandomPrekeys == nil || !*c.RandomPrekeys) {
+		prekeyAWS, err = newBrigAWSCredentials(ctx, peerHTTP)
+		if err != nil {
+			return err
+		}
+	}
+	deleteLock, err := clientLockDeletion(c, prekeyAWS)
 	if err != nil {
 		return err
 	}
@@ -270,13 +277,6 @@ func Run(ctx context.Context, c Config) error {
 			_, err := (sessionManager{store: business.sessions}).revoke(ctx, user, nil, nil, []string{label})
 			return err
 		}, enqueue: internalQueue.enqueueClientDeletion, remove: deletionStore.remove,
-	}
-	prekeyAWS := internalQueue.sqs
-	if prekeyAWS == nil && (c.RandomPrekeys == nil || !*c.RandomPrekeys) {
-		prekeyAWS, err = newBrigAWSCredentials(ctx, peerHTTP)
-		if err != nil {
-			return err
-		}
 	}
 	prekeyStore, err := newPrekeyClaimStore(c, clientStore{cassandra}, prekeyAWS)
 	if err != nil {

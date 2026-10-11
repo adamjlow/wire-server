@@ -1773,3 +1773,13 @@ optimistic claim controls passed beforehand; this failed run is not qualified.
 All25 managed exits0, runner1/cleanup0 and independent resources empty. Correct
 only the observer's empty-output handling; retain the run and rerun unchanged
 production/original assertions. Initial disk-floor preflight also retained.
+
+Source154c04563 combined control establishes native HTTP-created lockversion1
+and native queued deletion removes it, then Go fails startup with `prekey lock
+configuration unavailable`: client deletion was bound to internalQueue.sqs
+before the independently initialized Dynamo credentials. STOMP correctly has
+no SQS queue client. Move shared prekey AWS credentials before both deletion and
+claim binding; retain the actual failed run (native24 exits0/Go1, runner1/cleanup0
+and independent empty). Changed production requires fresh pinned full Go/static
+checks and a new exact binary, followed by the same combined backend matrix.
+No Haskell, oracle, schema, security policy or queue defaults change.
