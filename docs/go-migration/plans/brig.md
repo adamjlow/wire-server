@@ -5,10 +5,11 @@ User-selected goal2026-10-10. Reference/upstream source f6636ed53315fa7b0fc4c8aa
 ## Current status (2026-10-11)
 
 Brig remains implementing/unavailable; Galley is authorized only after actual
-whole Brig completion. Latest source6cfd8048d has pinned Go checks and static
+whole Brig completion. Latest sourcea57e981e9 has pinned Go checks and static
 original-runner units PASS. Public registration policy/mail ordering/session
-composition now exists; actual mail adapters and HTTP startup wiring remain
-pending, so the public endpoint is not claimed implemented. Internal invitation acceptance is implemented with
+composition and native localized template/MIME rendering now exist. Actual
+SES/SMTP delivery adapters and HTTP startup wiring remain pending, so the public
+endpoint is not claimed implemented. Internal invitation acceptance is implemented with
 native validation/SCIM/claim/membership/activation/cleanup ordering; actual
 native-schema code/deletion/pending checks PASS at04c621ce6. The latest count-only
 fix preserves native integer-valued Scientific team totals without rounding;
@@ -311,3 +312,5 @@ Public composition source6cfd8048d/candidate399a291cbc209d2155c58a3af297992f2273
 ## Registration mail rendering foundation
 
 Implement the native template grammar and literal/variable HTML escaping, cached user/team locale catalogues with exact→language→default selection and per-file fallback, and retained IdP certificate partials. Registration rendering uses native branding and sender validation, independent default template locale en, ordinary/team activation URLs, activation processing headers and member welcome literal URL/bare recipient. MIME preserves decoded plain/HTML parts, native Q display-name encoding and320-character rendered recipient limit, sanitizes header controls and uses quoted-printable UTF8. Finite controls load unchanged repository templates and exercise invalid templates/UTF8/config, locale fallback, header injection, recipient length and decoded MIME. Transport delivery, /register routing and original native public-registration comparison remain pending; this stage does not expose fake mail success. No added dependency, Haskell/oracle/storage/deadline/security-policy change. Full pinned Go and original-runner static unit checks required; no redundant database rerun for rendering-only changes.
+
+Mail rendering sourcea57e981e9/service1c6fbd3bec4253b98762c566ae2d9a8e9b18c2616a198253a651018889588faa passes full pinned Go checks and static normal units in the original runner; evidence registration-mail-render. Retain failed loader/prefix-locale and candidate template-expectation attempts. No storage change/database rerun, actual delivery/API/original e2e or whole-service claim. Exact native MIME package version and actual delivered MIME comparison remain controls before mail parity approval. Next implement actual SES/SMTP delivery (native transport-selection/retries/errors/credentials/TLS/timeouts/pool lifecycle), wire public registration, then reuse original accepted-invitation tests unchanged.
