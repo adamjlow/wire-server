@@ -442,3 +442,18 @@ wiring. Finite precedence/replacement/all-key-validation controls, full pinned
 Go checks and unchanged-runner units planned; native registration/switchback
 and original Client cases follow whole addClient composition. No availability
 claim, stubbed peer effect, oracle/default/schema/security-policy change.
+
+
+Client registration core sourcef17fbcdf1/service5cfefbcb... PASS full pinned
+Go SDK checks and unchanged-runner static units; tagged stores compile only.
+Two containers0/network cleanup0/independent audits empty. Evidence
+qualification/evidence/client-registration-core records exact identities,
+native-source/default-policy scope, finite tests and same-author slice review.
+No public registration/native-store/original Client execution claimed.
+Next compose real account/login-code admission and decoded NewClient with
+legalhold/version/capability/password semantics; bind core to current store
+and actual reauthentication, consumable setup, deletion queue/cookie/storage
+cleanup, Galley, synchronous event and new-client mail. Add custom reauth
+policy for native internal handlers when needed. Then original compiled
+Client tests and same-state native registration/deletion witness. Whole
+Brig remains active/unavailable and Galley follows actual completion.
