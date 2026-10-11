@@ -1,0 +1,1 @@
+Initial source699f16e25 SDK attempt failed during vet because mime.ParseMediaType needs three return values. No backend or original test execution. Fixed in next production commit; retain failed build receipt/log. This attempt never qualifies the service.

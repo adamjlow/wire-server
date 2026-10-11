@@ -1,0 +1,14 @@
+Postgres migrations finished
+Property.testMaxLength[32m OK[0m (0.15 s)
+Property.testPropertyNameNotAscii[32m OK[0m (0.04 s)
+Property.testSetGetDeleteProperty[32m OK[0m (0.05 s)
+Property.testClearProperties[32m OK[0m (0.27 s)
+Property.testGetProperties[32m OK[0m (0.27 s)
+Property.testMaxProperties[32m OK[0m (0.37 s)
+Attempting to delete federation V0 queues...
+No or incomplete credentials for fed V0 RabbitMQ
+Attempting to delete federation V1 queues...
+No or incomplete credentials for fed V1 RabbitMQ
+Attempting to delete federation V2 queues...
+No or incomplete credentials for fed V2 RabbitMQ
+6 tests run.

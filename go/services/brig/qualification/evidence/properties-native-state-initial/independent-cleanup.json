@@ -1,0 +1,38 @@
+{
+  "observed_at_utc": "2026-10-11T07:09:14.409476+00:00",
+  "owned_projects": {
+    "wire-e2e-e1f7793f2b01457885dc3538009b3325": {
+      "container": "",
+      "network": "",
+      "volume": ""
+    },
+    "wire-e2e-5880dab22ded4a21b7fa11881ae67d81": {
+      "container": "",
+      "network": "",
+      "volume": ""
+    },
+    "wire-e2e-b3c825895a634e23a3e893b31a10cf52": {
+      "container": "",
+      "network": "",
+      "volume": ""
+    }
+  },
+  "sdk_prefixes": {
+    "brig-properties-core-sdk": {
+      "containers": "",
+      "networks": ""
+    },
+    "brig-properties-core-corrected-sdk": {
+      "containers": "",
+      "networks": ""
+    },
+    "brig-properties-native-media-sdk": {
+      "containers": "",
+      "networks": ""
+    },
+    "brig-properties-error-media-sdk": {
+      "containers": "",
+      "networks": ""
+    }
+  }
+}

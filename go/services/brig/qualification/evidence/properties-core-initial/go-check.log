@@ -1,0 +1,7 @@
+all modules verified
+# github.com/adamjlow/wire-server/go/services/brig
+./properties.go:208:22: assignment mismatch: 2 variables but mime.ParseMediaType returns 3 values
+# github.com/adamjlow/wire-server/go/services/brig
+# [github.com/adamjlow/wire-server/go/services/brig]
+vet: ./properties.go:208:22: assignment mismatch: 2 variables but mime.ParseMediaType returns 3 values
+Candidate checks failed: go vet failed (exit 1)
