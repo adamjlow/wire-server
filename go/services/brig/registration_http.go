@@ -63,7 +63,7 @@ func registrationHTTPError(w http.ResponseWriter, err error) {
 	case errors.Is(err, errRegistrationTooManyTeamMembers):
 		authenticationWireError(w, 403, "too-many-team-members", "Too many members in this team.")
 	case errors.Is(err, errRegistrationBlacklisted):
-		authenticationWireError(w, 403, "blacklisted-email", "The given e-mail address has been blacklisted due to a permanent bounce or a complaint.")
+		wireError(w, 403, "blacklisted-email", "The given e-mail address has been blacklisted due to a permanent bounce or a complaint.")
 	case errors.As(err, &rate):
 		authenticationHTTPError(w, err)
 	default:

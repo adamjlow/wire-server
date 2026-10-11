@@ -1,0 +1,127 @@
+[
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/ses-feedback-switchback-paired/compose.json",
+    "sha256": "c0031333ffd15961d168d2a16057f423caf55fad823d609571e067fb6e1f4d41",
+    "bytes": 22101
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/ses-feedback-switchback-paired/controller.log",
+    "sha256": "fde604272cedcefe1d5f910c81b9c2c78108ba476a8b4a79cff957d4f1c33480",
+    "bytes": 952984
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/ses-feedback-switchback-paired/environment.json",
+    "sha256": "9d5550c0651dae96dea0cdd640359a1fe1ccf3c01babbe93a8331cf205aa3d04",
+    "bytes": 1377
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/ses-feedback-switchback-paired/fixtures/configs.json",
+    "sha256": "a72b39e034c0563ea28260de4782ee8122f5b8e015887f835fd30b04ad4b8180",
+    "bytes": 25814
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/ses-feedback-switchback-paired/fixtures/coredns-Corefile",
+    "sha256": "f86a1dd0ea71d82a8f03c554e5ad80523d70615aa511889b5206179a538094e5",
+    "bytes": 140
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/ses-feedback-switchback-paired/fixtures/coredns-db.example.com",
+    "sha256": "6405b829e03e3c98f6742245bedffaf2e6ce80bc0f5202ccc5da5dee501c4b9f",
+    "bytes": 863
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/ses-feedback-switchback-paired/fixtures/coredns-db.sft",
+    "sha256": "38b816d19035e42da7b3fbb90f419641b222d38c17d8c09000d773484b1aa03a",
+    "bytes": 277
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/ses-feedback-switchback-paired/fixtures/integration.json",
+    "sha256": "d8834dad54e1f851e689ac00691cd527aac69e0e9ce00baf149835433812c73c",
+    "bytes": 8278
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/ses-feedback-switchback-paired/fixtures/peers.json",
+    "sha256": "1877182efbc07cc70bf12db44905c75d5b6fe15cc849cb8143891db9617883f2",
+    "bytes": 74780
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/ses-feedback-switchback-paired/paired-compose.json",
+    "sha256": "e6caf73a70a09a217e20b5b511131712515e4aeb719ca2ad1e817c44e03f2701",
+    "bytes": 23710
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/ses-feedback-switchback-paired/redis-cluster-initialization.log",
+    "sha256": "46b16976169ded2c1375f8cb93f3e2da0ec0e7b4614f5f8f75b76a4b6d2f323c",
+    "bytes": 2129
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/ses-feedback-switchback-paired/reports/background-worker-native.log",
+    "sha256": "fe525e383a200a2ff50e9cb929bcb88bade3e928d3e2de76e5a7b4b9a90317a1",
+    "bytes": 814
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/ses-feedback-switchback-paired/reports/brig-go.log",
+    "sha256": "83c88168e03962ced63fce932f057f0bb95e6b9722156ffe58ac262edbaefaa7",
+    "bytes": 114
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/ses-feedback-switchback-paired/reports/brig-native.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/ses-feedback-switchback-paired/reports/cannon-native.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/ses-feedback-switchback-paired/reports/cargohold-native.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/ses-feedback-switchback-paired/reports/federator-native.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/ses-feedback-switchback-paired/reports/galley-native.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/ses-feedback-switchback-paired/reports/gundeck-go.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/ses-feedback-switchback-paired/reports/paired-reads.json",
+    "sha256": "1411e436a95ab67082ab8abe045673c1ffe90d0a35368d5a8e7e7c7c9195ef18",
+    "bytes": 25147
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/ses-feedback-switchback-paired/reports/proxy-native.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/ses-feedback-switchback-paired/reports/spar-native.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/ses-feedback-switchback-paired/reports/stern-native.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/ses-feedback-switchback-paired/reports/wire-server-enterprise-native.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/ses-feedback-switchback-paired/result.json",
+    "sha256": "1c10e41b68dbcab4e5d6f2dc9e914e6fadf2dbeabbdef60fc817fa3451e85767",
+    "bytes": 2034
+  }
+]

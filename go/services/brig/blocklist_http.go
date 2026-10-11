@@ -22,10 +22,8 @@ func (s blocklistStore) handle(w http.ResponseWriter, r *http.Request) {
 		found, err := s.exists(r.Context(), email)
 		if err != nil {
 			authenticationWireError(w, 500, "server-error", "Internal Server Error")
-		} else if found {
-			w.WriteHeader(200)
 		} else {
-			w.WriteHeader(404)
+			blacklistReadResponse(w, r, found)
 		}
 		return
 	}
@@ -33,5 +31,20 @@ func (s blocklistStore) handle(w http.ResponseWriter, r *http.Request) {
 		authenticationWireError(w, 500, "server-error", "Internal Server Error")
 		return
 	}
+	w.Header().Set("Content-Type", "application/json;charset=utf-8")
 	w.WriteHeader(200)
+}
+
+func blacklistReadResponse(w http.ResponseWriter, r *http.Request, found bool) {
+	w.Header().Set("Content-Type", "application/json;charset=utf-8")
+	status := 404
+	if found {
+		status = 200
+	}
+	w.WriteHeader(status)
+	// Native MultiVerb Respond () uses Aeson's JSON unit value ([]), including
+	// the not-found response. HEAD retains its headers but removes the body.
+	if r.Method != http.MethodHead {
+		_, _ = w.Write([]byte("[]"))
+	}
 }
