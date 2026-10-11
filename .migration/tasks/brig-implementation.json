@@ -199,6 +199,13 @@
       "command": "Scoped deletion verification completion: full pinned Go/static units and actual native-schema scope1 TTL/retry/account/throttle/other-scope/null-TTL checks pass; prior user/group/client/deletion controls retained, total stores2.06sec. SDK/schema/test/cleanup0, independent empty. No public HTTP/mail delivery/original22/full535 claim.",
       "revision": "0dbc1e25879b668fe210b1f1b7f016c18047aa6e",
       "artifact": "go/services/brig/qualification/evidence/deletion-verification/README.md"
+    },
+    {
+      "criterion": "quality",
+      "result": "pass",
+      "command": "Scoped deletion startup/public/internal binding: full pinned Go/static checks, 22 unchanged compiled originals now pass incl retained DELETE/self remote-owner failure; affected paired account/client/prekey/connection/MLS controls and actual durable native-Go-native client/raw+signed MLS switchback pass. All25 process exits0, runner/cleanup0 independent empty. Two-Go/Haskell remainder, not final535/eight-Go or all-entity switchback.",
+      "revision": "485ab4581334efa7b92112aa812c68c294cb9d00",
+      "artifact": "go/services/brig/qualification/evidence/deletion-http/README.md"
     }
   ],
   "review": null,

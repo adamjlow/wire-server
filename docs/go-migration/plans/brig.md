@@ -1395,3 +1395,13 @@ property/client/all-relation local+remote connection/cookie source before decidi
 whether to replay. Parameterized storage, scrubbing and existing password rate
 limits remain; no authentication or delivery policy changes. Finite HTTP units
 cover admission/errors/order and idempotence. Actual queue consumer still required.
+
+Bound source485ab4581/service9ec0ec19 passes full pinned/static checks and all22
+unchanged original MLS/connection executions, recovering retained DELETE/self405
+failure. Affected paired controls and actual raw/signed MLS/client switchback pass;
+all25 exits0, runner/cleanup0 and independent audit empty.
+[Evidence](../../../go/services/brig/qualification/evidence/deletion-http/README.md).
+This is two-Go/Haskell remainder, not final eight-Go535/all-entity qualification.
+Next actual internal queue consumer replay and account deletion/code delivery
+finite cases, then remaining Brig contracts/final matrix. Public/internal endpoints
+are real-bound; internal ensure HTTP tested in units only. Keep all goals/gates.
