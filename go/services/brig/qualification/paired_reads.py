@@ -26,7 +26,7 @@ def checked(args, timeout=30):
     return result.stdout.strip()
 
 
-def inside(gundeck_path=None, access_switchback=False, login_contract=False, activation_contract=False, registration_contract=False, saml_registration_contract=False, public_registration_contract=False, password_reset_contract=False, password_change_contract=False, ses_feedback_contract=False, properties_contract=False, client_update_contract=False):
+def inside(gundeck_path=None, access_switchback=False, login_contract=False, activation_contract=False, registration_contract=False, saml_registration_contract=False, public_registration_contract=False, password_reset_contract=False, password_change_contract=False, ses_feedback_contract=False, properties_contract=False, client_update_contract=False, client_registration_contract=False):
     registration_contract = registration_contract or saml_registration_contract
     if os.getuid() != 65534 or os.environ.get('WIRE_E2E_DISPOSABLE') != '1':
         raise ValueError('owned nonroot Docker runner required')
@@ -136,7 +136,7 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
                 native_brig_path = Path(args[0]).resolve()
                 report['native_brig'] = {'path': str(native_brig_path), 'sha256': hashlib.sha256(native_brig_path.read_bytes()).hexdigest()}
         extra_ports = set()
-        if ses_feedback_contract or properties_contract:
+        if ses_feedback_contract or properties_contract or client_registration_contract:
             # Original compiled tests require both static federator ingress
             # services, even when the selected body only uses a dynamic backend.
             # Match the existing full runtime's native backend-B/NGINX setup.
@@ -510,6 +510,19 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             assert native_claim['status']==200 and native_claim['json']['prekey']=={'id':7,'key':replacement_key}, 'native could not consume Go updated prekey'
             report['client_update_switchback']={'same_initialized_stores':True,'native_accepts_go_client_state':True,'native_claims_go_updated_prekey':True}
             assert not mismatches, 'native client update responses mismatch'
+        if client_registration_contract:
+            import runner,harness
+            required=['Client.testCreateClientWithCapabilities','Client.testUpdateClientWithConsumableNotificationsCapability','Client.testGetClientCapabilitiesV7']
+            assert set(required).issubset(runner.discover('brig')), 'original client cases absent'
+            link=runtime.WORK/'dist/brig';link.unlink();link.symlink_to(candidate)
+            xml=Path('/reports/client-registration-original.xml')
+            with open('/reports/client-registration-original.log','w') as original_log:
+                original=subprocess.run([runner.binary('integration')['path'],'--config',str(runtime.WORK/'services/integration.yaml'),*[arg for name in required for arg in ('--include',name)],'--xml',str(xml)],cwd=runtime.WORK,stdout=original_log,stderr=subprocess.STDOUT,timeout=1200)
+            report['original_client_registration_tests']={'required_tests':required,'process_exit_code':original.returncode,'integration_binary':runner.binary('integration'),'dynamic_brig_sha256':report['candidate_brig_sha256']}
+            report['e2e_attempted']=True;report['e2e_executed']=xml.is_file()
+            if xml.is_file():
+                report['original_client_registration_tests']['validated_report']=harness.check_xml(xml,required)
+            assert original.returncode==0, 'original compiled client registration tests failed'
         if properties_contract:
             fields=lambda record: ('status','content_type','json' if 'json' in record else 'body')
             go_property_state=[request('GET','/properties/native-durable',property_headers)[0],request('GET','/properties-values',property_headers)[0]]
@@ -1081,6 +1094,7 @@ def main():
     parser.add_argument('--ses-feedback-contract', action='store_true')
     parser.add_argument('--properties-contract', action='store_true')
     parser.add_argument('--client-update-contract', action='store_true')
+    parser.add_argument('--client-registration-contract', action='store_true')
     args = parser.parse_args()
     if (args.registration_contract or args.saml_registration_contract) and (args.activation_contract or args.access_switchback or args.login_contract):
         parser.error('registration observation runs separately from credential/activation observations')
@@ -1096,8 +1110,10 @@ def main():
         parser.error('properties observation runs separately')
     if args.client_update_contract and any((args.registration_contract,args.saml_registration_contract,args.activation_contract,args.access_switchback,args.login_contract,args.public_registration_contract,args.password_reset_contract,args.password_change_contract,args.ses_feedback_contract,args.properties_contract)):
         parser.error('client update observation runs separately')
+    if args.client_registration_contract and any((args.registration_contract,args.saml_registration_contract,args.activation_contract,args.access_switchback,args.login_contract,args.public_registration_contract,args.password_reset_contract,args.password_change_contract,args.ses_feedback_contract,args.properties_contract,args.client_update_contract)):
+        parser.error('client registration observation runs separately')
     if args.in_container:
-        return inside(args.gundeck_path, args.access_switchback, args.login_contract, args.activation_contract, args.registration_contract, args.saml_registration_contract, args.public_registration_contract, args.password_reset_contract, args.password_change_contract, args.ses_feedback_contract, args.properties_contract, args.client_update_contract)
+        return inside(args.gundeck_path, args.access_switchback, args.login_contract, args.activation_contract, args.registration_contract, args.saml_registration_contract, args.public_registration_contract, args.password_reset_contract, args.password_change_contract, args.ses_feedback_contract, args.properties_contract, args.client_update_contract, args.client_registration_contract)
     if args.binary is None or args.build_receipt is None or args.output is None:
         parser.error('identified binary, receipt and new output required')
     sys.path.insert(0, str(ROOT / 'tools/parity/docker'))
@@ -1145,6 +1161,8 @@ def main():
         runner['command'].append('--properties-contract')
     if args.client_update_contract:
         runner['command'].append('--client-update-contract')
+    if args.client_registration_contract:
+        runner['command'].append('--client-registration-contract')
     if args.gundeck_binary:
         runner['command'] += ['--gundeck-path', '/candidate/gundeck']
         runner['volumes'].append({'type': 'bind', 'source': str(args.gundeck_binary.resolve(strict=True)),
@@ -1183,7 +1201,7 @@ def main():
         result['redis_cluster_initialization_completed'] = True
         with (output / 'controller.log').open('w') as log:
             process = subprocess.run(command + ['run', '--rm', '--no-deps', 'runner'],
-                                     stdout=log, stderr=subprocess.STDOUT, timeout=1500 if args.ses_feedback_contract or args.properties_contract else 900)
+                                     stdout=log, stderr=subprocess.STDOUT, timeout=1500 if args.ses_feedback_contract or args.properties_contract or args.client_registration_contract else 900)
         result['runner_exit_code'] = process.returncode
         report = json.loads((output / 'reports/paired-reads.json').read_text())
         result['e2e_executed'] = report.get('e2e_executed', False)
