@@ -1,0 +1,12 @@
+{
+  "uid": 65534,
+  "gid": 65534,
+  "path": "/dev/shm/wire-migration-brig-20261010/sdk-go-cache",
+  "cutoff_epoch": 1791709397.264464,
+  "files": 1746,
+  "bytes": 1009274254,
+  "only_regular_nonsymlink_owned_a_d_cache_files": true,
+  "compiler_or_backend_jobs_live_during_maintenance": false,
+  "retained_binaries_evidence_source_unchanged": true,
+  "exit_code": 0
+}

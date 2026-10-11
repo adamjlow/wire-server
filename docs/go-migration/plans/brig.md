@@ -772,7 +772,7 @@ claim. [Evidence](../../../go/services/brig/qualification/evidence/public-user-c
 MLS read RPCs, malformed-parser details and previous fidelity gaps
 remain unfinished; this does not publish compatibility or whole acceptance.
 
-### MLS client read/count candidate wiring (qualification pending)
+### MLS client read/count wiring and scoped proof
 
 Native internal list/single and federation V0/V1 list/V3 single contracts wired.
 Counting reads actual CQL key-package rows, fully decodes native TLS presentation
@@ -784,6 +784,10 @@ The versioned RPC exposed a prior candidate bug: native header is
 X-Wire-API-Version, not Wire-Federation-Version, and unprefixed requests preserve
 the header. Both corrected, native branches/regressions added. Historical prekey
 proof never validated a versioned RPC; keep that scope explicit. Full pinned
-checks plus ten actual native/Go MLS read controls pending. Positive/expired/
+Go/static checks plus ten exact native/Go MLS read controls pass at sourcee193a3a7f/
+service5d9edc95. Prior14 public clients/13 federation/5 single/5 multi/7 lifecycle/
+17 paired and actual client/prekey/MLS switchback pass; all25 exits0/runner0/
+cleanup0/independent empty, no original suite claim.
+[Evidence](../../../go/services/brig/qualification/evidence/mls-client-reads/README.md). Positive/expired/
 malformed real CQL package side-effects still need direct qualification, and
 upload/claim/count public APIs remain unfinished; no whole-service claim.
