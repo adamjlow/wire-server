@@ -1151,3 +1151,20 @@ replay and incoming remote deletion RPC. Reuse original22 plus affected original
 account/MLS cases and finish all prior signed/client switchbacks with separated
 profile actor. No success stubs, direct RPC replacing a persistent queue, native
 repairs, weakened assertions or expanded speculative validation.
+
+### Deletion peer bindings
+
+Bind the native owner lookup and peer-removal phase through captured account
+state. Owner lookup accepts every status except403 as owner; no missing-team or
+server-error bypass. Cleanup calls Gundeck then Galley DELETE/i/user, forwarding
+Z-User and Request-Id and requiring2xx; only then delete captured Cargohold assets.
+Asset HTTP statuses, including404/5xx, are accepted like native, while transport
+failures retain three retries/100ms exponential backoff and stop cleanup on
+exhaustion. Keep cancellation and bounded response draining; canonical asset-key
+validation prevents stored text from becoming an unrelated request path. No new
+dependency or TLS configuration change. Real HTTP tests cover owner statuses,
+cleanup ordering, failure prefix, peer retries, asset no-retry and headers;
+malformed stored keys and canceled retries cover the security/resource boundary.
+These adapters remain unbound until groups, events, persistent federation and
+verification/mail/replay complete the deletion pipeline. They do not qualify
+DELETE/self or fix the retained original22 failure by themselves.
