@@ -1,0 +1,24 @@
+{
+  "directory": "/dev/shm/wire-migration-brig-20261010/registration-mail-ses-sdk-check",
+  "sha256": {
+    "argon2-copyright": "6059eb2b0f8f23b5c6023b08f68d4df9addd834665d07e5dcc364d4ae80d9b69",
+    "brig": "d57a05a3f570e368598cabdf9208a9485b8b5690b0c06811d340660221e80bdb",
+    "brig.test": "34e45b22da9506ebef18596d935b9459a3cbfc7ea407663329103589d32afc30",
+    "build-receipt.json": "eb94baa6f7a31e7adaa46470ad7c9ff148c12aae51137b3f4f880681ba008839",
+    "controller.log": "5b2278170b6160b9a369f404cd0d8b492feb291ecfe3b02e76a9f973097a7e22",
+    "cxx-package.sha256": "5abc52f67b0befe6317695d4489a2433b32854cbb6b5916a6f875b2c0e300636",
+    "cxx-package.txt": "d41b16dcb551842304cab9549bb3da24fdb859d85d690bd121de7f3cb29cce01",
+    "glibc-copyright": "f5788886720a2605a946e81d571e6c8162b09f58d2e2ceb8d36e5768fccd850d",
+    "go-check.log": "fd4d7dbf34a28c120b66d279f3aeac2e9624a39c94533ad6ffa3b44ed42ea8f2",
+    "icu-copyright": "5bbff5f646ce750ac0a347e7f91793279b7422a1119820b5f75d98879c201c68",
+    "libraries.sha256": "875560a1f32f1ad76a866a7f792a6b392f64c5555e8f55f270f60869079f9af2",
+    "libstdc++-copyright": "20390f8a6f3b1e4d7cb45dd8652dabb259bbef688cbad839bcdb0b9ba7252f79",
+    "openssl-copyright": "6a7da622fe0637a334d2a8fc470852d2ffb77d9a2b2f930f854e32a41ad6ef35",
+    "packages.txt": "9e9db92065c33bc81e7e8b5ff6f5c0a9a32814690509f59c88718cc418f5e262",
+    "runtime-units.log": "198b9d120d08bd874b921a7af812e2add21420e8a17622a3cb7bff2ddb595d90",
+    "stores-build-receipt.json": "285a42bed6702837dc41dd1b4e33a2d88613c4ee117aaa9541f352bc35eb1f15",
+    "stores.test": "f5976cb151954fd97d85ffb68d14a8f997d01dbac66aff5d28c7d77e2ca6c2bf",
+    "zlib-copyright": "9e5b96d63773a5d177ba264254390f792be07e41748ebd94730981c6cac31cc6",
+    "zstd-copyright": "5cec9fef4d3fa7e0371fbef4ec3fc416e0105dc2a9922117f84e825cb11f50f8"
+  }
+}

@@ -5,10 +5,10 @@ User-selected goal2026-10-10. Reference/upstream source f6636ed53315fa7b0fc4c8aa
 ## Current status (2026-10-11)
 
 Brig remains implementing/unavailable; Galley is authorized only after actual
-whole Brig completion. Latest sourcea57e981e9 has pinned Go checks and static
+whole Brig completion. Latest source89fe996ac has pinned Go checks and static
 original-runner units PASS. Public registration policy/mail ordering/session
-composition and native localized template/MIME rendering now exist. Actual
-SES/SMTP delivery adapters and HTTP startup wiring remain pending, so the public
+composition, native localized template/MIME rendering and the SES delivery
+adapter now exist. SMTP and HTTP startup wiring remain pending, so the public
 endpoint is not claimed implemented. Internal invitation acceptance is implemented with
 native validation/SCIM/claim/membership/activation/cleanup ordering; actual
 native-schema code/deletion/pending checks PASS at04c621ce6. The latest count-only
@@ -318,3 +318,5 @@ Mail rendering sourcea57e981e9/service1c6fbd3bec4253b98762c566ae2d9a8e9b18c2616a
 ## SES mail transport
 
 Add real SES SendRawEmail query delivery with existing AWS default credential discovery, region and SigV4 ses scope, source/envelope destination and base64 raw multipart MIME. Native endpoint drops path/query, required config includes sesQueue and sesEndpoint (feedback consumption still pending). Render once for stable retries; preserve five retries with100ms exponential backoff only for RequestThrottled or a timeout after a successful request write. No retries for dial/TLS/write failures, ordinary500/429, credential errors or caller cancellation. Preserve native400 Invalid domain name message-prefix mapping to invalid-email/Invalid e-mail address.; hide other transport details. Require the Amazonka required MessageId XML field, accepting empty Text. Finite real HTTP controls verify actual credential/session signing, MIME delivery and stable throttled retry; protocol/error/timeout-category/retry-budget/cancellation/missing-dependency controls cover remaining concrete risks. No new dependencies, no Haskell/oracle/storage changes. HTTP client/startup selection, SMTP, SES feedback and public register wiring/native original API comparison remain required. Record inherited duplicate-delivery risk from native retries after an uncertain response, without adding migration-only idempotency policy.
+
+SES source89fe996ac/candidated57a05a3f570e368598cabdf9208a9485b8b5690b0c06811d340660221e80bdb passes full pinned Go/static original-runner units; evidence registration-mail-ses. Actual signed HTTP delivery/throttled retry controls PASS; no original native/API e2e or startup-wiring claim. Native HTTP-manager response timeout10s identified in Brig.App430 and remains required in real mail startup construction. Next SMTP native credentials/LOGIN/plain-STARTTLS-SSL/pool/15s actions and shutdown, SES-first fallback factory, then live public registration and native delivered MIME/unchanged original registration tests.
