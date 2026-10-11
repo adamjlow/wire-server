@@ -950,3 +950,16 @@ retained and corrected only candidate.
 Next: implement complete local creation/update admission and state transitions
 with real Galley conversation/membership effects and Gundeck notifications, then
 remote actions and original connection tests. Read-only proof is not whole Brig.
+
+### Local connection creation continuation
+
+Implement native admission order: self/target identity, legalhold via internal
+team-member API, same binding-team prohibition, app-profile exclusion, directed
+row lookup and accepted/sent count (native One/retry1). Preserve native create/
+resend/accept/existing branches, Galley Location and connect-conversation type,
+separate row timestamps and event origin/route/name. Validate bounded legacy
+name and UUID/domain/Z-Connection before effects; parameterized CQL, bounded
+peer responses and existing retry policy, no security-policy change. Add focused
+admission/effect-order tests and retain unchanged native oracle. HTTP binding is
+local creation only until local updates/remote actions have their full effects;
+this remains part of whole Brig, never a substitute acceptance definition.

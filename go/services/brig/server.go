@@ -223,6 +223,7 @@ func Run(ctx context.Context, c Config) error {
 	business.federationConfig = &federationRead
 	business.mlsClients = &mlsClientReads{domain: c.Settings.Domain, key: (clientStore{cassandra}).mlsPublicKey, insert: (clientStore{cassandra}).insertMLSPackages, removeSuite: (clientStore{cassandra}).deleteMLSSuite, ids: (clientStore{cassandra}).ids, get: (clientStore{cassandra}).get, packages: (clientStore{cassandra}).mlsPackages, remove: (clientStore{cassandra}).deleteMLSPackages, now: time.Now, maximum: c.Settings.KeyPackageMaximumLifetime, enabled: c.Settings.EnableMLS}
 	connectionStorage := connectionStore{cassandra: cassandra, domain: c.Settings.Domain}
+	business.localConnections = &connectionLocalService{domain: c.Settings.Domain, limit: c.Settings.UserMaxConnections, activated: business.users.isActivated, user: business.users.get, legalhold: business.peers.connectionLegalhold, team: business.peers.connectionTeam, get: connectionStorage.get, count: connectionStorage.count, insert: connectionStorage.insert, update: connectionStorage.update, createConversation: business.peers.createConnectionConversation, acceptConversation: business.peers.acceptConnectionConversation, now: time.Now}
 	business.connections = &connectionReads{domain: c.Settings.Domain, get: connectionStorage.get, page: connectionStorage.page}
 	business.clients = &clientReadHandlers{store: clientStore{cassandra}}
 	business.clientActivity = &clientActivityService{update: (clientStore{cassandra}).updateLastActive, now: time.Now}
@@ -291,6 +292,7 @@ func Run(ctx context.Context, c Config) error {
 		mail: mailDelivery.newClient, domain: c.Settings.Domain, locale: c.Settings.DefaultLocale,
 	}
 	notifications := newSessionNotifications(ctx, business.peers)
+	business.localConnections.notify = notifications.submitPush
 	defer notifications.close()
 	business.properties = newPropertyService(c, propertyStore{cassandra}, notifications.submitPush)
 	codes := activationStore{cassandra}
