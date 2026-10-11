@@ -45,7 +45,7 @@ type prekeyFederationClient struct {
 func newPrekeyFederationClient(c Config) (prekeyFederationClient, func()) {
 	protocols := new(http.Protocols)
 	protocols.SetUnencryptedHTTP2(true)
-	transport := &http.Transport{Proxy: nil, Protocols: protocols, DialContext: (&net.Dialer{Timeout: 10 * time.Second}).DialContext, MaxIdleConns: 4096, MaxIdleConnsPerHost: 1024, DisableCompression: true}
+	transport := &http.Transport{Proxy: nil, Protocols: protocols, DialContext: (&net.Dialer{Timeout: 30 * time.Second}).DialContext, MaxIdleConns: 4096, MaxIdleConnsPerHost: 1024, DisableCompression: true}
 	return prekeyFederationClient{client: &http.Client{Transport: transport, Timeout: 30 * time.Second, CheckRedirect: func(*http.Request, []*http.Request) error { return http.ErrUseLastResponse }}, endpoint: c.Federator, origin: c.Settings.Domain}, transport.CloseIdleConnections
 }
 

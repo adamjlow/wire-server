@@ -719,3 +719,17 @@ admission/null tests are added. Full pinned checks and native live federation
 comparisons are pending; malformed-input details, local HTTP/2 transport error
 text, parser aliases, response limits/timeouts and whole-service acceptance
 remain unqualified. This wiring does not publish availability or compatibility.
+
+### Scoped native federation prekey proof
+
+[Evidence](../../../go/services/brig/qualification/evidence/prekey-federation/README.md):
+source8ada940ca with observer74d4411f5, service1aa9256b; full pinned Go/static
+checks and exact native/Go9 federation controls pass with prior local/lifecycle/
+17 controls and actual client/prekey/MLS native-Go-native switchback. Two backends,
+Go Brig/Gundeck plus native remainder; all25 exits0/runner0/cleanup0/independent
+empty. No new original suite/current live Dynamo/full535 claim. Native TCP
+connection timeout30s corrects initial candidate10s in the subsequent source;
+this retained live evidence names only the tested binary. Detailed failure/error
+serialization, limits/deadlines/alias maps, remote8 bound and all whole-service
+gates remain pending. Cross-federation legalhold bypass and remote unchecked
+identity/prekey text are inherited concerns, preserved rather than repaired.
