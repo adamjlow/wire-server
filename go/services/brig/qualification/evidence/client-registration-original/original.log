@@ -1,0 +1,11 @@
+Postgres migrations finished
+Client.testCreateClientWithCapabilities[32m OK[0m (0.24 s)
+Client.testGetClientCapabilitiesV7[32m OK[0m (0.29 s)
+Client.testUpdateClientWithConsumableNotificationsCapability[32m OK[0m (0.29 s)
+Attempting to delete federation V0 queues...
+No or incomplete credentials for fed V0 RabbitMQ
+Attempting to delete federation V1 queues...
+No or incomplete credentials for fed V1 RabbitMQ
+Attempting to delete federation V2 queues...
+No or incomplete credentials for fed V2 RabbitMQ
+3 tests run.

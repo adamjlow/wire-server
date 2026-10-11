@@ -619,3 +619,14 @@ internal callback; offline cross-backend needs connections/federation.
 Go deletion consumer/STOMP/internal legalhold and full remaining contracts
 and whole535/eight-Go/final operations/allentities/three modes/image/default
 selector/legal/security/review remain pending.
+
+### Original client registration tests (scoped)
+
+[Evidence](../../../go/services/brig/qualification/evidence/client-registration-original/README.md)
+records source1926a1c28 and unchanged production fd9052f9: all three original
+client capability cases pass strict exact-name/count XML checks, alongside
+the unchanged17 paired controls. Both SDK and original runner units pass; all25
+managed exits0, runner0/cleanup0 and independent project audit empty. Two-Go
+Brig/Gundeck with Haskell remainder and native backend B, not final eight-Go.
+Last-active/offline original cases, client durable switchback/mail delivery,
+remaining Brig families and whole535 final qualification remain pending.
