@@ -30,6 +30,7 @@ type brigReadHandlers struct {
 	appIDs         func(context.Context, gocql.UUID) ([]string, error)
 	accounts       *accountLookup
 	bulkClients    *clientBulkReads
+	blocklist      *blocklistStore
 }
 
 func readJSON(w http.ResponseWriter, r *http.Request, body any) {
@@ -66,6 +67,10 @@ func routeParseError(w http.ResponseWriter, message string) {
 }
 
 func (b brigReadHandlers) handle(w http.ResponseWriter, r *http.Request, path string) bool {
+	if path == "/i/users/blacklist" && b.blocklist != nil {
+		b.blocklist.handle(w, r)
+		return true
+	}
 	if path == "/self/password" && b.passwordChange != nil {
 		b.passwordChange.handle(w, r)
 		return true

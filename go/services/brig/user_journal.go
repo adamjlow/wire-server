@@ -39,9 +39,10 @@ type userJournal struct {
 func (userJournal) String() string { return "<UserJournal>" }
 
 type journalResponse struct {
-	Queue string  `xml:"GetQueueUrlResult>QueueUrl"`
-	MD5   *string `xml:"SendMessageResult>MD5OfMessageBody"`
-	Error struct {
+	Queue    string               `xml:"GetQueueUrlResult>QueueUrl"`
+	MD5      *string              `xml:"SendMessageResult>MD5OfMessageBody"`
+	Messages []sqsFeedbackMessage `xml:"ReceiveMessageResult>Message"`
+	Error    struct {
 		Code string `xml:"Code"`
 	} `xml:"Error"`
 }

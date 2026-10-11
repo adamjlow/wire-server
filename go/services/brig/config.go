@@ -74,6 +74,7 @@ type Config struct {
 		} `yaml:"authSettings"`
 	} `yaml:"zauth"`
 	Settings struct {
+		SQSThrottleMillis    *int64    `yaml:"sqsThrottleMillis"`
 		RestrictUserCreation *bool     `yaml:"setRestrictUserCreation"`
 		EphemeralCreation    *bool     `yaml:"setEphemeralUserCreationEnabled"`
 		AllowlistDomains     *[]string `yaml:"setAllowlistEmailDomains"`

@@ -13,6 +13,13 @@ type registrationEmailParser struct {
 
 func canonicalRegistrationEmail(value string) (string, error) {
 	p := registrationEmailParser{input: value}
+	return parseRegistrationEmail(&p, 0)
+}
+
+// A mailbox's addr-spec uses the same grammar but ends at its closing angle
+// bracket. Parse once rather than repeatedly probing untrusted input prefixes.
+func parseRegistrationEmail(p *registrationEmailParser, terminator byte) (string, error) {
+	value := p.input
 	var local []string
 	for {
 		if !p.cfws() {
@@ -100,7 +107,7 @@ func canonicalRegistrationEmail(value string) (string, error) {
 			p.offset++
 			// Native optional terminal dot is discarded. A following comment
 			// or whitespace belongs to a label only when another label exists.
-			if p.offset == len(value) {
+			if p.offset == len(value) || terminator != 0 && p.peek() == terminator {
 				break
 			}
 		}
@@ -109,7 +116,14 @@ func canonicalRegistrationEmail(value string) (string, error) {
 			return "", invalidRegistrationRequest()
 		}
 	}
-	if !p.cfws() || p.offset != len(value) || len(l)+len(domain)+1 > 254 {
+	if !p.cfws() {
+		return "", invalidRegistrationRequest()
+	}
+	complete := p.offset == len(value)
+	if terminator != 0 {
+		complete = p.offset < len(value) && p.peek() == terminator
+	}
+	if !complete || len(l)+len(domain)+1 > 254 {
 		return "", invalidRegistrationRequest()
 	}
 	return l + "@" + domain, nil

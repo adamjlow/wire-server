@@ -273,6 +273,7 @@ func Run(ctx context.Context, c Config) error {
 		return guardRegistrationDomain(ctx, email, domains.lookup)
 	}, activate: activation.activateKey, clearUnvalidated: business.users.clearUnvalidatedEmail}, syncIndex: index.sync, events: activationEvents{notifications: notifications, journal: journal, domain: c.Settings.Domain, defaultLocale: c.Settings.DefaultLocale}, peers: business.peers}
 	blocklist := blocklistStore{databases: business.users.userAuthStore, mode: c.Migration["blockList"]}
+	business.blocklist = &blocklist
 	if c.Settings.MaxTeamSize == nil {
 		return errors.New("missing native maximum team size")
 	}
@@ -313,6 +314,8 @@ func Run(ctx context.Context, c Config) error {
 		inactiveTimeout: timeout, sessions: loginSessions, now: time.Now,
 	}, syncIndex: index.sync, refreshSuggested: notifications.submit, cookieInsecure: c.Settings.CookieInsecure}
 	server := &http.Server{Handler: newHandler(c, &business), ReadHeaderTimeout: 10 * time.Second, IdleTimeout: 60 * time.Second}
+	feedback := startSESFeedback(ctx, mailDelivery.feedback, blocklist, c.Settings.SQSThrottleMillis)
+	defer feedback.close()
 	return serve(ctx, server, listener)
 }
 
