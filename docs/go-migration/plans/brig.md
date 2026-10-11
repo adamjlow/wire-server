@@ -752,7 +752,7 @@ alias maps and other whole-family contract/acceptance gaps stay explicit.
 Next public user-client/remote federation/MLS read contracts reuse actual storage
 and federator boundaries; finish outstanding fidelity gaps before final gates.
 
-### Public user-client read contract wiring (checks pending)
+### Public user-client read contract wiring and scoped proof
 
 Native single/list/bulk public reads use `SELECT client, class from clients
 where user = ?`, excluding private/MLS metadata. Local requests pool50 and
@@ -764,6 +764,10 @@ untilV16, specific qualified all versions, legacy bare bulk/V2 wrapped bulk
 and federation `get-user-clients` are wired. Public GET has no native Z-User
 requirement; bulk has one, ignored after header validation. Request limits1..500
 apply to public bulk, not internal federation. Payload exposes only ID/class.
-Focused units and fourteen exact native/Go controls added; SDK/backend results
-pending. MLS read RPCs, malformed-parser details and previous fidelity gaps
+Focused units and fourteen exact native/Go controls pass at source6351c13e9,
+service dce9b0a9. Full pinned Go/static and prior13 federation/5 single/5 multi/
+7 lifecycle/17 paired plus actual client/prekey/MLS switchback pass. All25 exits0/
+runner0/cleanup0/independent namespace empty; no original suite/new native build
+claim. [Evidence](../../../go/services/brig/qualification/evidence/public-user-clients/README.md).
+MLS read RPCs, malformed-parser details and previous fidelity gaps
 remain unfinished; this does not publish compatibility or whole acceptance.
