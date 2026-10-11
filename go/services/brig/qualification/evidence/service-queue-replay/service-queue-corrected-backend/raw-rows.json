@@ -1,0 +1,1 @@
+{"backend":"postgresql","counts":{"bot_association":1,"clients":1,"mls_public_keys":1,"prefix":1,"prekeys":2,"properties":1,"service":1,"tags":7,"team_bot_association":1,"user":1,"whitelist":1,"whitelist_rev":1},"name":"Synthetic service queue bot","provider":"37713a9c-813b-4504-9466-2c6c29329668","service":"e0037bfc-a985-4dc8-8fa9-712f9300a223","status":3}

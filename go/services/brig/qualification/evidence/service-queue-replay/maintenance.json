@@ -1,0 +1,26 @@
+[
+  {
+    "artifact": "/home/operator/.cache/wire-migration/brig-20261010/service-queue-inactive-archives.json",
+    "sha256": "ce215c0bef427d1b3991a9acb44f7aa9296cfcf3252d0c32befc70da49743074"
+  },
+  {
+    "artifact": "/home/operator/.cache/wire-migration/brig-20261010/service-queue-failed-fixture-archive.json",
+    "sha256": "7a0ffd8a8ff867a7fd4b19ca89c1678defaf358d86fbc7a442af2bc47e159f42"
+  },
+  {
+    "artifact": "/home/operator/.cache/wire-migration/brig-20261010/service-queue-corrected-failed-archive.json",
+    "sha256": "8a77d95b63f4b02b96a33a77790918e830e4559bbb08c0e3d562fbcb60c223df"
+  },
+  {
+    "artifact": "/home/operator/.cache/wire-migration/brig-20261010/service-queue-failed-archive-relocation.json",
+    "sha256": "63d19c8c75fec149ea2a4a2796414b7abbf2a26494cc22db1a5ded6e19384758"
+  },
+  {
+    "artifact": "/home/operator/.cache/wire-migration/brig-20261010/service-queue-corrected-archive-relocation.json",
+    "sha256": "079bdf05ab993bb4c83957586cbfaa80a7ce1ba150b6de690b45c293ac22280e"
+  },
+  {
+    "artifact": "/home/operator/.cache/wire-migration/brig-20261010/service-queue-old-controller-archives.json",
+    "sha256": "e4a05ef644ec4ec43f6a84bf6e914648e9786d2299520db45cc95473dca9868b"
+  }
+]

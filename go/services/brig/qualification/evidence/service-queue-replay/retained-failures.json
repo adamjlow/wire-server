@@ -1,0 +1,14 @@
+[
+  {
+    "name": "service-queue-backend",
+    "reason": "CQL associations attached while configured native users live in PostgreSQL; native metadata cleanup succeeded but bot rows were misplaced",
+    "result": "failed",
+    "production_changed": false
+  },
+  {
+    "name": "service-queue-corrected-backend",
+    "reason": "Verified PG actor is Ephemeral3 before source-defined bot attachment; observer pre-enqueue requires native bot Active0",
+    "result": "failed",
+    "production_changed": false
+  }
+]

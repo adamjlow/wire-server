@@ -1704,3 +1704,14 @@ both initial status0/type1 and retained type1 after deletion. Do not relax the
 expected bot status or modify Haskell/Go production behavior. Retain both failed
 fixtures/receipts and empty cleanup; native service metadata admission already
 passed in the initial trial. Final whole acceptance remains incomplete.
+
+At source0079c6ae0/serviceb8256ee1/taggeda4939b68, [actual queue proof](../../../go/services/brig/qualification/evidence/service-queue-replay/README.md)
+passes native cleanup, Go consumption of native work and metadata-absent replay,
+native deleted-status plus identical independent raw state after switchback,
+native consumption of Go-created work and replay. PG users/CQL metadata+clients,
+actual Galley404 and authenticated plaintext ActiveMQ/random prekeys. All22
+unchanged originals and previous durable controls pass; all25 managed exits0,
+runner/cleanup0 and independent empty. Keep two failed fixtures and disk preflight
+explicit; source-defined active/typeBot/activated/no-expiry attachment fixes only
+helper setup. Actual Galley200/TLS/optimistic-Dynamo/all-three-mode service queue
+and final whole535/eight-Go gates remain open. No new production Go/Haskell change.

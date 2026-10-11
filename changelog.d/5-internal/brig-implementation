@@ -6,3 +6,7 @@ remain pending. Retain rejected direct fixture mount and restore approved mount.
 Add an opt-in owned actual service/bot queue fixture for native and Go cleanup,
 ACK/replay, retained bot identity/MLS/properties and durable switchback. Actual
 backend execution remains required; no whole-service qualification is implied.
+Actual authenticated service/bot queue cleanup now passes native-Go-native work,
+ACK/replay, PG-user/CQL metadata effects and retained bot identity/type/MLS/property
+row witnesses, plus22 unchanged originals. Retain helper setup/preflight failures;
+Galley200, other queue configurations and whole Brig acceptance remain pending.

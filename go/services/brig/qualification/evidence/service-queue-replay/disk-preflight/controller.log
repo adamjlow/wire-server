@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/home/operator/wire-server/go/services/brig/qualification/paired_reads.py", line 1935, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/home/operator/wire-server/go/services/brig/qualification/paired_reads.py", line 1876, in main
+    raise ValueError('owned dependency disk floor unmet')
+ValueError: owned dependency disk floor unmet
