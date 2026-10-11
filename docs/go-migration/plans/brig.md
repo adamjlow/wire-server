@@ -791,3 +791,17 @@ cleanup0/independent empty, no original suite claim.
 [Evidence](../../../go/services/brig/qualification/evidence/mls-client-reads/README.md). Positive/expired/
 malformed real CQL package side-effects still need direct qualification, and
 upload/claim/count public APIs remain unfinished; no whole-service claim.
+
+### Public MLS count and actual row cleanup witness (checks pending)
+
+Public count uses native FromV5 optional/default1 untilV8, required ciphersuite
+fromV8, Z-User, enableMLS guard before suite support, count-only storage effects
+and {count:n}. Existing internal read reuses the same count implementation.
+Owned tagged synthetic CQL fixture helper (no candidate decoder) stages usable/
+expired/future/non-key-source/malformed rows and reads exact retained ref/data.
+Native and Go must both count1, remove the three decoded unusable rows, retain
+usable and malformed bytes, and let native consume Go-retained state after
+switchback. New helper binary and receipt are explicitly identified and mounted
+only in the owned observer; original suite/oracle/fixtures unchanged. Full
+pinned checks and actual database witness pending; upload/claim/delete and
+original MLS test execution still unfinished.

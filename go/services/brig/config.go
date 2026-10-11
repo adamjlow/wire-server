@@ -75,6 +75,7 @@ type Config struct {
 		} `yaml:"authSettings"`
 	} `yaml:"zauth"`
 	Settings struct {
+		EnableMLS                 bool                      `yaml:"setEnableMLS"`
 		KeyPackageMaximumLifetime *mlsLifetimeMaximum       `yaml:"setKeyPackageMaximumLifetime"`
 		MaxConversationSize       *uint16                   `yaml:"setMaxConvSize"`
 		MaxPermanentClients       *int                      `yaml:"setUserMaxPermClients"`

@@ -32,6 +32,9 @@ func mlsSuiteHex(text string) (uint16, bool) {
 	return value, true
 }
 func (s mlsClientReads) handle(w http.ResponseWriter, r *http.Request, path string) bool {
+	if s.handlePublicCount(w, r, path) {
+		return true
+	}
 	federation := path == "/federation/get-mls-clients" || path == "/federation/get-mls-client"
 	single := path == "/federation/get-mls-client"
 	var userText, client string
@@ -157,6 +160,59 @@ func (s mlsClientReads) handle(w http.ResponseWriter, r *http.Request, path stri
 		} else {
 			readJSON(w, r, result)
 		}
+	}
+	return true
+}
+
+func (s mlsClientReads) handlePublicCount(w http.ResponseWriter, r *http.Request, path string) bool {
+	parts := strings.Split(strings.Trim(path, "/"), "/")
+	if len(parts) != 5 || parts[0] != "mls" || parts[1] != "key-packages" || parts[2] != "self" || parts[4] != "count" {
+		return false
+	}
+	version, _ := strconv.Atoi(r.Header.Get("X-Wire-API-Version"))
+	if version < 5 {
+		return false
+	}
+	if r.Method != http.MethodGet && r.Method != http.MethodHead {
+		w.WriteHeader(405)
+		return true
+	}
+	user, ok := userHeader(w, r)
+	if !ok {
+		return true
+	}
+	client, err := parseClientID(parts[3])
+	if err != nil {
+		routeParseError(w, "invalid client ID")
+		return true
+	}
+	suite := uint16(1)
+	values, present := r.URL.Query()["ciphersuite"]
+	if (!present || len(values) == 0) && version >= 8 {
+		routeParseError(w, "Query parameter ciphersuite is required")
+		return true
+	}
+	if present && len(values) > 0 {
+		var ok bool
+		suite, ok = mlsSuiteHex(values[0])
+		if !ok {
+			routeParseError(w, "Invalid ciphersuite")
+			return true
+		}
+	}
+	if !s.enabled {
+		authenticationWireError(w, 400, "mls-not-enabled", "MLS is not configured on this backend. See docs.wire.com for instructions on how to enable it")
+		return true
+	}
+	if mlsClientScheme(suite) == "" {
+		authenticationWireError(w, 400, "mls-protocol-error", "Unknown ciphersuite")
+		return true
+	}
+	count, err := s.count(r.Context(), user, client, suite)
+	if err != nil {
+		authenticationHTTPError(w, err)
+	} else {
+		readJSON(w, r, map[string]int64{"count": count})
 	}
 	return true
 }

@@ -23,6 +23,7 @@ type mlsClientReads struct {
 	remove   func(context.Context, gocql.UUID, string, uint16, [][]byte) error
 	now      func() time.Time
 	maximum  *mlsLifetimeMaximum
+	enabled  bool
 }
 
 func mlsClientScheme(suite uint16) string {
@@ -58,8 +59,8 @@ func (s clientStore) deleteMLSPackages(ctx context.Context, user gocql.UUID, cli
 	// Native executes this query even with an empty reference list.
 	return s.cassandra.Query(`DELETE FROM mls_key_packages WHERE user = ? AND client = ? AND cipher_suite = ? AND ref IN ?`, user, client, int32(suite), refs).WithContext(ctx).Consistency(gocql.LocalQuorum).RetryPolicy(&gocql.SimpleRetryPolicy{NumRetries: 5}).Exec()
 }
-func (s mlsClientReads) single(ctx context.Context, user gocql.UUID, client string, suite uint16) (mlsClientInfo, error) {
-	result := mlsClientInfo{ID: client}
+func (s mlsClientReads) count(ctx context.Context, user gocql.UUID, client string, suite uint16) (int64, error) {
+	var result int64
 	rows, err := s.packages(ctx, user, client, suite)
 	if err != nil {
 		return result, err
@@ -72,7 +73,7 @@ func (s mlsClientReads) single(ctx context.Context, user gocql.UUID, client stri
 			continue
 		} // malformed rows are retained, not counted
 		if lifetime.usable(now, s.maximum) {
-			result.MLS = true
+			result++
 		} else {
 			expired = append(expired, row.ref)
 		}
@@ -80,6 +81,15 @@ func (s mlsClientReads) single(ctx context.Context, user gocql.UUID, client stri
 	if err := s.remove(ctx, user, client, suite, expired); err != nil {
 		return result, err
 	}
+	return result, nil
+}
+func (s mlsClientReads) single(ctx context.Context, user gocql.UUID, client string, suite uint16) (mlsClientInfo, error) {
+	result := mlsClientInfo{ID: client}
+	count, err := s.count(ctx, user, client, suite)
+	if err != nil {
+		return result, err
+	}
+	result.MLS = count > 0
 	stored, err := s.get(ctx, user, client)
 	if err != nil {
 		return result, err

@@ -26,7 +26,7 @@ def checked(args, timeout=30):
     return result.stdout.strip()
 
 
-def inside(gundeck_path=None, access_switchback=False, login_contract=False, activation_contract=False, registration_contract=False, saml_registration_contract=False, public_registration_contract=False, password_reset_contract=False, password_change_contract=False, ses_feedback_contract=False, properties_contract=False, client_update_contract=False, client_registration_contract=False, client_lifecycle_contract=False):
+def inside(gundeck_path=None, access_switchback=False, login_contract=False, activation_contract=False, registration_contract=False, saml_registration_contract=False, public_registration_contract=False, password_reset_contract=False, password_change_contract=False, ses_feedback_contract=False, properties_contract=False, client_update_contract=False, client_registration_contract=False, client_lifecycle_contract=False, store_fixture_path=None):
     registration_contract = registration_contract or saml_registration_contract
     if os.getuid() != 65534 or os.environ.get('WIRE_E2E_DISPOSABLE') != '1':
         raise ValueError('owned nonroot Docker runner required')
@@ -60,6 +60,19 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             return result, response.getheader('Set-Cookie')
         finally:
             connection.close()
+
+    def mls_row_fixture(action, phase):
+        assert store_fixture_path, 'identified tagged store fixture required'
+        output='/reports/mls-rows-'+phase+'.json'
+        manifest=Path('/reports/mls-rows-'+phase+'-input.json')
+        manifest.write_text(json.dumps({'User':lifecycle_user,'Client':lifecycle_id,'Action':action,'Rows':mls_rows,'Output':output}))
+        env={**os.environ,'BRIG_STORE_CONFIG':str(runtime.WORK/'brig-static-0.json'),'BRIG_MLS_ROWS_INPUT':str(manifest)}
+        with open('/reports/mls-rows-'+phase+'.log','w') as log:
+            process=subprocess.run([store_fixture_path,'-test.run=^TestOwnedMLSRowFixture$','-test.v','-test.timeout=45s'],env=env,stdout=log,stderr=subprocess.STDOUT,timeout=50)
+        assert process.returncode==0, 'owned MLS row fixture failed: '+phase
+        rows=json.loads(Path(output).read_text())
+        report['mls_rows_'+phase]=rows
+        return rows
 
     def ready(process):
         for _ in range(60):
@@ -355,10 +368,31 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
                 ('POST','/federation/get-mls-client',{'Wire-Origin-Domain':remote_domain,'X-Wire-API-Version':'3'},{'user_id':lifecycle_user,'client_id':lifecycle_id,'cipher_suite':1}),
                 ('POST','/federation/get-mls-client',{'Wire-Origin-Domain':remote_domain,'X-Wire-API-Version':'3'},{'user_id':lifecycle_user,'client_id':'f','cipher_suite':1}),
                 ('POST','/federation/get-mls-client',{'Wire-Origin-Domain':remote_domain,'X-Wire-API-Version':'3'},{'user_id':lifecycle_user,'client_id':lifecycle_id,'cipher_suite':3})]
+            count_path='/mls/key-packages/self/'+lifecycle_id+'/count'
+            count_cases=[('GET','/v4'+count_path+'?ciphersuite=0x1',lifecycle_headers),('GET','/v7'+count_path,lifecycle_headers),('GET','/v19'+count_path+'?ciphersuite=0x1',lifecycle_headers),('GET','/v19'+count_path+'?ciphersuite=0x3',lifecycle_headers),('GET','/v19/mls/key-packages/self/f/count?ciphersuite=0x1',lifecycle_headers)]
+            if store_fixture_path:
+                import struct
+                anchor=int(time.time())
+                def package(before,after,source=1):
+                    value=bytes([0,1,0,1,0,0,0,0,1,0,0,0,0,0,0,source])
+                    if source==1:value+=struct.pack('>QQ',before,after)
+                    return (value+bytes(4)).hex()
+                mls_rows=[{'Ref':'01','Data':package(0,anchor+3600)},{'Ref':'02','Data':package(0,1)},{'Ref':'03','Data':package(anchor+3600,anchor+7200)},{'Ref':'04','Data':package(0,0,2)},{'Ref':'05','Data':'00'}]
+                staged=mls_row_fixture('stage','native-staged')
+                assert staged==[{'ref':row['Ref'],'data':row['Data']} for row in mls_rows], 'native MLS stage bytes changed'
+                row_count_case=('GET','/v19'+count_path+'?ciphersuite=0x1',lifecycle_headers)
+                row_count_native=request(*row_count_case)[0];report['mls_rows_native_count']=row_count_native
+                assert row_count_native['status']==200 and row_count_native['json']=={'count':1}, 'native usable/malformed count policy changed'
+                native_rows_retained=mls_row_fixture('read','native-retained')
+                assert native_rows_retained==[{'ref':row['Ref'],'data':row['Data']} for row in (mls_rows[0],mls_rows[4])], 'native MLS cleanup retention policy changed'
+            native_count_controls=[request(*case)[0] for case in count_cases]
+            report['mls_count_native_controls']=native_count_controls
+            assert [r['status'] for r in native_count_controls]==[404,200,200,400,200], 'native public MLS count reference changed'
+            assert native_count_controls[1]['json']=={'count':1 if store_fixture_path else 0}, 'native MLS count reference changed'
             native_mls_controls=[request(*case)[0] for case in mls_cases]
             report['mls_client_native_controls']=native_mls_controls
             assert [r['status'] for r in native_mls_controls]==[200,200,200,200,400,200,200,200,200,400], 'native MLS client reference changed'
-            assert native_mls_controls[1]['json']['mls_signature_key']=='AQI=' and native_mls_controls[1]['json']['mls'] is False, 'native MLS signature/count reference changed'
+            assert native_mls_controls[1]['json']['mls_signature_key']=='AQI=' and native_mls_controls[1]['json']['mls'] is bool(store_fixture_path), 'native MLS signature/count reference changed'
             assert native_mls_controls[2]['json']=={'id':'f','mls':False}, 'native missing MLS client reference changed'
             restaged,_=request('POST','/v19/clients',lifecycle_headers,{**native_body,'mls_public_keys':{}})
             report['prekey_native_restage']=restaged
@@ -634,6 +668,16 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             public_client_mismatches=[{'case':i,'fields':[k for k in fields(ref) if ref.get(k)!=actual.get(k)]} for i,(ref,actual) in enumerate(zip(native_public_client_controls,go_public_client_controls)) if not same(ref,actual)]
             report['public_client_mismatches']=public_client_mismatches
             assert not public_client_mismatches, 'native public client responses mismatch'
+            if store_fixture_path:
+                assert mls_row_fixture('read','go-reads-native')==native_rows_retained, 'Go lost native MLS retained bytes'
+                mls_row_fixture('stage','go-staged')
+                go_row_count=request(*row_count_case)[0];report['mls_rows_go_count']=go_row_count
+                assert same(row_count_native,go_row_count), 'native/Go MLS usable count mismatch'
+                go_rows_retained=mls_row_fixture('read','go-retained')
+                assert go_rows_retained==native_rows_retained, 'native/Go MLS retained bytes mismatch'
+            go_count_controls=[request(*case)[0] for case in count_cases]
+            report['mls_count_go_controls']=go_count_controls
+            assert all(same(ref,actual) for ref,actual in zip(native_count_controls,go_count_controls)), 'native public MLS count controls mismatch'
             go_mls_controls=[request(*case)[0] for case in mls_cases]
             report['mls_client_go_controls']=go_mls_controls
             mls_client_mismatches=[{'case':i,'fields':[k for k in fields(ref) if ref.get(k)!=actual.get(k)]} for i,(ref,actual) in enumerate(zip(native_mls_controls,go_mls_controls)) if not same(ref,actual)]
@@ -675,6 +719,11 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             retained,_=request('GET',lifecycle_path,lifecycle_headers)
             report['client_lifecycle_native_retained_mls']=retained
             assert retained['status']==200 and retained['json']['mls_public_keys']=={'ed25519':'AQI='}, 'Go deletion changed native MLS retention'
+            if store_fixture_path:
+                native_final_count=request(*row_count_case)[0];report['mls_rows_native_switchback_count']=native_final_count
+                assert same(row_count_native,native_final_count), 'native lost Go MLS count state'
+                assert mls_row_fixture('read','native-switchback')==go_rows_retained, 'native lost Go retained MLS bytes'
+                report['mls_rows_switchback']={'same_initialized_stores':True,'native_go_counts_equal':True,'native_go_cleanup_bytes_equal':True,'native_reads_go_retained_state':True,'expired_future_non_key_source_deleted':True,'malformed_retained':True}
             report['client_lifecycle_switchback']={'same_initialized_stores':True,'native_accepts_go_creation':True,'native_accepts_go_deletion':True,'native_claims_go_created_prekey':True,'native_mls_retention_preserved':True}
         if client_update_contract:
             fields=lambda record: ('status','content_type','json' if 'json' in record else 'body')
@@ -1279,6 +1328,9 @@ def main():
     parser.add_argument('--gundeck-binary', type=Path)
     parser.add_argument('--gundeck-receipt', type=Path)
     parser.add_argument('--gundeck-path')
+    parser.add_argument('--store-fixture-binary',type=Path)
+    parser.add_argument('--store-fixture-receipt',type=Path)
+    parser.add_argument('--store-fixture-path')
     parser.add_argument('--access-switchback', action='store_true')
     parser.add_argument('--login-contract', action='store_true')
     parser.add_argument('--activation-contract', action='store_true')
@@ -1312,7 +1364,7 @@ def main():
     if args.client_lifecycle_contract and any((args.registration_contract,args.saml_registration_contract,args.activation_contract,args.access_switchback,args.login_contract,args.public_registration_contract,args.password_reset_contract,args.password_change_contract,args.ses_feedback_contract,args.properties_contract,args.client_update_contract,args.client_registration_contract)):
         parser.error('client lifecycle observation runs separately')
     if args.in_container:
-        return inside(args.gundeck_path, args.access_switchback, args.login_contract, args.activation_contract, args.registration_contract, args.saml_registration_contract, args.public_registration_contract, args.password_reset_contract, args.password_change_contract, args.ses_feedback_contract, args.properties_contract, args.client_update_contract, args.client_registration_contract, args.client_lifecycle_contract)
+        return inside(args.gundeck_path, args.access_switchback, args.login_contract, args.activation_contract, args.registration_contract, args.saml_registration_contract, args.public_registration_contract, args.password_reset_contract, args.password_change_contract, args.ses_feedback_contract, args.properties_contract, args.client_update_contract, args.client_registration_contract, args.client_lifecycle_contract, args.store_fixture_path)
     if args.binary is None or args.build_receipt is None or args.output is None:
         parser.error('identified binary, receipt and new output required')
     sys.path.insert(0, str(ROOT / 'tools/parity/docker'))
@@ -1370,6 +1422,14 @@ def main():
                                   'target': '/candidate/gundeck', 'read_only': True})
     runner['volumes'].append({'type': 'bind', 'source': str(args.binary.resolve(strict=True)),
                               'target': '/candidate/brig', 'read_only': True})
+    if bool(args.store_fixture_binary)!=bool(args.store_fixture_receipt):
+        raise ValueError('identified store fixture binary and receipt required together')
+    if args.store_fixture_binary:
+        if not args.client_lifecycle_contract:raise ValueError('MLS store fixture requires client lifecycle observation')
+        fixture=environment.identified_candidate(args.store_fixture_binary,args.store_fixture_receipt)
+        assert json.loads(args.store_fixture_receipt.read_text())['source_revision']==revision, 'current store fixture required'
+        runner['volumes'].append({'type':'bind','source':str(args.store_fixture_binary.resolve(strict=True)),'target':'/candidate/stores.test','read_only':True})
+        runner['command']+=['--store-fixture-path','/candidate/stores.test']
     environment.identified_candidate(args.binary, args.build_receipt)
     environment.validate_isolation(spec)
     if shutil.disk_usage(output).free < 2 * 1024**3:

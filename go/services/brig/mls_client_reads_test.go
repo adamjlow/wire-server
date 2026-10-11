@@ -138,3 +138,34 @@ func TestMLSFederationVersionsAndMissingClient(t *testing.T) {
 		t.Fatalf("legacy suite or invalid request effects changed: %v", suiteCalls)
 	}
 }
+
+func TestPublicMLSCountFeatureAndVersions(t *testing.T) {
+	user := gocql.TimeUUID()
+	calls := 0
+	s := mlsClientReads{enabled: true, now: time.Now, packages: func(context.Context, gocql.UUID, string, uint16) ([]mlsPackageRow, error) { calls++; return nil, nil }, remove: func(context.Context, gocql.UUID, string, uint16, [][]byte) error { return nil }}
+	for _, tc := range []struct {
+		version, query string
+		enabled        bool
+		status         int
+		handled        bool
+	}{
+		{"4", "?ciphersuite=0x1", true, 0, false}, {"7", "", true, 200, true}, {"19", "?ciphersuite=0x1", true, 200, true}, {"19", "", true, 400, true}, {"19", "?ciphersuite=0x3", true, 400, true}, {"19", "?ciphersuite=0x1", false, 400, true},
+	} {
+		s.enabled = tc.enabled
+		r := httptest.NewRequest("GET", "/mls/key-packages/self/f/count"+tc.query, nil)
+		r.Header.Set("X-Wire-API-Version", tc.version)
+		r.Header.Set("Z-User", user.String())
+		w := httptest.NewRecorder()
+		before := calls
+		handled := s.handle(w, r, "/mls/key-packages/self/f/count")
+		if handled != tc.handled || handled && w.Code != tc.status {
+			t.Fatalf("v%s: handled=%v %d %s", tc.version, handled, w.Code, w.Body.String())
+		}
+		if tc.status != 200 && calls != before {
+			t.Fatal("invalid/disabled count accessed storage")
+		}
+	}
+	if calls != 2 {
+		t.Fatalf("count calls=%d", calls)
+	}
+}
