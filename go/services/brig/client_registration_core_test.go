@@ -83,3 +83,18 @@ func TestClientRegistrationReplacementAndPartialFailure(t *testing.T) {
 		t.Fatalf("invalid later prekey must prevent all writes: %v %v", err, events)
 	}
 }
+
+func TestClientRegistrationInternalReauthenticationPolicy(t *testing.T) {
+	key := uncheckedPrekey{ID: 7, Key: "pQABAQcCoQBYIDXdN8VlKb5lbgPmoDPLPyqNIEyShG4oT/DlW0peRRZUA6EAoQBYILLf1TIwSB62q69Ojs/X1tzJ+dYHNAw4QbW/7TC5vSZqBPY="}
+	events := []string{}
+	store := &registrationClientFake{clients: []storedClient{{ID: "a", Type: 0}}, events: &events}
+	core := clientRegistrationCore{store: store, maxPermanent: 7, now: time.Now, reauthPolicy: func(count int, exists bool) bool {
+		if count != 1 || exists {
+			t.Fatal("policy did not receive native same-type count/upsert")
+		}
+		return false
+	}}
+	if _, _, _, err := core.upsert(context.Background(), gocql.UUID{}, clientRegistrationRequest{client: storedClient{Type: 0}, last: key}); err != nil {
+		t.Fatal("explicit internal policy ignored", err)
+	}
+}

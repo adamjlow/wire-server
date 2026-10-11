@@ -19,10 +19,11 @@ type clientRegistrationStore interface {
 }
 
 type clientRegistrationRequest struct {
-	client   storedClient
-	last     uncheckedPrekey
-	prekeys  []uncheckedPrekey
-	password *string
+	client           storedClient
+	last             uncheckedPrekey
+	prekeys          []uncheckedPrekey
+	password         *string
+	verificationCode *string
 }
 
 func (clientRegistrationRequest) String() string { return "<ClientRegistrationRequest>" }
@@ -32,6 +33,9 @@ type clientRegistrationCore struct {
 	maxPermanent   int
 	now            func() time.Time
 	reauthenticate func(context.Context, gocql.UUID, *string) error
+	// Native internal handlers may supply AddClientWithPolicy. Nil selects
+	// reAuthForNewClients, the public/default policy.
+	reauthPolicy func(int, bool) bool
 }
 
 func (s clientRegistrationCore) upsert(ctx context.Context, user gocql.UUID, request clientRegistrationRequest) (storedClient, []storedClient, int, error) {
@@ -49,7 +53,11 @@ func (s clientRegistrationCore) upsert(ctx context.Context, user gocql.UUID, req
 			exists = exists || client.ID == id
 		}
 	}
-	if len(typed) > 0 && !exists {
+	needsAuth := len(typed) > 0 && !exists
+	if s.reauthPolicy != nil {
+		needsAuth = s.reauthPolicy(len(typed), exists)
+	}
+	if needsAuth {
 		if s.reauthenticate == nil {
 			return zero, nil, 0, errors.New("client reauthentication unavailable")
 		}

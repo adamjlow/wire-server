@@ -457,3 +457,19 @@ cleanup, Galley, synchronous event and new-client mail. Add custom reauth
 policy for native internal handlers when needed. Then original compiled
 Client tests and same-state native registration/deletion witness. Whole
 Brig remains active/unavailable and Galley follows actual completion.
+
+
+Client registration request/peer composition slice: reuse native update-body
+key/capability/MLS decoder but enforce required NewClient prekeys/lastkey/type;
+retain native first duplicate JSON property, decimal ID, password6, optional
+class/cookie/model/verification-code validation and nullable absent capabilities.
+Legalhold parses before public policy (forbid public/add implicit consent
+internally remains to wire). AddClientWithPolicy uses explicit internal policy
+while nil remains native default. Actual Galley newClient is POST/i/clients/:id
+with Z-User/request context/retries and no body; ClientAdded synchronous real
+Gundeck request uses native V6 client event, RouteAny/all-client/origin connection,
+chunkedJSON/no retry and propagates failure. Finite decoder/version/policy and
+actual HTTP failure/transport controls, full pinned Go checks/static units;
+not public POST or native-stack/state/original Client qualification. Preserve
+whole registration/delete/code/mail/queue composition and final acceptance
+requirements; no fixture/oracle/schema/default changes.
