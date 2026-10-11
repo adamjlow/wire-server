@@ -288,7 +288,7 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             native_positive,_=request('PUT','/v19/clients/'+reference_id,reference_headers,positive_update)
             report['native_client_update_positive']=native_positive
             assert native_positive['status']==200, 'native positive client update failed'
-            native_claim,_=request('GET','/v19/users/'+reference_user+'/prekeys/'+reference_id,reference_headers)
+            native_claim,_=request('GET','/v19/users/'+peers['brig']['optSettings']['setFederationDomain']+'/'+reference_user+'/prekeys/'+reference_id,reference_headers)
             report['native_client_update_claim_reference']=native_claim
             assert native_claim['status']==200 and native_claim['json']['prekey']=={'id':7,'key':replacement_key}, 'native updated prekey claim failed'
             report['client_update_consumable_config']=peers['brig']['optSettings']['consumableNotifications']
@@ -505,7 +505,7 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             native_state=[request('GET',update_path,update_headers)[0],request('GET',update_path+'/prekeys',update_headers)[0]]
             report['native_reads_go_client_update']=native_state
             assert all(all(ref.get(k)==actual.get(k) for k in fields(ref)) for ref,actual in zip(go_state,native_state)), 'native lost Go client update state'
-            native_claim,_=request('GET','/v19/users/'+update_user+'/prekeys/'+update_id,update_headers)
+            native_claim,_=request('GET','/v19/users/'+peers['brig']['optSettings']['setFederationDomain']+'/'+update_user+'/prekeys/'+update_id,update_headers)
             report['native_claims_go_updated_prekey']=native_claim
             assert native_claim['status']==200 and native_claim['json']['prekey']=={'id':7,'key':replacement_key}, 'native could not consume Go updated prekey'
             report['client_update_switchback']={'same_initialized_stores':True,'native_accepts_go_client_state':True,'native_claims_go_updated_prekey':True}
