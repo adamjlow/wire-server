@@ -204,6 +204,7 @@ func Run(ctx context.Context, c Config) error {
 	}
 	business := brigReadHandlers{config: c, users: userStore{userAuthStore{cassandra: cassandra, postgres: postgres, mode: c.Migration["user"], acquisition: time.Duration(c.PostgresPool.Acquisition)}}, sessions: sessionStore{cassandra}, peers: brigPeers{client: peerHTTP, galley: c.Galley, gundeck: c.Gundeck}}
 	business.clients = &clientReadHandlers{store: clientStore{cassandra}}
+	business.bulkClients = &clientBulkReads{clients: (clientStore{cassandra}).list, ids: (clientStore{cassandra}).ids}
 	issuer := tokenIssuer{key: private, index: int64(c.ZAuth.Settings.KeyIndex), userTTL: c.ZAuth.Settings.UserTTL, sessionTTL: c.ZAuth.Settings.SessionTTL, accessTTL: c.ZAuth.Settings.AccessTTL, legalUserTTL: c.ZAuth.Settings.LegalHoldUserTTL, legalAccessTTL: c.ZAuth.Settings.LegalHoldAccessTTL}
 	business.access = &accessTokenService{lookup: business.sessions, sessions: sessionManager{store: business.sessions, issuer: issuer, renewAge: *c.Settings.CookieRenewAge}, keys: public, now: time.Now}
 	business.index = indexWriter

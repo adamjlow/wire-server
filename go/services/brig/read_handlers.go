@@ -27,6 +27,7 @@ type brigReadHandlers struct {
 	index        *searchIndexWriter
 	appIDs       func(context.Context, gocql.UUID) ([]string, error)
 	accounts     *accountLookup
+	bulkClients  *clientBulkReads
 }
 
 func readJSON(w http.ResponseWriter, r *http.Request, body any) {
@@ -63,6 +64,10 @@ func routeParseError(w http.ResponseWriter, message string) {
 }
 
 func (b brigReadHandlers) handle(w http.ResponseWriter, r *http.Request, path string) bool {
+	if b.bulkClients != nil && (path == "/i/clients" || path == "/i/clients/full") {
+		b.bulkClients.handle(w, r, path == "/i/clients/full")
+		return true
+	}
 	if path == "/i/users" && r.Method == http.MethodPost && b.registration != nil {
 		b.registration.handleInternal(w, r)
 		return true

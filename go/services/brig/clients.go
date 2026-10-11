@@ -167,6 +167,29 @@ func (s clientStore) list(ctx context.Context, user gocql.UUID) ([]storedClient,
 	return s.read(ctx, user, nil)
 }
 
+func (s clientStore) ids(ctx context.Context, user gocql.UUID) ([]string, error) {
+	// Native ID-only lookup does not read MLS keys or decode client metadata.
+	rows := s.cassandra.Query(`SELECT client FROM clients WHERE user=?`, user).WithContext(ctx).Consistency(gocql.LocalQuorum).RetryPolicy(&gocql.SimpleRetryPolicy{NumRetries: 1}).Iter()
+	result := []string{}
+	var id *string
+	for rows.Scan(&id) {
+		if id == nil {
+			_ = rows.Close()
+			return nil, errors.New("invalid stored client ID")
+		}
+		canonical, err := parseClientID(*id)
+		if err != nil {
+			_ = rows.Close()
+			return nil, err
+		}
+		result = append(result, canonical)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, errors.New("client ID lookup failed")
+	}
+	return result, nil
+}
+
 func (s clientStore) prekeyIDs(ctx context.Context, user gocql.UUID, id string) ([]uint16, error) {
 	canonical, err := parseClientID(id)
 	if err != nil {

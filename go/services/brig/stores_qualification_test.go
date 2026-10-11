@@ -265,6 +265,12 @@ func TestOwnedDurableStores(t *testing.T) {
 	if err != nil || len(listed) != 2 || listed[0].ID != "1" || listed[1].ID != "2" || listed[1].Class != nil || len(listed[1].Capabilities) != 0 || len(listed[1].PublicKeys) != 0 {
 		t.Fatal("actual client order/null defaults changed", err)
 	}
+	bulkClients := clientBulkReads{clients: clients.list, ids: clients.ids}
+	missingClientUser := user()
+	fullMap, err := bulkClients.lookup(ctx, []gocql.UUID{clientOwner, missingClientUser}, true)
+	if err != nil || len(fullMap) != 2 || len(fullMap[clientOwner.String()].([]map[string]any)) != len(listed) || len(fullMap[missingClientUser.String()].([]map[string]any)) != 0 {
+		t.Fatal("actual bulk clients lost populated/empty user map", err)
+	}
 	if absent, err := clients.get(ctx, clientOwner, "ff"); err != nil || absent != nil {
 		t.Fatal("missing client lookup changed", err)
 	}
@@ -282,6 +288,12 @@ func TestOwnedDurableStores(t *testing.T) {
 	}
 	if _, err := clients.get(ctx, clientOwner, "3"); err == nil {
 		t.Fatal("malformed orphan MLS key hidden by missing client")
+	}
+	if clientIDs, err := clients.ids(ctx, clientOwner); err != nil || len(clientIDs) != len(listed) {
+		t.Fatal("ID-only client query decoded unrelated orphan MLS keys", err)
+	}
+	if _, err := bulkClients.lookup(ctx, []gocql.UUID{clientOwner}, true); err == nil {
+		t.Fatal("bulk full-client query hid malformed orphan MLS keys")
 	}
 	// Email identity and activation/budgets remain Cassandra contracts even
 	// when PostgreSQL owns the user. Handle lookup has native PG precedence.
