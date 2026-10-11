@@ -1820,3 +1820,9 @@ native HTTP creates and activates the provider; compare native/Go read/update
 responses and restart native against Go-written state. Reuse unchanged original
 client/MLS assertions as regression, without claiming provider's original reset/
 service/bot families pass. Full remaining provider lifecycle remains required.
+
+Initial provider source8fa13621d compile/vet fails on the candidate's batch retry
+setter syntax. Correct to the pinned driver's RetryPolicy method; retain failed
+SDK receipt/log. No backend ran; SDK cleanup0/owned namespace empty. Owned Go
+cache now has a byte-verified disk copy (9114 files), preserving its original
+shared-memory copy; fresh output/cache use available disk space.

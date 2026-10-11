@@ -78,7 +78,7 @@ func (s providerAccountStore) lookup(ctx context.Context, id gocql.UUID) (*provi
 func (s providerAccountStore) update(ctx context.Context, id gocql.UUID, update providerProfileUpdate) error {
 	batch := s.cassandra.NewBatch(gocql.UnloggedBatch).WithContext(ctx)
 	batch.SetConsistency(gocql.LocalQuorum)
-	batch.RetryPolicy = &gocql.SimpleRetryPolicy{NumRetries: 5}
+	batch.RetryPolicy(&gocql.SimpleRetryPolicy{NumRetries: 5})
 	if update.name != nil {
 		batch.Query(`UPDATE provider SET name=? WHERE id=?`, *update.name, id)
 	}
