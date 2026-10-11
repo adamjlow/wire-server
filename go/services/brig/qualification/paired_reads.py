@@ -61,11 +61,11 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
         finally:
             connection.close()
 
-    def mls_row_fixture(action, phase):
+    def mls_row_fixture(action, phase, user=None, client=None):
         assert store_fixture_path, 'identified tagged store fixture required'
         output='/reports/mls-rows-'+phase+'.json'
         manifest=Path('/reports/mls-rows-'+phase+'-input.json')
-        manifest.write_text(json.dumps({'User':lifecycle_user,'Client':lifecycle_id,'Action':action,'Rows':mls_rows,'Output':output}))
+        manifest.write_text(json.dumps({'User':user or lifecycle_user,'Client':client or lifecycle_id,'Action':action,'Rows':mls_rows,'Output':output}))
         env={**os.environ,'BRIG_STORE_CONFIG':str(runtime.WORK/'brig-static-0.json'),'BRIG_MLS_ROWS_INPUT':str(manifest)}
         with open('/reports/mls-rows-'+phase+'.log','w') as log:
             process=subprocess.run([store_fixture_path,'-test.run=^TestOwnedMLSRowFixture$','-test.v','-test.timeout=45s'],env=env,stdout=log,stderr=subprocess.STDOUT,timeout=50)
@@ -385,6 +385,38 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
                 assert row_count_native['status']==200 and row_count_native['json']=={'count':1}, 'native usable/malformed count policy changed'
                 native_rows_retained=mls_row_fixture('read','native-retained')
                 assert native_rows_retained==[{'ref':row['Ref'],'data':row['Data']} for row in (mls_rows[0],mls_rows[4])], 'native MLS cleanup retention policy changed'
+            if mls_upload_originals and store_fixture_path:
+                signed_actor,_=request('POST','/i/users',body={'name':'Synthetic signed MLS switchback','password':password})
+                assert signed_actor['status']==201, 'native signed actor setup failed'
+                signed_user=signed_actor['json']['id'];signed_headers={'Z-User':signed_user,'Z-Connection':'synthetic-mls-switchback'}
+                signed_client_body={**native_body,'mls_public_keys':{}}
+                signed_created,_=request('POST','/v19/clients',signed_headers,signed_client_body)
+                assert signed_created['status']==201, 'native signed client setup failed'
+                signed_client=signed_created['json']['id']
+                manifest=Path('/reports/mls-signed-material-input.json');material_path=Path('/reports/mls-signed-material.json')
+                manifest.write_text(json.dumps({'User':signed_user,'Client':signed_client,'Output':str(material_path)}))
+                env={**os.environ,'BRIG_STORE_CONFIG':str(runtime.WORK/'brig-static-0.json'),'BRIG_MLS_ROWS_INPUT':str(manifest)}
+                with open('/reports/mls-signed-material.log','w') as log:
+                    generated=subprocess.run([store_fixture_path,'-test.run=^TestOwnedMLSSignMaterial$','-test.v','-test.timeout=45s'],env=env,stdout=log,stderr=subprocess.STDOUT,timeout=50)
+                assert generated.returncode==0, 'independent synthetic signed material failed'
+                material=json.loads(material_path.read_text())
+                signed_key,_=request('PUT','/v19/clients/'+signed_client,signed_headers,{'mls_public_keys':{'ed25519':material['public_key']}})
+                assert signed_key['status']==200, 'native signed client key setup failed'
+                signed_path='/v19/mls/key-packages/self/'+signed_client
+                signed_count_path=signed_path+'/count?ciphersuite=1'
+                signed_claim_path='/v19/mls/key-packages/claim/'+local_domain+'/'+signed_user+'?ciphersuite=1'
+                signed_valid={'key_packages':[material['valid']]};signed_invalid={'key_packages':[material['invalid_protocol']]}
+                signed_native_upload,_=request('POST',signed_path,signed_headers,signed_valid)
+                assert signed_native_upload['status']==201, 'native signed upload failed'
+                signed_native_rows=mls_row_fixture('read','signed-native-upload',signed_user,signed_client)
+                assert len(signed_native_rows)==1 and signed_native_rows[0]['data']==base64.b64decode(material['valid']).hex(), 'native signed upload bytes differ'
+                signed_native_rejection,_=request('PUT',signed_path+'?ciphersuites=1',signed_headers,signed_invalid)
+                report['mls_signed_native_rejected_replace']=signed_native_rejection
+                assert signed_native_rejection['status']==400 and signed_native_rejection['json']['label']=='mls-protocol-error' and signed_native_rejection['json']['message']=='Unsupported protocol version', 'native replacement validation priority changed'
+                assert mls_row_fixture('read','signed-native-rejected-replace',signed_user,signed_client)==[], 'native rejected replacement did not delete prior state'
+                restored,_=request('POST',signed_path,signed_headers,signed_valid)
+                assert restored==signed_native_upload, 'native signed restoration response differs'
+                assert mls_row_fixture('read','signed-native-restored',signed_user,signed_client)==signed_native_rows, 'native signed restoration bytes differ'
             native_count_controls=[request(*case)[0] for case in count_cases]
             report['mls_count_native_controls']=native_count_controls
             assert [r['status'] for r in native_count_controls]==[404,200,200,400,200], 'native public MLS count reference changed'
@@ -704,6 +736,22 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
                 assert same(row_count_native,request(*row_count_case)[0]), 'Go delete restage count changed'
                 assert mls_row_fixture('read','go-delete-restored')==native_rows_retained, 'Go delete restage bytes changed'
 
+            if mls_upload_originals and store_fixture_path:
+                assert mls_row_fixture('read','signed-go-reads-native',signed_user,signed_client)==signed_native_rows, 'Go lost signed native upload state'
+                signed_go_claim,_=request('POST',signed_claim_path,signed_headers)
+                report['mls_signed_go_claim_native']=signed_go_claim
+                expected_entry={'user':signed_user,'domain':local_domain,'client':signed_client,'key_package_ref':base64.b64encode(bytes.fromhex(signed_native_rows[0]['ref'])).decode(),'key_package':material['valid']}
+                assert signed_go_claim['status']==200 and signed_go_claim['json']=={'key_packages':[expected_entry]}, 'Go could not claim exact signed native package'
+                assert mls_row_fixture('read','signed-go-consumed-native',signed_user,signed_client)==[], 'Go claim left signed native package'
+                go_upload,_=request('POST',signed_path,signed_headers,signed_valid)
+                assert same(signed_native_upload,go_upload), 'Go signed upload response differs'
+                go_rejection,_=request('PUT',signed_path+'?ciphersuites=1',signed_headers,signed_invalid)
+                report['mls_signed_go_rejected_replace']=go_rejection
+                assert same(signed_native_rejection,go_rejection), 'native/Go destructive replacement error mismatch'
+                assert mls_row_fixture('read','signed-go-rejected-replace',signed_user,signed_client)==[], 'Go rejected replacement kept old state'
+                go_replace,_=request('PUT',signed_path+'?ciphersuites=1',signed_headers,signed_valid)
+                assert same(signed_native_upload,go_replace), 'Go signed replacement response differs'
+                assert mls_row_fixture('read','signed-go-replaced',signed_user,signed_client)==signed_native_rows, 'Go signed replacement changed ref or package bytes'
             if mls_upload_originals:
                 import runner,harness
                 required=['MLS.KeyPackage.'+name for name in ('testDeleteKeyPackages','testKeyPackageUploadNoKey','testUnsupportedCiphersuite','testClaimKeyPackagesEphemeralUser','testKeyPackageClaim','testKeyPackageSelfClaim','testKeyPackageMultipleCiphersuites','testKeyPackageRemoteClaim','testReplaceKeyPackages','testReplaceKeyPackagesV7')]+[f'MLS.KeyPackage.testKeyPackageCount[suite={suite}]' for suite in ('0x0001','0x0002','0x0005','0x0007')]
@@ -757,6 +805,15 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
                 assert same(row_count_native,native_final_count), 'native lost Go MLS count state'
                 assert mls_row_fixture('read','native-switchback')==go_rows_retained, 'native lost Go retained MLS bytes'
                 report['mls_rows_switchback']={'same_initialized_stores':True,'native_go_counts_equal':True,'native_go_cleanup_bytes_equal':True,'native_reads_go_retained_state':True,'expired_future_non_key_source_deleted':True,'malformed_retained':True}
+            if mls_upload_originals and store_fixture_path:
+                assert mls_row_fixture('read','signed-native-reads-go',signed_user,signed_client)==signed_native_rows, 'native lost Go signed replacement'
+                native_signed_count,_=request('GET',signed_count_path,signed_headers)
+                assert native_signed_count['status']==200 and native_signed_count['json']=={'count':1}, 'native did not count Go signed package'
+                final_claim,_=request('POST',signed_claim_path,signed_headers)
+                report['mls_signed_native_claims_go']=final_claim
+                assert same(signed_go_claim,final_claim), 'native could not claim exact Go signed replacement'
+                assert mls_row_fixture('read','signed-native-consumes-go',signed_user,signed_client)==[], 'native claim left Go signed replacement'
+                report['mls_signed_switchback']={'same_initialized_stores':True,'go_claims_native_signed_upload':True,'native_claims_go_signed_replacement':True,'exact_ref_and_raw_bytes':True,'native_go_destructive_replace_failure_equal':True}
             report['client_lifecycle_switchback']={'same_initialized_stores':True,'native_accepts_go_creation':True,'native_accepts_go_deletion':True,'native_claims_go_created_prekey':True,'native_mls_retention_preserved':True}
         if client_update_contract:
             fields=lambda record: ('status','content_type','json' if 'json' in record else 'body')

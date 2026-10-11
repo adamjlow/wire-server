@@ -893,3 +893,17 @@ original MLS cases and native legalhold/error/parser/version variants remain
 required. Claim lock is only process-wide and CQL delete unconditional: possible
 cross-replica duplicate selection is an inherited source-based concern, not a
 newly demonstrated exploit; do not change transaction policy here.
+
+### Signed MLS state and remote validation priority (checks pending)
+
+Remote bundle now normalizes native typed Set before package validation; add
+actual h2c regression with reversed client order and duplicate malformed entry
+to verify native low-client decoding-error priority. Tagged nonroot synthetic
+signer emits only public signed material using the independent test signer,
+without candidate validation or direct signed-row writes. Own observer creates
+a separate native actor/client/key through APIs, uploads a valid package, proves
+native invalid-protocol replacement deletes old state, restores, switches to
+Go, claims exact native package, proves same destructive rejection and writes
+a replacement, then switches back for native byte/count/claim/readback proof.
+All14 original tests and existing witnesses rerun with the same artifact.
+No qualification until actual controller result and cleanup are verified.

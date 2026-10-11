@@ -5,6 +5,7 @@ package brig
 
 import (
 	"context"
+	"encoding/base64"
 	"encoding/hex"
 	"encoding/json"
 	"os"
@@ -13,6 +14,45 @@ import (
 
 	"github.com/apache/cassandra-gocql-driver/v2"
 )
+
+// Generate signed synthetic public material using the independent test signer.
+// No private key is emitted and no candidate decoder/validator/store is used.
+func TestOwnedMLSSignMaterial(t *testing.T) {
+	if os.Getuid() != 65534 || os.Getenv("WIRE_E2E_DISPOSABLE") != "1" {
+		t.Fatal("owned nonroot runner required")
+	}
+	c, err := LoadConfig(os.Getenv("BRIG_STORE_CONFIG"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	var input struct{ User, Client, Output string }
+	raw, err := os.ReadFile(os.Getenv("BRIG_MLS_ROWS_INPUT"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if json.Unmarshal(raw, &input) != nil {
+		t.Fatal("invalid signed fixture manifest")
+	}
+	user, err := gocql.ParseUUID(input.User)
+	if err != nil {
+		t.Fatal(err)
+	}
+	client, err := parseClientID(input.Client)
+	if err != nil {
+		t.Fatal(err)
+	}
+	identity := user.String() + ":" + client + "@" + c.Settings.Domain
+	valid, key := signedMLSFixture(t, 1, identity, 1, false, false)
+	invalid, _ := signedMLSFixture(t, 1, identity, 2, false, false)
+	result := map[string]string{"public_key": base64.StdEncoding.EncodeToString(key), "valid": base64.StdEncoding.EncodeToString(valid), "invalid_protocol": base64.StdEncoding.EncodeToString(invalid)}
+	encoded, err := json.Marshal(result)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(input.Output, encoded, 0600); err != nil {
+		t.Fatal(err)
+	}
+}
 
 // Synthetic supplemental fixture writer/reader. Expected native HTTP and row
 // assertions live in the observer; this helper never calls candidate decoders.

@@ -3,7 +3,11 @@ package brig
 
 import (
 	"context"
+	"encoding/base64"
+	"encoding/json"
 	"errors"
+	"io"
+	"net/http"
 	"net/http/httptest"
 	"strings"
 	"sync"
@@ -12,6 +16,28 @@ import (
 
 	"github.com/apache/cassandra-gocql-driver/v2"
 )
+
+func TestMLSRemoteSetValidationUsesNativeOrder(t *testing.T) {
+	user := gocql.TimeUUID()
+	client := federationTestPeer(t, func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+		if strings.HasSuffix(r.URL.Path, "/api-version") {
+			_, _ = io.WriteString(w, `{"supported":[0],"supported_versions":[4]}`)
+			return
+		}
+		// Higher client first would produce an invalid-signature error if
+		// validation ran in input order. Native builds its Set first.
+		high := mlsBundleEntry{User: user.String(), Domain: "remote.example.com", Client: "b", Ref: "AQ==", Data: base64.StdEncoding.EncodeToString(syntheticMLSCountPackage(0, 101, 1))}
+		low := mlsBundleEntry{User: user.String(), Domain: "remote.example.com", Client: "a", Ref: "AQ==", Data: "AA=="}
+		_ = json.NewEncoder(w).Encode(mlsBundle{Entries: []mlsBundleEntry{high, low, low}})
+	})
+	s := mlsClientReads{remote: &client, domain: "example.com"}
+	_, err := s.claimRemote(context.Background(), user, user, "remote.example.com", 1, "synthetic")
+	var failure registrationAdmissionError
+	if !errors.As(err, &failure) || failure.Code != 409 || failure.Label != "decoding-error" {
+		t.Fatalf("native remote validation priority changed: %v", err)
+	}
+}
 
 func TestMLSClaimAdmissionSelfSkipAndConsumeOnce(t *testing.T) {
 	user := gocql.TimeUUID()

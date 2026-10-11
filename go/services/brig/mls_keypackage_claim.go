@@ -196,33 +196,6 @@ func (s mlsClientReads) claimRemote(ctx context.Context, claimant, target gocql.
 		if err != nil {
 			return result, err
 		}
-		p, err := decodeUploadedMLSPackage(data)
-		if err != nil {
-			return result, registrationAdmissionError{Code: 409, Label: "decoding-error", Message: "Key package could not be TLS-decoded"}
-		}
-		if err := p.validate(value.User + ":" + value.Client + "@" + value.Domain); err != nil {
-			return result, err
-		}
-		if err := p.lifetime.validationError(s.now(), s.maximum); err != nil {
-			return result, err
-		}
-		if value.Domain == s.domain {
-			uid, _ := gocql.ParseUUID(value.User)
-			key, present, err := s.key(ctx, uid, value.Client, mlsClientScheme(p.suite))
-			if err != nil {
-				return result, err
-			}
-			if !present {
-				return result, mlsProtocolFailure("No key associated to the given identity and signature scheme")
-			}
-			if !bytes.Equal(key, p.signatureKey) {
-				return result, mlsProtocolFailure("Unrecognised signature key")
-			}
-		}
-		actual := mlsHash(p.suite, append(mlsVector([]byte("MLS 1.0 KeyPackage Reference")), mlsVector(data)...))
-		if !bytes.Equal(ref, actual) {
-			return result, registrationAdmissionError{Code: 409, Label: "invalid-reference", Message: "Key package's reference does not match its data"}
-		}
 		value.Ref = base64.StdEncoding.EncodeToString(ref)
 		value.Data = base64.StdEncoding.EncodeToString(data)
 		result.Entries = append(result.Entries, value)
@@ -258,6 +231,37 @@ func (s mlsClientReads) claimRemote(ctx context.Context, claimant, target gocql.
 		}
 	}
 	result.Entries = deduplicated
+	for _, value := range result.Entries {
+		ref, _ := base64.StdEncoding.Strict().DecodeString(value.Ref)
+		data, _ := base64.StdEncoding.Strict().DecodeString(value.Data)
+		p, err := decodeUploadedMLSPackage(data)
+		if err != nil {
+			return result, registrationAdmissionError{Code: 409, Label: "decoding-error", Message: "Key package could not be TLS-decoded"}
+		}
+		if err := p.validate(value.User + ":" + value.Client + "@" + value.Domain); err != nil {
+			return result, err
+		}
+		if err := p.lifetime.validationError(s.now(), s.maximum); err != nil {
+			return result, err
+		}
+		if value.Domain == s.domain {
+			uid, _ := gocql.ParseUUID(value.User)
+			key, present, err := s.key(ctx, uid, value.Client, mlsClientScheme(p.suite))
+			if err != nil {
+				return result, err
+			}
+			if !present {
+				return result, mlsProtocolFailure("No key associated to the given identity and signature scheme")
+			}
+			if !bytes.Equal(key, p.signatureKey) {
+				return result, mlsProtocolFailure("Unrecognised signature key")
+			}
+		}
+		actual := mlsHash(p.suite, append(mlsVector([]byte("MLS 1.0 KeyPackage Reference")), mlsVector(data)...))
+		if !bytes.Equal(ref, actual) {
+			return result, registrationAdmissionError{Code: 409, Label: "invalid-reference", Message: "Key package's reference does not match its data"}
+		}
+	}
 	return result, nil
 }
 
