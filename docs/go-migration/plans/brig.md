@@ -1594,3 +1594,13 @@ Native service metadata remains CQL even when users select PG. Test real native
 schema lookup/nullable summary/invalid metadata, all seven subsets of three tags,
 reverse/forward whitelist removal and unrelated-service retention. No Haskell
 repair, new dependencies, altered shared oracle or successful queue stub.
+
+At sourcef42118429/service6b357d1a, pinned Go/static and actual native-schema
+metadata/index/whitelist controls pass; prior stores retained. [Metadata evidence](../../../go/services/brig/qualification/evidence/service-metadata/README.md)
+records full decoding, all7 subset deletes/Unicode keys, malformed admission,
+unrelated retention/replay and initial direct-dependency alignment failure.
+No dependency version changed. URL/PEM/Unicode-version native comparison remains
+unproven; corrupt>3-tag early failure differs from native unsafeRange timing,
+and very large native whitelist batches retain availability risk. These are
+recorded limitations, not contract exceptions or whole-service claims. Next
+typed Galley Event/RPC adapters, queue binding and actual replay.

@@ -1,0 +1,13 @@
+{
+  "controller_terminal_exits": {
+    "initial_sdk": 1,
+    "corrected_sdk": 0,
+    "native_schema": 0,
+    "stores": 0
+  },
+  "all_controller_cleanups": "empty",
+  "independent_containers": "empty",
+  "independent_networks": "empty",
+  "independent_store_volumes": "empty",
+  "store_namespace": "wire-brig-stores-e7bd9b0cffab4695890bed232bc37b8b"
+}
