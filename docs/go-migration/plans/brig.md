@@ -1168,3 +1168,15 @@ malformed stored keys and canceled retries cover the security/resource boundary.
 These adapters remain unbound until groups, events, persistent federation and
 verification/mail/replay complete the deletion pipeline. They do not qualify
 DELETE/self or fix the retained original22 failure by themselves.
+
+Deletion peer sourcea408e14a4/service76ee2284 passes full pinned SDK/static units;
+real HTTP owner-status/order/failure/retry/header tests and key/cancellation
+negatives pass. SDK controller terminal0 and independently empty owned resources.
+[Evidence](../../../go/services/brig/qualification/evidence/account-deletion-peers/README.md).
+No backend or public-deletion qualification inferred. Next group cleanup must use
+native page15/descending(created_at,id), ReadCommitted read transaction and full
+metadata decoding, with includeMemberCount=False/includeChannels=False (channel
+count is still selected). Preserve timestamp millisecond truncation for the next
+cursor and sequential per-group membership deletes; check typed Galley member
+presence first. Then complete notifications/persistent federation/code/mail/replay
+and bind the endpoint before rerunning the original failure.

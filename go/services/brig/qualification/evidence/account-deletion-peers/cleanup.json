@@ -1,0 +1,13 @@
+{
+  "sdk_controller_terminal_exit": 0,
+  "independent_prefix": "brig-account-deletion-peers-sdk-",
+  "containers": [],
+  "networks": [],
+  "volumes": [],
+  "cache_maintenance": {
+    "cutoff_epoch": 1791721034.3615866,
+    "files": 256,
+    "bytes": 164711565,
+    "scope": "Only regular nonsymlink UID/GID65534 cache entries older one hour; no retained artifacts removed"
+  }
+}

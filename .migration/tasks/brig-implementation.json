@@ -150,6 +150,13 @@
       "command": "Scoped production dae7c8987/servicef66e431b full pinned Go/static checks; tagged-fixture-only source66474b799/storef10639b1 rebuilt after exact unchanged-production input comparison. Actual native-schema owned-store runner passes three selectors/Cassandra migration residence, tombstone shape and retained fields, real PG serialization retry/exactly one deletion record, guarded reassigned email/handle/claims,101-contact multi-page cleanup. Failed fixture attempt retained; terminal independent cleanup empty. Engine unbound; no DELETE/self/original22/full535 pass.",
       "revision": "66474b799d55dd77f63601735553880d399a0842",
       "artifact": "go/services/brig/qualification/evidence/account-deletion-core/README.md"
+    },
+    {
+      "criterion": "quality",
+      "result": "pass",
+      "command": "Scoped sourcea408e14a4/service76ee2284: full pinned Go checks/static normal units; real HTTP native owner-status semantics, Gundeck/Galley deletion order/failure prefix/retry and Cargohold any-status/no-retry; key-path validation/canceled transport tests. SDK/units/cleanup0 and independent namespace empty. Tagged stores compiled only; adapters unbound/no new original or public DELETE/self/whole535 proof.",
+      "revision": "a408e14a4b611f8c486a4625e0734731554fe2b3",
+      "artifact": "go/services/brig/qualification/evidence/account-deletion-peers/README.md"
     }
   ],
   "review": null,
