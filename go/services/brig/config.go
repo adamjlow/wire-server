@@ -74,7 +74,7 @@ type Config struct {
 		} `yaml:"authSettings"`
 	} `yaml:"zauth"`
 	Settings struct {
-		ConsumableNotifications bool                      `yaml:"consumableNotifications"`
+		ConsumableNotifications bool                      `yaml:"setConsumableNotifications"`
 		PropertyMaxKeyLen       *int64                    `yaml:"setPropertyMaxKeyLen"`
 		PropertyMaxValueLen     *int64                    `yaml:"setPropertyMaxValueLen"`
 		FederationStrategy      *string                   `yaml:"setFederationStrategy"`

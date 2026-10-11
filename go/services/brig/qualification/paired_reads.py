@@ -291,7 +291,7 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             native_claim,_=request('GET','/v19/users/'+peers['brig']['optSettings']['setFederationDomain']+'/'+reference_user+'/prekeys/'+reference_id,reference_headers)
             report['native_client_update_claim_reference']=native_claim
             assert native_claim['status']==200 and native_claim['json']['prekey']=={'id':7,'key':replacement_key}, 'native updated prekey claim failed'
-            report['client_update_consumable_config']=peers['brig']['optSettings']['consumableNotifications']
+            report['client_update_consumable_config']=peers['brig']['optSettings']['setConsumableNotifications']
         if properties_contract:
             actor,_=request('POST','/i/users',body={'name':'Synthetic property state'})
             report['property_actor_setup']=actor

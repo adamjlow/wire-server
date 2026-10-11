@@ -13,6 +13,7 @@ import (
 	"testing"
 
 	"github.com/apache/cassandra-gocql-driver/v2"
+	"go.yaml.in/yaml/v3"
 )
 
 type testClientUpdateStore struct {
@@ -20,6 +21,21 @@ type testClientUpdateStore struct {
 	calls  []string
 	fail   string
 	label  string
+}
+
+func TestClientUpdateNativeConsumableConfigurationKey(t *testing.T) {
+	for _, tc := range []struct {
+		value   string
+		enabled bool
+	}{{"true", true}, {"false", false}} {
+		var config Config
+		if err := yaml.Unmarshal([]byte("optSettings:\n  setConsumableNotifications: "+tc.value+"\n"), &config); err != nil {
+			t.Fatal(err)
+		}
+		if config.Settings.ConsumableNotifications != tc.enabled {
+			t.Fatal("native set-prefixed option ignored")
+		}
+	}
 }
 
 func (s *testClientUpdateStore) step(name string) error {
