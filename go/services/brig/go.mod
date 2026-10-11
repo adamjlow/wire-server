@@ -11,6 +11,7 @@ require (
 	github.com/rabbitmq/amqp091-go v1.15.0
 	go.yaml.in/yaml/v3 v3.0.5
 	golang.org/x/sync v0.23.0
+	golang.org/x/text v0.42.0
 )
 
 require (
@@ -31,6 +32,5 @@ require (
 	github.com/jackc/puddle/v2 v2.2.2 // indirect
 	github.com/rogpeppe/go-internal v1.16.0 // indirect
 	golang.org/x/sys v0.48.0 // indirect
-	golang.org/x/text v0.42.0 // indirect
 	gopkg.in/inf.v0 v0.9.1 // indirect
 )
