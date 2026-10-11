@@ -306,9 +306,21 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
                 ('POST','/federation/claim-prekey',{'Wire-Origin-Domain':remote_domain},[lifecycle_user,'f']),
                 ('POST','/federation/claim-prekey-bundle',{'Wire-Origin-Domain':remote_domain},lifecycle_user),
                 ('POST','/federation/claim-multi-prekey-bundle',{'Wire-Origin-Domain':remote_domain},{lifecycle_user:[lifecycle_id,'f']})]
+            missing_domain='unavailable-prekey.invalid'
+            missing_path='/v19/users/'+missing_domain+'/'+remote_user+'/prekeys'
+            failure_mixed={**mixed,missing_domain:{remote_user:[remote_id]}}
+            federation_cases.extend([
+                ('GET',missing_path+'/'+remote_id,lifecycle_headers),
+                ('GET',missing_path,lifecycle_headers),
+                ('POST','/v3/users/list-prekeys',lifecycle_headers,failure_mixed),
+                ('POST','/v19/users/list-prekeys',lifecycle_headers,failure_mixed)])
             native_federation_controls=[request(*case)[0] for case in federation_cases]
             report['prekey_native_federation_controls']=native_federation_controls
-            assert [r['status'] for r in native_federation_controls]==[200,200,404,200,200,200,200,200,200], 'native federation reference changed'
+            assert [r['status'] for r in native_federation_controls[:9]]==[200,200,404,200,200,200,200,200,200], 'native federation reference changed'
+            assert all(r['status']>=400 and r['json']['label'] for r in native_federation_controls[9:12]), 'native federation missing-domain failures changed'
+            assert native_federation_controls[12]['status']==200, 'native federation partial request failed'
+            assert native_federation_controls[12]['json']['failed_to_list']==[{'domain':missing_domain,'id':remote_user}], 'native federation qualified failure changed'
+            assert set(native_federation_controls[12]['json']['qualified_user_client_prekeys'])==set(mixed), 'native federation partial successes changed'
             restaged,_=request('POST','/v19/clients',lifecycle_headers,{**native_body,'mls_public_keys':{}})
             report['prekey_native_restage']=restaged
             assert restaged['status']==201, 'native prekey reference restage failed'

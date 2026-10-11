@@ -11,12 +11,107 @@ import (
 	"net/http/httptest"
 	"strconv"
 	"strings"
+	"sync"
 	"sync/atomic"
 	"testing"
 	"time"
 
 	"github.com/apache/cassandra-gocql-driver/v2"
 )
+
+func TestFederationRemotePoolJoinsFailuresAfterLocalEffects(t *testing.T) {
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+	first, rest := make(chan struct{}), make(chan struct{})
+	var releaseFirst, releaseRest sync.Once
+	defer releaseFirst.Do(func() { close(first) })
+	defer releaseRest.Do(func() { close(rest) })
+	arrived := make(chan string, 9)
+	var active, peak, completed, localClaims atomic.Int32
+	client := federationTestPeer(t, func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+		if strings.HasSuffix(r.URL.Path, "/api-version") {
+			if localClaims.Load() != 1 {
+				t.Error("remote call preceded local consumption")
+			}
+			_, _ = io.WriteString(w, `{"supported":[0,1],"supported_versions":[4]}`)
+			return
+		}
+		n := active.Add(1)
+		for old := peak.Load(); n > old && !peak.CompareAndSwap(old, n); old = peak.Load() {
+		}
+		defer active.Add(-1)
+		domain := strings.Split(r.URL.Path, "/")[2]
+		arrived <- domain
+		gate := rest
+		if domain == "d0.example" {
+			gate = first
+		}
+		select {
+		case <-gate:
+		case <-r.Context().Done():
+			return
+		}
+		completed.Add(1)
+		if domain == "d0.example" {
+			w.WriteHeader(503)
+			_, _ = io.WriteString(w, `{"code":503,"label":"synthetic-down","message":"synthetic"}`)
+		} else {
+			_, _ = io.WriteString(w, `{}`)
+		}
+	})
+	user := gocql.TimeUUID()
+	s := prekeyClaimService{domain: "local.example", remote: &client,
+		guard: func(context.Context, gocql.UUID, map[string][]string, string) error { return nil },
+		claim: func(context.Context, gocql.UUID, string) (*uncheckedPrekey, error) {
+			localClaims.Add(1)
+			return &uncheckedPrekey{ID: 7, Key: "synthetic"}, nil
+		},
+	}
+	domains := map[string]map[string][]string{"local.example": {user.String(): {"a"}}}
+	for i := range 9 {
+		domains["d"+strconv.Itoa(i)+".example"] = map[string][]string{}
+	}
+	done := make(chan error, 1)
+	go func() { _, _, err := s.multiQualified(ctx, user, domains, "synthetic", false); done <- err }()
+	for range 8 {
+		select {
+		case <-arrived:
+		case <-ctx.Done():
+			t.Fatal("first eight requests did not arrive")
+		}
+	}
+	if active.Load() != 8 {
+		t.Fatalf("pool did not admit eight: %d", active.Load())
+	}
+	select {
+	case domain := <-arrived:
+		t.Fatalf("ninth request admitted early: %s", domain)
+	default:
+	}
+	releaseFirst.Do(func() { close(first) })
+	select {
+	case <-arrived:
+	case <-ctx.Done():
+		t.Fatal("ninth request did not follow completed failure")
+	}
+	select {
+	case err := <-done:
+		t.Fatalf("failed before remaining calls joined: %v", err)
+	default:
+	}
+	releaseRest.Do(func() { close(rest) })
+	var err error
+	select {
+	case err = <-done:
+	case <-ctx.Done():
+		t.Fatal("pool did not join")
+	}
+	var failure prekeyFederationFailure
+	if !errors.As(err, &failure) || failure.code != 503 || peak.Load() != 8 || completed.Load() != 9 || localClaims.Load() != 1 {
+		t.Fatalf("err=%v peak=%d completed=%d local=%d", err, peak.Load(), completed.Load(), localClaims.Load())
+	}
+}
 
 func federationTestPeer(t *testing.T, handler http.HandlerFunc) prekeyFederationClient {
 	t.Helper()
