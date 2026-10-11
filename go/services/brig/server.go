@@ -212,6 +212,12 @@ func Run(ctx context.Context, c Config) error {
 		return errors.New("Brig listener initialization failed")
 	}
 	business := brigReadHandlers{config: c, users: userStore{userAuthStore{cassandra: cassandra, postgres: postgres, mode: c.Migration["user"], acquisition: time.Duration(c.PostgresPool.Acquisition)}}, sessions: sessionStore{cassandra}, peers: brigPeers{client: peerHTTP, galley: c.Galley, gundeck: c.Gundeck}}
+	federationRead, err := federationReadFromConfig(c)
+	if err != nil {
+		return err
+	}
+	federationRead.useCassandra(cassandra)
+	business.federationConfig = &federationRead
 	business.clients = &clientReadHandlers{store: clientStore{cassandra}}
 	business.bulkClients = &clientBulkReads{clients: (clientStore{cassandra}).list, ids: (clientStore{cassandra}).ids}
 	issuer := tokenIssuer{key: private, index: int64(c.ZAuth.Settings.KeyIndex), userTTL: c.ZAuth.Settings.UserTTL, sessionTTL: c.ZAuth.Settings.SessionTTL, accessTTL: c.ZAuth.Settings.AccessTTL, legalUserTTL: c.ZAuth.Settings.LegalHoldUserTTL, legalAccessTTL: c.ZAuth.Settings.LegalHoldAccessTTL}

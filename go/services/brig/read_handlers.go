@@ -13,24 +13,25 @@ import (
 )
 
 type brigReadHandlers struct {
-	config         Config
-	users          userStore
-	sessions       sessionStore
-	peers          brigPeers
-	auth           *reauthenticationHandler
-	access         *accessTokenService
-	renewal        *accessRenewalHTTP
-	login          *loginHTTP
-	activation     *activationHTTP
-	registration   *registrationHTTP
-	passwordReset  *passwordResetHTTP
-	passwordChange *passwordChangeService
-	clients        *clientReadHandlers
-	index          *searchIndexWriter
-	appIDs         func(context.Context, gocql.UUID) ([]string, error)
-	accounts       *accountLookup
-	bulkClients    *clientBulkReads
-	blocklist      *blocklistStore
+	config           Config
+	users            userStore
+	sessions         sessionStore
+	peers            brigPeers
+	auth             *reauthenticationHandler
+	access           *accessTokenService
+	renewal          *accessRenewalHTTP
+	login            *loginHTTP
+	activation       *activationHTTP
+	registration     *registrationHTTP
+	passwordReset    *passwordResetHTTP
+	passwordChange   *passwordChangeService
+	clients          *clientReadHandlers
+	index            *searchIndexWriter
+	appIDs           func(context.Context, gocql.UUID) ([]string, error)
+	accounts         *accountLookup
+	bulkClients      *clientBulkReads
+	blocklist        *blocklistStore
+	federationConfig *federationConfigRead
 }
 
 func readJSON(w http.ResponseWriter, r *http.Request, body any) {
@@ -67,6 +68,23 @@ func routeParseError(w http.ResponseWriter, message string) {
 }
 
 func (b brigReadHandlers) handle(w http.ResponseWriter, r *http.Request, path string) bool {
+	if path == "/federation/api-version" {
+		federationVersionHTTP(w, r)
+		return true
+	}
+	if path == "/i/federation/remotes" && b.federationConfig != nil {
+		if r.Method != http.MethodGet && r.Method != http.MethodHead {
+			w.WriteHeader(405)
+			return true
+		}
+		result, err := b.federationConfig.read(r.Context())
+		if err != nil {
+			authenticationWireError(w, 500, "server-error", "Internal Server Error")
+		} else {
+			readJSON(w, r, result)
+		}
+		return true
+	}
 	if path == "/i/users/blacklist" && b.blocklist != nil {
 		b.blocklist.handle(w, r)
 		return true

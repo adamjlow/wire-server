@@ -250,6 +250,13 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             report['native_activation_reference'] = native_activation
             report['native_activation_repeat_reference'] = native_repeat
         if ses_feedback_contract:
+            native_federation,_=request('GET','/i/federation/remotes')
+            report['native_federation_config']=native_federation
+            assert native_federation['status']==200, 'native federation configuration read failed'
+            federation_version_cases=[('POST','/federation/api-version',{'Wire-Origin-Domain':'example2.com'},{}),('POST','/federation/api-version',{},{}),('POST','/federation/api-version',{'Wire-Origin-Domain':'example2.com'},[])]
+            native_federation_versions=[request(*case)[0] for case in federation_version_cases]
+            report['native_federation_versions']=native_federation_versions
+            assert [r['status'] for r in native_federation_versions]==[200,400,200], 'native federation version input changed'
             ses_endpoint=peers['brig']['aws']['sqsEndpoint']
             queue_name=peers['brig']['emailSMS']['email']['sesQueue']
             ses_queue=sqs('get-queue-url','--queue-name',queue_name)['QueueUrl']
@@ -395,6 +402,12 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
         report['mismatches'] = mismatches
         assert not mismatches, 'paired response mismatches'
         if ses_feedback_contract:
+            go_federation,_=request('GET','/i/federation/remotes')
+            report['go_federation_config']=go_federation
+            assert all(native_federation.get(k)==go_federation.get(k) for k in ('status','content_type','json')), 'native federation configuration mismatch'
+            go_federation_versions=[request(*case)[0] for case in federation_version_cases]
+            report['go_federation_versions']=go_federation_versions
+            assert all(all(ref.get(k)==actual.get(k) for k in ('status','content_type','json' if 'json' in ref else 'body')) for ref,actual in zip(native_federation_versions,go_federation_versions)), 'native federation version responses mismatch'
             go_admin=[request(*case)[0] for case in admin_cases]
             report['go_blacklist_api']=go_admin
             fields=lambda record: ('status','content_type','json' if 'json' in record else 'body')

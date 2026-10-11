@@ -74,15 +74,17 @@ type Config struct {
 		} `yaml:"authSettings"`
 	} `yaml:"zauth"`
 	Settings struct {
-		SQSThrottleMillis    *int64    `yaml:"sqsThrottleMillis"`
-		RestrictUserCreation *bool     `yaml:"setRestrictUserCreation"`
-		EphemeralCreation    *bool     `yaml:"setEphemeralUserCreationEnabled"`
-		AllowlistDomains     *[]string `yaml:"setAllowlistEmailDomains"`
-		MaxTeamSize          *uint32   `yaml:"setMaxTeamSize"`
-		ActivationTimeout    *float64  `yaml:"setActivationTimeout"`
-		CookieInsecure       bool      `yaml:"setCookieInsecure"`
-		CookieRenewAge       *int64    `yaml:"setUserCookieRenewAge"`
-		CookieLimit          *int      `yaml:"setUserCookieLimit"`
+		FederationStrategy   *string                   `yaml:"setFederationStrategy"`
+		FederationDomains    *[]federationStaticDomain `yaml:"setFederationDomainConfigs"`
+		SQSThrottleMillis    *int64                    `yaml:"sqsThrottleMillis"`
+		RestrictUserCreation *bool                     `yaml:"setRestrictUserCreation"`
+		EphemeralCreation    *bool                     `yaml:"setEphemeralUserCreationEnabled"`
+		AllowlistDomains     *[]string                 `yaml:"setAllowlistEmailDomains"`
+		MaxTeamSize          *uint32                   `yaml:"setMaxTeamSize"`
+		ActivationTimeout    *float64                  `yaml:"setActivationTimeout"`
+		CookieInsecure       bool                      `yaml:"setCookieInsecure"`
+		CookieRenewAge       *int64                    `yaml:"setUserCookieRenewAge"`
+		CookieLimit          *int                      `yaml:"setUserCookieLimit"`
 		CookieThrottle       *struct {
 			StdDev     float64 `yaml:"stdDev"`
 			RetryAfter int64   `yaml:"retryAfter"`
@@ -129,6 +131,9 @@ func LoadConfig(path string) (Config, error) {
 }
 func (c Config) Validate() error {
 	invalid := errors.New("invalid Brig configuration")
+	if _, err := federationReadFromConfig(c); err != nil {
+		return invalid
+	}
 	for _, e := range []Endpoint{c.Brig, c.Cargohold, c.Galley, c.Spar, c.Gundeck, c.Cassandra.Endpoint} {
 		if !e.valid() {
 			return invalid
