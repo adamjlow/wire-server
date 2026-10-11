@@ -8,6 +8,7 @@ import (
 	"crypto/x509"
 	"encoding/base64"
 	"errors"
+	"math"
 	"net"
 	"net/textproto"
 	"os"
@@ -44,8 +45,8 @@ func parseSMTPMailConfig(raw any) (smtpMailConfig, error) {
 	if !ok {
 		return result, failure
 	}
-	port, ok := endpoint["port"].(int)
-	if !ok || port < 0 || port > 65535 {
+	port, ok := smtpNativePort(endpoint["port"])
+	if !ok {
 		return result, failure
 	}
 	mode, ok := fields["smtpConnType"].(string)
@@ -360,4 +361,22 @@ func (s *smtpMailSender) close() {
 		retiring.Wait()
 		<-s.done
 	})
+}
+
+// Native Endpoint.port is a Word16; YAML integer-valued Scientific numbers
+// are accepted by its JSON parser, including decimal/exponent notation.
+func smtpNativePort(value any) (int, bool) {
+	switch number := value.(type) {
+	case int:
+		return number, number >= 0 && number <= 65535
+	case uint64:
+		if number <= 65535 {
+			return int(number), true
+		}
+	case float64:
+		if number >= 0 && number <= 65535 && number == math.Trunc(number) {
+			return int(number), true
+		}
+	}
+	return 0, false
 }
