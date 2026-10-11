@@ -534,3 +534,21 @@ delete switchback and original Client cases/last-active. Final whole gates
 unchanged. Current owned shm free~482MiB after closed qualification; if
 needed reclaim only owned stale compiler cache/completed duplicate artifacts
 after independent cleanup, not reports/defaults/other Docker resources.
+
+
+Dynamo deletion retry alignment: repository and frozen native reference
+f6636ed5 both pin Amazonka b562aa3f24845e34b95748daae671860017426be.
+Read exact upstream primary HTTP.retryRequest/retryService, Env native
+retryConnectionFailure, DynamoDB.Types defaultService, Types ErrorCode and
+Error.parseJSONError. Native service policy retries5, deterministic25/50/100/
+200/400ms backoff, selected500/502/503/504/509/429 and named400 codes;
+selected transport failures cap3, response timeout not included. Malformed
+error JSON is SerializeError and not retried; explicit body code precedence,
+header fallback, namespace/single suffix normalization and message parsing
+matter. Implement against those actual pinned contracts, with fresh signed
+requests per retry and cancellation; preserve bounded/redacted errors.
+Finite actual signed HTTP eventual-success/saturation controls plus source
+classification/normalization/backoff/transport controls and full pinned Go
+checks/static runner units. Actual native executable fault-injection/region/
+TLS/timeout/corner serialization comparison still required before wider
+optimistic-mode qualification; no original suites/state claimed here.

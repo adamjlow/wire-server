@@ -5,3 +5,5 @@ Add native-order client registration core and parameterized Cassandra insertion;
 Add versioned native client registration decoding and Galley/synchronous Gundeck callbacks; public registration composition remains pending.
 
 Add public client deletion with native cookie/queue/storage order and configured prekey-lock cleanup; backend lifecycle qualification remains pending.
+
+Align client lock deletion retries with the repository-pinned native Amazonka policy; wider native execution qualification remains pending.
