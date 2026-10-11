@@ -679,6 +679,22 @@ func TestOwnedDurableStores(t *testing.T) {
 		if err := store.create(ctx, created, nil, nil); err != nil {
 			t.Fatal(mode, "registration persistence", err)
 		}
+		disabledFeature, enabledFeature := int32(0), int32(1)
+		for _, value := range []*int32{nil, &enabledFeature, &disabledFeature} {
+			if err := store.updateConferenceCalling(ctx, id, value); err != nil {
+				t.Fatal(mode, "registration feature write", err)
+			}
+			actual, err := store.conferenceCalling(ctx, id)
+			if err != nil || (actual == nil) != (value == nil) || actual != nil && *actual != *value {
+				t.Fatal(mode, "registration feature state", err)
+			}
+		}
+		if err := store.updateConferenceCalling(ctx, id, nil); err != nil {
+			t.Fatal(err)
+		}
+		if actual, err := store.conferenceCalling(ctx, id); err != nil || actual != nil {
+			t.Fatal(mode, "feature null clear", err)
+		}
 		if ok, err := store.claimEmailKey(ctx, email, id); err != nil || !ok {
 			t.Fatal(mode, "registration owner", err)
 		}

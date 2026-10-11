@@ -35,12 +35,19 @@ func retryableBrigRPC(err error) bool {
 
 // Replayable Galley requests use native x3 (three retries, 100/200/400ms).
 func (p brigPeers) activationGalley(ctx context.Context, method, path, requestID string, body []byte, allowMissing bool) ([]byte, bool, error) {
+	return p.galleyRPC(ctx, method, path, requestID, body, allowMissing, nil)
+}
+
+func (p brigPeers) galleyRPC(ctx context.Context, method, path, requestID string, body []byte, allowMissing bool, user *gocql.UUID) ([]byte, bool, error) {
 	for attempt := 0; ; attempt++ {
 		req, err := http.NewRequestWithContext(ctx, method, "http://"+p.galley.Address()+path, bytes.NewReader(body))
 		if err != nil {
 			return nil, false, errors.New("invalid Galley activation endpoint")
 		}
 		req.Header.Set("Request-Id", requestID)
+		if user != nil {
+			req.Header.Set("Z-User", user.String())
+		}
 		if body != nil {
 			req.Header.Set("Content-Type", "application/json")
 		}
@@ -70,6 +77,9 @@ func (p brigPeers) activationGalley(ctx context.Context, method, path, requestID
 	}
 }
 func (p brigPeers) activateBindingTeam(ctx context.Context, user gocql.UUID, requestID string) error {
+	return p.activateBindingTeamCurrency(ctx, user, requestID, nil)
+}
+func (p brigPeers) activateBindingTeamCurrency(ctx context.Context, user gocql.UUID, requestID string, currency *string) error {
 	raw, missing, err := p.activationGalley(ctx, http.MethodGet, "/i/users/"+user.String()+"/team", requestID, nil, true)
 	if err != nil || missing {
 		return err
@@ -82,6 +92,14 @@ func (p brigPeers) activateBindingTeam(ctx context.Context, user gocql.UUID, req
 	if err != nil {
 		return errors.New("invalid Galley binding team")
 	}
-	_, _, err = p.activationGalley(ctx, http.MethodPut, "/i/teams/"+team.String()+"/status", requestID, []byte(`{"status":"active"}`), false)
+	body := map[string]string{"status": "active"}
+	if currency != nil {
+		body["currency"] = *currency
+	}
+	raw, err = json.Marshal(body)
+	if err != nil {
+		return errors.New("invalid team activation request")
+	}
+	_, _, err = p.activationGalley(ctx, http.MethodPut, "/i/teams/"+team.String()+"/status", requestID, raw, false)
 	return err
 }

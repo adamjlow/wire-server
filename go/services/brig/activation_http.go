@@ -106,6 +106,23 @@ func activationHTTPError(w http.ResponseWriter, err error) {
 		authenticationWireError(w, 500, "server-error", "Internal Server Error")
 	}
 }
+
+func (h activationHTTP) forRequest(requestID string, currency *string) activationAPI {
+	service := h.service
+	service.syncIndex = func(ctx context.Context, user gocql.UUID) error {
+		if h.syncIndex == nil {
+			return errors.New("activation index unavailable")
+		}
+		return h.syncIndex(ctx, user, requestID)
+	}
+	service.generateEvent = func(ctx context.Context, result *activatedIdentity) error {
+		return h.events.generate(ctx, result, requestID)
+	}
+	service.activateTeam = func(ctx context.Context, user gocql.UUID) error {
+		return h.peers.activateBindingTeamCurrency(ctx, user, requestID, currency)
+	}
+	return service
+}
 func (h activationHTTP) handle(w http.ResponseWriter, r *http.Request) {
 	var request activateRequest
 	switch r.Method {
@@ -137,15 +154,8 @@ func (h activationHTTP) handle(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusMethodNotAllowed)
 		return
 	}
-	service := h.service
 	requestID := r.Header.Get("Request-Id")
-	service.syncIndex = func(ctx context.Context, user gocql.UUID) error { return h.syncIndex(ctx, user, requestID) }
-	service.generateEvent = func(ctx context.Context, result *activatedIdentity) error {
-		return h.events.generate(ctx, result, requestID)
-	}
-	service.activateTeam = func(ctx context.Context, user gocql.UUID) error {
-		return h.peers.activateBindingTeam(ctx, user, requestID)
-	}
+	service := h.forRequest(requestID, nil)
 	result, err := service.run(r.Context(), request.key, request.code, request.dryrun, true, nil)
 	if err != nil {
 		activationHTTPError(w, err)

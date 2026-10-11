@@ -8,6 +8,13 @@ func TestConferenceCallingNativeNullFallbackAndStoredPrecedence(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	newStatus, err := conferenceCallingNew(c)
+	if err != nil || newStatus == nil || *newStatus != 0 {
+		t.Fatal("native registration default changed", err)
+	}
+	if absent, err := conferenceCallingNew(Config{}); err != nil || absent != nil {
+		t.Fatal("absent registration feature must not write", err)
+	}
 	status, err := conferenceCallingStatus(c, nil)
 	if err != nil || status != "disabled" {
 		t.Fatal("native configured null fallback changed")
@@ -33,5 +40,10 @@ func TestConferenceCallingNativeNullFallbackAndStoredPrecedence(t *testing.T) {
 	c.Settings.FeatureFlags.ConferenceCalling.DefaultForNull.Status = "invalid"
 	if c.Validate() == nil {
 		t.Fatal("invalid configured feature status accepted")
+	}
+	c.Settings.FeatureFlags.ConferenceCalling.DefaultForNull.Status = "disabled"
+	c.Settings.FeatureFlags.ConferenceCalling.DefaultForNew.Status = "invalid"
+	if c.Validate() == nil {
+		t.Fatal("invalid registration feature status accepted")
 	}
 }

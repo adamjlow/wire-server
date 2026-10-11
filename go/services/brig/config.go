@@ -73,10 +73,11 @@ type Config struct {
 		} `yaml:"authSettings"`
 	} `yaml:"zauth"`
 	Settings struct {
-		CookieInsecure bool   `yaml:"setCookieInsecure"`
-		CookieRenewAge *int64 `yaml:"setUserCookieRenewAge"`
-		CookieLimit    *int   `yaml:"setUserCookieLimit"`
-		CookieThrottle *struct {
+		ActivationTimeout *float64 `yaml:"setActivationTimeout"`
+		CookieInsecure    bool     `yaml:"setCookieInsecure"`
+		CookieRenewAge    *int64   `yaml:"setUserCookieRenewAge"`
+		CookieLimit       *int     `yaml:"setUserCookieLimit"`
+		CookieThrottle    *struct {
 			StdDev     float64 `yaml:"stdDev"`
 			RetryAfter int64   `yaml:"retryAfter"`
 		} `yaml:"setUserCookieThrottle"`
@@ -91,6 +92,9 @@ type Config struct {
 		DisabledVersions []string            `yaml:"setDisabledAPIVersions"`
 		FeatureFlags     *struct {
 			ConferenceCalling struct {
+				DefaultForNew *struct {
+					Status string `yaml:"status"`
+				} `yaml:"defaultForNew"`
 				DefaultForNull *struct {
 					Status string `yaml:"status"`
 				} `yaml:"defaultForNull"`
@@ -139,6 +143,19 @@ func (c Config) Validate() error {
 	}
 	if _, err := conferenceCallingStatus(c, nil); err != nil {
 		return invalid
+	}
+	if _, err := conferenceCallingNew(c); err != nil {
+		return invalid
+	}
+	if c.Settings.DefaultLocale != "" {
+		if _, err := parseRegistrationLocale(c.Settings.DefaultLocale); err != nil {
+			return invalid
+		}
+	}
+	if c.Settings.ActivationTimeout != nil {
+		if _, err := cassandraTTL(*c.Settings.ActivationTimeout); err != nil {
+			return invalid
+		}
 	}
 	return nil
 }

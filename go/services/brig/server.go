@@ -135,6 +135,25 @@ func Run(ctx context.Context, c Config) error {
 	if c.Settings.PasswordPolicy == nil || c.Settings.PasswordRate == nil {
 		return errors.New("missing password hashing configuration")
 	}
+	if c.Settings.ActivationTimeout == nil {
+		return errors.New("missing registration activation configuration")
+	}
+	locale := c.Settings.DefaultLocale
+	if locale == "" {
+		locale = "en"
+	}
+	registrationDefaultLocale, err := parseRegistrationLocale(locale)
+	if err != nil {
+		return err
+	}
+	galleyVersion, err := registrationGalleyVersion(c)
+	if err != nil {
+		return err
+	}
+	newConferenceStatus, err := conferenceCallingNew(c)
+	if err != nil {
+		return err
+	}
 	rate, err := newPasswordRateLimiter(*c.Settings.PasswordRate)
 	if err != nil {
 		return err
@@ -210,6 +229,21 @@ func Run(ctx context.Context, c Config) error {
 	business.activation = &activationHTTP{service: activationAPI{codes: codes, guardDomain: func(ctx context.Context, email string) error {
 		return guardRegistrationDomain(ctx, email, domains.lookup)
 	}, activate: activation.activateKey, clearUnvalidated: business.users.clearUnvalidatedEmail}, syncIndex: index.sync, events: activationEvents{notifications: notifications, journal: journal, domain: c.Settings.Domain, defaultLocale: c.Settings.DefaultLocale}, peers: business.peers}
+	blocklist := blocklistStore{databases: business.users.userAuthStore, mode: c.Migration["blockList"]}
+	business.registration = &registrationHTTP{service: registrationService{
+		identity:    registrationIdentity{owner: business.users.registrationEmailOwner, account: business.users.get, deleteKey: business.users.deleteEmailKey, blacklisted: blocklist.exists},
+		guardDomain: business.activation.service.guardDomain, hash: passwords.hash,
+		createAccount: func(ctx context.Context, account storedUser) error {
+			return business.users.create(ctx, account, nil, nil)
+		},
+		newCode: codes.newCode, initFeature: func(ctx context.Context, user gocql.UUID) error {
+			if newConferenceStatus == nil {
+				return nil
+			}
+			return business.users.updateConferenceCalling(ctx, user, newConferenceStatus)
+		},
+		domain: c.Settings.Domain, locale: registrationDefaultLocale, sessionTTL: c.ZAuth.Settings.SessionTTL, activationTimeout: *c.Settings.ActivationTimeout, now: time.Now,
+	}, peers: business.peers, galleyVersion: galleyVersion, activation: business.activation}
 
 	loginSessions := business.access.sessions
 	loginSessions.limit = *c.Settings.CookieLimit

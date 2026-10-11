@@ -12,16 +12,17 @@ import (
 )
 
 type brigReadHandlers struct {
-	config     Config
-	users      userStore
-	sessions   sessionStore
-	peers      brigPeers
-	auth       *reauthenticationHandler
-	access     *accessTokenService
-	renewal    *accessRenewalHTTP
-	login      *loginHTTP
-	activation *activationHTTP
-	clients    *clientReadHandlers
+	config       Config
+	users        userStore
+	sessions     sessionStore
+	peers        brigPeers
+	auth         *reauthenticationHandler
+	access       *accessTokenService
+	renewal      *accessRenewalHTTP
+	login        *loginHTTP
+	activation   *activationHTTP
+	registration *registrationHTTP
+	clients      *clientReadHandlers
 }
 
 func readJSON(w http.ResponseWriter, r *http.Request, body any) {
@@ -58,6 +59,10 @@ func routeParseError(w http.ResponseWriter, message string) {
 }
 
 func (b brigReadHandlers) handle(w http.ResponseWriter, r *http.Request, path string) bool {
+	if path == "/i/users" && r.Method == http.MethodPost && b.registration != nil {
+		b.registration.handleInternal(w, r)
+		return true
+	}
 	if path == "/activate" && b.activation != nil {
 		b.activation.handle(w, r)
 		return true
