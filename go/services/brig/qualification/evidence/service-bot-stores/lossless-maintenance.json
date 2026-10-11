@@ -1,0 +1,35 @@
+{
+  "scope": "Inactive owned scalar SDK artifacts only; lossless original bytes retained",
+  "files": [
+    {
+      "path": "/home/operator/.cache/wire-migration/brig-20261010/internal-stomp-scalar-sdk-check/brig",
+      "archive": "/home/operator/.cache/wire-migration/brig-20261010/internal-stomp-scalar-sdk-check/brig.gz",
+      "sha256": "51e309c195c2332c29675e59fbd5698980960cfea9f4cfcf6b443d6274118f56",
+      "mode": "0o755",
+      "uid": 65534,
+      "gid": 65534,
+      "original_bytes": 69806536,
+      "archive_bytes": 29014253
+    },
+    {
+      "path": "/home/operator/.cache/wire-migration/brig-20261010/internal-stomp-scalar-sdk-check/brig.test",
+      "archive": "/home/operator/.cache/wire-migration/brig-20261010/internal-stomp-scalar-sdk-check/brig.test.gz",
+      "sha256": "8878f5fe507472f0baaa52377c839a37855801ed636a19603173549f8c031a6f",
+      "mode": "0o755",
+      "uid": 65534,
+      "gid": 65534,
+      "original_bytes": 67835496,
+      "archive_bytes": 28666141
+    },
+    {
+      "path": "/home/operator/.cache/wire-migration/brig-20261010/internal-stomp-scalar-sdk-check/stores.test",
+      "archive": "/home/operator/.cache/wire-migration/brig-20261010/internal-stomp-scalar-sdk-check/stores.test.gz",
+      "sha256": "476da1422f06f68532d9528e231cb9b24c11194082c761aec1fb5ad59900f69a",
+      "mode": "0o755",
+      "uid": 65534,
+      "gid": 65534,
+      "original_bytes": 72849464,
+      "archive_bytes": 30378299
+    }
+  ]
+}

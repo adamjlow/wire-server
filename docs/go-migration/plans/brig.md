@@ -1572,3 +1572,13 @@ only bot_conv in PG or logged service_user/service_team CQL rows, retaining user
 identity/status. Finite native-schema controls create101 bots per backend, assert
 exact page sizes/counts for all selectors, delete during mixed pagination, and
 verify association replay plus unchanged account identity/status.
+
+At source2ebed4df3/servicea170b4e8, full pinned Go/static checks pass, including
+canceled-page worker joining and missing/pending bot projection controls. Actual
+native-schema store execution2.63sec confirms101 bots per backend, native exact
+page sizes in all modes,202 association deletes during mixed pagination, absent
+associations/replay and unchanged account identity/status. [Bot store evidence](../../../go/services/brig/qualification/evidence/service-bot-stores/README.md)
+records exact artifacts, maintenance and terminal/independent empty cleanup.
+Next: native full service metadata decoding, final whitelist/index deletion and
+typed Galley adapters, then bind and qualify actual queue replay. Core/storage
+remain unbound; no current e2e/whole-service milestone or new push.

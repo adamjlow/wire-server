@@ -1,0 +1,8 @@
+{
+  "sdk_and_store_controllers": "terminal exit0",
+  "independent_containers": "empty",
+  "independent_networks": "empty",
+  "independent_store_volumes": "empty",
+  "store_namespace": "wire-brig-stores-32c1a4cda8b04292acb8f4ed19b48f6d",
+  "sdk_namespace": "brig-service-bot-store-sdk-804edbc6db014bb187323ef9bd32f29c"
+}
