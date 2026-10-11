@@ -515,3 +515,22 @@ qualification rather than infer equivalence. Same-author slice review will
 retain this known qualification gap. No Haskell/security-policy/oracle/
 schema/default change. Full addClient/mail/code and queue consumer/STOMP
 lifecycle remain next whole-service work; no availability claim.
+
+
+Public deletion sourcee9e7c8476/service3a8822d7... passes full pinned Go
+checks/static original-runner units including real signed SQS/Dynamo HTTP
+controls and native-order/public route cases. Two containers0/network0/
+independent audits empty; tagged stores compile only. Evidence
+client-deletion-core explicitly records no native backend/state/original
+Client claim and one-attempt Dynamo transport needing native SDK retry/
+error/default-region comparison before optimistic-mode qualification.
+Actual CQL/session/queue/lock callbacks are bound to public DELETE; native
+worker cleanup remains queued (Go consumer/STOMP pending), MLS rows retained.
+Next align Dynamo retry contract from actual pinned native SDK and compose
+full addClient account/login-code/native userMaxPermClients config/default7,
+legalhold augmentation/public forbid/core/consumable/old-client execute/
+Galley/synchronous event/new-client template mail; then native registration/
+delete switchback and original Client cases/last-active. Final whole gates
+unchanged. Current owned shm free~482MiB after closed qualification; if
+needed reclaim only owned stale compiler cache/completed duplicate artifacts
+after independent cleanup, not reports/defaults/other Docker resources.
