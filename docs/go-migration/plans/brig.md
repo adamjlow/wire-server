@@ -1835,3 +1835,10 @@ that required type guard and native empty403, correct fixture headers, and add
 missing/wrong-type controls (11 comparisons total). Retain failed backend, all24
 managed exits0/runner1/cleanup0/independent empty. This is an actual security
 boundary correction, not weakening an oracle or changing native policy.
+
+Qualified corrected sourceb26a7ec24 passes full Go/static checks. Add a second
+native-registered, intentionally unactivated account to the owned observer so
+Go must prove hidden reads and rejected writes on actual email-null storage,
+not only a fake missing account;14 comparisons total. This changes observer only;
+reuse sourceb26 artifact/full quality after exact production/tagged inputs diff.
+No new provider assertion replaces original protected tests.

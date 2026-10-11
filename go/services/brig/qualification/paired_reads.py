@@ -427,6 +427,15 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             activated = request('GET', '/v19/provider/activate?'+urlencode(pair['json']))[0]
             report['provider_native_activated'] = activated
             assert activated['status'] == 200, 'native provider activation failed'
+            hidden_provider = request('POST', '/v19/provider/register',
+                {'X-Forwarded-For': '127.0.0.44'}, {'name': 'Synthetic unactivated provider',
+                'email': 'synthetic-unactivated-'+uuid.uuid4().hex+'@example.com',
+                'password': 'Synthetic-provider-password!', 'url': 'https://example.com/provider',
+                'description': 'Synthetic unactivated provider'})[0]
+            assert hidden_provider['status'] == 201, 'native unactivated provider setup failed'
+            report['provider_native_hidden_actor'] = hidden_provider
+            hidden_id = hidden_provider['json']['id']
+            hidden_headers = {'Z-Provider': hidden_id, 'Z-Type': 'provider'}
             missing_provider = str(uuid.uuid4())
             provider_cases = [('GET', '/v19/provider', {'Z-Provider': provider_id}),
                 ('GET', '/v19/provider', {'Z-Provider': provider_id, 'Z-Type': 'user'}),
@@ -438,10 +447,13 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
                 ('PUT', '/v19/provider', {'Z-Provider': missing_provider, 'Z-Type': 'provider'}, {'name': 'Synthetic missing'}),
                 ('PUT', '/v19/provider', provider_headers, {'name': None, 'url': None, 'description': None}),
                 ('PUT', '/v19/provider', provider_headers, {'name': 'Synthetic native provider'}),
-                ('GET', '/v19/provider', provider_headers)]
+                ('GET', '/v19/provider', provider_headers),
+                ('GET', '/v19/provider', hidden_headers),
+                ('GET', '/v19/providers/'+hidden_id, provider_user_headers),
+                ('PUT', '/v19/provider', hidden_headers, {'name': 'Forbidden inactive write'})]
             provider_native_controls = [request(*case)[0] for case in provider_cases]
             report['provider_native_controls'] = provider_native_controls
-            assert [r['status'] for r in provider_native_controls] == [403,403,200,200,200,404,404,404,200,200,200], 'native provider read/update reference changed'
+            assert [r['status'] for r in provider_native_controls] == [403,403,200,200,200,404,404,404,200,200,200,404,404,404], 'native provider read/update reference changed'
         registration_body, registration_reference, registration_reads = None, None, None
         if registration_contract:
             actor = str(uuid.uuid4())
