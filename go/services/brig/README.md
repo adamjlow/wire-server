@@ -51,3 +51,6 @@ Those checks alone do not prove native parity. The frozen whole-service contract
 actual same-state native-Go-native switchback and optional image/selector remain
 required. Haskell remains supported and default. Never use this unfinished
 candidate in a production deployment.
+
+
+Public signup credential switchback at source a261c531c (candidate dfe202c081ed7a0ab3037fea7bbaa306b15554b1c4c038930cc5981f3e6d9b99) now passes: fresh Go labeled signup/activation, native consumption of profile/cookies and native acceptance of Go cookie/password on unchanged stores. Full Go checks/static original-runner units, original17 paired observations/four raw IP controls, all13 clean exits and independent cleanup PASS. See [retained evidence](qualification/evidence/registration-public-switchback/README.md). This supplemental observation does not execute original535 or qualify full registration/queue/mail delivery contracts; one asynchronous notification failure is retained with cause/delivery unproved. Brig remains implementing/unavailable; Galley follows whole Brig completion.

@@ -5,13 +5,15 @@ User-selected goal2026-10-10. Reference/upstream source f6636ed53315fa7b0fc4c8aa
 ## Current status (2026-10-11)
 
 Brig remains implementing/unavailable; Galley is authorized only after actual
-whole Brig completion. Latest source2d27afde5 has pinned Go checks and static
-original-runner units PASS. Public registration policy/mail ordering/session
-composition, native localized templates/MIME and actual SES/SMTP delivery
-factory are now wired into Run and /register. Unit success controls pass, and
-actual frozen-config mixed startup/SAML switchback passes; native public API/IP/error
-comparisons and feedback consumption remain pending, so full public parity is not
-claimed. Internal invitation acceptance is implemented with
+whole Brig completion. Latest source a261c531c has full pinned Go checks and
+static original-runner units PASS. Public signup now has an actual native→Go→native
+witness: fresh Go labeled signup, activation, exact durable profile/cookie reads,
+and native acceptance of its cookie/password. All17 original paired observations
+and four raw IP/header controls match; all13 managed exits0 and cleanup audited
+empty. This is a supplemental observer, not original535 or full public parity.
+Localized templates/MIME and SES/SMTP delivery are implemented; SES fixture send
+succeeds, but native-delivered MIME comparison and feedback consumption remain
+pending. Wider public/version/invitation/error contracts remain unqualified. Internal invitation acceptance is implemented with
 native validation/SCIM/claim/membership/activation/cleanup ordering; actual
 native-schema code/deletion/pending checks PASS at04c621ce6. The latest count-only
 fix preserves native integer-valued Scientific team totals without rounding;
@@ -19,7 +21,7 @@ no storage code changed or redundant database rerun was performed.
 
 Selected prior exact artifacts have positive native→Go→native activation,
 identityless internal registration and SAML rejoin witnesses. These are scoped
-observations, not whole-service or original535 e2e acceptance. Public registration,
+observations, not whole-service or original535 e2e acceptance. Remaining public registration,
 invitation setup/SCIM provisioning, client writes and other remaining API
 families, queue consumers, operations and final image/selector/review gates are
 still required. See the module README and per-attempt evidence for precise
@@ -340,3 +342,8 @@ Wire Run to validated native public policy and actual SES/SMTP mail factory with
 Public route source2d27afde5/candidatecabdf28576633e57db3898211843182605903990899e37ad70bc9dd8bcbf68ec passes full pinned Go/static original-runner units and existing exact mixed SAML/17-read regression witness, evidence registration-public-http. Actual frozen mail-factory startup validated; original mixed processes13 all0/no forced stops/cleanup independently empty. No original compiled e2e/public native delivery witness yet. Next extend only owned supplemental observer for native public success/cookie/state and strict header errors without changing original17 assertions or protected fixtures; qualify same executable with source/input identities.
 
 Owned supplemental public-registration observer adds four native/Go strict-header error comparisons, independent original native public-success control, actual fresh Go public signup/activation/mail cookie contract and same-state native rollback consuming exact stored profile/cookie views, Go-issued cookie and password. Fresh creation UUIDs/token bytes are not equated across independent registrations; assert their canonical IDs/Location/request projection and actual native credential consumption rather than normalize original responses. All original17 cases/assertions remain intact. Preserve failed raw comparisons and continue bounded independent state controls before final failure assertion so one run diagnoses both. Original compiled535 and native delivered-MIME comparison remain separate required gates. Harness-only changes allow a guarded exact rebuild/byte identity check against source2d27afde5 full Go-check receipts plus actual static units; no redundant full Go/library/database checks for unchanged production code.
+
+
+## Public registration credential switchback (2026-10-11)
+
+Source a261c531c7930ae9d9b840c5c629eec82af36693 / executable dfe202c081ed7a0ab3037fea7bbaa306b15554b1c4c038930cc5981f3e6d9b99 passes full Go checks/static original-runner units and the unchanged supplemental public observer. Native baseline signup201; fresh Go labeled signup201, matching native cookie attributes; actual activation pair/first activation200; original native reads the same Go-created profile/cookies and accepts cookie/password. Original17 paired read/reauth assertions plus four literal IP/header controls match. All13 managed exits0, runner0/cleanup0 and independent resource audit empty. Evidence: go/services/brig/qualification/evidence/registration-public-switchback. Retain every preceding failure; fixes match the observed native IP prefix, wire the existing request-scoped session refresh notification and implement the native internal activation-pair endpoint instead of changing tests. No original535 suites or three-mode signup qualification claimed. One asynchronous notification failure is retained and delivery/cause unproved; this witness qualifies credentials/state, not queue/push consumption. Delegated same-author slice review recorded; whole-service availability/review remain pending. Continue remaining registration flows/feedback and account/password APIs with source-guided existing upstream tests; do not start Galley until whole Brig acceptance passes.

@@ -1,0 +1,806 @@
+{
+  "result": "pass",
+  "e2e_executed": false,
+  "scope": "Finite native -> Go read/reauthentication observations on native-created state.",
+  "records": [
+    {
+      "implementation": "haskell",
+      "observations": [
+        {
+          "method": "GET",
+          "path": "/i/status",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": ""
+        },
+        {
+          "method": "HEAD",
+          "path": "/i/status",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "path": "/api-version",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"development\":[19],\"domain\":\"example.com\",\"federation\":true,\"supported\":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18]}",
+          "json": {
+            "development": [
+              19
+            ],
+            "domain": "example.com",
+            "federation": true,
+            "supported": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18
+            ]
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/self",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"accent_id\":0,\"assets\":[],\"email\":\"synthetic-parity-40d1740ef96a480b840a9ced307f1250@example.com\",\"id\":\"1592b619-8aeb-4a4e-82cb-209c7e0aca7c\",\"locale\":\"en\",\"managed_by\":\"wire\",\"name\":\"Synthetic parity reader\",\"picture\":[],\"qualified_id\":{\"domain\":\"example.com\",\"id\":\"1592b619-8aeb-4a4e-82cb-209c7e0aca7c\"},\"searchable\":true,\"status\":\"active\",\"supported_protocols\":[\"proteus\"],\"type\":\"regular\"}",
+          "json": {
+            "accent_id": 0,
+            "assets": [],
+            "email": "synthetic-parity-40d1740ef96a480b840a9ced307f1250@example.com",
+            "id": "1592b619-8aeb-4a4e-82cb-209c7e0aca7c",
+            "locale": "en",
+            "managed_by": "wire",
+            "name": "Synthetic parity reader",
+            "picture": [],
+            "qualified_id": {
+              "domain": "example.com",
+              "id": "1592b619-8aeb-4a4e-82cb-209c7e0aca7c"
+            },
+            "searchable": true,
+            "status": "active",
+            "supported_protocols": [
+              "proteus"
+            ],
+            "type": "regular"
+          }
+        },
+        {
+          "method": "HEAD",
+          "path": "/self",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "path": "/cookies",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"cookies\":[{\"created\":\"2026-10-11T05:00:48.063Z\",\"expires\":\"2026-10-11T05:02:48Z\",\"id\":1599243740,\"label\":\"synthetic-paired-device\",\"successor\":null,\"type\":\"persistent\"}]}",
+          "json": {
+            "cookies": [
+              {
+                "created": "2026-10-11T05:00:48.063Z",
+                "expires": "2026-10-11T05:02:48Z",
+                "id": 1599243740,
+                "label": "synthetic-paired-device",
+                "successor": null,
+                "type": "persistent"
+              }
+            ]
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/cookies?labels=synthetic-paired-device",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"cookies\":[{\"created\":\"2026-10-11T05:00:48.063Z\",\"expires\":\"2026-10-11T05:02:48Z\",\"id\":1599243740,\"label\":\"synthetic-paired-device\",\"successor\":null,\"type\":\"persistent\"}]}",
+          "json": {
+            "cookies": [
+              {
+                "created": "2026-10-11T05:00:48.063Z",
+                "expires": "2026-10-11T05:02:48Z",
+                "id": 1599243740,
+                "label": "synthetic-paired-device",
+                "successor": null,
+                "type": "persistent"
+              }
+            ]
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/cookies?labels=absent",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"cookies\":[]}",
+          "json": {
+            "cookies": []
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/i/users/1592b619-8aeb-4a4e-82cb-209c7e0aca7c/status",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"status\":\"active\"}",
+          "json": {
+            "status": "active"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/self",
+          "status": 400,
+          "content_type": null,
+          "body": "Header Z-User is required"
+        },
+        {
+          "method": "GET",
+          "path": "/self",
+          "status": 400,
+          "content_type": null,
+          "body": "Error parsing header Z-User failed: invalid UUID"
+        },
+        {
+          "method": "GET",
+          "path": "/self",
+          "status": 400,
+          "content_type": null,
+          "body": "Error parsing header Z-User failed: invalid UUID"
+        },
+        {
+          "method": "GET",
+          "path": "/v1/self",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"accent_id\":0,\"assets\":[],\"email\":\"synthetic-parity-40d1740ef96a480b840a9ced307f1250@example.com\",\"id\":\"1592b619-8aeb-4a4e-82cb-209c7e0aca7c\",\"locale\":\"en\",\"managed_by\":\"wire\",\"name\":\"Synthetic parity reader\",\"picture\":[],\"qualified_id\":{\"domain\":\"example.com\",\"id\":\"1592b619-8aeb-4a4e-82cb-209c7e0aca7c\"},\"searchable\":true,\"status\":\"active\",\"supported_protocols\":[\"proteus\"],\"type\":\"regular\"}",
+          "json": {
+            "accent_id": 0,
+            "assets": [],
+            "email": "synthetic-parity-40d1740ef96a480b840a9ced307f1250@example.com",
+            "id": "1592b619-8aeb-4a4e-82cb-209c7e0aca7c",
+            "locale": "en",
+            "managed_by": "wire",
+            "name": "Synthetic parity reader",
+            "picture": [],
+            "qualified_id": {
+              "domain": "example.com",
+              "id": "1592b619-8aeb-4a4e-82cb-209c7e0aca7c"
+            },
+            "searchable": true,
+            "status": "active",
+            "supported_protocols": [
+              "proteus"
+            ],
+            "type": "regular"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/i/users/1592b619-8aeb-4a4e-82cb-209c7e0aca7c/reauthenticate",
+          "status": 200,
+          "content_type": null,
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "path": "/i/users/1592b619-8aeb-4a4e-82cb-209c7e0aca7c/reauthenticate",
+          "status": 403,
+          "content_type": "application/json",
+          "body": "{\"code\":403,\"label\":\"invalid-credentials\",\"message\":\"Authentication failed\"}",
+          "json": {
+            "code": 403,
+            "label": "invalid-credentials",
+            "message": "Authentication failed"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/i/users/1592b619-8aeb-4a4e-82cb-209c7e0aca7c/reauthenticate",
+          "status": 403,
+          "content_type": "application/json",
+          "body": "{\"code\":403,\"label\":\"missing-auth\",\"message\":\"Re-authentication via password required\"}",
+          "json": {
+            "code": 403,
+            "label": "missing-auth",
+            "message": "Re-authentication via password required"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/i/users/1592b619-8aeb-4a4e-82cb-209c7e0aca7c/reauthenticate",
+          "status": 200,
+          "content_type": null,
+          "body": ""
+        }
+      ]
+    },
+    {
+      "implementation": "go",
+      "observations": [
+        {
+          "method": "GET",
+          "path": "/i/status",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": ""
+        },
+        {
+          "method": "HEAD",
+          "path": "/i/status",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "path": "/api-version",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"development\":[19],\"domain\":\"example.com\",\"federation\":true,\"supported\":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18]}\n",
+          "json": {
+            "development": [
+              19
+            ],
+            "domain": "example.com",
+            "federation": true,
+            "supported": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18
+            ]
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/self",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"qualified_id\":{\"id\":\"1592b619-8aeb-4a4e-82cb-209c7e0aca7c\",\"domain\":\"example.com\"},\"id\":\"1592b619-8aeb-4a4e-82cb-209c7e0aca7c\",\"type\":\"regular\",\"email\":\"synthetic-parity-40d1740ef96a480b840a9ced307f1250@example.com\",\"name\":\"Synthetic parity reader\",\"picture\":[],\"assets\":[],\"accent_id\":0,\"status\":\"active\",\"locale\":\"en\",\"managed_by\":\"wire\",\"supported_protocols\":[\"proteus\"],\"searchable\":true}\n",
+          "json": {
+            "qualified_id": {
+              "id": "1592b619-8aeb-4a4e-82cb-209c7e0aca7c",
+              "domain": "example.com"
+            },
+            "id": "1592b619-8aeb-4a4e-82cb-209c7e0aca7c",
+            "type": "regular",
+            "email": "synthetic-parity-40d1740ef96a480b840a9ced307f1250@example.com",
+            "name": "Synthetic parity reader",
+            "picture": [],
+            "assets": [],
+            "accent_id": 0,
+            "status": "active",
+            "locale": "en",
+            "managed_by": "wire",
+            "supported_protocols": [
+              "proteus"
+            ],
+            "searchable": true
+          }
+        },
+        {
+          "method": "HEAD",
+          "path": "/self",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "path": "/cookies",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"cookies\":[{\"created\":\"2026-10-11T05:00:48.063Z\",\"expires\":\"2026-10-11T05:02:48Z\",\"id\":1599243740,\"label\":\"synthetic-paired-device\",\"successor\":null,\"type\":\"persistent\"}]}\n",
+          "json": {
+            "cookies": [
+              {
+                "created": "2026-10-11T05:00:48.063Z",
+                "expires": "2026-10-11T05:02:48Z",
+                "id": 1599243740,
+                "label": "synthetic-paired-device",
+                "successor": null,
+                "type": "persistent"
+              }
+            ]
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/cookies?labels=synthetic-paired-device",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"cookies\":[{\"created\":\"2026-10-11T05:00:48.063Z\",\"expires\":\"2026-10-11T05:02:48Z\",\"id\":1599243740,\"label\":\"synthetic-paired-device\",\"successor\":null,\"type\":\"persistent\"}]}\n",
+          "json": {
+            "cookies": [
+              {
+                "created": "2026-10-11T05:00:48.063Z",
+                "expires": "2026-10-11T05:02:48Z",
+                "id": 1599243740,
+                "label": "synthetic-paired-device",
+                "successor": null,
+                "type": "persistent"
+              }
+            ]
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/cookies?labels=absent",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"cookies\":[]}\n",
+          "json": {
+            "cookies": []
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/i/users/1592b619-8aeb-4a4e-82cb-209c7e0aca7c/status",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"status\":\"active\"}\n",
+          "json": {
+            "status": "active"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/self",
+          "status": 400,
+          "content_type": null,
+          "body": "Header Z-User is required"
+        },
+        {
+          "method": "GET",
+          "path": "/self",
+          "status": 400,
+          "content_type": null,
+          "body": "Error parsing header Z-User failed: invalid UUID"
+        },
+        {
+          "method": "GET",
+          "path": "/self",
+          "status": 400,
+          "content_type": null,
+          "body": "Error parsing header Z-User failed: invalid UUID"
+        },
+        {
+          "method": "GET",
+          "path": "/v1/self",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"qualified_id\":{\"id\":\"1592b619-8aeb-4a4e-82cb-209c7e0aca7c\",\"domain\":\"example.com\"},\"id\":\"1592b619-8aeb-4a4e-82cb-209c7e0aca7c\",\"type\":\"regular\",\"email\":\"synthetic-parity-40d1740ef96a480b840a9ced307f1250@example.com\",\"name\":\"Synthetic parity reader\",\"picture\":[],\"assets\":[],\"accent_id\":0,\"status\":\"active\",\"locale\":\"en\",\"managed_by\":\"wire\",\"supported_protocols\":[\"proteus\"],\"searchable\":true}\n",
+          "json": {
+            "qualified_id": {
+              "id": "1592b619-8aeb-4a4e-82cb-209c7e0aca7c",
+              "domain": "example.com"
+            },
+            "id": "1592b619-8aeb-4a4e-82cb-209c7e0aca7c",
+            "type": "regular",
+            "email": "synthetic-parity-40d1740ef96a480b840a9ced307f1250@example.com",
+            "name": "Synthetic parity reader",
+            "picture": [],
+            "assets": [],
+            "accent_id": 0,
+            "status": "active",
+            "locale": "en",
+            "managed_by": "wire",
+            "supported_protocols": [
+              "proteus"
+            ],
+            "searchable": true
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/i/users/1592b619-8aeb-4a4e-82cb-209c7e0aca7c/reauthenticate",
+          "status": 200,
+          "content_type": null,
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "path": "/i/users/1592b619-8aeb-4a4e-82cb-209c7e0aca7c/reauthenticate",
+          "status": 403,
+          "content_type": "application/json",
+          "body": "{\"code\":403,\"label\":\"invalid-credentials\",\"message\":\"Authentication failed\"}\n",
+          "json": {
+            "code": 403,
+            "label": "invalid-credentials",
+            "message": "Authentication failed"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/i/users/1592b619-8aeb-4a4e-82cb-209c7e0aca7c/reauthenticate",
+          "status": 403,
+          "content_type": "application/json",
+          "body": "{\"code\":403,\"label\":\"missing-auth\",\"message\":\"Re-authentication via password required\"}\n",
+          "json": {
+            "code": 403,
+            "label": "missing-auth",
+            "message": "Re-authentication via password required"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/i/users/1592b619-8aeb-4a4e-82cb-209c7e0aca7c/reauthenticate",
+          "status": 200,
+          "content_type": null,
+          "body": ""
+        }
+      ]
+    }
+  ],
+  "native_brig": {
+    "path": "/nix/store/f6l2f0l8l2r6z9jbg937q96k6056iqfn-brig/bin/brig",
+    "sha256": "c45a40da63268712a7cacdbd884287fa3dc93cec179d70323d3f22f7d5cdf1ca"
+  },
+  "go_gundeck_sha256": "a50512ef30d7fa9ddf92c2c1933e69769d6691e08cdfbe9f7c4f2d266071f46c",
+  "native_setup": [
+    {
+      "method": "POST",
+      "path": "/i/users",
+      "status": 201,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"accent_id\":0,\"assets\":[],\"email\":\"synthetic-parity-40d1740ef96a480b840a9ced307f1250@example.com\",\"id\":\"1592b619-8aeb-4a4e-82cb-209c7e0aca7c\",\"locale\":\"en\",\"managed_by\":\"wire\",\"name\":\"Synthetic parity reader\",\"picture\":[],\"qualified_id\":{\"domain\":\"example.com\",\"id\":\"1592b619-8aeb-4a4e-82cb-209c7e0aca7c\"},\"searchable\":true,\"status\":\"active\",\"supported_protocols\":[\"proteus\"],\"type\":\"regular\"}",
+      "location": "1592b619-8aeb-4a4e-82cb-209c7e0aca7c",
+      "json": {
+        "accent_id": 0,
+        "assets": [],
+        "email": "synthetic-parity-40d1740ef96a480b840a9ced307f1250@example.com",
+        "id": "1592b619-8aeb-4a4e-82cb-209c7e0aca7c",
+        "locale": "en",
+        "managed_by": "wire",
+        "name": "Synthetic parity reader",
+        "picture": [],
+        "qualified_id": {
+          "domain": "example.com",
+          "id": "1592b619-8aeb-4a4e-82cb-209c7e0aca7c"
+        },
+        "searchable": true,
+        "status": "active",
+        "supported_protocols": [
+          "proteus"
+        ],
+        "type": "regular"
+      }
+    },
+    {
+      "operation": "persistent login",
+      "status": 200,
+      "cookie_issued": true
+    }
+  ],
+  "native_public_header_controls": [
+    {
+      "method": "POST",
+      "path": "/register",
+      "status": 400,
+      "content_type": null,
+      "body": "Header X-Forwarded-For is required",
+      "location": null
+    },
+    {
+      "method": "POST",
+      "path": "/register",
+      "status": 400,
+      "content_type": null,
+      "body": "Error parsing header X-Forwarded-For failed: Failed reading: Failed parsing bytestring as IpAddr.",
+      "location": null
+    },
+    {
+      "method": "POST",
+      "path": "/register",
+      "status": 400,
+      "content_type": null,
+      "body": "Error parsing header X-Forwarded-For failed: Failed reading: Failed parsing bytestring as IpAddr.",
+      "location": null
+    },
+    {
+      "method": "POST",
+      "path": "/register",
+      "status": 400,
+      "content_type": null,
+      "body": "Error parsing header X-Forwarded-For failed: Failed reading: Failed parsing bytestring as IpAddr.",
+      "location": null
+    }
+  ],
+  "native_public_creation": {
+    "method": "POST",
+    "path": "/register",
+    "status": 201,
+    "content_type": "application/json;charset=utf-8",
+    "body": "{\"accent_id\":0,\"assets\":[],\"email\":\"synthetic-native-public-01bbeaecede0476b83068f6e1bdd358c@example.com\",\"id\":\"f05649b5-05c9-49e0-8d60-d5bdb2a3e50a\",\"locale\":\"en\",\"managed_by\":\"wire\",\"name\":\"Synthetic native public control\",\"picture\":[],\"qualified_id\":{\"domain\":\"example.com\",\"id\":\"f05649b5-05c9-49e0-8d60-d5bdb2a3e50a\"},\"searchable\":true,\"status\":\"active\",\"supported_protocols\":[\"proteus\"],\"type\":\"regular\"}",
+    "location": "f05649b5-05c9-49e0-8d60-d5bdb2a3e50a",
+    "json": {
+      "accent_id": 0,
+      "assets": [],
+      "email": "synthetic-native-public-01bbeaecede0476b83068f6e1bdd358c@example.com",
+      "id": "f05649b5-05c9-49e0-8d60-d5bdb2a3e50a",
+      "locale": "en",
+      "managed_by": "wire",
+      "name": "Synthetic native public control",
+      "picture": [],
+      "qualified_id": {
+        "domain": "example.com",
+        "id": "f05649b5-05c9-49e0-8d60-d5bdb2a3e50a"
+      },
+      "searchable": true,
+      "status": "active",
+      "supported_protocols": [
+        "proteus"
+      ],
+      "type": "regular"
+    }
+  },
+  "native_stop_exit_code": 0,
+  "candidate_brig_sha256": "dfe202c081ed7a0ab3037fea7bbaa306b15554b1c4c038930cc5981f3e6d9b99",
+  "mismatches": [],
+  "go_public_header_controls": [
+    {
+      "method": "POST",
+      "path": "/register",
+      "status": 400,
+      "content_type": null,
+      "body": "Header X-Forwarded-For is required",
+      "location": null
+    },
+    {
+      "method": "POST",
+      "path": "/register",
+      "status": 400,
+      "content_type": null,
+      "body": "Error parsing header X-Forwarded-For failed: Failed reading: Failed parsing bytestring as IpAddr.",
+      "location": null
+    },
+    {
+      "method": "POST",
+      "path": "/register",
+      "status": 400,
+      "content_type": null,
+      "body": "Error parsing header X-Forwarded-For failed: Failed reading: Failed parsing bytestring as IpAddr.",
+      "location": null
+    },
+    {
+      "method": "POST",
+      "path": "/register",
+      "status": 400,
+      "content_type": null,
+      "body": "Error parsing header X-Forwarded-For failed: Failed reading: Failed parsing bytestring as IpAddr.",
+      "location": null
+    }
+  ],
+  "public_header_mismatches": [],
+  "go_public_creation": {
+    "method": "POST",
+    "path": "/register",
+    "status": 201,
+    "content_type": "application/json;charset=utf-8",
+    "body": "{\"qualified_id\":{\"id\":\"a8e30006-a006-4fb2-b448-e3dad8b44265\",\"domain\":\"example.com\"},\"id\":\"a8e30006-a006-4fb2-b448-e3dad8b44265\",\"type\":\"regular\",\"email\":\"synthetic-go-public-5eba52840a0b44ef9795efa5a05d0612@example.com\",\"name\":\"Synthetic Go public registration\",\"picture\":[],\"assets\":[],\"accent_id\":0,\"status\":\"active\",\"locale\":\"en\",\"managed_by\":\"wire\",\"supported_protocols\":[\"proteus\"],\"searchable\":true}\n",
+    "location": "a8e30006-a006-4fb2-b448-e3dad8b44265",
+    "json": {
+      "qualified_id": {
+        "id": "a8e30006-a006-4fb2-b448-e3dad8b44265",
+        "domain": "example.com"
+      },
+      "id": "a8e30006-a006-4fb2-b448-e3dad8b44265",
+      "type": "regular",
+      "email": "synthetic-go-public-5eba52840a0b44ef9795efa5a05d0612@example.com",
+      "name": "Synthetic Go public registration",
+      "picture": [],
+      "assets": [],
+      "accent_id": 0,
+      "status": "active",
+      "locale": "en",
+      "managed_by": "wire",
+      "supported_protocols": [
+        "proteus"
+      ],
+      "searchable": true
+    }
+  },
+  "go_public_activation_pair_lookup": {
+    "method": "GET",
+    "path": "/i/users/activation-code?email=synthetic-go-public-5eba52840a0b44ef9795efa5a05d0612%40example.com",
+    "status": 200,
+    "content_type": "application/json;charset=utf-8",
+    "body": "{\"code\":\"492071\",\"key\":\"SxeytpMtoNyOy8zUtplhHKPItr-pdATexI3fcQPex9o=\"}\n",
+    "json": {
+      "code": "492071",
+      "key": "SxeytpMtoNyOy8zUtplhHKPItr-pdATexI3fcQPex9o="
+    }
+  },
+  "go_public_activation": {
+    "method": "POST",
+    "path": "/activate",
+    "status": 200,
+    "content_type": "application/json;charset=utf-8",
+    "body": "{\"email\":\"synthetic-go-public-5eba52840a0b44ef9795efa5a05d0612@example.com\",\"first\":true}\n",
+    "json": {
+      "email": "synthetic-go-public-5eba52840a0b44ef9795efa5a05d0612@example.com",
+      "first": true
+    }
+  },
+  "go_public_stored_reads": [
+    {
+      "method": "GET",
+      "path": "/self",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"qualified_id\":{\"id\":\"a8e30006-a006-4fb2-b448-e3dad8b44265\",\"domain\":\"example.com\"},\"id\":\"a8e30006-a006-4fb2-b448-e3dad8b44265\",\"type\":\"regular\",\"email\":\"synthetic-go-public-5eba52840a0b44ef9795efa5a05d0612@example.com\",\"name\":\"Synthetic Go public registration\",\"picture\":[],\"assets\":[],\"accent_id\":0,\"status\":\"active\",\"locale\":\"en\",\"managed_by\":\"wire\",\"supported_protocols\":[\"proteus\"],\"searchable\":true}\n",
+      "json": {
+        "qualified_id": {
+          "id": "a8e30006-a006-4fb2-b448-e3dad8b44265",
+          "domain": "example.com"
+        },
+        "id": "a8e30006-a006-4fb2-b448-e3dad8b44265",
+        "type": "regular",
+        "email": "synthetic-go-public-5eba52840a0b44ef9795efa5a05d0612@example.com",
+        "name": "Synthetic Go public registration",
+        "picture": [],
+        "assets": [],
+        "accent_id": 0,
+        "status": "active",
+        "locale": "en",
+        "managed_by": "wire",
+        "supported_protocols": [
+          "proteus"
+        ],
+        "searchable": true
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/cookies",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"cookies\":[{\"created\":\"2026-10-11T05:01:19.024Z\",\"expires\":\"2026-10-11T05:03:19Z\",\"id\":3457299376,\"label\":\"synthetic-public-device\",\"successor\":null,\"type\":\"persistent\"}]}\n",
+      "json": {
+        "cookies": [
+          {
+            "created": "2026-10-11T05:01:19.024Z",
+            "expires": "2026-10-11T05:03:19Z",
+            "id": 3457299376,
+            "label": "synthetic-public-device",
+            "successor": null,
+            "type": "persistent"
+          }
+        ]
+      }
+    }
+  ],
+  "go_public_stop_exit_code": 0,
+  "native_public_consumed_reads": [
+    {
+      "method": "GET",
+      "path": "/self",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"accent_id\":0,\"assets\":[],\"email\":\"synthetic-go-public-5eba52840a0b44ef9795efa5a05d0612@example.com\",\"id\":\"a8e30006-a006-4fb2-b448-e3dad8b44265\",\"locale\":\"en\",\"managed_by\":\"wire\",\"name\":\"Synthetic Go public registration\",\"picture\":[],\"qualified_id\":{\"domain\":\"example.com\",\"id\":\"a8e30006-a006-4fb2-b448-e3dad8b44265\"},\"searchable\":true,\"status\":\"active\",\"supported_protocols\":[\"proteus\"],\"type\":\"regular\"}",
+      "json": {
+        "accent_id": 0,
+        "assets": [],
+        "email": "synthetic-go-public-5eba52840a0b44ef9795efa5a05d0612@example.com",
+        "id": "a8e30006-a006-4fb2-b448-e3dad8b44265",
+        "locale": "en",
+        "managed_by": "wire",
+        "name": "Synthetic Go public registration",
+        "picture": [],
+        "qualified_id": {
+          "domain": "example.com",
+          "id": "a8e30006-a006-4fb2-b448-e3dad8b44265"
+        },
+        "searchable": true,
+        "status": "active",
+        "supported_protocols": [
+          "proteus"
+        ],
+        "type": "regular"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/cookies",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"cookies\":[{\"created\":\"2026-10-11T05:01:19.024Z\",\"expires\":\"2026-10-11T05:03:19Z\",\"id\":3457299376,\"label\":\"synthetic-public-device\",\"successor\":null,\"type\":\"persistent\"}]}",
+      "json": {
+        "cookies": [
+          {
+            "created": "2026-10-11T05:01:19.024Z",
+            "expires": "2026-10-11T05:03:19Z",
+            "id": 3457299376,
+            "label": "synthetic-public-device",
+            "successor": null,
+            "type": "persistent"
+          }
+        ]
+      }
+    }
+  ],
+  "native_public_consumed_cookie": {
+    "method": "POST",
+    "path": "/access",
+    "status": 200,
+    "content_type": "application/json;charset=utf-8",
+    "body": "{\"access_token\":\"KKVb7Jrq3JzH1VeUaPX4aU2TC0lhSE-h8JEQXvA63CC-g7odJ4tzb7jbB20zgKS9lH7p09OZLlrpNaJId5i1BA==.v=1.k=1.d=1791694909.t=a.l=.u=a8e30006-a006-4fb2-b448-e3dad8b44265.c=11215367469371460241\",\"expires_in\":30,\"token_type\":\"Bearer\",\"user\":\"a8e30006-a006-4fb2-b448-e3dad8b44265\"}",
+    "json": {
+      "access_token": "KKVb7Jrq3JzH1VeUaPX4aU2TC0lhSE-h8JEQXvA63CC-g7odJ4tzb7jbB20zgKS9lH7p09OZLlrpNaJId5i1BA==.v=1.k=1.d=1791694909.t=a.l=.u=a8e30006-a006-4fb2-b448-e3dad8b44265.c=11215367469371460241",
+      "expires_in": 30,
+      "token_type": "Bearer",
+      "user": "a8e30006-a006-4fb2-b448-e3dad8b44265"
+    }
+  },
+  "native_public_consumed_password": {
+    "method": "POST",
+    "path": "/login?persist=true",
+    "status": 200,
+    "content_type": "application/json;charset=utf-8",
+    "body": "{\"access_token\":\"vB8bkTsWd8oL9aDa448p1Z3FLQNNQGUaiw35mxDXYLwQQyND53JhaDyDK2PVPDZXKSEnRgBHhITkY0J-RKmvBw==.v=1.k=1.d=1791694909.t=a.l=.u=a8e30006-a006-4fb2-b448-e3dad8b44265.c=10393535995941749011\",\"expires_in\":30,\"token_type\":\"Bearer\",\"user\":\"a8e30006-a006-4fb2-b448-e3dad8b44265\"}",
+    "json": {
+      "access_token": "vB8bkTsWd8oL9aDa448p1Z3FLQNNQGUaiw35mxDXYLwQQyND53JhaDyDK2PVPDZXKSEnRgBHhITkY0J-RKmvBw==.v=1.k=1.d=1791694909.t=a.l=.u=a8e30006-a006-4fb2-b448-e3dad8b44265.c=10393535995941749011",
+      "expires_in": 30,
+      "token_type": "Bearer",
+      "user": "a8e30006-a006-4fb2-b448-e3dad8b44265"
+    }
+  },
+  "public_registration_switchback": {
+    "actual_fresh_go_account": true,
+    "native_consumed_profile_cookie_password": true,
+    "same_initialized_stores": true,
+    "native_public_cookie_attributes_match": true,
+    "creation_uuid_and_token_bytes_compared": false
+  },
+  "owned_process_exit_codes": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ]
+}
