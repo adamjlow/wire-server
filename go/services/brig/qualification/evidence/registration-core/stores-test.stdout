@@ -1,0 +1,3 @@
+=== RUN   TestOwnedDurableStores
+--- PASS: TestOwnedDurableStores (1.22s)
+PASS
