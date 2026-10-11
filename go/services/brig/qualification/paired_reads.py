@@ -26,6 +26,11 @@ def checked(args, timeout=30):
     return result.stdout.strip()
 
 
+def same_response(reference, actual):
+    fields = ('status', 'content_type', 'json' if 'json' in reference else 'body')
+    return all(reference.get(field) == actual.get(field) for field in fields)
+
+
 def inside(gundeck_path=None, access_switchback=False, login_contract=False, activation_contract=False, registration_contract=False, saml_registration_contract=False, public_registration_contract=False, password_reset_contract=False, password_change_contract=False, ses_feedback_contract=False, properties_contract=False, client_update_contract=False, client_registration_contract=False, client_lifecycle_contract=False, store_fixture_path=None, mls_upload_originals=False, stomp_internal_events=False, service_deletion_queue=False, service_galley_event=False, optimistic_prekeys=False, provider_profile_contract=False):
     registration_contract = registration_contract or saml_registration_contract
     if os.getuid() != 65534 or os.environ.get('WIRE_E2E_DISPOSABLE') != '1':
@@ -38,8 +43,7 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
     original_failures = []
     service_conversations = {}
     service_clients = {}
-    fields=lambda record: ('status','content_type','json' if 'json' in record else 'body')
-    same=lambda ref,actual: all(ref.get(k)==actual.get(k) for k in fields(ref))
+    same = same_response
     if stomp_internal_events:
         import stomp_broker
 

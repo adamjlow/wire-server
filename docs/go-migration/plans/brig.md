@@ -1854,3 +1854,12 @@ cleanup0/independent empty retained. Failed controller metadata mislabeled reuse
 production as built at observer961; actual passing production/full quality is
 sourceb26a7ec24/SHAa5257b6d, original SDK receipt retained. This failed run is not
 qualified; next controller must identify actual artifact build source correctly.
+
+Source69e6c9381 full Go/static checks pass and all14 native/Go provider responses
+match, with actual Go profile update/read succeeding. Overall backend fails
+before original22/switchback because same() captured a name later overwritten
+by the legacy generic loop's tuple. Replace that closure with a pure same_response
+helper using the identical status/media/JSON-or-body comparison; verify positive
+and mismatching controls locally before retry. All25 exits0, runner1/cleanup0 and
+independent empty retained. Production unchanged; reuse exact source69 artifacts/
+quality with actual artifact_build_source_revision preserved in the next receipt.
