@@ -1,0 +1,12 @@
+{
+  "wire.migration.observation": {
+    "container": "",
+    "network": "",
+    "volume": ""
+  },
+  "wire-migration-task=brig-implementation": {
+    "container": "",
+    "network": "",
+    "volume": ""
+  }
+}

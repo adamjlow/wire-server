@@ -1,0 +1,23 @@
+{
+  "/dev/shm/wire-migration-brig-20261010/activation-api-sdk-check": {
+    "argon2-copyright": "6059eb2b0f8f23b5c6023b08f68d4df9addd834665d07e5dcc364d4ae80d9b69",
+    "brig": "1b578b76c1afa64200168f7f1ab560ade5ba6cb50aa6a90083ca0ba7adb1d74d",
+    "brig.test": "1b254da8697c109405785578a4a923e37fa38593a91683128ee81b0c46a42299",
+    "build-receipt.json": "1b50005387a4e17ace314bebca6cfc3f63f19ea0c1363cfb815d480fd15f4ce4",
+    "controller.log": "5b2278170b6160b9a369f404cd0d8b492feb291ecfe3b02e76a9f973097a7e22",
+    "cxx-package.sha256": "5abc52f67b0befe6317695d4489a2433b32854cbb6b5916a6f875b2c0e300636",
+    "cxx-package.txt": "d41b16dcb551842304cab9549bb3da24fdb859d85d690bd121de7f3cb29cce01",
+    "glibc-copyright": "f5788886720a2605a946e81d571e6c8162b09f58d2e2ceb8d36e5768fccd850d",
+    "go-check.log": "d939cc44b72720b3a33006ec366f8ffee979c70d8d05b65e27f4ef8ac0b6a795",
+    "icu-copyright": "5bbff5f646ce750ac0a347e7f91793279b7422a1119820b5f75d98879c201c68",
+    "libraries.sha256": "875560a1f32f1ad76a866a7f792a6b392f64c5555e8f55f270f60869079f9af2",
+    "libstdc++-copyright": "20390f8a6f3b1e4d7cb45dd8652dabb259bbef688cbad839bcdb0b9ba7252f79",
+    "openssl-copyright": "6a7da622fe0637a334d2a8fc470852d2ffb77d9a2b2f930f854e32a41ad6ef35",
+    "packages.txt": "9e9db92065c33bc81e7e8b5ff6f5c0a9a32814690509f59c88718cc418f5e262",
+    "runtime-units.log": "97c34edfb5f7a87a0676fcb287ea9dfaa813c30830efae22f4877bf022cc544b",
+    "stores-build-receipt.json": "e71fb825712cd9cf0279e7e78abefc3de69f546c533848c6b58d35d9ac3c0acb",
+    "stores.test": "ee4a72dbb33a00069d0c4fca4c1cf41fdd25db8d16e31636ea76a814e5e6c5e9",
+    "zlib-copyright": "9e5b96d63773a5d177ba264254390f792be07e41748ebd94730981c6cac31cc6",
+    "zstd-copyright": "5cec9fef4d3fa7e0371fbef4ec3fc416e0105dc2a9922117f84e825cb11f50f8"
+  }
+}
