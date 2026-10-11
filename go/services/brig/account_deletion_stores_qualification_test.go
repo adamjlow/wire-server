@@ -69,6 +69,56 @@ func qualifyAccountDeletionStores(t *testing.T, ctx context.Context, stores map[
 			}
 		})
 	}
+	// Hold a conflicting update until the serializable DELETE is waiting on
+	// its row lock. The native transaction retries40001 and creates exactly one
+	// deletion record; scrubbing the error inside the transaction loses that
+	// retry. This exercises actual PostgreSQL isolation, rather than a mock.
+	pg := stores["postgresql"]
+	conflict := record(newID())
+	if err := pg.create(ctx, conflict, nil, nil); err != nil {
+		t.Fatal(err)
+	}
+	blocker, err := pg.postgres.Begin(ctx)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer blocker.Rollback(ctx)
+	if _, err = blocker.Exec(ctx, `UPDATE wire_user SET name=$2 WHERE id=$1::uuid`, conflict.ID.String(), "Synthetic concurrent update"); err != nil {
+		t.Fatal(err)
+	}
+	completed := make(chan error, 1)
+	go func() { completed <- pg.deleteAccount(ctx, conflict) }()
+	deadline := time.Now().Add(5 * time.Second)
+	for {
+		var waiting bool
+		err := pg.postgres.QueryRow(ctx, `SELECT EXISTS (SELECT 1 FROM pg_stat_activity WHERE datname=current_database() AND wait_event_type='Lock' AND query LIKE 'DELETE FROM wire_user WHERE id=%')`).Scan(&waiting)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if waiting {
+			break
+		}
+		if time.Now().After(deadline) {
+			t.Fatal("serializable deletion did not wait for competing update")
+		}
+		time.Sleep(10 * time.Millisecond)
+	}
+	if err = blocker.Commit(ctx); err != nil {
+		t.Fatal(err)
+	}
+	select {
+	case err = <-completed:
+		if err != nil {
+			t.Fatal("serializable deletion did not retry", err)
+		}
+	case <-ctx.Done():
+		t.Fatal("serializable deletion did not complete")
+	}
+	var deletedCount int
+	if err = pg.postgres.QueryRow(ctx, `SELECT count(*) FROM deleted_user WHERE id=$1::uuid`, conflict.ID.String()).Scan(&deletedCount); err != nil || deletedCount != 1 {
+		t.Fatal("serialization retry lost deletion record", err)
+	}
+
 	// Migration-mode deletion must also select a Cassandra-resident user,
 	// retaining its native row instead of inventing a PostgreSQL tombstone.
 	migrate := stores["migration-to-postgresql"]

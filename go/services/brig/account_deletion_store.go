@@ -14,7 +14,7 @@ import (
 func (s userStore) deleteAccount(ctx context.Context, user storedUser) error {
 	return s.withUserBackend(ctx, user.ID, func(postgres bool) error {
 		if postgres {
-			return s.withPostgres(ctx, func(conn *pgx.Conn) error {
+			err := s.withPostgres(ctx, func(conn *pgx.Conn) error {
 				return migrationTransaction(ctx, conn, func(tx pgx.Tx) error {
 					var created time.Time
 					err := tx.QueryRow(ctx, `DELETE FROM wire_user WHERE id=$1::uuid RETURNING created_at`, user.ID.String()).Scan(&created)
@@ -22,12 +22,15 @@ func (s userStore) deleteAccount(ctx context.Context, user storedUser) error {
 						return nil
 					}
 					if err != nil {
-						return userStorageError(err)
+						return err
 					}
 					_, err = tx.Exec(ctx, `INSERT INTO deleted_user (id,team,created_at) VALUES ($1::uuid,$2::uuid,$3) ON CONFLICT (id) DO NOTHING`, user.ID.String(), uuidText(user.Team), created)
-					return userStorageError(err)
+					return err
 				})
 			})
+			// Keep serialization errors typed inside the transaction retry loop;
+			// scrub storage details only after that loop has finished.
+			return userStorageError(err)
 		}
 		if user.Handle != nil {
 			owner, err := s.cassandraLoginLookup(ctx, `SELECT user FROM user_handle WHERE handle=?`, *user.Handle)

@@ -1111,3 +1111,11 @@ oracle, native schema utility unchanged. API/consumer/peer/group/email/federatio
 notification binding remains next and this unbound engine is not advertised as
 completed DELETE/self or recovery of original22. Stop speculative checks after
 these finite controls; finish actual public deletion and reuse the original tests.
+
+Source53c98722e SDK/static checks pass. Code review found that scrubbing PG errors
+inside the serializable transaction would hide40001 from the existing retry loop.
+Move scrubbing outside that loop and add one actual PG locked-row concurrent
+update/deletion control, verifying the retry produces exactly one tombstone.
+This is a concrete retry fidelity issue, not a speculative extra gate. Owned
+nonroot cache maintenance removes only regular UID/GID65534 Go cache entries
+older1h (627 files/475569124bytes); retained artifacts untouched.
