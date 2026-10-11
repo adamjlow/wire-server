@@ -26,7 +26,8 @@ def checked(args, timeout=30):
     return result.stdout.strip()
 
 
-def inside(gundeck_path=None, access_switchback=False, login_contract=False, activation_contract=False, registration_contract=False):
+def inside(gundeck_path=None, access_switchback=False, login_contract=False, activation_contract=False, registration_contract=False, saml_registration_contract=False):
+    registration_contract = registration_contract or saml_registration_contract
     if os.getuid() != 65534 or os.environ.get('WIRE_E2E_DISPOSABLE') != '1':
         raise ValueError('owned nonroot Docker runner required')
     sys.path.insert(0, '/opt/wire-e2e')
@@ -123,7 +124,17 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             predecessor_password = 'Synthetic-registration-password-B!'
             registration_body = {'name': 'Synthetic registration reference', 'uuid': actor,
                 'managed_by': 'scim', 'password': registration_password, 'supported_protocols': []}
+            if saml_registration_contract:
+                owner, _ = request('POST', '/i/users', body={'name': 'Synthetic SAML team owner',
+                    'email': 'synthetic-saml-owner-' + uuid.uuid4().hex + '@example.com',
+                    'password': 'Synthetic-team-owner-password!',
+                    'team': {'name': 'Synthetic SAML binding team', 'icon': 'default'}})
+                report['registration_native_team_setup'] = owner
+                assert owner['status'] == 201 and owner['json'].get('team'), 'native SAML binding team setup failed'
+                registration_body.update({'managed_by': 'wire', 'team_id': owner['json']['team'],
+                    'sso_id': {'tenant': 'https://synthetic-issuer.example.com', 'subject': 'synthetic-' + actor}})
             registration_reference, _ = request('POST', '/i/users', body=registration_body)
+            report['registration_native_reference'] = registration_reference
             assert registration_reference['status'] == 201, 'native registration reference failed'
             assert registration_reference['json']['id'] == actor and registration_reference['location'] == actor, 'native registration actor/Location changed'
             registration_cases = [('GET', '/self', {'Z-User': actor}),
@@ -131,9 +142,11 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
                 ('GET', '/i/users/' + actor + '/reauthenticate', {}, {'password': registration_password}),
                 ('GET', '/i/users/' + actor + '/reauthenticate', {}, {'password': predecessor_password})]
             registration_reads = [request(*case)[0] for case in registration_cases]
+            report['registration_native_reads'] = registration_reads
             assert [record['status'] for record in registration_reads] == [200, 200, 200, 403], 'native registration reference reads failed'
             staged, _ = request('POST', '/i/users', body={**registration_body,
                 'name': 'Synthetic registration predecessor', 'password': predecessor_password})
+            report['registration_native_staged_creation'] = staged
             assert staged['status'] == 201, 'native same-actor registration staging failed'
             staged_profile, _ = request('GET', '/self', {'Z-User': actor})
             old_password, _ = request(*registration_cases[2])
@@ -265,7 +278,8 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
                 'native_consumed_restored_profile_password_and_conference_feature': True,
                 'native_rejected_predecessor_password': True,
                 'dynamic_fields_normalized': False,
-                'scope': 'identityless SCIM-managed internal creation; no invitation/SSO/public/email activation proof'}
+                'scope': ('SAML internal creation/rejoin through original native Galley; no invitation/public/email activation or fresh-member/delivery proof'
+                          if saml_registration_contract else 'identityless SCIM-managed internal creation; no invitation/SSO/public/email activation proof')}
         if activation_contract:
             # Native fixture activation codes live four seconds. Establish a
             # fresh account before closing peer clients, then issue its first
@@ -547,11 +561,12 @@ def main():
     parser.add_argument('--login-contract', action='store_true')
     parser.add_argument('--activation-contract', action='store_true')
     parser.add_argument('--registration-contract', action='store_true')
+    parser.add_argument('--saml-registration-contract', action='store_true')
     args = parser.parse_args()
-    if args.registration_contract and (args.activation_contract or args.access_switchback or args.login_contract):
+    if (args.registration_contract or args.saml_registration_contract) and (args.activation_contract or args.access_switchback or args.login_contract):
         parser.error('registration observation runs separately from credential/activation observations')
     if args.in_container:
-        return inside(args.gundeck_path, args.access_switchback, args.login_contract, args.activation_contract, args.registration_contract)
+        return inside(args.gundeck_path, args.access_switchback, args.login_contract, args.activation_contract, args.registration_contract, args.saml_registration_contract)
     if args.binary is None or args.build_receipt is None or args.output is None:
         parser.error('identified binary, receipt and new output required')
     sys.path.insert(0, str(ROOT / 'tools/parity/docker'))
@@ -585,6 +600,8 @@ def main():
         runner['command'].append('--activation-contract')
     if args.registration_contract:
         runner['command'].append('--registration-contract')
+    if args.saml_registration_contract:
+        runner['command'].append('--saml-registration-contract')
     if args.gundeck_binary:
         runner['command'] += ['--gundeck-path', '/candidate/gundeck']
         runner['volumes'].append({'type': 'bind', 'source': str(args.gundeck_binary.resolve(strict=True)),
