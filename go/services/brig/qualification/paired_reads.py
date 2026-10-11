@@ -26,7 +26,7 @@ def checked(args, timeout=30):
     return result.stdout.strip()
 
 
-def inside(gundeck_path=None, access_switchback=False, login_contract=False, activation_contract=False, registration_contract=False, saml_registration_contract=False):
+def inside(gundeck_path=None, access_switchback=False, login_contract=False, activation_contract=False, registration_contract=False, saml_registration_contract=False, public_registration_contract=False):
     registration_contract = registration_contract or saml_registration_contract
     if os.getuid() != 65534 or os.environ.get('WIRE_E2E_DISPOSABLE') != '1':
         raise ValueError('owned nonroot Docker runner required')
@@ -48,7 +48,7 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             data = response.read()
             result = {'method': method, 'path': path, 'status': response.status,
                       'content_type': response.getheader('Content-Type'), 'body': data.decode()}
-            if method == 'POST' and path == '/i/users':
+            if method == 'POST' and path in ('/i/users','/register'):
                 result['location'] = response.getheader('Location')
             try:
                 result['json'] = json.loads(data)
@@ -191,6 +191,21 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             activation_pair = stage_email(activation_email)
             report['native_activation_reference'] = native_activation
             report['native_activation_repeat_reference'] = native_repeat
+        public_cases = []
+        native_public_errors = []
+        if public_registration_contract:
+            public_cases = [
+                ('POST','/register',{}, {'name':'Synthetic public header control'}),
+                ('POST','/register',{'X-Forwarded-For':'invalid-synthetic-ip'}, {'name':'Synthetic public header control'}),
+                ('POST','/register',{'X-Forwarded-For':'127.0.0.1,127.0.0.2'}, {'name':'Synthetic public header control'}),
+                ('POST','/register',{'X-Forwarded-For':'fe80::1%lo'}, {'name':'Synthetic public header control'})]
+            native_public_errors = [request(*case)[0] for case in public_cases]
+            assert all(record['status'] == 400 for record in native_public_errors), 'native public header controls unexpectedly created accounts'
+            report['native_public_header_controls'] = native_public_errors
+            native_public, native_public_cookie = request('POST','/register',{'X-Forwarded-For':'127.0.0.42'},
+                {'name':'Synthetic native public control','email':'synthetic-native-public-'+uuid.uuid4().hex+'@example.com','password':'Synthetic-public-password-2026!'})
+            report['native_public_creation'] = native_public
+            assert native_public['status'] == 201 and native_public['location'] == native_public['json']['id'] and native_public_cookie, 'native public registration baseline failed'
         reference_access = None
         second_login, second_cookie = None, None
         cases = [('GET', '/i/status', {}), ('HEAD', '/i/status', {}),
@@ -243,6 +258,57 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
                 mismatches.append({'case': index, 'path': cases[index][1], 'fields': [key for key in fields if native.get(key) != go.get(key)]})
         report['mismatches'] = mismatches
         assert not mismatches, 'paired response mismatches'
+        if public_registration_contract:
+            go_public_errors = [request(*case)[0] for case in public_cases]
+            report['go_public_header_controls'] = go_public_errors
+            report['public_header_mismatches'] = [
+                {'case':index,'fields':[field for field in ('status','content_type','body') if reference.get(field)!=actual.get(field)]}
+                for index,(reference,actual) in enumerate(zip(native_public_errors,go_public_errors))
+                if any(reference.get(field)!=actual.get(field) for field in ('status','content_type','body'))]
+            public_email='synthetic-go-public-'+uuid.uuid4().hex+'@example.com'
+            public_password='Synthetic-public-password-2026!'
+            public_created, public_cookie = request('POST','/register',{'X-Forwarded-For':'127.0.0.42'},
+                {'name':'Synthetic Go public registration','email':public_email,'password':public_password,'label':'synthetic-public-device'})
+            report['go_public_creation'] = public_created
+            assert public_created['status']==201 and public_cookie, 'Go public registration failed'
+            public_user=public_created['json']['id']
+            assert str(uuid.UUID(public_user))==public_user and public_created['location']==public_user, 'Go public UUID/Location contract failed'
+            assert public_created['json']['email']==public_email and public_created['json']['name']=='Synthetic Go public registration', 'Go public request projection failed'
+            from http.cookies import SimpleCookie
+            def cookie_attributes(raw):
+                cookie=SimpleCookie();cookie.load(raw)
+                assert set(cookie)=={'zuid'}, 'public cookie name changed'
+                return {key:cookie['zuid'][key] for key in ('path','httponly','secure','samesite','domain','max-age')}, bool(cookie['zuid']['expires'])
+            assert cookie_attributes(native_public_cookie)==cookie_attributes(public_cookie), 'native public cookie attributes mismatch'
+            pair,_=request('GET','/i/users/activation-code?'+urlencode({'email':public_email}))
+            report['go_public_activation_pair_lookup']=pair
+            assert pair['status']==200 and set(pair['json'])=={'key','code'}, 'Go public durable activation pair missing'
+            activated,_=request('POST','/activate',body={**pair['json'],'dryrun':False})
+            report['go_public_activation']=activated
+            assert activated['status']==200 and activated['json']=={'email':public_email,'first':True}, 'Go public first activation failed'
+            public_reads=[('GET','/self',{'Z-User':public_user}),('GET','/cookies',{'Z-User':public_user})]
+            public_go_reads=[request(*case)[0] for case in public_reads]
+            report['go_public_stored_reads']=public_go_reads
+            active.terminate()
+            report['go_public_stop_exit_code']=active.wait(timeout=35)
+            assert report['go_public_stop_exit_code']==0, 'Go public process did not stop cleanly'
+            with socket.socket() as check:
+                assert check.connect_ex(('127.0.0.1',8082))!=0, 'Go public listener remains'
+            log=open('/reports/brig-native-public-switchback.log','w');logs.append(log)
+            active=subprocess.Popen([str(native_brig_path),'-c',str(runtime.WORK/'brig-static-0.json')],cwd=runtime.WORK/'services/brig',stdout=log,stderr=subprocess.STDOUT)
+            processes.append(active);ready(active)
+            public_native_reads=[request(*case)[0] for case in public_reads]
+            report['native_public_consumed_reads']=public_native_reads
+            for reference,actual in zip(public_go_reads,public_native_reads):
+                assert all(reference.get(field)==actual.get(field) for field in ('status','content_type','json')), 'native public durable profile/cookie mismatch'
+            consumed,_=request('POST','/access',{'Cookie':public_cookie.split(';',1)[0]})
+            report['native_public_consumed_cookie']=consumed
+            assert consumed['status']==200 and consumed['json']['user']==public_user, 'native rejected Go public registration cookie'
+            login,_=request('POST','/login?persist=true',body={'email':public_email,'password':public_password})
+            report['native_public_consumed_password']=login
+            assert login['status']==200 and login['json']['user']==public_user, 'native rejected Go public registration password'
+            report['public_registration_switchback']={'actual_fresh_go_account':True,'native_consumed_profile_cookie_password':True,'same_initialized_stores':True,'native_public_cookie_attributes_match':True,'creation_uuid_and_token_bytes_compared':False}
+            assert not report['public_header_mismatches'], 'public header response mismatches'
         if registration_contract:
             def same_registration_response(reference, actual, creation=False):
                 fields = ('status', 'content_type', 'json' if 'json' in reference else 'body')
@@ -562,11 +628,14 @@ def main():
     parser.add_argument('--activation-contract', action='store_true')
     parser.add_argument('--registration-contract', action='store_true')
     parser.add_argument('--saml-registration-contract', action='store_true')
+    parser.add_argument('--public-registration-contract', action='store_true')
     args = parser.parse_args()
     if (args.registration_contract or args.saml_registration_contract) and (args.activation_contract or args.access_switchback or args.login_contract):
         parser.error('registration observation runs separately from credential/activation observations')
+    if args.public_registration_contract and any((args.registration_contract,args.saml_registration_contract,args.activation_contract,args.access_switchback,args.login_contract)):
+        parser.error('public registration observation runs separately')
     if args.in_container:
-        return inside(args.gundeck_path, args.access_switchback, args.login_contract, args.activation_contract, args.registration_contract, args.saml_registration_contract)
+        return inside(args.gundeck_path, args.access_switchback, args.login_contract, args.activation_contract, args.registration_contract, args.saml_registration_contract, args.public_registration_contract)
     if args.binary is None or args.build_receipt is None or args.output is None:
         parser.error('identified binary, receipt and new output required')
     sys.path.insert(0, str(ROOT / 'tools/parity/docker'))
@@ -602,6 +671,8 @@ def main():
         runner['command'].append('--registration-contract')
     if args.saml_registration_contract:
         runner['command'].append('--saml-registration-contract')
+    if args.public_registration_contract:
+        runner['command'].append('--public-registration-contract')
     if args.gundeck_binary:
         runner['command'] += ['--gundeck-path', '/candidate/gundeck']
         runner['volumes'].append({'type': 'bind', 'source': str(args.gundeck_binary.resolve(strict=True)),
