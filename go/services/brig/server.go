@@ -142,6 +142,18 @@ func Run(ctx context.Context, c Config) error {
 	if err != nil {
 		return err
 	}
+	if c.Elasticsearch == nil || c.Settings.CookieRenewAge == nil {
+		return errors.New("missing renewal/search index configuration")
+	}
+	timeout, err := inactiveTimeout(c)
+	if err != nil {
+		return err
+	}
+	indexWriter, err := newSearchIndex(*c.Elasticsearch)
+	if err != nil {
+		return err
+	}
+	defer indexWriter.close()
 	cassandra, err := openCassandra(ctx, c)
 	if err != nil {
 		return err
@@ -164,7 +176,13 @@ func Run(ctx context.Context, c Config) error {
 	business := brigReadHandlers{config: c, users: userStore{userAuthStore{cassandra: cassandra, postgres: postgres, mode: c.Migration["user"], acquisition: time.Duration(c.PostgresPool.Acquisition)}}, sessions: sessionStore{cassandra}, peers: brigPeers{client: &http.Client{Transport: transport, Timeout: 30 * time.Second}, galley: c.Galley}}
 	business.clients = &clientReadHandlers{store: clientStore{cassandra}}
 	issuer := tokenIssuer{key: private, index: int64(c.ZAuth.Settings.KeyIndex), userTTL: c.ZAuth.Settings.UserTTL, sessionTTL: c.ZAuth.Settings.SessionTTL, accessTTL: c.ZAuth.Settings.AccessTTL, legalUserTTL: c.ZAuth.Settings.LegalHoldUserTTL, legalAccessTTL: c.ZAuth.Settings.LegalHoldAccessTTL}
-	business.access = &accessTokenService{lookup: business.sessions, sessions: sessionManager{store: business.sessions, issuer: issuer}, keys: public, now: time.Now}
+	business.access = &accessTokenService{lookup: business.sessions, sessions: sessionManager{store: business.sessions, issuer: issuer, renewAge: *c.Settings.CookieRenewAge}, keys: public, now: time.Now}
+	index := searchIndexService{users: business.users.userAuthStore, team: business.peers.indexTeam, writer: indexWriter}
+	business.renewal = &accessRenewalHTTP{service: accessRenewalService{
+		tokens: *business.access, clients: clientStore{cassandra},
+		accounts:        accountLifecycle{accounts: business.users.userAuthStore, cookies: business.sessions},
+		inactiveTimeout: timeout,
+	}, syncIndex: index.sync, cookieInsecure: c.Settings.CookieInsecure}
 	business.auth = &reauthenticationHandler{
 		accounts: business.users.get,
 		passwords: authenticationService{store: business.users.userAuthStore, passwords: passwords, isSAML: func(ctx context.Context, user gocql.UUID) (bool, error) {

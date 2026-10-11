@@ -85,6 +85,13 @@ func TestOwnedDurableStores(t *testing.T) {
 		if err := s.updateAccountStatus(ctx, id, 1); err != nil {
 			t.Fatalf("%s suspend status write: %v", mode, err)
 		}
+		indexed, err := s.indexUser(ctx, id)
+		if err != nil || indexed == nil || indexed.user.Name != "Synthetic user" || indexed.user.Status == nil || *indexed.user.Status != 1 || indexed.user.Type == nil || *indexed.user.Type != 0 || indexed.updated.Before(indexed.created) {
+			t.Fatalf("%s native index storage mismatch: %v", mode, err)
+		}
+		if missing, err := s.indexUser(ctx, user()); err != nil || missing != nil {
+			t.Fatalf("%s missing index user mismatch: %v", mode, err)
+		}
 		a, err = s.authentication(ctx, id)
 		if err != nil || a == nil || a.Status != 1 || a.Password == nil || *a.Password != changedPassword {
 			t.Fatalf("%s suspend changed unrelated auth state: %v", mode, err)
@@ -116,6 +123,10 @@ func TestOwnedDurableStores(t *testing.T) {
 	legacyAuth, err := stores["cassandra"].authentication(ctx, id)
 	if err != nil || legacyAuth == nil || legacyAuth.Status != 1 {
 		t.Fatal("migration-mode status write did not stay in Cassandra", err)
+	}
+	legacyIndex, err := stores["migration-to-postgresql"].indexUser(ctx, id)
+	if err != nil || legacyIndex == nil || legacyIndex.user.Status == nil || *legacyIndex.user.Status != 1 {
+		t.Fatal("migration-mode index lookup did not use legacy Cassandra", err)
 	}
 	if err := stores["migration-to-postgresql"].create(ctx, newRecord(id), nil, nil); err != nil {
 		t.Fatal(err)
@@ -158,6 +169,30 @@ func TestOwnedDurableStores(t *testing.T) {
 	if _, err := lease.Exec(ctx, `SELECT pg_advisory_unlock($1::bigint)`, key); err != nil {
 		t.Fatal(err)
 	}
+	// Cookie ID signedness/null successor/label, millisecond time, TTL override
+	// Explicit native CQL timestamps demonstrate activated creation time and
+	// write_time_bumper's contribution to the external search document version.
+	indexID := user()
+	createdMicros, updatedMicros := int64(1700000000123456), int64(1700000001123456)
+	if err := cassandra.Query(`INSERT INTO user (id,name,accent_id,activated,status) VALUES (?,?,?,?,?) USING TIMESTAMP ?`, indexID, "Synthetic index", int32(2), true, int32(0), createdMicros).WithContext(ctx).Exec(); err != nil {
+		t.Fatal(err)
+	}
+	if err := cassandra.Query(`UPDATE user USING TIMESTAMP ? SET write_time_bumper=? WHERE id=?`, updatedMicros, int32(0), indexID).WithContext(ctx).Exec(); err != nil {
+		t.Fatal(err)
+	}
+	indexed, err := stores["cassandra"].indexUser(ctx, indexID)
+	if err != nil || indexed == nil || indexed.created.UnixMicro() != createdMicros || indexed.updated.UnixMicro() != updatedMicros || indexed.user.Type == nil || *indexed.user.Type != 0 {
+		t.Fatal("native index timestamps/default type", err)
+	}
+	// Malformed legacy rows fail before an incomplete search document is used.
+	partialID := user()
+	if err := cassandra.Query(`INSERT INTO user (id,name) VALUES (?,?)`, partialID, "Synthetic partial").WithContext(ctx).Exec(); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := stores["cassandra"].indexUser(ctx, partialID); err == nil {
+		t.Fatal("incomplete native index row accepted")
+	}
+
 	// Cookie ID signedness/null successor/label, millisecond time, TTL override
 	// and exact-key revocation exercise the actual native Cassandra table.
 	sessions := sessionStore{cassandra}

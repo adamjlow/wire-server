@@ -45,6 +45,7 @@ type PostgresPoolConfig struct {
 	Idleness    Duration `yaml:"idlenessTimeout"`
 }
 type Config struct {
+	Elasticsearch    *searchIndexConfig `yaml:"elasticsearch"`
 	PostgresPool     PostgresPoolConfig `yaml:"postgresqlPool"`
 	Brig             Endpoint           `yaml:"brig"`
 	Cargohold        Endpoint           `yaml:"cargohold"`
@@ -71,6 +72,11 @@ type Config struct {
 		} `yaml:"authSettings"`
 	} `yaml:"zauth"`
 	Settings struct {
+		CookieInsecure  bool   `yaml:"setCookieInsecure"`
+		CookieRenewAge  *int64 `yaml:"setUserCookieRenewAge"`
+		SuspendInactive *struct {
+			Timeout float64 `yaml:"suspendTimeout"`
+		} `yaml:"setSuspendInactiveUsers"`
 		PasswordPolicy   *passwordPolicy     `yaml:"setPasswordHashingOptions"`
 		PasswordRate     *passwordRateConfig `yaml:"setPasswordHashingRateLimit"`
 		Domain           string              `yaml:"setFederationDomain"`

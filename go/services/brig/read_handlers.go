@@ -18,6 +18,7 @@ type brigReadHandlers struct {
 	peers    brigPeers
 	auth     *reauthenticationHandler
 	access   *accessTokenService
+	renewal  *accessRenewalHTTP
 	clients  *clientReadHandlers
 }
 
@@ -55,6 +56,10 @@ func routeParseError(w http.ResponseWriter, message string) {
 }
 
 func (b brigReadHandlers) handle(w http.ResponseWriter, r *http.Request, path string) bool {
+	if path == "/access" && b.renewal != nil {
+		b.renewal.handle(w, r)
+		return true
+	}
 	if b.clients != nil && b.clients.handle(w, r, path) {
 		return true
 	}

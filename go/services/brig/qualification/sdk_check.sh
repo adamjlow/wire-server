@@ -9,6 +9,8 @@ cp /usr/share/doc/libssl3t64/copyright /output/openssl-copyright
 cp /usr/share/doc/zlib1g/copyright /output/zlib-copyright
 cp /usr/share/doc/libzstd1/copyright /output/zstd-copyright
 cp /usr/share/doc/libc6/copyright /output/glibc-copyright
+cp /usr/share/doc/libicu76/copyright /output/icu-copyright
+cp /usr/share/doc/libstdc++6/copyright /output/libstdc++-copyright
 python3 /source/go/check.py brig > /output/go-check.log 2>&1
 cd /source/go/services/brig
 go build -trimpath -buildvcs=false -tags=netgo,osusergo \
