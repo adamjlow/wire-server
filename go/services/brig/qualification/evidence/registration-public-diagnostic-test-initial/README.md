@@ -1,0 +1,1 @@
+Diagnostics test failed because it used errors.Is for an admission error containing JSON slices. Correct to errors.As for the typed value, retain sentinel Is checks and exact HTTP/redaction comparisons. No production failure observed in this attempt. SDK terminal1, cleanup0; independent owned container/network queries empty.

@@ -1,0 +1,10 @@
+all modules verified
+2026/10/11 04:46:48 session refresh notification failed
+--- FAIL: TestRegistrationStageDiagnosticsPreserveErrorsAndRedactDetails (0.00s)
+    registration_http_test.go:67: private stage lost cause or exposed details
+2026/10/11 04:46:51 session refresh notification failed
+FAIL
+FAIL	github.com/adamjlow/wire-server/go/services/brig	2.950s
+?   	github.com/adamjlow/wire-server/go/services/brig/cmd/brig	[no test files]
+FAIL
+Candidate checks failed: go test failed (exit 1)

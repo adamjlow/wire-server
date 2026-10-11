@@ -63,7 +63,12 @@ func TestRegistrationStageDiagnosticsPreserveErrorsAndRedactDetails(t *testing.T
 	defer log.SetOutput(original)
 	for _, cause := range []error{errSESMailInvalidDomain, registrationAdmissionError{Code: 403, Label: "native-team-policy", Message: "synthetic rejection"}, errors.New("synthetic private credential")} {
 		failure := registrationFailure{stage: "activation-mail", cause: cause}
-		if !errors.Is(failure, cause) || strings.Contains(failure.Error(), "credential") {
+		var admission registrationAdmissionError
+		preserved := errors.Is(failure, cause)
+		if typed, ok := cause.(registrationAdmissionError); ok {
+			preserved = errors.As(failure, &admission) && admission.Code == typed.Code && admission.Label == typed.Label
+		}
+		if !preserved || strings.Contains(failure.Error(), "credential") {
 			t.Fatal("private stage lost cause or exposed details")
 		}
 		plain, wrapped := httptest.NewRecorder(), httptest.NewRecorder()
