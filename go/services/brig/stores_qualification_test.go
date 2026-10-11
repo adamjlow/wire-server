@@ -597,4 +597,73 @@ func TestOwnedDurableStores(t *testing.T) {
 			t.Fatal("missing required reset column accepted", column)
 		}
 	}
+
+	// Domain registration migration reads Cassandra regardless of PG presence.
+	domainDB := stores["cassandra"].userAuthStore
+	for _, mode := range []string{"cassandra", "postgresql", "migration-to-postgresql"} {
+		domain := strings.ReplaceAll(mode, "-", ".") + ".synthetic.example"
+		idp := user()
+		if mode != "postgresql" {
+			if err := cassandra.Query(`INSERT INTO domain_registration (domain,domain_redirect,team_invite,idp_id) VALUES (?,?,?,?)`, domain, int32(3), int32(1), idp).WithContext(ctx).Consistency(gocql.LocalQuorum).Exec(); err != nil {
+				t.Fatal(err)
+			}
+		} else {
+			if _, err := postgres.Exec(ctx, `INSERT INTO domain_registration (domain,domain_redirect,team_invite,idp_id) VALUES ($1,3,1,$2::uuid)`, domain, idp.String()); err != nil {
+				t.Fatal(err)
+			}
+		}
+		store := domainRegistrationStore{databases: domainDB, mode: mode}
+		record, err := store.lookup(ctx, strings.ToUpper(domain))
+		if err != nil || record == nil || record.idp == nil || *record.idp != idp {
+			t.Fatalf("%s domain read: %v", mode, err)
+		}
+		if err := guardRegistrationDomain(ctx, "synthetic@"+domain, store.lookup); !errors.Is(err, errDomainRegistrationSSO) {
+			t.Fatal("SSO registration guard failed", mode, err)
+		}
+		if mode != "postgresql" {
+			if err := cassandra.Query(`UPDATE domain_registration SET idp_id=null WHERE domain=?`, domain).WithContext(ctx).Consistency(gocql.LocalQuorum).Exec(); err != nil {
+				t.Fatal(err)
+			}
+		} else {
+			if _, err := postgres.Exec(ctx, `UPDATE domain_registration SET idp_id=null WHERE domain=$1`, domain); err != nil {
+				t.Fatal(err)
+			}
+		}
+		logged := 0
+		store.invalidRecord = func() { logged++ }
+		if record, err := store.lookup(ctx, domain); err != nil || record != nil || logged != 1 {
+			t.Fatal("inconsistent native domain registration not ignored", mode, err)
+		}
+		if mode != "postgresql" {
+			if err := cassandra.Query(`UPDATE domain_registration SET domain_redirect=? WHERE domain=?`, int32(9), domain).WithContext(ctx).Consistency(gocql.LocalQuorum).Exec(); err != nil {
+				t.Fatal(err)
+			}
+		} else {
+			if _, err := postgres.Exec(ctx, `UPDATE domain_registration SET domain_redirect=9 WHERE domain=$1`, domain); err != nil {
+				t.Fatal(err)
+			}
+		}
+		if _, err := store.lookup(ctx, domain); err == nil {
+			t.Fatal("unknown stored domain tag ignored", mode)
+		}
+	}
+	pgDomain := "pg.only.synthetic.example"
+	idp := user()
+	if _, err := postgres.Exec(ctx, `INSERT INTO domain_registration (domain,domain_redirect,idp_id) VALUES ($1,3,$2::uuid)`, pgDomain, idp.String()); err != nil {
+		t.Fatal(err)
+	}
+	migratingDomains := domainRegistrationStore{databases: domainDB, mode: "migration-to-postgresql"}
+	if record, err := migratingDomains.lookup(ctx, pgDomain); err != nil || record != nil {
+		t.Fatal("PG-only domain incorrectly used in migration", err)
+	}
+	if err := cassandra.Query(`INSERT INTO domain_registration (domain) VALUES (?)`, pgDomain).WithContext(ctx).Consistency(gocql.LocalQuorum).Exec(); err != nil {
+		t.Fatal(err)
+	}
+	if err := guardRegistrationDomain(ctx, "synthetic@"+pgDomain, migratingDomains.lookup); err != nil {
+		t.Fatal("native legacy missing domain tags rejected", err)
+	}
+	pgDomains := domainRegistrationStore{databases: domainDB, mode: "postgresql"}
+	if err := guardRegistrationDomain(ctx, "synthetic@"+pgDomain, pgDomains.lookup); !errors.Is(err, errDomainRegistrationSSO) {
+		t.Fatal("PG domain selector failed", err)
+	}
 }
