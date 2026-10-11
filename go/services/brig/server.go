@@ -226,6 +226,8 @@ func Run(ctx context.Context, c Config) error {
 	}
 	federationRead.useCassandra(cassandra)
 	business.federationConfig = &federationRead
+	providerStore := providerAccountStore{cassandra: cassandra}
+	business.providerAccounts = &providerAccountHTTP{lookup: providerStore.lookup, update: providerStore.update, secondFactorEnabled: business.peers.providerSecondFactorEnabled}
 	business.mlsClients = &mlsClientReads{domain: c.Settings.Domain, key: (clientStore{cassandra}).mlsPublicKey, insert: (clientStore{cassandra}).insertMLSPackages, removeSuite: (clientStore{cassandra}).deleteMLSSuite, ids: (clientStore{cassandra}).ids, get: (clientStore{cassandra}).get, packages: (clientStore{cassandra}).mlsPackages, remove: (clientStore{cassandra}).deleteMLSPackages, now: time.Now, maximum: c.Settings.KeyPackageMaximumLifetime, enabled: c.Settings.EnableMLS}
 	connectionStorage := connectionStore{cassandra: cassandra, domain: c.Settings.Domain}
 	business.localConnections = &connectionLocalService{domain: c.Settings.Domain, limit: c.Settings.UserMaxConnections, activated: business.users.isActivated, user: business.users.get, legalhold: business.peers.connectionLegalhold, team: business.peers.connectionTeam, get: connectionStorage.get, count: connectionStorage.count, insert: connectionStorage.insert, update: connectionStorage.update, createConversation: func(ctx context.Context, self, target gocql.UUID, connection, requestID string) (gocql.UUID, error) {

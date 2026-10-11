@@ -26,7 +26,7 @@ def checked(args, timeout=30):
     return result.stdout.strip()
 
 
-def inside(gundeck_path=None, access_switchback=False, login_contract=False, activation_contract=False, registration_contract=False, saml_registration_contract=False, public_registration_contract=False, password_reset_contract=False, password_change_contract=False, ses_feedback_contract=False, properties_contract=False, client_update_contract=False, client_registration_contract=False, client_lifecycle_contract=False, store_fixture_path=None, mls_upload_originals=False, stomp_internal_events=False, service_deletion_queue=False, service_galley_event=False, optimistic_prekeys=False):
+def inside(gundeck_path=None, access_switchback=False, login_contract=False, activation_contract=False, registration_contract=False, saml_registration_contract=False, public_registration_contract=False, password_reset_contract=False, password_change_contract=False, ses_feedback_contract=False, properties_contract=False, client_update_contract=False, client_registration_contract=False, client_lifecycle_contract=False, store_fixture_path=None, mls_upload_originals=False, stomp_internal_events=False, service_deletion_queue=False, service_galley_event=False, optimistic_prekeys=False, provider_profile_contract=False):
     registration_contract = registration_contract or saml_registration_contract
     if os.getuid() != 65534 or os.environ.get('WIRE_E2E_DISPOSABLE') != '1':
         raise ValueError('owned nonroot Docker runner required')
@@ -406,6 +406,40 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
         report['native_setup'] = [created]
         assert created['status'] == 201, 'native account setup failed'
         user = created['json']['id']
+        if provider_profile_contract:
+            provider_email = 'synthetic-provider-'+uuid.uuid4().hex+'@example.com'
+            provider_setup = request('POST', '/v19/provider/register',
+                {'X-Forwarded-For': '127.0.0.43'}, {'name': 'Synthetic native provider',
+                'email': provider_email, 'password': 'Synthetic-provider-password!',
+                'url': 'https://example.com/provider', 'description': 'Synthetic provider profile'})[0]
+            report['provider_native_registered'] = provider_setup
+            assert provider_setup['status'] == 201, 'native provider registration failed'
+            provider_id = provider_setup['json']['id']
+            provider_headers = {'Z-Provider': provider_id}
+            provider_user_headers = {'Z-User': user}
+            provider_inactive = [request('GET', '/v19/provider', provider_headers)[0],
+                request('GET', '/v19/providers/'+provider_id, provider_user_headers)[0],
+                request('PUT', '/v19/provider', provider_headers, {'name': 'Unactivated write'})[0]]
+            report['provider_native_unactivated'] = provider_inactive
+            assert all(r['status'] == 404 for r in provider_inactive), 'native unactivated provider became visible'
+            pair = request('GET', '/i/provider/activation-code?'+urlencode({'email': provider_email}))[0]
+            assert pair['status'] == 200, 'native provider activation fixture unavailable'
+            activated = request('GET', '/v19/provider/activate?'+urlencode(pair['json']))[0]
+            report['provider_native_activated'] = activated
+            assert activated['status'] == 200, 'native provider activation failed'
+            missing_provider = str(uuid.uuid4())
+            provider_cases = [('GET', '/v19/provider', provider_headers),
+                ('HEAD', '/v19/provider', provider_headers),
+                ('GET', '/v19/providers/'+provider_id, provider_user_headers),
+                ('GET', '/v19/provider', {'Z-Provider': missing_provider}),
+                ('GET', '/v19/providers/'+missing_provider, provider_user_headers),
+                ('PUT', '/v19/provider', {'Z-Provider': missing_provider}, {'name': 'Synthetic missing'}),
+                ('PUT', '/v19/provider', provider_headers, {'name': None, 'url': None, 'description': None}),
+                ('PUT', '/v19/provider', provider_headers, {'name': 'Synthetic native provider'}),
+                ('GET', '/v19/provider', provider_headers)]
+            provider_native_controls = [request(*case)[0] for case in provider_cases]
+            report['provider_native_controls'] = provider_native_controls
+            assert [r['status'] for r in provider_native_controls] == [200,200,200,404,404,404,200,200,200], 'native provider read/update reference changed'
         registration_body, registration_reference, registration_reads = None, None, None
         if registration_contract:
             actor = str(uuid.uuid4())
@@ -973,6 +1007,20 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
                                   cwd=runtime.WORK / 'services/brig', stdout=log, stderr=subprocess.STDOUT)
         processes.append(active)
         ready(active)
+        if provider_profile_contract:
+            provider_go_controls = [request(*case)[0] for case in provider_cases]
+            report['provider_go_controls'] = provider_go_controls
+            assert all(same(ref, actual) for ref, actual in zip(provider_native_controls, provider_go_controls)), 'native/Go provider read/update contract mismatch'
+            provider_go_update = request('PUT', '/v19/provider', provider_headers,
+                {'name': 'Synthetic Go provider', 'url': 'https://example.com/go-provider?source=go',
+                 'description': 'Synthetic Go-written description'})[0]
+            assert provider_go_update['status'] == 200, 'Go provider profile write failed'
+            provider_go_written = [request('GET', '/v19/provider', provider_headers)[0],
+                request('GET', '/v19/providers/'+provider_id, provider_user_headers)[0]]
+            report['provider_go_updated'] = {'write': provider_go_update, 'reads': provider_go_written}
+            expected = {'id': provider_id, 'name': 'Synthetic Go provider', 'email': provider_email,
+                'url': 'https://example.com/go-provider?source=go', 'description': 'Synthetic Go-written description'}
+            assert all(r['status'] == 200 and r['json'] == expected for r in provider_go_written), 'Go provider write/read projection differs'
         if client_lifecycle_contract:
             report['internal_queue_go_consumes_native'] = await_replay(pending_replay_actor)
             if service_deletion_queue:
@@ -1185,6 +1233,11 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             log=open('/reports/brig-native-client-lifecycle-switchback.log','w');logs.append(log)
             active=subprocess.Popen([str(native_brig_path),'-c',str(runtime.WORK/'brig-static-0.json')],cwd=runtime.WORK/'services/brig',stdout=log,stderr=subprocess.STDOUT)
             processes.append(active);ready(active)
+            if provider_profile_contract:
+                provider_native_switchback = [request('GET', '/v19/provider', provider_headers)[0],
+                    request('GET', '/v19/providers/'+provider_id, provider_user_headers)[0]]
+                report['provider_native_reads_go'] = provider_native_switchback
+                assert all(same(ref, actual) for ref, actual in zip(provider_go_written, provider_native_switchback)), 'native provider switchback lost Go-written state'
             if service_deletion_queue:
                 native_readback = await_service(pending_service_actor, 'native-reads-go')
                 assert native_readback == go_service_rows, 'native switchback service raw state differs'
@@ -1865,6 +1918,7 @@ def main():
     parser.add_argument('--service-deletion-queue', action='store_true')
     parser.add_argument('--service-galley-event', action='store_true')
     parser.add_argument('--optimistic-prekeys', action='store_true')
+    parser.add_argument('--provider-profile-contract', action='store_true')
     args = parser.parse_args()
     if (args.registration_contract or args.saml_registration_contract) and (args.activation_contract or args.access_switchback or args.login_contract):
         parser.error('registration observation runs separately from credential/activation observations')
@@ -1894,8 +1948,10 @@ def main():
         parser.error('live Galley event requires service queue proof')
     if args.optimistic_prekeys and not args.service_deletion_queue:
         parser.error('optimistic prekey control requires the owned service queue proof')
+    if args.provider_profile_contract and not args.client_lifecycle_contract:
+        parser.error('provider profile control requires durable switchback observation')
     if args.in_container:
-        return inside(args.gundeck_path, args.access_switchback, args.login_contract, args.activation_contract, args.registration_contract, args.saml_registration_contract, args.public_registration_contract, args.password_reset_contract, args.password_change_contract, args.ses_feedback_contract, args.properties_contract, args.client_update_contract, args.client_registration_contract, args.client_lifecycle_contract, args.store_fixture_path, args.mls_upload_originals, args.stomp_internal_events, args.service_deletion_queue, args.service_galley_event, args.optimistic_prekeys)
+        return inside(args.gundeck_path, args.access_switchback, args.login_contract, args.activation_contract, args.registration_contract, args.saml_registration_contract, args.public_registration_contract, args.password_reset_contract, args.password_change_contract, args.ses_feedback_contract, args.properties_contract, args.client_update_contract, args.client_registration_contract, args.client_lifecycle_contract, args.store_fixture_path, args.mls_upload_originals, args.stomp_internal_events, args.service_deletion_queue, args.service_galley_event, args.optimistic_prekeys, args.provider_profile_contract)
     if args.binary is None or args.build_receipt is None or args.output is None:
         parser.error('identified binary, receipt and new output required')
     sys.path.insert(0, str(ROOT / 'tools/parity/docker'))
@@ -1955,6 +2011,8 @@ def main():
         runner['command'].append('--service-galley-event')
     if args.optimistic_prekeys:
         runner['command'].append('--optimistic-prekeys')
+    if args.provider_profile_contract:
+        runner['command'].append('--provider-profile-contract')
     if args.stomp_internal_events:
         import stomp_broker
         stomp_broker.prepare(spec, output)

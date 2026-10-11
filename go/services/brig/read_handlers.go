@@ -47,6 +47,7 @@ type brigReadHandlers struct {
 	publicProfiles     *publicProfileService
 	remoteDeletion     *remoteAccountDeletion
 	accountDeletion    *accountDeletionHTTP
+	providerAccounts   *providerAccountHTTP
 }
 
 func readJSON(w http.ResponseWriter, r *http.Request, body any) {
@@ -83,6 +84,9 @@ func routeParseError(w http.ResponseWriter, message string) {
 }
 
 func (b brigReadHandlers) handle(w http.ResponseWriter, r *http.Request, path string) bool {
+	if b.providerAccounts != nil && b.providerAccounts.handle(w, r, path) {
+		return true
+	}
 	if b.accountDeletion != nil && b.accountDeletion.handle(w, r, path) {
 		return true
 	}

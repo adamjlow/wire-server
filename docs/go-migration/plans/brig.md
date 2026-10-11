@@ -1793,3 +1793,30 @@ runner/cleanup0 and independent resources empty. Retain observer/startup failure
 Next remaining whole Brig API/internal/federation surface and finite positive TLS
 control; full535/eight-Go/all-entity three-selector/operations/image/legal gates
 remain open. Authorized remote push now throughabb6c113d; subsequent work local.
+
+### Provider account reads and profile updates
+
+Next bounded implementation: GET/HEAD `/provider`, GET/HEAD
+`/providers/{provider-id}` and PUT `/provider`. Source: public ProviderAPI,
+Brig.Provider.API getAccount/getProviderProfile/updateAccountProfile and
+Brig.Provider.DB lookupAccount/updateAccountProfile. Use real native Cassandra
+provider rows; only email-activated providers are visible. Return the native
+id/name/email/url/description projection (including public email, an inherited
+contract). Preserve optional/null updates, name1..128 Unicode characters,
+strict HTTPS URI storage, unrestricted description Text and unlogged partial
+LocalQuorum batch/retries. Do not silently add activation, change schemas or
+expose provider password hashes.
+
+Security: gateway-trusted Z-Provider/Z-User UUID headers match native boundaries;
+fail parsing before storage. Fetch global `/i/feature-configs` and reject enabled
+sndFactorPasswordChallenge before lookup/write, fail closed on missing/invalid
+peer response. Existing bounded RPC limits/context cancellation and generic storage errors;
+parameterized CQL, existing pinned URI/password libraries, no new dependency.
+Native description Text has no endpoint-specific length limit; preserve that
+inherited resource concern rather than inventing a contract cap.
+Finite tests: activated/missing account, optional updates/HTTPS/name/type negatives,
+feature guard/dependency errors and no writes on denied/missing accounts. Actual
+native HTTP creates and activates the provider; compare native/Go read/update
+responses and restart native against Go-written state. Reuse unchanged original
+client/MLS assertions as regression, without claiming provider's original reset/
+service/bot families pass. Full remaining provider lifecycle remains required.
