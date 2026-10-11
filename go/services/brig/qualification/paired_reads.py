@@ -400,7 +400,7 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
                 mls_delete_cases=[('DELETE','/v4'+delete_path+'?ciphersuite=1',lifecycle_headers,delete_body),('DELETE','/v7'+delete_path,lifecycle_headers,delete_body),('DELETE','/v19'+delete_path+'?ciphersuite=1',lifecycle_headers,delete_body),('DELETE','/v19/mls/key-packages/self/f?ciphersuite=1',lifecycle_headers,delete_body)]
                 native_delete_controls=[request(*case)[0] for case in mls_delete_cases]
                 report['mls_delete_native_controls']=native_delete_controls
-                assert [r['status'] for r in native_delete_controls]==[404,201,201,201], 'native public MLS deletion reference changed'
+                assert [r['status'] for r in native_delete_controls]==[405,201,201,201], 'native public MLS deletion reference changed'
                 assert mls_row_fixture('read','native-deleted')==[], 'native reference deletion did not remove exact rows'
                 mls_row_fixture('stage','native-delete-restaged')
                 assert same(row_count_native,request(*row_count_case)[0]), 'native delete restage count changed'

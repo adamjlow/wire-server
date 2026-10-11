@@ -198,6 +198,11 @@ func (s mlsClientReads) handlePublicSelf(w http.ResponseWriter, r *http.Request,
 	}
 	version, _ := strconv.Atoi(r.Header.Get("X-Wire-API-Version"))
 	if version < 5 {
+		if len(parts) == 4 && r.Method == http.MethodDelete {
+			// Native routing retains this path's method rejection before V5.
+			w.WriteHeader(http.StatusMethodNotAllowed)
+			return true
+		}
 		return false
 	}
 	deleting := len(parts) == 4

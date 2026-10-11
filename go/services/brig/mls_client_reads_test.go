@@ -186,7 +186,7 @@ func TestMLSDeleteAdmissionAndNativeStorageEffects(t *testing.T) {
 		enabled              bool
 		status               int
 	}{
-		{"4", "?ciphersuite=1", body, true, 404},
+		{"4", "?ciphersuite=1", body, true, 405},
 		{"7", "", body, true, 201},
 		{"19", "?ciphersuite=1", body, true, 201},
 		{"19", "", body, true, 400},
