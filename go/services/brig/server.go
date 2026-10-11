@@ -202,6 +202,7 @@ func Run(ctx context.Context, c Config) error {
 	business.clients = &clientReadHandlers{store: clientStore{cassandra}}
 	issuer := tokenIssuer{key: private, index: int64(c.ZAuth.Settings.KeyIndex), userTTL: c.ZAuth.Settings.UserTTL, sessionTTL: c.ZAuth.Settings.SessionTTL, accessTTL: c.ZAuth.Settings.AccessTTL, legalUserTTL: c.ZAuth.Settings.LegalHoldUserTTL, legalAccessTTL: c.ZAuth.Settings.LegalHoldAccessTTL}
 	business.access = &accessTokenService{lookup: business.sessions, sessions: sessionManager{store: business.sessions, issuer: issuer, renewAge: *c.Settings.CookieRenewAge}, keys: public, now: time.Now}
+	business.index = indexWriter
 	index := searchIndexService{users: business.users.userAuthStore, team: business.peers.indexTeam, writer: indexWriter}
 	business.renewal = &accessRenewalHTTP{service: accessRenewalService{
 		tokens: *business.access, clients: clientStore{cassandra},

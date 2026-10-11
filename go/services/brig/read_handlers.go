@@ -23,6 +23,7 @@ type brigReadHandlers struct {
 	activation   *activationHTTP
 	registration *registrationHTTP
 	clients      *clientReadHandlers
+	index        *searchIndexWriter
 }
 
 func readJSON(w http.ResponseWriter, r *http.Request, body any) {
@@ -83,6 +84,25 @@ func (b brigReadHandlers) handle(w http.ResponseWriter, r *http.Request, path st
 		return true
 	}
 	segments := strings.Split(strings.Trim(path, "/"), "/")
+	if len(segments) == 4 && segments[0] == "i" && segments[1] == "teams" && segments[3] == "size" {
+		if r.Method != http.MethodGet && r.Method != http.MethodHead {
+			w.WriteHeader(http.StatusMethodNotAllowed)
+			return true
+		}
+		canonical, valid := tokenUUID(segments[2])
+		if !valid {
+			routeParseError(w, "Error parsing URL piece failed: invalid UUID")
+			return true
+		}
+		team, _ := gocql.ParseUUID(canonical)
+		size, err := b.index.teamSize(r.Context(), team, r.Header.Get("Request-Id"))
+		if err != nil {
+			authenticationWireError(w, 500, "server-error", "Internal Server Error")
+			return true
+		}
+		readJSON(w, r, size)
+		return true
+	}
 	if len(segments) == 4 && segments[0] == "i" && segments[1] == "users" && segments[3] == "reauthenticate" && b.auth != nil {
 		b.auth.handle(w, r, segments[2])
 		return true
