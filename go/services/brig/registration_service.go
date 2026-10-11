@@ -12,30 +12,41 @@ import (
 type registrationCreation struct {
 	profile    selfProfile
 	activation *activationRecord
+	team       *registrationCreatedTeam
 }
+
+type registrationCreatedTeam struct {
+	ID   gocql.UUID
+	Name string
+}
+
+var errRegistrationTooManyTeamMembers = errors.New("registration team member limit reached")
 
 func (registrationCreation) String() string { return "<RegistrationCreation>" }
 
 type registrationService struct {
-	identity          registrationIdentity
-	guardDomain       func(context.Context, string) error
-	hash              func(context.Context, passwordRateKey, string, int) (string, error)
-	createAccount     func(context.Context, storedUser) error
-	createSelf        func(context.Context, gocql.UUID) error
-	createTeam        func(context.Context, gocql.UUID, gocql.UUID, registrationTeam) error
-	newCode           func(context.Context, string, float64, *gocql.UUID) (activationRecord, error)
-	activate          func(context.Context, string, string, *gocql.UUID, *string) error
-	initFeature       func(context.Context, gocql.UUID) error
-	domain            string
-	locale            registrationLocale
-	sessionTTL        int64
-	activationTimeout float64
-	now               func() time.Time
+	identity           registrationIdentity
+	guardDomain        func(context.Context, string) error
+	hash               func(context.Context, passwordRateKey, string, int) (string, error)
+	createAccount      func(context.Context, storedUser) error
+	createSelf         func(context.Context, gocql.UUID) error
+	createTeam         func(context.Context, gocql.UUID, gocql.UUID, registrationTeam) error
+	joinSSO            func(context.Context, gocql.UUID, gocql.UUID) (bool, error)
+	activateStored     func(context.Context, gocql.UUID, *string, bool) error
+	onAccountActivated func(context.Context, *activatedIdentity) error
+	teamName           func(context.Context, gocql.UUID) (string, error)
+	newCode            func(context.Context, string, float64, *gocql.UUID) (activationRecord, error)
+	activate           func(context.Context, string, string, *gocql.UUID, *string) error
+	initFeature        func(context.Context, gocql.UUID) error
+	domain             string
+	locale             registrationLocale
+	sessionTTL         int64
+	activationTimeout  float64
+	now                func() time.Time
 }
 
-// Native createUserWith order for independent accounts and team creators.
-// Invitation/SSO origin resolution must be implemented before those flows can
-// reach account storage. Missing flows fail explicitly, never succeed partially.
+// Native createUserWith order. Team-invitation resolution remains required
+// before those origins can reach storage; missing flows never succeed partially.
 func (s registrationService) create(ctx context.Context, request registrationRequest, rate passwordRateKey) (registrationCreation, error) {
 	var result registrationCreation
 	if s.guardDomain == nil || s.hash == nil || s.createAccount == nil || s.createSelf == nil || s.newCode == nil || s.activate == nil || s.initFeature == nil || s.now == nil {
@@ -49,15 +60,15 @@ func (s registrationService) create(ctx context.Context, request registrationReq
 	}
 	// The historical non-team invitation_code is parsed and origin-validated,
 	// but createUserWith derives team behavior only from newUserTeam.
-	if request.Origin.TeamCode != nil || request.Origin.SSOTeam != nil {
-		return result, errors.New("registration invitation or SSO origin unavailable")
+	if request.Origin.TeamCode != nil {
+		return result, errors.New("registration invitation origin unavailable")
 	}
-	if n.Email != nil {
+	if n.Email != nil && request.Origin.SSOTeam == nil {
 		if err := s.guardDomain(ctx, *n.Email); err != nil {
 			return result, err
 		}
 	}
-	var team *gocql.UUID
+	team := request.Origin.SSOTeam
 	if request.Origin.Team != nil {
 		if s.createTeam == nil {
 			return result, errors.New("registration team creation unavailable")
@@ -84,6 +95,16 @@ func (s registrationService) create(ctx context.Context, request registrationReq
 	if err != nil {
 		return result, err
 	}
+	activationView := account
+	activationView.Activated = true
+	joinSSO, err := storedSAML(&activationView)
+	if err != nil {
+		return result, err
+	}
+	joinSSO = joinSSO && request.Origin.SSOTeam != nil
+	if joinSSO && (s.joinSSO == nil || s.activateStored == nil || s.onAccountActivated == nil || s.teamName == nil) {
+		return result, errors.New("registration SSO dependencies unavailable")
+	}
 	if err := s.createAccount(ctx, account); err != nil {
 		return result, err
 	}
@@ -91,10 +112,33 @@ func (s registrationService) create(ctx context.Context, request registrationReq
 		return result, err
 	}
 	// Native UserCreated sends neither notification nor journal entry.
-	if team != nil {
+	if request.Origin.Team != nil {
 		if err := s.createTeam(ctx, account.ID, *team, *request.Origin.Team); err != nil {
 			return result, err
 		}
+		if request.EmailCode != nil {
+			result.team = &registrationCreatedTeam{ID: *team, Name: request.Origin.Team.Name}
+		}
+	}
+	if joinSSO {
+		added, err := s.joinSSO(ctx, account.ID, *team)
+		if err != nil {
+			return result, err
+		}
+		if !added {
+			return result, errRegistrationTooManyTeamMembers
+		}
+		if err := s.activateStored(ctx, account.ID, n.Email, true); err != nil {
+			return result, err
+		}
+		if err := s.onAccountActivated(ctx, &activatedIdentity{user: account.ID, first: true, account: &activationView, creationProfile: &profile}); err != nil {
+			return result, err
+		}
+		name, err := s.teamName(ctx, *team)
+		if err != nil {
+			return result, err
+		}
+		result.team = &registrationCreatedTeam{ID: *team, Name: name}
 	}
 	if n.Email != nil {
 		if request.EmailCode == nil {

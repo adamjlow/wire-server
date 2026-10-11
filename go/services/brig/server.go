@@ -233,6 +233,7 @@ func Run(ctx context.Context, c Config) error {
 	business.registration = &registrationHTTP{service: registrationService{
 		identity:    registrationIdentity{owner: business.users.registrationEmailOwner, account: business.users.get, deleteKey: business.users.deleteEmailKey, blacklisted: blocklist.exists},
 		guardDomain: business.activation.service.guardDomain, hash: passwords.hash,
+		activateStored: business.users.setEmailIdentity,
 		createAccount: func(ctx context.Context, account storedUser) error {
 			return business.users.create(ctx, account, nil, nil)
 		},

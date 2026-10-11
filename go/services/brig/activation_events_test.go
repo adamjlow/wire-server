@@ -60,6 +60,39 @@ func TestEmailActivationEventContainsOnlyNativeIdentity(t *testing.T) {
 	}
 }
 
+func TestRegistrationActivationEventUsesCreationSnapshot(t *testing.T) {
+	protocols := int32(0)
+	raw, err := decodeRegistrationSSO(`{"tenant":"https://issuer.example.com","subject":"synthetic"}`)
+	if err != nil {
+		t.Fatal(err)
+	}
+	account := storedUser{ID: gocql.UUID{}, Name: "Synthetic", Activated: true, SSO: raw, Protocols: &protocols}
+	profile, err := registrationProfile(account, "example.com", "en")
+	if err != nil {
+		t.Fatal(err)
+	}
+	result := &activatedIdentity{user: account.ID, first: true, account: &account, creationProfile: &profile}
+	event, err := activationEventBody(result, "example.com", "en")
+	if err != nil {
+		t.Fatal(err)
+	}
+	var decoded struct {
+		Type string
+		User selfProfile
+	}
+	if json.Unmarshal(event, &decoded) != nil || decoded.Type != "user.activate" || len(decoded.User.Protocols) != 0 || len(decoded.User.SSO) == 0 {
+		t.Fatal("registration activation event changed")
+	}
+	journalView, err := activatedProfile(result, "example.com", "en")
+	if err != nil || !reflect.DeepEqual(journalView, profile) {
+		t.Fatal("journal lost creation snapshot", err)
+	}
+	storedView, err := account.selfProfile("example.com", "en")
+	if err != nil || len(storedView.Protocols) != 1 || storedView.Protocols[0] != "proteus" {
+		t.Fatal("registration event override changed stored read default", err)
+	}
+}
+
 func TestActivationPushBestEffortAndJournalFailure(t *testing.T) {
 	delivered := make(chan bool, 2)
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

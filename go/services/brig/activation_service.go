@@ -29,10 +29,11 @@ type activationService struct {
 	deletePasswordReset func(context.Context, gocql.UUID) error
 }
 type activatedIdentity struct {
-	user    gocql.UUID
-	email   string
-	first   bool
-	account *storedUser
+	user            gocql.UUID
+	email           string
+	first           bool
+	account         *storedUser
+	creationProfile *selfProfile
 }
 
 func (activatedIdentity) String() string { return "<ActivatedIdentity>" }

@@ -39,10 +39,15 @@ func (p brigPeers) activationGalley(ctx context.Context, method, path, requestID
 }
 
 func (p brigPeers) galleyRPC(ctx context.Context, method, path, requestID string, body []byte, allowMissing bool, user *gocql.UUID) ([]byte, bool, error) {
+	raw, status, err := p.galleyRPCStatus(ctx, method, path, requestID, body, allowMissing, false, user)
+	return raw, status == http.StatusNotFound, err
+}
+
+func (p brigPeers) galleyRPCStatus(ctx context.Context, method, path, requestID string, body []byte, allowMissing, allowForbidden bool, user *gocql.UUID) ([]byte, int, error) {
 	for attempt := 0; ; attempt++ {
 		req, err := http.NewRequestWithContext(ctx, method, "http://"+p.galley.Address()+path, bytes.NewReader(body))
 		if err != nil {
-			return nil, false, errors.New("invalid Galley activation endpoint")
+			return nil, 0, errors.New("invalid Galley activation endpoint")
 		}
 		req.Header.Set("Request-Id", requestID)
 		if user != nil {
@@ -56,12 +61,12 @@ func (p brigPeers) galleyRPC(ctx context.Context, method, path, requestID string
 		if err == nil {
 			raw, readErr := io.ReadAll(io.LimitReader(response.Body, 4<<20+1))
 			response.Body.Close()
-			if allowMissing && response.StatusCode == 404 {
-				return nil, true, nil
+			if allowMissing && response.StatusCode == 404 || allowForbidden && response.StatusCode == 403 {
+				return nil, response.StatusCode, nil
 			}
 			if response.StatusCode >= 200 && response.StatusCode < 300 && (!allowMissing || response.StatusCode == 200) {
 				if readErr == nil && len(raw) <= 4<<20 {
-					return raw, false, nil
+					return raw, response.StatusCode, nil
 				}
 				retry = readErr != nil && retryableBrigRPC(readErr)
 			} else {
@@ -69,10 +74,10 @@ func (p brigPeers) galleyRPC(ctx context.Context, method, path, requestID string
 			}
 		}
 		if !retry || attempt >= 3 || ctx.Err() != nil {
-			return nil, false, errors.New("Galley activation request failed")
+			return nil, 0, errors.New("Galley activation request failed")
 		}
 		if waitBrigRetry(ctx, 100*time.Millisecond<<attempt) != nil {
-			return nil, false, errors.New("Galley activation request canceled")
+			return nil, 0, errors.New("Galley activation request canceled")
 		}
 	}
 }

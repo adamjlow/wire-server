@@ -132,7 +132,7 @@ func TestRegistrationNativeCreationOrderingAndFailures(t *testing.T) {
 }
 
 func TestRegistrationUnavailableOriginsDoNotPersistPartialAccounts(t *testing.T) {
-	for _, body := range []string{`{"name":"Synthetic","team_code":"synthetic","password":"12345678"}`, `{"name":"Synthetic","sso_id":{"scim_external_id":"synthetic"},"team_id":"00000000-0000-0000-0000-000000000001"}`} {
+	for _, body := range []string{`{"name":"Synthetic","team_code":"synthetic","password":"12345678"}`, `{"name":"Synthetic","sso_id":{"tenant":"https://issuer.example.com","subject":"synthetic"},"team_id":"00000000-0000-0000-0000-000000000001"}`} {
 		request, err := decodeRegistration(strings.NewReader(body), false)
 		if err != nil {
 			t.Fatal(err)
@@ -144,5 +144,102 @@ func TestRegistrationUnavailableOriginsDoNotPersistPartialAccounts(t *testing.T)
 		if _, err := service.createInternal(context.Background(), request); err == nil || stored {
 			t.Fatal("unimplemented origin persisted partial account")
 		}
+	}
+}
+
+func TestRegistrationSAMLAndSCIMOriginOrdering(t *testing.T) {
+	for _, scenario := range []struct {
+		name, fail  string
+		saml, email bool
+		want        []string
+	}{
+		{"saml", "", true, false, []string{"store", "self", "join", "activate-store", "event", "team-name", "feature"}},
+		{"saml-email", "", true, true, []string{"store", "self", "join", "activate-store", "event", "team-name", "code", "feature", "activate-code"}},
+		{"scim", "", false, false, []string{"store", "self", "feature"}},
+		{"join-denied", "denied", true, false, []string{"store", "self", "join"}},
+		{"join-error", "join", true, false, []string{"store", "self", "join"}},
+		{"activation-error", "activate-store", true, false, []string{"store", "self", "join", "activate-store"}},
+		{"event-error", "event", true, false, []string{"store", "self", "join", "activate-store", "event"}},
+		{"name-error", "team-name", true, false, []string{"store", "self", "join", "activate-store", "event", "team-name"}},
+	} {
+		t.Run(scenario.name, func(t *testing.T) {
+			body := `{"name":"Synthetic SSO","uuid":"00000000-0000-0000-0000-000000000001","team_id":"00000000-0000-0000-0000-000000000002","supported_protocols":[],"sso_id":`
+			if scenario.saml {
+				body += `{"tenant":"https://issuer.example.com","subject":"synthetic"}`
+			} else {
+				body += `{"scim_external_id":"synthetic"}`
+			}
+			if scenario.email {
+				body += `,"email":"synthetic@example.com"`
+			}
+			body += `}`
+			request, err := decodeRegistration(strings.NewReader(body), false)
+			if err != nil {
+				t.Fatal(err)
+			}
+			var calls []string
+			failure := errors.New("synthetic dependency error")
+			step := func(name string) error {
+				calls = append(calls, name)
+				if name == scenario.fail {
+					return failure
+				}
+				return nil
+			}
+			service := registrationService{
+				identity: registrationIdentity{owner: func(context.Context, string) (*gocql.UUID, error) { return nil, nil }, account: func(context.Context, gocql.UUID) (*storedUser, error) { return nil, nil }, deleteKey: func(context.Context, string, *gocql.UUID) error { return nil }, blacklisted: func(context.Context, string) (bool, error) { return false, nil }},
+				guardDomain: func(context.Context, string) error {
+					t.Fatal("SSO origin used ordinary registration domain guard")
+					return nil
+				}, hash: func(context.Context, passwordRateKey, string, int) (string, error) {
+					t.Fatal("passwordless SSO hashed a password")
+					return "", nil
+				},
+				createAccount: func(_ context.Context, account storedUser) error {
+					if account.Team == nil || *account.Team != *request.Origin.SSOTeam || account.Activated {
+						t.Fatal("SSO constructor identity/team/activation changed")
+					}
+					return step("store")
+				},
+				createSelf: func(context.Context, gocql.UUID) error { return step("self") },
+				joinSSO: func(_ context.Context, user, team gocql.UUID) (bool, error) {
+					if user != *request.User.UUID || team != *request.Origin.SSOTeam {
+						t.Fatal("wrong membership actor/team")
+					}
+					return scenario.fail != "denied", step("join")
+				},
+				activateStored: func(_ context.Context, user gocql.UUID, email *string, activate bool) error {
+					if !activate || user != *request.User.UUID || !sameRegistrationString(email, request.User.Email) {
+						t.Fatal("native SSO activation changed")
+					}
+					return step("activate-store")
+				},
+				onAccountActivated: func(_ context.Context, result *activatedIdentity) error {
+					if !result.first || result.creationProfile == nil || len(result.creationProfile.SSO) == 0 || len(result.creationProfile.Protocols) != 0 || !result.account.Activated {
+						t.Fatal("native creation event projection changed")
+					}
+					return step("event")
+				},
+				teamName: func(context.Context, gocql.UUID) (string, error) { return "Native team", step("team-name") },
+				newCode: func(context.Context, string, float64, *gocql.UUID) (activationRecord, error) {
+					return activationRecord{key: "synthetic", code: "123456"}, step("code")
+				}, activate: func(context.Context, string, string, *gocql.UUID, *string) error { return step("activate-code") }, initFeature: func(context.Context, gocql.UUID) error { return step("feature") }, domain: "example.com", locale: registrationLocale{Language: "en"}, sessionTTL: 30, now: time.Now,
+			}
+			profile, err := service.createInternal(context.Background(), request)
+			if !reflect.DeepEqual(calls, scenario.want) {
+				t.Fatal("native SSO creation ordering changed", calls)
+			}
+			if scenario.fail == "denied" {
+				if !errors.Is(err, errRegistrationTooManyTeamMembers) || profile.ID != "" {
+					t.Fatal("membership rejection returned success")
+				}
+			} else if scenario.fail != "" {
+				if !errors.Is(err, failure) || profile.ID != "" {
+					t.Fatal("failed join step returned success", err)
+				}
+			} else if err != nil || profile.ID != request.User.UUID.String() || len(profile.SSO) == 0 || len(profile.Protocols) != 0 {
+				t.Fatal("native SSO response changed", err)
+			}
+		})
 	}
 }

@@ -15,6 +15,16 @@ type activationEvents struct {
 	domain, defaultLocale string
 }
 
+func activatedProfile(result *activatedIdentity, domain, defaultLocale string) (selfProfile, error) {
+	if result == nil || result.account == nil {
+		return selfProfile{}, errors.New("activation account unavailable")
+	}
+	if result.creationProfile != nil {
+		return *result.creationProfile, nil
+	}
+	return result.account.selfProfile(domain, defaultLocale)
+}
+
 func activationEventBody(result *activatedIdentity, domain, defaultLocale string) ([]byte, error) {
 	if result == nil {
 		return nil, errors.New("activation event unavailable")
@@ -23,7 +33,7 @@ func activationEventBody(result *activatedIdentity, domain, defaultLocale string
 		if result.account == nil {
 			return nil, errors.New("activation account unavailable")
 		}
-		profile, err := result.account.selfProfile(domain, defaultLocale)
+		profile, err := activatedProfile(result, domain, defaultLocale)
 		if err != nil {
 			return nil, err
 		}
@@ -59,7 +69,7 @@ func (s activationEvents) generate(ctx context.Context, result *activatedIdentit
 	}
 	at := s.journal.now()
 	if result.first {
-		profile, err := result.account.selfProfile(s.domain, s.defaultLocale)
+		profile, err := activatedProfile(result, s.domain, s.defaultLocale)
 		if err != nil {
 			return err
 		}

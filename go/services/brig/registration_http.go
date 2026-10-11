@@ -22,6 +22,8 @@ type registrationHTTP struct {
 func registrationHTTPError(w http.ResponseWriter, err error) {
 	var rate passwordRateExceeded
 	switch {
+	case errors.Is(err, errRegistrationTooManyTeamMembers):
+		authenticationWireError(w, 403, "too-many-team-members", "Too many members in this team.")
 	case errors.Is(err, errRegistrationBlacklisted):
 		authenticationWireError(w, 403, "blacklisted-email", "The given e-mail address has been blacklisted due to a permanent bounce or a complaint.")
 	case errors.As(err, &rate):
@@ -56,6 +58,19 @@ func (h registrationHTTP) handleInternal(w http.ResponseWriter, r *http.Request)
 	}
 	service.createTeam = func(ctx context.Context, user, team gocql.UUID, input registrationTeam) error {
 		return h.peers.createRegistrationTeam(ctx, user, team, input, requestID)
+	}
+	service.joinSSO = func(ctx context.Context, user, team gocql.UUID) (bool, error) {
+		return h.peers.joinRegistrationSSO(ctx, user, team, requestID)
+	}
+	service.teamName = func(ctx context.Context, team gocql.UUID) (string, error) {
+		return h.peers.registrationTeamName(ctx, team, requestID)
+	}
+	service.onAccountActivated = func(ctx context.Context, result *activatedIdentity) error {
+		api := h.activation.forRequest(requestID, nil)
+		if err := api.syncIndex(ctx, result.user); err != nil {
+			return err
+		}
+		return api.generateEvent(ctx, result)
 	}
 	service.activate = func(ctx context.Context, key, code string, override *gocql.UUID, currency *string) error {
 		_, err := h.activation.forRequest(requestID, currency).run(ctx, key, code, false, true, override)

@@ -737,5 +737,29 @@ func TestOwnedDurableStores(t *testing.T) {
 		if err != nil || persisted == nil || persisted.Status == nil || *persisted.Status != 3 || persisted.Expires == nil || !persisted.Expires.Equal(now.Add(30*time.Second).UTC().Truncate(time.Millisecond)) {
 			t.Fatal(mode, "ephemeral native state mismatch", err)
 		}
+		ssoID, teamID := user(), user()
+		sso, err := decodeRegistrationSSO(`{"tenant":"https://issuer.example.com","subject":"synthetic"}`)
+		if err != nil {
+			t.Fatal(err)
+		}
+		protocols := int32(0)
+		ssoAccount, err := (newRegistrationUser{Name: "Synthetic SSO", UUID: &ssoID, SSO: sso, Protocols: &protocols}).build(nil, &teamID, nil, registrationLocale{Language: "en"}, 30, time.Now())
+		if err != nil {
+			t.Fatal(err)
+		}
+		if err := store.create(ctx, ssoAccount, nil, nil); err != nil {
+			t.Fatal(err)
+		}
+		if err := store.setEmailIdentity(ctx, ssoID, nil, true); err != nil {
+			t.Fatal(err)
+		}
+		loaded, err := store.get(ctx, ssoID)
+		if err != nil || loaded == nil || !loaded.Activated || loaded.Email != nil || loaded.Team == nil || *loaded.Team != teamID || len(loaded.SSO) == 0 {
+			t.Fatal(mode, "native SSO activation persistence", err)
+		}
+		view, err := loaded.selfProfile("example.com", "en")
+		if err != nil || len(view.SSO) == 0 || len(view.Protocols) != 1 || view.Protocols[0] != "proteus" {
+			t.Fatal(mode, "native stored SSO projection", err)
+		}
 	}
 }

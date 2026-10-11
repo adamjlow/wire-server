@@ -80,3 +80,48 @@ func TestRegistrationGalleyNativeRequestsAndCurrency(t *testing.T) {
 		t.Fatal("missing API version accepted")
 	}
 }
+
+func TestRegistrationSSOJoinNativeMemberBodyAndRejection(t *testing.T) {
+	for _, status := range []int{200, 403} {
+		t.Run(strconv.Itoa(status), func(t *testing.T) {
+			user, team := gocql.UUID{}, gocql.UUID{1}
+			calls := 0
+			server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+				calls++
+				if r.Header.Get("Request-Id") != "synthetic-sso" {
+					t.Error("SSO request context missing")
+				}
+				if calls == 1 {
+					var body map[string]map[string]json.RawMessage
+					if r.Method != http.MethodPost || r.URL.Path != "/i/teams/"+team.String()+"/members" || r.Header.Get("Z-User") != user.String() || json.NewDecoder(r.Body).Decode(&body) != nil {
+						t.Error("SSO membership request changed")
+					}
+					member := body["member"]
+					var permissions map[string]uint64
+					var id string
+					if len(body) != 1 || len(member) != 4 || json.Unmarshal(member["user"], &id) != nil || id != user.String() || json.Unmarshal(member["permissions"], &permissions) != nil || len(permissions) != 2 || permissions["self"] != 1587 || permissions["copy"] != 1587 || string(member["created_by"]) != "null" || string(member["created_at"]) != "null" {
+						t.Error("default member privilege or native null metadata changed")
+					}
+					w.WriteHeader(status)
+					return
+				}
+				if r.Method != http.MethodGet || r.URL.Path != "/i/teams/"+team.String()+"/name" {
+					t.Error("native team name path changed")
+				}
+				w.Write([]byte(`{"name":"Native team"}`))
+			}))
+			defer server.Close()
+			host, port, _ := net.SplitHostPort(server.Listener.Addr().String())
+			number, _ := strconv.Atoi(port)
+			peer := brigPeers{client: server.Client(), galley: Endpoint{Host: host, Port: number}}
+			added, err := peer.joinRegistrationSSO(context.Background(), user, team, "synthetic-sso")
+			if err != nil || added != (status == 200) || calls != 1 {
+				t.Fatal("native membership response/retry changed", err)
+			}
+			name, err := peer.registrationTeamName(context.Background(), team, "synthetic-sso")
+			if err != nil || name != "Native team" || calls != 2 {
+				t.Fatal("native team name changed", err)
+			}
+		})
+	}
+}
