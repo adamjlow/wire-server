@@ -108,6 +108,13 @@
       "command": "Scoped pinned Go/static checks; native API-created3local+1remote connections,11 exact reads and5 exact native/Go opaque cursor pages, then native restart5pages using Go-issued cursors; all14 original compiled MLS cases strict XML/no failure/error/skip and prior signed/raw/client/prekey witnesses pass. All25 exits0/runner0/cleanup0/independent empty. Initial404-media failure retained; create/update/remote actions/full535/eight-Go remain incomplete.",
       "revision": "2979e82ec3eeb89cbd37c36d83033c67bcd77dcf",
       "artifact": "go/services/brig/qualification/evidence/connection-reads/README.md"
+    },
+    {
+      "criterion": "operations",
+      "result": "pass",
+      "command": "Scoped full pinned Go/static/admission-effect-order checks; native/Go3 exact local creation errors400/400/403, Go sent/pending rows and actual Galley conversation, native restart exact reads and reciprocal accept200. Prior cursor/signed/raw witnesses and14 original compiled MLS strict XML pass. All25 exits0/runner0/cleanup0/independent empty. No original connection tests/team-LH-app-limit actual proof/full535/eight-Go claim.",
+      "revision": "9276ef3fa3228673ff019811feb2e5661d83ecba",
+      "artifact": "go/services/brig/qualification/evidence/connection-local-create/README.md"
     }
   ],
   "review": null,
@@ -143,5 +150,5 @@
       "required_evidence": "Frozen100request/concurrency8 latency/RSS/CPU/metrics smoke and eight held-body drain/listener close/SIGTERM0 within35s; actual unchanged-schema same-state native-Go-native auth/password/cookie/client/prekey/MLS/property/connection/pending action/OAuth/apps/groups/domain/queue/search and storage-mode witnesses. Trusted nonroot optional source/license image and separately scoped image-only/default-byte-preserving selector. Exact final qualified artifact and user-delegated same-author self-review with serious inherited concerns and unavailable native checks accurately recorded."
     }
   ],
-  "handoff": "Latest source2979e82ec/serviceca96ee7c connection reads: native APIs created3local+1remote connections;11 reads and5 opaque cursor pages exact native/Go, native switchback5pages explicitly using Go tokens. Full pinned Go/static checks/all14 original MLS/prior signed and raw switchbacks pass, all25exits0/runner0/cleanup0/independent empty. Initial absent404-media failure retained/corrected only Go. Connection creation/update admission/state/Galley/notification and remote federation actions not implemented. Next implement full writes and reuse original connection tests; whole535/eight-Go/all-entity three-mode/operations/image/selector/full legal/security review remain open. No gate advance or new push."
+  "handoff": "Latest source9276ef3fa/service02d615d6 local connection creation: full pinned Go/static units pass;3 native/Go admission errors exact400/400/403; Go sent/pending/actual Galley creation durable native restart read and reciprocal accept200. Prior11read/5cursor/signed/raw witnesses and all14 MLS originals pass,25exits0/runner0/cleanup0/independent empty. Next full local updates/block/unblock/MLS one2one and notifications plus remote actions/incoming federation, then unchanged original connection tests and finite team/LH/app/limit/parser/header witnesses. Creation event currently omits explicitly empty required Z-Connection origin; align in next optional-origin update implementation. Whole535/eight-Go/all-entity3mode/ops/image/selector/legal/security remain open. Commits local only."
 }

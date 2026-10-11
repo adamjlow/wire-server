@@ -963,3 +963,15 @@ peer responses and existing retry policy, no security-policy change. Add focused
 admission/effect-order tests and retain unchanged native oracle. HTTP binding is
 local creation only until local updates/remote actions have their full effects;
 this remains part of whole Brig, never a substitute acceptance definition.
+
+Qualified source9276ef3fa/service02d615d6: full pinned Go/static checks and
+local admission/effect-order units pass. Actual native/Go self/missing/identityless
+creation errors match400/400/403. Go creates sent/pending rows and actual Galley
+conversation; native reads exact same rows after restart and reciprocal POST
+accepts200. Prior11reads/5opaque pages/signed/raw state witnesses and14 unchanged
+original MLS cases pass strict XML. All25exits0/runner0/cleanup0/independent empty.
+[Evidence](../../../go/services/brig/qualification/evidence/connection-local-create/README.md).
+Actual team/LH/app/limit and creation branch notification witnesses are still
+needed with local updates/remote actions and original connection tests. Header
+parser/optional empty connection-origin detail remains finite fidelity work.
+No whole-service gate is advanced; Haskell sources remain unchanged.
