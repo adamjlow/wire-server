@@ -299,6 +299,46 @@ func Run(ctx context.Context, c Config) error {
 		mail: mailDelivery.newClient, domain: c.Settings.Domain, locale: c.Settings.DefaultLocale,
 	}
 	notifications := newSessionNotifications(ctx, business.peers)
+	defer notifications.close()
+	throttleTTL := int32(300)
+	if value := c.Settings.Other["set2FACodeGenerationDelaySecs"]; value != nil {
+		encoded, err := json.Marshal(value)
+		var seconds int64
+		if err != nil || json.Unmarshal(encoded, &seconds) != nil {
+			return errors.New("invalid verification code throttle configuration")
+		}
+		throttleTTL = int32(seconds)
+	}
+	verificationStore := verificationCodeStore{cassandra}
+	deletionCodes := accountDeletionCodes{lookup: verificationStore.deletionLookup, insert: verificationStore.deletionInsert, remove: verificationStore.deletionRemove, throttle: verificationStore.deletionThrottle, insertThrottle: verificationStore.deletionInsertThrottle, mail: mailDelivery.deletion, throttleTTL: throttleTTL}
+	deletionPeers := accountDeletionPeers{peers: business.peers, cargohold: c.Cargohold}
+	deletionGroups := accountDeletionGroups{member: business.peers.deletionTeamMember, page: business.users.deletionGroupPage, remove: business.users.removeDeletionGroupMember}
+	deletionEvents := accountDeletionEvents{domain: c.Settings.Domain, page: connectionStorage.page, notify: notifications.submitPush, connectionEvent: business.localConnections.event, enqueue: backendNotifications.enqueue, journal: journal, now: time.Now,
+		rescind: func(ctx context.Context, domain string, from, to gocql.UUID, requestID string) error {
+			_, err := federationClient.call(ctx, domain, "send-connection-action", requestID, map[string]any{"from": from.String(), "from_team": nil, "to": to.String(), "action": "RemoteRescind"})
+			return err
+		},
+	}
+	// Capture the shared asynchronous notification transport for connection events
+	// before taking the service method value used by account deletion.
+	business.localConnections.notify = notifications.submitPush
+	deletionEvents.connectionEvent = business.localConnections.event
+	deletion := accountDeletionService{get: business.users.get, owner: deletionPeers.owner, password: business.users.hashedPassword,
+		verify: func(ctx context.Context, user gocql.UUID, encoded, plain string) (bool, error) {
+			matched, _, err := passwords.verify(ctx, passwordRateKey{kind: "user", id: user.String()}, encoded, plain)
+			return matched, err
+		},
+		sendCode: func(ctx context.Context, user storedUser, _ string) (int64, error) {
+			profile, err := user.selfProfile(c.Settings.Domain, c.Settings.DefaultLocale)
+			if err != nil {
+				return 0, err
+			}
+			return deletionCodes.send(ctx, profile, user.ID)
+		},
+		emailKey: business.users.deleteEmailKey, properties: (propertyStore{cassandra}).clear, tombstone: business.users.deleteAccount, invitations: business.users.deleteAccountInvitations,
+		groups: deletionGroups.execute, peers: deletionPeers.remove, clients: (clientStore{cassandra}).list, removeClient: deletionStore.remove, index: index.sync, events: deletionEvents.generate, connections: connectionStorage.deleteAccount, cookies: business.sessions.deleteAll,
+	}
+	business.accountDeletion = &accountDeletionHTTP{service: deletion, verification: accountDeletionVerification{codes: deletionCodes, get: business.users.get, execute: deletion.execute}, keys: (propertyStore{cassandra}).keys, count: connectionStorage.deletionConnectionCount, cookies: business.sessions.list}
 	business.remoteDeletion = &remoteAccountDeletion{statuses: connectionStorage.remoteDeletionAccepted, remove: connectionStorage.removeRemoteDeletedUser, notify: notifications.submitPush}
 	business.localConnections.notify = notifications.submitPush
 	business.publicProfiles = &publicProfileService{domain: c.Settings.Domain, locale: c.Settings.DefaultLocale, emailVisibility: c.Settings.EmailVisibility, get: business.users.get, legalhold: business.peers.connectionLegalhold, enqueueDeletion: internalQueue.enqueueUserDeletion, now: time.Now, app: func(ctx context.Context, user, team gocql.UUID, requestID string) (*publicAppInfo, error) {
@@ -329,7 +369,6 @@ func Run(ctx context.Context, c Config) error {
 		return business.peers.unblockConnectionConversation(ctx, self, conv, domain, connection, requestID, galleyVersion)
 	}, established: business.peers.connectionMLSEstablished}
 
-	defer notifications.close()
 	business.properties = newPropertyService(c, propertyStore{cassandra}, notifications.submitPush)
 	codes := activationStore{cassandra}
 	resets := passwordResetStore{databases: business.users.userAuthStore, mode: c.Migration["passwordReset"]}

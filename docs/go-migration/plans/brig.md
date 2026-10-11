@@ -1386,3 +1386,12 @@ and complete startup engine, honoring native self/delete responses and internal
 ensureAccountDeleted property/client/local-connection/cookie idempotence check;
 actual internal queue replay remains required. Then recover enough root space
 losslessly for the owned backend guard and rerun retained original22 controls.
+
+Bind DELETE/self, POST/delete and DELETE/i/users/:uid to actual deletion effects.
+Validate exact JSON keys, native password6..1024 and Code.Key20/Value6..20 ASCII
+base64url before effects. Preserve gateway Z-User trust, native200/202 responses,
+pending403 expires_in and throttle429 Retry-After. Internal ensure checks every
+property/client/all-relation local+remote connection/cookie source before deciding
+whether to replay. Parameterized storage, scrubbing and existing password rate
+limits remain; no authentication or delivery policy changes. Finite HTTP units
+cover admission/errors/order and idempotence. Actual queue consumer still required.
