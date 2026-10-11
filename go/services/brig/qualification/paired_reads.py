@@ -12,6 +12,7 @@ import subprocess
 import sys
 import time
 import uuid
+from urllib.parse import urlencode
 
 ROOT = Path(__file__).resolve().parents[4]
 IMAGE = 'sha256:f487c90fd364aac9daee5a1ce6e60fdba0ab74ab0c671ab0de0198e8f05659a9'
@@ -25,7 +26,7 @@ def checked(args, timeout=30):
     return result.stdout.strip()
 
 
-def inside(gundeck_path=None, access_switchback=False, login_contract=False):
+def inside(gundeck_path=None, access_switchback=False, login_contract=False, activation_contract=False):
     if os.getuid() != 65534 or os.environ.get('WIRE_E2E_DISPOSABLE') != '1':
         raise ValueError('owned nonroot Docker runner required')
     sys.path.insert(0, '/opt/wire-e2e')
@@ -119,6 +120,34 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False):
         # Token bytes are synthetic but unnecessary for read parity evidence.
         report['native_setup'].append({'operation': 'persistent login', 'status': login['status'], 'cookie_issued': bool(cookie)})
         assert login['status'] == 200 and cookie, 'native session setup failed'
+        activation_pair = None
+        if activation_contract:
+            original_email = created['json']['email']
+            activation_email = 'synthetic-activation-' + uuid.uuid4().hex + '@example.com'
+
+            def stage_email(email):
+                pending, _ = request('PUT', '/access/self/email', {
+                    'Cookie': cookie.split(';', 1)[0],
+                    'Authorization': 'Bearer ' + login['json']['access_token']}, {'email': email})
+                assert pending['status'] == 202, 'native pending email setup failed'
+                pair, _ = request('GET', '/i/users/activation-code?' + urlencode({'email': email}))
+                assert pair['status'] == 200 and set(pair['json']) == {'key', 'code'}, 'native activation pair lookup failed'
+                return pair['json']
+
+            pair = stage_email(activation_email)
+            native_activation, _ = request('POST', '/activate', body={**pair, 'dryrun': False})
+            assert native_activation['status'] == 200 and native_activation['json'] == {'email': activation_email, 'first': False}, 'native email activation reference failed'
+            native_repeat, _ = request('POST', '/activate', body={**pair, 'dryrun': False})
+            assert native_repeat['status'] == 204, 'native activation repeat reference failed'
+            # Restore through original APIs, then stage the identical target.
+            # Go must perform the same transition, rather than consume an
+            # already-activated row or weaken comparison of dynamic fields.
+            restore_pair = stage_email(original_email)
+            restored, _ = request('POST', '/activate', body={**restore_pair, 'dryrun': False})
+            assert restored['status'] == 200, 'native original identity restore failed'
+            activation_pair = stage_email(activation_email)
+            report['native_activation_reference'] = native_activation
+            report['native_activation_repeat_reference'] = native_repeat
         reference_access = None
         second_login, second_cookie = None, None
         cases = [('GET', '/i/status', {}), ('HEAD', '/i/status', {}),
@@ -142,6 +171,11 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False):
             cases += [('POST', '/login', {}, {'email': created['json']['email'], 'password': 'Wrong-synthetic-password'}),
                       ('POST', '/login', {}, {'email': 'synthetic-absent-' + user + '@example.com', 'password': 'Synthetic-password-2026!'}),
                       ('POST', '/login?persist=invalid-synthetic', {}, {'email': created['json']['email'], 'password': 'Synthetic-password-2026!'})]
+        if activation_contract:
+            cases += [('GET', '/activate?key=synthetic-missing&code=000000', {}),
+                      ('HEAD', '/activate?key=synthetic-missing&code=000000', {}),
+                      ('POST', '/activate', {}, {'key': 'synthetic-missing', 'code': '000000', 'dryrun': True}),
+                      ('POST', '/activate', {}, {**activation_pair, 'dryrun': True})]
         native_records = [request(*case)[0] for case in cases]
         report['records'].append({'implementation': 'haskell', 'observations': native_records})
         active.terminate()
@@ -167,6 +201,41 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False):
                 mismatches.append({'case': index, 'path': cases[index][1], 'fields': [key for key in fields if native.get(key) != go.get(key)]})
         report['mismatches'] = mismatches
         assert not mismatches, 'paired response mismatches'
+        if activation_contract:
+            go_activation, _ = request('POST', '/activate', body={**activation_pair, 'dryrun': False})
+            go_repeat, _ = request('POST', '/activate', body={**activation_pair, 'dryrun': False})
+            for name, native, go in [('activation', native_activation, go_activation), ('repeat', native_repeat, go_repeat)]:
+                fields = ('status', 'content_type', 'json' if 'json' in native else 'body')
+                report['go_' + name + '_observation'] = go
+                assert all(native.get(key) == go.get(key) for key in fields), 'native/Go ' + name + ' response mismatch'
+            go_profile, _ = request('GET', '/self', {'Z-User': user})
+            assert go_profile['status'] == 200 and go_profile['json']['email'] == activation_email and 'email_unvalidated' not in go_profile['json'], 'Go activated profile/clear pending state failed'
+            active.terminate()
+            report['go_activation_stop_exit_code'] = active.wait(timeout=35)
+            assert report['go_activation_stop_exit_code'] == 0, 'Go activation process did not stop cleanly'
+            with socket.socket() as check:
+                assert check.connect_ex(('127.0.0.1', 8082)) != 0, 'Go activation listener remains'
+            log = open('/reports/brig-native-activation-switchback.log', 'w')
+            logs.append(log)
+            active = subprocess.Popen([str(native_brig_path), '-c', str(runtime.WORK / 'brig-static-0.json')],
+                                      cwd=runtime.WORK / 'services/brig', stdout=log, stderr=subprocess.STDOUT)
+            processes.append(active)
+            ready(active)
+            native_profile, _ = request('GET', '/self', {'Z-User': user})
+            assert native_profile['status'] == 200 and native_profile['json'] == go_profile['json'], 'native Brig rejected Go-activated profile state'
+            consumed_repeat, _ = request('POST', '/activate', body={**activation_pair, 'dryrun': False})
+            assert all(consumed_repeat.get(key) == native_repeat.get(key) for key in ('status', 'content_type', 'body')), 'native repeat-link state differs after Go activation'
+            new_login, new_cookie = request('POST', '/login?persist=true', body={'email': activation_email, 'password': 'Synthetic-password-2026!', 'label': 'synthetic-activated-device'})
+            assert new_login['status'] == 200 and new_cookie, 'native Brig cannot log in using Go-activated email'
+            old_login, _ = request('POST', '/login', body={'email': original_email, 'password': 'Synthetic-password-2026!'})
+            assert old_login['status'] == 403 and old_login['json']['label'] == 'invalid-credentials', 'native Brig accepted released old email key'
+            report['activation_switchback'] = {
+                'same_initialized_stores': True, 'native_restored_and_restaged_same_target': True,
+                'go_activation_status': go_activation['status'], 'go_repeat_status': go_repeat['status'],
+                'native_consumed_profile_status': native_profile['status'],
+                'native_repeat_status': consumed_repeat['status'], 'native_new_email_login_status': new_login['status'],
+                'native_released_old_email_login_status': old_login['status'],
+                'profile_exactly_matches': True, 'key_and_code_recorded': False}
         if access_switchback:
             # The fixture has a ten-second inactivity policy. Password checks
             # deliberately precede this separate account/session handoff; do
@@ -339,9 +408,10 @@ def main():
     parser.add_argument('--gundeck-path')
     parser.add_argument('--access-switchback', action='store_true')
     parser.add_argument('--login-contract', action='store_true')
+    parser.add_argument('--activation-contract', action='store_true')
     args = parser.parse_args()
     if args.in_container:
-        return inside(args.gundeck_path, args.access_switchback, args.login_contract)
+        return inside(args.gundeck_path, args.access_switchback, args.login_contract, args.activation_contract)
     if args.binary is None or args.build_receipt is None or args.output is None:
         parser.error('identified binary, receipt and new output required')
     sys.path.insert(0, str(ROOT / 'tools/parity/docker'))
@@ -371,6 +441,8 @@ def main():
         if not args.access_switchback:
             raise ValueError('login qualification requires credential switchback')
         runner['command'].append('--login-contract')
+    if args.activation_contract:
+        runner['command'].append('--activation-contract')
     if args.gundeck_binary:
         runner['command'] += ['--gundeck-path', '/candidate/gundeck']
         runner['volumes'].append({'type': 'bind', 'source': str(args.gundeck_binary.resolve(strict=True)),
