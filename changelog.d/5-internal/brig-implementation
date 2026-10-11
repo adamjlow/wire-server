@@ -11,3 +11,5 @@ Align client lock deletion retries with the repository-pinned native Amazonka po
 Wire public client registration to real native-order account/code, storage, peer, deletion and new-device mail effects; original/native backend qualification remains pending.
 
 Add native MLS package count/read cleanup and public reference deletion, validated by exact Haskell/Go responses and real Cassandra deletion/retention through switchback; whole Brig migration remains in progress.
+
+Add signed MLS key-package upload and replacement core using standard Go crypto; seven original compiled Haskell MLS upload/count/delete tests pass across supported suites, with whole-service qualification pending.

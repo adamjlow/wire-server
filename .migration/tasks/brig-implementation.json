@@ -80,6 +80,13 @@
       "command": "Scoped full pinned Go/static checks; four exact native/Go MLS reference deletion controls, actual CQL readback and restoration plus prior count/MLS/client/prekey controls and durable switchback; all25 managed exits0/runner0/cleanup0/independent empty. Two failed attempts retained. No original MLS/whole535/eight-Go acceptance claim.",
       "revision": "d5f8b972b1d3644f11a4f0686cb5886d168eb85f",
       "artifact": "go/services/brig/qualification/evidence/mls-delete/README.md"
+    },
+    {
+      "criterion": "quality",
+      "result": "pass",
+      "command": "Scoped full pinned Go/static checks; seven unchanged original compiled MLS delete/upload-no-key/unsupported/count four-suites tests, strict exact XML7/no failures/errors/skips; prior deletion/count/MLS/client/prekey/17 comparisons and real durable switchback; all25 exits0/runner0/cleanup0/independent empty. Not whole535/eight-Go or replace/claim qualification.",
+      "revision": "c061bba2170cc3c178245ee2e3c02086f994726b",
+      "artifact": "go/services/brig/qualification/evidence/mls-upload-original7/README.md"
     }
   ],
   "review": null,
@@ -115,5 +122,5 @@
       "required_evidence": "Frozen100request/concurrency8 latency/RSS/CPU/metrics smoke and eight held-body drain/listener close/SIGTERM0 within35s; actual unchanged-schema same-state native-Go-native auth/password/cookie/client/prekey/MLS/property/connection/pending action/OAuth/apps/groups/domain/queue/search and storage-mode witnesses. Trusted nonroot optional source/license image and separately scoped image-only/default-byte-preserving selector. Exact final qualified artifact and user-delegated same-author self-review with serious inherited concerns and unavailable native checks accurately recorded."
     }
   ],
-  "handoff": "Public MLS reference delete qualified at sourced5f8b972b1d3644f11a4f0686cb5886d168eb85f/servicea623b3ee with full pinned Go/static checks, four exact native/Go controls including V4 empty405 and V7/V19 empty201, actual CQL refs removal/restore and prior5 count/10 MLS/14 public/13 federation/5 single/5 multi/7 lifecycle/17 paired controls plus actual durable client/prekey/MLS switchback. All25 exits0/runner0/cleanup0/independent empty; original suite not executed. Retained native V4 wrong inference and own observer helper order failures. Whole Brig incomplete/unavailable: next upload/replace/claim real crypto/storage/events and original tests, then remaining families/full535/eight-Go/all-entity3mode/ops/image/defaultselector/legal/security/whole review. Native X509 certificate trust verification absent; preserve/document, do not harden acceptance. Prior parser/Base64/error detail/prekey/Dynamo/legalhold gaps remain. Current remote655dd7623e5e34c22dd933489015a806e6df0b07 from explicit push; this continuation commits local only. Galley only after whole Brig achieved."
+  "handoff": "MLS upload/replace core now implemented at sourcec061bba2170cc3c178245ee2e3c02086f994726b/servicec92313e3. Full pinned Go/static checks and seven unchanged original compiled MLS tests pass (count4 suites/delete/no-key/unsupported), strict XML7/no failure/error/skip, actual mls-test-cli signatures/refs. Prior4 delete/5 count/10 MLS/14 public/13 federation/5 single/5 multi/7 lifecycle/17 paired and actual client/prekey/MLS stored-byte switchback pass; all25 exits0/runner0/cleanup0/independent empty. Next local/federation MLS claim then original claim/replace tests; actual signed package upload/replace native-Go-native and native destructive failure-order witness needed. Basic History identity-mismatch error and X509 parse diagnostics/DER/identity/Base64/malformed variants remain unqualified. Native X509 chain trust/signature absence preserved/documented. Other families/final535/eight-Go/all-entity3mode/ops/image/defaultselector/legal/security/whole review pending. Whole Brig incomplete/unavailable; Galley after whole completion. Remote655dd7623 from explicit audit push; continuation commits local only."
 }

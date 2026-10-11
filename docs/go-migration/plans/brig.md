@@ -840,7 +840,7 @@ validation parses the first certificate and matches SAN/public key without
 verifying its certificate-chain signature/trust (KeyPackage.hs credentialIdentityAndKey
 FUTUREWORK). Record it; do not add a different acceptance policy during migration.
 
-### MLS upload and replacement (checks pending)
+### MLS upload and replacement
 
 Native raw TBS parsing, labelled Ed25519/P256/P384/P521 verification, protocol,
 Basic/X509 identity/key/source/capabilities, lifetime and stored key admission
@@ -852,3 +852,15 @@ unsupported tests on four ciphersuites with dynamic Go Brig and native peers.
 Claim and original replace tests (which claim packages) remain subsequent work.
 No acceptance claimed before checks. Native X509 trust omission preserved;
 X509/DER/identity/Base64/error-detail variants need direct contract evidence.
+
+Scoped checks now pass at sourcec061bba21/servicec92313e3. Seven unchanged
+compiled original tests pass, strict exact XML7/no failures/errors/skips: delete,
+upload-no-key, unsupported suite, count across four suites. Actual mls-test-cli
+packages/signatures/reference deletion accepted. Prior comparisons and client/
+prekey/MLS actual stored-byte switchback pass; all25 exits0/runner0/cleanup0/
+independent empty. [Evidence](../../../go/services/brig/qualification/evidence/mls-upload-original7/README.md).
+Replace route/core and destructive failure ordering have focused units, but
+original replace cases need claim first. Actual signed-package durable upload/
+replace switchback and native failure-order witness pending. Basic History
+identity-mismatch error and X509/DER/identity/Base64/malformed-error-detail
+variants need alignment/direct evidence before whole acceptance.
