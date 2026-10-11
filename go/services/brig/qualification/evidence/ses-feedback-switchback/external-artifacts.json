@@ -1,0 +1,297 @@
+[
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/ses-feedback-federation-switchback-paired/compose.json",
+    "sha256": "25e8ca0747052f09cb437dfde0287e19ff9906a20ec2308af56dd17ef582f507",
+    "bytes": 22134
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/ses-feedback-federation-switchback-paired/controller.log",
+    "sha256": "d3906c6a4d187f7d21cf63c262fa4bb91510eb60e2c98f5cfc49b5ab9317d028",
+    "bytes": 958039
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/ses-feedback-federation-switchback-paired/environment.json",
+    "sha256": "42f776e499219e37f3cf6c76d5925f9cfd2ccdc6a362ca2c24af7fbf066fd770",
+    "bytes": 1377
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/ses-feedback-federation-switchback-paired/fixtures/configs.json",
+    "sha256": "a72b39e034c0563ea28260de4782ee8122f5b8e015887f835fd30b04ad4b8180",
+    "bytes": 25814
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/ses-feedback-federation-switchback-paired/fixtures/coredns-Corefile",
+    "sha256": "f86a1dd0ea71d82a8f03c554e5ad80523d70615aa511889b5206179a538094e5",
+    "bytes": 140
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/ses-feedback-federation-switchback-paired/fixtures/coredns-db.example.com",
+    "sha256": "6405b829e03e3c98f6742245bedffaf2e6ce80bc0f5202ccc5da5dee501c4b9f",
+    "bytes": 863
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/ses-feedback-federation-switchback-paired/fixtures/coredns-db.sft",
+    "sha256": "38b816d19035e42da7b3fbb90f419641b222d38c17d8c09000d773484b1aa03a",
+    "bytes": 277
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/ses-feedback-federation-switchback-paired/fixtures/integration.json",
+    "sha256": "d8834dad54e1f851e689ac00691cd527aac69e0e9ce00baf149835433812c73c",
+    "bytes": 8278
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/ses-feedback-federation-switchback-paired/fixtures/peers.json",
+    "sha256": "1877182efbc07cc70bf12db44905c75d5b6fe15cc849cb8143891db9617883f2",
+    "bytes": 74780
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/ses-feedback-federation-switchback-paired/paired-compose.json",
+    "sha256": "c3c7da12da7f0e1ca3b5e069143da19bedc5ad9213691cee28620fef5e8a11cb",
+    "bytes": 23749
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/ses-feedback-federation-switchback-paired/redis-cluster-initialization.log",
+    "sha256": "7e81f1bbe288a3ea7a77ee8cf279b1fb14fd37665f93d6da97b952e211b0eec3",
+    "bytes": 2129
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/ses-feedback-federation-switchback-paired/reports/background-worker-native-static-1.log",
+    "sha256": "d0d6068f8c6df78d824dde5e302b72b2cf1df7ed5416c98c63add1f1f03ba259",
+    "bytes": 813
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/ses-feedback-federation-switchback-paired/reports/background-worker-native.log",
+    "sha256": "223ade6a02f38c3c1aaa275f341b2c154f9058576d32cb35e9ee5559dd28364a",
+    "bytes": 814
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/ses-feedback-federation-switchback-paired/reports/blacklist-original.log",
+    "sha256": "fbbf2c7b9bc22fc15ead1e0daec31923c67977fca7e32b1252fea996094ca520",
+    "bytes": 387
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/ses-feedback-federation-switchback-paired/reports/blacklist-original.xml",
+    "sha256": "cb7deb525b3fa9c960771e2017b4ede323622cd8646639979bb14e1478c108b9",
+    "bytes": 231
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/ses-feedback-federation-switchback-paired/reports/brig-go.log",
+    "sha256": "9e43ddf37679bfb7d5c2288c1454ae9744741b7f6c62291e21cb4ba32baf3531",
+    "bytes": 316
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/ses-feedback-federation-switchback-paired/reports/brig-native-feedback-switchback.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/ses-feedback-federation-switchback-paired/reports/brig-native-static-1.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/ses-feedback-federation-switchback-paired/reports/brig-native.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/ses-feedback-federation-switchback-paired/reports/cannon-native-static-1.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/ses-feedback-federation-switchback-paired/reports/cannon-native.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/ses-feedback-federation-switchback-paired/reports/cargohold-native-static-1.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/ses-feedback-federation-switchback-paired/reports/cargohold-native.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/ses-feedback-federation-switchback-paired/reports/federator-native-static-1.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/ses-feedback-federation-switchback-paired/reports/federator-native.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/ses-feedback-federation-switchback-paired/reports/galley-native-static-1.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/ses-feedback-federation-switchback-paired/reports/galley-native.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/ses-feedback-federation-switchback-paired/reports/gundeck-go.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/ses-feedback-federation-switchback-paired/reports/gundeck-native-static-1.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/ses-feedback-federation-switchback-paired/reports/nginz-0.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/ses-feedback-federation-switchback-paired/reports/nginz-1.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/ses-feedback-federation-switchback-paired/reports/paired-reads.json",
+    "sha256": "865aafd8192dcda8f5283e686391ac7c10a9bf27a6e5e6dd83ebddee03e3a9b1",
+    "bytes": 33237
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/ses-feedback-federation-switchback-paired/reports/proxy-native-static-1.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/ses-feedback-federation-switchback-paired/reports/proxy-native.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/ses-feedback-federation-switchback-paired/reports/spar-native-static-1.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/ses-feedback-federation-switchback-paired/reports/spar-native.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/ses-feedback-federation-switchback-paired/reports/stern-native-static-1.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/ses-feedback-federation-switchback-paired/reports/stern-native.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/ses-feedback-federation-switchback-paired/reports/wire-server-enterprise-native.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/ses-feedback-federation-switchback-paired/result.json",
+    "sha256": "6ffc2c026ddf1acdddf1d2303bc422f35e696be05dc37ff590a1a782cd23280f",
+    "bytes": 1742
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/federation-config-read-core-sdk-check/argon2-copyright",
+    "sha256": "6059eb2b0f8f23b5c6023b08f68d4df9addd834665d07e5dcc364d4ae80d9b69",
+    "bytes": 8745
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/federation-config-read-core-sdk-check/brig",
+    "sha256": "b1b2c453013800695fd5b8670f9fd4dbeee39b7267b676f176969b1a370d19b6",
+    "bytes": 68182528
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/federation-config-read-core-sdk-check/brig.test",
+    "sha256": "c305205b5b0e3099e578339159a4f9f3a80e7407b09593c8a95dbf0e78b8acf2",
+    "bytes": 65613648
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/federation-config-read-core-sdk-check/build-receipt.json",
+    "sha256": "699d4c0f7c20399c2fb2c5e92a9aabbfb9e506c5c145ef383630843e8eb384f8",
+    "bytes": 872
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/federation-config-read-core-sdk-check/controller.log",
+    "sha256": "5b2278170b6160b9a369f404cd0d8b492feb291ecfe3b02e76a9f973097a7e22",
+    "bytes": 2878
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/federation-config-read-core-sdk-check/cxx-package.sha256",
+    "sha256": "5abc52f67b0befe6317695d4489a2433b32854cbb6b5916a6f875b2c0e300636",
+    "bytes": 102
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/federation-config-read-core-sdk-check/cxx-package.txt",
+    "sha256": "d41b16dcb551842304cab9549bb3da24fdb859d85d690bd121de7f3cb29cce01",
+    "bytes": 59
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/federation-config-read-core-sdk-check/glibc-copyright",
+    "sha256": "f5788886720a2605a946e81d571e6c8162b09f58d2e2ceb8d36e5768fccd850d",
+    "bytes": 51200
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/federation-config-read-core-sdk-check/go-check.log",
+    "sha256": "35b19ce32a5bde226c3f81bef0d88c524ff673532aa1d0d7ab6eae79e3fcac70",
+    "bytes": 3723
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/federation-config-read-core-sdk-check/icu-copyright",
+    "sha256": "5bbff5f646ce750ac0a347e7f91793279b7422a1119820b5f75d98879c201c68",
+    "bytes": 2214
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/federation-config-read-core-sdk-check/libraries.sha256",
+    "sha256": "875560a1f32f1ad76a866a7f792a6b392f64c5555e8f55f270f60869079f9af2",
+    "bytes": 846
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/federation-config-read-core-sdk-check/libstdc++-copyright",
+    "sha256": "20390f8a6f3b1e4d7cb45dd8652dabb259bbef688cbad839bcdb0b9ba7252f79",
+    "bytes": 69004
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/federation-config-read-core-sdk-check/openssl-copyright",
+    "sha256": "6a7da622fe0637a334d2a8fc470852d2ffb77d9a2b2f930f854e32a41ad6ef35",
+    "bytes": 2543
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/federation-config-read-core-sdk-check/packages.txt",
+    "sha256": "9e9db92065c33bc81e7e8b5ff6f5c0a9a32814690509f59c88718cc418f5e262",
+    "bytes": 3793
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/federation-config-read-core-sdk-check/runtime-units.log",
+    "sha256": "ddd8b5133973aaacccb35f45d4924af99997ff24d6685c5c411452f2d3116ac2",
+    "bytes": 50041
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/federation-config-read-core-sdk-check/stores-build-receipt.json",
+    "sha256": "3339c574008969d8723a0ea92e184e0b09f4de9bdf23ff115e6d0b655e74f149",
+    "bytes": 872
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/federation-config-read-core-sdk-check/stores.test",
+    "sha256": "57daeac08b4796fa27f3bc4f0d20a2f57608f2900c4e212d6f8dfe09d07b1155",
+    "bytes": 70442656
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/federation-config-read-core-sdk-check/zlib-copyright",
+    "sha256": "9e5b96d63773a5d177ba264254390f792be07e41748ebd94730981c6cac31cc6",
+    "bytes": 2927
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/federation-config-read-core-sdk-check/zstd-copyright",
+    "sha256": "5cec9fef4d3fa7e0371fbef4ec3fc416e0105dc2a9922117f84e825cb11f50f8",
+    "bytes": 5332
+  }
+]
