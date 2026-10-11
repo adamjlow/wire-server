@@ -174,8 +174,7 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
         if activation_contract:
             cases += [('GET', '/activate?key=synthetic-missing&code=000000', {}),
                       ('HEAD', '/activate?key=synthetic-missing&code=000000', {}),
-                      ('POST', '/activate', {}, {'key': 'synthetic-missing', 'code': '000000', 'dryrun': True}),
-                      ('POST', '/activate', {}, {**activation_pair, 'dryrun': True})]
+                      ('POST', '/activate', {}, {'key': 'synthetic-missing', 'code': '000000', 'dryrun': True})]
         native_records = [request(*case)[0] for case in cases]
         report['records'].append({'implementation': 'haskell', 'observations': native_records})
         active.terminate()
@@ -202,6 +201,54 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
         report['mismatches'] = mismatches
         assert not mismatches, 'paired response mismatches'
         if activation_contract:
+            # Native fixture activation codes live four seconds. Establish a
+            # fresh account before closing peer clients, then issue its first
+            # sessions/code only after their idle connections have drained.
+            active.terminate()
+            report['go_activation_reads_stop_exit_code'] = active.wait(timeout=35)
+            assert report['go_activation_reads_stop_exit_code'] == 0, 'Go activation read process did not stop cleanly'
+            with socket.socket() as check:
+                assert check.connect_ex(('127.0.0.1', 8082)) != 0, 'Go activation read listener remains'
+            log = open('/reports/brig-native-activation-setup.log', 'w')
+            logs.append(log)
+            active = subprocess.Popen([str(native_brig_path), '-c', str(runtime.WORK / 'brig-static-0.json')],
+                                      cwd=runtime.WORK / 'services/brig', stdout=log, stderr=subprocess.STDOUT)
+            processes.append(active)
+            ready(active)
+            handoff, _ = request('POST', '/i/users', body={'name': 'Synthetic activation handoff',
+                'email': 'synthetic-activation-origin-' + uuid.uuid4().hex + '@example.com',
+                'password': 'Synthetic-password-2026!'})
+            assert handoff['status'] == 201, 'native fresh activation account setup failed'
+            report['activation_reference_actor'] = user
+            user, original_email = handoff['json']['id'], handoff['json']['email']
+            peer_processes = [process for process in processes if process is not active and process.poll() is None]
+            for process in peer_processes:
+                process.terminate()
+            peer_exits = [process.wait(timeout=35) for process in peer_processes]
+            report['activation_quiesced_peer_exit_codes'] = peer_exits
+            assert all(code == 0 for code in peer_exits), 'activation peers did not quiesce cleanly'
+            login, cookie = request('POST', '/login?persist=true', body={'email': original_email,
+                'password': 'Synthetic-password-2026!', 'label': 'synthetic-activation-handoff'})
+            assert login['status'] == 200 and cookie, 'native fresh activation session setup failed'
+            activation_pair = stage_email(activation_email)
+            native_dryrun, _ = request('POST', '/activate', body={**activation_pair, 'dryrun': True})
+            assert native_dryrun['status'] == 200 and native_dryrun['body'] == '', 'native fresh activation dryrun failed'
+            handoff_started = time.monotonic()
+            active.terminate()
+            report['native_activation_setup_stop_exit_code'] = active.wait(timeout=35)
+            assert report['native_activation_setup_stop_exit_code'] == 0, 'native activation setup did not stop cleanly'
+            with socket.socket() as check:
+                assert check.connect_ex(('127.0.0.1', 8082)) != 0, 'native activation setup listener remains'
+            log = open('/reports/brig-go-activation.log', 'w')
+            logs.append(log)
+            active = subprocess.Popen([str(candidate), '-c', str(runtime.WORK / 'brig-static-0.json')],
+                                      cwd=runtime.WORK / 'services/brig', stdout=log, stderr=subprocess.STDOUT)
+            processes.append(active)
+            ready(active)
+            report['activation_native_to_go_seconds'] = time.monotonic() - handoff_started
+            go_dryrun, _ = request('POST', '/activate', body={**activation_pair, 'dryrun': True})
+            report['activation_dryrun_pair'] = [native_dryrun, go_dryrun]
+            assert all(native_dryrun.get(key) == go_dryrun.get(key) for key in ('status', 'content_type', 'body')), 'native/Go fresh dryrun mismatch'
             go_activation, _ = request('POST', '/activate', body={**activation_pair, 'dryrun': False})
             go_repeat, _ = request('POST', '/activate', body={**activation_pair, 'dryrun': False})
             for name, native, go in [('activation', native_activation, go_activation), ('repeat', native_repeat, go_repeat)]:
@@ -235,7 +282,9 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
                 'native_consumed_profile_status': native_profile['status'],
                 'native_repeat_status': consumed_repeat['status'], 'native_new_email_login_status': new_login['status'],
                 'native_released_old_email_login_status': old_login['status'],
-                'profile_exactly_matches': True, 'key_and_code_recorded': False}
+                'profile_exactly_matches': True, 'key_and_code_recorded': False,
+                'handoff_actor': user, 'response_reference_actor_distinct': True,
+                'notification_peers_quiesced_for_short_expiry': True}
         if access_switchback:
             # The fixture has a ten-second inactivity policy. Password checks
             # deliberately precede this separate account/session handoff; do

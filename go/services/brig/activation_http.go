@@ -89,21 +89,21 @@ func decodeActivate(reader io.Reader) (activateRequest, error) {
 func activationHTTPError(w http.ResponseWriter, err error) {
 	switch {
 	case errors.Is(err, errInvalidActivationCode):
-		wireError(w, 404, "invalid-code", "Invalid activation code")
+		authenticationWireError(w, 404, "invalid-code", "Invalid activation code")
 	case errors.Is(err, errActivationWrongUser):
-		wireError(w, 404, "invalid-code", "User does not exist")
+		authenticationWireError(w, 404, "invalid-code", "User does not exist")
 	case errors.Is(err, errActivationKeyExists):
-		wireError(w, 409, "key-exists", "The given e-mail address is in use.")
+		authenticationWireError(w, 409, "key-exists", "The given e-mail address is in use.")
 	case errors.Is(err, errDomainRegistrationSSO):
-		wireError(w, 403, "condition-failed", "`domain_redirect` is set to `sso:{code}`")
+		authenticationWireError(w, 403, "condition-failed", "`domain_redirect` is set to `sso:{code}`")
 	case errors.Is(err, errDomainRegistrationBackend):
-		wireError(w, 403, "condition-failed", "`domain_redirect` is set to `backend`")
+		authenticationWireError(w, 403, "condition-failed", "`domain_redirect` is set to `backend`")
 	case errors.Is(err, errDomainRegistrationDisabled):
-		wireError(w, 403, "condition-failed", "`domain_redirect` is set to `no-registration`")
+		authenticationWireError(w, 403, "condition-failed", "`domain_redirect` is set to `no-registration`")
 	case errors.Is(err, errInvalidEmailDomain):
-		wireError(w, 400, "invalid-domain", "Invalid domain")
+		authenticationWireError(w, 400, "invalid-domain", "Invalid domain")
 	default:
-		wireError(w, 500, "server-error", "Internal Server Error")
+		authenticationWireError(w, 500, "server-error", "Internal Server Error")
 	}
 }
 func (h activationHTTP) handle(w http.ResponseWriter, r *http.Request) {
@@ -130,7 +130,7 @@ func (h activationHTTP) handle(w http.ResponseWriter, r *http.Request) {
 		var err error
 		request, err = decodeActivate(r.Body)
 		if err != nil {
-			wireError(w, 400, "bad-request", "Invalid activation request")
+			authenticationWireError(w, 400, "bad-request", "Invalid activation request")
 			return
 		}
 	default:

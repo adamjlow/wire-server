@@ -1,0 +1,32 @@
+{
+  "result": "failed",
+  "source_revision": "1b47a249a5c3e35da0cbd27ec4e7c768f0d4cbac",
+  "build": {
+    "source_revision": "1b47a249a5c3e35da0cbd27ec4e7c768f0d4cbac",
+    "sdk_image": "sha256:2f9e4393295d7270538dd1c666ab1345eaec06b2c2f8c217283ba6565caee399",
+    "build_exit_code": 0,
+    "quality_checked_source": "e9d411b3544fb7fac80dde97c6e692ff27355d35",
+    "compiled_go_inputs_unchanged": true,
+    "binary_sha256": "362d7d9bf6a523e2199a3a48c9f67b9f95062e7fb9b6d44c7dffe50902f10a82",
+    "matches_previously_quality_checked_executable": true
+  },
+  "project": "wire-e2e-19285f0a625540ab80eefa1b76199c65",
+  "compose_sha256": "a86b662c8c9f87b62f13fd1693e79257ea02b9c98c912270a5495746031680ba",
+  "runner_image": "sha256:f487c90fd364aac9daee5a1ce6e60fdba0ab74ab0c671ab0de0198e8f05659a9",
+  "e2e_executed": false,
+  "peer_candidates": {
+    "gundeck": {
+      "path": "/home/operator/.cache/wire-migration/go-patched-20261009/gundeck",
+      "sha256": "a50512ef30d7fa9ddf92c2c1933e69769d6691e08cdfbe9f7c4f2d266071f46c",
+      "source_revision": "c1120238f8ecd7480742156df6c5dd2d2ec41f56"
+    }
+  },
+  "redis_cluster_initialization_completed": true,
+  "runner_exit_code": 1,
+  "cleanup_exit_code": 0,
+  "remaining_resources": {
+    "container": "",
+    "network": "",
+    "volume": ""
+  }
+}
