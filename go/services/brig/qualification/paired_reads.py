@@ -321,6 +321,29 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             assert native_federation_controls[12]['status']==200, 'native federation partial request failed'
             assert native_federation_controls[12]['json']['failed_to_list']==[{'domain':missing_domain,'id':remote_user}], 'native federation qualified failure changed'
             assert set(native_federation_controls[12]['json']['qualified_user_client_prekeys'])==set(mixed), 'native federation partial successes changed'
+            public_local='/users/'+local_domain+'/'+lifecycle_user+'/clients'
+            public_remote='/users/'+remote_domain+'/'+remote_user+'/clients'
+            public_users=[{'domain':local_domain,'id':lifecycle_user},{'domain':remote_domain,'id':remote_user},{'domain':missing_domain,'id':remote_user}]
+            public_client_cases=[
+                ('GET','/v1/users/'+lifecycle_user+'/clients',{}),
+                ('GET','/v15'+public_local,{}),
+                ('GET','/v16'+public_local,{}),
+                ('GET','/v19'+public_local+'/'+lifecycle_id,{}),
+                ('GET','/v19'+public_local+'/f',{}),
+                ('GET','/v15'+public_remote,{}),
+                ('GET','/v19'+public_remote+'/'+remote_id,{}),
+                ('GET','/v15/users/'+missing_domain+'/'+remote_user+'/clients',{}),
+                ('GET','/v19/users/'+missing_domain+'/'+remote_user+'/clients/'+remote_id,{}),
+                ('POST','/v1/users/list-clients',lifecycle_headers,public_users),
+                ('POST','/v1/users/list-clients/v2',lifecycle_headers,{'qualified_users':public_users}),
+                ('POST','/v19/users/list-clients',lifecycle_headers,{'qualified_users':public_users}),
+                ('POST','/federation/get-user-clients',{'Wire-Origin-Domain':remote_domain},{'users':[lifecycle_user]}),
+                ('POST','/federation/get-user-clients',{'Wire-Origin-Domain':remote_domain},{'users':[]})]
+            native_public_client_controls=[request(*case)[0] for case in public_client_cases]
+            report['public_client_native_controls']=native_public_client_controls
+            assert [r['status'] for r in native_public_client_controls]==[200,200,404,200,404,200,200,200,404,200,200,200,200,200], 'native public client reference changed'
+            assert native_public_client_controls[7]['json']==[], 'native remote failure did not become empty client list'
+            assert set(native_public_client_controls[11]['json']['qualified_user_map'])=={local_domain,remote_domain}, 'native public client bulk remote omission changed'
             restaged,_=request('POST','/v19/clients',lifecycle_headers,{**native_body,'mls_public_keys':{}})
             report['prekey_native_restage']=restaged
             assert restaged['status']==201, 'native prekey reference restage failed'
@@ -590,6 +613,11 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             federation_mismatches=[{'case':i,'fields':[k for k in fields(ref) if ref.get(k)!=actual.get(k)]} for i,(ref,actual) in enumerate(zip(native_federation_controls,go_federation_controls)) if not same(ref,actual)]
             report['prekey_federation_mismatches']=federation_mismatches
             assert not federation_mismatches, 'native federation prekey responses mismatch'
+            go_public_client_controls=[request(*case)[0] for case in public_client_cases]
+            report['public_client_go_controls']=go_public_client_controls
+            public_client_mismatches=[{'case':i,'fields':[k for k in fields(ref) if ref.get(k)!=actual.get(k)]} for i,(ref,actual) in enumerate(zip(native_public_client_controls,go_public_client_controls)) if not same(ref,actual)]
+            report['public_client_mismatches']=public_client_mismatches
+            assert not public_client_mismatches, 'native public client responses mismatch'
             go_created,_=request('POST','/v19/clients',lifecycle_headers,{**new_body,'password':password})
             report['client_lifecycle_go_created']=go_created
             assert go_created['status']==201 and go_created['location']==go_created['json']['id'], 'Go client creation failed'

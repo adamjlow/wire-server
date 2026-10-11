@@ -751,3 +751,19 @@ independent label audit empty. No new original suite/current live Dynamo/whole
 alias maps and other whole-family contract/acceptance gaps stay explicit.
 Next public user-client/remote federation/MLS read contracts reuse actual storage
 and federator boundaries; finish outstanding fidelity gaps before final gates.
+
+### Public user-client read contract wiring (checks pending)
+
+Native single/list/bulk public reads use `SELECT client, class from clients
+where user = ?`, excluding private/MLS metadata. Local requests pool50 and
+return numeric-ID/class-ordered sets; empty users remain explicit. Remote
+domains are fetched sequentially before local rows, with failures logged and
+omitted; local domain always present. Single remote failure becomes an empty
+list or a specific-client404. Native legacy list/single untilV2, qualified list
+untilV16, specific qualified all versions, legacy bare bulk/V2 wrapped bulk
+and federation `get-user-clients` are wired. Public GET has no native Z-User
+requirement; bulk has one, ignored after header validation. Request limits1..500
+apply to public bulk, not internal federation. Payload exposes only ID/class.
+Focused units and fourteen exact native/Go controls added; SDK/backend results
+pending. MLS read RPCs, malformed-parser details and previous fidelity gaps
+remain unfinished; this does not publish compatibility or whole acceptance.

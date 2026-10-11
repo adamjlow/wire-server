@@ -267,6 +267,7 @@ func Run(ctx context.Context, c Config) error {
 	prekeyStore.exhausted = func() { log.Print("PreKeys: Optimistic lock failed") }
 	federationClient, closeFederation := newPrekeyFederationClient(c)
 	defer closeFederation()
+	business.publicClients = &publicClientService{domain: c.Settings.Domain, remote: &federationClient, list: (clientStore{cassandra}).publicClients, warn: func(domain string) { log.Printf("Failed to fetch clients for domain %q", domain) }}
 	business.prekeys = &prekeyClaimService{remote: &federationClient, domain: c.Settings.Domain, maxUsers: int(*c.Settings.MaxConversationSize), claim: prekeyStore.claim, clients: (clientStore{cassandra}).list, lookup: (clientStore{cassandra}).get, remove: business.clientDeletion.execute, guard: business.peers.guardPrekeyLegalhold, federationGuard: business.peers.guardFederationPrekeyLegalhold}
 	maxPermanent := 7
 	if c.Settings.MaxPermanentClients != nil {
