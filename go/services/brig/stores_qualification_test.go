@@ -666,4 +666,60 @@ func TestOwnedDurableStores(t *testing.T) {
 	if err := guardRegistrationDomain(ctx, "synthetic@"+pgDomain, pgDomains.lookup); !errors.Is(err, errDomainRegistrationSSO) {
 		t.Fatal("PG domain selector failed", err)
 	}
+
+	// Native registration construction and stale-owner verification reuse the
+	// actual user/key/blocklist stores, with independently selected backends.
+	for mode, store := range stores {
+		id := user()
+		email := "synthetic-registration-" + id.String() + "@example.com"
+		created, err := (newRegistrationUser{Name: "Synthetic registration", UUID: &id, Email: &email}).build(nil, nil, &password, registrationLocale{Language: "en"}, 30, time.Now())
+		if err != nil {
+			t.Fatal(err)
+		}
+		if err := store.create(ctx, created, nil, nil); err != nil {
+			t.Fatal(mode, "registration persistence", err)
+		}
+		if ok, err := store.claimEmailKey(ctx, email, id); err != nil || !ok {
+			t.Fatal(mode, "registration owner", err)
+		}
+		block := blocklistStore{databases: store.userAuthStore, mode: mode}
+		identity := registrationIdentity{owner: store.registrationEmailOwner, account: store.get, deleteKey: store.deleteEmailKey, blacklisted: block.exists}
+		if err := identity.verify(ctx, email); err != nil {
+			t.Fatal(mode, "unactivated native account rejected", err)
+		}
+		if err := store.setEmailIdentity(ctx, id, &email, true); err != nil {
+			t.Fatal(err)
+		}
+		if err := identity.verify(ctx, email); !errors.Is(err, errActivationKeyExists) {
+			t.Fatal(mode, "activated identity not protected", err)
+		}
+		if err := store.updateAccountStatus(ctx, id, 2); err != nil {
+			t.Fatal(err)
+		}
+		if err := identity.verify(ctx, email); err != nil {
+			t.Fatal(mode, "deleted registration key repair failed", err)
+		}
+		if owner, err := store.registrationEmailOwner(ctx, email); err != nil || owner != nil {
+			t.Fatal(mode, "deleted owner key remains", err)
+		}
+		if err := block.write(ctx, email, false); err != nil {
+			t.Fatal(err)
+		}
+		if err := identity.verify(ctx, email); !errors.Is(err, errRegistrationBlacklisted) {
+			t.Fatal(mode, "registration blacklist not enforced", err)
+		}
+		ephemeralID := user()
+		now := time.Now()
+		ephemeral, err := (newRegistrationUser{Name: "Synthetic ephemeral", UUID: &ephemeralID}).build(nil, nil, nil, registrationLocale{Language: "en"}, 30, now)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if err := store.create(ctx, ephemeral, nil, nil); err != nil {
+			t.Fatal(err)
+		}
+		persisted, err := store.get(ctx, ephemeralID)
+		if err != nil || persisted == nil || persisted.Status == nil || *persisted.Status != 3 || persisted.Expires == nil || !persisted.Expires.Equal(now.Add(30*time.Second).UTC().Truncate(time.Millisecond)) {
+			t.Fatal(mode, "ephemeral native state mismatch", err)
+		}
+	}
 }
