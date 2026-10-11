@@ -4,11 +4,13 @@ package brig
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"net"
 	"net/http"
 	"net/http/httptest"
 	"strconv"
 	"testing"
+	"time"
 
 	"github.com/apache/cassandra-gocql-driver/v2"
 )
@@ -123,5 +125,81 @@ func TestRegistrationSSOJoinNativeMemberBodyAndRejection(t *testing.T) {
 				t.Fatal("native team name changed", err)
 			}
 		})
+	}
+}
+
+func TestRegistrationInvitationMembershipPermissionsAndMetadata(t *testing.T) {
+	for role, mask := range []uint64{8191, 5951, 1587, 1025} {
+		for _, withCreator := range []bool{false, true} {
+			user, team, creator := gocql.UUID{1}, gocql.UUID{2}, gocql.UUID{3}
+			inv := storedInvitation{CreatedAt: time.Unix(1700000000, 123000000)}
+			if withCreator {
+				inv.CreatedBy = &creator
+			}
+			calls := 0
+			server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+				calls++
+				var body struct {
+					Member struct {
+						User        string
+						Permissions struct{ Self, Copy uint64 }
+						CreatedBy   *string `json:"created_by"`
+						CreatedAt   *string `json:"created_at"`
+					}
+				}
+				if r.Method != "POST" || r.URL.Path != "/i/teams/"+team.String()+"/members" || r.Header.Get("Z-User") != user.String() || json.NewDecoder(r.Body).Decode(&body) != nil || body.Member.User != user.String() || body.Member.Permissions.Self != mask || body.Member.Permissions.Copy != mask {
+					t.Error("native invitation member request")
+				}
+				if withCreator {
+					if body.Member.CreatedBy == nil || *body.Member.CreatedBy != creator.String() || body.Member.CreatedAt == nil || *body.Member.CreatedAt != "2023-11-14T22:13:20.123Z" {
+						t.Error("native invitation metadata lost")
+					}
+				} else if body.Member.CreatedBy != nil || body.Member.CreatedAt != nil {
+					t.Error("unpaired invitation metadata")
+				}
+				w.WriteHeader(200)
+			}))
+			host, port, _ := net.SplitHostPort(server.Listener.Addr().String())
+			number, _ := strconv.Atoi(port)
+			peer := brigPeers{client: server.Client(), galley: Endpoint{Host: host, Port: number}}
+			added, err := peer.joinRegistrationMember(context.Background(), user, team, &inv, int32(role+1), "synthetic-invite")
+			server.Close()
+			if err != nil || !added || calls != 1 {
+				t.Fatal("member request failed", err)
+			}
+		}
+	}
+}
+
+func TestRegistrationAdmissionErrorPassesNativePolicyRejection(t *testing.T) {
+	for _, scenario := range []struct {
+		body   string
+		status int
+		want   bool
+	}{
+		{status: 200}, {status: 403, body: `{"code":403,"label":"too-many-members-for-legalhold","message":"synthetic native policy"}`, want: true},
+		{status: 403, body: `{"code":403,"label":"synthetic"}`},
+		{status: 403, body: `{"code":-1,"label":"synthetic","message":"synthetic"}`},
+	} {
+		server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			if r.Method != "GET" || r.URL.Path != "/i/teams/00000000-0000-0000-0000-000000000000/members/check" || r.Header.Get("Content-Type") != "application/json" || r.Header.Get("Request-Id") != "synthetic-admission" || r.Header.Get("Z-User") != "" {
+				t.Error("native admission request changed")
+			}
+			w.WriteHeader(scenario.status)
+			w.Write([]byte(scenario.body))
+		}))
+		host, port, _ := net.SplitHostPort(server.Listener.Addr().String())
+		number, _ := strconv.Atoi(port)
+		peer := brigPeers{client: server.Client(), galley: Endpoint{Host: host, Port: number}}
+		err := peer.checkRegistrationJoin(context.Background(), gocql.UUID{}, "synthetic-admission")
+		server.Close()
+		var rejection registrationAdmissionError
+		if scenario.status == 200 {
+			if err != nil {
+				t.Fatal(err)
+			}
+		} else if err == nil || errors.As(err, &rejection) != scenario.want {
+			t.Fatal("admission rejection hidden/malformed accepted", err)
+		}
 	}
 }

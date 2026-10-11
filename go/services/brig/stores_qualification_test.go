@@ -892,6 +892,21 @@ func TestOwnedDurableStores(t *testing.T) {
 	if found, err := invites.byEmail(ctx, "absent-"+inviteEmail); err != nil || found == nil || len(found) != 0 {
 		t.Fatal("absent invitation lookup", err)
 	}
+	if err := cassandra.Query(`INSERT INTO team_invitation_info (code,team,id) VALUES (?,?,?)`, "synthetic_invitation", liveTeam, liveID).WithContext(ctx).Consistency(gocql.LocalQuorum).Exec(); err != nil {
+		t.Fatal(err)
+	}
+	if got, err := invites.byCode(ctx, "synthetic_invitation"); err != nil || got == nil || got.ID != liveID || got.Team != liveTeam {
+		t.Fatal("actual invitation code lookup", err)
+	}
+	if got, err := invites.byCode(ctx, "absent-synthetic-code"); err != nil || got != nil {
+		t.Fatal("absent invitation code", err)
+	}
+	if err := cassandra.Query(`INSERT INTO team_invitation_info (code,team,id) VALUES (?,?,?)`, "synthetic_stale", staleTeam, staleID).WithContext(ctx).Consistency(gocql.LocalQuorum).Exec(); err != nil {
+		t.Fatal(err)
+	}
+	if got, err := invites.byCode(ctx, "synthetic_stale"); err != nil || got != nil {
+		t.Fatal("stale invitation code reference", err)
+	}
 	if err := cassandra.Query(`UPDATE team_invitation SET role=? WHERE team=? AND id=?`, int32(0), liveTeam, liveID).WithContext(ctx).Consistency(gocql.LocalQuorum).Exec(); err != nil {
 		t.Fatal(err)
 	}
@@ -903,5 +918,32 @@ func TestOwnedDurableStores(t *testing.T) {
 	}
 	if _, err := invites.byEmail(ctx, inviteEmail); err == nil {
 		t.Fatal("missing required invitation timestamp accepted")
+	}
+	// Deletion must still work with this unrelated malformed timestamp.
+	if err := invites.delete(ctx, liveTeam, liveID); err != nil {
+		t.Fatal("invitation deletion decoded unrelated metadata", err)
+	}
+	if got, err := invites.byCode(ctx, "synthetic_invitation"); err != nil || got != nil {
+		t.Fatal("deleted code reference remains", err)
+	}
+	var remaining int
+	if err := cassandra.Query(`SELECT count(*) FROM team_invitation_email WHERE email=? AND team=?`, inviteEmail, liveTeam).WithContext(ctx).Consistency(gocql.LocalQuorum).Scan(&remaining); err != nil || remaining != 0 {
+		t.Fatal("deleted email/team reference remains", err)
+	}
+	if err := cassandra.Query(`SELECT count(*) FROM team_invitation WHERE team=? AND id=?`, liveTeam, liveID).WithContext(ctx).Consistency(gocql.LocalQuorum).Scan(&remaining); err != nil || remaining != 0 {
+		t.Fatal("deleted main invitation remains", err)
+	}
+	if err := invites.delete(ctx, liveTeam, liveID); err != nil {
+		t.Fatal("absent invitation deletion", err)
+	}
+	pendingID := user()
+	if err := cassandra.Query(`INSERT INTO users_pending_activation (user,expires_at) VALUES (?,?)`, pendingID, time.Now().UTC()).WithContext(ctx).Consistency(gocql.LocalQuorum).Exec(); err != nil {
+		t.Fatal(err)
+	}
+	if err := invites.removePending(ctx, pendingID); err != nil {
+		t.Fatal("actual pending activation cleanup", err)
+	}
+	if err := cassandra.Query(`SELECT count(*) FROM users_pending_activation WHERE user=?`, pendingID).WithContext(ctx).Consistency(gocql.LocalQuorum).Scan(&remaining); err != nil || remaining != 0 {
+		t.Fatal("pending activation row remains", err)
 	}
 }

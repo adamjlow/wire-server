@@ -33,6 +33,12 @@ func TestInternalRegistrationRejectsInvalidRequestsBeforeDependencies(t *testing
 		label  string
 	}{
 		{errRegistrationBlacklisted, 403, "blacklisted-email"},
+		{errRegistrationMissingIdentity, 403, "missing-identity"},
+		{errRegistrationInvalidInvitation, 400, "invalid-invitation-code"},
+		{errRegistrationSCIMName, 403, "managed-by-scim"},
+		{errInviteNotAllowed, 403, "condition-failed"},
+		{errInviteOtherTeam, 403, "condition-failed"},
+		{registrationAdmissionError{Code: 403, Label: "native-team-policy", Message: "synthetic rejection"}, 403, "native-team-policy"},
 		{errActivationKeyExists, 409, "key-exists"},
 		{passwordRateExceeded{micros: 1000000}, 429, "too-many-requests"},
 		{errors.New("synthetic private detail"), 500, "server-error"},

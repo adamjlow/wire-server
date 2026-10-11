@@ -238,7 +238,19 @@ func Run(ctx context.Context, c Config) error {
 		return guardRegistrationDomain(ctx, email, domains.lookup)
 	}, activate: activation.activateKey, clearUnvalidated: business.users.clearUnvalidatedEmail}, syncIndex: index.sync, events: activationEvents{notifications: notifications, journal: journal, domain: c.Settings.Domain, defaultLocale: c.Settings.DefaultLocale}, peers: business.peers}
 	blocklist := blocklistStore{databases: business.users.userAuthStore, mode: c.Migration["blockList"]}
+	if c.Settings.MaxTeamSize == nil {
+		return errors.New("missing native maximum team size")
+	}
+	invites := invitationStore{cassandra}
 	business.registration = &registrationHTTP{service: registrationService{
+		invitedAccount: func(ctx context.Context, user gocql.UUID) (*selfProfile, error) {
+			profiles, err := business.accounts.lookup(ctx, accountLookupRequest{IDs: []gocql.UUID{user}, IncludePending: true})
+			if err != nil || len(profiles) == 0 {
+				return nil, err
+			}
+			return &profiles[0], nil
+		},
+		claimInvitationKey: business.users.claimEmailKey, removePending: invites.removePending, deleteInvitation: invites.delete,
 		identity:    registrationIdentity{owner: business.users.registrationEmailOwner, account: business.users.get, deleteKey: business.users.deleteEmailKey, blacklisted: blocklist.exists},
 		guardDomain: business.activation.service.guardDomain, hash: passwords.hash,
 		activateStored: business.users.setEmailIdentity,
@@ -252,7 +264,7 @@ func Run(ctx context.Context, c Config) error {
 			return business.users.updateConferenceCalling(ctx, user, newConferenceStatus)
 		},
 		domain: c.Settings.Domain, locale: registrationDefaultLocale, sessionTTL: c.ZAuth.Settings.SessionTTL, activationTimeout: *c.Settings.ActivationTimeout, now: time.Now,
-	}, peers: business.peers, galleyVersion: galleyVersion, activation: business.activation}
+	}, peers: business.peers, galleyVersion: galleyVersion, activation: business.activation, index: index, invitations: registrationInvitations{lookup: invites.byCode, domain: domains.lookup, maxSize: *c.Settings.MaxTeamSize}}
 
 	loginSessions := business.access.sessions
 	loginSessions.limit = *c.Settings.CookieLimit

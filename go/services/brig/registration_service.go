@@ -3,6 +3,7 @@ package brig
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"time"
 
@@ -26,6 +27,12 @@ func (registrationCreation) String() string { return "<RegistrationCreation>" }
 
 type registrationService struct {
 	identity           registrationIdentity
+	findInvitation     func(context.Context, *string, string) (*storedInvitation, error)
+	invitedAccount     func(context.Context, gocql.UUID) (*selfProfile, error)
+	claimInvitationKey func(context.Context, string, gocql.UUID) (bool, error)
+	joinInvitation     func(context.Context, gocql.UUID, storedInvitation) (bool, error)
+	removePending      func(context.Context, gocql.UUID) error
+	deleteInvitation   func(context.Context, gocql.UUID, gocql.UUID) error
 	guardDomain        func(context.Context, string) error
 	hash               func(context.Context, passwordRateKey, string, int) (string, error)
 	createAccount      func(context.Context, storedUser) error
@@ -45,8 +52,7 @@ type registrationService struct {
 	now                func() time.Time
 }
 
-// Native createUserWith order. Team-invitation resolution remains required
-// before those origins can reach storage; missing flows never succeed partially.
+// Preserve createUserWith's validation, persistence and partial-failure order.
 func (s registrationService) create(ctx context.Context, request registrationRequest, rate passwordRateKey) (registrationCreation, error) {
 	var result registrationCreation
 	if s.guardDomain == nil || s.hash == nil || s.createAccount == nil || s.createSelf == nil || s.newCode == nil || s.activate == nil || s.initFeature == nil || s.now == nil {
@@ -60,15 +66,55 @@ func (s registrationService) create(ctx context.Context, request registrationReq
 	}
 	// The historical non-team invitation_code is parsed and origin-validated,
 	// but createUserWith derives team behavior only from newUserTeam.
+	var invitation *storedInvitation
+	var invitationID *gocql.UUID
+	var handle *string
+	team := request.Origin.SSOTeam
 	if request.Origin.TeamCode != nil {
-		return result, errors.New("registration invitation origin unavailable")
+		if s.findInvitation == nil || s.invitedAccount == nil || s.claimInvitationKey == nil || s.joinInvitation == nil || s.activateStored == nil || s.onAccountActivated == nil || s.removePending == nil || s.deleteInvitation == nil || s.teamName == nil {
+			return result, errors.New("registration invitation dependencies unavailable")
+		}
+		var err error
+		invitation, err = s.findInvitation(ctx, n.Email, *request.Origin.TeamCode)
+		if err != nil {
+			return result, err
+		}
+		if invitation == nil {
+			return result, errRegistrationInvalidInvitation
+		}
+		team, invitationID = &invitation.Team, &invitation.ID
+		existing, err := s.invitedAccount(ctx, invitation.ID)
+		if err != nil {
+			return result, err
+		}
+		if existing != nil {
+			handle = existing.Handle
+			managed := int32(0)
+			if existing.ManagedBy == "scim" {
+				if n.Name != existing.Name {
+					return result, errRegistrationSCIMName
+				}
+				managed = 1
+				var identity struct {
+					External *string `json:"scim_external_id"`
+				}
+				if len(existing.SSO) > 0 && json.Unmarshal(existing.SSO, &identity) != nil {
+					return result, errors.New("invalid provisioned invitation identity")
+				}
+				if identity.External != nil {
+					n.SSO = existing.SSO
+				} else if n.Email != nil {
+					n.SSO, _ = json.Marshal(map[string]string{"scim_external_id": *n.Email})
+				}
+			}
+			n.ManagedBy = &managed
+		}
 	}
-	if n.Email != nil && request.Origin.SSOTeam == nil {
+	if n.Email != nil && request.Origin.SSOTeam == nil && invitation == nil {
 		if err := s.guardDomain(ctx, *n.Email); err != nil {
 			return result, err
 		}
 	}
-	team := request.Origin.SSOTeam
 	if request.Origin.Team != nil {
 		if s.createTeam == nil {
 			return result, errors.New("registration team creation unavailable")
@@ -87,7 +133,7 @@ func (s registrationService) create(ctx context.Context, request registrationReq
 		}
 		password = &encoded
 	}
-	account, err := n.build(nil, team, password, s.locale, s.sessionTTL, s.now())
+	account, err := n.build(invitationID, team, password, s.locale, s.sessionTTL, s.now())
 	if err != nil {
 		return result, err
 	}
@@ -95,6 +141,7 @@ func (s registrationService) create(ctx context.Context, request registrationReq
 	if err != nil {
 		return result, err
 	}
+	profile.Handle = handle
 	activationView := account
 	activationView.Activated = true
 	joinSSO, err := storedSAML(&activationView)
@@ -120,6 +167,39 @@ func (s registrationService) create(ctx context.Context, request registrationReq
 			result.team = &registrationCreatedTeam{ID: *team, Name: request.Origin.Team.Name}
 		}
 	}
+	if invitation != nil {
+		claimed, err := s.claimInvitationKey(ctx, invitation.Email, account.ID)
+		if err != nil {
+			return result, err
+		}
+		if !claimed {
+			return result, errActivationKeyExists
+		}
+		added, err := s.joinInvitation(ctx, account.ID, *invitation)
+		if err != nil {
+			return result, err
+		}
+		if !added {
+			return result, errRegistrationTooManyTeamMembers
+		}
+		if err := s.activateStored(ctx, account.ID, &invitation.Email, true); err != nil {
+			return result, err
+		}
+		if err := s.onAccountActivated(ctx, &activatedIdentity{user: account.ID, first: true, account: &activationView, creationProfile: &profile}); err != nil {
+			return result, err
+		}
+		if err := s.removePending(ctx, account.ID); err != nil {
+			return result, err
+		}
+		if err := s.deleteInvitation(ctx, invitation.Team, invitation.ID); err != nil {
+			return result, err
+		}
+		name, err := s.teamName(ctx, invitation.Team)
+		if err != nil {
+			return result, err
+		}
+		result.team = &registrationCreatedTeam{ID: invitation.Team, Name: name}
+	}
 	if joinSSO {
 		added, err := s.joinSSO(ctx, account.ID, *team)
 		if err != nil {
@@ -140,7 +220,7 @@ func (s registrationService) create(ctx context.Context, request registrationReq
 		}
 		result.team = &registrationCreatedTeam{ID: *team, Name: name}
 	}
-	if n.Email != nil {
+	if n.Email != nil && invitation == nil {
 		if request.EmailCode == nil {
 			code, err := s.newCode(ctx, *n.Email, s.activationTimeout, &account.ID)
 			if err != nil {

@@ -93,3 +93,53 @@ func (s invitationStore) byEmail(ctx context.Context, email string) ([]storedInv
 	}
 	return result, nil
 }
+
+func (s invitationStore) byCode(ctx context.Context, code string) (*storedInvitation, error) {
+	var team, id *gocql.UUID
+	var storedCode *string
+	err := s.cassandra.Query(`SELECT team,id,code FROM team_invitation_info WHERE code=?`, code).
+		WithContext(ctx).Consistency(gocql.LocalQuorum).RetryPolicy(&gocql.SimpleRetryPolicy{NumRetries: 1}).Scan(&team, &id, &storedCode)
+	if errors.Is(err, gocql.ErrNotFound) {
+		return nil, nil
+	}
+	if err != nil {
+		return nil, userStorageError(err)
+	}
+	if team == nil || id == nil || storedCode == nil || !asciiInvitationCode(*storedCode) {
+		return nil, errors.New("invalid stored invitation reference")
+	}
+	return s.lookup(ctx, *team, *id)
+}
+
+func (s invitationStore) delete(ctx context.Context, team, id gocql.UUID) error {
+	// Native deletion reads only code/email: unrelated malformed invitation
+	// metadata must not prevent removing the native rows.
+	var code, email *string
+	err := s.cassandra.Query(`SELECT code,email FROM team_invitation WHERE team=? AND id=?`, team, id).
+		WithContext(ctx).Consistency(gocql.LocalQuorum).RetryPolicy(&gocql.SimpleRetryPolicy{NumRetries: 1}).Scan(&code, &email)
+	if errors.Is(err, gocql.ErrNotFound) {
+		return userStorageError(s.cassandra.Query(`DELETE FROM team_invitation WHERE team=? AND id=?`, team, id).
+			WithContext(ctx).Consistency(gocql.LocalQuorum).RetryPolicy(&gocql.SimpleRetryPolicy{NumRetries: 5}).Exec())
+	}
+	if err != nil {
+		return userStorageError(err)
+	}
+	if code == nil || email == nil || !asciiInvitationCode(*code) {
+		return errors.New("invalid stored invitation deletion reference")
+	}
+	canonical, err := canonicalRegistrationEmail(*email)
+	if err != nil {
+		return errors.New("invalid stored invitation deletion reference")
+	}
+	batch := s.cassandra.NewBatch(gocql.LoggedBatch).WithContext(ctx).Consistency(gocql.LocalQuorum).RetryPolicy(&gocql.SimpleRetryPolicy{NumRetries: 5})
+	batch.Query(`DELETE FROM team_invitation WHERE team=? AND id=?`, team, id)
+	batch.Query(`DELETE FROM team_invitation_info WHERE code=?`, *code)
+	// Native removes the whole email/team partition, not only this ID.
+	batch.Query(`DELETE FROM team_invitation_email WHERE email=? AND team=?`, canonical, team)
+	return userStorageError(s.cassandra.ExecuteBatch(batch))
+}
+
+func (s invitationStore) removePending(ctx context.Context, user gocql.UUID) error {
+	return userStorageError(s.cassandra.Query(`DELETE FROM users_pending_activation WHERE user IN ?`, []gocql.UUID{user}).
+		WithContext(ctx).Consistency(gocql.LocalQuorum).RetryPolicy(&gocql.SimpleRetryPolicy{NumRetries: 5}).Exec())
+}

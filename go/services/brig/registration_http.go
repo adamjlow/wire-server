@@ -17,11 +17,28 @@ type registrationHTTP struct {
 	peers         brigPeers
 	galleyVersion int
 	activation    *activationHTTP
+	invitations   registrationInvitations
+	index         *searchIndexWriter
 }
 
 func registrationHTTPError(w http.ResponseWriter, err error) {
 	var rate passwordRateExceeded
+	var admission registrationAdmissionError
 	switch {
+	case errors.As(err, &admission):
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(admission.Code)
+		_ = json.NewEncoder(w).Encode(admission)
+	case errors.Is(err, errRegistrationMissingIdentity):
+		authenticationWireError(w, 403, "missing-identity", "Using an invitation code requires registering the given email.")
+	case errors.Is(err, errRegistrationInvalidInvitation):
+		authenticationWireError(w, 400, "invalid-invitation-code", "Invalid invitation code.")
+	case errors.Is(err, errRegistrationSCIMName):
+		authenticationWireError(w, 403, "managed-by-scim", "Updating name is not allowed, because it is managed by SCIM, or E2EId is enabled")
+	case errors.Is(err, errInviteNotAllowed):
+		authenticationWireError(w, 403, "condition-failed", "`teamInvite` is set to `not-allowed`")
+	case errors.Is(err, errInviteOtherTeam):
+		authenticationWireError(w, 403, "condition-failed", "`teamInvite` is restricted to another team.")
 	case errors.Is(err, errRegistrationTooManyTeamMembers):
 		authenticationWireError(w, 403, "too-many-team-members", "Too many members in this team.")
 	case errors.Is(err, errRegistrationBlacklisted):
@@ -53,6 +70,23 @@ func (h registrationHTTP) handleInternal(w http.ResponseWriter, r *http.Request)
 	}
 	requestID := r.Header.Get("Request-Id")
 	service := h.service
+	if request.Origin.TeamCode != nil {
+		resolver := h.invitations
+		resolver.checkJoin = func(ctx context.Context, team gocql.UUID) error {
+			return h.peers.checkRegistrationJoin(ctx, team, requestID)
+		}
+		resolver.size = func(ctx context.Context, team gocql.UUID) (teamSize, error) {
+			return h.index.teamSize(ctx, team, requestID)
+		}
+		service.findInvitation = resolver.find
+		service.joinInvitation = func(ctx context.Context, user gocql.UUID, inv storedInvitation) (bool, error) {
+			role := int32(3)
+			if inv.Role != nil {
+				role = *inv.Role
+			}
+			return h.peers.joinRegistrationMember(ctx, user, inv.Team, &inv, role, requestID)
+		}
+	}
 	service.createSelf = func(ctx context.Context, user gocql.UUID) error {
 		return h.peers.createSelfConversation(ctx, user, h.galleyVersion, requestID)
 	}

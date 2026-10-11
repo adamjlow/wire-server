@@ -74,6 +74,7 @@ type Config struct {
 		} `yaml:"authSettings"`
 	} `yaml:"zauth"`
 	Settings struct {
+		MaxTeamSize       *uint32  `yaml:"setMaxTeamSize"`
 		ActivationTimeout *float64 `yaml:"setActivationTimeout"`
 		CookieInsecure    bool     `yaml:"setCookieInsecure"`
 		CookieRenewAge    *int64   `yaml:"setUserCookieRenewAge"`

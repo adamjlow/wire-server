@@ -2,11 +2,14 @@
 package brig
 
 import (
+	"bytes"
 	"context"
 	"encoding/json"
 	"errors"
+	"io"
 	"net/http"
 	"strconv"
+	"time"
 
 	"github.com/apache/cassandra-gocql-driver/v2"
 )
@@ -40,8 +43,21 @@ func (p brigPeers) createRegistrationTeam(ctx context.Context, user, team gocql.
 // SSO join uses native defaultRole (member): identical self/copy masks. Null
 // invitation metadata is part of NewTeamMember's original JSON contract.
 func (p brigPeers) joinRegistrationSSO(ctx context.Context, user, team gocql.UUID, requestID string) (bool, error) {
+	return p.joinRegistrationMember(ctx, user, team, nil, 3, requestID)
+}
+
+func (p brigPeers) joinRegistrationMember(ctx context.Context, user, team gocql.UUID, invitation *storedInvitation, role int32, requestID string) (bool, error) {
+	if role < 1 || role > 4 {
+		return false, errors.New("invalid invitation role")
+	}
+	mask := []uint64{8191, 5951, 1587, 1025}[role-1]
+	var creator, created any
+	if invitation != nil && invitation.CreatedBy != nil {
+		creator = invitation.CreatedBy.String()
+		created = invitation.CreatedAt.UTC().Format("2006-01-02T15:04:05.000Z")
+	}
 	raw, err := json.Marshal(map[string]any{"member": map[string]any{
-		"user": user.String(), "permissions": map[string]uint64{"self": 1587, "copy": 1587}, "created_by": nil, "created_at": nil,
+		"user": user.String(), "permissions": map[string]uint64{"self": mask, "copy": mask}, "created_by": creator, "created_at": created,
 	}})
 	if err != nil {
 		return false, errors.New("team member encoding failed")
@@ -57,6 +73,56 @@ func (p brigPeers) joinRegistrationSSO(ctx context.Context, user, team gocql.UUI
 		return false, nil
 	default:
 		return false, errors.New("invalid team membership response")
+	}
+}
+
+// A valid Galley admission rejection is a native public error, not a storage
+// failure. Keep its structured fields; never expose transport errors.
+type registrationAdmissionError struct {
+	Code    int             `json:"code"`
+	Label   string          `json:"label"`
+	Message string          `json:"message"`
+	Data    json.RawMessage `json:"data,omitempty"`
+	Inner   json.RawMessage `json:"inner,omitempty"`
+}
+
+func (registrationAdmissionError) Error() string { return "team admission rejected" }
+
+func (p brigPeers) checkRegistrationJoin(ctx context.Context, team gocql.UUID, requestID string) error {
+	for attempt := 0; ; attempt++ {
+		req, err := http.NewRequestWithContext(ctx, http.MethodGet, "http://"+p.galley.Address()+"/i/teams/"+team.String()+"/members/check", nil)
+		if err != nil {
+			return errors.New("invalid team admission endpoint")
+		}
+		req.Header.Set("Content-Type", "application/json")
+		req.Header.Set("Request-Id", requestID)
+		response, err := p.client.Do(req)
+		if err != nil {
+			if !retryableBrigRPC(err) || attempt >= 3 || waitBrigRetry(ctx, 100*time.Millisecond<<attempt) != nil {
+				return errors.New("team admission request failed")
+			}
+			continue
+		}
+		raw, err := io.ReadAll(io.LimitReader(response.Body, 4<<20+1))
+		response.Body.Close()
+		if response.StatusCode == http.StatusOK {
+			return nil
+		}
+		if err != nil || len(raw) > 4<<20 || !validRegistrationJSONText(raw) {
+			return errors.New("invalid team admission response")
+		}
+		var required struct {
+			Code           *int
+			Label, Message *string
+		}
+		if json.Unmarshal(raw, &required) != nil || required.Code == nil || *required.Code < 100 || *required.Code > 999 || required.Label == nil || required.Message == nil {
+			return errors.New("invalid team admission error")
+		}
+		var failure registrationAdmissionError
+		if json.Unmarshal(bytes.TrimSpace(raw), &failure) != nil {
+			return errors.New("invalid team admission error")
+		}
+		return failure
 	}
 }
 
