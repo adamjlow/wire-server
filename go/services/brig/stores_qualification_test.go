@@ -484,4 +484,92 @@ func TestOwnedDurableStores(t *testing.T) {
 	if exists, err := (blocklistStore{databases: pgOnly.databases, mode: "migration-to-postgresql"}).exists(ctx, pgOnlyEmail); err != nil || exists {
 		t.Fatal("migration blocklist incorrectly read PG", err)
 	}
+	for mode, store := range stores {
+		owner := user()
+		if err := store.create(ctx, newRecord(owner), nil, nil); err != nil {
+			t.Fatal(err)
+		}
+		reset := passwordResetStore{databases: store.userAuthStore, mode: mode}
+		key := passwordResetKey(owner)
+		if got, err := reset.lookup(ctx, key); err != nil || got != nil {
+			t.Fatal(mode, "missing password reset", err)
+		}
+		code, err := newPasswordResetCode()
+		if err != nil {
+			t.Fatal(err)
+		}
+		retries := int32(3)
+		timeout := time.Now().UTC().Truncate(time.Millisecond).Add(time.Minute)
+		record := passwordResetRecord{code: code, user: owner, retries: &retries, timeout: &timeout}
+		if err := reset.insert(ctx, key, record, 30); err != nil {
+			t.Fatal(mode, "reset insertion", err)
+		}
+		got, err := reset.lookup(ctx, key)
+		if err != nil || got == nil || got.code != code || got.user != owner || got.retries == nil || *got.retries != 3 || got.timeout == nil || !got.timeout.Equal(timeout) {
+			t.Fatal(mode, "reset record changed", err)
+		}
+		if mode == "migration-to-postgresql" {
+			if got, err := (passwordResetStore{databases: reset.databases, mode: "postgresql"}).lookup(ctx, key); err != nil || got == nil || got.code != code {
+				t.Fatal("reset dual-write missed PG", err)
+			}
+		}
+		service := activationService{codes: activation, account: store.get, identities: store.userAuthStore, deletePasswordReset: reset.deleteForUser}
+		email := "synthetic-flow-" + mode + "@example.com"
+		activationRecord, err := activation.newCode(ctx, email, 60, &owner)
+		if err != nil {
+			t.Fatal(err)
+		}
+		first, err := service.activateKey(ctx, activationRecord.key, activationRecord.code, nil)
+		if err != nil || first == nil || !first.first {
+			t.Fatal(mode, "real first activation failed", err)
+		}
+		if again, err := service.activateKey(ctx, activationRecord.key, activationRecord.code, nil); err != nil || again != nil {
+			t.Fatal(mode, "repeat activation mutated account", err)
+		}
+		if got, err := reset.lookup(ctx, key); err != nil || got == nil {
+			t.Fatal("first/repeat activation invalidated reset", err)
+		}
+		newEmail := "synthetic-replaced-" + mode + "@example.com"
+		activationRecord, err = activation.newCode(ctx, newEmail, 60, &owner)
+		if err != nil {
+			t.Fatal(err)
+		}
+		changed, err := service.activateKey(ctx, activationRecord.key, activationRecord.code, nil)
+		if err != nil || changed == nil || changed.first || changed.email != newEmail {
+			t.Fatal(mode, "real email replacement failed", err)
+		}
+		if got, err := reset.lookup(ctx, key); err != nil || got != nil {
+			t.Fatal(mode, "email replacement retained reset", err)
+		}
+		if got, err := store.resolveLogin(ctx, loginIdentifier{email: &email}); err != nil || got != nil {
+			t.Fatal(mode, "old email key remained claimed", err)
+		}
+		if got, err := store.resolveLogin(ctx, loginIdentifier{email: &newEmail}); err != nil || got == nil || *got != owner {
+			t.Fatal(mode, "replacement identity not claimed", err)
+		}
+		if mode == "migration-to-postgresql" {
+			if got, err := (passwordResetStore{databases: reset.databases, mode: "postgresql"}).lookup(ctx, key); err != nil || got != nil {
+				t.Fatal("reset dual-delete missed PG", err)
+			}
+		}
+	}
+	// PG expiration is a query filter, while migrating reads remain Cassandra.
+	resetDB := stores["postgresql"].userAuthStore
+	pgReset := passwordResetStore{databases: resetDB, mode: "postgresql"}
+	pgResetUser := user()
+	pgResetKey := passwordResetKey(pgResetUser)
+	retries := int32(3)
+	timeout := time.Now().UTC().Add(time.Minute)
+	if err := pgReset.insert(ctx, pgResetKey, passwordResetRecord{code: "synthetic-code", user: pgResetUser, retries: &retries, timeout: &timeout}, 30); err != nil {
+		t.Fatal(err)
+	}
+	if got, err := (passwordResetStore{databases: resetDB, mode: "migration-to-postgresql"}).lookup(ctx, pgResetKey); err != nil || got != nil {
+		t.Fatal("migration reset read incorrectly preferred PG", err)
+	}
+	if _, err := postgres.Exec(ctx, `UPDATE password_reset SET expires_at=now() WHERE key=$1`, pgResetKey); err != nil {
+		t.Fatal(err)
+	}
+	if got, err := pgReset.lookup(ctx, pgResetKey); err != nil || got != nil {
+		t.Fatal("expired PG reset accepted", err)
+	}
 }
