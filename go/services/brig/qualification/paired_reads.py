@@ -1781,10 +1781,12 @@ def main():
         if not args.client_lifecycle_contract:raise ValueError('MLS store fixture requires client lifecycle observation')
         fixture=environment.identified_candidate(args.store_fixture_binary,args.store_fixture_receipt)
         assert json.loads(args.store_fixture_receipt.read_text())['source_revision']==revision, 'current store fixture required'
-        fixture_copy=output/'fixtures'/'brig-stores.test'
-        shutil.copyfile(args.store_fixture_binary.resolve(strict=True),fixture_copy)
-        fixture_copy.chmod(0o555)
-        assert hashlib.sha256(fixture_copy.read_bytes()).hexdigest()==fixture['sha256'], 'copied store fixture identity required'
+        # This identified executable is immutable for the owned run. Bind it
+        # read-only like the service binary rather than retaining another large
+        # copy in every historical fixture directory.
+        runner['volumes'].append({'type': 'bind',
+            'source': str(args.store_fixture_binary.resolve(strict=True)),
+            'target': '/fixtures/brig-stores.test', 'read_only': True})
         runner['command']+=['--store-fixture-path','/fixtures/brig-stores.test']
     environment.identified_candidate(args.binary, args.build_receipt)
     environment.validate_isolation(spec)

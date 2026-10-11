@@ -1636,3 +1636,17 @@ prefix parsing and nullable/default field rules are retained, not hardened.
 Compiled-native Event decoder admission/actual Galley+queue replay/current original
 e2e remain unproven; no whole-service or exhaustive codec claim. Next actual
 native-Go-native service/bot queue work and affected original22 regression.
+
+### Current executable backend regression and fixture storage
+
+Rerun the unchanged original22 plus existing actual authenticated STOMP and
+native-Go-native client/prekey/MLS/user queue witnesses against serviceb8256ee1.
+This is affected-backend regression, not yet service/bot queue replay or the
+whole535 gate. The observer now mounts the checksum-identified tagged fixture
+read-only, just like candidate services, instead of duplicating its large binary
+in each historical output. Keep immutable inputs for the lifetime of the owned
+run; no assertion, reference fixture, isolation limit or disk floor is changed.
+Reuse pinned Go quality only after comparing all production inputs with the
+qualified a73fd44e7 tree; record the original build revision in derived receipts.
+Inactive historical artifacts are losslessly gzip-archived with original hash,
+size/mode/owner and decompression verification recorded before removing raw bytes.
