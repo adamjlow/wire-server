@@ -1,0 +1,13 @@
+{
+  "directory": "/home/operator/.cache/wire-migration/brig-20261010/password-reset-stores-actual",
+  "sha256": {
+    "brig.json": "f7b9560124a3305a40832e104f44066c770cdf4b41aa3c5d23eb217f5454dbe0",
+    "cassandra.log": "33a59dba55d5ef220b328a8b62cee61e0108f9489ae989df6526880796c2460c",
+    "native-schema.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "native-schema.stdout": "cbc689f32d64c6a03447ae35526c1392084b8435cbdc8190273c00479cb6d931",
+    "postgres.log": "0d2c10cdaec75360e08216d2baaea24f52abbee96e27636cfb2bd6ead1035a34",
+    "result.json": "65617eb63368357cbba46aeac84d7aa4e46f4dab7fd1757aec27f33cb9c6e4b0",
+    "test.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "test.stdout": "84a4387d1337931d81264df2384aa10f34aeb7ae68da7cd612e0c3ba24a0167b"
+  }
+}

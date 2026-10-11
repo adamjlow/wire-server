@@ -1,0 +1,6 @@
+{
+  "scope": "all owned Brig-store namespace name prefixes (covers this disposable run; original helper report has no namespace identity)",
+  "containers": "",
+  "networks": "",
+  "volumes": ""
+}

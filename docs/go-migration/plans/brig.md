@@ -5,7 +5,12 @@ User-selected goal2026-10-10. Reference/upstream source f6636ed53315fa7b0fc4c8aa
 ## Current status (2026-10-11)
 
 Brig remains implementing/unavailable; Galley is authorized only after actual
-whole Brig completion. Latest source a261c531c has full pinned Go checks and
+whole Brig completion. Password reset is now implemented with a passing
+native→Go→native reset-code/password/cookie witness at ee047a9b5, plus actual
+native-schema reset/KDF/cookie composition in all three storage modes at5de8f0e54.
+Both use the identical executable998d2267... with full Go checks at7ca1dfbfb.
+These are scoped supplemental checks, not original535/full-service acceptance.
+ Latest source a261c531c has full pinned Go checks and
 static original-runner units PASS. Public signup now has an actual native→Go→native
 witness: fresh Go labeled signup, activation, exact durable profile/cookie reads,
 and native acceptance of its cookie/password. All17 original paired observations
@@ -356,3 +361,8 @@ Implement POST/password-reset, POST/password-reset/complete, legacy POST/passwor
 Finite validation: reuse existing integration/test/Test/PasswordReset.hs and Test/Migration/PasswordReset.hs as unchanged source expectations; focused candidate controls for privacy, code attempts/expiry, same-password/phone/rate failures, effect order/partial failures and actual SMTP MIME; full pinned Go/static original-runner units for changed production. Extend only the owned supplemental paired observer for actual native reset responses, native-issued code consumed by Go, wrong-code preservation and cookie revocation/password acceptance after native restart. Existing original17 assertions and fixture/deadlines remain unchanged. Broader original535 and three-mode durable acceptance remain required; these focused observations cannot replace them.
 
 Security parity: unknown/disallowed/SAML/in-progress begin responses stay indistinguishable201; do not log submitted email/code/password/hash. Compare reset codes in constant time. Retain native one-hour storage TTL refresh on failed codes while keeping original logical expiry, and nontransactional password/code/cookie mutation order; document inherited risks rather than changing native policy. Modern upstream password reset tests are identified source expectations here, not yet claimed executed.
+
+
+## Password reset API and three-store composition (2026-10-11)
+
+Production7ca1dfbfb51dda94f7bf62e04f3b4730d4d2022b/executable998d2267b29951d12adb3ba4f4ae19360f0b73e53ea0fead79d5fe23dd34b265 passes full pinned Go/static original-runner units. Observeree047a9b5 and tagged-store5de8f0e54 changes preserve identical production/normal-unit artifacts through a guarded rebuild. All17 original paired read/reauth assertions and8 native reset admission/error status/media/body-or-JSON comparisons match. Separate synthetic account keeps native rate budgets unchanged. Go consumes native reset code via email identity, replaces password and revokes native cookies; creates fresh reset code/mail and persistent Go cookie. Native on same stores accepts Go password, reads identical profile/cookies/reset pair, completes Go-issued reset code and revokes Go cookie. All13 managed exits0, runner0/cleanup0 with independent exact owned namespace audits empty. Then actual native-schema durable store test (original45s context) passes all prior assertions plus real configured KDF/reset/code/password/cookie effects across Cassandra/PostgreSQL/migration modes. No three-mode native HTTP switchback or original535 execution claimed. Evidence: qualification/evidence/password-reset-core, password-reset-switchback, password-reset-stores. Same-author slice review/security concerns and precise unavailable/unproven scope retained; no Haskell repair or oracle/config/deadline/rate changes. Generic malformed Aeson text and wider email/version controls remain unqualified; modern upstream PasswordReset/Migration tests identified but not yet executed. Stop this finite reset validation here and continue remaining service families/queue behavior. Whole availability/review remain pending; Galley only after whole Brig completion.
