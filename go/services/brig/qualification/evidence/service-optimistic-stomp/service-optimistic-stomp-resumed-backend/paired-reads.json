@@ -1,0 +1,2494 @@
+{
+  "result": "failed",
+  "e2e_executed": false,
+  "scope": "Finite native -> Go read/reauthentication observations on native-created state.",
+  "records": [
+    {
+      "implementation": "haskell",
+      "observations": [
+        {
+          "method": "GET",
+          "path": "/i/status",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": ""
+        },
+        {
+          "method": "HEAD",
+          "path": "/i/status",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "path": "/api-version",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"development\":[19],\"domain\":\"example.com\",\"federation\":true,\"supported\":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18]}",
+          "json": {
+            "development": [
+              19
+            ],
+            "domain": "example.com",
+            "federation": true,
+            "supported": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18
+            ]
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/self",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"accent_id\":0,\"assets\":[],\"email\":\"synthetic-parity-dd0b3038941a4af494329f6fcfe2990e@example.com\",\"id\":\"31505839-0f7f-4944-a8b2-a3c78f71d4f3\",\"locale\":\"en\",\"managed_by\":\"wire\",\"name\":\"Synthetic parity reader\",\"picture\":[],\"qualified_id\":{\"domain\":\"example.com\",\"id\":\"31505839-0f7f-4944-a8b2-a3c78f71d4f3\"},\"searchable\":true,\"status\":\"active\",\"supported_protocols\":[\"proteus\"],\"type\":\"regular\"}",
+          "json": {
+            "accent_id": 0,
+            "assets": [],
+            "email": "synthetic-parity-dd0b3038941a4af494329f6fcfe2990e@example.com",
+            "id": "31505839-0f7f-4944-a8b2-a3c78f71d4f3",
+            "locale": "en",
+            "managed_by": "wire",
+            "name": "Synthetic parity reader",
+            "picture": [],
+            "qualified_id": {
+              "domain": "example.com",
+              "id": "31505839-0f7f-4944-a8b2-a3c78f71d4f3"
+            },
+            "searchable": true,
+            "status": "active",
+            "supported_protocols": [
+              "proteus"
+            ],
+            "type": "regular"
+          }
+        },
+        {
+          "method": "HEAD",
+          "path": "/self",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "path": "/cookies",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"cookies\":[{\"created\":\"2026-10-11T18:02:35.655Z\",\"expires\":\"2026-10-11T18:04:35Z\",\"id\":2643391640,\"label\":\"synthetic-paired-device\",\"successor\":null,\"type\":\"persistent\"}]}",
+          "json": {
+            "cookies": [
+              {
+                "created": "2026-10-11T18:02:35.655Z",
+                "expires": "2026-10-11T18:04:35Z",
+                "id": 2643391640,
+                "label": "synthetic-paired-device",
+                "successor": null,
+                "type": "persistent"
+              }
+            ]
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/cookies?labels=synthetic-paired-device",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"cookies\":[{\"created\":\"2026-10-11T18:02:35.655Z\",\"expires\":\"2026-10-11T18:04:35Z\",\"id\":2643391640,\"label\":\"synthetic-paired-device\",\"successor\":null,\"type\":\"persistent\"}]}",
+          "json": {
+            "cookies": [
+              {
+                "created": "2026-10-11T18:02:35.655Z",
+                "expires": "2026-10-11T18:04:35Z",
+                "id": 2643391640,
+                "label": "synthetic-paired-device",
+                "successor": null,
+                "type": "persistent"
+              }
+            ]
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/cookies?labels=absent",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"cookies\":[]}",
+          "json": {
+            "cookies": []
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/i/users/31505839-0f7f-4944-a8b2-a3c78f71d4f3/status",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"status\":\"active\"}",
+          "json": {
+            "status": "active"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/self",
+          "status": 400,
+          "content_type": null,
+          "body": "Header Z-User is required"
+        },
+        {
+          "method": "GET",
+          "path": "/self",
+          "status": 400,
+          "content_type": null,
+          "body": "Error parsing header Z-User failed: invalid UUID"
+        },
+        {
+          "method": "GET",
+          "path": "/self",
+          "status": 400,
+          "content_type": null,
+          "body": "Error parsing header Z-User failed: invalid UUID"
+        },
+        {
+          "method": "GET",
+          "path": "/v1/self",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"accent_id\":0,\"assets\":[],\"email\":\"synthetic-parity-dd0b3038941a4af494329f6fcfe2990e@example.com\",\"id\":\"31505839-0f7f-4944-a8b2-a3c78f71d4f3\",\"locale\":\"en\",\"managed_by\":\"wire\",\"name\":\"Synthetic parity reader\",\"picture\":[],\"qualified_id\":{\"domain\":\"example.com\",\"id\":\"31505839-0f7f-4944-a8b2-a3c78f71d4f3\"},\"searchable\":true,\"status\":\"active\",\"supported_protocols\":[\"proteus\"],\"type\":\"regular\"}",
+          "json": {
+            "accent_id": 0,
+            "assets": [],
+            "email": "synthetic-parity-dd0b3038941a4af494329f6fcfe2990e@example.com",
+            "id": "31505839-0f7f-4944-a8b2-a3c78f71d4f3",
+            "locale": "en",
+            "managed_by": "wire",
+            "name": "Synthetic parity reader",
+            "picture": [],
+            "qualified_id": {
+              "domain": "example.com",
+              "id": "31505839-0f7f-4944-a8b2-a3c78f71d4f3"
+            },
+            "searchable": true,
+            "status": "active",
+            "supported_protocols": [
+              "proteus"
+            ],
+            "type": "regular"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/i/users/31505839-0f7f-4944-a8b2-a3c78f71d4f3/reauthenticate",
+          "status": 200,
+          "content_type": null,
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "path": "/i/users/31505839-0f7f-4944-a8b2-a3c78f71d4f3/reauthenticate",
+          "status": 403,
+          "content_type": "application/json",
+          "body": "{\"code\":403,\"label\":\"invalid-credentials\",\"message\":\"Authentication failed\"}",
+          "json": {
+            "code": 403,
+            "label": "invalid-credentials",
+            "message": "Authentication failed"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/i/users/31505839-0f7f-4944-a8b2-a3c78f71d4f3/reauthenticate",
+          "status": 403,
+          "content_type": "application/json",
+          "body": "{\"code\":403,\"label\":\"missing-auth\",\"message\":\"Re-authentication via password required\"}",
+          "json": {
+            "code": 403,
+            "label": "missing-auth",
+            "message": "Re-authentication via password required"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/i/users/31505839-0f7f-4944-a8b2-a3c78f71d4f3/reauthenticate",
+          "status": 200,
+          "content_type": null,
+          "body": ""
+        }
+      ]
+    }
+  ],
+  "prekey_allocation": {
+    "strategy": "optimistic",
+    "table": "integration-brig-prekeys",
+    "owned_dynamo": true
+  },
+  "internal_transport": {
+    "type": "stomp",
+    "broker_image": "apache/activemq@sha256:1cacfbd9c08ad437c5e1177a9f1217e7c7ada62a64065128acd1a81866a03711",
+    "broker_image_id": "sha256:b9972c335fae8deb648f3f048622aaf3540c82d5c42741c9e6dad43af1e18180",
+    "synthetic_authentication": true
+  },
+  "native_brig": {
+    "path": "/nix/store/f6l2f0l8l2r6z9jbg937q96k6056iqfn-brig/bin/brig",
+    "sha256": "c45a40da63268712a7cacdbd884287fa3dc93cec179d70323d3f22f7d5cdf1ca"
+  },
+  "go_gundeck_sha256": "a50512ef30d7fa9ddf92c2c1933e69769d6691e08cdfbe9f7c4f2d266071f46c",
+  "native_setup": [
+    {
+      "method": "POST",
+      "path": "/i/users",
+      "status": 201,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"accent_id\":0,\"assets\":[],\"email\":\"synthetic-parity-dd0b3038941a4af494329f6fcfe2990e@example.com\",\"id\":\"31505839-0f7f-4944-a8b2-a3c78f71d4f3\",\"locale\":\"en\",\"managed_by\":\"wire\",\"name\":\"Synthetic parity reader\",\"picture\":[],\"qualified_id\":{\"domain\":\"example.com\",\"id\":\"31505839-0f7f-4944-a8b2-a3c78f71d4f3\"},\"searchable\":true,\"status\":\"active\",\"supported_protocols\":[\"proteus\"],\"type\":\"regular\"}",
+      "location": "31505839-0f7f-4944-a8b2-a3c78f71d4f3",
+      "json": {
+        "accent_id": 0,
+        "assets": [],
+        "email": "synthetic-parity-dd0b3038941a4af494329f6fcfe2990e@example.com",
+        "id": "31505839-0f7f-4944-a8b2-a3c78f71d4f3",
+        "locale": "en",
+        "managed_by": "wire",
+        "name": "Synthetic parity reader",
+        "picture": [],
+        "qualified_id": {
+          "domain": "example.com",
+          "id": "31505839-0f7f-4944-a8b2-a3c78f71d4f3"
+        },
+        "searchable": true,
+        "status": "active",
+        "supported_protocols": [
+          "proteus"
+        ],
+        "type": "regular"
+      }
+    },
+    {
+      "operation": "persistent login",
+      "status": 200,
+      "cookie_issued": true
+    }
+  ],
+  "client_lifecycle_native_actor": {
+    "method": "POST",
+    "path": "/i/users",
+    "status": 201,
+    "content_type": "application/json;charset=utf-8",
+    "body": "{\"accent_id\":0,\"assets\":[],\"expires_at\":\"2026-10-11T18:02:55.655Z\",\"id\":\"ced2511e-2da4-433f-acfd-5525564590eb\",\"locale\":\"en\",\"managed_by\":\"wire\",\"name\":\"Synthetic client lifecycle\",\"picture\":[],\"qualified_id\":{\"domain\":\"example.com\",\"id\":\"ced2511e-2da4-433f-acfd-5525564590eb\"},\"searchable\":true,\"status\":\"ephemeral\",\"supported_protocols\":[\"proteus\"],\"type\":\"regular\"}",
+    "location": "ced2511e-2da4-433f-acfd-5525564590eb",
+    "json": {
+      "accent_id": 0,
+      "assets": [],
+      "expires_at": "2026-10-11T18:02:55.655Z",
+      "id": "ced2511e-2da4-433f-acfd-5525564590eb",
+      "locale": "en",
+      "managed_by": "wire",
+      "name": "Synthetic client lifecycle",
+      "picture": [],
+      "qualified_id": {
+        "domain": "example.com",
+        "id": "ced2511e-2da4-433f-acfd-5525564590eb"
+      },
+      "searchable": true,
+      "status": "ephemeral",
+      "supported_protocols": [
+        "proteus"
+      ],
+      "type": "regular"
+    }
+  },
+  "client_lifecycle_native_created": {
+    "method": "POST",
+    "path": "/v19/clients",
+    "status": 201,
+    "content_type": "application/json;charset=utf-8",
+    "body": "{\"capabilities\":[\"legalhold-implicit-consent\"],\"class\":\"desktop\",\"id\":\"afc1c13c3c651593\",\"label\":\"native-durable-client\",\"mls_public_keys\":{\"ed25519\":\"AQI=\"},\"model\":\"synthetic-model\",\"time\":\"2026-10-11T18:02:35.655Z\",\"type\":\"permanent\"}",
+    "location": "afc1c13c3c651593",
+    "json": {
+      "capabilities": [
+        "legalhold-implicit-consent"
+      ],
+      "class": "desktop",
+      "id": "afc1c13c3c651593",
+      "label": "native-durable-client",
+      "mls_public_keys": {
+        "ed25519": "AQI="
+      },
+      "model": "synthetic-model",
+      "time": "2026-10-11T18:02:35.655Z",
+      "type": "permanent"
+    }
+  },
+  "prekey_native_claim_controls": [
+    {
+      "method": "GET",
+      "path": "/v19/users/example.com/ced2511e-2da4-433f-acfd-5525564590eb/prekeys/afc1c13c3c651593",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"client\":\"afc1c13c3c651593\",\"prekey\":{\"id\":7,\"key\":\"pQABAQcCoQBYIDXdN8VlKb5lbgPmoDPLPyqNIEyShG4oT/DlW0peRRZUA6EAoQBYILLf1TIwSB62q69Ojs/X1tzJ+dYHNAw4QbW/7TC5vSZqBPY=\"}}",
+      "json": {
+        "client": "afc1c13c3c651593",
+        "prekey": {
+          "id": 7,
+          "key": "pQABAQcCoQBYIDXdN8VlKb5lbgPmoDPLPyqNIEyShG4oT/DlW0peRRZUA6EAoQBYILLf1TIwSB62q69Ojs/X1tzJ+dYHNAw4QbW/7TC5vSZqBPY="
+        }
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v19/users/example.com/ced2511e-2da4-433f-acfd-5525564590eb/prekeys/afc1c13c3c651593",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"client\":\"afc1c13c3c651593\",\"prekey\":{\"id\":65535,\"key\":\"pQABARn//wKhAFggNd03xWUpvmVuA+agM8s/Ko0gTJKEbihP8OVbSl5FFlQDoQChAFggst/VMjBIHrarr06Oz9fW3Mn51gc0DDhBtb/tMLm9JmoE9g==\"}}",
+      "json": {
+        "client": "afc1c13c3c651593",
+        "prekey": {
+          "id": 65535,
+          "key": "pQABARn//wKhAFggNd03xWUpvmVuA+agM8s/Ko0gTJKEbihP8OVbSl5FFlQDoQChAFggst/VMjBIHrarr06Oz9fW3Mn51gc0DDhBtb/tMLm9JmoE9g=="
+        }
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v19/users/example.com/ced2511e-2da4-433f-acfd-5525564590eb/prekeys/afc1c13c3c651593",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"client\":\"afc1c13c3c651593\",\"prekey\":{\"id\":65535,\"key\":\"pQABARn//wKhAFggNd03xWUpvmVuA+agM8s/Ko0gTJKEbihP8OVbSl5FFlQDoQChAFggst/VMjBIHrarr06Oz9fW3Mn51gc0DDhBtb/tMLm9JmoE9g==\"}}",
+      "json": {
+        "client": "afc1c13c3c651593",
+        "prekey": {
+          "id": 65535,
+          "key": "pQABARn//wKhAFggNd03xWUpvmVuA+agM8s/Ko0gTJKEbihP8OVbSl5FFlQDoQChAFggst/VMjBIHrarr06Oz9fW3Mn51gc0DDhBtb/tMLm9JmoE9g=="
+        }
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v19/users/example.com/ced2511e-2da4-433f-acfd-5525564590eb/prekeys",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"clients\":[{\"client\":\"afc1c13c3c651593\",\"prekey\":{\"id\":65535,\"key\":\"pQABARn//wKhAFggNd03xWUpvmVuA+agM8s/Ko0gTJKEbihP8OVbSl5FFlQDoQChAFggst/VMjBIHrarr06Oz9fW3Mn51gc0DDhBtb/tMLm9JmoE9g==\"}}],\"user\":\"ced2511e-2da4-433f-acfd-5525564590eb\"}",
+      "json": {
+        "clients": [
+          {
+            "client": "afc1c13c3c651593",
+            "prekey": {
+              "id": 65535,
+              "key": "pQABARn//wKhAFggNd03xWUpvmVuA+agM8s/Ko0gTJKEbihP8OVbSl5FFlQDoQChAFggst/VMjBIHrarr06Oz9fW3Mn51gc0DDhBtb/tMLm9JmoE9g=="
+            }
+          }
+        ],
+        "user": "ced2511e-2da4-433f-acfd-5525564590eb"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v19/users/example.com/ced2511e-2da4-433f-acfd-5525564590eb/prekeys/f",
+      "status": 404,
+      "content_type": "application/json",
+      "body": "{\"code\":404,\"label\":\"not-found\",\"message\":\"prekey not found\"}",
+      "json": {
+        "code": 404,
+        "label": "not-found",
+        "message": "prekey not found"
+      }
+    }
+  ],
+  "connections_native_created": [
+    {
+      "method": "POST",
+      "path": "/v19/connections/example.com/66a2c9e3-9d5b-4656-bdf8-c35da42bff1d",
+      "status": 201,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"conversation\":\"97f3221c-acda-4f9a-a6ab-6724339dd410\",\"from\":\"31505839-0f7f-4944-a8b2-a3c78f71d4f3\",\"last_update\":\"2026-10-11T18:02:36.145Z\",\"qualified_conversation\":{\"domain\":\"example.com\",\"id\":\"97f3221c-acda-4f9a-a6ab-6724339dd410\"},\"qualified_to\":{\"domain\":\"example.com\",\"id\":\"66a2c9e3-9d5b-4656-bdf8-c35da42bff1d\"},\"status\":\"sent\",\"to\":\"66a2c9e3-9d5b-4656-bdf8-c35da42bff1d\"}",
+      "json": {
+        "conversation": "97f3221c-acda-4f9a-a6ab-6724339dd410",
+        "from": "31505839-0f7f-4944-a8b2-a3c78f71d4f3",
+        "last_update": "2026-10-11T18:02:36.145Z",
+        "qualified_conversation": {
+          "domain": "example.com",
+          "id": "97f3221c-acda-4f9a-a6ab-6724339dd410"
+        },
+        "qualified_to": {
+          "domain": "example.com",
+          "id": "66a2c9e3-9d5b-4656-bdf8-c35da42bff1d"
+        },
+        "status": "sent",
+        "to": "66a2c9e3-9d5b-4656-bdf8-c35da42bff1d"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v19/connections/example.com/2af04101-c2b2-4605-a564-c551ad4b99f6",
+      "status": 201,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"conversation\":\"5c40993a-d231-4f49-8e17-69183cbd6ee9\",\"from\":\"31505839-0f7f-4944-a8b2-a3c78f71d4f3\",\"last_update\":\"2026-10-11T18:02:36.190Z\",\"qualified_conversation\":{\"domain\":\"example.com\",\"id\":\"5c40993a-d231-4f49-8e17-69183cbd6ee9\"},\"qualified_to\":{\"domain\":\"example.com\",\"id\":\"2af04101-c2b2-4605-a564-c551ad4b99f6\"},\"status\":\"sent\",\"to\":\"2af04101-c2b2-4605-a564-c551ad4b99f6\"}",
+      "json": {
+        "conversation": "5c40993a-d231-4f49-8e17-69183cbd6ee9",
+        "from": "31505839-0f7f-4944-a8b2-a3c78f71d4f3",
+        "last_update": "2026-10-11T18:02:36.190Z",
+        "qualified_conversation": {
+          "domain": "example.com",
+          "id": "5c40993a-d231-4f49-8e17-69183cbd6ee9"
+        },
+        "qualified_to": {
+          "domain": "example.com",
+          "id": "2af04101-c2b2-4605-a564-c551ad4b99f6"
+        },
+        "status": "sent",
+        "to": "2af04101-c2b2-4605-a564-c551ad4b99f6"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v19/connections/example.com/9b8cc92a-33d8-45e3-b48b-f0891f250a45",
+      "status": 201,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"conversation\":\"ccdd2163-4357-4f27-9d3e-9450ae96df38\",\"from\":\"31505839-0f7f-4944-a8b2-a3c78f71d4f3\",\"last_update\":\"2026-10-11T18:02:36.240Z\",\"qualified_conversation\":{\"domain\":\"example.com\",\"id\":\"ccdd2163-4357-4f27-9d3e-9450ae96df38\"},\"qualified_to\":{\"domain\":\"example.com\",\"id\":\"9b8cc92a-33d8-45e3-b48b-f0891f250a45\"},\"status\":\"sent\",\"to\":\"9b8cc92a-33d8-45e3-b48b-f0891f250a45\"}",
+      "json": {
+        "conversation": "ccdd2163-4357-4f27-9d3e-9450ae96df38",
+        "from": "31505839-0f7f-4944-a8b2-a3c78f71d4f3",
+        "last_update": "2026-10-11T18:02:36.240Z",
+        "qualified_conversation": {
+          "domain": "example.com",
+          "id": "ccdd2163-4357-4f27-9d3e-9450ae96df38"
+        },
+        "qualified_to": {
+          "domain": "example.com",
+          "id": "9b8cc92a-33d8-45e3-b48b-f0891f250a45"
+        },
+        "status": "sent",
+        "to": "9b8cc92a-33d8-45e3-b48b-f0891f250a45"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v19/connections/b.example.com/043ac8df-05ac-4deb-a7b5-30bec7dbd5b0",
+      "status": 201,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"conversation\":\"d8210b5e-c2f2-565e-8d3f-76b9bf9ee957\",\"from\":\"31505839-0f7f-4944-a8b2-a3c78f71d4f3\",\"last_update\":\"2026-10-11T18:02:36.400Z\",\"qualified_conversation\":{\"domain\":\"b.example.com\",\"id\":\"d8210b5e-c2f2-565e-8d3f-76b9bf9ee957\"},\"qualified_to\":{\"domain\":\"b.example.com\",\"id\":\"043ac8df-05ac-4deb-a7b5-30bec7dbd5b0\"},\"status\":\"sent\",\"to\":\"043ac8df-05ac-4deb-a7b5-30bec7dbd5b0\"}",
+      "json": {
+        "conversation": "d8210b5e-c2f2-565e-8d3f-76b9bf9ee957",
+        "from": "31505839-0f7f-4944-a8b2-a3c78f71d4f3",
+        "last_update": "2026-10-11T18:02:36.400Z",
+        "qualified_conversation": {
+          "domain": "b.example.com",
+          "id": "d8210b5e-c2f2-565e-8d3f-76b9bf9ee957"
+        },
+        "qualified_to": {
+          "domain": "b.example.com",
+          "id": "043ac8df-05ac-4deb-a7b5-30bec7dbd5b0"
+        },
+        "status": "sent",
+        "to": "043ac8df-05ac-4deb-a7b5-30bec7dbd5b0"
+      }
+    }
+  ],
+  "connections_native_controls": [
+    {
+      "method": "GET",
+      "path": "/v19/connections/example.com/66a2c9e3-9d5b-4656-bdf8-c35da42bff1d",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"conversation\":\"97f3221c-acda-4f9a-a6ab-6724339dd410\",\"from\":\"31505839-0f7f-4944-a8b2-a3c78f71d4f3\",\"last_update\":\"2026-10-11T18:02:36.145Z\",\"qualified_conversation\":{\"domain\":\"example.com\",\"id\":\"97f3221c-acda-4f9a-a6ab-6724339dd410\"},\"qualified_to\":{\"domain\":\"example.com\",\"id\":\"66a2c9e3-9d5b-4656-bdf8-c35da42bff1d\"},\"status\":\"sent\",\"to\":\"66a2c9e3-9d5b-4656-bdf8-c35da42bff1d\"}",
+      "json": {
+        "conversation": "97f3221c-acda-4f9a-a6ab-6724339dd410",
+        "from": "31505839-0f7f-4944-a8b2-a3c78f71d4f3",
+        "last_update": "2026-10-11T18:02:36.145Z",
+        "qualified_conversation": {
+          "domain": "example.com",
+          "id": "97f3221c-acda-4f9a-a6ab-6724339dd410"
+        },
+        "qualified_to": {
+          "domain": "example.com",
+          "id": "66a2c9e3-9d5b-4656-bdf8-c35da42bff1d"
+        },
+        "status": "sent",
+        "to": "66a2c9e3-9d5b-4656-bdf8-c35da42bff1d"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v19/connections/example.com/2af04101-c2b2-4605-a564-c551ad4b99f6",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"conversation\":\"5c40993a-d231-4f49-8e17-69183cbd6ee9\",\"from\":\"31505839-0f7f-4944-a8b2-a3c78f71d4f3\",\"last_update\":\"2026-10-11T18:02:36.190Z\",\"qualified_conversation\":{\"domain\":\"example.com\",\"id\":\"5c40993a-d231-4f49-8e17-69183cbd6ee9\"},\"qualified_to\":{\"domain\":\"example.com\",\"id\":\"2af04101-c2b2-4605-a564-c551ad4b99f6\"},\"status\":\"sent\",\"to\":\"2af04101-c2b2-4605-a564-c551ad4b99f6\"}",
+      "json": {
+        "conversation": "5c40993a-d231-4f49-8e17-69183cbd6ee9",
+        "from": "31505839-0f7f-4944-a8b2-a3c78f71d4f3",
+        "last_update": "2026-10-11T18:02:36.190Z",
+        "qualified_conversation": {
+          "domain": "example.com",
+          "id": "5c40993a-d231-4f49-8e17-69183cbd6ee9"
+        },
+        "qualified_to": {
+          "domain": "example.com",
+          "id": "2af04101-c2b2-4605-a564-c551ad4b99f6"
+        },
+        "status": "sent",
+        "to": "2af04101-c2b2-4605-a564-c551ad4b99f6"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v19/connections/example.com/9b8cc92a-33d8-45e3-b48b-f0891f250a45",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"conversation\":\"ccdd2163-4357-4f27-9d3e-9450ae96df38\",\"from\":\"31505839-0f7f-4944-a8b2-a3c78f71d4f3\",\"last_update\":\"2026-10-11T18:02:36.240Z\",\"qualified_conversation\":{\"domain\":\"example.com\",\"id\":\"ccdd2163-4357-4f27-9d3e-9450ae96df38\"},\"qualified_to\":{\"domain\":\"example.com\",\"id\":\"9b8cc92a-33d8-45e3-b48b-f0891f250a45\"},\"status\":\"sent\",\"to\":\"9b8cc92a-33d8-45e3-b48b-f0891f250a45\"}",
+      "json": {
+        "conversation": "ccdd2163-4357-4f27-9d3e-9450ae96df38",
+        "from": "31505839-0f7f-4944-a8b2-a3c78f71d4f3",
+        "last_update": "2026-10-11T18:02:36.240Z",
+        "qualified_conversation": {
+          "domain": "example.com",
+          "id": "ccdd2163-4357-4f27-9d3e-9450ae96df38"
+        },
+        "qualified_to": {
+          "domain": "example.com",
+          "id": "9b8cc92a-33d8-45e3-b48b-f0891f250a45"
+        },
+        "status": "sent",
+        "to": "9b8cc92a-33d8-45e3-b48b-f0891f250a45"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v19/connections/b.example.com/043ac8df-05ac-4deb-a7b5-30bec7dbd5b0",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"conversation\":\"d8210b5e-c2f2-565e-8d3f-76b9bf9ee957\",\"from\":\"31505839-0f7f-4944-a8b2-a3c78f71d4f3\",\"last_update\":\"2026-10-11T18:02:36.400Z\",\"qualified_conversation\":{\"domain\":\"b.example.com\",\"id\":\"d8210b5e-c2f2-565e-8d3f-76b9bf9ee957\"},\"qualified_to\":{\"domain\":\"b.example.com\",\"id\":\"043ac8df-05ac-4deb-a7b5-30bec7dbd5b0\"},\"status\":\"sent\",\"to\":\"043ac8df-05ac-4deb-a7b5-30bec7dbd5b0\"}",
+      "json": {
+        "conversation": "d8210b5e-c2f2-565e-8d3f-76b9bf9ee957",
+        "from": "31505839-0f7f-4944-a8b2-a3c78f71d4f3",
+        "last_update": "2026-10-11T18:02:36.400Z",
+        "qualified_conversation": {
+          "domain": "b.example.com",
+          "id": "d8210b5e-c2f2-565e-8d3f-76b9bf9ee957"
+        },
+        "qualified_to": {
+          "domain": "b.example.com",
+          "id": "043ac8df-05ac-4deb-a7b5-30bec7dbd5b0"
+        },
+        "status": "sent",
+        "to": "043ac8df-05ac-4deb-a7b5-30bec7dbd5b0"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v1/connections/66a2c9e3-9d5b-4656-bdf8-c35da42bff1d",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"conversation\":\"97f3221c-acda-4f9a-a6ab-6724339dd410\",\"from\":\"31505839-0f7f-4944-a8b2-a3c78f71d4f3\",\"last_update\":\"2026-10-11T18:02:36.145Z\",\"qualified_conversation\":{\"domain\":\"example.com\",\"id\":\"97f3221c-acda-4f9a-a6ab-6724339dd410\"},\"qualified_to\":{\"domain\":\"example.com\",\"id\":\"66a2c9e3-9d5b-4656-bdf8-c35da42bff1d\"},\"status\":\"sent\",\"to\":\"66a2c9e3-9d5b-4656-bdf8-c35da42bff1d\"}",
+      "json": {
+        "conversation": "97f3221c-acda-4f9a-a6ab-6724339dd410",
+        "from": "31505839-0f7f-4944-a8b2-a3c78f71d4f3",
+        "last_update": "2026-10-11T18:02:36.145Z",
+        "qualified_conversation": {
+          "domain": "example.com",
+          "id": "97f3221c-acda-4f9a-a6ab-6724339dd410"
+        },
+        "qualified_to": {
+          "domain": "example.com",
+          "id": "66a2c9e3-9d5b-4656-bdf8-c35da42bff1d"
+        },
+        "status": "sent",
+        "to": "66a2c9e3-9d5b-4656-bdf8-c35da42bff1d"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v19/connections/example.com/47546b63-590d-4157-85db-d3a4e1c84d91",
+      "status": 404,
+      "content_type": "text/plain;charset=utf-8",
+      "body": ""
+    },
+    {
+      "method": "GET",
+      "path": "/v1/connections",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"connections\":[{\"conversation\":\"5c40993a-d231-4f49-8e17-69183cbd6ee9\",\"from\":\"31505839-0f7f-4944-a8b2-a3c78f71d4f3\",\"last_update\":\"2026-10-11T18:02:36.190Z\",\"qualified_conversation\":{\"domain\":\"example.com\",\"id\":\"5c40993a-d231-4f49-8e17-69183cbd6ee9\"},\"qualified_to\":{\"domain\":\"example.com\",\"id\":\"2af04101-c2b2-4605-a564-c551ad4b99f6\"},\"status\":\"sent\",\"to\":\"2af04101-c2b2-4605-a564-c551ad4b99f6\"},{\"conversation\":\"97f3221c-acda-4f9a-a6ab-6724339dd410\",\"from\":\"31505839-0f7f-4944-a8b2-a3c78f71d4f3\",\"last_update\":\"2026-10-11T18:02:36.145Z\",\"qualified_conversation\":{\"domain\":\"example.com\",\"id\":\"97f3221c-acda-4f9a-a6ab-6724339dd410\"},\"qualified_to\":{\"domain\":\"example.com\",\"id\":\"66a2c9e3-9d5b-4656-bdf8-c35da42bff1d\"},\"status\":\"sent\",\"to\":\"66a2c9e3-9d5b-4656-bdf8-c35da42bff1d\"},{\"conversation\":\"ccdd2163-4357-4f27-9d3e-9450ae96df38\",\"from\":\"31505839-0f7f-4944-a8b2-a3c78f71d4f3\",\"last_update\":\"2026-10-11T18:02:36.240Z\",\"qualified_conversation\":{\"domain\":\"example.com\",\"id\":\"ccdd2163-4357-4f27-9d3e-9450ae96df38\"},\"qualified_to\":{\"domain\":\"example.com\",\"id\":\"9b8cc92a-33d8-45e3-b48b-f0891f250a45\"},\"status\":\"sent\",\"to\":\"9b8cc92a-33d8-45e3-b48b-f0891f250a45\"}],\"has_more\":false}",
+      "json": {
+        "connections": [
+          {
+            "conversation": "5c40993a-d231-4f49-8e17-69183cbd6ee9",
+            "from": "31505839-0f7f-4944-a8b2-a3c78f71d4f3",
+            "last_update": "2026-10-11T18:02:36.190Z",
+            "qualified_conversation": {
+              "domain": "example.com",
+              "id": "5c40993a-d231-4f49-8e17-69183cbd6ee9"
+            },
+            "qualified_to": {
+              "domain": "example.com",
+              "id": "2af04101-c2b2-4605-a564-c551ad4b99f6"
+            },
+            "status": "sent",
+            "to": "2af04101-c2b2-4605-a564-c551ad4b99f6"
+          },
+          {
+            "conversation": "97f3221c-acda-4f9a-a6ab-6724339dd410",
+            "from": "31505839-0f7f-4944-a8b2-a3c78f71d4f3",
+            "last_update": "2026-10-11T18:02:36.145Z",
+            "qualified_conversation": {
+              "domain": "example.com",
+              "id": "97f3221c-acda-4f9a-a6ab-6724339dd410"
+            },
+            "qualified_to": {
+              "domain": "example.com",
+              "id": "66a2c9e3-9d5b-4656-bdf8-c35da42bff1d"
+            },
+            "status": "sent",
+            "to": "66a2c9e3-9d5b-4656-bdf8-c35da42bff1d"
+          },
+          {
+            "conversation": "ccdd2163-4357-4f27-9d3e-9450ae96df38",
+            "from": "31505839-0f7f-4944-a8b2-a3c78f71d4f3",
+            "last_update": "2026-10-11T18:02:36.240Z",
+            "qualified_conversation": {
+              "domain": "example.com",
+              "id": "ccdd2163-4357-4f27-9d3e-9450ae96df38"
+            },
+            "qualified_to": {
+              "domain": "example.com",
+              "id": "9b8cc92a-33d8-45e3-b48b-f0891f250a45"
+            },
+            "status": "sent",
+            "to": "9b8cc92a-33d8-45e3-b48b-f0891f250a45"
+          }
+        ],
+        "has_more": false
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v1/connections?size=1",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"connections\":[{\"conversation\":\"5c40993a-d231-4f49-8e17-69183cbd6ee9\",\"from\":\"31505839-0f7f-4944-a8b2-a3c78f71d4f3\",\"last_update\":\"2026-10-11T18:02:36.190Z\",\"qualified_conversation\":{\"domain\":\"example.com\",\"id\":\"5c40993a-d231-4f49-8e17-69183cbd6ee9\"},\"qualified_to\":{\"domain\":\"example.com\",\"id\":\"2af04101-c2b2-4605-a564-c551ad4b99f6\"},\"status\":\"sent\",\"to\":\"2af04101-c2b2-4605-a564-c551ad4b99f6\"}],\"has_more\":true}",
+      "json": {
+        "connections": [
+          {
+            "conversation": "5c40993a-d231-4f49-8e17-69183cbd6ee9",
+            "from": "31505839-0f7f-4944-a8b2-a3c78f71d4f3",
+            "last_update": "2026-10-11T18:02:36.190Z",
+            "qualified_conversation": {
+              "domain": "example.com",
+              "id": "5c40993a-d231-4f49-8e17-69183cbd6ee9"
+            },
+            "qualified_to": {
+              "domain": "example.com",
+              "id": "2af04101-c2b2-4605-a564-c551ad4b99f6"
+            },
+            "status": "sent",
+            "to": "2af04101-c2b2-4605-a564-c551ad4b99f6"
+          }
+        ],
+        "has_more": true
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v1/connections?size=2",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"connections\":[{\"conversation\":\"5c40993a-d231-4f49-8e17-69183cbd6ee9\",\"from\":\"31505839-0f7f-4944-a8b2-a3c78f71d4f3\",\"last_update\":\"2026-10-11T18:02:36.190Z\",\"qualified_conversation\":{\"domain\":\"example.com\",\"id\":\"5c40993a-d231-4f49-8e17-69183cbd6ee9\"},\"qualified_to\":{\"domain\":\"example.com\",\"id\":\"2af04101-c2b2-4605-a564-c551ad4b99f6\"},\"status\":\"sent\",\"to\":\"2af04101-c2b2-4605-a564-c551ad4b99f6\"},{\"conversation\":\"97f3221c-acda-4f9a-a6ab-6724339dd410\",\"from\":\"31505839-0f7f-4944-a8b2-a3c78f71d4f3\",\"last_update\":\"2026-10-11T18:02:36.145Z\",\"qualified_conversation\":{\"domain\":\"example.com\",\"id\":\"97f3221c-acda-4f9a-a6ab-6724339dd410\"},\"qualified_to\":{\"domain\":\"example.com\",\"id\":\"66a2c9e3-9d5b-4656-bdf8-c35da42bff1d\"},\"status\":\"sent\",\"to\":\"66a2c9e3-9d5b-4656-bdf8-c35da42bff1d\"}],\"has_more\":true}",
+      "json": {
+        "connections": [
+          {
+            "conversation": "5c40993a-d231-4f49-8e17-69183cbd6ee9",
+            "from": "31505839-0f7f-4944-a8b2-a3c78f71d4f3",
+            "last_update": "2026-10-11T18:02:36.190Z",
+            "qualified_conversation": {
+              "domain": "example.com",
+              "id": "5c40993a-d231-4f49-8e17-69183cbd6ee9"
+            },
+            "qualified_to": {
+              "domain": "example.com",
+              "id": "2af04101-c2b2-4605-a564-c551ad4b99f6"
+            },
+            "status": "sent",
+            "to": "2af04101-c2b2-4605-a564-c551ad4b99f6"
+          },
+          {
+            "conversation": "97f3221c-acda-4f9a-a6ab-6724339dd410",
+            "from": "31505839-0f7f-4944-a8b2-a3c78f71d4f3",
+            "last_update": "2026-10-11T18:02:36.145Z",
+            "qualified_conversation": {
+              "domain": "example.com",
+              "id": "97f3221c-acda-4f9a-a6ab-6724339dd410"
+            },
+            "qualified_to": {
+              "domain": "example.com",
+              "id": "66a2c9e3-9d5b-4656-bdf8-c35da42bff1d"
+            },
+            "status": "sent",
+            "to": "66a2c9e3-9d5b-4656-bdf8-c35da42bff1d"
+          }
+        ],
+        "has_more": true
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v1/connections?size=1&start=66a2c9e3-9d5b-4656-bdf8-c35da42bff1d",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"connections\":[{\"conversation\":\"ccdd2163-4357-4f27-9d3e-9450ae96df38\",\"from\":\"31505839-0f7f-4944-a8b2-a3c78f71d4f3\",\"last_update\":\"2026-10-11T18:02:36.240Z\",\"qualified_conversation\":{\"domain\":\"example.com\",\"id\":\"ccdd2163-4357-4f27-9d3e-9450ae96df38\"},\"qualified_to\":{\"domain\":\"example.com\",\"id\":\"9b8cc92a-33d8-45e3-b48b-f0891f250a45\"},\"status\":\"sent\",\"to\":\"9b8cc92a-33d8-45e3-b48b-f0891f250a45\"}],\"has_more\":false}",
+      "json": {
+        "connections": [
+          {
+            "conversation": "ccdd2163-4357-4f27-9d3e-9450ae96df38",
+            "from": "31505839-0f7f-4944-a8b2-a3c78f71d4f3",
+            "last_update": "2026-10-11T18:02:36.240Z",
+            "qualified_conversation": {
+              "domain": "example.com",
+              "id": "ccdd2163-4357-4f27-9d3e-9450ae96df38"
+            },
+            "qualified_to": {
+              "domain": "example.com",
+              "id": "9b8cc92a-33d8-45e3-b48b-f0891f250a45"
+            },
+            "status": "sent",
+            "to": "9b8cc92a-33d8-45e3-b48b-f0891f250a45"
+          }
+        ],
+        "has_more": false
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v19/list-connections",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"connections\":[{\"conversation\":\"5c40993a-d231-4f49-8e17-69183cbd6ee9\",\"from\":\"31505839-0f7f-4944-a8b2-a3c78f71d4f3\",\"last_update\":\"2026-10-11T18:02:36.190Z\",\"qualified_conversation\":{\"domain\":\"example.com\",\"id\":\"5c40993a-d231-4f49-8e17-69183cbd6ee9\"},\"qualified_to\":{\"domain\":\"example.com\",\"id\":\"2af04101-c2b2-4605-a564-c551ad4b99f6\"},\"status\":\"sent\",\"to\":\"2af04101-c2b2-4605-a564-c551ad4b99f6\"},{\"conversation\":\"97f3221c-acda-4f9a-a6ab-6724339dd410\",\"from\":\"31505839-0f7f-4944-a8b2-a3c78f71d4f3\",\"last_update\":\"2026-10-11T18:02:36.145Z\",\"qualified_conversation\":{\"domain\":\"example.com\",\"id\":\"97f3221c-acda-4f9a-a6ab-6724339dd410\"},\"qualified_to\":{\"domain\":\"example.com\",\"id\":\"66a2c9e3-9d5b-4656-bdf8-c35da42bff1d\"},\"status\":\"sent\",\"to\":\"66a2c9e3-9d5b-4656-bdf8-c35da42bff1d\"},{\"conversation\":\"ccdd2163-4357-4f27-9d3e-9450ae96df38\",\"from\":\"31505839-0f7f-4944-a8b2-a3c78f71d4f3\",\"last_update\":\"2026-10-11T18:02:36.240Z\",\"qualified_conversation\":{\"domain\":\"example.com\",\"id\":\"ccdd2163-4357-4f27-9d3e-9450ae96df38\"},\"qualified_to\":{\"domain\":\"example.com\",\"id\":\"9b8cc92a-33d8-45e3-b48b-f0891f250a45\"},\"status\":\"sent\",\"to\":\"9b8cc92a-33d8-45e3-b48b-f0891f250a45\"},{\"conversation\":\"d8210b5e-c2f2-565e-8d3f-76b9bf9ee957\",\"from\":\"31505839-0f7f-4944-a8b2-a3c78f71d4f3\",\"last_update\":\"2026-10-11T18:02:36.400Z\",\"qualified_conversation\":{\"domain\":\"b.example.com\",\"id\":\"d8210b5e-c2f2-565e-8d3f-76b9bf9ee957\"},\"qualified_to\":{\"domain\":\"b.example.com\",\"id\":\"043ac8df-05ac-4deb-a7b5-30bec7dbd5b0\"},\"status\":\"sent\",\"to\":\"043ac8df-05ac-4deb-a7b5-30bec7dbd5b0\"}],\"has_more\":false,\"paging_state\":\"AQ==\"}",
+      "json": {
+        "connections": [
+          {
+            "conversation": "5c40993a-d231-4f49-8e17-69183cbd6ee9",
+            "from": "31505839-0f7f-4944-a8b2-a3c78f71d4f3",
+            "last_update": "2026-10-11T18:02:36.190Z",
+            "qualified_conversation": {
+              "domain": "example.com",
+              "id": "5c40993a-d231-4f49-8e17-69183cbd6ee9"
+            },
+            "qualified_to": {
+              "domain": "example.com",
+              "id": "2af04101-c2b2-4605-a564-c551ad4b99f6"
+            },
+            "status": "sent",
+            "to": "2af04101-c2b2-4605-a564-c551ad4b99f6"
+          },
+          {
+            "conversation": "97f3221c-acda-4f9a-a6ab-6724339dd410",
+            "from": "31505839-0f7f-4944-a8b2-a3c78f71d4f3",
+            "last_update": "2026-10-11T18:02:36.145Z",
+            "qualified_conversation": {
+              "domain": "example.com",
+              "id": "97f3221c-acda-4f9a-a6ab-6724339dd410"
+            },
+            "qualified_to": {
+              "domain": "example.com",
+              "id": "66a2c9e3-9d5b-4656-bdf8-c35da42bff1d"
+            },
+            "status": "sent",
+            "to": "66a2c9e3-9d5b-4656-bdf8-c35da42bff1d"
+          },
+          {
+            "conversation": "ccdd2163-4357-4f27-9d3e-9450ae96df38",
+            "from": "31505839-0f7f-4944-a8b2-a3c78f71d4f3",
+            "last_update": "2026-10-11T18:02:36.240Z",
+            "qualified_conversation": {
+              "domain": "example.com",
+              "id": "ccdd2163-4357-4f27-9d3e-9450ae96df38"
+            },
+            "qualified_to": {
+              "domain": "example.com",
+              "id": "9b8cc92a-33d8-45e3-b48b-f0891f250a45"
+            },
+            "status": "sent",
+            "to": "9b8cc92a-33d8-45e3-b48b-f0891f250a45"
+          },
+          {
+            "conversation": "d8210b5e-c2f2-565e-8d3f-76b9bf9ee957",
+            "from": "31505839-0f7f-4944-a8b2-a3c78f71d4f3",
+            "last_update": "2026-10-11T18:02:36.400Z",
+            "qualified_conversation": {
+              "domain": "b.example.com",
+              "id": "d8210b5e-c2f2-565e-8d3f-76b9bf9ee957"
+            },
+            "qualified_to": {
+              "domain": "b.example.com",
+              "id": "043ac8df-05ac-4deb-a7b5-30bec7dbd5b0"
+            },
+            "status": "sent",
+            "to": "043ac8df-05ac-4deb-a7b5-30bec7dbd5b0"
+          }
+        ],
+        "has_more": false,
+        "paging_state": "AQ=="
+      }
+    }
+  ],
+  "connections_native_pages": [
+    {
+      "method": "POST",
+      "path": "/v19/list-connections",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"connections\":[{\"conversation\":\"5c40993a-d231-4f49-8e17-69183cbd6ee9\",\"from\":\"31505839-0f7f-4944-a8b2-a3c78f71d4f3\",\"last_update\":\"2026-10-11T18:02:36.190Z\",\"qualified_conversation\":{\"domain\":\"example.com\",\"id\":\"5c40993a-d231-4f49-8e17-69183cbd6ee9\"},\"qualified_to\":{\"domain\":\"example.com\",\"id\":\"2af04101-c2b2-4605-a564-c551ad4b99f6\"},\"status\":\"sent\",\"to\":\"2af04101-c2b2-4605-a564-c551ad4b99f6\"}],\"has_more\":true,\"paging_state\":\"AAASABAq8EEBwrJGBaVkxVGtS5n28H____7wf____g==\"}",
+      "json": {
+        "connections": [
+          {
+            "conversation": "5c40993a-d231-4f49-8e17-69183cbd6ee9",
+            "from": "31505839-0f7f-4944-a8b2-a3c78f71d4f3",
+            "last_update": "2026-10-11T18:02:36.190Z",
+            "qualified_conversation": {
+              "domain": "example.com",
+              "id": "5c40993a-d231-4f49-8e17-69183cbd6ee9"
+            },
+            "qualified_to": {
+              "domain": "example.com",
+              "id": "2af04101-c2b2-4605-a564-c551ad4b99f6"
+            },
+            "status": "sent",
+            "to": "2af04101-c2b2-4605-a564-c551ad4b99f6"
+          }
+        ],
+        "has_more": true,
+        "paging_state": "AAASABAq8EEBwrJGBaVkxVGtS5n28H____7wf____g=="
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v19/list-connections",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"connections\":[{\"conversation\":\"97f3221c-acda-4f9a-a6ab-6724339dd410\",\"from\":\"31505839-0f7f-4944-a8b2-a3c78f71d4f3\",\"last_update\":\"2026-10-11T18:02:36.145Z\",\"qualified_conversation\":{\"domain\":\"example.com\",\"id\":\"97f3221c-acda-4f9a-a6ab-6724339dd410\"},\"qualified_to\":{\"domain\":\"example.com\",\"id\":\"66a2c9e3-9d5b-4656-bdf8-c35da42bff1d\"},\"status\":\"sent\",\"to\":\"66a2c9e3-9d5b-4656-bdf8-c35da42bff1d\"}],\"has_more\":true,\"paging_state\":\"AAASABBmosnjnVtGVr34w12kK_8d8H____3wf____Q==\"}",
+      "json": {
+        "connections": [
+          {
+            "conversation": "97f3221c-acda-4f9a-a6ab-6724339dd410",
+            "from": "31505839-0f7f-4944-a8b2-a3c78f71d4f3",
+            "last_update": "2026-10-11T18:02:36.145Z",
+            "qualified_conversation": {
+              "domain": "example.com",
+              "id": "97f3221c-acda-4f9a-a6ab-6724339dd410"
+            },
+            "qualified_to": {
+              "domain": "example.com",
+              "id": "66a2c9e3-9d5b-4656-bdf8-c35da42bff1d"
+            },
+            "status": "sent",
+            "to": "66a2c9e3-9d5b-4656-bdf8-c35da42bff1d"
+          }
+        ],
+        "has_more": true,
+        "paging_state": "AAASABBmosnjnVtGVr34w12kK_8d8H____3wf____Q=="
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v19/list-connections",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"connections\":[{\"conversation\":\"ccdd2163-4357-4f27-9d3e-9450ae96df38\",\"from\":\"31505839-0f7f-4944-a8b2-a3c78f71d4f3\",\"last_update\":\"2026-10-11T18:02:36.240Z\",\"qualified_conversation\":{\"domain\":\"example.com\",\"id\":\"ccdd2163-4357-4f27-9d3e-9450ae96df38\"},\"qualified_to\":{\"domain\":\"example.com\",\"id\":\"9b8cc92a-33d8-45e3-b48b-f0891f250a45\"},\"status\":\"sent\",\"to\":\"9b8cc92a-33d8-45e3-b48b-f0891f250a45\"}],\"has_more\":true,\"paging_state\":\"AAASABCbjMkqM9hF47SL8IkfJQpF8H____zwf____A==\"}",
+      "json": {
+        "connections": [
+          {
+            "conversation": "ccdd2163-4357-4f27-9d3e-9450ae96df38",
+            "from": "31505839-0f7f-4944-a8b2-a3c78f71d4f3",
+            "last_update": "2026-10-11T18:02:36.240Z",
+            "qualified_conversation": {
+              "domain": "example.com",
+              "id": "ccdd2163-4357-4f27-9d3e-9450ae96df38"
+            },
+            "qualified_to": {
+              "domain": "example.com",
+              "id": "9b8cc92a-33d8-45e3-b48b-f0891f250a45"
+            },
+            "status": "sent",
+            "to": "9b8cc92a-33d8-45e3-b48b-f0891f250a45"
+          }
+        ],
+        "has_more": true,
+        "paging_state": "AAASABCbjMkqM9hF47SL8IkfJQpF8H____zwf____A=="
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v19/list-connections",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"connections\":[{\"conversation\":\"d8210b5e-c2f2-565e-8d3f-76b9bf9ee957\",\"from\":\"31505839-0f7f-4944-a8b2-a3c78f71d4f3\",\"last_update\":\"2026-10-11T18:02:36.400Z\",\"qualified_conversation\":{\"domain\":\"b.example.com\",\"id\":\"d8210b5e-c2f2-565e-8d3f-76b9bf9ee957\"},\"qualified_to\":{\"domain\":\"b.example.com\",\"id\":\"043ac8df-05ac-4deb-a7b5-30bec7dbd5b0\"},\"status\":\"sent\",\"to\":\"043ac8df-05ac-4deb-a7b5-30bec7dbd5b0\"}],\"has_more\":true,\"paging_state\":\"AQAgAA1iLmV4YW1wbGUuY29tEAQ6yN8FrE3rp7Uwvsfb1bDwf____vB____-\"}",
+      "json": {
+        "connections": [
+          {
+            "conversation": "d8210b5e-c2f2-565e-8d3f-76b9bf9ee957",
+            "from": "31505839-0f7f-4944-a8b2-a3c78f71d4f3",
+            "last_update": "2026-10-11T18:02:36.400Z",
+            "qualified_conversation": {
+              "domain": "b.example.com",
+              "id": "d8210b5e-c2f2-565e-8d3f-76b9bf9ee957"
+            },
+            "qualified_to": {
+              "domain": "b.example.com",
+              "id": "043ac8df-05ac-4deb-a7b5-30bec7dbd5b0"
+            },
+            "status": "sent",
+            "to": "043ac8df-05ac-4deb-a7b5-30bec7dbd5b0"
+          }
+        ],
+        "has_more": true,
+        "paging_state": "AQAgAA1iLmV4YW1wbGUuY29tEAQ6yN8FrE3rp7Uwvsfb1bDwf____vB____-"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v19/list-connections",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"connections\":[],\"has_more\":false,\"paging_state\":\"AQ==\"}",
+      "json": {
+        "connections": [],
+        "has_more": false,
+        "paging_state": "AQ=="
+      }
+    }
+  ],
+  "connections_native_create_controls": [
+    {
+      "method": "POST",
+      "path": "/v19/connections/example.com/c0c66c07-0ca4-4a56-bc1c-2ad277c36b89",
+      "status": 400,
+      "content_type": "application/json",
+      "body": "{\"code\":400,\"label\":\"invalid-user\",\"message\":\"Invalid user\"}",
+      "json": {
+        "code": 400,
+        "label": "invalid-user",
+        "message": "Invalid user"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v19/connections/example.com/32472837-e08a-4549-9c76-b97256067b0f",
+      "status": 400,
+      "content_type": "application/json",
+      "body": "{\"code\":400,\"label\":\"invalid-user\",\"message\":\"Invalid user\"}",
+      "json": {
+        "code": 400,
+        "label": "invalid-user",
+        "message": "Invalid user"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v19/connections/example.com/c6b6fb9a-38b2-4799-8cf3-bea55c12c228",
+      "status": 403,
+      "content_type": "application/json",
+      "body": "{\"code\":403,\"label\":\"no-identity\",\"message\":\"The user has no verified email\"}",
+      "json": {
+        "code": 403,
+        "label": "no-identity",
+        "message": "The user has no verified email"
+      }
+    }
+  ],
+  "profiles_native_controls": [
+    {
+      "method": "POST",
+      "path": "/federation/get-users-by-ids",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "[]",
+      "json": []
+    },
+    {
+      "method": "POST",
+      "path": "/federation/get-users-by-ids",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "[{\"accent_id\":0,\"assets\":[],\"id\":\"c0c66c07-0ca4-4a56-bc1c-2ad277c36b89\",\"legalhold_status\":\"no_consent\",\"name\":\"Synthetic local connection write\",\"picture\":[],\"qualified_id\":{\"domain\":\"example.com\",\"id\":\"c0c66c07-0ca4-4a56-bc1c-2ad277c36b89\"},\"searchable\":true,\"supported_protocols\":[\"proteus\"],\"type\":\"regular\"}]",
+      "json": [
+        {
+          "accent_id": 0,
+          "assets": [],
+          "id": "c0c66c07-0ca4-4a56-bc1c-2ad277c36b89",
+          "legalhold_status": "no_consent",
+          "name": "Synthetic local connection write",
+          "picture": [],
+          "qualified_id": {
+            "domain": "example.com",
+            "id": "c0c66c07-0ca4-4a56-bc1c-2ad277c36b89"
+          },
+          "searchable": true,
+          "supported_protocols": [
+            "proteus"
+          ],
+          "type": "regular"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/federation/get-users-by-ids",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "[{\"accent_id\":0,\"assets\":[],\"expires_at\":\"2026-10-11T19:02:35.655Z\",\"id\":\"6a0d7da0-699a-4502-ac63-cb16334d15c6\",\"legalhold_status\":\"no_consent\",\"name\":\"Synthetic identityless profile\",\"picture\":[],\"qualified_id\":{\"domain\":\"example.com\",\"id\":\"6a0d7da0-699a-4502-ac63-cb16334d15c6\"},\"searchable\":true,\"supported_protocols\":[\"proteus\"],\"type\":\"regular\"}]",
+      "json": [
+        {
+          "accent_id": 0,
+          "assets": [],
+          "expires_at": "2026-10-11T19:02:35.655Z",
+          "id": "6a0d7da0-699a-4502-ac63-cb16334d15c6",
+          "legalhold_status": "no_consent",
+          "name": "Synthetic identityless profile",
+          "picture": [],
+          "qualified_id": {
+            "domain": "example.com",
+            "id": "6a0d7da0-699a-4502-ac63-cb16334d15c6"
+          },
+          "searchable": true,
+          "supported_protocols": [
+            "proteus"
+          ],
+          "type": "regular"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/federation/get-users-by-ids",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "[]",
+      "json": []
+    },
+    {
+      "method": "POST",
+      "path": "/federation/get-users-by-ids",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "[{\"accent_id\":0,\"assets\":[],\"id\":\"c0c66c07-0ca4-4a56-bc1c-2ad277c36b89\",\"legalhold_status\":\"no_consent\",\"name\":\"Synthetic local connection write\",\"picture\":[],\"qualified_id\":{\"domain\":\"example.com\",\"id\":\"c0c66c07-0ca4-4a56-bc1c-2ad277c36b89\"},\"searchable\":true,\"supported_protocols\":[\"proteus\"],\"type\":\"regular\"},{\"accent_id\":0,\"assets\":[],\"expires_at\":\"2026-10-11T19:02:35.655Z\",\"id\":\"6a0d7da0-699a-4502-ac63-cb16334d15c6\",\"legalhold_status\":\"no_consent\",\"name\":\"Synthetic identityless profile\",\"picture\":[],\"qualified_id\":{\"domain\":\"example.com\",\"id\":\"6a0d7da0-699a-4502-ac63-cb16334d15c6\"},\"searchable\":true,\"supported_protocols\":[\"proteus\"],\"type\":\"regular\"},{\"accent_id\":0,\"assets\":[],\"id\":\"c6b6fb9a-38b2-4799-8cf3-bea55c12c228\",\"legalhold_status\":\"no_consent\",\"name\":\"Synthetic local connection write\",\"picture\":[],\"qualified_id\":{\"domain\":\"example.com\",\"id\":\"c6b6fb9a-38b2-4799-8cf3-bea55c12c228\"},\"searchable\":true,\"supported_protocols\":[\"proteus\"],\"type\":\"regular\"},{\"accent_id\":0,\"assets\":[],\"id\":\"c0c66c07-0ca4-4a56-bc1c-2ad277c36b89\",\"legalhold_status\":\"no_consent\",\"name\":\"Synthetic local connection write\",\"picture\":[],\"qualified_id\":{\"domain\":\"example.com\",\"id\":\"c0c66c07-0ca4-4a56-bc1c-2ad277c36b89\"},\"searchable\":true,\"supported_protocols\":[\"proteus\"],\"type\":\"regular\"}]",
+      "json": [
+        {
+          "accent_id": 0,
+          "assets": [],
+          "id": "c0c66c07-0ca4-4a56-bc1c-2ad277c36b89",
+          "legalhold_status": "no_consent",
+          "name": "Synthetic local connection write",
+          "picture": [],
+          "qualified_id": {
+            "domain": "example.com",
+            "id": "c0c66c07-0ca4-4a56-bc1c-2ad277c36b89"
+          },
+          "searchable": true,
+          "supported_protocols": [
+            "proteus"
+          ],
+          "type": "regular"
+        },
+        {
+          "accent_id": 0,
+          "assets": [],
+          "expires_at": "2026-10-11T19:02:35.655Z",
+          "id": "6a0d7da0-699a-4502-ac63-cb16334d15c6",
+          "legalhold_status": "no_consent",
+          "name": "Synthetic identityless profile",
+          "picture": [],
+          "qualified_id": {
+            "domain": "example.com",
+            "id": "6a0d7da0-699a-4502-ac63-cb16334d15c6"
+          },
+          "searchable": true,
+          "supported_protocols": [
+            "proteus"
+          ],
+          "type": "regular"
+        },
+        {
+          "accent_id": 0,
+          "assets": [],
+          "id": "c6b6fb9a-38b2-4799-8cf3-bea55c12c228",
+          "legalhold_status": "no_consent",
+          "name": "Synthetic local connection write",
+          "picture": [],
+          "qualified_id": {
+            "domain": "example.com",
+            "id": "c6b6fb9a-38b2-4799-8cf3-bea55c12c228"
+          },
+          "searchable": true,
+          "supported_protocols": [
+            "proteus"
+          ],
+          "type": "regular"
+        },
+        {
+          "accent_id": 0,
+          "assets": [],
+          "id": "c0c66c07-0ca4-4a56-bc1c-2ad277c36b89",
+          "legalhold_status": "no_consent",
+          "name": "Synthetic local connection write",
+          "picture": [],
+          "qualified_id": {
+            "domain": "example.com",
+            "id": "c0c66c07-0ca4-4a56-bc1c-2ad277c36b89"
+          },
+          "searchable": true,
+          "supported_protocols": [
+            "proteus"
+          ],
+          "type": "regular"
+        }
+      ]
+    }
+  ],
+  "connections_native_update_controls": [
+    {
+      "method": "PUT",
+      "path": "/v19/connections/example.com/66a2c9e3-9d5b-4656-bdf8-c35da42bff1d",
+      "status": 403,
+      "content_type": "application/json",
+      "body": "{\"code\":403,\"label\":\"bad-conn-update\",\"message\":\"Invalid status transition\"}",
+      "json": {
+        "code": 403,
+        "label": "bad-conn-update",
+        "message": "Invalid status transition"
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/v19/connections/example.com/66a2c9e3-9d5b-4656-bdf8-c35da42bff1d",
+      "status": 204,
+      "content_type": null,
+      "body": ""
+    },
+    {
+      "method": "PUT",
+      "path": "/v19/connections/example.com/b604a54c-d753-44a6-a83e-546a3647e654",
+      "status": 403,
+      "content_type": "application/json",
+      "body": "{\"code\":403,\"label\":\"not-connected\",\"message\":\"Users are not connected\"}",
+      "json": {
+        "code": 403,
+        "label": "not-connected",
+        "message": "Users are not connected"
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/v19/connections/example.com/66a2c9e3-9d5b-4656-bdf8-c35da42bff1d",
+      "status": 403,
+      "content_type": "application/json",
+      "body": "{\"code\":403,\"label\":\"bad-conn-update\",\"message\":\"Invalid status transition\"}",
+      "json": {
+        "code": 403,
+        "label": "bad-conn-update",
+        "message": "Invalid status transition"
+      }
+    }
+  ],
+  "prekey_native_multi_controls": [
+    {
+      "method": "POST",
+      "path": "/v1/users/prekeys",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"ced2511e-2da4-433f-acfd-5525564590eb\":{\"afc1c13c3c651593\":{\"id\":65535,\"key\":\"pQABARn//wKhAFggNd03xWUpvmVuA+agM8s/Ko0gTJKEbihP8OVbSl5FFlQDoQChAFggst/VMjBIHrarr06Oz9fW3Mn51gc0DDhBtb/tMLm9JmoE9g==\"},\"f\":null}}",
+      "json": {
+        "ced2511e-2da4-433f-acfd-5525564590eb": {
+          "afc1c13c3c651593": {
+            "id": 65535,
+            "key": "pQABARn//wKhAFggNd03xWUpvmVuA+agM8s/Ko0gTJKEbihP8OVbSl5FFlQDoQChAFggst/VMjBIHrarr06Oz9fW3Mn51gc0DDhBtb/tMLm9JmoE9g=="
+          },
+          "f": null
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v3/users/list-prekeys",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"example.com\":{\"ced2511e-2da4-433f-acfd-5525564590eb\":{\"afc1c13c3c651593\":{\"id\":65535,\"key\":\"pQABARn//wKhAFggNd03xWUpvmVuA+agM8s/Ko0gTJKEbihP8OVbSl5FFlQDoQChAFggst/VMjBIHrarr06Oz9fW3Mn51gc0DDhBtb/tMLm9JmoE9g==\"},\"f\":null}}}",
+      "json": {
+        "example.com": {
+          "ced2511e-2da4-433f-acfd-5525564590eb": {
+            "afc1c13c3c651593": {
+              "id": 65535,
+              "key": "pQABARn//wKhAFggNd03xWUpvmVuA+agM8s/Ko0gTJKEbihP8OVbSl5FFlQDoQChAFggst/VMjBIHrarr06Oz9fW3Mn51gc0DDhBtb/tMLm9JmoE9g=="
+            },
+            "f": null
+          }
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v19/users/list-prekeys",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"qualified_user_client_prekeys\":{\"example.com\":{\"ced2511e-2da4-433f-acfd-5525564590eb\":{\"afc1c13c3c651593\":{\"id\":65535,\"key\":\"pQABARn//wKhAFggNd03xWUpvmVuA+agM8s/Ko0gTJKEbihP8OVbSl5FFlQDoQChAFggst/VMjBIHrarr06Oz9fW3Mn51gc0DDhBtb/tMLm9JmoE9g==\"},\"f\":null}}}}",
+      "json": {
+        "qualified_user_client_prekeys": {
+          "example.com": {
+            "ced2511e-2da4-433f-acfd-5525564590eb": {
+              "afc1c13c3c651593": {
+                "id": 65535,
+                "key": "pQABARn//wKhAFggNd03xWUpvmVuA+agM8s/Ko0gTJKEbihP8OVbSl5FFlQDoQChAFggst/VMjBIHrarr06Oz9fW3Mn51gc0DDhBtb/tMLm9JmoE9g=="
+              },
+              "f": null
+            }
+          }
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v19/users/list-prekeys",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"qualified_user_client_prekeys\":{}}",
+      "json": {
+        "qualified_user_client_prekeys": {}
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v19/users/list-prekeys",
+      "status": 403,
+      "content_type": "application/json",
+      "body": "{\"code\":403,\"label\":\"too-many-clients\",\"message\":\"Too many clients\"}",
+      "json": {
+        "code": 403,
+        "label": "too-many-clients",
+        "message": "Too many clients"
+      }
+    }
+  ],
+  "prekey_remote_native_actor": {
+    "method": "POST",
+    "path": "/i/users",
+    "status": 201,
+    "content_type": "application/json;charset=utf-8",
+    "body": "{\"accent_id\":0,\"assets\":[],\"expires_at\":\"2026-10-11T18:02:55.652Z\",\"id\":\"659207f1-bdcf-46af-b40a-f444a42fbc2c\",\"locale\":\"en\",\"managed_by\":\"wire\",\"name\":\"Synthetic federation prekey actor\",\"picture\":[],\"qualified_id\":{\"domain\":\"b.example.com\",\"id\":\"659207f1-bdcf-46af-b40a-f444a42fbc2c\"},\"searchable\":true,\"status\":\"ephemeral\",\"supported_protocols\":[\"proteus\"],\"type\":\"regular\"}",
+    "location": "659207f1-bdcf-46af-b40a-f444a42fbc2c",
+    "json": {
+      "accent_id": 0,
+      "assets": [],
+      "expires_at": "2026-10-11T18:02:55.652Z",
+      "id": "659207f1-bdcf-46af-b40a-f444a42fbc2c",
+      "locale": "en",
+      "managed_by": "wire",
+      "name": "Synthetic federation prekey actor",
+      "picture": [],
+      "qualified_id": {
+        "domain": "b.example.com",
+        "id": "659207f1-bdcf-46af-b40a-f444a42fbc2c"
+      },
+      "searchable": true,
+      "status": "ephemeral",
+      "supported_protocols": [
+        "proteus"
+      ],
+      "type": "regular"
+    }
+  },
+  "prekey_remote_native_client": {
+    "method": "POST",
+    "path": "/v19/clients",
+    "status": 201,
+    "content_type": "application/json;charset=utf-8",
+    "body": "{\"capabilities\":[\"legalhold-implicit-consent\"],\"class\":\"desktop\",\"id\":\"afc1c13c3c651593\",\"label\":\"native-durable-client\",\"mls_public_keys\":{\"ed25519\":\"AQI=\"},\"model\":\"synthetic-model\",\"time\":\"2026-10-11T18:02:35.652Z\",\"type\":\"permanent\"}",
+    "location": "afc1c13c3c651593",
+    "json": {
+      "capabilities": [
+        "legalhold-implicit-consent"
+      ],
+      "class": "desktop",
+      "id": "afc1c13c3c651593",
+      "label": "native-durable-client",
+      "mls_public_keys": {
+        "ed25519": "AQI="
+      },
+      "model": "synthetic-model",
+      "time": "2026-10-11T18:02:35.652Z",
+      "type": "permanent"
+    }
+  },
+  "prekey_native_federation_controls": [
+    {
+      "method": "GET",
+      "path": "/v19/users/b.example.com/659207f1-bdcf-46af-b40a-f444a42fbc2c/prekeys/afc1c13c3c651593",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"client\":\"afc1c13c3c651593\",\"prekey\":{\"id\":65535,\"key\":\"pQABARn//wKhAFggNd03xWUpvmVuA+agM8s/Ko0gTJKEbihP8OVbSl5FFlQDoQChAFggst/VMjBIHrarr06Oz9fW3Mn51gc0DDhBtb/tMLm9JmoE9g==\"}}",
+      "json": {
+        "client": "afc1c13c3c651593",
+        "prekey": {
+          "id": 65535,
+          "key": "pQABARn//wKhAFggNd03xWUpvmVuA+agM8s/Ko0gTJKEbihP8OVbSl5FFlQDoQChAFggst/VMjBIHrarr06Oz9fW3Mn51gc0DDhBtb/tMLm9JmoE9g=="
+        }
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v19/users/b.example.com/659207f1-bdcf-46af-b40a-f444a42fbc2c/prekeys",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"clients\":[{\"client\":\"afc1c13c3c651593\",\"prekey\":{\"id\":65535,\"key\":\"pQABARn//wKhAFggNd03xWUpvmVuA+agM8s/Ko0gTJKEbihP8OVbSl5FFlQDoQChAFggst/VMjBIHrarr06Oz9fW3Mn51gc0DDhBtb/tMLm9JmoE9g==\"}}],\"user\":\"659207f1-bdcf-46af-b40a-f444a42fbc2c\"}",
+      "json": {
+        "clients": [
+          {
+            "client": "afc1c13c3c651593",
+            "prekey": {
+              "id": 65535,
+              "key": "pQABARn//wKhAFggNd03xWUpvmVuA+agM8s/Ko0gTJKEbihP8OVbSl5FFlQDoQChAFggst/VMjBIHrarr06Oz9fW3Mn51gc0DDhBtb/tMLm9JmoE9g=="
+            }
+          }
+        ],
+        "user": "659207f1-bdcf-46af-b40a-f444a42fbc2c"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v19/users/b.example.com/659207f1-bdcf-46af-b40a-f444a42fbc2c/prekeys/f",
+      "status": 404,
+      "content_type": "application/json",
+      "body": "{\"code\":404,\"label\":\"not-found\",\"message\":\"prekey not found\"}",
+      "json": {
+        "code": 404,
+        "label": "not-found",
+        "message": "prekey not found"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v3/users/list-prekeys",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"b.example.com\":{\"659207f1-bdcf-46af-b40a-f444a42fbc2c\":{\"afc1c13c3c651593\":{\"id\":65535,\"key\":\"pQABARn//wKhAFggNd03xWUpvmVuA+agM8s/Ko0gTJKEbihP8OVbSl5FFlQDoQChAFggst/VMjBIHrarr06Oz9fW3Mn51gc0DDhBtb/tMLm9JmoE9g==\"},\"f\":null}},\"example.com\":{\"ced2511e-2da4-433f-acfd-5525564590eb\":{\"afc1c13c3c651593\":{\"id\":65535,\"key\":\"pQABARn//wKhAFggNd03xWUpvmVuA+agM8s/Ko0gTJKEbihP8OVbSl5FFlQDoQChAFggst/VMjBIHrarr06Oz9fW3Mn51gc0DDhBtb/tMLm9JmoE9g==\"},\"f\":null}}}",
+      "json": {
+        "b.example.com": {
+          "659207f1-bdcf-46af-b40a-f444a42fbc2c": {
+            "afc1c13c3c651593": {
+              "id": 65535,
+              "key": "pQABARn//wKhAFggNd03xWUpvmVuA+agM8s/Ko0gTJKEbihP8OVbSl5FFlQDoQChAFggst/VMjBIHrarr06Oz9fW3Mn51gc0DDhBtb/tMLm9JmoE9g=="
+            },
+            "f": null
+          }
+        },
+        "example.com": {
+          "ced2511e-2da4-433f-acfd-5525564590eb": {
+            "afc1c13c3c651593": {
+              "id": 65535,
+              "key": "pQABARn//wKhAFggNd03xWUpvmVuA+agM8s/Ko0gTJKEbihP8OVbSl5FFlQDoQChAFggst/VMjBIHrarr06Oz9fW3Mn51gc0DDhBtb/tMLm9JmoE9g=="
+            },
+            "f": null
+          }
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v19/users/list-prekeys",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"qualified_user_client_prekeys\":{\"b.example.com\":{\"659207f1-bdcf-46af-b40a-f444a42fbc2c\":{\"afc1c13c3c651593\":{\"id\":65535,\"key\":\"pQABARn//wKhAFggNd03xWUpvmVuA+agM8s/Ko0gTJKEbihP8OVbSl5FFlQDoQChAFggst/VMjBIHrarr06Oz9fW3Mn51gc0DDhBtb/tMLm9JmoE9g==\"},\"f\":null}},\"example.com\":{\"ced2511e-2da4-433f-acfd-5525564590eb\":{\"afc1c13c3c651593\":{\"id\":65535,\"key\":\"pQABARn//wKhAFggNd03xWUpvmVuA+agM8s/Ko0gTJKEbihP8OVbSl5FFlQDoQChAFggst/VMjBIHrarr06Oz9fW3Mn51gc0DDhBtb/tMLm9JmoE9g==\"},\"f\":null}}}}",
+      "json": {
+        "qualified_user_client_prekeys": {
+          "b.example.com": {
+            "659207f1-bdcf-46af-b40a-f444a42fbc2c": {
+              "afc1c13c3c651593": {
+                "id": 65535,
+                "key": "pQABARn//wKhAFggNd03xWUpvmVuA+agM8s/Ko0gTJKEbihP8OVbSl5FFlQDoQChAFggst/VMjBIHrarr06Oz9fW3Mn51gc0DDhBtb/tMLm9JmoE9g=="
+              },
+              "f": null
+            }
+          },
+          "example.com": {
+            "ced2511e-2da4-433f-acfd-5525564590eb": {
+              "afc1c13c3c651593": {
+                "id": 65535,
+                "key": "pQABARn//wKhAFggNd03xWUpvmVuA+agM8s/Ko0gTJKEbihP8OVbSl5FFlQDoQChAFggst/VMjBIHrarr06Oz9fW3Mn51gc0DDhBtb/tMLm9JmoE9g=="
+              },
+              "f": null
+            }
+          }
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/federation/claim-prekey",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"client\":\"afc1c13c3c651593\",\"prekey\":{\"id\":65535,\"key\":\"pQABARn//wKhAFggNd03xWUpvmVuA+agM8s/Ko0gTJKEbihP8OVbSl5FFlQDoQChAFggst/VMjBIHrarr06Oz9fW3Mn51gc0DDhBtb/tMLm9JmoE9g==\"}}",
+      "json": {
+        "client": "afc1c13c3c651593",
+        "prekey": {
+          "id": 65535,
+          "key": "pQABARn//wKhAFggNd03xWUpvmVuA+agM8s/Ko0gTJKEbihP8OVbSl5FFlQDoQChAFggst/VMjBIHrarr06Oz9fW3Mn51gc0DDhBtb/tMLm9JmoE9g=="
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/federation/claim-prekey",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "null",
+      "json": null
+    },
+    {
+      "method": "POST",
+      "path": "/federation/claim-prekey-bundle",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"clients\":[{\"client\":\"afc1c13c3c651593\",\"prekey\":{\"id\":65535,\"key\":\"pQABARn//wKhAFggNd03xWUpvmVuA+agM8s/Ko0gTJKEbihP8OVbSl5FFlQDoQChAFggst/VMjBIHrarr06Oz9fW3Mn51gc0DDhBtb/tMLm9JmoE9g==\"}}],\"user\":\"ced2511e-2da4-433f-acfd-5525564590eb\"}",
+      "json": {
+        "clients": [
+          {
+            "client": "afc1c13c3c651593",
+            "prekey": {
+              "id": 65535,
+              "key": "pQABARn//wKhAFggNd03xWUpvmVuA+agM8s/Ko0gTJKEbihP8OVbSl5FFlQDoQChAFggst/VMjBIHrarr06Oz9fW3Mn51gc0DDhBtb/tMLm9JmoE9g=="
+            }
+          }
+        ],
+        "user": "ced2511e-2da4-433f-acfd-5525564590eb"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/federation/claim-multi-prekey-bundle",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"ced2511e-2da4-433f-acfd-5525564590eb\":{\"afc1c13c3c651593\":{\"id\":65535,\"key\":\"pQABARn//wKhAFggNd03xWUpvmVuA+agM8s/Ko0gTJKEbihP8OVbSl5FFlQDoQChAFggst/VMjBIHrarr06Oz9fW3Mn51gc0DDhBtb/tMLm9JmoE9g==\"},\"f\":null}}",
+      "json": {
+        "ced2511e-2da4-433f-acfd-5525564590eb": {
+          "afc1c13c3c651593": {
+            "id": 65535,
+            "key": "pQABARn//wKhAFggNd03xWUpvmVuA+agM8s/Ko0gTJKEbihP8OVbSl5FFlQDoQChAFggst/VMjBIHrarr06Oz9fW3Mn51gc0DDhBtb/tMLm9JmoE9g=="
+          },
+          "f": null
+        }
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v19/users/unavailable-prekey.invalid/659207f1-bdcf-46af-b40a-f444a42fbc2c/prekeys/afc1c13c3c651593",
+      "status": 400,
+      "content_type": "application/json",
+      "body": "{\"code\":400,\"data\":{\"domain\":\"unavailable-prekey.invalid\",\"path\":\"/federation/api-version\",\"type\":\"federation\"},\"label\":\"discovery-failure\",\"message\":\"DNS error: _wire-server-federator._tcp.unavailable-prekey.invalid\"}",
+      "json": {
+        "code": 400,
+        "data": {
+          "domain": "unavailable-prekey.invalid",
+          "path": "/federation/api-version",
+          "type": "federation"
+        },
+        "label": "discovery-failure",
+        "message": "DNS error: _wire-server-federator._tcp.unavailable-prekey.invalid"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v19/users/unavailable-prekey.invalid/659207f1-bdcf-46af-b40a-f444a42fbc2c/prekeys",
+      "status": 400,
+      "content_type": "application/json",
+      "body": "{\"code\":400,\"data\":{\"domain\":\"unavailable-prekey.invalid\",\"path\":\"/federation/api-version\",\"type\":\"federation\"},\"label\":\"discovery-failure\",\"message\":\"DNS error: _wire-server-federator._tcp.unavailable-prekey.invalid\"}",
+      "json": {
+        "code": 400,
+        "data": {
+          "domain": "unavailable-prekey.invalid",
+          "path": "/federation/api-version",
+          "type": "federation"
+        },
+        "label": "discovery-failure",
+        "message": "DNS error: _wire-server-federator._tcp.unavailable-prekey.invalid"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v3/users/list-prekeys",
+      "status": 400,
+      "content_type": "application/json",
+      "body": "{\"code\":400,\"data\":{\"domain\":\"unavailable-prekey.invalid\",\"path\":\"/federation/api-version\",\"type\":\"federation\"},\"label\":\"discovery-failure\",\"message\":\"DNS error: _wire-server-federator._tcp.unavailable-prekey.invalid\"}",
+      "json": {
+        "code": 400,
+        "data": {
+          "domain": "unavailable-prekey.invalid",
+          "path": "/federation/api-version",
+          "type": "federation"
+        },
+        "label": "discovery-failure",
+        "message": "DNS error: _wire-server-federator._tcp.unavailable-prekey.invalid"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v19/users/list-prekeys",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"failed_to_list\":[{\"domain\":\"unavailable-prekey.invalid\",\"id\":\"659207f1-bdcf-46af-b40a-f444a42fbc2c\"}],\"qualified_user_client_prekeys\":{\"b.example.com\":{\"659207f1-bdcf-46af-b40a-f444a42fbc2c\":{\"afc1c13c3c651593\":{\"id\":65535,\"key\":\"pQABARn//wKhAFggNd03xWUpvmVuA+agM8s/Ko0gTJKEbihP8OVbSl5FFlQDoQChAFggst/VMjBIHrarr06Oz9fW3Mn51gc0DDhBtb/tMLm9JmoE9g==\"},\"f\":null}},\"example.com\":{\"ced2511e-2da4-433f-acfd-5525564590eb\":{\"afc1c13c3c651593\":{\"id\":65535,\"key\":\"pQABARn//wKhAFggNd03xWUpvmVuA+agM8s/Ko0gTJKEbihP8OVbSl5FFlQDoQChAFggst/VMjBIHrarr06Oz9fW3Mn51gc0DDhBtb/tMLm9JmoE9g==\"},\"f\":null}}}}",
+      "json": {
+        "failed_to_list": [
+          {
+            "domain": "unavailable-prekey.invalid",
+            "id": "659207f1-bdcf-46af-b40a-f444a42fbc2c"
+          }
+        ],
+        "qualified_user_client_prekeys": {
+          "b.example.com": {
+            "659207f1-bdcf-46af-b40a-f444a42fbc2c": {
+              "afc1c13c3c651593": {
+                "id": 65535,
+                "key": "pQABARn//wKhAFggNd03xWUpvmVuA+agM8s/Ko0gTJKEbihP8OVbSl5FFlQDoQChAFggst/VMjBIHrarr06Oz9fW3Mn51gc0DDhBtb/tMLm9JmoE9g=="
+              },
+              "f": null
+            }
+          },
+          "example.com": {
+            "ced2511e-2da4-433f-acfd-5525564590eb": {
+              "afc1c13c3c651593": {
+                "id": 65535,
+                "key": "pQABARn//wKhAFggNd03xWUpvmVuA+agM8s/Ko0gTJKEbihP8OVbSl5FFlQDoQChAFggst/VMjBIHrarr06Oz9fW3Mn51gc0DDhBtb/tMLm9JmoE9g=="
+              },
+              "f": null
+            }
+          }
+        }
+      }
+    }
+  ],
+  "public_client_native_controls": [
+    {
+      "method": "GET",
+      "path": "/v1/users/ced2511e-2da4-433f-acfd-5525564590eb/clients",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "[{\"class\":\"desktop\",\"id\":\"afc1c13c3c651593\"}]",
+      "json": [
+        {
+          "class": "desktop",
+          "id": "afc1c13c3c651593"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/v15/users/example.com/ced2511e-2da4-433f-acfd-5525564590eb/clients",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "[{\"class\":\"desktop\",\"id\":\"afc1c13c3c651593\"}]",
+      "json": [
+        {
+          "class": "desktop",
+          "id": "afc1c13c3c651593"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/v16/users/example.com/ced2511e-2da4-433f-acfd-5525564590eb/clients",
+      "status": 404,
+      "content_type": null,
+      "body": ""
+    },
+    {
+      "method": "GET",
+      "path": "/v19/users/example.com/ced2511e-2da4-433f-acfd-5525564590eb/clients/afc1c13c3c651593",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"class\":\"desktop\",\"id\":\"afc1c13c3c651593\"}",
+      "json": {
+        "class": "desktop",
+        "id": "afc1c13c3c651593"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v19/users/example.com/ced2511e-2da4-433f-acfd-5525564590eb/clients/f",
+      "status": 404,
+      "content_type": "application/json",
+      "body": "{\"code\":404,\"label\":\"not-found\",\"message\":\"client not found\"}",
+      "json": {
+        "code": 404,
+        "label": "not-found",
+        "message": "client not found"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v15/users/b.example.com/659207f1-bdcf-46af-b40a-f444a42fbc2c/clients",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "[{\"class\":\"desktop\",\"id\":\"afc1c13c3c651593\"}]",
+      "json": [
+        {
+          "class": "desktop",
+          "id": "afc1c13c3c651593"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/v19/users/b.example.com/659207f1-bdcf-46af-b40a-f444a42fbc2c/clients/afc1c13c3c651593",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"class\":\"desktop\",\"id\":\"afc1c13c3c651593\"}",
+      "json": {
+        "class": "desktop",
+        "id": "afc1c13c3c651593"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v15/users/unavailable-prekey.invalid/659207f1-bdcf-46af-b40a-f444a42fbc2c/clients",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "[]",
+      "json": []
+    },
+    {
+      "method": "GET",
+      "path": "/v19/users/unavailable-prekey.invalid/659207f1-bdcf-46af-b40a-f444a42fbc2c/clients/afc1c13c3c651593",
+      "status": 404,
+      "content_type": "application/json",
+      "body": "{\"code\":404,\"label\":\"not-found\",\"message\":\"client not found\"}",
+      "json": {
+        "code": 404,
+        "label": "not-found",
+        "message": "client not found"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v1/users/list-clients",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"b.example.com\":{\"659207f1-bdcf-46af-b40a-f444a42fbc2c\":[{\"class\":\"desktop\",\"id\":\"afc1c13c3c651593\"}]},\"example.com\":{\"ced2511e-2da4-433f-acfd-5525564590eb\":[{\"class\":\"desktop\",\"id\":\"afc1c13c3c651593\"}]}}",
+      "json": {
+        "b.example.com": {
+          "659207f1-bdcf-46af-b40a-f444a42fbc2c": [
+            {
+              "class": "desktop",
+              "id": "afc1c13c3c651593"
+            }
+          ]
+        },
+        "example.com": {
+          "ced2511e-2da4-433f-acfd-5525564590eb": [
+            {
+              "class": "desktop",
+              "id": "afc1c13c3c651593"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v1/users/list-clients/v2",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"qualified_user_map\":{\"b.example.com\":{\"659207f1-bdcf-46af-b40a-f444a42fbc2c\":[{\"class\":\"desktop\",\"id\":\"afc1c13c3c651593\"}]},\"example.com\":{\"ced2511e-2da4-433f-acfd-5525564590eb\":[{\"class\":\"desktop\",\"id\":\"afc1c13c3c651593\"}]}}}",
+      "json": {
+        "qualified_user_map": {
+          "b.example.com": {
+            "659207f1-bdcf-46af-b40a-f444a42fbc2c": [
+              {
+                "class": "desktop",
+                "id": "afc1c13c3c651593"
+              }
+            ]
+          },
+          "example.com": {
+            "ced2511e-2da4-433f-acfd-5525564590eb": [
+              {
+                "class": "desktop",
+                "id": "afc1c13c3c651593"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v19/users/list-clients",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"qualified_user_map\":{\"b.example.com\":{\"659207f1-bdcf-46af-b40a-f444a42fbc2c\":[{\"class\":\"desktop\",\"id\":\"afc1c13c3c651593\"}]},\"example.com\":{\"ced2511e-2da4-433f-acfd-5525564590eb\":[{\"class\":\"desktop\",\"id\":\"afc1c13c3c651593\"}]}}}",
+      "json": {
+        "qualified_user_map": {
+          "b.example.com": {
+            "659207f1-bdcf-46af-b40a-f444a42fbc2c": [
+              {
+                "class": "desktop",
+                "id": "afc1c13c3c651593"
+              }
+            ]
+          },
+          "example.com": {
+            "ced2511e-2da4-433f-acfd-5525564590eb": [
+              {
+                "class": "desktop",
+                "id": "afc1c13c3c651593"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/federation/get-user-clients",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"ced2511e-2da4-433f-acfd-5525564590eb\":[{\"class\":\"desktop\",\"id\":\"afc1c13c3c651593\"}]}",
+      "json": {
+        "ced2511e-2da4-433f-acfd-5525564590eb": [
+          {
+            "class": "desktop",
+            "id": "afc1c13c3c651593"
+          }
+        ]
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/federation/get-user-clients",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{}",
+      "json": {}
+    }
+  ],
+  "mls_rows_native-staged": [
+    {
+      "data": "000100010000000001000000000000010000000000000000000000006acbdd4d00000000",
+      "ref": "01"
+    },
+    {
+      "data": "000100010000000001000000000000010000000000000000000000000000000100000000",
+      "ref": "02"
+    },
+    {
+      "data": "00010001000000000100000000000001000000006acbdd4d000000006acbeb5d00000000",
+      "ref": "03"
+    },
+    {
+      "data": "0001000100000000010000000000000200000000",
+      "ref": "04"
+    },
+    {
+      "data": "00",
+      "ref": "05"
+    }
+  ],
+  "mls_rows_native_count": {
+    "method": "GET",
+    "path": "/v19/mls/key-packages/self/afc1c13c3c651593/count?ciphersuite=0x1",
+    "status": 200,
+    "content_type": "application/json;charset=utf-8",
+    "body": "{\"count\":1}",
+    "json": {
+      "count": 1
+    }
+  },
+  "mls_rows_native-retained": [
+    {
+      "data": "000100010000000001000000000000010000000000000000000000006acbdd4d00000000",
+      "ref": "01"
+    },
+    {
+      "data": "00",
+      "ref": "05"
+    }
+  ],
+  "mls_rows_signed-native-upload": [
+    {
+      "data": "00010001000020b3a58f3ccac60a14080d895935b4b5047f4931245a31cdf06e281e5cdc96fe9c0001404163366234303634392d633162622d343761642d386466312d3261623666346663623235303a61666331633133633363363531353933406578616d706c652e636f6d0200010200010000020001010000000000000000000000006acbdd4d004040f8392ef2cd5a6f82cbb84686e1b837526f24600ae814be2a968fc9913b9a8b67cff0bb6785a2ad423e8c56d242fc83ec7249bd881f396351036962d8ec0b8c0f004040ad3c68fa04909589c3c97576a5ee61092a1c6a8e26cdc4b0f335aac2e5fa8c6719fe01089f7043c466e66829fc32caf1a481f83df2e87bad019ec36b14e6f400",
+      "ref": "a6532ef044581a884cfea20d51a96fa52391ada4017c46e10cc522c44c64a5d1"
+    }
+  ],
+  "mls_signed_native_rejected_replace": {
+    "method": "PUT",
+    "path": "/v19/mls/key-packages/self/afc1c13c3c651593?ciphersuites=1",
+    "status": 400,
+    "content_type": "application/json",
+    "body": "{\"code\":400,\"label\":\"mls-protocol-error\",\"message\":\"Unsupported protocol version\"}",
+    "json": {
+      "code": 400,
+      "label": "mls-protocol-error",
+      "message": "Unsupported protocol version"
+    }
+  },
+  "mls_rows_signed-native-rejected-replace": [],
+  "mls_rows_signed-native-restored": [
+    {
+      "data": "00010001000020b3a58f3ccac60a14080d895935b4b5047f4931245a31cdf06e281e5cdc96fe9c0001404163366234303634392d633162622d343761642d386466312d3261623666346663623235303a61666331633133633363363531353933406578616d706c652e636f6d0200010200010000020001010000000000000000000000006acbdd4d004040f8392ef2cd5a6f82cbb84686e1b837526f24600ae814be2a968fc9913b9a8b67cff0bb6785a2ad423e8c56d242fc83ec7249bd881f396351036962d8ec0b8c0f004040ad3c68fa04909589c3c97576a5ee61092a1c6a8e26cdc4b0f335aac2e5fa8c6719fe01089f7043c466e66829fc32caf1a481f83df2e87bad019ec36b14e6f400",
+      "ref": "a6532ef044581a884cfea20d51a96fa52391ada4017c46e10cc522c44c64a5d1"
+    }
+  ],
+  "mls_count_native_controls": [
+    {
+      "method": "GET",
+      "path": "/v4/mls/key-packages/self/afc1c13c3c651593/count?ciphersuite=0x1",
+      "status": 404,
+      "content_type": null,
+      "body": ""
+    },
+    {
+      "method": "GET",
+      "path": "/v7/mls/key-packages/self/afc1c13c3c651593/count",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"count\":1}",
+      "json": {
+        "count": 1
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v19/mls/key-packages/self/afc1c13c3c651593/count?ciphersuite=0x1",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"count\":1}",
+      "json": {
+        "count": 1
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v19/mls/key-packages/self/afc1c13c3c651593/count?ciphersuite=0x3",
+      "status": 400,
+      "content_type": "application/json",
+      "body": "{\"code\":400,\"label\":\"mls-protocol-error\",\"message\":\"Unknown ciphersuite\"}",
+      "json": {
+        "code": 400,
+        "label": "mls-protocol-error",
+        "message": "Unknown ciphersuite"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v19/mls/key-packages/self/f/count?ciphersuite=0x1",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"count\":0}",
+      "json": {
+        "count": 0
+      }
+    }
+  ],
+  "mls_client_native_controls": [
+    {
+      "method": "GET",
+      "path": "/i/mls/clients/ced2511e-2da4-433f-acfd-5525564590eb?ciphersuite=0x1",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "[{\"id\":\"afc1c13c3c651593\",\"mls\":true,\"mls_signature_key\":\"AQI=\"}]",
+      "json": [
+        {
+          "id": "afc1c13c3c651593",
+          "mls": true,
+          "mls_signature_key": "AQI="
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/i/mls/client/ced2511e-2da4-433f-acfd-5525564590eb/afc1c13c3c651593?ciphersuite=0x1",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"id\":\"afc1c13c3c651593\",\"mls\":true,\"mls_signature_key\":\"AQI=\"}",
+      "json": {
+        "id": "afc1c13c3c651593",
+        "mls": true,
+        "mls_signature_key": "AQI="
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/i/mls/client/ced2511e-2da4-433f-acfd-5525564590eb/f?ciphersuite=0x1",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"id\":\"f\",\"mls\":false}",
+      "json": {
+        "id": "f",
+        "mls": false
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/i/mls/client/ced2511e-2da4-433f-acfd-5525564590eb/afc1c13c3c651593?ciphersuite=0x2",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"id\":\"afc1c13c3c651593\",\"mls\":false}",
+      "json": {
+        "id": "afc1c13c3c651593",
+        "mls": false
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/i/mls/clients/ced2511e-2da4-433f-acfd-5525564590eb?ciphersuite=0x3",
+      "status": 400,
+      "content_type": "application/json",
+      "body": "{\"code\":400,\"label\":\"mls-protocol-error\",\"message\":\"Unknown ciphersuite\"}",
+      "json": {
+        "code": 400,
+        "label": "mls-protocol-error",
+        "message": "Unknown ciphersuite"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/federation/get-mls-clients",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "[{\"id\":\"afc1c13c3c651593\",\"mls\":true,\"mls_signature_key\":\"AQI=\"}]",
+      "json": [
+        {
+          "id": "afc1c13c3c651593",
+          "mls": true,
+          "mls_signature_key": "AQI="
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/federation/get-mls-clients",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "[{\"id\":\"afc1c13c3c651593\",\"mls\":true,\"mls_signature_key\":\"AQI=\"}]",
+      "json": [
+        {
+          "id": "afc1c13c3c651593",
+          "mls": true,
+          "mls_signature_key": "AQI="
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/federation/get-mls-client",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"id\":\"afc1c13c3c651593\",\"mls\":true,\"mls_signature_key\":\"AQI=\"}",
+      "json": {
+        "id": "afc1c13c3c651593",
+        "mls": true,
+        "mls_signature_key": "AQI="
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/federation/get-mls-client",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"id\":\"f\",\"mls\":false}",
+      "json": {
+        "id": "f",
+        "mls": false
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/federation/get-mls-client",
+      "status": 400,
+      "content_type": "application/json",
+      "body": "{\"code\":400,\"label\":\"mls-protocol-error\",\"message\":\"Unknown ciphersuite\"}",
+      "json": {
+        "code": 400,
+        "label": "mls-protocol-error",
+        "message": "Unknown ciphersuite"
+      }
+    }
+  ],
+  "mls_delete_native_controls": [
+    {
+      "method": "DELETE",
+      "path": "/v4/mls/key-packages/self/afc1c13c3c651593?ciphersuite=1",
+      "status": 405,
+      "content_type": null,
+      "body": ""
+    },
+    {
+      "method": "DELETE",
+      "path": "/v7/mls/key-packages/self/afc1c13c3c651593",
+      "status": 201,
+      "content_type": null,
+      "body": ""
+    },
+    {
+      "method": "DELETE",
+      "path": "/v19/mls/key-packages/self/afc1c13c3c651593?ciphersuite=1",
+      "status": 201,
+      "content_type": null,
+      "body": ""
+    },
+    {
+      "method": "DELETE",
+      "path": "/v19/mls/key-packages/self/f?ciphersuite=1",
+      "status": 201,
+      "content_type": null,
+      "body": ""
+    }
+  ],
+  "mls_rows_native-deleted": [],
+  "mls_rows_native-delete-restaged": [
+    {
+      "data": "000100010000000001000000000000010000000000000000000000006acbdd4d00000000",
+      "ref": "01"
+    },
+    {
+      "data": "000100010000000001000000000000010000000000000000000000000000000100000000",
+      "ref": "02"
+    },
+    {
+      "data": "00010001000000000100000000000001000000006acbdd4d000000006acbeb5d00000000",
+      "ref": "03"
+    },
+    {
+      "data": "0001000100000000010000000000000200000000",
+      "ref": "04"
+    },
+    {
+      "data": "00",
+      "ref": "05"
+    }
+  ],
+  "mls_rows_native-delete-restored": [
+    {
+      "data": "000100010000000001000000000000010000000000000000000000006acbdd4d00000000",
+      "ref": "01"
+    },
+    {
+      "data": "00",
+      "ref": "05"
+    }
+  ],
+  "prekey_native_restage": {
+    "method": "POST",
+    "path": "/v19/clients",
+    "status": 201,
+    "content_type": "application/json;charset=utf-8",
+    "body": "{\"capabilities\":[\"legalhold-implicit-consent\"],\"class\":\"desktop\",\"id\":\"afc1c13c3c651593\",\"label\":\"native-durable-client\",\"mls_public_keys\":{},\"model\":\"synthetic-model\",\"time\":\"2026-10-11T18:02:37.661Z\",\"type\":\"permanent\"}",
+    "location": "afc1c13c3c651593",
+    "json": {
+      "capabilities": [
+        "legalhold-implicit-consent"
+      ],
+      "class": "desktop",
+      "id": "afc1c13c3c651593",
+      "label": "native-durable-client",
+      "mls_public_keys": {},
+      "model": "synthetic-model",
+      "time": "2026-10-11T18:02:37.661Z",
+      "type": "permanent"
+    }
+  },
+  "client_lifecycle_native_state": [
+    {
+      "method": "GET",
+      "path": "/v19/clients/afc1c13c3c651593",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"capabilities\":[\"legalhold-implicit-consent\"],\"class\":\"desktop\",\"id\":\"afc1c13c3c651593\",\"label\":\"native-durable-client\",\"mls_public_keys\":{\"ed25519\":\"AQI=\"},\"model\":\"synthetic-model\",\"time\":\"2026-10-11T18:02:37.661Z\",\"type\":\"permanent\"}",
+      "json": {
+        "capabilities": [
+          "legalhold-implicit-consent"
+        ],
+        "class": "desktop",
+        "id": "afc1c13c3c651593",
+        "label": "native-durable-client",
+        "mls_public_keys": {
+          "ed25519": "AQI="
+        },
+        "model": "synthetic-model",
+        "time": "2026-10-11T18:02:37.661Z",
+        "type": "permanent"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v19/clients/afc1c13c3c651593/prekeys",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "[7,65535]",
+      "json": [
+        7,
+        65535
+      ]
+    }
+  ],
+  "client_lifecycle_native_controls": [
+    {
+      "method": "POST",
+      "path": "/v19/clients",
+      "status": 400,
+      "content_type": "application/json",
+      "body": "{\"code\":400,\"label\":\"client-error\",\"message\":\"LegalHold clients cannot be added manually. LegalHold must be enabled on this user by an admin\"}",
+      "location": null,
+      "json": {
+        "code": 400,
+        "label": "client-error",
+        "message": "LegalHold clients cannot be added manually. LegalHold must be enabled on this user by an admin"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v19/clients",
+      "status": 400,
+      "content_type": "application/json",
+      "body": "{\"code\":400,\"label\":\"invalid-user\",\"message\":\"Invalid user\"}",
+      "location": null,
+      "json": {
+        "code": 400,
+        "label": "invalid-user",
+        "message": "Invalid user"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v19/clients",
+      "status": 403,
+      "content_type": "application/json",
+      "body": "{\"code\":403,\"label\":\"missing-auth\",\"message\":\"Re-authentication via password required\"}",
+      "location": null,
+      "json": {
+        "code": 403,
+        "label": "missing-auth",
+        "message": "Re-authentication via password required"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v19/clients",
+      "status": 403,
+      "content_type": "application/json",
+      "body": "{\"code\":403,\"label\":\"invalid-credentials\",\"message\":\"Authentication failed\"}",
+      "location": null,
+      "json": {
+        "code": 403,
+        "label": "invalid-credentials",
+        "message": "Authentication failed"
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/v19/clients/afc1c13c3c651593",
+      "status": 403,
+      "content_type": "application/json",
+      "body": "{\"code\":403,\"label\":\"missing-auth\",\"message\":\"Re-authentication via password required\"}",
+      "json": {
+        "code": 403,
+        "label": "missing-auth",
+        "message": "Re-authentication via password required"
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/v19/clients/afc1c13c3c651593",
+      "status": 403,
+      "content_type": "application/json",
+      "body": "{\"code\":403,\"label\":\"invalid-credentials\",\"message\":\"Authentication failed\"}",
+      "json": {
+        "code": 403,
+        "label": "invalid-credentials",
+        "message": "Authentication failed"
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/v19/clients/f",
+      "status": 404,
+      "content_type": "application/json",
+      "body": "{\"code\":404,\"label\":\"client-not-found\",\"message\":\"Client not found\"}",
+      "json": {
+        "code": 404,
+        "label": "client-not-found",
+        "message": "Client not found"
+      }
+    }
+  ],
+  "internal_queue_native_replay": {
+    "status": {
+      "method": "GET",
+      "path": "/i/users/84bff53c-a417-4ed6-ba32-fb887f37788a/status",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"status\":\"deleted\"}",
+      "json": {
+        "status": "deleted"
+      }
+    },
+    "properties": {
+      "method": "GET",
+      "path": "/properties",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "[]",
+      "json": []
+    },
+    "queue_attributes": {
+      "QueueSize": 0,
+      "InFlightCount": 0
+    }
+  },
+  "service_galley_native_setup": {
+    "conversation": {
+      "method": "POST",
+      "path": "/v19/conversations",
+      "status": 201,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"access\":[\"invite\"],\"access_role\":[\"team_member\",\"non_team_member\",\"service\"],\"add_permission\":null,\"cells_state\":\"disabled\",\"creator\":\"31505839-0f7f-4944-a8b2-a3c78f71d4f3\",\"failed_to_add\":[],\"group_conv_type\":\"group_conversation\",\"history\":null,\"last_event\":\"0.0\",\"last_event_time\":\"1970-01-01T00:00:00.000Z\",\"members\":{\"others\":[],\"self\":{\"conversation_role\":\"wire_admin\",\"hidden\":false,\"hidden_ref\":null,\"id\":\"31505839-0f7f-4944-a8b2-a3c78f71d4f3\",\"otr_archived\":false,\"otr_archived_ref\":null,\"otr_muted_ref\":null,\"otr_muted_status\":null,\"qualified_id\":{\"domain\":\"example.com\",\"id\":\"31505839-0f7f-4944-a8b2-a3c78f71d4f3\"},\"service\":null,\"status\":0,\"status_ref\":\"0.0\",\"status_time\":\"1970-01-01T00:00:00.000Z\"}},\"message_timer\":null,\"name\":\"Synthetic queue bot membership\",\"parent\":null,\"protocol\":\"proteus\",\"qualified_id\":{\"domain\":\"example.com\",\"id\":\"a7456160-8978-412d-9c16-8166a9b8cd63\"},\"receipt_mode\":null,\"team\":null,\"type\":0}",
+      "json": {
+        "access": [
+          "invite"
+        ],
+        "access_role": [
+          "team_member",
+          "non_team_member",
+          "service"
+        ],
+        "add_permission": null,
+        "cells_state": "disabled",
+        "creator": "31505839-0f7f-4944-a8b2-a3c78f71d4f3",
+        "failed_to_add": [],
+        "group_conv_type": "group_conversation",
+        "history": null,
+        "last_event": "0.0",
+        "last_event_time": "1970-01-01T00:00:00.000Z",
+        "members": {
+          "others": [],
+          "self": {
+            "conversation_role": "wire_admin",
+            "hidden": false,
+            "hidden_ref": null,
+            "id": "31505839-0f7f-4944-a8b2-a3c78f71d4f3",
+            "otr_archived": false,
+            "otr_archived_ref": null,
+            "otr_muted_ref": null,
+            "otr_muted_status": null,
+            "qualified_id": {
+              "domain": "example.com",
+              "id": "31505839-0f7f-4944-a8b2-a3c78f71d4f3"
+            },
+            "service": null,
+            "status": 0,
+            "status_ref": "0.0",
+            "status_time": "1970-01-01T00:00:00.000Z"
+          }
+        },
+        "message_timer": null,
+        "name": "Synthetic queue bot membership",
+        "parent": null,
+        "protocol": "proteus",
+        "qualified_id": {
+          "domain": "example.com",
+          "id": "a7456160-8978-412d-9c16-8166a9b8cd63"
+        },
+        "receipt_mode": null,
+        "team": null,
+        "type": 0
+      }
+    },
+    "connection": {
+      "method": "POST",
+      "path": "/i/services",
+      "status": 200,
+      "content_type": null,
+      "body": ""
+    },
+    "bot_add": {
+      "method": "POST",
+      "path": "/i/bots",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"conversation\":\"a7456160-8978-412d-9c16-8166a9b8cd63\",\"data\":{\"add_type\":\"internal_add\",\"user_ids\":[\"96323494-b5bd-4f5d-8f33-a671f4428ad2\"],\"users\":[{\"conversation_role\":\"wire_admin\",\"id\":\"96323494-b5bd-4f5d-8f33-a671f4428ad2\",\"qualified_id\":{\"domain\":\"example.com\",\"id\":\"96323494-b5bd-4f5d-8f33-a671f4428ad2\"}}]},\"from\":\"31505839-0f7f-4944-a8b2-a3c78f71d4f3\",\"qualified_conversation\":{\"domain\":\"example.com\",\"id\":\"a7456160-8978-412d-9c16-8166a9b8cd63\"},\"qualified_from\":{\"domain\":\"example.com\",\"id\":\"31505839-0f7f-4944-a8b2-a3c78f71d4f3\"},\"time\":\"2026-10-11T18:02:38.052Z\",\"type\":\"conversation.member-join\",\"via\":\"user\"}",
+      "json": {
+        "conversation": "a7456160-8978-412d-9c16-8166a9b8cd63",
+        "data": {
+          "add_type": "internal_add",
+          "user_ids": [
+            "96323494-b5bd-4f5d-8f33-a671f4428ad2"
+          ],
+          "users": [
+            {
+              "conversation_role": "wire_admin",
+              "id": "96323494-b5bd-4f5d-8f33-a671f4428ad2",
+              "qualified_id": {
+                "domain": "example.com",
+                "id": "96323494-b5bd-4f5d-8f33-a671f4428ad2"
+              }
+            }
+          ]
+        },
+        "from": "31505839-0f7f-4944-a8b2-a3c78f71d4f3",
+        "qualified_conversation": {
+          "domain": "example.com",
+          "id": "a7456160-8978-412d-9c16-8166a9b8cd63"
+        },
+        "qualified_from": {
+          "domain": "example.com",
+          "id": "31505839-0f7f-4944-a8b2-a3c78f71d4f3"
+        },
+        "time": "2026-10-11T18:02:38.052Z",
+        "type": "conversation.member-join",
+        "via": "user"
+      }
+    }
+  },
+  "service_galley_native_live_event": {
+    "method": "DELETE",
+    "path": "/i/bots",
+    "status": 200,
+    "content_type": "application/json;charset=utf-8",
+    "body": "{\"conversation\":\"a7456160-8978-412d-9c16-8166a9b8cd63\",\"data\":{\"qualified_user_ids\":[{\"domain\":\"example.com\",\"id\":\"96323494-b5bd-4f5d-8f33-a671f4428ad2\"}],\"reason\":\"removed\",\"user_ids\":[\"96323494-b5bd-4f5d-8f33-a671f4428ad2\"]},\"from\":\"96323494-b5bd-4f5d-8f33-a671f4428ad2\",\"qualified_conversation\":{\"domain\":\"example.com\",\"id\":\"a7456160-8978-412d-9c16-8166a9b8cd63\"},\"qualified_from\":{\"domain\":\"example.com\",\"id\":\"96323494-b5bd-4f5d-8f33-a671f4428ad2\"},\"time\":\"2026-10-11T18:02:38.062Z\",\"type\":\"conversation.member-leave\",\"via\":\"user\"}",
+    "json": {
+      "conversation": "a7456160-8978-412d-9c16-8166a9b8cd63",
+      "data": {
+        "qualified_user_ids": [
+          {
+            "domain": "example.com",
+            "id": "96323494-b5bd-4f5d-8f33-a671f4428ad2"
+          }
+        ],
+        "reason": "removed",
+        "user_ids": [
+          "96323494-b5bd-4f5d-8f33-a671f4428ad2"
+        ]
+      },
+      "from": "96323494-b5bd-4f5d-8f33-a671f4428ad2",
+      "qualified_conversation": {
+        "domain": "example.com",
+        "id": "a7456160-8978-412d-9c16-8166a9b8cd63"
+      },
+      "qualified_from": {
+        "domain": "example.com",
+        "id": "96323494-b5bd-4f5d-8f33-a671f4428ad2"
+      },
+      "time": "2026-10-11T18:02:38.062Z",
+      "type": "conversation.member-leave",
+      "via": "user"
+    }
+  },
+  "service_galley_native_before": {
+    "method": "GET",
+    "path": "/v19/conversations/example.com/a7456160-8978-412d-9c16-8166a9b8cd63",
+    "status": 200,
+    "content_type": "application/json;charset=utf-8",
+    "body": "{\"access\":[\"invite\"],\"access_role\":[\"team_member\",\"non_team_member\",\"service\"],\"add_permission\":null,\"cells_state\":\"disabled\",\"creator\":\"31505839-0f7f-4944-a8b2-a3c78f71d4f3\",\"group_conv_type\":\"group_conversation\",\"history\":null,\"last_event\":\"0.0\",\"last_event_time\":\"1970-01-01T00:00:00.000Z\",\"members\":{\"others\":[{\"conversation_role\":\"wire_admin\",\"id\":\"96323494-b5bd-4f5d-8f33-a671f4428ad2\",\"qualified_id\":{\"domain\":\"example.com\",\"id\":\"96323494-b5bd-4f5d-8f33-a671f4428ad2\"},\"service\":{\"id\":\"e26b3475-774b-4cd7-8b8a-0e136294466f\",\"provider\":\"ff68c286-3880-4bac-9f74-e51c110216b7\"},\"status\":0}],\"self\":{\"conversation_role\":\"wire_admin\",\"hidden\":false,\"hidden_ref\":null,\"id\":\"31505839-0f7f-4944-a8b2-a3c78f71d4f3\",\"otr_archived\":false,\"otr_archived_ref\":null,\"otr_muted_ref\":null,\"otr_muted_status\":null,\"qualified_id\":{\"domain\":\"example.com\",\"id\":\"31505839-0f7f-4944-a8b2-a3c78f71d4f3\"},\"service\":null,\"status\":0,\"status_ref\":\"0.0\",\"status_time\":\"1970-01-01T00:00:00.000Z\"}},\"message_timer\":null,\"name\":\"Synthetic queue bot membership\",\"parent\":null,\"protocol\":\"proteus\",\"qualified_id\":{\"domain\":\"example.com\",\"id\":\"a7456160-8978-412d-9c16-8166a9b8cd63\"},\"receipt_mode\":null,\"team\":null,\"type\":0}",
+    "json": {
+      "access": [
+        "invite"
+      ],
+      "access_role": [
+        "team_member",
+        "non_team_member",
+        "service"
+      ],
+      "add_permission": null,
+      "cells_state": "disabled",
+      "creator": "31505839-0f7f-4944-a8b2-a3c78f71d4f3",
+      "group_conv_type": "group_conversation",
+      "history": null,
+      "last_event": "0.0",
+      "last_event_time": "1970-01-01T00:00:00.000Z",
+      "members": {
+        "others": [
+          {
+            "conversation_role": "wire_admin",
+            "id": "96323494-b5bd-4f5d-8f33-a671f4428ad2",
+            "qualified_id": {
+              "domain": "example.com",
+              "id": "96323494-b5bd-4f5d-8f33-a671f4428ad2"
+            },
+            "service": {
+              "id": "e26b3475-774b-4cd7-8b8a-0e136294466f",
+              "provider": "ff68c286-3880-4bac-9f74-e51c110216b7"
+            },
+            "status": 0
+          }
+        ],
+        "self": {
+          "conversation_role": "wire_admin",
+          "hidden": false,
+          "hidden_ref": null,
+          "id": "31505839-0f7f-4944-a8b2-a3c78f71d4f3",
+          "otr_archived": false,
+          "otr_archived_ref": null,
+          "otr_muted_ref": null,
+          "otr_muted_status": null,
+          "qualified_id": {
+            "domain": "example.com",
+            "id": "31505839-0f7f-4944-a8b2-a3c78f71d4f3"
+          },
+          "service": null,
+          "status": 0,
+          "status_ref": "0.0",
+          "status_time": "1970-01-01T00:00:00.000Z"
+        }
+      },
+      "message_timer": null,
+      "name": "Synthetic queue bot membership",
+      "parent": null,
+      "protocol": "proteus",
+      "qualified_id": {
+        "domain": "example.com",
+        "id": "a7456160-8978-412d-9c16-8166a9b8cd63"
+      },
+      "receipt_mode": null,
+      "team": null,
+      "type": 0
+    }
+  },
+  "failure": "Expecting value: line 1 column 1 (char 0)",
+  "owned_process_exit_codes": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ]
+}

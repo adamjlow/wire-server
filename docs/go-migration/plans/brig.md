@@ -1783,3 +1783,13 @@ claim binding; retain the actual failed run (native24 exits0/Go1, runner1/cleanu
 and independent empty). Changed production requires fresh pinned full Go/static
 checks and a new exact binary, followed by the same combined backend matrix.
 No Haskell, oracle, schema, security policy or queue defaults change.
+
+Sourcea3d1b09f0 fixes STOMP/optimistic startup and passes fresh full pinned
+Go/static checks and the [combined real backend control](../../../go/services/brig/qualification/evidence/service-optimistic-stomp/README.md).
+Native/Go HTTP-created Dynamo lockversion1 is removed by queued native/Go service
+cleanup and durable replay/readback; real Galley effects and no-redelivery hold.
+All22 exact original executions pass/no failures/errors/skips, all25 exits0,
+runner/cleanup0 and independent resources empty. Retain observer/startup failures.
+Next remaining whole Brig API/internal/federation surface and finite positive TLS
+control; full535/eight-Go/all-entity three-selector/operations/image/legal gates
+remain open. Authorized remote push now throughabb6c113d; subsequent work local.

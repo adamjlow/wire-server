@@ -16,3 +16,5 @@ masked by404 replay. This fixture still requires owned backend execution.
 Real native Galley membership/event and stored connection cleanup now pass with
 expected single queue deliveries, preventing200 decode failure masked by404
 replay, plus durable switchback and22 unchanged originals. Full Brig work remains.
+
+Fix Go Brig startup for optimistic DynamoDB prekeys with STOMP queues; qualify real lock creation/deletion and retain all failed attempts.

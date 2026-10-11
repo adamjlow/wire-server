@@ -1,0 +1,9 @@
+{
+  "removed_duplicate": "/home/operator/.cache/wire-migration/brig-20261010/service-optimistic-stomp-corrected-backend/fixtures/brig-stores.test",
+  "canonical": "/dev/shm/wire-migration-brig-20261010/service-galley-event-corrected-sdk-check/stores.test",
+  "sha256": "40a0477ca0dc63b9259ad2ba59926a4ec976c0dde0cef763da279ec48773b9e5",
+  "size": 73114656,
+  "mode": 33133,
+  "uid": 1001,
+  "gid": 37
+}
