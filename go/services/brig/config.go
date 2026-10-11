@@ -74,12 +74,15 @@ type Config struct {
 		} `yaml:"authSettings"`
 	} `yaml:"zauth"`
 	Settings struct {
-		MaxTeamSize       *uint32  `yaml:"setMaxTeamSize"`
-		ActivationTimeout *float64 `yaml:"setActivationTimeout"`
-		CookieInsecure    bool     `yaml:"setCookieInsecure"`
-		CookieRenewAge    *int64   `yaml:"setUserCookieRenewAge"`
-		CookieLimit       *int     `yaml:"setUserCookieLimit"`
-		CookieThrottle    *struct {
+		RestrictUserCreation *bool     `yaml:"setRestrictUserCreation"`
+		EphemeralCreation    *bool     `yaml:"setEphemeralUserCreationEnabled"`
+		AllowlistDomains     *[]string `yaml:"setAllowlistEmailDomains"`
+		MaxTeamSize          *uint32   `yaml:"setMaxTeamSize"`
+		ActivationTimeout    *float64  `yaml:"setActivationTimeout"`
+		CookieInsecure       bool      `yaml:"setCookieInsecure"`
+		CookieRenewAge       *int64    `yaml:"setUserCookieRenewAge"`
+		CookieLimit          *int      `yaml:"setUserCookieLimit"`
+		CookieThrottle       *struct {
 			StdDev     float64 `yaml:"stdDev"`
 			RetryAfter int64   `yaml:"retryAfter"`
 		} `yaml:"setUserCookieThrottle"`

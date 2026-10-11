@@ -84,10 +84,11 @@ func TestRegistrationInvitationGuardsRunBeforeAccountMutation(t *testing.T) {
 
 func TestRegistrationInvitationActivationOrderingAndSCIMIdentity(t *testing.T) {
 	for _, scenario := range []struct {
-		name, fail           string
-		claimed, added, scim bool
+		name, fail                   string
+		claimed, added, scim, legacy bool
 	}{
 		{name: "ordinary", claimed: true, added: true}, {name: "scim", claimed: true, added: true, scim: true},
+		{name: "legacy-scim-name", claimed: true, added: true, scim: true, legacy: true},
 		{name: "claim-denied", added: true}, {name: "member-denied", claimed: true},
 		{name: "scim-name", claimed: true, added: true, scim: true, fail: "scim-name"},
 		{name: "claim-error", claimed: true, added: true, fail: "claim"},
@@ -117,11 +118,12 @@ func TestRegistrationInvitationActivationOrderingAndSCIMIdentity(t *testing.T) {
 				existing.ManagedBy = "scim"
 				existing.SSO = json.RawMessage(`{"scim_external_id":"native-external"}`)
 			}
-			if scenario.fail == "scim-name" {
+			if scenario.fail == "scim-name" || scenario.legacy {
 				existing.Name = "SCIM controlled name"
 			}
 			service := registrationService{
-				identity: registrationIdentity{owner: func(context.Context, string) (*gocql.UUID, error) { return nil, step("owner") }, account: func(context.Context, gocql.UUID) (*storedUser, error) { t.Fatal("unexpected owner"); return nil, nil }, deleteKey: func(context.Context, string, *gocql.UUID) error { t.Fatal("unexpected stale owner"); return nil }, blacklisted: func(context.Context, string) (bool, error) { return false, step("block") }},
+				preserveSCIMDisplayName: scenario.legacy,
+				identity:                registrationIdentity{owner: func(context.Context, string) (*gocql.UUID, error) { return nil, step("owner") }, account: func(context.Context, gocql.UUID) (*storedUser, error) { t.Fatal("unexpected owner"); return nil, nil }, deleteKey: func(context.Context, string, *gocql.UUID) error { t.Fatal("unexpected stale owner"); return nil }, blacklisted: func(context.Context, string) (bool, error) { return false, step("block") }},
 				guardDomain: func(context.Context, string) error {
 					t.Fatal("ordinary domain guard applied to invitation")
 					return nil
@@ -137,6 +139,9 @@ func TestRegistrationInvitationActivationOrderingAndSCIMIdentity(t *testing.T) {
 					}
 					if scenario.scim && (!reflect.DeepEqual(u.SSO, existing.SSO) || u.ManagedBy == nil || *u.ManagedBy != 1) {
 						t.Fatal("SCIM identity lost")
+					}
+					if scenario.legacy && u.Name != existing.Name {
+						t.Fatal("legacy SCIM display name changed")
 					}
 					return step("store")
 				},

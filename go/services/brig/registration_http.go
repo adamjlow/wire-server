@@ -25,6 +25,12 @@ func registrationHTTPError(w http.ResponseWriter, err error) {
 	var rate passwordRateExceeded
 	var admission registrationAdmissionError
 	switch {
+	case errors.Is(err, errRegistrationRestricted):
+		authenticationWireError(w, 403, "user-creation-restricted", "This instance does not allow creation of personal users or teams.")
+	case errors.Is(err, errRegistrationEphemeralDisabled):
+		authenticationWireError(w, 403, "ephemeral-user-creation-disabled", "Ephemeral user creation is disabled on this instance.")
+	case errors.Is(err, errRegistrationNotAllowlisted):
+		authenticationWireError(w, 403, "unauthorized", "Unauthorized e-mail address")
 	case errors.As(err, &admission):
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(admission.Code)

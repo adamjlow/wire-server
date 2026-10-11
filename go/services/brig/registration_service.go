@@ -26,30 +26,31 @@ var errRegistrationTooManyTeamMembers = errors.New("registration team member lim
 func (registrationCreation) String() string { return "<RegistrationCreation>" }
 
 type registrationService struct {
-	identity           registrationIdentity
-	findInvitation     func(context.Context, *string, string) (*storedInvitation, error)
-	invitedAccount     func(context.Context, gocql.UUID) (*selfProfile, error)
-	claimInvitationKey func(context.Context, string, gocql.UUID) (bool, error)
-	joinInvitation     func(context.Context, gocql.UUID, storedInvitation) (bool, error)
-	removePending      func(context.Context, gocql.UUID) error
-	deleteInvitation   func(context.Context, gocql.UUID, gocql.UUID) error
-	guardDomain        func(context.Context, string) error
-	hash               func(context.Context, passwordRateKey, string, int) (string, error)
-	createAccount      func(context.Context, storedUser) error
-	createSelf         func(context.Context, gocql.UUID) error
-	createTeam         func(context.Context, gocql.UUID, gocql.UUID, registrationTeam) error
-	joinSSO            func(context.Context, gocql.UUID, gocql.UUID) (bool, error)
-	activateStored     func(context.Context, gocql.UUID, *string, bool) error
-	onAccountActivated func(context.Context, *activatedIdentity) error
-	teamName           func(context.Context, gocql.UUID) (string, error)
-	newCode            func(context.Context, string, float64, *gocql.UUID) (activationRecord, error)
-	activate           func(context.Context, string, string, *gocql.UUID, *string) error
-	initFeature        func(context.Context, gocql.UUID) error
-	domain             string
-	locale             registrationLocale
-	sessionTTL         int64
-	activationTimeout  float64
-	now                func() time.Time
+	preserveSCIMDisplayName bool
+	identity                registrationIdentity
+	findInvitation          func(context.Context, *string, string) (*storedInvitation, error)
+	invitedAccount          func(context.Context, gocql.UUID) (*selfProfile, error)
+	claimInvitationKey      func(context.Context, string, gocql.UUID) (bool, error)
+	joinInvitation          func(context.Context, gocql.UUID, storedInvitation) (bool, error)
+	removePending           func(context.Context, gocql.UUID) error
+	deleteInvitation        func(context.Context, gocql.UUID, gocql.UUID) error
+	guardDomain             func(context.Context, string) error
+	hash                    func(context.Context, passwordRateKey, string, int) (string, error)
+	createAccount           func(context.Context, storedUser) error
+	createSelf              func(context.Context, gocql.UUID) error
+	createTeam              func(context.Context, gocql.UUID, gocql.UUID, registrationTeam) error
+	joinSSO                 func(context.Context, gocql.UUID, gocql.UUID) (bool, error)
+	activateStored          func(context.Context, gocql.UUID, *string, bool) error
+	onAccountActivated      func(context.Context, *activatedIdentity) error
+	teamName                func(context.Context, gocql.UUID) (string, error)
+	newCode                 func(context.Context, string, float64, *gocql.UUID) (activationRecord, error)
+	activate                func(context.Context, string, string, *gocql.UUID, *string) error
+	initFeature             func(context.Context, gocql.UUID) error
+	domain                  string
+	locale                  registrationLocale
+	sessionTTL              int64
+	activationTimeout       float64
+	now                     func() time.Time
 }
 
 // Preserve createUserWith's validation, persistence and partial-failure order.
@@ -91,7 +92,9 @@ func (s registrationService) create(ctx context.Context, request registrationReq
 			handle = existing.Handle
 			managed := int32(0)
 			if existing.ManagedBy == "scim" {
-				if n.Name != existing.Name {
+				if s.preserveSCIMDisplayName {
+					n.Name = existing.Name
+				} else if n.Name != existing.Name {
 					return result, errRegistrationSCIMName
 				}
 				managed = 1

@@ -34,6 +34,9 @@ func TestInternalRegistrationRejectsInvalidRequestsBeforeDependencies(t *testing
 	}{
 		{errRegistrationBlacklisted, 403, "blacklisted-email"},
 		{errRegistrationMissingIdentity, 403, "missing-identity"},
+		{errRegistrationRestricted, 403, "user-creation-restricted"},
+		{errRegistrationEphemeralDisabled, 403, "ephemeral-user-creation-disabled"},
+		{errRegistrationNotAllowlisted, 403, "unauthorized"},
 		{errRegistrationInvalidInvitation, 400, "invalid-invitation-code"},
 		{errRegistrationSCIMName, 403, "managed-by-scim"},
 		{errInviteNotAllowed, 403, "condition-failed"},
