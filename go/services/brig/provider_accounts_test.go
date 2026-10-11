@@ -28,7 +28,7 @@ func TestProviderProfileUpdateAdmission(t *testing.T) {
 }
 
 func TestProviderAccountGuardAndWriteOrdering(t *testing.T) {
-	id := gocql.MustParseUUID("11111111-2222-3333-4444-555555555555")
+	id, _ := gocql.ParseUUID("11111111-2222-3333-4444-555555555555")
 	for _, tc := range []struct {
 		name                  string
 		enabled, missing      bool
@@ -76,7 +76,7 @@ func TestProviderAccountGuardAndWriteOrdering(t *testing.T) {
 }
 
 func TestProviderPublicProjectionAndHeaderBoundary(t *testing.T) {
-	id := gocql.MustParseUUID("11111111-2222-3333-4444-555555555555")
+	id, _ := gocql.ParseUUID("11111111-2222-3333-4444-555555555555")
 	account := &providerAccount{ID: id, Name: "Synthetic", Email: "synthetic@example.com", URL: "https://example.com", Description: "Synthetic"}
 	h := providerAccountHTTP{lookup: func(context.Context, gocql.UUID) (*providerAccount, error) { return account, nil }, secondFactorEnabled: func(context.Context, string) (bool, error) { return false, nil }}
 	for _, method := range []string{http.MethodGet, http.MethodHead} {
