@@ -1740,3 +1740,13 @@ Initial tagged event fixture compile at6da24be27 reports a tidy requirement beca
 its import used the old gopkg.in YAML path. Correct it to the module's existing
 go.yaml.in/yaml/v3 dependency; add/change no dependency. Retain failed build receipt
 and log, namespace empty. Production and original assertions remain unchanged.
+
+Source27b4d0639/serviceb8256ee1/tagged40a0477c now passes [real Galley membership proof](../../../go/services/brig/qualification/evidence/service-galley-event/README.md):
+native200 member-leave captured/re-add before work, native and Go real member
+removal and stored connection1→0, exact dispatch deltas1/2/1/1/1 with queue0,
+durable switchback/replay and unchanged original22. No decoder failure masked by
+404 replay; live Go200 acceptance is inferred from source response + observed
+membership and one delivery, explicit in evidence. All25 process exits0,
+runner/cleanup0 and independent empty. Earlier404 proof and failures retained.
+Next trusted positive TLS/optimistic-Dynamo STOMP and remaining whole-service
+surface; no webhook or full535/eight-Go/three-selector qualification claim.

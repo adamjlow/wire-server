@@ -13,3 +13,6 @@ Galley200, other queue configurations and whole Brig acceptance remain pending.
 Add opt-in real Galley conversation/bot membership and stored connection controls,
 a native200 leave-event probe, and exact queue deliveries to detect decoder errors
 masked by404 replay. This fixture still requires owned backend execution.
+Real native Galley membership/event and stored connection cleanup now pass with
+expected single queue deliveries, preventing200 decode failure masked by404
+replay, plus durable switchback and22 unchanged originals. Full Brig work remains.

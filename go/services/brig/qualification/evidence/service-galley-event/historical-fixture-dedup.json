@@ -1,0 +1,9 @@
+{
+  "removed_duplicate": "/home/operator/.cache/wire-migration/brig-20261010/service-queue-native-bot-resumed-backend/fixtures/brig-stores.test",
+  "retained_original": "/dev/shm/wire-migration-brig-20261010/service-queue-native-bot-sdk-check/stores.test",
+  "sha256": "a4939b68d3eab79be12fe4151fbf16a7af91008cff267c3ab09509ff7d1d555b",
+  "size": 73108992,
+  "mode": 365,
+  "uid": 1001,
+  "gid": 37
+}
