@@ -19,6 +19,88 @@ type memoryCookieLookup struct {
 	failOn int
 }
 
+type renewalClientLookup struct {
+	client *storedClient
+	err    error
+	reads  int
+}
+
+func (s *renewalClientLookup) get(context.Context, gocql.UUID, string) (*storedClient, error) {
+	s.reads++
+	return s.client, s.err
+}
+
+func TestAccessRenewalClientAndInactivityOrdering(t *testing.T) {
+	ctx, created := context.Background(), time.Unix(1000, 0)
+	m, cookies, user := testSessionManager()
+	old, err := m.newCookie(ctx, user, nil, 1, nil, false, false, created)
+	if err != nil {
+		t.Fatal(err)
+	}
+	lookup := &memoryCookieLookup{store: cookies}
+	clients := &renewalClientLookup{}
+	accounts := &lifecycleTestStore{existsValue: true, memoryCookieStore: memoryCookieStore{cookies: append([]sessionCookie(nil), cookies.cookies...)}}
+	timeout := 100 * time.Second
+	s := accessRenewalService{
+		tokens:          accessTokenService{lookup: lookup, sessions: m, keys: []ed25519.PublicKey{m.issuer.key.Public().(ed25519.PublicKey)}, now: func() time.Time { return created.Add(101 * time.Second) }},
+		clients:         clients,
+		accounts:        accountLifecycle{accounts: accounts, cookies: accounts, syncIndex: func(context.Context, gocql.UUID) error { return accounts.step("index") }},
+		inactiveTimeout: &timeout,
+	}
+	client := "1"
+	credentials := accessCredentials{cookies: []ZToken{old.token}}
+	if _, err := s.renew(ctx, credentials, &client); !errors.Is(err, ErrInvalidToken) || len(accounts.steps) != 0 || cookies.writes != 1 {
+		t.Fatal("missing client must reject before suspension/issuance", err)
+	}
+	clients.err = errors.New("synthetic client store failure")
+	if _, err := s.renew(ctx, credentials, &client); err == nil || errors.Is(err, ErrInvalidToken) || len(accounts.steps) != 0 {
+		t.Fatal("client storage failure disguised", err)
+	}
+	clients.err, clients.client = nil, &storedClient{ID: client}
+	if _, err := s.renew(ctx, credentials, &client); !errors.Is(err, ErrExpiredToken) || accounts.status != 1 || len(accounts.cookies) != 0 || cookies.writes != 1 {
+		t.Fatal("inactive renewal issued credentials", err)
+	}
+}
+
+func TestAccessRenewalUsesReplacementAndPreservesConnection(t *testing.T) {
+	ctx, created := context.Background(), time.Unix(1000, 0)
+	m, cookies, user := testSessionManager()
+	old, err := m.newCookie(ctx, user, nil, 1, nil, false, false, created)
+	if err != nil {
+		t.Fatal(err)
+	}
+	previous, _, err := m.issuer.access(old.token, nil, created)
+	if err != nil {
+		t.Fatal(err)
+	}
+	now := created.Add(101 * time.Second)
+	clients := &renewalClientLookup{client: &storedClient{ID: "1"}}
+	s := accessRenewalService{
+		tokens:  accessTokenService{lookup: &memoryCookieLookup{store: cookies}, sessions: m, keys: []ed25519.PublicKey{m.issuer.key.Public().(ed25519.PublicKey)}, now: func() time.Time { return now }},
+		clients: clients,
+	}
+	client := "1"
+	renewed, err := s.renew(ctx, accessCredentials{cookies: []ZToken{old.token}, access: &previous}, &client)
+	if err != nil || renewed.cookie == nil || renewed.token.Client == nil || *renewed.token.Client != client || renewed.token.Connection != previous.Connection || renewed.expiresIn != 30 || renewed.token.Expires.Int64() != now.Unix()+30 {
+		t.Fatal("renewal lost client/connection/expiry", err)
+	}
+	if err := renewed.token.Verify(s.tokens.keys, now); err != nil {
+		t.Fatal("renewal token signature invalid", err)
+	}
+	if previous.Expires.Int64() != created.Unix()+30 {
+		t.Fatal("renewal corrupted original signed token")
+	}
+	// A young cookie retains its original row and issues access without an
+	// optional client lookup. Disabled inactivity does not access the account.
+	s.tokens.now = func() time.Time { return now.Add(time.Second) }
+	before := cookies.writes
+	credentials := accessCredentials{cookies: []ZToken{renewed.cookie.token}, access: &renewed.token}
+	unchanged, err := s.renew(ctx, credentials, nil)
+	if err != nil || unchanged.cookie != nil || cookies.writes != before || clients.reads != 1 {
+		t.Fatal("young renewal changed cookie or added client check", err)
+	}
+}
+
 func (s *memoryCookieLookup) lookup(_ context.Context, _ gocql.UUID, expires time.Time, id uint32) (*sessionCookie, error) {
 	s.reads++
 	if s.reads == s.failOn {

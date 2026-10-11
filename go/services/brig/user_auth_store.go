@@ -167,6 +167,63 @@ func (s userAuthStore) setPassword(ctx context.Context, user gocql.UUID, encoded
 	})
 }
 
+// Native existence includes PostgreSQL deletion tombstones. In migration
+// mode, PostgreSQL is checked first under the shared user migration lock.
+func (s userAuthStore) exists(ctx context.Context, user gocql.UUID) (bool, error) {
+	postgres := func() (bool, error) {
+		var found bool
+		err := s.withPostgres(ctx, func(conn *pgx.Conn) error {
+			return conn.QueryRow(ctx, `SELECT EXISTS (SELECT 1 FROM wire_user WHERE id=$1::uuid UNION ALL SELECT 1 FROM deleted_user WHERE id=$1::uuid)`, user.String()).Scan(&found)
+		})
+		return found, userStorageError(err)
+	}
+	cassandra := func() (bool, error) {
+		var id gocql.UUID
+		err := s.cassandra.Query(`SELECT id FROM user WHERE id=?`, user).
+			WithContext(ctx).Consistency(gocql.LocalQuorum).RetryPolicy(&gocql.SimpleRetryPolicy{NumRetries: 1}).Scan(&id)
+		if errors.Is(err, gocql.ErrNotFound) {
+			return false, nil
+		}
+		return err == nil, userStorageError(err)
+	}
+	switch s.mode {
+	case "cassandra":
+		return cassandra()
+	case "postgresql":
+		return postgres()
+	case "migration-to-postgresql":
+		var found bool
+		err := s.withMigrationLock(ctx, user, func() error {
+			var err error
+			found, err = postgres()
+			if err != nil || found {
+				return err
+			}
+			found, err = cassandra()
+			return err
+		})
+		return found, err
+	default:
+		return false, errors.New("invalid user storage mode")
+	}
+}
+
+func (s userAuthStore) updateAccountStatus(ctx context.Context, user gocql.UUID, status int32) error {
+	if status < 0 || status > 4 {
+		return errors.New("invalid account status")
+	}
+	return s.withUserBackend(ctx, user, func(postgres bool) error {
+		if postgres {
+			return userStorageError(s.withPostgres(ctx, func(conn *pgx.Conn) error {
+				_, err := conn.Exec(ctx, `UPDATE wire_user SET account_status=$2::integer WHERE id=$1::uuid`, user.String(), status)
+				return err
+			}))
+		}
+		return userStorageError(s.cassandra.Query(`UPDATE user SET status=? WHERE id=?`, status, user).
+			WithContext(ctx).Consistency(gocql.LocalQuorum).RetryPolicy(&gocql.SimpleRetryPolicy{NumRetries: 5}).Exec())
+	})
+}
+
 func (s userAuthStore) status(ctx context.Context, user gocql.UUID) (*int32, error) {
 	var status *int32
 	err := s.withUserBackend(ctx, user, func(postgres bool) error {

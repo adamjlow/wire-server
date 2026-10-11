@@ -106,6 +106,54 @@ type accessTokenService struct {
 	now      func() time.Time
 }
 
+type clientLookup interface {
+	get(context.Context, gocql.UUID, string) (*storedClient, error)
+}
+
+type accessRenewalService struct {
+	tokens          accessTokenService
+	clients         clientLookup
+	accounts        accountLifecycle
+	inactiveTimeout *time.Duration
+}
+
+type renewedAccess struct {
+	token     ZToken
+	expiresIn int64
+	cookie    *issuedCookie
+}
+
+// Renewal requires a live stored cookie, then an optional real client, then
+// inactivity enforcement. Expired signed access tokens may still be renewed.
+func (s accessRenewalService) renew(ctx context.Context, credentials accessCredentials, client *string) (renewedAccess, error) {
+	user, old, err := s.tokens.validate(ctx, credentials)
+	if err != nil {
+		return renewedAccess{}, err
+	}
+	if client != nil {
+		found, err := s.clients.get(ctx, user, *client)
+		if err != nil {
+			return renewedAccess{}, err
+		}
+		if found == nil {
+			return renewedAccess{}, ErrInvalidToken
+		}
+	}
+	if err := s.accounts.suspendInactive(ctx, user, s.inactiveTimeout, s.tokens.now()); err != nil {
+		return renewedAccess{}, err
+	}
+	next, err := s.tokens.sessions.nextCookie(ctx, old, client, s.tokens.now())
+	if err != nil {
+		return renewedAccess{}, err
+	}
+	cookie := old.token
+	if next != nil {
+		cookie = next.token
+	}
+	token, ttl, err := s.tokens.sessions.issuer.access(cookie, credentials.access, s.tokens.now())
+	return renewedAccess{token: token, expiresIn: ttl, cookie: next}, err
+}
+
 func (s accessTokenService) validateOne(ctx context.Context, token ZToken, access *ZToken, now time.Time) (gocql.UUID, issuedCookie, error) {
 	if access != nil && access.User != token.User {
 		return gocql.UUID{}, issuedCookie{}, ErrInvalidToken

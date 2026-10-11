@@ -1,0 +1,1 @@
+{"result":"failed","scope":"host smoke compile only","command":"GOCACHE=/dev/shm/wire-migration-brig-20261010/go-build-cache GOTOOLCHAIN=local pinned-go test ./...","exit_code":1,"failure":"ld cannot find -largon2 or -lcrypto","unit_tests_executed":false,"host_dependencies_installed":false,"resolution":"identified Docker compiler SDK"}

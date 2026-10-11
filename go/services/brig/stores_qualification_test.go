@@ -76,6 +76,22 @@ func TestOwnedDurableStores(t *testing.T) {
 		if err != nil || a == nil || a.Password == nil || *a.Password != changedPassword {
 			t.Fatalf("%s password update mismatch: %v", mode, err)
 		}
+		if exists, err := s.exists(ctx, id); err != nil || !exists {
+			t.Fatalf("%s existing user lookup: %v", mode, err)
+		}
+		if exists, err := s.exists(ctx, user()); err != nil || exists {
+			t.Fatalf("%s missing user lookup: %v", mode, err)
+		}
+		if err := s.updateAccountStatus(ctx, id, 1); err != nil {
+			t.Fatalf("%s suspend status write: %v", mode, err)
+		}
+		a, err = s.authentication(ctx, id)
+		if err != nil || a == nil || a.Status != 1 || a.Password == nil || *a.Password != changedPassword {
+			t.Fatalf("%s suspend changed unrelated auth state: %v", mode, err)
+		}
+		if err := s.updateAccountStatus(ctx, id, 0); err != nil {
+			t.Fatalf("%s resume status write: %v", mode, err)
+		}
 		if mode == "migration-to-postgresql" {
 			var exists bool
 			if err := postgres.QueryRow(ctx, `SELECT EXISTS(SELECT 1 FROM wire_user WHERE id=$1::uuid)`, id.String()).Scan(&exists); err != nil || !exists {
@@ -91,6 +107,16 @@ func TestOwnedDurableStores(t *testing.T) {
 	if err := stores["migration-to-postgresql"].setPassword(ctx, id, password); err != nil {
 		t.Fatal(err)
 	}
+	if exists, err := stores["migration-to-postgresql"].exists(ctx, id); err != nil || !exists {
+		t.Fatal("migration-mode existence did not find legacy Cassandra user", err)
+	}
+	if err := stores["migration-to-postgresql"].updateAccountStatus(ctx, id, 1); err != nil {
+		t.Fatal(err)
+	}
+	legacyAuth, err := stores["cassandra"].authentication(ctx, id)
+	if err != nil || legacyAuth == nil || legacyAuth.Status != 1 {
+		t.Fatal("migration-mode status write did not stay in Cassandra", err)
+	}
 	if err := stores["migration-to-postgresql"].create(ctx, newRecord(id), nil, nil); err != nil {
 		t.Fatal(err)
 	}
@@ -104,6 +130,11 @@ func TestOwnedDurableStores(t *testing.T) {
 	}
 	if _, err := postgres.Exec(ctx, `INSERT INTO deleted_user(id,created_at) VALUES($1::uuid,now())`, id.String()); err != nil {
 		t.Fatal(err)
+	}
+	for _, mode := range []string{"postgresql", "migration-to-postgresql"} {
+		if exists, err := stores[mode].exists(ctx, id); err != nil || !exists {
+			t.Fatal("native existence excludes deletion tombstone", mode, err)
+		}
 	}
 	r, err := stores["migration-to-postgresql"].get(ctx, id)
 	if err != nil || r == nil || r.Status == nil || *r.Status != 2 || r.Email != nil || r.Name != "default" {
