@@ -205,7 +205,7 @@ func (s propertyService) handle(w http.ResponseWriter, r *http.Request, path str
 	}
 	var err error
 	if write {
-		media, parseErr := mime.ParseMediaType(r.Header.Get("Content-Type"))
+		media, _, parseErr := mime.ParseMediaType(r.Header.Get("Content-Type"))
 		if parseErr != nil || !strings.EqualFold(media, "application/json") {
 			w.WriteHeader(415)
 			return true

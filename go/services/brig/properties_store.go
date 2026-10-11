@@ -26,7 +26,7 @@ func (s propertyStore) query(ctx context.Context, retries int, statement string,
 }
 
 func (s propertyStore) lookup(ctx context.Context, user gocql.UUID, key string) ([]byte, bool, error) {
-	var value []byte
+	var value *[]byte
 	err := s.query(ctx, 1, `SELECT value FROM properties WHERE user=? AND key=?`, user, key).Scan(&value)
 	if errors.Is(err, gocql.ErrNotFound) {
 		return nil, false, nil
@@ -34,7 +34,10 @@ func (s propertyStore) lookup(ctx context.Context, user gocql.UUID, key string) 
 	if err == nil && value == nil {
 		return nil, false, errors.New("property blob decoding failed")
 	}
-	return value, err == nil, userStorageError(err)
+	if err != nil {
+		return nil, false, userStorageError(err)
+	}
+	return *value, true, nil
 }
 
 func (s propertyStore) count(ctx context.Context, user gocql.UUID) (int64, error) {
@@ -76,13 +79,13 @@ func (s propertyStore) all(ctx context.Context, user gocql.UUID) (map[string][]b
 	iter := s.query(ctx, 1, `SELECT key,value FROM properties WHERE user=?`, user).Iter()
 	result := map[string][]byte{}
 	var key *string
-	var value []byte
+	var value *[]byte
 	for iter.Scan(&key, &value) {
 		if key == nil || !validPropertyKey(*key) || value == nil {
 			_ = iter.Close()
 			return nil, errors.New("property row decoding failed")
 		}
-		result[*key] = append([]byte{}, value...)
+		result[*key] = append([]byte{}, (*value)...)
 	}
 	return result, userStorageError(iter.Close())
 }
