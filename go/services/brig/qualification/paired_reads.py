@@ -335,6 +335,11 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             connection_create_cases=[('POST','/v19/connections/'+local_domain+'/'+connection_writer,connection_write_headers),('POST','/v19/connections/'+local_domain+'/'+str(uuid.uuid4()),connection_write_headers),('POST',connection_create_path,lifecycle_headers)]
             native_connection_create_controls=[request(*case)[0] for case in connection_create_cases]
             report['connections_native_create_controls']=native_connection_create_controls
+            update_control_path='/v19/connections/'+local_domain+'/'+connection_targets[0][1]
+            connection_update_cases=[('PUT',update_control_path,connection_headers,{'status':'pending'}),('PUT',update_control_path,connection_headers,{'status':'sent'}),('PUT','/v19/connections/'+local_domain+'/'+str(uuid.uuid4()),connection_headers,{'status':'accepted'}),('PUT',update_control_path,connection_headers,{'status':'missing-legalhold-consent'})]
+            native_connection_update_controls=[request(*case)[0] for case in connection_update_cases]
+            report['connections_native_update_controls']=native_connection_update_controls
+            assert [r['status'] for r in native_connection_update_controls]==[403,204,403,403], 'native local update controls changed'
             assert [r['status'] for r in native_connection_create_controls]==[400,400,403], 'native local connection admission changed'
             assert sum(len(p['json']['connections']) for p in native_connection_pages)==4, 'native paged connection rows lost or repeated'
             local_multi={lifecycle_user:[lifecycle_id,'f',lifecycle_id]}
@@ -820,6 +825,9 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
                 assert original.returncode==0, 'original compiled MLS upload tests failed'
             go_connection_create_controls=[request(*case)[0] for case in connection_create_cases]
             report['connections_go_create_controls']=go_connection_create_controls
+            go_connection_update_controls=[request(*case)[0] for case in connection_update_cases]
+            report['connections_go_update_controls']=go_connection_update_controls
+            assert all(same(ref,actual) for ref,actual in zip(native_connection_update_controls,go_connection_update_controls)), 'native/Go connection update admission mismatch'
             assert all(same(ref,actual) for ref,actual in zip(native_connection_create_controls,go_connection_create_controls)), 'native/Go connection creation admission mismatch'
             go_connection_created,_=request('POST',connection_create_path,connection_write_headers)
             report['connections_go_created']=go_connection_created
@@ -831,6 +839,31 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             report['connections_go_reverse']=go_connection_reverse
             assert go_connection_reverse['status']==200 and go_connection_reverse['json']['status']=='pending', 'Go reverse pending row missing'
             assert go_connection_reverse['json']['qualified_conversation']==go_connection_created['json']['qualified_conversation'], 'Go connection pair has distinct conversations'
+            connection_update_results=[]
+            for path,headers,desired,status,actual in [(reverse_path,recipient_headers,'ignored',200,'ignored'),(reverse_path,recipient_headers,'accepted',200,'accepted'),(reverse_path,recipient_headers,'accepted',204,None),(reverse_path,recipient_headers,'blocked',200,'blocked'),(reverse_path,recipient_headers,'sent',200,'accepted'),(connection_create_path,connection_write_headers,'blocked',200,'blocked'),(connection_create_path,connection_write_headers,'accepted',200,'accepted')]:
+                updated,_=request('PUT',path,headers,{'status':desired})
+                connection_update_results.append(updated)
+                assert updated['status']==status and (actual is None or updated['json']['status']==actual), 'Go local connection transition differs'
+            report['connections_go_updates']=connection_update_results
+            go_connection_created=request('GET',connection_create_path,connection_write_headers)[0]
+            go_connection_reverse=request('GET',reverse_path,recipient_headers)[0]
+            report['connections_go_final_pair']=[go_connection_created,go_connection_reverse]
+            assert go_connection_created['json']['status']==go_connection_reverse['json']['status']=='accepted', 'Go final directed connection state differs'
+            notification_deadline=time.monotonic()+5
+            expected_notifications=[(connection_writer,['sent','accepted','blocked','accepted']),(connection_recipient,['pending','ignored','accepted','blocked','accepted'])]
+            delivered=[]
+            for actor,expected in expected_notifications:
+                while True:
+                    notifications,_=request('GET','/notifications?size=100',{'Z-User':actor},port=8086)
+                    assert notifications['status']==200, 'connection notification read failed'
+                    events=[event for notification in notifications['json']['notifications'] for event in notification['payload'] if event.get('type')=='user.connection']
+                    if len(events)>=len(expected):break
+                    assert time.monotonic()<notification_deadline, 'connection notifications missing'
+                    time.sleep(0.05)
+                assert sorted(e['connection']['status'] for e in events)==sorted(expected), 'connection notification statuses differ'
+                assert all(e['connection']['from']==actor for e in events), 'connection notification recipient differs'
+                delivered.append({'user':actor,'events':events})
+            report['connections_go_delivered_notifications']=delivered
             go_created,_=request('POST','/v19/clients',lifecycle_headers,{**new_body,'password':password})
             report['client_lifecycle_go_created']=go_created
             assert go_created['status']==201 and go_created['location']==go_created['json']['id'], 'Go client creation failed'

@@ -42,6 +42,7 @@ type brigReadHandlers struct {
 	mlsClients         *mlsClientReads
 	connections        *connectionReads
 	localConnections   *connectionLocalService
+	connectionUpdates  *connectionUpdateService
 }
 
 func readJSON(w http.ResponseWriter, r *http.Request, body any) {
@@ -78,6 +79,9 @@ func routeParseError(w http.ResponseWriter, message string) {
 }
 
 func (b brigReadHandlers) handle(w http.ResponseWriter, r *http.Request, path string) bool {
+	if b.connectionUpdates != nil && b.connectionUpdates.handle(w, r, path) {
+		return true
+	}
 	if b.localConnections != nil && b.localConnections.handle(w, r, path) {
 		return true
 	}

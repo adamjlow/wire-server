@@ -63,7 +63,7 @@ func (s connectionLocalService) checkLimit(ctx context.Context, user gocql.UUID)
 	}
 	return nil
 }
-func (s connectionLocalService) event(ctx context.Context, origin gocql.UUID, connection, requestID string, row storedConnection, name *string) error {
+func (s connectionLocalService) event(ctx context.Context, origin gocql.UUID, connection *string, requestID string, row storedConnection, name *string) error {
 	wire, err := row.wire()
 	if err != nil {
 		return err
@@ -73,8 +73,8 @@ func (s connectionLocalService) event(ctx context.Context, origin gocql.UUID, co
 		event["user"] = map[string]string{"name": *name}
 	}
 	push := map[string]any{"recipients": []any{map[string]any{"user_id": row.from.String(), "route": "any", "clients": []string{}}}, "origin": origin.String(), "payload": []any{event}, "is_cells_event": false}
-	if connection != "" {
-		push["origin_connection"] = connection
+	if connection != nil {
+		push["origin_connection"] = *connection
 	}
 	raw, err := json.Marshal([]any{push})
 	if err != nil {
@@ -187,10 +187,10 @@ func (s connectionLocalService) create(ctx context.Context, self, target gocql.U
 			if err != nil {
 				return nil, false, err
 			}
-			if err = s.event(ctx, self, connection, requestID, r, &asker.Name); err != nil {
+			if err = s.event(ctx, self, &connection, requestID, r, &asker.Name); err != nil {
 				return nil, false, err
 			}
-			if err = s.event(ctx, self, connection, requestID, f, nil); err != nil {
+			if err = s.event(ctx, self, &connection, requestID, f, nil); err != nil {
 				return nil, false, err
 			}
 			return &f, false, nil
@@ -213,10 +213,10 @@ func (s connectionLocalService) create(ctx context.Context, self, target gocql.U
 	if err := s.insert(ctx, r); err != nil {
 		return nil, false, err
 	}
-	if err = s.event(ctx, self, connection, requestID, r, &asker.Name); err != nil {
+	if err = s.event(ctx, self, &connection, requestID, r, &asker.Name); err != nil {
 		return nil, false, err
 	}
-	if err = s.event(ctx, self, connection, requestID, f, nil); err != nil {
+	if err = s.event(ctx, self, &connection, requestID, f, nil); err != nil {
 		return nil, false, err
 	}
 	return &f, !existed, nil

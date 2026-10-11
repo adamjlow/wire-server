@@ -9,6 +9,7 @@ import (
 	"github.com/apache/cassandra-gocql-driver/v2"
 	"io"
 	"net/http"
+	"strconv"
 	"time"
 )
 
@@ -54,7 +55,7 @@ func (p brigPeers) connectionLegalhold(ctx context.Context, user *storedUser, re
 
 // Connection mutations must preserve Z-Connection and the native Location
 // header. Existing activation RPC projections intentionally discard both.
-func (p brigPeers) connectionGalley(ctx context.Context, method, path string, user gocql.UUID, connection, requestID string, body []byte) ([]byte, string, error) {
+func (p brigPeers) connectionGalley(ctx context.Context, method, path string, user gocql.UUID, connection *string, requestID string, body []byte) ([]byte, string, error) {
 	for attempt := 0; ; attempt++ {
 		req, err := http.NewRequestWithContext(ctx, method, "http://"+p.galley.Address()+path, bytes.NewReader(body))
 		if err != nil {
@@ -62,8 +63,8 @@ func (p brigPeers) connectionGalley(ctx context.Context, method, path string, us
 		}
 		req.Header.Set("Z-User", user.String())
 		req.Header.Set("Request-Id", requestID)
-		if connection != "" {
-			req.Header.Set("Z-Connection", connection)
+		if connection != nil {
+			req.Header.Set("Z-Connection", *connection)
 		}
 		if body != nil {
 			req.Header.Set("Content-Type", "application/json")
@@ -91,14 +92,14 @@ func (p brigPeers) createConnectionConversation(ctx context.Context, self, targe
 	if err != nil {
 		return gocql.UUID{}, err
 	}
-	_, location, err := p.connectionGalley(ctx, http.MethodPost, "/i/conversations/connect", self, connection, requestID, body)
+	_, location, err := p.connectionGalley(ctx, http.MethodPost, "/i/conversations/connect", self, &connection, requestID, body)
 	if err != nil {
 		return gocql.UUID{}, err
 	}
 	return gocql.ParseUUID(location)
 }
 func (p brigPeers) acceptConnectionConversation(ctx context.Context, self, conv gocql.UUID, connection, requestID string) (int, error) {
-	raw, _, err := p.connectionGalley(ctx, http.MethodPut, "/i/conversations/"+conv.String()+"/accept/v2", self, connection, requestID, nil)
+	raw, _, err := p.connectionGalley(ctx, http.MethodPut, "/i/conversations/"+conv.String()+"/accept/v2", self, &connection, requestID, nil)
 	if err != nil {
 		return 0, err
 	}
@@ -109,4 +110,78 @@ func (p brigPeers) acceptConnectionConversation(ctx context.Context, self, conv 
 		return 0, errors.New("invalid accepted conversation")
 	}
 	return *value.Type, nil
+}
+
+func (p brigPeers) acceptConnectionOptional(ctx context.Context, self, conv gocql.UUID, connection *string, requestID string) (int, error) {
+	raw, _, err := p.connectionGalley(ctx, http.MethodPut, "/i/conversations/"+conv.String()+"/accept/v2", self, connection, requestID, nil)
+	if err != nil {
+		return 0, err
+	}
+	return connectionConversationType(raw)
+}
+func connectionConversationType(raw []byte) (int, error) {
+	var value struct {
+		Type *int `json:"type"`
+	}
+	if json.Unmarshal(raw, &value) != nil || value.Type == nil {
+		return 0, errors.New("invalid connection conversation")
+	}
+	return *value.Type, nil
+}
+func (p brigPeers) blockConnectionConversation(ctx context.Context, self, conv gocql.UUID, domain, requestID string) error {
+	_, _, err := p.connectionGalley(ctx, http.MethodPut, "/i/conversations/"+domain+"/"+conv.String()+"/block", self, nil, requestID, nil)
+	return err
+}
+func (p brigPeers) unblockConnectionConversation(ctx context.Context, self, conv gocql.UUID, domain string, connection *string, requestID string, version int) (int, error) {
+	_, _, err := p.connectionGalley(ctx, http.MethodPut, "/i/conversations/"+domain+"/"+conv.String()+"/unblock", self, connection, requestID, nil)
+	if err != nil {
+		return 0, err
+	}
+	raw, _, err := p.connectionGalley(ctx, http.MethodGet, "/v"+strconv.Itoa(version)+"/conversations/"+domain+"/"+conv.String(), self, nil, requestID, nil)
+	if err != nil {
+		return 0, err
+	}
+	return connectionConversationType(raw)
+}
+func (p brigPeers) connectionMLSEstablished(ctx context.Context, self, target gocql.UUID, domain, requestID string) (int, error) {
+	// Native accepts every HTTP status here: 200 decodes Bool, 403 means
+	// NotAMember, every other response means NotEstablished. Transport errors
+	// are failures, never invented evidence that a conversation is absent.
+	for attempt := 0; ; attempt++ {
+		req, err := http.NewRequestWithContext(ctx, http.MethodGet, "http://"+p.galley.Address()+"/i/mls-one2one-conversations/"+domain+"/"+target.String()+"/established", nil)
+		if err != nil {
+			return 0, err
+		}
+		req.Header.Set("Z-User", self.String())
+		req.Header.Set("Request-Id", requestID)
+		res, err := p.client.Do(req)
+		if err == nil {
+			defer res.Body.Close()
+			switch res.StatusCode {
+			case 403:
+				return 2, nil
+			case 200:
+				raw, err := io.ReadAll(io.LimitReader(res.Body, 4<<20+1))
+				if err != nil {
+					return 0, err
+				}
+				var established bool
+				if len(raw) > 4<<20 || json.Unmarshal(raw, &established) != nil {
+					return 0, errors.New("invalid MLS establishment response")
+				}
+				if established {
+					return 1, nil
+				}
+				return 0, nil
+			default:
+				return 0, nil
+			}
+		}
+		if !retryableBrigRPC(err) || attempt >= 3 || ctx.Err() != nil {
+			return 0, errors.New("MLS establishment request failed")
+		}
+		if waitBrigRetry(ctx, 100*time.Millisecond<<attempt) != nil {
+			return 0, errors.New("MLS establishment request canceled")
+		}
+	}
 }

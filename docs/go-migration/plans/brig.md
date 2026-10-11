@@ -975,3 +975,16 @@ Actual team/LH/app/limit and creation branch notification witnesses are still
 needed with local updates/remote actions and original connection tests. Header
 parser/optional empty connection-origin detail remains finite fidelity work.
 No whole-service gate is advanced; Haskell sources remain unchanged.
+
+### Local update continuation
+
+Preserve complete native directed local state transitions, including Sent/Sent
+accept's returned reverse row, no-op204, missing connection403 and legalhold
+history rejection. Galley accept/block/unblock and established MLS one2one effects
+must precede storage exactly as native. Deterministic MLS conversation ID follows
+native namespace/SHA256/UUID5/owner-bit derivation. Preserve optional versus empty
+origin connection headers/push fields, parameterized writes and existing bounded
+peer retries. Finite proof uses real API creation, repeated local updates and
+notifications, native readback/continuation, original MLS regressions and focused
+negative/effect-order checks. Remote actions remain required next; no successful
+stub or relaxed native oracle is introduced.
