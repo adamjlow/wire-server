@@ -25,6 +25,8 @@ func TestNativeTeamMemberDecode(t *testing.T) {
 		{`{"user":"` + id + `","permissions":{"self":0,"copy":0},"created_by":"` + id + `"}`, false},
 		{`{"user":"` + id + `","permissions":{"self":0,"copy":0},"legalhold_status":"bad"}`, false},
 		{`{"legalhold_status":"enabled"}`, false},
+		{`{"User":"` + id + `","permissions":{"self":0,"copy":0}}`, false},
+		{`{"user":"` + id + `","permissions":{"Self":0,"copy":0}}`, false},
 		{`null`, false},
 	} {
 		_, err := decodeTeamMember([]byte(scenario.body))

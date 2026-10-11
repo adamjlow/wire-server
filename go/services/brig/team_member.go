@@ -18,24 +18,30 @@ import (
 // 200 body as membership. Unknown permission bits are ignored by intToPerms.
 func decodeTeamMember(raw []byte) (string, error) {
 	failure := errors.New("invalid Galley team member")
-	var member struct {
-		User        *string                               `json:"user"`
-		Permissions *struct{ Self, Copy json.RawMessage } `json:"permissions"`
-		Creator     *string                               `json:"created_by"`
-		Created     *string                               `json:"created_at"`
-		Legalhold   *string                               `json:"legalhold_status"`
+	var object map[string]json.RawMessage
+	var member struct{ User, Creator, Created, Legalhold *string }
+	if !validRegistrationJSONText(raw) || json.Unmarshal(raw, &object) != nil || object == nil {
+		return "", failure
 	}
-	if !validRegistrationJSONText(raw) || json.Unmarshal(raw, &member) != nil || member.User == nil || member.Permissions == nil {
+	// Aeson field names are case sensitive. Go's struct decoder alone would
+	// accept User/Permissions/Self, which cannot establish native membership.
+	for name, output := range map[string]any{"user": &member.User, "created_by": &member.Creator, "created_at": &member.Created, "legalhold_status": &member.Legalhold} {
+		if field, present := object[name]; present && json.Unmarshal(field, output) != nil {
+			return "", failure
+		}
+	}
+	var permissions map[string]json.RawMessage
+	if member.User == nil || json.Unmarshal(object["permissions"], &permissions) != nil || permissions == nil {
 		return "", failure
 	}
 	if _, err := registrationUUID(*member.User); err != nil {
 		return "", failure
 	}
-	self, err := teamPermissionWord(member.Permissions.Self)
+	self, err := teamPermissionWord(permissions["self"])
 	if err != nil {
 		return "", failure
 	}
-	copy, err := teamPermissionWord(member.Permissions.Copy)
+	copy, err := teamPermissionWord(permissions["copy"])
 	if err != nil || (copy&8191)&^(self&8191) != 0 {
 		return "", failure
 	}

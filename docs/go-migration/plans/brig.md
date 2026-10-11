@@ -1200,3 +1200,12 @@ missing membership and failed phases. The existing owned native-schema store
 runner adds17 target-team groups plus one outside team,15+2 pagination, all three
 selectors and preservation of other users/teams; reject invalid full metadata.
 Do not claim actual Galley/public deletion/original-suite or whole service proof.
+
+Source954abe23c full pinned checks/static units and actual native-schema stores
+pass (1.86s),17-group pagination/removal and unrelated membership preservation.
+Review found Go struct JSON field matching accepts case variants that native
+Aeson rejects. Require exact native member/permission keys before binding this
+new decoder, with focused uppercase-key regressions. Group storage and tagged
+store assertions are unchanged; retain their exact954abe23c store proof, rerun
+full Go/static checks for the decoder correction and do not repeat unchanged
+native stores solely for metadata/decoder changes not invoked by that fixture.
