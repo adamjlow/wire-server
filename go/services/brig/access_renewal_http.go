@@ -60,18 +60,22 @@ func (s accessRenewalHTTP) handle(w http.ResponseWriter, r *http.Request) {
 		tokenHTTPError(w, err)
 		return
 	}
+	if err := writeAccessResponse(w, renewed, s.cookieInsecure); err != nil {
+		tokenHTTPError(w, err)
+	}
+}
+
+func writeAccessResponse(w http.ResponseWriter, renewed renewedAccess, cookieInsecure bool) error {
 	encoded, err := renewed.token.Encode()
 	if err != nil {
-		tokenHTTPError(w, err)
-		return
+		return err
 	}
 	if renewed.cookie != nil {
 		value, err := renewed.cookie.token.Encode()
 		if err != nil {
-			tokenHTTPError(w, err)
-			return
+			return err
 		}
-		cookie := http.Cookie{Name: "zuid", Value: value, Path: "/access", HttpOnly: true, Secure: !s.cookieInsecure}
+		cookie := http.Cookie{Name: "zuid", Value: value, Path: "/access", HttpOnly: true, Secure: !cookieInsecure}
 		if renewed.cookie.record.Type == 1 {
 			cookie.Expires = renewed.cookie.record.Expires
 		}
@@ -84,4 +88,5 @@ func (s accessRenewalHTTP) handle(w http.ResponseWriter, r *http.Request) {
 		Type    string `json:"token_type"`
 		Expires int64  `json:"expires_in"`
 	}{renewed.token.User, encoded, "Bearer", renewed.expiresIn})
+	return nil
 }

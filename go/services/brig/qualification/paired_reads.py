@@ -25,7 +25,7 @@ def checked(args, timeout=30):
     return result.stdout.strip()
 
 
-def inside(gundeck_path=None, access_switchback=False):
+def inside(gundeck_path=None, access_switchback=False, login_contract=False):
     if os.getuid() != 65534 or os.environ.get('WIRE_E2E_DISPOSABLE') != '1':
         raise ValueError('owned nonroot Docker runner required')
     sys.path.insert(0, '/opt/wire-e2e')
@@ -138,6 +138,10 @@ def inside(gundeck_path=None, access_switchback=False):
             cases += [('POST', '/access', {}), ('POST', '/access/logout', {}),
                       ('POST', '/access', {'Cookie': 'zuid=invalid-synthetic-token'}),
                       ('POST', '/access', {'Authorization': 'Basic synthetic'})]
+        if login_contract:
+            cases += [('POST', '/login', {}, {'email': created['json']['email'], 'password': 'Wrong-synthetic-password'}),
+                      ('POST', '/login', {}, {'email': 'synthetic-absent-' + user + '@example.com', 'password': 'Synthetic-password-2026!'}),
+                      ('POST', '/login?persist=invalid-synthetic', {}, {'email': created['json']['email'], 'password': 'Synthetic-password-2026!'})]
         native_records = [request(*case)[0] for case in cases]
         report['records'].append({'implementation': 'haskell', 'observations': native_records})
         active.terminate()
@@ -240,6 +244,19 @@ def inside(gundeck_path=None, access_switchback=False):
             assert isinstance(go_json['access_token'], str) and go_json['access_token'], 'Go access token missing'
             if replacement:
                 cookie = replacement
+            go_login, go_login_cookie = None, None
+            if login_contract:
+                go_login, go_login_cookie = request('POST', '/login?persist=true', body={
+                    'email': created['json']['email'], 'password': 'Synthetic-password-2026!',
+                    'label': 'synthetic-go-login-device'})
+                report['go_login_observation'] = {
+                    'status': go_login['status'], 'content_type': go_login['content_type'],
+                    'json': {key: value for key, value in go_login.get('json', {}).items() if key != 'access_token'},
+                    'cookie_issued': bool(go_login_cookie)}
+                assert go_login['status'] == 200 and go_login_cookie, 'Go login on native-created account failed'
+                assert go_login['json'].keys() == native_json.keys(), 'login response fields mismatch'
+                assert go_login['content_type'] == reference_access['content_type'], 'login media type mismatch'
+                assert all(go_login['json'][key] == native_json[key] for key in ('user', 'token_type', 'expires_in')), 'login response contract mismatch'
             revoked, _ = request('POST', '/access/logout', {
                 'Cookie': second_cookie.split(';', 1)[0],
                 'Authorization': 'Bearer ' + second_login['json']['access_token']})
@@ -260,6 +277,15 @@ def inside(gundeck_path=None, access_switchback=False):
                 'Authorization': 'Bearer ' + go_json['access_token']})
             assert consumed['status'] == 200, 'native Brig rejected Go-issued token/cookie/state'
             assert all(consumed['json'][key] == native_json[key] for key in ('user', 'token_type', 'expires_in')), 'native consumption changed access contract'
+            if login_contract:
+                login_consumed, _ = request('POST', '/access', {
+                    'Cookie': go_login_cookie.split(';', 1)[0],
+                    'Authorization': 'Bearer ' + go_login['json']['access_token']})
+                report['native_consumed_go_login'] = {
+                    'status': login_consumed['status'],
+                    'json': {key: value for key, value in login_consumed.get('json', {}).items() if key != 'access_token'}}
+                assert login_consumed['status'] == 200, 'native Brig rejected Go login cookie/token/store state'
+                assert all(login_consumed['json'][key] == native_json[key] for key in ('user', 'token_type', 'expires_in')), 'native Go-login consumption contract mismatch'
             rejected, _ = request('POST', '/access', {
                 'Cookie': second_cookie.split(';', 1)[0],
                 'Authorization': 'Bearer ' + second_login['json']['access_token']})
@@ -312,9 +338,10 @@ def main():
     parser.add_argument('--gundeck-receipt', type=Path)
     parser.add_argument('--gundeck-path')
     parser.add_argument('--access-switchback', action='store_true')
+    parser.add_argument('--login-contract', action='store_true')
     args = parser.parse_args()
     if args.in_container:
-        return inside(args.gundeck_path, args.access_switchback)
+        return inside(args.gundeck_path, args.access_switchback, args.login_contract)
     if args.binary is None or args.build_receipt is None or args.output is None:
         parser.error('identified binary, receipt and new output required')
     sys.path.insert(0, str(ROOT / 'tools/parity/docker'))
@@ -340,6 +367,10 @@ def main():
     runner['command'] = ['--in-container']
     if args.access_switchback:
         runner['command'].append('--access-switchback')
+    if args.login_contract:
+        if not args.access_switchback:
+            raise ValueError('login qualification requires credential switchback')
+        runner['command'].append('--login-contract')
     if args.gundeck_binary:
         runner['command'] += ['--gundeck-path', '/candidate/gundeck']
         runner['volumes'].append({'type': 'bind', 'source': str(args.gundeck_binary.resolve(strict=True)),

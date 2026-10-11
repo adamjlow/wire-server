@@ -13,8 +13,9 @@ import (
 )
 
 type brigPeers struct {
-	client *http.Client
-	galley Endpoint
+	client  *http.Client
+	galley  Endpoint
+	gundeck Endpoint
 }
 
 func (p brigPeers) indexTeam(ctx context.Context, team, user, requestID string) (string, *indexRole, error) {

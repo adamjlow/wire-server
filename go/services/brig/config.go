@@ -72,8 +72,14 @@ type Config struct {
 		} `yaml:"authSettings"`
 	} `yaml:"zauth"`
 	Settings struct {
-		CookieInsecure  bool   `yaml:"setCookieInsecure"`
-		CookieRenewAge  *int64 `yaml:"setUserCookieRenewAge"`
+		CookieInsecure bool   `yaml:"setCookieInsecure"`
+		CookieRenewAge *int64 `yaml:"setUserCookieRenewAge"`
+		CookieLimit    *int   `yaml:"setUserCookieLimit"`
+		CookieThrottle *struct {
+			StdDev     float64 `yaml:"stdDev"`
+			RetryAfter int64   `yaml:"retryAfter"`
+		} `yaml:"setUserCookieThrottle"`
+		FailedLogins    *failedLoginLimit `yaml:"setLimitFailedLogins"`
 		SuspendInactive *struct {
 			Timeout float64 `yaml:"suspendTimeout"`
 		} `yaml:"setSuspendInactiveUsers"`

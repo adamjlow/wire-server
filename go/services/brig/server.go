@@ -142,8 +142,8 @@ func Run(ctx context.Context, c Config) error {
 	if err != nil {
 		return err
 	}
-	if c.Elasticsearch == nil || c.Settings.CookieRenewAge == nil {
-		return errors.New("missing renewal/search index configuration")
+	if c.Elasticsearch == nil || c.Settings.CookieRenewAge == nil || c.Settings.CookieLimit == nil || c.Settings.CookieThrottle == nil {
+		return errors.New("missing session/search index configuration")
 	}
 	timeout, err := inactiveTimeout(c)
 	if err != nil {
@@ -173,7 +173,7 @@ func Run(ctx context.Context, c Config) error {
 	}
 	transport := http.DefaultTransport.(*http.Transport).Clone()
 	defer transport.CloseIdleConnections()
-	business := brigReadHandlers{config: c, users: userStore{userAuthStore{cassandra: cassandra, postgres: postgres, mode: c.Migration["user"], acquisition: time.Duration(c.PostgresPool.Acquisition)}}, sessions: sessionStore{cassandra}, peers: brigPeers{client: &http.Client{Transport: transport, Timeout: 30 * time.Second}, galley: c.Galley}}
+	business := brigReadHandlers{config: c, users: userStore{userAuthStore{cassandra: cassandra, postgres: postgres, mode: c.Migration["user"], acquisition: time.Duration(c.PostgresPool.Acquisition)}}, sessions: sessionStore{cassandra}, peers: brigPeers{client: &http.Client{Transport: transport, Timeout: 30 * time.Second}, galley: c.Galley, gundeck: c.Gundeck}}
 	business.clients = &clientReadHandlers{store: clientStore{cassandra}}
 	issuer := tokenIssuer{key: private, index: int64(c.ZAuth.Settings.KeyIndex), userTTL: c.ZAuth.Settings.UserTTL, sessionTTL: c.ZAuth.Settings.SessionTTL, accessTTL: c.ZAuth.Settings.AccessTTL, legalUserTTL: c.ZAuth.Settings.LegalHoldUserTTL, legalAccessTTL: c.ZAuth.Settings.LegalHoldAccessTTL}
 	business.access = &accessTokenService{lookup: business.sessions, sessions: sessionManager{store: business.sessions, issuer: issuer, renewAge: *c.Settings.CookieRenewAge}, keys: public, now: time.Now}
@@ -195,6 +195,19 @@ func Run(ctx context.Context, c Config) error {
 		verificationEnabled: business.peers.verificationEnabled,
 		verifyCode:          verificationCodeStore{cassandra}.verify,
 	}
+	notifications := newSessionNotifications(ctx, business.peers)
+	defer notifications.close()
+	loginSessions := business.access.sessions
+	loginSessions.limit = *c.Settings.CookieLimit
+	loginSessions.throttle = cookieThrottle{stdDev: c.Settings.CookieThrottle.StdDev, retryAfter: c.Settings.CookieThrottle.RetryAfter}
+	business.login = &loginHTTP{service: loginService{
+		resolve: business.users.resolveLogin, pending: business.users.pendingLoginActivation,
+		authenticate: business.auth.passwords.authenticate, account: business.users.get,
+		verificationEnabled: business.peers.verificationEnabled, verifyCode: verificationCodeStore{cassandra}.verify,
+		budgets: loginBudgetStore{cassandra}, limit: c.Settings.FailedLogins,
+		lifecycle:       accountLifecycle{accounts: business.users.userAuthStore, cookies: business.sessions},
+		inactiveTimeout: timeout, sessions: loginSessions, now: time.Now,
+	}, syncIndex: index.sync, refreshSuggested: notifications.submit, cookieInsecure: c.Settings.CookieInsecure}
 	server := &http.Server{Handler: newHandler(c, &business), ReadHeaderTimeout: 10 * time.Second, IdleTimeout: 60 * time.Second}
 	return serve(ctx, server, listener)
 }
