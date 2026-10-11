@@ -1085,3 +1085,29 @@ ordering and all supported user storage modes. Reference APIs include self delet
 code verification, internal enqueue/consumer and remote-deleted connections. Reuse
 unchanged connection22 and deletion/account/MLS originals for appropriate surface
 coverage. Retain inherited security concerns, no Haskell fixes or oracle changes.
+
+### Account deletion engine and durable storage
+
+Implement the native synchronous deletion engine with explicit required effects,
+public self admission (deleted immediate return, active/suspended team owner check,
+password-only lookup/verification without password upgrade, verified email code
+branch and identityless deletion), queue replay including tombstoned users, and
+stop-on-failure order. Preserve property/key cleanup before user deletion, peers
+and client storage before search/events, notifications before connection cleanup,
+and cookies last. Store adapter uses native CQL tombstone/handle ownership and
+claim subtraction TTL3600; PG serializable DELETE RETURNING created_at + optional
+deleted_user insert, native migration shared-lock/selector; invitation reuse and
+SCIM pending row cleanup; contacts page100/bound16 reverse writes then partition
+clear. No statement interpolates request-controlled SQL/CQL identifiers.
+
+Security: reuse pinned Go1.26.9 and existing password/driver packages; generic
+errors, no hash upgrade/SAML/status reauth bypass introduced, email/handle owners
+guarded, interrupted cleanup does not report success. No new dependency. Focused
+admission/failure/replay tests plus actual native-schema store tests for three
+selectors/Cassandra migration residence, tombstone retained fields, repeated/absent
+PG deletion, reassigned email/handle/claim preservation and101-contact cleanup
+across native pages. Use existing SDK controller and stores.py; no new backend
+oracle, native schema utility unchanged. API/consumer/peer/group/email/federation
+notification binding remains next and this unbound engine is not advertised as
+completed DELETE/self or recovery of original22. Stop speculative checks after
+these finite controls; finish actual public deletion and reuse the original tests.
