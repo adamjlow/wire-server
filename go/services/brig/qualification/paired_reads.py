@@ -26,7 +26,7 @@ def checked(args, timeout=30):
     return result.stdout.strip()
 
 
-def inside(gundeck_path=None, access_switchback=False, login_contract=False, activation_contract=False, registration_contract=False, saml_registration_contract=False, public_registration_contract=False, password_reset_contract=False, password_change_contract=False, ses_feedback_contract=False, properties_contract=False, client_update_contract=False, client_registration_contract=False):
+def inside(gundeck_path=None, access_switchback=False, login_contract=False, activation_contract=False, registration_contract=False, saml_registration_contract=False, public_registration_contract=False, password_reset_contract=False, password_change_contract=False, ses_feedback_contract=False, properties_contract=False, client_update_contract=False, client_registration_contract=False, client_lifecycle_contract=False):
     registration_contract = registration_contract or saml_registration_contract
     if os.getuid() != 65534 or os.environ.get('WIRE_E2E_DISPOSABLE') != '1':
         raise ValueError('owned nonroot Docker runner required')
@@ -51,7 +51,7 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             data = response.read()
             result = {'method': method, 'path': path, 'status': response.status,
                       'content_type': response.getheader('Content-Type'), 'body': data.decode()}
-            if method == 'POST' and path in ('/i/users','/register'):
+            if method == 'POST' and (path in ('/i/users','/register') or path.endswith('/clients')):
                 result['location'] = response.getheader('Location')
             try:
                 result['json'] = json.loads(data)
@@ -252,6 +252,37 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             activation_pair = stage_email(activation_email)
             report['native_activation_reference'] = native_activation
             report['native_activation_repeat_reference'] = native_repeat
+        if client_lifecycle_contract:
+            import base64
+            seed=base64.b64decode('pQABAQcCoQBYIDXdN8VlKb5lbgPmoDPLPyqNIEyShG4oT/DlW0peRRZUA6EAoQBYILLf1TIwSB62q69Ojs/X1tzJ+dYHNAw4QbW/7TC5vSZqBPY=')
+            last_key=base64.b64encode(seed[:4]+bytes([0x19,0xff,0xff])+seed[5:]).decode()
+            second_key=base64.b64encode(seed[:2]+bytes([2])+seed[3:4]+bytes([0x19,0xff,0xff])+seed[5:]).decode()
+            ordinary_key=base64.b64encode(seed).decode()
+            password='Synthetic-client-lifecycle-password!'
+            actor,_=request('POST','/i/users',body={'name':'Synthetic client lifecycle','password':password})
+            report['client_lifecycle_native_actor']=actor
+            assert actor['status']==201, 'native client lifecycle actor setup failed'
+            lifecycle_user=actor['json']['id'];lifecycle_headers={'Z-User':lifecycle_user,'Z-Connection':'synthetic-client-lifecycle'}
+            native_body={'type':'permanent','lastkey':{'id':65535,'key':last_key},'prekeys':[{'id':7,'key':ordinary_key}],'label':'native-durable-client','model':'synthetic-model','class':'desktop','capabilities':['legalhold-implicit-consent'],'mls_public_keys':{'ed25519':'AQI='}}
+            first,_=request('POST','/v19/clients',lifecycle_headers,native_body)
+            report['client_lifecycle_native_created']=first
+            assert first['status']==201, 'native client creation failed'
+            lifecycle_id=first['json']['id'];lifecycle_path='/v19/clients/'+lifecycle_id
+            native_lifecycle_state=[request('GET',lifecycle_path,lifecycle_headers)[0],request('GET',lifecycle_path+'/prekeys',lifecycle_headers)[0]]
+            report['client_lifecycle_native_state']=native_lifecycle_state
+            new_body={'type':'permanent','lastkey':{'id':65535,'key':second_key},'prekeys':[{'id':7,'key':ordinary_key}],'label':'go-durable-client','class':'phone','capabilities':['legalhold-implicit-consent'],'mls_public_keys':{'ed25519':'AQID'}}
+            absent_headers={**lifecycle_headers,'Z-User':str(uuid.uuid4())}
+            lifecycle_cases=[
+                ('POST','/v19/clients',absent_headers,{**new_body,'type':'legalhold'}),
+                ('POST','/v19/clients',absent_headers,new_body),
+                ('POST','/v19/clients',lifecycle_headers,new_body),
+                ('POST','/v19/clients',lifecycle_headers,{**new_body,'password':'Synthetic-wrong-password!'}),
+                ('DELETE',lifecycle_path,lifecycle_headers,{}),
+                ('DELETE',lifecycle_path,lifecycle_headers,{'password':'Synthetic-wrong-password!'}),
+                ('DELETE','/v19/clients/f',lifecycle_headers,{})]
+            native_lifecycle_controls=[request(*case)[0] for case in lifecycle_cases]
+            report['client_lifecycle_native_controls']=native_lifecycle_controls
+            assert [r['status'] for r in native_lifecycle_controls]==[400,400,403,403,403,403,404], 'native lifecycle controls changed'
         if client_update_contract:
             import base64
             seed=base64.b64decode('pQABAQcCoQBYIDXdN8VlKb5lbgPmoDPLPyqNIEyShG4oT/DlW0peRRZUA6EAoQBYILLf1TIwSB62q69Ojs/X1tzJ+dYHNAw4QbW/7TC5vSZqBPY=')
@@ -480,6 +511,54 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
                 mismatches.append({'case': index, 'path': cases[index][1], 'fields': [key for key in fields if native.get(key) != go.get(key)]})
         report['mismatches'] = mismatches
         assert not mismatches, 'paired response mismatches'
+        if client_lifecycle_contract:
+            fields=lambda record: ('status','content_type','json' if 'json' in record else 'body')
+            same=lambda ref,actual: all(ref.get(k)==actual.get(k) for k in fields(ref))
+            go_lifecycle_state=[request('GET',lifecycle_path,lifecycle_headers)[0],request('GET',lifecycle_path+'/prekeys',lifecycle_headers)[0]]
+            report['client_lifecycle_go_reads_native']=go_lifecycle_state
+            assert all(same(ref,actual) for ref,actual in zip(native_lifecycle_state,go_lifecycle_state)), 'Go lost native-created client/prekey state'
+            go_lifecycle_controls=[request(*case)[0] for case in lifecycle_cases]
+            report['client_lifecycle_go_controls']=go_lifecycle_controls
+            lifecycle_mismatches=[{'case':i,'fields':[k for k in fields(ref) if ref.get(k)!=actual.get(k)]} for i,(ref,actual) in enumerate(zip(native_lifecycle_controls,go_lifecycle_controls)) if not same(ref,actual)]
+            report['client_lifecycle_mismatches']=lifecycle_mismatches
+            assert not lifecycle_mismatches, 'native lifecycle admission responses mismatch'
+            go_created,_=request('POST','/v19/clients',lifecycle_headers,{**new_body,'password':password})
+            report['client_lifecycle_go_created']=go_created
+            assert go_created['status']==201 and go_created['location']==go_created['json']['id'], 'Go client creation failed'
+            go_id=go_created['json']['id'];assert go_id!=lifecycle_id, 'synthetic distinct prekey fixture collision'
+            go_path='/v19/clients/'+go_id
+            go_created_state=[request('GET',go_path,lifecycle_headers)[0],request('GET',go_path+'/prekeys',lifecycle_headers)[0]]
+            report['client_lifecycle_go_created_state']=go_created_state
+            assert go_created_state[0]['json']==go_created['json'] and go_created_state[1]['json']==[7,65535], 'Go creation did not persist response and keys'
+            deleted,_=request('DELETE',lifecycle_path,lifecycle_headers,{'password':password})
+            report['client_lifecycle_go_deleted']=deleted
+            assert deleted['status']==200 and deleted['body']=='' and deleted['content_type'] is None, 'Go native-client deletion failed'
+            go_deleted_state=[request('GET',lifecycle_path,lifecycle_headers)[0],request('GET',lifecycle_path+'/prekeys',lifecycle_headers)[0]]
+            report['client_lifecycle_go_deleted_state']=go_deleted_state
+            assert go_deleted_state[0]['status']==404 and go_deleted_state[1]['json']==[], 'Go deletion retained client/prekeys'
+            active.terminate();report['client_lifecycle_go_stop_exit_code']=active.wait(timeout=35)
+            assert report['client_lifecycle_go_stop_exit_code']==0, 'Go lifecycle stop failed'
+            with socket.socket() as check:
+                assert check.connect_ex(('127.0.0.1',8082))!=0, 'Go lifecycle listener remains'
+            log=open('/reports/brig-native-client-lifecycle-switchback.log','w');logs.append(log)
+            active=subprocess.Popen([str(native_brig_path),'-c',str(runtime.WORK/'brig-static-0.json')],cwd=runtime.WORK/'services/brig',stdout=log,stderr=subprocess.STDOUT)
+            processes.append(active);ready(active)
+            native_go_state=[request('GET',go_path,lifecycle_headers)[0],request('GET',go_path+'/prekeys',lifecycle_headers)[0]]
+            native_deleted_state=[request('GET',lifecycle_path,lifecycle_headers)[0],request('GET',lifecycle_path+'/prekeys',lifecycle_headers)[0]]
+            report['client_lifecycle_native_reads_go']=native_go_state
+            report['client_lifecycle_native_reads_deletion']=native_deleted_state
+            assert all(same(ref,actual) for ref,actual in zip(go_created_state,native_go_state)), 'native lost Go-created client state'
+            assert all(same(ref,actual) for ref,actual in zip(go_deleted_state,native_deleted_state)), 'native lost Go deletion state'
+            claim,_=request('GET','/v19/users/'+peers['brig']['optSettings']['setFederationDomain']+'/'+lifecycle_user+'/prekeys/'+go_id,lifecycle_headers)
+            report['client_lifecycle_native_claims_go_prekey']=claim
+            assert claim['status']==200 and claim['json']['prekey']=={'id':7,'key':ordinary_key}, 'native cannot consume Go-created prekey'
+            restored,_=request('POST','/v19/clients',lifecycle_headers,{**native_body,'prekeys':[],'mls_public_keys':{},'password':password})
+            report['client_lifecycle_native_recreated_deleted']=restored
+            assert restored['status']==201, 'native cannot recreate Go-deleted client'
+            retained,_=request('GET',lifecycle_path,lifecycle_headers)
+            report['client_lifecycle_native_retained_mls']=retained
+            assert retained['status']==200 and retained['json']['mls_public_keys']=={'ed25519':'AQI='}, 'Go deletion changed native MLS retention'
+            report['client_lifecycle_switchback']={'same_initialized_stores':True,'native_accepts_go_creation':True,'native_accepts_go_deletion':True,'native_claims_go_created_prekey':True,'native_mls_retention_preserved':True}
         if client_update_contract:
             fields=lambda record: ('status','content_type','json' if 'json' in record else 'body')
             go_updates=[request(*case)[0] for case in update_cases]
@@ -1095,6 +1174,7 @@ def main():
     parser.add_argument('--properties-contract', action='store_true')
     parser.add_argument('--client-update-contract', action='store_true')
     parser.add_argument('--client-registration-contract', action='store_true')
+    parser.add_argument('--client-lifecycle-contract', action='store_true')
     args = parser.parse_args()
     if (args.registration_contract or args.saml_registration_contract) and (args.activation_contract or args.access_switchback or args.login_contract):
         parser.error('registration observation runs separately from credential/activation observations')
@@ -1112,8 +1192,10 @@ def main():
         parser.error('client update observation runs separately')
     if args.client_registration_contract and any((args.registration_contract,args.saml_registration_contract,args.activation_contract,args.access_switchback,args.login_contract,args.public_registration_contract,args.password_reset_contract,args.password_change_contract,args.ses_feedback_contract,args.properties_contract,args.client_update_contract)):
         parser.error('client registration observation runs separately')
+    if args.client_lifecycle_contract and any((args.registration_contract,args.saml_registration_contract,args.activation_contract,args.access_switchback,args.login_contract,args.public_registration_contract,args.password_reset_contract,args.password_change_contract,args.ses_feedback_contract,args.properties_contract,args.client_update_contract,args.client_registration_contract)):
+        parser.error('client lifecycle observation runs separately')
     if args.in_container:
-        return inside(args.gundeck_path, args.access_switchback, args.login_contract, args.activation_contract, args.registration_contract, args.saml_registration_contract, args.public_registration_contract, args.password_reset_contract, args.password_change_contract, args.ses_feedback_contract, args.properties_contract, args.client_update_contract, args.client_registration_contract)
+        return inside(args.gundeck_path, args.access_switchback, args.login_contract, args.activation_contract, args.registration_contract, args.saml_registration_contract, args.public_registration_contract, args.password_reset_contract, args.password_change_contract, args.ses_feedback_contract, args.properties_contract, args.client_update_contract, args.client_registration_contract, args.client_lifecycle_contract)
     if args.binary is None or args.build_receipt is None or args.output is None:
         parser.error('identified binary, receipt and new output required')
     sys.path.insert(0, str(ROOT / 'tools/parity/docker'))
@@ -1163,6 +1245,8 @@ def main():
         runner['command'].append('--client-update-contract')
     if args.client_registration_contract:
         runner['command'].append('--client-registration-contract')
+    if args.client_lifecycle_contract:
+        runner['command'].append('--client-lifecycle-contract')
     if args.gundeck_binary:
         runner['command'] += ['--gundeck-path', '/candidate/gundeck']
         runner['volumes'].append({'type': 'bind', 'source': str(args.gundeck_binary.resolve(strict=True)),
