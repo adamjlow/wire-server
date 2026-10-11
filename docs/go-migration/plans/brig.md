@@ -1694,3 +1694,13 @@ bot_conv for native PostgreSQL/migration writes and CQL only for Cassandra.
 Require the native-created account/name to exist before attaching rows, then
 read its actual selected backend. Metadata/clients/prekeys/MLS/properties stay
 CQL. No native or production Go behavior changes.
+
+Corrected backend source d72ba4206 reaches PostgreSQL native actor/association
+but pre-enqueue fails because /i/users creates status3 Ephemeral without identity.
+Native Provider.API NewStoredUser bot constructor (834–855) instead has Active0,
+UserTypeBot1, activatedTrue and no expiry. Attach these exact source-defined bot
+fields with provider/service to the verified native-created account, then require
+both initial status0/type1 and retained type1 after deletion. Do not relax the
+expected bot status or modify Haskell/Go production behavior. Retain both failed
+fixtures/receipts and empty cleanup; native service metadata admission already
+passed in the initial trial. Final whole acceptance remains incomplete.

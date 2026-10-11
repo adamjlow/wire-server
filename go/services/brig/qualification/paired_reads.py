@@ -109,7 +109,7 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
         assert rows['counts'] == {'service': 1, 'bot_association': 1, 'team_bot_association': 1,
             'whitelist': 1, 'whitelist_rev': 1, 'prefix': 1, 'tags': 7,
             'user': 1, 'clients': 1, 'prekeys': 2, 'mls_public_keys': 1, 'properties': 1}, 'service bot initial raw rows differ'
-        assert rows['status'] == 0 and rows['provider'] == fixture['Provider'] and rows['service'] == fixture['Service'], 'service bot account association differs'
+        assert rows['status'] == 0 and rows['user_type'] == 1 and rows['provider'] == fixture['Provider'] and rows['service'] == fixture['Service'], 'service bot account association differs'
         report['service_queue_'+phase+'_created'] = {'actor': actor, 'client': client,
             'property': prop, 'fixture': fixture, 'rows': rows}
         return fixture
@@ -132,7 +132,7 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
                 break
             assert time.monotonic() < deadline, 'service bot cleanup not completed and acknowledged: '+phase
             time.sleep(0.2)
-        assert rows['provider'] == actor['Provider'] and rows['service'] == actor['Service'] and rows['name'] == 'Synthetic service queue bot', 'service deletion lost native bot identity'
+        assert rows['user_type'] == 1 and rows['provider'] == actor['Provider'] and rows['service'] == actor['Service'] and rows['name'] == 'Synthetic service queue bot', 'service deletion lost native bot identity'
         status = request('GET', '/i/users/'+actor['User']+'/status')[0]
         assert status['status'] == 200 and status['json'] == {'status': 'deleted'}, 'service bot HTTP status differs'
         report['service_queue_'+phase] = {'rows': rows, 'queue': queue, 'status': status}
