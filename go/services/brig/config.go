@@ -74,20 +74,21 @@ type Config struct {
 		} `yaml:"authSettings"`
 	} `yaml:"zauth"`
 	Settings struct {
-		PropertyMaxKeyLen    *int64                    `yaml:"setPropertyMaxKeyLen"`
-		PropertyMaxValueLen  *int64                    `yaml:"setPropertyMaxValueLen"`
-		FederationStrategy   *string                   `yaml:"setFederationStrategy"`
-		FederationDomains    *[]federationStaticDomain `yaml:"setFederationDomainConfigs"`
-		SQSThrottleMillis    *int64                    `yaml:"sqsThrottleMillis"`
-		RestrictUserCreation *bool                     `yaml:"setRestrictUserCreation"`
-		EphemeralCreation    *bool                     `yaml:"setEphemeralUserCreationEnabled"`
-		AllowlistDomains     *[]string                 `yaml:"setAllowlistEmailDomains"`
-		MaxTeamSize          *uint32                   `yaml:"setMaxTeamSize"`
-		ActivationTimeout    *float64                  `yaml:"setActivationTimeout"`
-		CookieInsecure       bool                      `yaml:"setCookieInsecure"`
-		CookieRenewAge       *int64                    `yaml:"setUserCookieRenewAge"`
-		CookieLimit          *int                      `yaml:"setUserCookieLimit"`
-		CookieThrottle       *struct {
+		ConsumableNotifications bool                      `yaml:"consumableNotifications"`
+		PropertyMaxKeyLen       *int64                    `yaml:"setPropertyMaxKeyLen"`
+		PropertyMaxValueLen     *int64                    `yaml:"setPropertyMaxValueLen"`
+		FederationStrategy      *string                   `yaml:"setFederationStrategy"`
+		FederationDomains       *[]federationStaticDomain `yaml:"setFederationDomainConfigs"`
+		SQSThrottleMillis       *int64                    `yaml:"sqsThrottleMillis"`
+		RestrictUserCreation    *bool                     `yaml:"setRestrictUserCreation"`
+		EphemeralCreation       *bool                     `yaml:"setEphemeralUserCreationEnabled"`
+		AllowlistDomains        *[]string                 `yaml:"setAllowlistEmailDomains"`
+		MaxTeamSize             *uint32                   `yaml:"setMaxTeamSize"`
+		ActivationTimeout       *float64                  `yaml:"setActivationTimeout"`
+		CookieInsecure          bool                      `yaml:"setCookieInsecure"`
+		CookieRenewAge          *int64                    `yaml:"setUserCookieRenewAge"`
+		CookieLimit             *int                      `yaml:"setUserCookieLimit"`
+		CookieThrottle          *struct {
 			StdDev     float64 `yaml:"stdDev"`
 			RetryAfter int64   `yaml:"retryAfter"`
 		} `yaml:"setUserCookieThrottle"`

@@ -44,8 +44,12 @@ func (p brigPeers) galleyRPC(ctx context.Context, method, path, requestID string
 }
 
 func (p brigPeers) galleyRPCStatus(ctx context.Context, method, path, requestID string, body []byte, allowMissing, allowForbidden bool, user *gocql.UUID) ([]byte, int, error) {
+	return p.replayableRPCStatus(ctx, p.galley, method, path, requestID, body, allowMissing, allowForbidden, user)
+}
+
+func (p brigPeers) replayableRPCStatus(ctx context.Context, endpoint Endpoint, method, path, requestID string, body []byte, allowMissing, allowForbidden bool, user *gocql.UUID) ([]byte, int, error) {
 	for attempt := 0; ; attempt++ {
-		req, err := http.NewRequestWithContext(ctx, method, "http://"+p.galley.Address()+path, bytes.NewReader(body))
+		req, err := http.NewRequestWithContext(ctx, method, "http://"+endpoint.Address()+path, bytes.NewReader(body))
 		if err != nil {
 			return nil, 0, errors.New("invalid Galley activation endpoint")
 		}
