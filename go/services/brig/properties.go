@@ -178,11 +178,11 @@ func (s propertyService) event(ctx context.Context, user gocql.UUID, connection,
 func propertyHTTPError(w http.ResponseWriter, err error) {
 	switch {
 	case errors.Is(err, errPropertyKeyLarge):
-		wireError(w, 403, "property-key-too-large", "The property key is too large.")
+		authenticationWireError(w, 403, "property-key-too-large", "The property key is too large.")
 	case errors.Is(err, errPropertyValueLarge):
-		wireError(w, 403, "property-value-too-large", "The property value is too large")
+		authenticationWireError(w, 403, "property-value-too-large", "The property value is too large")
 	case errors.Is(err, errPropertyCount):
-		wireError(w, 403, "too-many-properties", "Too many properties")
+		authenticationWireError(w, 403, "too-many-properties", "Too many properties")
 	case errors.Is(err, errPropertyInvalid):
 		message := "Invalid JSON"
 		var parseError propertyJSONError
@@ -191,7 +191,7 @@ func propertyHTTPError(w http.ResponseWriter, err error) {
 		}
 		authenticationWireError(w, 400, "bad-request", message)
 	default:
-		wireError(w, 500, "internal-server-error", "Internal Server Error")
+		authenticationWireError(w, 500, "internal-server-error", "Internal Server Error")
 	}
 }
 

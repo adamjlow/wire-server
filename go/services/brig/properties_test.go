@@ -194,6 +194,13 @@ func TestPropertyHeadersEscapedKeysAndDeletionEvents(t *testing.T) {
 }
 
 func TestPropertyCapturedNativeParserAndMedia(t *testing.T) {
+	for _, err := range []error{errPropertyKeyLarge, errPropertyValueLarge, errPropertyCount, errPropertyStoredInvalid} {
+		w := httptest.NewRecorder()
+		propertyHTTPError(w, err)
+		if w.Header().Get("Content-Type") != "application/json" {
+			t.Fatal("native HttpError media differs", w.Header())
+		}
+	}
 	value, err := parsePropertyValue([]byte(`{"x":{"a":1,"a":2},"x":3,"list":[{"k":true,"k":false}],"empty":[]}`))
 	if err != nil {
 		t.Fatal(err)
