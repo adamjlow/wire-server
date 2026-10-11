@@ -1,0 +1,686 @@
+{
+  "result": "pass",
+  "e2e_executed": false,
+  "scope": "Finite native -> Go read/reauthentication observations on native-created state.",
+  "records": [
+    {
+      "implementation": "haskell",
+      "observations": [
+        {
+          "method": "GET",
+          "path": "/i/status",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": ""
+        },
+        {
+          "method": "HEAD",
+          "path": "/i/status",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "path": "/api-version",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"development\":[19],\"domain\":\"example.com\",\"federation\":true,\"supported\":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18]}",
+          "json": {
+            "development": [
+              19
+            ],
+            "domain": "example.com",
+            "federation": true,
+            "supported": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18
+            ]
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/self",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"accent_id\":0,\"assets\":[],\"email\":\"synthetic-parity-eb33bc69bb5d42dfb476af6eaae0130d@example.com\",\"email_unvalidated\":\"synthetic-activation-92b93b81fe5a40abacef2a2dab4bc776@example.com\",\"id\":\"861152b8-d669-4eb5-a79d-9ed1ddc0fdfa\",\"locale\":\"en\",\"managed_by\":\"wire\",\"name\":\"Synthetic parity reader\",\"picture\":[],\"qualified_id\":{\"domain\":\"example.com\",\"id\":\"861152b8-d669-4eb5-a79d-9ed1ddc0fdfa\"},\"searchable\":true,\"status\":\"active\",\"supported_protocols\":[\"proteus\"],\"type\":\"regular\"}",
+          "json": {
+            "accent_id": 0,
+            "assets": [],
+            "email": "synthetic-parity-eb33bc69bb5d42dfb476af6eaae0130d@example.com",
+            "email_unvalidated": "synthetic-activation-92b93b81fe5a40abacef2a2dab4bc776@example.com",
+            "id": "861152b8-d669-4eb5-a79d-9ed1ddc0fdfa",
+            "locale": "en",
+            "managed_by": "wire",
+            "name": "Synthetic parity reader",
+            "picture": [],
+            "qualified_id": {
+              "domain": "example.com",
+              "id": "861152b8-d669-4eb5-a79d-9ed1ddc0fdfa"
+            },
+            "searchable": true,
+            "status": "active",
+            "supported_protocols": [
+              "proteus"
+            ],
+            "type": "regular"
+          }
+        },
+        {
+          "method": "HEAD",
+          "path": "/self",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "path": "/cookies",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"cookies\":[{\"created\":\"2026-10-11T01:57:17.474Z\",\"expires\":\"2026-10-11T01:59:17Z\",\"id\":2508472871,\"label\":\"synthetic-paired-device\",\"successor\":null,\"type\":\"persistent\"}]}",
+          "json": {
+            "cookies": [
+              {
+                "created": "2026-10-11T01:57:17.474Z",
+                "expires": "2026-10-11T01:59:17Z",
+                "id": 2508472871,
+                "label": "synthetic-paired-device",
+                "successor": null,
+                "type": "persistent"
+              }
+            ]
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/cookies?labels=synthetic-paired-device",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"cookies\":[{\"created\":\"2026-10-11T01:57:17.474Z\",\"expires\":\"2026-10-11T01:59:17Z\",\"id\":2508472871,\"label\":\"synthetic-paired-device\",\"successor\":null,\"type\":\"persistent\"}]}",
+          "json": {
+            "cookies": [
+              {
+                "created": "2026-10-11T01:57:17.474Z",
+                "expires": "2026-10-11T01:59:17Z",
+                "id": 2508472871,
+                "label": "synthetic-paired-device",
+                "successor": null,
+                "type": "persistent"
+              }
+            ]
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/cookies?labels=absent",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"cookies\":[]}",
+          "json": {
+            "cookies": []
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/i/users/861152b8-d669-4eb5-a79d-9ed1ddc0fdfa/status",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"status\":\"active\"}",
+          "json": {
+            "status": "active"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/self",
+          "status": 400,
+          "content_type": null,
+          "body": "Header Z-User is required"
+        },
+        {
+          "method": "GET",
+          "path": "/self",
+          "status": 400,
+          "content_type": null,
+          "body": "Error parsing header Z-User failed: invalid UUID"
+        },
+        {
+          "method": "GET",
+          "path": "/self",
+          "status": 400,
+          "content_type": null,
+          "body": "Error parsing header Z-User failed: invalid UUID"
+        },
+        {
+          "method": "GET",
+          "path": "/v1/self",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"accent_id\":0,\"assets\":[],\"email\":\"synthetic-parity-eb33bc69bb5d42dfb476af6eaae0130d@example.com\",\"email_unvalidated\":\"synthetic-activation-92b93b81fe5a40abacef2a2dab4bc776@example.com\",\"id\":\"861152b8-d669-4eb5-a79d-9ed1ddc0fdfa\",\"locale\":\"en\",\"managed_by\":\"wire\",\"name\":\"Synthetic parity reader\",\"picture\":[],\"qualified_id\":{\"domain\":\"example.com\",\"id\":\"861152b8-d669-4eb5-a79d-9ed1ddc0fdfa\"},\"searchable\":true,\"status\":\"active\",\"supported_protocols\":[\"proteus\"],\"type\":\"regular\"}",
+          "json": {
+            "accent_id": 0,
+            "assets": [],
+            "email": "synthetic-parity-eb33bc69bb5d42dfb476af6eaae0130d@example.com",
+            "email_unvalidated": "synthetic-activation-92b93b81fe5a40abacef2a2dab4bc776@example.com",
+            "id": "861152b8-d669-4eb5-a79d-9ed1ddc0fdfa",
+            "locale": "en",
+            "managed_by": "wire",
+            "name": "Synthetic parity reader",
+            "picture": [],
+            "qualified_id": {
+              "domain": "example.com",
+              "id": "861152b8-d669-4eb5-a79d-9ed1ddc0fdfa"
+            },
+            "searchable": true,
+            "status": "active",
+            "supported_protocols": [
+              "proteus"
+            ],
+            "type": "regular"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/i/users/861152b8-d669-4eb5-a79d-9ed1ddc0fdfa/reauthenticate",
+          "status": 200,
+          "content_type": null,
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "path": "/i/users/861152b8-d669-4eb5-a79d-9ed1ddc0fdfa/reauthenticate",
+          "status": 403,
+          "content_type": "application/json",
+          "body": "{\"code\":403,\"label\":\"invalid-credentials\",\"message\":\"Authentication failed\"}",
+          "json": {
+            "code": 403,
+            "label": "invalid-credentials",
+            "message": "Authentication failed"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/i/users/861152b8-d669-4eb5-a79d-9ed1ddc0fdfa/reauthenticate",
+          "status": 403,
+          "content_type": "application/json",
+          "body": "{\"code\":403,\"label\":\"missing-auth\",\"message\":\"Re-authentication via password required\"}",
+          "json": {
+            "code": 403,
+            "label": "missing-auth",
+            "message": "Re-authentication via password required"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/i/users/861152b8-d669-4eb5-a79d-9ed1ddc0fdfa/reauthenticate",
+          "status": 200,
+          "content_type": null,
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "path": "/activate?key=synthetic-missing&code=000000",
+          "status": 404,
+          "content_type": "application/json",
+          "body": "{\"code\":404,\"label\":\"invalid-code\",\"message\":\"Invalid activation code\"}",
+          "json": {
+            "code": 404,
+            "label": "invalid-code",
+            "message": "Invalid activation code"
+          }
+        },
+        {
+          "method": "HEAD",
+          "path": "/activate?key=synthetic-missing&code=000000",
+          "status": 404,
+          "content_type": "application/json",
+          "body": ""
+        },
+        {
+          "method": "POST",
+          "path": "/activate",
+          "status": 404,
+          "content_type": "application/json",
+          "body": "{\"code\":404,\"label\":\"invalid-code\",\"message\":\"Invalid activation code\"}",
+          "json": {
+            "code": 404,
+            "label": "invalid-code",
+            "message": "Invalid activation code"
+          }
+        }
+      ]
+    },
+    {
+      "implementation": "go",
+      "observations": [
+        {
+          "method": "GET",
+          "path": "/i/status",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": ""
+        },
+        {
+          "method": "HEAD",
+          "path": "/i/status",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "path": "/api-version",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"development\":[19],\"domain\":\"example.com\",\"federation\":true,\"supported\":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18]}\n",
+          "json": {
+            "development": [
+              19
+            ],
+            "domain": "example.com",
+            "federation": true,
+            "supported": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18
+            ]
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/self",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"qualified_id\":{\"id\":\"861152b8-d669-4eb5-a79d-9ed1ddc0fdfa\",\"domain\":\"example.com\"},\"id\":\"861152b8-d669-4eb5-a79d-9ed1ddc0fdfa\",\"type\":\"regular\",\"email\":\"synthetic-parity-eb33bc69bb5d42dfb476af6eaae0130d@example.com\",\"email_unvalidated\":\"synthetic-activation-92b93b81fe5a40abacef2a2dab4bc776@example.com\",\"name\":\"Synthetic parity reader\",\"picture\":[],\"assets\":[],\"accent_id\":0,\"status\":\"active\",\"locale\":\"en\",\"managed_by\":\"wire\",\"supported_protocols\":[\"proteus\"],\"searchable\":true}\n",
+          "json": {
+            "qualified_id": {
+              "id": "861152b8-d669-4eb5-a79d-9ed1ddc0fdfa",
+              "domain": "example.com"
+            },
+            "id": "861152b8-d669-4eb5-a79d-9ed1ddc0fdfa",
+            "type": "regular",
+            "email": "synthetic-parity-eb33bc69bb5d42dfb476af6eaae0130d@example.com",
+            "email_unvalidated": "synthetic-activation-92b93b81fe5a40abacef2a2dab4bc776@example.com",
+            "name": "Synthetic parity reader",
+            "picture": [],
+            "assets": [],
+            "accent_id": 0,
+            "status": "active",
+            "locale": "en",
+            "managed_by": "wire",
+            "supported_protocols": [
+              "proteus"
+            ],
+            "searchable": true
+          }
+        },
+        {
+          "method": "HEAD",
+          "path": "/self",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "path": "/cookies",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"cookies\":[{\"created\":\"2026-10-11T01:57:17.474Z\",\"expires\":\"2026-10-11T01:59:17Z\",\"id\":2508472871,\"label\":\"synthetic-paired-device\",\"successor\":null,\"type\":\"persistent\"}]}\n",
+          "json": {
+            "cookies": [
+              {
+                "created": "2026-10-11T01:57:17.474Z",
+                "expires": "2026-10-11T01:59:17Z",
+                "id": 2508472871,
+                "label": "synthetic-paired-device",
+                "successor": null,
+                "type": "persistent"
+              }
+            ]
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/cookies?labels=synthetic-paired-device",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"cookies\":[{\"created\":\"2026-10-11T01:57:17.474Z\",\"expires\":\"2026-10-11T01:59:17Z\",\"id\":2508472871,\"label\":\"synthetic-paired-device\",\"successor\":null,\"type\":\"persistent\"}]}\n",
+          "json": {
+            "cookies": [
+              {
+                "created": "2026-10-11T01:57:17.474Z",
+                "expires": "2026-10-11T01:59:17Z",
+                "id": 2508472871,
+                "label": "synthetic-paired-device",
+                "successor": null,
+                "type": "persistent"
+              }
+            ]
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/cookies?labels=absent",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"cookies\":[]}\n",
+          "json": {
+            "cookies": []
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/i/users/861152b8-d669-4eb5-a79d-9ed1ddc0fdfa/status",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"status\":\"active\"}\n",
+          "json": {
+            "status": "active"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/self",
+          "status": 400,
+          "content_type": null,
+          "body": "Header Z-User is required"
+        },
+        {
+          "method": "GET",
+          "path": "/self",
+          "status": 400,
+          "content_type": null,
+          "body": "Error parsing header Z-User failed: invalid UUID"
+        },
+        {
+          "method": "GET",
+          "path": "/self",
+          "status": 400,
+          "content_type": null,
+          "body": "Error parsing header Z-User failed: invalid UUID"
+        },
+        {
+          "method": "GET",
+          "path": "/v1/self",
+          "status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body": "{\"qualified_id\":{\"id\":\"861152b8-d669-4eb5-a79d-9ed1ddc0fdfa\",\"domain\":\"example.com\"},\"id\":\"861152b8-d669-4eb5-a79d-9ed1ddc0fdfa\",\"type\":\"regular\",\"email\":\"synthetic-parity-eb33bc69bb5d42dfb476af6eaae0130d@example.com\",\"email_unvalidated\":\"synthetic-activation-92b93b81fe5a40abacef2a2dab4bc776@example.com\",\"name\":\"Synthetic parity reader\",\"picture\":[],\"assets\":[],\"accent_id\":0,\"status\":\"active\",\"locale\":\"en\",\"managed_by\":\"wire\",\"supported_protocols\":[\"proteus\"],\"searchable\":true}\n",
+          "json": {
+            "qualified_id": {
+              "id": "861152b8-d669-4eb5-a79d-9ed1ddc0fdfa",
+              "domain": "example.com"
+            },
+            "id": "861152b8-d669-4eb5-a79d-9ed1ddc0fdfa",
+            "type": "regular",
+            "email": "synthetic-parity-eb33bc69bb5d42dfb476af6eaae0130d@example.com",
+            "email_unvalidated": "synthetic-activation-92b93b81fe5a40abacef2a2dab4bc776@example.com",
+            "name": "Synthetic parity reader",
+            "picture": [],
+            "assets": [],
+            "accent_id": 0,
+            "status": "active",
+            "locale": "en",
+            "managed_by": "wire",
+            "supported_protocols": [
+              "proteus"
+            ],
+            "searchable": true
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/i/users/861152b8-d669-4eb5-a79d-9ed1ddc0fdfa/reauthenticate",
+          "status": 200,
+          "content_type": null,
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "path": "/i/users/861152b8-d669-4eb5-a79d-9ed1ddc0fdfa/reauthenticate",
+          "status": 403,
+          "content_type": "application/json",
+          "body": "{\"code\":403,\"label\":\"invalid-credentials\",\"message\":\"Authentication failed\"}\n",
+          "json": {
+            "code": 403,
+            "label": "invalid-credentials",
+            "message": "Authentication failed"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/i/users/861152b8-d669-4eb5-a79d-9ed1ddc0fdfa/reauthenticate",
+          "status": 403,
+          "content_type": "application/json",
+          "body": "{\"code\":403,\"label\":\"missing-auth\",\"message\":\"Re-authentication via password required\"}\n",
+          "json": {
+            "code": 403,
+            "label": "missing-auth",
+            "message": "Re-authentication via password required"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/i/users/861152b8-d669-4eb5-a79d-9ed1ddc0fdfa/reauthenticate",
+          "status": 200,
+          "content_type": null,
+          "body": ""
+        },
+        {
+          "method": "GET",
+          "path": "/activate?key=synthetic-missing&code=000000",
+          "status": 404,
+          "content_type": "application/json",
+          "body": "{\"code\":404,\"label\":\"invalid-code\",\"message\":\"Invalid activation code\"}\n",
+          "json": {
+            "code": 404,
+            "label": "invalid-code",
+            "message": "Invalid activation code"
+          }
+        },
+        {
+          "method": "HEAD",
+          "path": "/activate?key=synthetic-missing&code=000000",
+          "status": 404,
+          "content_type": "application/json",
+          "body": ""
+        },
+        {
+          "method": "POST",
+          "path": "/activate",
+          "status": 404,
+          "content_type": "application/json",
+          "body": "{\"code\":404,\"label\":\"invalid-code\",\"message\":\"Invalid activation code\"}\n",
+          "json": {
+            "code": 404,
+            "label": "invalid-code",
+            "message": "Invalid activation code"
+          }
+        }
+      ]
+    }
+  ],
+  "native_brig": {
+    "path": "/nix/store/f6l2f0l8l2r6z9jbg937q96k6056iqfn-brig/bin/brig",
+    "sha256": "c45a40da63268712a7cacdbd884287fa3dc93cec179d70323d3f22f7d5cdf1ca"
+  },
+  "go_gundeck_sha256": "a50512ef30d7fa9ddf92c2c1933e69769d6691e08cdfbe9f7c4f2d266071f46c",
+  "native_setup": [
+    {
+      "method": "POST",
+      "path": "/i/users",
+      "status": 201,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"accent_id\":0,\"assets\":[],\"email\":\"synthetic-parity-eb33bc69bb5d42dfb476af6eaae0130d@example.com\",\"id\":\"861152b8-d669-4eb5-a79d-9ed1ddc0fdfa\",\"locale\":\"en\",\"managed_by\":\"wire\",\"name\":\"Synthetic parity reader\",\"picture\":[],\"qualified_id\":{\"domain\":\"example.com\",\"id\":\"861152b8-d669-4eb5-a79d-9ed1ddc0fdfa\"},\"searchable\":true,\"status\":\"active\",\"supported_protocols\":[\"proteus\"],\"type\":\"regular\"}",
+      "json": {
+        "accent_id": 0,
+        "assets": [],
+        "email": "synthetic-parity-eb33bc69bb5d42dfb476af6eaae0130d@example.com",
+        "id": "861152b8-d669-4eb5-a79d-9ed1ddc0fdfa",
+        "locale": "en",
+        "managed_by": "wire",
+        "name": "Synthetic parity reader",
+        "picture": [],
+        "qualified_id": {
+          "domain": "example.com",
+          "id": "861152b8-d669-4eb5-a79d-9ed1ddc0fdfa"
+        },
+        "searchable": true,
+        "status": "active",
+        "supported_protocols": [
+          "proteus"
+        ],
+        "type": "regular"
+      }
+    },
+    {
+      "operation": "persistent login",
+      "status": 200,
+      "cookie_issued": true
+    }
+  ],
+  "native_activation_reference": {
+    "method": "POST",
+    "path": "/activate",
+    "status": 200,
+    "content_type": "application/json;charset=utf-8",
+    "body": "{\"email\":\"synthetic-activation-92b93b81fe5a40abacef2a2dab4bc776@example.com\",\"first\":false}",
+    "json": {
+      "email": "synthetic-activation-92b93b81fe5a40abacef2a2dab4bc776@example.com",
+      "first": false
+    }
+  },
+  "native_activation_repeat_reference": {
+    "method": "POST",
+    "path": "/activate",
+    "status": 204,
+    "content_type": null,
+    "body": ""
+  },
+  "native_stop_exit_code": 0,
+  "candidate_brig_sha256": "52ef6876c3b01a942b76b5016c039e60081a9ad16d0de2be9cce9dc80ace0956",
+  "mismatches": [],
+  "go_activation_reads_stop_exit_code": 0,
+  "activation_reference_actor": "861152b8-d669-4eb5-a79d-9ed1ddc0fdfa",
+  "activation_quiesced_peer_exit_codes": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "activation_required_peers_restarted": [
+    "galley",
+    "gundeck"
+  ],
+  "native_activation_setup_stop_exit_code": 0,
+  "activation_native_to_go_seconds": 0.516648955643177,
+  "activation_dryrun_pair": [
+    {
+      "method": "POST",
+      "path": "/activate",
+      "status": 200,
+      "content_type": null,
+      "body": ""
+    },
+    {
+      "method": "POST",
+      "path": "/activate",
+      "status": 200,
+      "content_type": null,
+      "body": ""
+    }
+  ],
+  "go_activation_observation": {
+    "method": "POST",
+    "path": "/activate",
+    "status": 200,
+    "content_type": "application/json;charset=utf-8",
+    "body": "{\"email\":\"synthetic-activation-92b93b81fe5a40abacef2a2dab4bc776@example.com\",\"first\":false}\n",
+    "json": {
+      "email": "synthetic-activation-92b93b81fe5a40abacef2a2dab4bc776@example.com",
+      "first": false
+    }
+  },
+  "go_repeat_observation": {
+    "method": "POST",
+    "path": "/activate",
+    "status": 204,
+    "content_type": null,
+    "body": ""
+  },
+  "go_activation_stop_exit_code": 0,
+  "activation_switchback": {
+    "same_initialized_stores": true,
+    "native_restored_and_restaged_same_target": true,
+    "go_activation_status": 200,
+    "go_repeat_status": 204,
+    "native_consumed_profile_status": 200,
+    "native_repeat_status": 204,
+    "native_new_email_login_status": 200,
+    "native_released_old_email_login_status": 403,
+    "profile_exactly_matches": true,
+    "key_and_code_recorded": false,
+    "handoff_actor": "d9490709-4f61-4db2-b756-e04d31e68625",
+    "response_reference_actor_distinct": true,
+    "required_profile_and_notification_peers_live": true
+  },
+  "owned_process_exit_codes": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ]
+}
