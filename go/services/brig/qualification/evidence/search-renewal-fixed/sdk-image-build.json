@@ -1,0 +1,7 @@
+{
+  "base_sdk_image": "sha256:f2f47f614f5dbefa4ef1bc2cbf2f24cf95dfa0d65e3e73c8878a74630baaae30",
+  "source_revision": "df82df0adbff97169453cd7f7b13bc096c144d54",
+  "dockerfile_sha256": "5177a0c488061621d091c761fb9ba77f917b749bde77da5481cd4442f9f7ccc5",
+  "build_exit_code": 0,
+  "sdk_image": "sha256:2f9e4393295d7270538dd1c666ab1345eaec06b2c2f8c217283ba6565caee399"
+}
