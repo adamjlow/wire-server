@@ -12,6 +12,7 @@ import (
 	"time"
 
 	"github.com/apache/cassandra-gocql-driver/v2"
+	"gopkg.in/yaml.v3"
 )
 
 // Supplemental queue fixture: native HTTP creates the user, clients, prekeys,
@@ -160,6 +161,31 @@ func TestOwnedServiceDeletionFixture(t *testing.T) {
 		if err := postgres.QueryRow(ctx, `SELECT provider::text,service::text,account_status,name,user_type FROM wire_user WHERE id=$1::uuid`, user.String()).Scan(&accountProvider, &accountService, &status, &name, &userType); err != nil {
 			t.Fatal(err)
 		}
+	}
+	if path := os.Getenv("BRIG_SERVICE_GALLEY_CONFIG"); path != "" {
+		// Native service connections stay in CQL even when conversations use
+		// PostgreSQL. Read only that config subset; never run candidate RPCs.
+		var peer struct {
+			Cassandra CassandraConfig `yaml:"cassandra"`
+		}
+		raw, err := os.ReadFile(path)
+		if err != nil || len(raw) > 256*1024 {
+			t.Fatal("invalid owned Galley config", err)
+		}
+		if err := yaml.Unmarshal(raw, &peer); err != nil {
+			t.Fatal(err)
+		}
+		c.Cassandra = peer.Cassandra
+		galley, err := openCassandra(ctx, c)
+		if err != nil {
+			t.Fatal(err)
+		}
+		defer galley.Close()
+		var count int
+		if err := galley.Query(`SELECT count(*) FROM service WHERE provider=? AND id=?`, provider, service).WithContext(ctx).Consistency(gocql.LocalQuorum).Scan(&count); err != nil {
+			t.Fatal(err)
+		}
+		counts["galley_service"] = count
 	}
 	encoded, err := json.Marshal(map[string]any{"counts": counts, "status": status, "user_type": userType, "backend": mode, "provider": accountProvider, "service": accountService, "name": name})
 	if err != nil {

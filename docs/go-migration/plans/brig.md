@@ -1715,3 +1715,23 @@ runner/cleanup0 and independent empty. Keep two failed fixtures and disk preflig
 explicit; source-defined active/typeBot/activated/no-expiry attachment fixes only
 helper setup. Actual Galley200/TLS/optimistic-Dynamo/all-three-mode service queue
 and final whole535/eight-Go gates remain open. No new production Go/Haskell change.
+
+### Successful native Galley membership event
+
+Extend the opt-in service queue observer with --service-galley-event, requiring
+existing service queue/STOMP/identified fixture. Native Galley HTTP creates a
+Proteus conversation, disabled synthetic service connection and real bot member.
+Retain a native DELETE/i/bots200 event and re-add that probe member before queue
+work. Read conversation membership before/after and raw Galley service connection
+counts via source-schema CQL. Add no webhook network exposure; disabled connection
+avoids outbound provider traffic. Bot webhook delivery is Galley's separate scope.
+
+Use broker dispatch/dequeue/enqueue snapshots to require exactly the expected
+one delivery per queued item, including already-pending user work. This prevents
+a decoder error after irreversible membership removal from being masked by a
+later404 replay. Keep original22, successful404 coverage and frozen assertions
+unchanged; new controls apply only to the opt-in event case. Parameterized CQL,
+owned nonroot helper, bounded native config subset read and existing timeouts/
+resource/isolation/disk guards apply. Only tagged fixture/observer change; reuse
+exact unchanged production quality and rebuild tagged helper. Final whole Brig
+API/535/eight-Go/all-entity/three-mode/operations gates remain incomplete.

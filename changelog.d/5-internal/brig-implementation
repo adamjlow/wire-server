@@ -10,3 +10,6 @@ Actual authenticated service/bot queue cleanup now passes native-Go-native work,
 ACK/replay, PG-user/CQL metadata effects and retained bot identity/type/MLS/property
 row witnesses, plus22 unchanged originals. Retain helper setup/preflight failures;
 Galley200, other queue configurations and whole Brig acceptance remain pending.
+Add opt-in real Galley conversation/bot membership and stored connection controls,
+a native200 leave-event probe, and exact queue deliveries to detect decoder errors
+masked by404 replay. This fixture still requires owned backend execution.

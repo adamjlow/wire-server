@@ -26,7 +26,7 @@ def checked(args, timeout=30):
     return result.stdout.strip()
 
 
-def inside(gundeck_path=None, access_switchback=False, login_contract=False, activation_contract=False, registration_contract=False, saml_registration_contract=False, public_registration_contract=False, password_reset_contract=False, password_change_contract=False, ses_feedback_contract=False, properties_contract=False, client_update_contract=False, client_registration_contract=False, client_lifecycle_contract=False, store_fixture_path=None, mls_upload_originals=False, stomp_internal_events=False, service_deletion_queue=False):
+def inside(gundeck_path=None, access_switchback=False, login_contract=False, activation_contract=False, registration_contract=False, saml_registration_contract=False, public_registration_contract=False, password_reset_contract=False, password_change_contract=False, ses_feedback_contract=False, properties_contract=False, client_update_contract=False, client_registration_contract=False, client_lifecycle_contract=False, store_fixture_path=None, mls_upload_originals=False, stomp_internal_events=False, service_deletion_queue=False, service_galley_event=False):
     registration_contract = registration_contract or saml_registration_contract
     if os.getuid() != 65534 or os.environ.get('WIRE_E2E_DISPOSABLE') != '1':
         raise ValueError('owned nonroot Docker runner required')
@@ -36,6 +36,7 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
     report = {'result': 'failed', 'e2e_executed': False, 'scope': __doc__, 'records': []}
     active = None
     original_failures = []
+    service_conversations = {}
     if stomp_internal_events:
         import stomp_broker
 
@@ -84,6 +85,8 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
         manifest.write_text(json.dumps({**actor, 'Action': action, 'Output': output}))
         env = {**os.environ, 'BRIG_STORE_CONFIG': str(runtime.WORK/'brig-static-0.json'),
             'BRIG_SERVICE_ROWS_INPUT': str(manifest)}
+        if service_galley_event:
+            env['BRIG_SERVICE_GALLEY_CONFIG'] = str(runtime.WORK/'galley-static-0.json')
         with open('/reports/service-rows-'+phase+'.log', 'w') as log:
             process = subprocess.run([store_fixture_path,
                 '-test.run=^TestOwnedServiceDeletionFixture$', '-test.v', '-test.timeout=45s'],
@@ -105,19 +108,62 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
         # path. This does not establish decoded Galley200 membership events.
         fixture = {'User': uid, **{key: str(uuid.uuid4())
             for key in ('Provider', 'Service', 'Conversation', 'Team')}}
+        if service_galley_event:
+            owner_headers = {'Z-User': user, 'Z-Connection': 'synthetic-service-conversation'}
+            created = request('POST', '/v19/conversations', owner_headers,
+                {'qualified_users': [], 'name': 'Synthetic queue bot membership',
+                 'protocol': 'proteus'}, port=8085)[0]
+            assert created['status'] == 201, 'native Galley group creation failed'
+            qid = created['json']['qualified_id']
+            fixture['Conversation'] = qid['id']
+            connection = request('POST', '/i/services', body={
+                'ref': {'id': fixture['Service'], 'provider': fixture['Provider']},
+                'base_url': 'https://example.com/synthetic-service',
+                'auth_token': 'c3ludGhldGlj', 'fingerprints': [], 'enabled': False}, port=8085)[0]
+            assert connection['status'] in (200, 201, 204), 'native Galley service connection setup failed'
+            bot_body = {'conversation': fixture['Conversation'], 'bot': uid,
+                'client': client['json']['id'],
+                'service': {'id': fixture['Service'], 'provider': fixture['Provider']}}
+            added = request('POST', '/i/bots', owner_headers, bot_body, port=8085)[0]
+            assert added['status'] == 200 and added['json']['type'] == 'conversation.member-join', 'native Galley bot add failed'
+            path = '/v19/conversations/'+qid['domain']+'/'+qid['id']
+            service_conversations[uid] = (path, owner_headers)
+            report['service_galley_'+phase+'_setup'] = {'conversation': created,
+                'connection': connection, 'bot_add': added}
+            if phase == 'native':
+                probe = request('DELETE', '/i/bots', {'Z-User': uid},
+                    {'conversation': fixture['Conversation'], 'bot': uid}, port=8085)[0]
+                assert probe['status'] == 200, 'native Galley live event probe did not return200'
+                event = probe['json']
+                assert event['type'] == 'conversation.member-leave' and event['qualified_conversation'] == qid and event['qualified_from']['id'] == uid, 'native Galley event envelope differs'
+                assert event['data']['reason'] == 'removed' and event['data']['user_ids'] == [uid] and event['data']['qualified_user_ids'] == [{'id': uid, 'domain': qid['domain']}], 'native Galley leave payload differs'
+                report['service_galley_native_live_event'] = probe
+                restored = request('POST', '/i/bots', owner_headers, bot_body, port=8085)[0]
+                assert restored['status'] == 200, 'native Galley probe membership restore failed'
+            member = request('GET', path, owner_headers, port=8085)[0]
+            assert member['status'] == 200 and any(x['qualified_id']['id'] == uid for x in member['json']['members']['others']), 'native Galley bot member is absent before queue work'
+            report['service_galley_'+phase+'_before'] = member
         rows = service_row_fixture('stage', phase+'-stage', fixture)
+        if service_galley_event:
+            assert rows['counts'].pop('galley_service') == 1, 'native Galley connection row is absent'
         assert rows['counts'] == {'service': 1, 'bot_association': 1, 'team_bot_association': 1,
             'whitelist': 1, 'whitelist_rev': 1, 'prefix': 1, 'tags': 7,
             'user': 1, 'clients': 1, 'prekeys': 2, 'mls_public_keys': 1, 'properties': 1}, 'service bot initial raw rows differ'
         assert rows['status'] == 0 and rows['user_type'] == 1 and rows['provider'] == fixture['Provider'] and rows['service'] == fixture['Service'], 'service bot account association differs'
+        if service_galley_event:
+            rows['counts']['galley_service'] = 1
         report['service_queue_'+phase+'_created'] = {'actor': actor, 'client': client,
             'property': prop, 'fixture': fixture, 'rows': rows}
         return fixture
 
     def enqueue_service(actor):
         before = stomp_broker.queue_state()
+        if service_galley_event:
+            assert before['InFlightCount'] == 0, 'service queue baseline has an inflight callback'
         stomp_broker.send(json.dumps({'type': 'service.delete',
             'provider': actor['Provider'], 'service': actor['Service']}).encode())
+        if service_galley_event:
+            return before
         return before['DequeueCount']
 
     def await_service(actor, phase, before=None):
@@ -128,13 +174,29 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             expected = {'service': 0, 'bot_association': 0, 'team_bot_association': 0,
                 'whitelist': 0, 'whitelist_rev': 0, 'prefix': 0, 'tags': 0,
                 'user': 1, 'clients': 0, 'prekeys': 0, 'mls_public_keys': 1, 'properties': 1}
-            if rows['counts'] == expected and rows['status'] == 2 and queue['QueueSize'] == 0 and queue['InFlightCount'] == 0 and (before is None or queue['DequeueCount'] > before):
+            if service_galley_event:
+                expected['galley_service'] = 0
+            dequeue_before = before['DequeueCount'] if isinstance(before, dict) else before
+            if rows['counts'] == expected and rows['status'] == 2 and queue['QueueSize'] == 0 and queue['InFlightCount'] == 0 and (before is None or queue['DequeueCount'] > dequeue_before):
                 break
             assert time.monotonic() < deadline, 'service bot cleanup not completed and acknowledged: '+phase
             time.sleep(0.2)
         assert rows['user_type'] == 1 and rows['provider'] == actor['Provider'] and rows['service'] == actor['Service'] and rows['name'] == 'Synthetic service queue bot', 'service deletion lost native bot identity'
         status = request('GET', '/i/users/'+actor['User']+'/status')[0]
         assert status['status'] == 200 and status['json'] == {'status': 'deleted'}, 'service bot HTTP status differs'
+        if service_galley_event:
+            path, headers = service_conversations[actor['User']]
+            member = request('GET', path, headers, port=8085)[0]
+            assert member['status'] == 200 and all(x['qualified_id']['id'] != actor['User'] for x in member['json']['members']['others']), 'native Galley bot membership remains after cleanup'
+            report['service_galley_'+phase+'_after'] = member
+            if before is not None:
+                # Failed200 decoding must not be hidden by a404 replay after
+                # Galley has already committed member removal.
+                expected_dispatches = before['QueueSize']+1
+                assert queue['DispatchCount']-before['DispatchCount'] == expected_dispatches, 'service cleanup required redelivery after membership removal'
+                assert queue['EnqueueCount'] == before['EnqueueCount']+1, 'unexpected extra internal events in service cleanup'
+                report['service_galley_'+phase+'_delivery'] = {'before': before,
+                    'after': queue, 'expected_dispatches': expected_dispatches}
         report['service_queue_'+phase] = {'rows': rows, 'queue': queue, 'status': status}
         return rows
 
@@ -1766,6 +1828,7 @@ def main():
     parser.add_argument('--mls-upload-originals', action='store_true')
     parser.add_argument('--stomp-internal-events', action='store_true')
     parser.add_argument('--service-deletion-queue', action='store_true')
+    parser.add_argument('--service-galley-event', action='store_true')
     args = parser.parse_args()
     if (args.registration_contract or args.saml_registration_contract) and (args.activation_contract or args.access_switchback or args.login_contract):
         parser.error('registration observation runs separately from credential/activation observations')
@@ -1791,8 +1854,10 @@ def main():
         parser.error('STOMP qualification requires durable client/queue lifecycle observation')
     if args.service_deletion_queue and (not args.stomp_internal_events or not (args.store_fixture_path if args.in_container else args.store_fixture_binary)):
         parser.error('service deletion queue proof requires STOMP and identified tagged fixture')
+    if args.service_galley_event and not args.service_deletion_queue:
+        parser.error('live Galley event requires service queue proof')
     if args.in_container:
-        return inside(args.gundeck_path, args.access_switchback, args.login_contract, args.activation_contract, args.registration_contract, args.saml_registration_contract, args.public_registration_contract, args.password_reset_contract, args.password_change_contract, args.ses_feedback_contract, args.properties_contract, args.client_update_contract, args.client_registration_contract, args.client_lifecycle_contract, args.store_fixture_path, args.mls_upload_originals, args.stomp_internal_events, args.service_deletion_queue)
+        return inside(args.gundeck_path, args.access_switchback, args.login_contract, args.activation_contract, args.registration_contract, args.saml_registration_contract, args.public_registration_contract, args.password_reset_contract, args.password_change_contract, args.ses_feedback_contract, args.properties_contract, args.client_update_contract, args.client_registration_contract, args.client_lifecycle_contract, args.store_fixture_path, args.mls_upload_originals, args.stomp_internal_events, args.service_deletion_queue, args.service_galley_event)
     if args.binary is None or args.build_receipt is None or args.output is None:
         parser.error('identified binary, receipt and new output required')
     sys.path.insert(0, str(ROOT / 'tools/parity/docker'))
@@ -1848,6 +1913,8 @@ def main():
         runner['command'].append('--mls-upload-originals')
     if args.service_deletion_queue:
         runner['command'].append('--service-deletion-queue')
+    if args.service_galley_event:
+        runner['command'].append('--service-galley-event')
     if args.stomp_internal_events:
         import stomp_broker
         stomp_broker.prepare(spec, output)
