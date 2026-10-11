@@ -1221,3 +1221,20 @@ verification/mail and queue replay, then attach full engine and rerun originals.
 Root now below2GiB backend floor after retaining builds; before any new full backend
 run recover space only through verified lossless owned-artifact maintenance,
 never weakening the floor or pruning shared Docker/unrelated files.
+
+### Deletion event fanout
+
+Implement synchronous contact reads before connection cleanup, native500-local
+legacy pages and1000-remote opaque pages. Send self and accepted contacts a direct
+user.delete event; raw Sent only receives a reversed synthetic Cancelled event
+without storage mutation. Preserve per-page/domain ordering, sorted remote domain
+buckets and persistent backend notification bundle (body is a JSON string,
+versionfrom0/unbounded, keep_queued). Enqueue must succeed before each domain's
+best-effort RemoteRescind calls; journal USER_DELETE follows successful fanout.
+Require real callbacks before any effects, bound pages/recipients, validate domains
+and raw relation range, keep context deadlines, never log private payloads.
+No success stub/direct federation replacement for the required persistent queue.
+Finite tests cover event wire shape, raw legalhold history exclusion, local/remote
+cursor advancement, enqueue failure stopping subsequent effects and best-effort
+rescind behavior. Queue payload/core qualification alone cannot enable public
+DELETE/self; concrete Rabbit publisher/lifecycle remains required before binding.
