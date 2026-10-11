@@ -1349,3 +1349,12 @@ Timeout600/accountUUID, pending-code TTL rejection, deletion mail key/code/name/
 locale and code removal on send exception. Successful verification retains row
 until account cleanup finishes then removes it; already-deleted accounts must
 still replay cleanup internally. Keep source contracts and assertions unchanged.
+
+Scope1 code implementation preserves native parameterized Cassandra reads/writes,
+remaining TTL on failed verification, Word8 retries, existing-code precedence over
+throttling, cryptographic random15-byte values, and mail-exception code cleanup
+without removing the throttle. Secrets have redacted String methods and are never
+logged. Reuse existing localized templates, HTML escaping and real mail delivery.
+Finite tests cover exhausted/pending codes, wrong-code TTL retention, throttle
+ordering, send failure and native template headers. Public binding and real-store
+qualification remain separate evidence; unit success alone is not API parity.

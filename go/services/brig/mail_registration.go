@@ -15,6 +15,7 @@ type registrationMailRenderer struct {
 	branding                         map[string]string
 	activationURL, teamActivationURL mailTemplate
 	passwordResetURL                 mailTemplate
+	deletionURL                      mailTemplate
 	memberWelcomeURL                 string
 	warn                             func(string)
 }
@@ -88,6 +89,7 @@ func newRegistrationMailRenderer(c Config, warn func(string)) (registrationMailR
 		destination *mailTemplate
 	}{
 		{user, "activationUrl", &result.activationURL}, {team, "tActivationUrl", &result.teamActivationURL}, {user, "passwordResetUrl", &result.passwordResetURL},
+		{user, "deletionUrl", &result.deletionURL},
 	} {
 		value, err := text(url.fields, url.key)
 		if err != nil {
