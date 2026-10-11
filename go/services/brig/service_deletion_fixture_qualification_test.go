@@ -12,7 +12,7 @@ import (
 	"time"
 
 	"github.com/apache/cassandra-gocql-driver/v2"
-	"gopkg.in/yaml.v3"
+	"go.yaml.in/yaml/v3"
 )
 
 // Supplemental queue fixture: native HTTP creates the user, clients, prekeys,

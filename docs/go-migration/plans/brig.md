@@ -1735,3 +1735,8 @@ owned nonroot helper, bounded native config subset read and existing timeouts/
 resource/isolation/disk guards apply. Only tagged fixture/observer change; reuse
 exact unchanged production quality and rebuild tagged helper. Final whole Brig
 API/535/eight-Go/all-entity/three-mode/operations gates remain incomplete.
+
+Initial tagged event fixture compile at6da24be27 reports a tidy requirement because
+its import used the old gopkg.in YAML path. Correct it to the module's existing
+go.yaml.in/yaml/v3 dependency; add/change no dependency. Retain failed build receipt
+and log, namespace empty. Production and original assertions remain unchanged.
