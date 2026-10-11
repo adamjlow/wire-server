@@ -19,11 +19,20 @@ type internalEventsConfig struct {
 	Name string `yaml:"queueName"`
 }
 
-type internalEventQueue struct{ sqs *userJournal }
+type internalEventQueue struct {
+	sqs   *userJournal
+	stomp *internalStompQueue
+}
 
-func newInternalEventQueue(ctx context.Context, config *internalEventsConfig, aws *brigAWSConfig, client *http.Client) (*internalEventQueue, error) {
+func newInternalEventQueue(ctx context.Context, config *internalEventsConfig, aws *brigAWSConfig, client *http.Client, runtime ...Config) (*internalEventQueue, error) {
+	if config != nil && config.Type == "stomp" && len(runtime) == 1 {
+		queue, err := newInternalStompQueue(runtime[0], config.Name)
+		if err != nil {
+			return nil, err
+		}
+		return &internalEventQueue{stomp: queue}, nil
+	}
 	if config == nil || config.Type != "sqs" {
-		// STOMP transport/listener remains required before whole-service release.
 		return nil, errors.New("internal event queue transport unavailable")
 	}
 	sqs, err := newBrigSQS(ctx, aws, config.Name, client)
@@ -58,6 +67,9 @@ func (q *internalEventQueue) enqueueClientDeletion(ctx context.Context, user goc
 }
 
 func (q *internalEventQueue) enqueue(ctx context.Context, body []byte) error {
+	if q != nil && q.stomp != nil {
+		return q.stomp.enqueue(ctx, body)
+	}
 	if q == nil || q.sqs == nil {
 		return errors.New("internal event queue unavailable")
 	}

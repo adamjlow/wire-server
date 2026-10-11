@@ -211,7 +211,7 @@ func Run(ctx context.Context, c Config) error {
 	if err != nil {
 		return err
 	}
-	internalQueue, err := newInternalEventQueue(ctx, c.InternalEvents, c.AWS, peerHTTP)
+	internalQueue, err := newInternalEventQueue(ctx, c.InternalEvents, c.AWS, peerHTTP, c)
 	if err != nil {
 		return err
 	}
@@ -271,7 +271,14 @@ func Run(ctx context.Context, c Config) error {
 			return err
 		}, enqueue: internalQueue.enqueueClientDeletion, remove: deletionStore.remove,
 	}
-	prekeyStore, err := newPrekeyClaimStore(c, clientStore{cassandra}, internalQueue.sqs)
+	prekeyAWS := internalQueue.sqs
+	if prekeyAWS == nil && (c.RandomPrekeys == nil || !*c.RandomPrekeys) {
+		prekeyAWS, err = newBrigAWSCredentials(ctx, peerHTTP)
+		if err != nil {
+			return err
+		}
+	}
+	prekeyStore, err := newPrekeyClaimStore(c, clientStore{cassandra}, prekeyAWS)
 	if err != nil {
 		return err
 	}

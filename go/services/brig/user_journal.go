@@ -64,11 +64,11 @@ func newBrigSQS(ctx context.Context, c *brigAWSConfig, name string, client *http
 	}
 	// Native AWSEndpoint discards URL path/query, retaining scheme/host/port.
 	endpoint := (&url.URL{Scheme: parsed.Scheme, Host: parsed.Host, Path: "/"}).String()
-	config, err := awsconfig.LoadDefaultConfig(ctx, awsconfig.WithDefaultRegion("us-east-1"), awsconfig.WithHTTPClient(client))
+	j, err := newBrigAWSCredentials(ctx, client)
 	if err != nil {
-		return nil, errors.New("journal credentials unavailable")
+		return nil, err
 	}
-	j := &userJournal{client: client, credentials: config.Credentials, region: config.Region, endpoint: endpoint, now: time.Now}
+	j.endpoint = endpoint
 	result, _, err := j.query(ctx, "GetQueueUrl", url.Values{"QueueName": {name}})
 	if err != nil {
 		return nil, err
@@ -79,6 +79,15 @@ func newBrigSQS(ctx context.Context, c *brigAWSConfig, name string, client *http
 	}
 	j.queue = result.Queue
 	return j, nil
+}
+
+// Dynamo signing remains available when the internal queue uses STOMP.
+func newBrigAWSCredentials(ctx context.Context, client *http.Client) (*userJournal, error) {
+	config, err := awsconfig.LoadDefaultConfig(ctx, awsconfig.WithDefaultRegion("us-east-1"), awsconfig.WithHTTPClient(client))
+	if err != nil {
+		return nil, errors.New("journal credentials unavailable")
+	}
+	return &userJournal{client: client, credentials: config.Credentials, region: config.Region, now: time.Now}, nil
 }
 func (j *userJournal) query(ctx context.Context, action string, params url.Values) (journalResponse, bool, error) {
 	var result journalResponse

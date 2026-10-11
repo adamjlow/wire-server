@@ -132,6 +132,7 @@ func (p internalDeletionProcessor) process(ctx context.Context, event internalDe
 
 type internalEventListener struct {
 	queue     *userJournal
+	stomp     *internalStompQueue
 	processor internalDeletionProcessor
 	throttle  time.Duration
 	ctx       context.Context
@@ -145,7 +146,7 @@ func startInternalEvents(ctx context.Context, queue *internalEventQueue, process
 	if throttle != nil {
 		millis = *throttle
 	}
-	l := &internalEventListener{queue: queue.sqs, processor: processor, throttle: time.Duration(millis) * time.Millisecond, ctx: worker, cancel: cancel, done: make(chan struct{})}
+	l := &internalEventListener{queue: queue.sqs, stomp: queue.stomp, processor: processor, throttle: time.Duration(millis) * time.Millisecond, ctx: worker, cancel: cancel, done: make(chan struct{})}
 	go func() { defer close(l.done); l.listen() }()
 	return l
 }
@@ -158,6 +159,10 @@ func (l *internalEventListener) close() {
 }
 
 func (l *internalEventListener) listen() {
+	if l.stomp != nil {
+		l.stomp.listen(l.ctx, l.processor)
+		return
+	}
 	for l.ctx.Err() == nil {
 		response, _, err := l.queue.query(l.ctx, "ReceiveMessage", url.Values{"QueueUrl": {l.queue.queue}, "WaitTimeSeconds": {"20"}, "MaxNumberOfMessages": {"10"}})
 		if err == nil {

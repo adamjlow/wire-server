@@ -1437,8 +1437,12 @@ unimplemented, actual client queue cleanup and email-code deletion remain finite
 required cases, and final535/eight-Go/operations/all-entity/image/selector gates
 remain unchanged. No whole-service stage advancement from this increment.
 
-Planned, not yet implemented: STOMP transport will use pinned go-stomp/stomp/v3 v3.1.5 (Apache-2.0; current
-official module tag inspected), instead of inventing a protocol implementation.
+STOMP candidate implemented; qualification pending: transport uses pinned go-stomp/stomp/v3 v3.1.5 (Apache-2.0; current
+official module tag inspected), for frame encoding/decoding. Its asynchronous client has unbounded frame allocation
+and queueing; use synchronous native-shaped sessions with a bounded frame reader
+instead. CONNECT headers require raw validated encoding because the generic
+writer escapes them contrary to the STOMP specification. Queue headers and body
+are capped at64KiB/4MiB; credentials at64KiB; error text is redacted.
 Read its implementation and run vulnerability/license checks before qualification.
 Honor the native parser's stomHost/stomPort/stomTls keys (Options.hs uses the
 "stom" prefix, despite examples using "stomp") plus setStomp credential file, verified
@@ -1450,3 +1454,10 @@ bad frames/JSON/callback failure close connection and leave work for redelivery.
 Reuse the60s deletion processor. Verify handshake/auth/receipts/admission/failure/
 cancellation with finite local protocol controls before actual owned-broker replay.
 Keep Dynamo credentials independent of the selected internal queue transport.
+
+The implementation uses synchronous library-frame sessions, with context-owned
+socket closure, persistent SEND/matching RECEIPT and individual ACK after successful
+processing. Focused protocol tests include raw CONNECT credentials, receipt mismatch,
+callback failure retention, idle cancellation, malformed/oversized frames and actual
+native parser keys/YAML credentials. These controls are not actual ActiveMQ or
+whole-service qualification; the native broker comparison remains required.

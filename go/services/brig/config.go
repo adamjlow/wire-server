@@ -47,6 +47,7 @@ type PostgresPoolConfig struct {
 type Config struct {
 	RandomPrekeys    *bool                 `yaml:"randomPrekeys"`
 	InternalEvents   *internalEventsConfig `yaml:"internalEvents"`
+	Stomp            *internalStompConfig  `yaml:"stomp"`
 	AWS              *brigAWSConfig        `yaml:"aws"`
 	Elasticsearch    *searchIndexConfig    `yaml:"elasticsearch"`
 	PostgresPool     PostgresPoolConfig    `yaml:"postgresqlPool"`
