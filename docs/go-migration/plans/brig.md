@@ -1625,3 +1625,14 @@ and success-only queue ACK. No stub/native embedding. Reuse14 untouched native
 event goldens plus explicitly converted native V9 conversation inputs for V2
 fields. Compiled-native decoder admission and actual queue replay remain separate
 proofs; units/source-derived decoding alone do not qualify whole Brig.
+
+At sourcea73fd44e7/serviceb8256ee1, queued service.delete is bound to real
+stores/client/peer adapters. Pinned Go/static checks,14 untouched Event golden
+inputs,3 explicitly projected V2 conversation inputs and focused actual HTTP/
+security controls pass. Actual native-schema stores2.75sec pass, including
+overfull tags failing after committed whitelist/retained metadata. [Bound-path evidence](../../../go/services/brig/qualification/evidence/service-deletion-bound/README.md)
+records exact artifacts and terminal/independent empty cleanup. Native History
+prefix parsing and nullable/default field rules are retained, not hardened.
+Compiled-native Event decoder admission/actual Galley+queue replay/current original
+e2e remain unproven; no whole-service or exhaustive codec claim. Next actual
+native-Go-native service/bot queue work and affected original22 regression.
