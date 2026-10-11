@@ -264,7 +264,7 @@ func Run(ctx context.Context, c Config) error {
 			return business.users.updateConferenceCalling(ctx, user, newConferenceStatus)
 		},
 		domain: c.Settings.Domain, locale: registrationDefaultLocale, sessionTTL: c.ZAuth.Settings.SessionTTL, activationTimeout: *c.Settings.ActivationTimeout, now: time.Now,
-	}, peers: business.peers, galleyVersion: galleyVersion, activation: business.activation, index: index, invitations: registrationInvitations{lookup: invites.byCode, domain: domains.lookup, maxSize: *c.Settings.MaxTeamSize}}
+	}, peers: business.peers, galleyVersion: galleyVersion, activation: business.activation, index: indexWriter, invitations: registrationInvitations{lookup: invites.byCode, domain: domains.lookup, maxSize: *c.Settings.MaxTeamSize}}
 
 	loginSessions := business.access.sessions
 	loginSessions.limit = *c.Settings.CookieLimit
