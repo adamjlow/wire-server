@@ -1,0 +1,6 @@
+{
+  "source_revision": "2c309fe9b07ed166f3dc721c2d32eac6ee95356f",
+  "result": "failed before dependency startup",
+  "error": "ValueError: unsafe mount",
+  "action": "Keep protected isolation validation unchanged; copy identified helper into the existing read-only generated fixtures directory, verify SHA256 and rerun with fresh outputs."
+}

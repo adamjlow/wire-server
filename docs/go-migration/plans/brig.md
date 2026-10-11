@@ -792,7 +792,7 @@ cleanup0/independent empty, no original suite claim.
 malformed real CQL package side-effects still need direct qualification, and
 upload/claim/count public APIs remain unfinished; no whole-service claim.
 
-### Public MLS count and actual row cleanup witness (checks pending)
+### Public MLS count and actual row cleanup witness
 
 Public count uses native FromV5 optional/default1 untilV8, required ciphersuite
 fromV8, Z-User, enableMLS guard before suite support, count-only storage effects
@@ -803,5 +803,10 @@ Native and Go must both count1, remove the three decoded unusable rows, retain
 usable and malformed bytes, and let native consume Go-retained state after
 switchback. New helper binary and receipt are explicitly identified and mounted
 only in the owned observer; original suite/oracle/fixtures unchanged. Full
-pinned checks and actual database witness pending; upload/claim/delete and
-original MLS test execution still unfinished.
+pinned checks and actual database witness pass at source947016816/servicee85ddd5c.
+Five public count and ten MLS client controls pass, with actual count1 and exact
+rows01/05 retained through native-Go-native; prior controls also pass. All25
+managed exits0/runner0/cleanup0/independent empty. First unsafe helper mount
+failure retained; use existing read-only generated fixture mount, no isolation
+relaxation. [Evidence](../../../go/services/brig/qualification/evidence/mls-count-rows/README.md).
+Upload/claim/replace/delete and original MLS test execution still unfinished.
