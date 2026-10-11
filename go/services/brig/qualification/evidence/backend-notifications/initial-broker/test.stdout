@@ -1,0 +1,4 @@
+=== RUN   TestOwnedBackendNotifications
+    backend_notifications_qualification_test.go:37: RabbitMQ connection failed
+--- FAIL: TestOwnedBackendNotifications (0.00s)
+FAIL

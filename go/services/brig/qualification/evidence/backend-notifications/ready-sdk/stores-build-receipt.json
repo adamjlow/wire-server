@@ -1,0 +1,18 @@
+{
+  "result": "pass",
+  "source_revision": "1df07661d5ab4b0b3ad93e9dfa1cbb84389ac0d0",
+  "sdk_image": "sha256:2f9e4393295d7270538dd1c666ab1345eaec06b2c2f8c217283ba6565caee399",
+  "toolchain": "go1.26.9",
+  "sdk_archives_manifest_sha256": "875560a1f32f1ad76a866a7f792a6b392f64c5555e8f55f270f60869079f9af2",
+  "scope": "Tagged store fixture rebuilt only; unchanged production/normal-unit/dependency quality reused with exact path comparison",
+  "reused_quality_revision": "367d55f64d928672eb9ff29000cfc5fc73d78405",
+  "reused_service_sha256": "439c6379e4136bfdeb3981f1defe060150668aad1455bc0be65a5a98ece6e08b",
+  "changed_paths": [
+    "docs/go-migration/plans/brig.md",
+    "go/services/brig/qualification/backend_notifications.py"
+  ],
+  "sdk_controller_exit_code": 0,
+  "binary_sha256": "81af7a87200582610648cc5dea0bbadf78e4dd8b8e6b52009c671d8d8da3585a",
+  "remaining_owned_containers": "",
+  "remaining_owned_networks": ""
+}

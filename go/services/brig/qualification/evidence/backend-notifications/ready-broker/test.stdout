@@ -1,0 +1,4 @@
+=== RUN   TestOwnedBackendNotifications
+    backend_notifications_qualification_test.go:52: Exception (405) Reason: "RESOURCE_LOCKED - cannot obtain access to locked queue 'backend-notifications.remote.example.com' in vhost '/'. basic.get operations are not supported by quorum queues with single active consumer"
+--- FAIL: TestOwnedBackendNotifications (0.01s)
+FAIL

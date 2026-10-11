@@ -171,6 +171,13 @@
       "command": "Scoped sourcecc80e031b/servicee9433b45 full pinned Go/static units pass; finite native deletion event/bundle/order/cursor/chunk/failure/best-effort rescind controls. SDK/controller/units/cleanup0 and independent namespace empty. No new deps; tagged stores compile only. Persistent enqueue callback required but Rabbit publisher not yet bound; no live queue/public/original22/whole535 acceptance claim.",
       "revision": "cc80e031bd640cdd717f4c517d3a2db2a1058234",
       "artifact": "go/services/brig/qualification/evidence/account-deletion-events/README.md"
+    },
+    {
+      "criterion": "quality",
+      "result": "pass",
+      "command": "Production source367d55f64/service439c6379 full pinned Go/static units and new amqp091-go1.15.0 vulnerability/license checks pass. Fixture revisionf1a0acc7a/tagged61920cf4 actual owned Rabbit payload/persistence/content type/manual consumer/reconnect and durable quorum/single-active arguments pass; three broker fixture failures and initial tidy failure retained. Reused unchanged production quality with exact input comparison; terminal/cleanup/independent namespaces empty. Publisher bound to startup lifecycle, deletion API/replay still incomplete; no whole535 or service gate claim.",
+      "revision": "f1a0acc7a4342d2134d956ea2d56673ffe51be85",
+      "artifact": "go/services/brig/qualification/evidence/backend-notifications/README.md"
     }
   ],
   "review": null,

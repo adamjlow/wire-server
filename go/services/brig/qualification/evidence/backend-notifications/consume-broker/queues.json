@@ -1,0 +1,19 @@
+[
+  {
+    "name": "backend-notifications.remote.example.com",
+    "durable": true,
+    "auto_delete": false,
+    "arguments": [
+      [
+        "x-queue-type",
+        "longstr",
+        "quorum"
+      ],
+      [
+        "x-single-active-consumer",
+        "bool",
+        true
+      ]
+    ]
+  }
+]

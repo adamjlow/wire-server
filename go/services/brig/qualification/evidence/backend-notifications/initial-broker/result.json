@@ -1,0 +1,15 @@
+{
+  "result": "failed",
+  "source_revision": "367d55f64d928672eb9ff29000cfc5fc73d78405",
+  "test_binary_sha256": "81af7a87200582610648cc5dea0bbadf78e4dd8b8e6b52009c671d8d8da3585a",
+  "rabbit_image": "rabbitmq@sha256:5cbd7145b0306399ad68422c3350b6cbd1bb95704b39f5896480e5b6d4238a04",
+  "runner_image": "sha256:f487c90fd364aac9daee5a1ce6e60fdba0ab74ab0c671ab0de0198e8f05659a9",
+  "scope": "Owned Rabbit publisher proof; no API or whole-service acceptance claim.",
+  "test_exit_code": 1,
+  "failure": "owned publisher assertions failed",
+  "cleanup": {
+    "containers": "",
+    "networks": "",
+    "volumes": ""
+  }
+}

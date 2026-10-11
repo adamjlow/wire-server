@@ -1,0 +1,15 @@
+{
+  "all_controllers_terminal": true,
+  "all_owned_prefix_audits_empty": true,
+  "sdk_prefixes": [
+    "brig-backend-notifications-sdk-",
+    "brig-backend-notifications-tidy-sdk-",
+    "brig-backend-notifications-ready-sdk-",
+    "brig-backend-notifications-consume-sdk-",
+    "brig-backend-notifications-arguments-sdk-"
+  ],
+  "broker_prefix": "wire-brig-rabbit-",
+  "containers": [],
+  "networks": [],
+  "volumes": []
+}

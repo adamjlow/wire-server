@@ -1301,3 +1301,17 @@ x-single-active-consumer bool true, exactly requested. Compare that native CLI
 representation with the same required values/types; no property/assertion waived.
 Retain failed controller result and passing tagged output, rerun complete owned
 queue proof after Python-only fixture correction with unchanged Go inputs.
+
+Production367d55f64/service439c6379 passes pinned full Go/static checks/new AMQP
+vulnerability/license controls. Final fixturef1a0acc7a/tagged61920cf4 owned Rabbit
+proof passes exact delivery/body/properties, actual consumer acknowledgement,
+reconnect and durable quorum/single-active queue arguments. Retain all failed
+fixture/tidy attempts; corrected tagged-only builds reuse unchanged normal quality
+with exact source-path comparison. All controllers terminal and owned namespaces
+independently empty. [Evidence/review](../../../go/services/brig/qualification/evidence/backend-notifications/README.md).
+Native no-confirm publication ambiguity/possible retry duplicates documented;
+no policy change or live TLS/public deletion/whole535 claim. Publisher starts and
+stops with configured Brig. Next verification-code/mail bindings, incoming remote
+deletion notification and actual internal replay; attach complete deletion engine
+and rerun original22 with separated profile actor. Resource recovery before full
+backend remains required; never lower2GiB guard or discard retained evidence.
