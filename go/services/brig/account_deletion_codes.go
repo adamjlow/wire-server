@@ -147,6 +147,9 @@ func (s verificationCodeStore) deletionThrottle(ctx context.Context, key string)
 	if err != nil {
 		return nil, errors.New("verification throttle lookup failed")
 	}
+	if ttl == nil {
+		return nil, errors.New("invalid stored verification throttle")
+	}
 	return ttl, nil
 }
 
