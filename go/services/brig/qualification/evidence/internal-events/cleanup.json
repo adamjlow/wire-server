@@ -1,0 +1,41 @@
+{
+  "sdk_controller_exit_code": 0,
+  "backend_controller_exit_code": 0,
+  "runner_exit_code": 0,
+  "cleanup_exit_code": 0,
+  "owned_process_exit_codes": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "independent_containers": [],
+  "independent_networks": [],
+  "independent_volumes": [],
+  "backend_project": "wire-e2e-d854341348f64039a4782a63fe0585b1",
+  "sdk_prefixes": [
+    "brig-internal-events-sdk-",
+    "brig-internal-events-replay-sdk-"
+  ]
+}

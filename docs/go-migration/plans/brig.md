@@ -1426,3 +1426,13 @@ read the same tombstone and cleared properties. Require real queue visible and
 in-flight counts zero; retain existing30-second observation bound and all22
 original assertions plus prior switchback controls. Only synthetic private actors;
 no fixture/original assertion relaxation. Exact qualified source/artifacts required.
+
+Sourcea14fe1243/servicedef0fef2 passes full pinned/static checks and actual durable
+native queue→Go consume/ack→native account/property switchback, visible/in-flight0.
+All22 unchanged original MLS/connection tests and prior affected paired controls
+pass; all25 managed exits0, runner/cleanup0 and independent resources empty.
+[Evidence](../../../go/services/brig/qualification/evidence/internal-events/README.md).
+SQS user/client listener is now bound. STOMP and provider/service.delete remain
+unimplemented, actual client queue cleanup and email-code deletion remain finite
+required cases, and final535/eight-Go/operations/all-entity/image/selector gates
+remain unchanged. No whole-service stage advancement from this increment.

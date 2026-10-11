@@ -206,6 +206,13 @@
       "command": "Scoped deletion startup/public/internal binding: full pinned Go/static checks, 22 unchanged compiled originals now pass incl retained DELETE/self remote-owner failure; affected paired account/client/prekey/connection/MLS controls and actual durable native-Go-native client/raw+signed MLS switchback pass. All25 process exits0, runner/cleanup0 independent empty. Two-Go/Haskell remainder, not final535/eight-Go or all-entity switchback.",
       "revision": "485ab4581334efa7b92112aa812c68c294cb9d00",
       "artifact": "go/services/brig/qualification/evidence/deletion-http/README.md"
+    },
+    {
+      "criterion": "operations",
+      "result": "pass",
+      "command": "Scoped SQS internal user/client consumer: full pinned/static checks and original22 pass; actual native queue cleanup, Haskell-created account/property enqueued after native stop consumed+acknowledged by Go, restarted native reads same tombstone/cleared properties, visible/in-flight0. Prior affected paired/client/raw+signed MLS switchback retained; all25 exits0 runner/cleanup0 independent empty. STOMP/service deletion/full535/all-entity operations not qualified.",
+      "revision": "a14fe1243bbc03697ba46da6ea8507639a60f882",
+      "artifact": "go/services/brig/qualification/evidence/internal-events/README.md"
     }
   ],
   "review": null,

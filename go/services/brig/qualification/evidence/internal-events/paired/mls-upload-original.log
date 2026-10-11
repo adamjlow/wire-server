@@ -1,0 +1,30 @@
+Postgres migrations finished
+Connection.testCancel[domain=other][32m OK[0m (0.35 s)
+Connection.testConnectFromIgnored[domain=other][32m OK[0m (0.60 s)
+Connection.testConnectWithRemoteUser[domain=otherdomain][32m OK[0m (0.71 s)
+Connection.testConnectWithRemoteUser[domain=owndomain][32m OK[0m (0.41 s)
+Connection.testConnectFromBlocked[domain=other][32m OK[0m (0.78 s)
+MLS.KeyPackage.testClaimKeyPackagesEphemeralUser[32m OK[0m (0.11 s)
+MLS.KeyPackage.testDeleteKeyPackages[32m OK[0m (0.20 s)
+Connection.testSentFromBlocked[domain=other][32m OK[0m (0.53 s)
+Connection.testSentFromIgnored[domain=other][32m OK[0m (0.52 s)
+MLS.KeyPackage.testKeyPackageCount[suite=0x0001][32m OK[0m (0.28 s)
+MLS.KeyPackage.testKeyPackageCount[suite=0x0002][32m OK[0m (0.29 s)
+MLS.KeyPackage.testKeyPackageClaim[32m OK[0m (0.76 s)
+MLS.KeyPackage.testKeyPackageCount[suite=0x0005][32m OK[0m (0.45 s)
+MLS.KeyPackage.testKeyPackageCount[suite=0x0007][32m OK[0m (0.44 s)
+MLS.KeyPackage.testKeyPackageMultipleCiphersuites[32m OK[0m (0.22 s)
+MLS.KeyPackage.testKeyPackageUploadNoKey[32m OK[0m (0.14 s)
+MLS.KeyPackage.testKeyPackageRemoteClaim[32m OK[0m (0.26 s)
+MLS.KeyPackage.testKeyPackageSelfClaim[32m OK[0m (0.73 s)
+MLS.KeyPackage.testUnsupportedCiphersuite[32m OK[0m (0.05 s)
+Connection.testConnectionLimits[domain=other][32m OK[0m (2.49 s)
+MLS.KeyPackage.testReplaceKeyPackages[32m OK[0m (1.09 s)
+MLS.KeyPackage.testReplaceKeyPackagesV7[32m OK[0m (1.20 s)
+Attempting to delete federation V0 queues...
+No or incomplete credentials for fed V0 RabbitMQ
+Attempting to delete federation V1 queues...
+No or incomplete credentials for fed V1 RabbitMQ
+Attempting to delete federation V2 queues...
+No or incomplete credentials for fed V2 RabbitMQ
+22 tests run.
