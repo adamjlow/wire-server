@@ -1436,3 +1436,17 @@ SQS user/client listener is now bound. STOMP and provider/service.delete remain
 unimplemented, actual client queue cleanup and email-code deletion remain finite
 required cases, and final535/eight-Go/operations/all-entity/image/selector gates
 remain unchanged. No whole-service stage advancement from this increment.
+
+Planned, not yet implemented: STOMP transport will use pinned go-stomp/stomp/v3 v3.1.5 (Apache-2.0; current
+official module tag inspected), instead of inventing a protocol implementation.
+Read its implementation and run vulnerability/license checks before qualification.
+Honor the native parser's stomHost/stomPort/stomTls keys (Options.hs uses the
+"stom" prefix, despite examples using "stomp") plus setStomp credential file, verified
+TLS hostname/system roots and context-cancelable dialing. Never log credentials or
+message bodies. Persistent JSON SEND must await broker RECEIPT, with native500ms
+attempt timeout/five retries/50ms exponential backoff. Consumer uses individual
+ACK only after parsed callback succeeds,1s ACK deadline and1s reconnect delay;
+bad frames/JSON/callback failure close connection and leave work for redelivery.
+Reuse the60s deletion processor. Verify handshake/auth/receipts/admission/failure/
+cancellation with finite local protocol controls before actual owned-broker replay.
+Keep Dynamo credentials independent of the selected internal queue transport.
