@@ -1,0 +1,273 @@
+D, No TLS cert file path configured.
+D, Connecting to 172.20.0.3:9042
+I, Known hosts: [datacenter1:rack1:172.20.0.3:9042]
+I, New control connection: datacenter1:rack1:172.20.0.3:9042#<socket: 13>
+D, Connection established: datacenter1:rack1:172.20.0.3:9042#<socket: 14>
+I, Event: SchemaEvent (SchemaCreated (KeyspaceChange (Keyspace {unKeyspace = "owned_brig_stores"})))
+I, Event: SchemaEvent (SchemaCreated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "meta"})))
+I, New migrations found.
+I, [43] Initial brig schema at time of open-sourcing wire-server in 2017
+I, Event: SchemaEvent (SchemaCreated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "user"})))
+I, Event: SchemaEvent (SchemaCreated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "user_keys"})))
+I, Event: SchemaEvent (SchemaCreated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "activation_keys"})))
+I, Event: SchemaEvent (SchemaCreated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "password_reset"})))
+I, Event: SchemaEvent (SchemaCreated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "connection"})))
+I, Event: SchemaEvent (SchemaUpdated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "connection"})))
+I, Event: SchemaEvent (SchemaCreated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "invitee_info"})))
+I, Event: SchemaEvent (SchemaCreated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "clients"})))
+I, Event: SchemaEvent (SchemaCreated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "prekeys"})))
+I, Event: SchemaEvent (SchemaCreated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "properties"})))
+I, Event: SchemaEvent (SchemaCreated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "login_codes"})))
+I, Event: SchemaEvent (SchemaUpdated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "password_reset"})))
+I, Event: SchemaEvent (SchemaUpdated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "password_reset"})))
+I, Event: SchemaEvent (SchemaUpdated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "clients"})))
+I, Event: SchemaEvent (SchemaUpdated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "clients"})))
+I, Event: SchemaEvent (SchemaCreated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "invitation"})))
+I, Event: SchemaEvent (SchemaCreated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "invitation_info"})))
+I, Event: SchemaEvent (SchemaUpdated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "clients"})))
+I, Event: SchemaEvent (SchemaUpdated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "clients"})))
+I, Event: SchemaEvent (SchemaUpdated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "clients"})))
+I, Event: SchemaEvent (SchemaUpdated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "clients"})))
+I, Event: SchemaEvent (SchemaCreated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "codes"})))
+I, Event: SchemaEvent (SchemaCreated (TypeChange (Keyspace {unKeyspace = "owned_brig_stores"}) "asset"))
+I, Event: SchemaEvent (SchemaUpdated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "user"})))
+I, Event: SchemaEvent (SchemaCreated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "vcodes"})))
+I, Event: SchemaEvent (SchemaCreated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "provider"})))
+I, Event: SchemaEvent (SchemaCreated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "provider_keys"})))
+I, Event: SchemaEvent (SchemaCreated (TypeChange (Keyspace {unKeyspace = "owned_brig_stores"}) "pubkey"))
+I, Event: SchemaEvent (SchemaCreated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "service"})))
+I, Event: SchemaEvent (SchemaCreated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "service_tag"})))
+I, Event: SchemaEvent (SchemaUpdated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "user"})))
+I, Event: SchemaEvent (SchemaUpdated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "user"})))
+I, Event: SchemaEvent (SchemaUpdated (TypeChange (Keyspace {unKeyspace = "owned_brig_stores"}) "asset"))
+I, Event: SchemaEvent (SchemaUpdated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "service"})))
+I, Event: SchemaEvent (SchemaUpdated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "user"})))
+I, Event: SchemaEvent (SchemaCreated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "budget"})))
+I, Event: SchemaEvent (SchemaCreated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "unique_claims"})))
+I, Event: SchemaEvent (SchemaCreated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "user_handle"})))
+I, Event: SchemaEvent (SchemaUpdated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "user"})))
+I, Event: SchemaEvent (SchemaCreated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "user_cookies"})))
+I, Event: SchemaEvent (SchemaCreated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "user_keys_hash"})))
+I, Event: SchemaEvent (SchemaUpdated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "user"})))
+I, Event: SchemaEvent (SchemaCreated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "team_invitation"})))
+I, Event: SchemaEvent (SchemaCreated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "team_invitation_info"})))
+I, Waiting for schema version consistency across peers...
+I, ... done waiting.
+I, [44] Use LeveledCompactionStrategy on clients
+I, Event: SchemaEvent (SchemaUpdated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "clients"})))
+I, Waiting for schema version consistency across peers...
+I, ... done waiting.
+I, [45] Use LeveledCompactionStrategy on prekeys
+I, Event: SchemaEvent (SchemaUpdated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "prekeys"})))
+I, Waiting for schema version consistency across peers...
+I, ... done waiting.
+I, [46] Add summary field to service table
+I, Event: SchemaEvent (SchemaUpdated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "service"})))
+I, Waiting for schema version consistency across peers...
+I, ... done waiting.
+I, [47] Create and populate prefix table
+I, Event: SchemaEvent (SchemaCreated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "service_prefix"})))
+I, Waiting for schema version consistency across peers...
+I, ... done waiting.
+I, [48] Add expiration to user table
+I, Event: SchemaEvent (SchemaUpdated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "user"})))
+I, Waiting for schema version consistency across peers...
+I, ... done waiting.
+I, [49] Add binding team to user table
+I, Waiting for schema version consistency across peers...
+I, Event: SchemaEvent (SchemaUpdated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "user"})))
+I, ... done waiting.
+I, [50] Add UserSSOId to user table
+I, Event: SchemaEvent (SchemaUpdated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "user"})))
+I, Waiting for schema version consistency across peers...
+I, ... done waiting.
+I, [51] Add blacklist table
+I, Event: SchemaEvent (SchemaCreated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "blacklist"})))
+I, Waiting for schema version consistency across peers...
+I, ... done waiting.
+I, [52] Add service whitelist table
+I, Event: SchemaEvent (SchemaCreated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "service_whitelist"})))
+I, Event: SchemaEvent (SchemaCreated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "service_whitelist_rev"})))
+I, Waiting for schema version consistency across peers...
+I, ... done waiting.
+I, [53] Add tables for tracking users spawned by services
+I, Event: SchemaEvent (SchemaCreated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "service_user"})))
+I, Event: SchemaEvent (SchemaCreated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "service_team"})))
+I, Waiting for schema version consistency across peers...
+I, ... done waiting.
+I, [54] Add metadata to team invitations
+I, Event: SchemaEvent (SchemaUpdated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "team_invitation"})))
+I, Waiting for schema version consistency across peers...
+I, ... done waiting.
+I, [55] Add optional role to team invitations
+I, Event: SchemaEvent (SchemaUpdated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "team_invitation"})))
+I, Waiting for schema version consistency across peers...
+I, ... done waiting.
+I, [56] Add table to exclude phone number prefixes
+I, Event: SchemaEvent (SchemaCreated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "excluded_phones"})))
+I, Waiting for schema version consistency across peers...
+I, ... done waiting.
+I, [57] Add managed_by
+I, Event: SchemaEvent (SchemaUpdated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "user"})))
+I, Waiting for schema version consistency across peers...
+I, ... done waiting.
+I, [58] Add table for storing rich info
+I, Event: SchemaEvent (SchemaCreated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "rich_info"})))
+I, Waiting for schema version consistency across peers...
+I, ... done waiting.
+I, [59] Add name and phone to the team invitations table
+I, Event: SchemaEvent (SchemaUpdated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "team_invitation"})))
+I, Waiting for schema version consistency across peers...
+I, ... done waiting.
+I, [60] Add ID mapping for federation
+I, Event: SchemaEvent (SchemaCreated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "id_mapping"})))
+I, Waiting for schema version consistency across peers...
+I, ... done waiting.
+I, [61] Add team_invitation_email table
+I, Event: SchemaEvent (SchemaCreated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "team_invitation_email"})))
+I, Waiting for schema version consistency across peers...
+I, ... done waiting.
+I, [62] Remove ID mapping for federation
+I, Event: SchemaEvent (SchemaDropped (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "id_mapping"})))
+I, Waiting for schema version consistency across peers...
+I, ... done waiting.
+I, [63] Add users_pending_activation
+I, Event: SchemaEvent (SchemaCreated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "users_pending_activation"})))
+I, Waiting for schema version consistency across peers...
+I, ... done waiting.
+I, [64] Add supported capabilities set to clients table
+I, Event: SchemaEvent (SchemaUpdated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "clients"})))
+I, Waiting for schema version consistency across peers...
+I, ... done waiting.
+I, [65] Add table for federated (remote) connections
+I, Event: SchemaEvent (SchemaCreated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "connection_remote"})))
+I, Waiting for schema version consistency across peers...
+I, ... done waiting.
+I, [66] Add personal account feature: conf call initiation
+I, Event: SchemaEvent (SchemaUpdated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "user"})))
+I, Waiting for schema version consistency across peers...
+I, ... done waiting.
+I, [67] Add table for MLS key packages
+I, Event: SchemaEvent (SchemaCreated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "mls_key_packages"})))
+I, Waiting for schema version consistency across peers...
+I, ... done waiting.
+I, [68] Add MLS public keys
+I, Event: SchemaEvent (SchemaCreated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "mls_public_keys"})))
+I, Waiting for schema version consistency across peers...
+I, ... done waiting.
+I, [69] Add key package ref mapping
+I, Event: SchemaEvent (SchemaCreated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "mls_key_package_refs"})))
+I, Waiting for schema version consistency across peers...
+I, ... done waiting.
+I, [70] Add email_unvalidated to user table
+I, Event: SchemaEvent (SchemaUpdated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "user"})))
+I, Waiting for schema version consistency across peers...
+I, ... done waiting.
+I, [71] Add table vcodes_throttle
+I, Event: SchemaEvent (SchemaCreated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "vcodes_throttle"})))
+I, Waiting for schema version consistency across peers...
+I, ... done waiting.
+I, [72] Add table nonce
+I, Event: SchemaEvent (SchemaCreated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "client_nonce"})))
+I, Waiting for schema version consistency across peers...
+I, ... done waiting.
+I, [73] Replace nonce with a better one
+I, Event: SchemaEvent (SchemaDropped (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "client_nonce"})))
+I, Event: SchemaEvent (SchemaCreated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "nonce"})))
+I, Waiting for schema version consistency across peers...
+I, ... done waiting.
+I, [74] Add table for OAuth clients
+I, Event: SchemaEvent (SchemaCreated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "oauth_client"})))
+I, Event: SchemaEvent (SchemaCreated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "oauth_auth_code"})))
+I, Event: SchemaEvent (SchemaCreated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "oauth_refresh_token"})))
+I, Event: SchemaEvent (SchemaCreated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "oauth_user_refresh_token"})))
+I, Waiting for schema version consistency across peers...
+I, ... done waiting.
+I, [75] Add PKCE code_challenge to oauth_auth_code table
+I, Event: SchemaEvent (SchemaUpdated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "oauth_auth_code"})))
+I, Waiting for schema version consistency across peers...
+I, ... done waiting.
+I, [76] Add supported_protocols to user table
+I, Event: SchemaEvent (SchemaUpdated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "user"})))
+I, Waiting for schema version consistency across peers...
+I, ... done waiting.
+I, [77] Table for keeping track of instances we federate with
+I, Event: SchemaEvent (SchemaCreated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "federation_remotes"})))
+I, Waiting for schema version consistency across peers...
+I, ... done waiting.
+I, [78] Add last_active field to clients table
+I, Event: SchemaEvent (SchemaUpdated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "clients"})))
+I, Waiting for schema version consistency across peers...
+I, ... done waiting.
+I, [79] Add a secondary index for federated (remote) connections
+I, Event: SchemaEvent (SchemaUpdated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "connection_remote"})))
+I, Waiting for schema version consistency across peers...
+I, ... done waiting.
+I, [80] Recreate mls_key_packages table
+I, Event: SchemaEvent (SchemaDropped (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "mls_key_packages"})))
+I, Event: SchemaEvent (SchemaCreated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "mls_key_packages"})))
+I, Waiting for schema version consistency across peers...
+I, ... done waiting.
+I, [81] Add table for managing backend wide team federation
+I, Event: SchemaEvent (SchemaCreated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "federation_remote_teams"})))
+I, Event: SchemaEvent (SchemaUpdated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "federation_remotes"})))
+I, Waiting for schema version consistency across peers...
+I, ... done waiting.
+I, [82] Drop phone column from user table
+I, Event: SchemaEvent (SchemaUpdated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "user"})))
+I, Waiting for schema version consistency across peers...
+I, ... done waiting.
+I, [83] Add field for textStatus to user table
+I, Event: SchemaEvent (SchemaUpdated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "user"})))
+I, Waiting for schema version consistency across peers...
+I, ... done waiting.
+I, [84] Drop phone column from team_invitation table
+I, Event: SchemaEvent (SchemaUpdated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "team_invitation"})))
+I, Waiting for schema version consistency across peers...
+I, ... done waiting.
+I, [85] Drop deprecated user_keys_hashed table
+I, Event: SchemaEvent (SchemaDropped (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "user_keys_hash"})))
+I, Waiting for schema version consistency across peers...
+I, ... done waiting.
+I, [86] Add field for keeping track of time of nulling another field
+I, Event: SchemaEvent (SchemaUpdated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "user"})))
+I, Waiting for schema version consistency across peers...
+I, ... done waiting.
+I, [87] Drop unused invitation tables
+I, Event: SchemaEvent (SchemaDropped (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "invitation"})))
+I, Event: SchemaEvent (SchemaDropped (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "invitation_info"})))
+I, Waiting for schema version consistency across peers...
+I, ... done waiting.
+I, [88] Add domain_registration table
+I, Event: SchemaEvent (SchemaCreated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "domain_registration"})))
+I, Waiting for schema version consistency across peers...
+I, ... done waiting.
+I, [89] add auth token hash column
+I, Event: SchemaEvent (SchemaUpdated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "domain_registration"})))
+I, Event: SchemaEvent (SchemaCreated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "domain_registration_challenge"})))
+I, Waiting for schema version consistency across peers...
+I, ... done waiting.
+I, [90] table serves as an index for looking up domains by team id
+I, Event: SchemaEvent (SchemaCreated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "domain_registration_by_team"})))
+I, Waiting for schema version consistency across peers...
+I, ... done waiting.
+I, [91] add webapp_url column
+I, Event: SchemaEvent (SchemaUpdated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "domain_registration"})))
+I, Waiting for schema version consistency across peers...
+I, ... done waiting.
+I, [92] add user_type column
+I, Event: SchemaEvent (SchemaUpdated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "user"})))
+I, Waiting for schema version consistency across peers...
+I, ... done waiting.
+I, [93] Add lookup table for pending SCIM users by team and email
+I, Event: SchemaEvent (SchemaCreated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "team_scim_pending_user_email"})))
+I, Waiting for schema version consistency across peers...
+I, ... done waiting.
+I, [94] reduce user gc_grace_period
+I, Event: SchemaEvent (SchemaUpdated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "user"})))
+I, Event: SchemaEvent (SchemaUpdated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "user_handle"})))
+I, Event: SchemaEvent (SchemaUpdated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "rich_info"})))
+I, Event: SchemaEvent (SchemaUpdated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "service_user"})))
+I, Event: SchemaEvent (SchemaUpdated (TableChange (Keyspace {unKeyspace = "owned_brig_stores"}) (Table {unTable = "service_team"})))
+I, Waiting for schema version consistency across peers...
+I, ... done waiting.

@@ -1209,3 +1209,15 @@ new decoder, with focused uppercase-key regressions. Group storage and tagged
 store assertions are unchanged; retain their exact954abe23c store proof, rerun
 full Go/static checks for the decoder correction and do not repeat unchanged
 native stores solely for metadata/decoder changes not invoked by that fixture.
+
+Group adapter final decoder source627001447/service0e1eebe9 passes full pinned
+Go/static checks; exact group/store source954abe23c/tagged26f66040 native-schema
+stores pass1.86s and unchanged store inputs reuse that precise proof. Both SDK
+controllers/store controller terminal0, independently empty owned namespaces.
+[Evidence/review](../../../go/services/brig/qualification/evidence/account-deletion-groups/README.md).
+Still unbound; no public/original/whole-service gate. Next complete native local
+and remote deletion event fanout, real persistent Rabbit bundles, deletion journal,
+verification/mail and queue replay, then attach full engine and rerun originals.
+Root now below2GiB backend floor after retaining builds; before any new full backend
+run recover space only through verified lossless owned-artifact maintenance,
+never weakening the floor or pruning shared Docker/unrelated files.

@@ -1,0 +1,24 @@
+{
+  "sdk_controllers_terminal_exit": 0,
+  "store_controller_terminal_exit": 0,
+  "independent_audits": [
+    {
+      "prefix": "brig-account-deletion-groups-sdk-",
+      "containers": [],
+      "networks": [],
+      "volumes": []
+    },
+    {
+      "prefix": "brig-account-deletion-groups-member-sdk-",
+      "containers": [],
+      "networks": [],
+      "volumes": []
+    },
+    {
+      "prefix": "wire-brig-stores-4af98dd00ffb47d1a4d4b5887aabd6dd",
+      "containers": [],
+      "networks": [],
+      "volumes": []
+    }
+  ]
+}
