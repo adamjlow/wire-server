@@ -244,6 +244,18 @@ func Run(ctx context.Context, c Config) error {
 		verificationEnabled: business.peers.verificationEnabled,
 		verifyCode:          verificationCodeStore{cassandra}.verify,
 	}
+	deleteLock, err := clientLockDeletion(c, internalQueue.sqs)
+	if err != nil {
+		return err
+	}
+	deletionStore := clientDeletionStorage{clientStore: clientStore{cassandra}, deleteLock: deleteLock}
+	business.clientDeletion = &clientDeletionService{
+		lookup: deletionStore.get, reauthenticate: business.auth.passwords.reauthenticate,
+		revokeLabel: func(ctx context.Context, user gocql.UUID, label string) error {
+			_, err := (sessionManager{store: business.sessions}).revoke(ctx, user, nil, nil, []string{label})
+			return err
+		}, enqueue: internalQueue.enqueueClientDeletion, remove: deletionStore.remove,
+	}
 	notifications := newSessionNotifications(ctx, business.peers)
 	defer notifications.close()
 	business.properties = newPropertyService(c, propertyStore{cassandra}, notifications.submitPush)

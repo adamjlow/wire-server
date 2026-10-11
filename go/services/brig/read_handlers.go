@@ -34,6 +34,7 @@ type brigReadHandlers struct {
 	federationConfig *federationConfigRead
 	properties       *propertyService
 	clientUpdate     *clientUpdateService
+	clientDeletion   *clientDeletionService
 }
 
 func readJSON(w http.ResponseWriter, r *http.Request, body any) {
@@ -70,6 +71,9 @@ func routeParseError(w http.ResponseWriter, message string) {
 }
 
 func (b brigReadHandlers) handle(w http.ResponseWriter, r *http.Request, path string) bool {
+	if b.clientDeletion != nil && b.clientDeletion.handle(w, r, path) {
+		return true
+	}
 	if b.clientUpdate != nil && b.clientUpdate.handle(w, r, path) {
 		return true
 	}

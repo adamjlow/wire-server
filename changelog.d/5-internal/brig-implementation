@@ -3,3 +3,5 @@ Extend the optional Go Brig implementation with property APIs and client updates
 Add native-order client registration core and parameterized Cassandra insertion; public registration and lifecycle qualification remain pending.
 
 Add versioned native client registration decoding and Galley/synchronous Gundeck callbacks; public registration composition remains pending.
+
+Add public client deletion with native cookie/queue/storage order and configured prekey-lock cleanup; backend lifecycle qualification remains pending.

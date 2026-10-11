@@ -489,3 +489,29 @@ Dynamo lock delete, then wire full addClient account/login-code/typed public
 policy/core/consumable/Galley/event/new-client email and remove/last-active.
 Reuse original Client tests and native switchback; final535/eight-Go and
 remaining whole gates unchanged.
+
+
+Client deletion implementation slice: public DELETE/clients/:id with required
+ZUser/ZConnection, native ID normalization, JSON object/password6 admission,
+lookup before type-dependent reauth (temporary skip/legalhold forbid), then
+cookie-label revoke→real native client.delete enqueue→CQL client/prekey delete
+→configured Dynamo lock delete. Preserve MLS rows and partial effects; worker
+Galley/Gundeck cleanup remains required. Reuse existing standard signed SQS
+MD5/retry publication primitive and keep user.delete bytes unchanged. New
+message contains client text/user UUID/required nullable connection/type.
+Parse native top-level randomPrekeys: JustTrue skips Dynamo lock deletion;
+absent/false uses configured prekeyTable/endpoint. Actual signed DeleteItem
+uses native client key userUUID.clientID, endpoint scheme/host/port, existing
+AWS credentials/signing/HTTP client and generic errors. No new dependency.
+
+Finite validation: public route/header/body/type/auth/work-order/failure
+controls, actual signed SQS null/present connection and checksum rejection,
+actual signed Dynamo request/key/success/rejection and no call in local mode;
+full pinned Go/static units. Native deletion stack/state/original Client
+execution, Dynamo retry/error/region matrix and wider malformed Aeson text
+are explicitly not established by these local controls. Current Dynamo
+transport attempts once; compare native SDK retries before optimistic-mode
+qualification rather than infer equivalence. Same-author slice review will
+retain this known qualification gap. No Haskell/security-policy/oracle/
+schema/default change. Full addClient/mail/code and queue consumer/STOMP
+lifecycle remain next whole-service work; no availability claim.

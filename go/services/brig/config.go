@@ -45,6 +45,7 @@ type PostgresPoolConfig struct {
 	Idleness    Duration `yaml:"idlenessTimeout"`
 }
 type Config struct {
+	RandomPrekeys    *bool                 `yaml:"randomPrekeys"`
 	InternalEvents   *internalEventsConfig `yaml:"internalEvents"`
 	AWS              *brigAWSConfig        `yaml:"aws"`
 	Elasticsearch    *searchIndexConfig    `yaml:"elasticsearch"`

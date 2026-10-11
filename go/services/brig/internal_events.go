@@ -34,15 +34,32 @@ func newInternalEventQueue(ctx context.Context, config *internalEventsConfig, aw
 }
 
 func (q *internalEventQueue) enqueueUserDeletion(ctx context.Context, user gocql.UUID) error {
-	if q == nil || q.sqs == nil {
-		return errors.New("internal event queue unavailable")
-	}
 	body, err := json.Marshal(struct {
 		User string `json:"user"`
 		Type string `json:"type"`
 	}{User: user.String(), Type: "user.delete"})
 	if err != nil {
 		return errors.New("internal event encoding failed")
+	}
+	return q.enqueue(ctx, body)
+}
+
+func (q *internalEventQueue) enqueueClientDeletion(ctx context.Context, user gocql.UUID, client string, connection *string) error {
+	body, err := json.Marshal(struct {
+		Client     string  `json:"client"`
+		User       string  `json:"user"`
+		Connection *string `json:"connection"`
+		Type       string  `json:"type"`
+	}{client, user.String(), connection, "client.delete"})
+	if err != nil {
+		return errors.New("internal event encoding failed")
+	}
+	return q.enqueue(ctx, body)
+}
+
+func (q *internalEventQueue) enqueue(ctx context.Context, body []byte) error {
+	if q == nil || q.sqs == nil {
+		return errors.New("internal event queue unavailable")
 	}
 	// MD5 is the native SQS response integrity check, not password hashing.
 	digest := md5.Sum(body)
