@@ -80,8 +80,9 @@ def main():
                                    'arguments', '--formatter', 'json']))
         (output / 'queues.json').write_text(json.dumps(queues, indent=2) + '\n')
         queue = next(q for q in queues if q['name'] == 'backend-notifications.remote.example.com')
-        if not queue['durable'] or queue['auto_delete'] or queue['arguments'] != {
-                'x-queue-type': 'quorum', 'x-single-active-consumer': True}:
+        if not queue['durable'] or queue['auto_delete'] or sorted(queue['arguments']) != sorted([
+                ['x-queue-type', 'longstr', 'quorum'],
+                ['x-single-active-consumer', 'bool', True]]):
             raise RuntimeError('native queue declaration mismatch')
         report['result'] = 'pass'
     except Exception as error:

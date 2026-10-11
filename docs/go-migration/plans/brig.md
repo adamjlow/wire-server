@@ -1293,3 +1293,11 @@ only the observer's get with an actual basic.consume/manual acknowledgement,
 retaining exact body/content type/persistence and reconnect assertions. Both
 failed attempts retained; terminal runner1/cleanup0 and independent namespaces
 empty. Tagged observer rebuild only; reuse unchanged production/module quality.
+
+Owned consumer/reconnect assertions now pass1.02s at b962818b7. Final controller
+still fails because Rabbit4.1 CLI encodes arguments as typed triples, not a JSON
+object. Captured queue is durable/nonautodelete, x-queue-type longstr quorum and
+x-single-active-consumer bool true, exactly requested. Compare that native CLI
+representation with the same required values/types; no property/assertion waived.
+Retain failed controller result and passing tagged output, rerun complete owned
+queue proof after Python-only fixture correction with unchanged Go inputs.
