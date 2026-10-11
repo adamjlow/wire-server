@@ -5,10 +5,11 @@ User-selected goal2026-10-10. Reference/upstream source f6636ed53315fa7b0fc4c8aa
 ## Current status (2026-10-11)
 
 Brig remains implementing/unavailable; Galley is authorized only after actual
-whole Brig completion. Latest source89fe996ac has pinned Go checks and static
+whole Brig completion. Latest sourcea39a9aac8 has pinned Go checks and static
 original-runner units PASS. Public registration policy/mail ordering/session
-composition, native localized template/MIME rendering and the SES delivery
-adapter now exist. SMTP and HTTP startup wiring remain pending, so the public
+composition, native localized templates/MIME and actual SES/SMTP delivery
+factory now exist. Run/public HTTP startup wiring and feedback consumption remain
+pending, so the public
 endpoint is not claimed implemented. Internal invitation acceptance is implemented with
 native validation/SCIM/claim/membership/activation/cleanup ordering; actual
 native-schema code/deletion/pending checks PASS at04c621ce6. The latest count-only
@@ -328,3 +329,5 @@ Native runner binary read-only package-string inspection identifies HaskellNet0.
 Serious inherited SMTP concern: HaskellNet0.6.2 DATA writes unescaped lines and does not dot-stuff. Leading-dot content can be changed/truncated by SMTP interpretation; a line consisting solely of a dot in rendered user/team content can prematurely terminate DATA and potentially enable SMTP command injection. Preserve requested behavior and record a separate future framing/escaping improvement rather than silently changing migration policy. Explicit plain SMTP LOGIN also exposes credentials on an untrusted network, matching configured native mode; recommend TLS separately. Current adapter remains unwired; original/native SMTP/public registration comparison and transport/startup factory still required.
 
 Registration mail delivery factory now binds real activation/welcome rendering and sends, prefers a complete SES shape over SMTP, falls back to SMTP on SES parse failure, probes SMTP at construction, and discovers/retains actual SES SQS feedback queue URL before accepting callbacks. SES HTTP transport uses native10s response timeout and1024/4096 connection/idle sizing. Callback errors propagate without fake success. Preserve native Word16 integer-valued YAML port notation. Finite controls deliver original-template activation/welcome MIME over actual signed HTTP and SMTP, prove SES preference by ignoring a nonexistent SMTP secret, prove invalid SES fallback and actual queue discovery. Factory is still not wired into Run or public /register; SES feedback consumer and original native API/mail witnesses remain pending.
+
+Mail delivery sourcea39a9aac8/candidatebc3c03c9500bf508ad8b2a3208c5e1b0c0828bd9f82ad64164e377e8e9770c05 passes full pinned Go/static original-runner checks; evidence registration-mail-delivery. SMTP modes/LOGIN/verified TLS/pool/retirement/close/cancellation and actual SES-first/fallback/callback/feedback-discovery controls PASS. Source review fixed a potential STARTTLS cancellation socket-reference race; latest actual handshake cancellation control passes. Exact native package identities now proved read-only, MIME version gap closed. No live Run/public route/original/native delivered-MIME or whole-service claim. Next bind factory and policy to request-scoped public registration, preserve API-version SCIM behavior/required strict IP header/Location/native cookie response, then actual native public registration switchback and unchanged original accepted-invitation tests as prerequisites become available.

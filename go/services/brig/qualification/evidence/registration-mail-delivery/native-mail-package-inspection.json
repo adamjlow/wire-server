@@ -1,0 +1,12 @@
+{
+  "runner": "sha256:f487c90fd364aac9daee5a1ce6e60fdba0ab74ab0c671ab0de0198e8f05659a9",
+  "binary": "/nix/store/f6l2f0l8l2r6z9jbg937q96k6056iqfn-brig/bin/brig",
+  "binary_sha256": "c45a40da63268712a7cacdbd884287fa3dc93cec179d70323d3f22f7d5cdf1ca",
+  "method": "Read-only nonroot network-none original runner; Python mmap package unit-ID string inspection. Package/version proof only, not a dependency closure audit.",
+  "packages": [
+    "HaskellNet-0.6.2-Jww7Sv0kFRB7zXe7gnxz6I",
+    "HaskellNet-SSL-0.4.0.2-7WBePEPJLkg9lcepkY7gUY",
+    "mime-mail-0.5.1-D8WOyi2CciZKe2vcdatx3G"
+  ],
+  "controller_exit": 0
+}

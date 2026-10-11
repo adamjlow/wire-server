@@ -1,0 +1,9 @@
+{
+  "url": "https://hackage-content.haskell.org/package/HaskellNet-0.6.2/HaskellNet-0.6.2.tar.gz",
+  "archive_sha256": "449baedb6a1e9564ae199c892bf19bbb69dd4c11141b5489700238b2caae8f8c",
+  "files": {
+    "Network-HaskellNet-Auth.hs": "164431f45460a125eb0ed170852dd6944d465a43d3be3cd757c8bf048bc54c93",
+    "Network-HaskellNet-SMTP.hs": "c42cb88a714ddb8a3b1571027b69f948b65ff2c828a5533baed198e50a3b686e",
+    "Network-HaskellNet-SMTP-Internal.hs": "8e90d9a8f6a05026e758aa12fa642e9387e8fcfb250bdab9ccc64fd8122c3beb"
+  }
+}
