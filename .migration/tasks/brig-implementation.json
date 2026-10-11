@@ -52,6 +52,13 @@
       "command": "Scoped sourcea6edb1b5f/service1b0ddb3a: native TCP30s correction; full pinned Go format/dependency/vet/unit/race/security/license/build and static normal units pass; tagged stores compile only, SDK/unit/cleanup0 and independent namespace empty. Revised binary not backend rerun; preceding federation live proof remains exact older artifact. Not full Brig acceptance.",
       "revision": "a6edb1b5f2cd6898dc06b597ce67e2fdbc607a48",
       "artifact": "go/services/brig/qualification/evidence/prekey-federation/timeout-aligned-build-receipt.json"
+    },
+    {
+      "criterion": "quality",
+      "result": "pass",
+      "command": "Scoped source1945701fb/service1b0ddb3a: full pinned Go/static; synchronized h2c remote peak8/completed9/local-first/error joins; exact native/Go13 federation success/null/discovery400/V3/V19 partial+prior5 single/5 multi/7 lifecycle/17 paired and actual client/prekey/MLS switchback; all25 exits0/runner0/cleanup0/independent empty. No new original suite/live Dynamo/whole535 claim.",
+      "revision": "1945701fb87cf5292ccd69512150908574278c63",
+      "artifact": "go/services/brig/qualification/evidence/prekey-federation-failure-pool/README.md"
     }
   ],
   "review": null,
@@ -87,5 +94,5 @@
       "required_evidence": "Frozen100request/concurrency8 latency/RSS/CPU/metrics smoke and eight held-body drain/listener close/SIGTERM0 within35s; actual unchanged-schema same-state native-Go-native auth/password/cookie/client/prekey/MLS/property/connection/pending action/OAuth/apps/groups/domain/queue/search and storage-mode witnesses. Trusted nonroot optional source/license image and separately scoped image-only/default-byte-preserving selector. Exact final qualified artifact and user-delegated same-author self-review with serious inherited concerns and unavailable native checks accurately recorded."
     }
   ],
-  "handoff": "Active whole Brig incomplete/unavailable. Scoped source8ada940ca/observer74d4411f5/service1aa9256b outgoing/incoming federation prekeys: full pinned Go/static, actual h2c tests, native/Go9 federation+prior5 single/5 multi/7 lifecycle/17 paired and actual client/prekey/MLS switchback pass; all25 exits0/runner0/cleanup0/independent empty. TCP30s corrected at sourcea6edb1b5f/service1b0ddb3a; full pinned Go/static checks pass and SDK cleanup independently empty. Revised binary has no backend rerun yet; prior9 live proof remains source8ada940ca/observer74d4411f5/service1aa9256b. Native cross-federation legalhold bypass and trusted remote prekey identity/text documented. Next bounded remote8/barrier/all-call join/partial failure tests, real federation failing peer controls, exact malformed-body/transport message parity and limit/deadline/alias maps. Live Dynamo/no-key/legalhold and other whole families pending. Full535/eight-Go/all-entity3mode/ops/image/defaultselector/legal/security/fullreview pending. No original suite this turn. Remote43899dca6 on explicit audit request; subsequent work local only. Galley only after whole Brig completion."
+  "handoff": "Active whole Brig incomplete/unavailable. Current source1945701fb/service1b0ddb3a: outgoing/incoming federation prekeys full pinned Go/static checks; finite actual h2c remote pool peak8/completed9/local-first/error joins; exact native/Go13 federation success/null/discovery400/V3/V19 partial plus prior5 single/5 multi/7 lifecycle/17 paired and actual client/prekey/MLS switchback pass. All25 exits0/runner0/cleanup0/independent empty, no force/new original suite. Native TCP30s aligned. Native remote identity/text trust and cross-federation legalhold bypass inherited/documented. Next public user-client/remote federation/MLS read contracts reusing CQL and native federator boundaries. Exact malformed-body/transport error text, overall response deadline/body cap, alias maps and live Dynamo/no-key/real legalhold remain required fidelity/qualification gaps. Whole other families/full535/eight-Go/all-entity3mode/ops/image/defaultselector/legal/security/fullreview pending. Remote43899dca6 on explicit audit request; subsequent work local, no push/deploy inferred. Galley only after whole Brig completion."
 }

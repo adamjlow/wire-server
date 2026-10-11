@@ -737,3 +737,17 @@ identity/prekey text are inherited concerns, preserved rather than repaired.
 TCP30s alignment now at sourcea6edb1b5f/service1b0ddb3a with full pinned Go/static
 checks passing and independent SDK cleanup empty. Revised binary not backend
 rerun yet; preserve preceding live proof's exact source/artifact distinction.
+
+### Federation failure/pool proof on timeout-aligned executable
+
+[Evidence](../../../go/services/brig/qualification/evidence/prekey-federation-failure-pool/README.md):
+source1945701fb/service1b0ddb3a, full pinned Go/static checks pass; synchronized
+actual h2c peak8/completed9/local-first/no-early-error join test passes. Real
+native/Go13 federation controls now include exact400 discovery-failure single/
+bundle/V3 and V19 qualified partial successes, plus prior local/lifecycle/17 and
+actual durable client/prekey/MLS switchback. All25 exits0/runner0/cleanup0/
+independent label audit empty. No new original suite/current live Dynamo/whole
+535 claim. Remaining body/transport error details, response limits/deadlines,
+alias maps and other whole-family contract/acceptance gaps stay explicit.
+Next public user-client/remote federation/MLS read contracts reuse actual storage
+and federator boundaries; finish outstanding fidelity gaps before final gates.
