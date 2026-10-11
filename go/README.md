@@ -1,4 +1,10 @@
-# Go candidates
+# Experimental Go candidates
+
+This is an AI-assisted service replacement experiment and a basis for measured
+Go-versus-Haskell comparisons. It is not a completed migration or a claim that
+Go is faster. See the [experiment scope, remaining services, layout and test/benchmark options](../docs/go-migration/README.md).
+Brig is still in progress; Galley has not started. Haskell remains supported
+and default, with Go selected explicitly per service.
 
 Current patched artifacts use **Go1.26.9**. The
 [five-service qualification](../docs/go-migration/qualifications/go-patched-20261009/README.md)
