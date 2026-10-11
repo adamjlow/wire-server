@@ -15,3 +15,5 @@ Add native MLS package count/read cleanup and public reference deletion, validat
 Add signed MLS key-package upload and replacement core using standard Go crypto; seven original compiled Haskell MLS upload/count/delete tests pass across supported suites, with whole-service qualification pending.
 
 Add native MLS local/federated claim admission and package consumption; fourteen unchanged compiled Haskell MLS tests including claim and replacement pass, while whole-service qualification remains in progress.
+
+Align MLS remote set validation priority and verify actual signed package/reference state across Haskell-Go-Haskell, including matching destructive replacement failure; whole Brig qualification remains pending.

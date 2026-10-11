@@ -894,7 +894,7 @@ required. Claim lock is only process-wide and CQL delete unconditional: possible
 cross-replica duplicate selection is an inherited source-based concern, not a
 newly demonstrated exploit; do not change transaction policy here.
 
-### Signed MLS state and remote validation priority (checks pending)
+### Signed MLS state and remote validation priority
 
 Remote bundle now normalizes native typed Set before package validation; add
 actual h2c regression with reversed client order and duplicate malformed entry
@@ -907,3 +907,14 @@ Go, claims exact native package, proves same destructive rejection and writes
 a replacement, then switches back for native byte/count/claim/readback proof.
 All14 original tests and existing witnesses rerun with the same artifact.
 No qualification until actual controller result and cleanup are verified.
+
+Qualified at sourcedd8edd104/servicecf3a62ac: full pinned Go/static checks and
+actual h2c native Set-priority regression pass. Separate signed actor's real API
+upload/claim/destructive failed replacement/successful replacement persists
+exact package/ref bytes native-Go-native; native final count1/claim/readempty.
+All14 original compiled cases pass again (strict exact XML/no failure/error/skip)
+plus prior witnesses; all25 exits0/runner0/cleanup0/independent empty.
+[Evidence](../../../go/services/brig/qualification/evidence/mls-signed-state/README.md).
+This closes the signed-package state/destructive ordering/remote priority gaps
+for the tested configuration, not all three user modes. Team/account families
+and remaining finite security/version/error/operational acceptance remain open.
