@@ -121,17 +121,6 @@ def inside(gundeck_path=None, access_switchback=False):
         assert login['status'] == 200 and cookie, 'native session setup failed'
         reference_access = None
         second_login, second_cookie = None, None
-        if access_switchback:
-            second_login, second_cookie = request('POST', '/login?persist=true', body={
-                'email': created['json']['email'], 'password': 'Synthetic-password-2026!',
-                'label': 'synthetic-revoked-device'})
-            assert second_login['status'] == 200 and second_cookie, 'native second session setup failed'
-            reference_access, replacement = request('POST', '/access', {
-                'Cookie': cookie.split(';', 1)[0],
-                'Authorization': 'Bearer ' + login['json']['access_token']})
-            assert reference_access['status'] == 200, 'native renewal baseline failed'
-            if replacement:
-                cookie = replacement
         cases = [('GET', '/i/status', {}), ('HEAD', '/i/status', {}),
                  ('GET', '/api-version', {}), ('GET', '/self', {'Z-User': user}),
                  ('HEAD', '/self', {'Z-User': user}), ('GET', '/cookies', {'Z-User': user}),
@@ -175,6 +164,49 @@ def inside(gundeck_path=None, access_switchback=False):
         report['mismatches'] = mismatches
         assert not mismatches, 'paired response mismatches'
         if access_switchback:
+            # The fixture has a ten-second inactivity policy. Password checks
+            # deliberately precede this separate account/session handoff; do
+            # not stretch that policy or age credentials through those checks.
+            active.terminate()
+            report['go_reads_stop_exit_code'] = active.wait(timeout=35)
+            assert report['go_reads_stop_exit_code'] == 0, 'Go read process did not stop cleanly'
+            with socket.socket() as check:
+                assert check.connect_ex(('127.0.0.1', 8082)) != 0, 'Go read listener remains'
+            log = open('/reports/brig-native-credential-setup.log', 'w')
+            logs.append(log)
+            active = subprocess.Popen([str(native_brig_path), '-c', str(runtime.WORK / 'brig-static-0.json')],
+                                      cwd=runtime.WORK / 'services/brig', stdout=log, stderr=subprocess.STDOUT)
+            processes.append(active)
+            ready(active)
+            created, _ = request('POST', '/i/users', body={'name': 'Synthetic credential handoff',
+                'email': 'synthetic-handoff-' + uuid.uuid4().hex + '@example.com',
+                'password': 'Synthetic-password-2026!'})
+            assert created['status'] == 201, 'native handoff account setup failed'
+            login, cookie = request('POST', '/login?persist=true', body={
+                'email': created['json']['email'], 'password': 'Synthetic-password-2026!',
+                'label': 'synthetic-paired-device'})
+            assert login['status'] == 200 and cookie, 'native handoff session setup failed'
+            second_login, second_cookie = request('POST', '/login?persist=true', body={
+                'email': created['json']['email'], 'password': 'Synthetic-password-2026!',
+                'label': 'synthetic-revoked-device'})
+            assert second_login['status'] == 200 and second_cookie, 'native second session setup failed'
+            reference_access, replacement = request('POST', '/access', {
+                'Cookie': cookie.split(';', 1)[0],
+                'Authorization': 'Bearer ' + login['json']['access_token']})
+            assert reference_access['status'] == 200, 'native renewal baseline failed'
+            if replacement:
+                cookie = replacement
+            active.terminate()
+            report['native_credentials_stop_exit_code'] = active.wait(timeout=35)
+            assert report['native_credentials_stop_exit_code'] == 0, 'native credential process did not stop cleanly'
+            with socket.socket() as check:
+                assert check.connect_ex(('127.0.0.1', 8082)) != 0, 'native credential listener remains'
+            log = open('/reports/brig-go-credentials.log', 'w')
+            logs.append(log)
+            active = subprocess.Popen([str(candidate), '-c', str(runtime.WORK / 'brig-static-0.json')],
+                                      cwd=runtime.WORK / 'services/brig', stdout=log, stderr=subprocess.STDOUT)
+            processes.append(active)
+            ready(active)
             renewed, replacement = request('POST', '/access', {
                 'Cookie': cookie.split(';', 1)[0],
                 'Authorization': 'Bearer ' + reference_access['json']['access_token']})

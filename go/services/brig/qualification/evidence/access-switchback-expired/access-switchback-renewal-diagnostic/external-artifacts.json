@@ -1,0 +1,30 @@
+{
+  "root": "/home/operator/.cache/wire-migration/brig-20261010/access-switchback-renewal-diagnostic",
+  "sha256": {
+    "controller.log": "734edf631b9d72bdf53ea8dc3ba6770bfcb62a9f6a21ad16745534d8978064b8",
+    "paired-compose.json": "87a36a517d97f928f5fb4a06d5fedc997198df4cf09a161e6f52224981668cee",
+    "environment.json": "43b42cd725527109486735aa999e9df87a92a9f34cbb3a0b2ee8193a0349bbe1",
+    "result.json": "0eb146fa2cffccfc994e2a64bb1e45c30b992f5cc5f6856b630ab133bb842c7f",
+    "compose.json": "45328f59270bb20b46008e67f09b10216a8e836e8936908e4dc33c2401f65f81",
+    "redis-cluster-initialization.log": "8b33b4be2f35a26926e92ea987801ec855d0745959761538eb239d01c9415d5f",
+    "reports/wire-server-enterprise-native.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "reports/federator-native.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "reports/cargohold-native.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "reports/cannon-native.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "reports/background-worker-native.log": "9b05a6cca3aad2f458b0ab0d6e493636d1ee46f8d016166c7c1c45a9c6a06e71",
+    "reports/paired-reads.json": "0f939ef95fc79b229cd4d48dc272878eefa48831c1416e61eb4cc14d2c469fba",
+    "reports/proxy-native.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "reports/brig-go.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "reports/brig-native.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "reports/stern-native.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "reports/spar-native.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "reports/gundeck-go.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "reports/galley-native.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "fixtures/configs.json": "a72b39e034c0563ea28260de4782ee8122f5b8e015887f835fd30b04ad4b8180",
+    "fixtures/coredns-db.sft": "38b816d19035e42da7b3fbb90f419641b222d38c17d8c09000d773484b1aa03a",
+    "fixtures/coredns-db.example.com": "6405b829e03e3c98f6742245bedffaf2e6ce80bc0f5202ccc5da5dee501c4b9f",
+    "fixtures/peers.json": "1877182efbc07cc70bf12db44905c75d5b6fe15cc849cb8143891db9617883f2",
+    "fixtures/coredns-Corefile": "f86a1dd0ea71d82a8f03c554e5ad80523d70615aa511889b5206179a538094e5",
+    "fixtures/integration.json": "d8834dad54e1f851e689ac00691cd527aac69e0e9ce00baf149835433812c73c"
+  }
+}
