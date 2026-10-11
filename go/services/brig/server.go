@@ -245,6 +245,7 @@ func Run(ctx context.Context, c Config) error {
 	}
 	notifications := newSessionNotifications(ctx, business.peers)
 	defer notifications.close()
+	business.properties = newPropertyService(c, propertyStore{cassandra}, notifications.submitPush)
 	codes := activationStore{cassandra}
 	resets := passwordResetStore{databases: business.users.userAuthStore, mode: c.Migration["passwordReset"]}
 	domains := domainRegistrationStore{databases: business.users.userAuthStore, mode: c.Migration["domainRegistration"], invalidRecord: func() { log.Print("invalid stored domain registration") }}

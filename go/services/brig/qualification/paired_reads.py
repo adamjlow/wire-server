@@ -26,7 +26,7 @@ def checked(args, timeout=30):
     return result.stdout.strip()
 
 
-def inside(gundeck_path=None, access_switchback=False, login_contract=False, activation_contract=False, registration_contract=False, saml_registration_contract=False, public_registration_contract=False, password_reset_contract=False, password_change_contract=False, ses_feedback_contract=False):
+def inside(gundeck_path=None, access_switchback=False, login_contract=False, activation_contract=False, registration_contract=False, saml_registration_contract=False, public_registration_contract=False, password_reset_contract=False, password_change_contract=False, ses_feedback_contract=False, properties_contract=False):
     registration_contract = registration_contract or saml_registration_contract
     if os.getuid() != 65534 or os.environ.get('WIRE_E2E_DISPOSABLE') != '1':
         raise ValueError('owned nonroot Docker runner required')
@@ -36,12 +36,15 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
     report = {'result': 'failed', 'e2e_executed': False, 'scope': __doc__, 'records': []}
     active = None
 
-    def request(method, path, headers=None, body=None):
+    def request(method, path, headers=None, body=None, raw_body=None):
         connection = http.client.HTTPConnection('127.0.0.1', 8082, timeout=15)
         try:
             request_headers = {'Request-Id': 'synthetic-paired-read', **(headers or {})}
             if body is not None:
                 body = json.dumps(body).encode()
+                request_headers['Content-Type'] = 'application/json'
+            if raw_body is not None:
+                body = raw_body.encode()
                 request_headers['Content-Type'] = 'application/json'
             connection.request(method, path, body, request_headers)
             response = connection.getresponse()
@@ -133,7 +136,7 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
                 native_brig_path = Path(args[0]).resolve()
                 report['native_brig'] = {'path': str(native_brig_path), 'sha256': hashlib.sha256(native_brig_path.read_bytes()).hexdigest()}
         extra_ports = set()
-        if ses_feedback_contract:
+        if ses_feedback_contract or properties_contract:
             # Original compiled tests require both static federator ingress
             # services, even when the selected body only uses a dynamic backend.
             # Match the existing full runtime's native backend-B/NGINX setup.
@@ -249,6 +252,37 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             activation_pair = stage_email(activation_email)
             report['native_activation_reference'] = native_activation
             report['native_activation_repeat_reference'] = native_repeat
+        if properties_contract:
+            actor,_=request('POST','/i/users',body={'name':'Synthetic property state'})
+            report['property_actor_setup']=actor
+            assert actor['status']==201, 'native property account setup failed'
+            property_user=actor['json']['id']
+            property_headers={'Z-User':property_user,'Z-Connection':'synthetic-property-connection'}
+            raw_property=' \n{"x":1,"x":2,"large":9007199254740993}\t'
+            property_cases=[
+                ('GET','/properties/missing',property_headers),
+                ('PUT','/properties/raw',property_headers,None,raw_property),
+                ('GET','/properties/raw',property_headers),
+                ('HEAD','/properties/raw',property_headers),
+                ('GET','/properties-values',property_headers),
+                ('GET','/properties',property_headers),
+                ('PUT','/properties/d%C3%B6ner',property_headers,True),
+                ('PUT','/properties/missing-connection',{'Z-User':property_user},True),
+                ('PUT','/properties/a%2Fb',property_headers,True),
+                ('GET','/properties/a%2Fb',property_headers),
+                ('PUT','/properties/bad',property_headers,None,'{'),
+                ('DELETE','/properties/raw',property_headers),
+                ('GET','/properties/raw',property_headers),
+                ('DELETE','/properties',property_headers),
+            ]
+            native_properties=[request(*case)[0] for case in property_cases]
+            report['native_properties']=native_properties
+            assert [r['status'] for r in native_properties]==[404,200,200,200,200,200,400,400,200,200,400,200,404,200], 'native property contract changed'
+            assert native_properties[2]['body']==raw_property, 'native raw bytes changed'
+            staged,_=request('PUT','/properties/native-durable',property_headers,None,raw_property)
+            assert staged['status']==200, 'native durable property setup failed'
+            native_property_state=[request('GET','/properties/native-durable',property_headers)[0],request('GET','/properties-values',property_headers)[0]]
+            report['native_property_state']=native_property_state
         if ses_feedback_contract:
             native_federation,_=request('GET','/i/federation/remotes')
             report['native_federation_config']=native_federation
@@ -401,6 +435,49 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
                 mismatches.append({'case': index, 'path': cases[index][1], 'fields': [key for key in fields if native.get(key) != go.get(key)]})
         report['mismatches'] = mismatches
         assert not mismatches, 'paired response mismatches'
+        if properties_contract:
+            fields=lambda record: ('status','content_type','json' if 'json' in record else 'body')
+            go_property_state=[request('GET','/properties/native-durable',property_headers)[0],request('GET','/properties-values',property_headers)[0]]
+            report['go_reads_native_properties']=go_property_state
+            assert all(all(ref.get(k)==actual.get(k) for k in fields(ref)) for ref,actual in zip(native_property_state,go_property_state)), 'Go lost native property state'
+            assert go_property_state[0]['body']==raw_property, 'Go changed native raw property'
+            cleared,_=request('DELETE','/properties',property_headers)
+            assert cleared['status']==200, 'Go property control reset failed'
+            go_properties=[request(*case)[0] for case in property_cases]
+            report['go_properties']=go_properties
+            mismatches=[{'case':i,'fields':[k for k in fields(ref) if ref.get(k)!=actual.get(k)]} for i,(ref,actual) in enumerate(zip(native_properties,go_properties)) if any(ref.get(k)!=actual.get(k) for k in fields(ref))]
+            report['property_mismatches']=mismatches
+            # Continue independent original tests/state witness before reporting
+            # exact native media/parser differences, retaining every response.
+            assert go_properties[2]['body']==raw_property, 'Go changed raw bytes'
+            staged,_=request('PUT','/properties/go-durable',property_headers,None,raw_property)
+            assert staged['status']==200, 'Go durable property write failed'
+            go_written_properties=[request('GET','/properties/go-durable',property_headers)[0],request('GET','/properties-values',property_headers)[0]]
+            report['go_written_properties']=go_written_properties
+            import runner,harness
+            required=['Property.testClearProperties','Property.testGetProperties','Property.testMaxLength','Property.testMaxProperties','Property.testPropertyNameNotAscii','Property.testSetGetDeleteProperty']
+            assert set(required).issubset(runner.discover('brig')), 'original property cases absent'
+            link=runtime.WORK/'dist/brig';link.unlink();link.symlink_to(candidate)
+            xml=Path('/reports/properties-original.xml')
+            with open('/reports/properties-original.log','w') as original_log:
+                original=subprocess.run([runner.binary('integration')['path'],'--config',str(runtime.WORK/'services/integration.yaml'),'--include','Property.','--xml',str(xml)],cwd=runtime.WORK,stdout=original_log,stderr=subprocess.STDOUT,timeout=1200)
+            report['original_property_tests']={'required_tests':required,'process_exit_code':original.returncode,'integration_binary':runner.binary('integration'),'dynamic_brig_sha256':report['candidate_brig_sha256']}
+            report['e2e_attempted']=True;report['e2e_executed']=xml.is_file()
+            if original.returncode==0: report['original_property_tests']['validated_report']=harness.check_xml(xml,required)
+            active.terminate();report['go_property_stop_exit_code']=active.wait(timeout=35)
+            assert report['go_property_stop_exit_code']==0, 'Go property stop failed'
+            with socket.socket() as check:
+                assert check.connect_ex(('127.0.0.1',8082))!=0, 'Go property listener remains'
+            log=open('/reports/brig-native-property-switchback.log','w');logs.append(log)
+            active=subprocess.Popen([str(native_brig_path),'-c',str(runtime.WORK/'brig-static-0.json')],cwd=runtime.WORK/'services/brig',stdout=log,stderr=subprocess.STDOUT)
+            processes.append(active);ready(active)
+            native_consumed=[request('GET','/properties/go-durable',property_headers)[0],request('GET','/properties-values',property_headers)[0]]
+            report['native_reads_go_properties']=native_consumed
+            assert all(all(ref.get(k)==actual.get(k) for k in fields(ref)) for ref,actual in zip(go_written_properties,native_consumed)), 'native lost Go property state'
+            assert native_consumed[0]['body']==raw_property, 'native changed Go raw property'
+            report['property_switchback']={'same_initialized_stores':True,'native_accepts_go_property_state':True,'raw_json_unchanged':True}
+            assert original.returncode==0, 'original compiled property tests failed'
+            assert not mismatches, 'native property responses mismatch'
         if ses_feedback_contract:
             go_federation,_=request('GET','/i/federation/remotes')
             report['go_federation_config']=go_federation
@@ -927,6 +1004,7 @@ def main():
     parser.add_argument('--password-reset-contract', action='store_true')
     parser.add_argument('--password-change-contract', action='store_true')
     parser.add_argument('--ses-feedback-contract', action='store_true')
+    parser.add_argument('--properties-contract', action='store_true')
     args = parser.parse_args()
     if (args.registration_contract or args.saml_registration_contract) and (args.activation_contract or args.access_switchback or args.login_contract):
         parser.error('registration observation runs separately from credential/activation observations')
@@ -938,8 +1016,10 @@ def main():
         parser.error('password change observation runs separately')
     if args.ses_feedback_contract and any((args.registration_contract,args.saml_registration_contract,args.activation_contract,args.access_switchback,args.login_contract,args.public_registration_contract,args.password_reset_contract,args.password_change_contract)):
         parser.error('SES feedback observation runs separately')
+    if args.properties_contract and any((args.registration_contract,args.saml_registration_contract,args.activation_contract,args.access_switchback,args.login_contract,args.public_registration_contract,args.password_reset_contract,args.password_change_contract,args.ses_feedback_contract)):
+        parser.error('properties observation runs separately')
     if args.in_container:
-        return inside(args.gundeck_path, args.access_switchback, args.login_contract, args.activation_contract, args.registration_contract, args.saml_registration_contract, args.public_registration_contract, args.password_reset_contract, args.password_change_contract, args.ses_feedback_contract)
+        return inside(args.gundeck_path, args.access_switchback, args.login_contract, args.activation_contract, args.registration_contract, args.saml_registration_contract, args.public_registration_contract, args.password_reset_contract, args.password_change_contract, args.ses_feedback_contract, args.properties_contract)
     if args.binary is None or args.build_receipt is None or args.output is None:
         parser.error('identified binary, receipt and new output required')
     sys.path.insert(0, str(ROOT / 'tools/parity/docker'))
@@ -983,6 +1063,8 @@ def main():
         runner['command'].append('--password-change-contract')
     if args.ses_feedback_contract:
         runner['command'].append('--ses-feedback-contract')
+    if args.properties_contract:
+        runner['command'].append('--properties-contract')
     if args.gundeck_binary:
         runner['command'] += ['--gundeck-path', '/candidate/gundeck']
         runner['volumes'].append({'type': 'bind', 'source': str(args.gundeck_binary.resolve(strict=True)),
@@ -1021,7 +1103,7 @@ def main():
         result['redis_cluster_initialization_completed'] = True
         with (output / 'controller.log').open('w') as log:
             process = subprocess.run(command + ['run', '--rm', '--no-deps', 'runner'],
-                                     stdout=log, stderr=subprocess.STDOUT, timeout=1500 if args.ses_feedback_contract else 900)
+                                     stdout=log, stderr=subprocess.STDOUT, timeout=1500 if args.ses_feedback_contract or args.properties_contract else 900)
         result['runner_exit_code'] = process.returncode
         report = json.loads((output / 'reports/paired-reads.json').read_text())
         result['e2e_executed'] = report.get('e2e_executed', False)

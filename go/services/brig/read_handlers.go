@@ -32,6 +32,7 @@ type brigReadHandlers struct {
 	bulkClients      *clientBulkReads
 	blocklist        *blocklistStore
 	federationConfig *federationConfigRead
+	properties       *propertyService
 }
 
 func readJSON(w http.ResponseWriter, r *http.Request, body any) {
@@ -68,6 +69,9 @@ func routeParseError(w http.ResponseWriter, message string) {
 }
 
 func (b brigReadHandlers) handle(w http.ResponseWriter, r *http.Request, path string) bool {
+	if b.properties != nil && b.properties.handle(w, r, path) {
+		return true
+	}
 	if path == "/federation/api-version" {
 		federationVersionHTTP(w, r)
 		return true

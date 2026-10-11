@@ -74,6 +74,8 @@ type Config struct {
 		} `yaml:"authSettings"`
 	} `yaml:"zauth"`
 	Settings struct {
+		PropertyMaxKeyLen    *int64                    `yaml:"setPropertyMaxKeyLen"`
+		PropertyMaxValueLen  *int64                    `yaml:"setPropertyMaxValueLen"`
 		FederationStrategy   *string                   `yaml:"setFederationStrategy"`
 		FederationDomains    *[]federationStaticDomain `yaml:"setFederationDomainConfigs"`
 		SQSThrottleMillis    *int64                    `yaml:"sqsThrottleMillis"`
