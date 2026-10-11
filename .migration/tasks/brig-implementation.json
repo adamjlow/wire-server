@@ -122,6 +122,13 @@
       "command": "Scoped pinned Go/static/local transition-effect-history-failure-header checks;4 exact native/Go update controls403/204/403/403;7 actual Go transitions,9 HTTP-delivered Gundeck connection events, native identical final pair readback/accept200. All14 original compiled MLS/prior witnesses pass strict XML,25exits0/runner0/cleanup0/independent empty. Initial compiler failure retained. Remote/actions/original connections/positive MLS/cancel/team-LH-app-limit/full535/eight-Go remain unqualified.",
       "revision": "1af9e686df26280badd8a770552be2e3064dc5b6",
       "artifact": "go/services/brig/qualification/evidence/connection-local-update/README.md"
+    },
+    {
+      "criterion": "operations",
+      "result": "pass",
+      "command": "Scoped pinned Go/static/reaction-policy-order units; actual Go remote create201/sent, native B pending with identical independently derived conversation UUID/owner; Go block/reconnect/rescind200 leaves native B cancelled and native A restart exact remote row readback. Prior local/cursor/signed/raw and14 original MLS strict XML pass,25exits0/runner0/cleanup0/independent empty. Incoming profiles/full typed outgoing profile decode/reciprocal original connections/full535 remain unqualified.",
+      "revision": "35738642491006242d04fe0a00b21921479eed88",
+      "artifact": "go/services/brig/qualification/evidence/connection-remote-actions/README.md"
     }
   ],
   "review": null,
@@ -157,5 +164,5 @@
       "required_evidence": "Frozen100request/concurrency8 latency/RSS/CPU/metrics smoke and eight held-body drain/listener close/SIGTERM0 within35s; actual unchanged-schema same-state native-Go-native auth/password/cookie/client/prekey/MLS/property/connection/pending action/OAuth/apps/groups/domain/queue/search and storage-mode witnesses. Trusted nonroot optional source/license image and separately scoped image-only/default-byte-preserving selector. Exact final qualified artifact and user-delegated same-author self-review with serious inherited concerns and unavailable native checks accurately recorded."
     }
   ],
-  "handoff": "Latest source1af9e686d/servicee8fed1e2 local updates: complete source-backed transitions and optional origin handling; full pinned Go/static units,4 exact native/Go controls,7 actual transitions,9 delivered Gundeck events, native identical final pair reads/existing accept200 pass. Prior11reads/5cursors/signed/raw witnesses and14 MLS originals pass,25exits0/runner0/cleanup0/independent empty. Initial duplicate variable SDK failure retained/candidate only fix. Next incoming/outgoing remote actions/profile/team-federation admission/Galley upsert/native deterministic IDs, then original connection tests; finite positive MLS/cancel/team/LH/app/limit/parser witnesses remain. Whole535/eight-Go/all-entity3mode/ops/image/selector/legal/security not complete; no gate advance/push."
+  "handoff": "Latest source357386424/serviced12ea76f remote actions: native reaction algebra/activation/team policy/static precedence/exact CQL/Galley upsert; full pinned Go/static tests. Actual Go create remote201/sent/native B pending, identical deterministic conversation UUID/owner; block/reconnect/rescind200 leaves native B cancelled; native A restart exact Go remote row. Prior local updates/9notifications/cursors/signed/raw witnesses plus14 MLS originals pass,25exits0/runner0/cleanup0/independent empty. Next incoming get-users-by-ids full public profiles/visibility/pending-expiry-delete/LH/app injection and full outgoing profile decoder (current type/team-only concrete gap), then native-initiated reciprocal/incoming action and original connection suites. Whole535/eight-Go/all-entity3mode/ops/image/selector/legal/security incomplete; no gate/push."
 }

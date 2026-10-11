@@ -1019,3 +1019,16 @@ CQL and preserve native outgoing version negotiation. No policy/fixture/oracle
 change. Incoming profile RPC is a separate remaining actual prerequisite for
 native peer reciprocal public calls/original connection suites; core/action proof
 must not be advertised as whole federation or Brig acceptance.
+
+Qualified source357386424/serviced12ea76f: pinned Go/static and focused admission/
+reaction/effect-order checks pass. Actual Go remote creation201/sent has native B
+pending reverse; independently derived qualified conversation UUID/owner identical.
+Go block200/reconnect-to-sent200/rescind200 leaves native B cancelled too. Native A
+restart reads exact Go remote row. Prior local updates/notifications/cursors/signed
+and raw witnesses plus14 MLS originals pass strict XML, all25exits0/runner0/cleanup0/
+independent empty.
+[Evidence](../../../go/services/brig/qualification/evidence/connection-remote-actions/README.md).
+Next incoming profiles with full typed outgoing profile decoding (current admission
+uses type/team only), app injection/visibility/pending/expiry/deletion/LH semantics;
+then actual native-initiated reciprocal connections/incoming action and unchanged
+original connection suites. Whole goal remains active and no gate is advanced.
