@@ -22,7 +22,11 @@ currently has source, unit and actual native-schema storage evidence;
 its original end-to-end/API witness remains outstanding. Earlier passing
 witnesses do not automatically qualify a newer binary or the complete service.
 
-Remaining work includes public registration/mail/cookies and invitation creation,
+Public registration policy, mail sequencing and session composition have
+[unit and compiler evidence](qualification/evidence/registration-public-core/README.md).
+Native mail adapters and the live public HTTP endpoint are still pending.
+
+Remaining work includes public registration/mail delivery and invitation creation,
 SCIM provisioning, client writes/prekey/MLS/DPoP operations, connections,
 properties, OAuth/app/provider/federation families, complete configuration/docs,
 queue consumption/discovery and final service/image/selector qualification.

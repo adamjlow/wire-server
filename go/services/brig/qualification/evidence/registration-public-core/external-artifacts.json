@@ -1,0 +1,97 @@
+[
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/registration-public-core-sdk-check/argon2-copyright",
+    "sha256": "6059eb2b0f8f23b5c6023b08f68d4df9addd834665d07e5dcc364d4ae80d9b69",
+    "bytes": 8745
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/registration-public-core-sdk-check/brig",
+    "sha256": "399a291cbc209d2155c58a3af297992f22735eaa12650d9a910daf29d769f11f",
+    "bytes": 67857464
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/registration-public-core-sdk-check/brig.test",
+    "sha256": "941d8ffe1a636942cd2a1749a6ed48283fdd3d7f0c2f30f0b4e7a41207d05463",
+    "bytes": 64673640
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/registration-public-core-sdk-check/build-receipt.json",
+    "sha256": "3554d920c4cd307acba41ba7ebe7a709524e2d443da0b0b68a08adedcc00a185",
+    "bytes": 872
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/registration-public-core-sdk-check/controller.log",
+    "sha256": "5b2278170b6160b9a369f404cd0d8b492feb291ecfe3b02e76a9f973097a7e22",
+    "bytes": 2878
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/registration-public-core-sdk-check/cxx-package.sha256",
+    "sha256": "5abc52f67b0befe6317695d4489a2433b32854cbb6b5916a6f875b2c0e300636",
+    "bytes": 102
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/registration-public-core-sdk-check/cxx-package.txt",
+    "sha256": "d41b16dcb551842304cab9549bb3da24fdb859d85d690bd121de7f3cb29cce01",
+    "bytes": 59
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/registration-public-core-sdk-check/glibc-copyright",
+    "sha256": "f5788886720a2605a946e81d571e6c8162b09f58d2e2ceb8d36e5768fccd850d",
+    "bytes": 51200
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/registration-public-core-sdk-check/go-check.log",
+    "sha256": "b7dd6c5e0eaa3ef6b78f45f76b2ee918cbc835807b71927ca17988941168d967",
+    "bytes": 3723
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/registration-public-core-sdk-check/icu-copyright",
+    "sha256": "5bbff5f646ce750ac0a347e7f91793279b7422a1119820b5f75d98879c201c68",
+    "bytes": 2214
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/registration-public-core-sdk-check/libraries.sha256",
+    "sha256": "875560a1f32f1ad76a866a7f792a6b392f64c5555e8f55f270f60869079f9af2",
+    "bytes": 846
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/registration-public-core-sdk-check/libstdc++-copyright",
+    "sha256": "20390f8a6f3b1e4d7cb45dd8652dabb259bbef688cbad839bcdb0b9ba7252f79",
+    "bytes": 69004
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/registration-public-core-sdk-check/openssl-copyright",
+    "sha256": "6a7da622fe0637a334d2a8fc470852d2ffb77d9a2b2f930f854e32a41ad6ef35",
+    "bytes": 2543
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/registration-public-core-sdk-check/packages.txt",
+    "sha256": "9e9db92065c33bc81e7e8b5ff6f5c0a9a32814690509f59c88718cc418f5e262",
+    "bytes": 3793
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/registration-public-core-sdk-check/runtime-units.log",
+    "sha256": "273418ab65ad5bea8b9ae9b1781ac477aa0c76efb2e1c033b9a91235fb94b1d9",
+    "bytes": 36639
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/registration-public-core-sdk-check/stores-build-receipt.json",
+    "sha256": "9dc811a49e1eb1a19f055a60cc78d3357813fa243408ce7e0bc899a76cd527e6",
+    "bytes": 872
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/registration-public-core-sdk-check/stores.test",
+    "sha256": "e068449feaa51db7bb3b9af24e2124c14582414dddb428cf271b161ce13af870",
+    "bytes": 69474192
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/registration-public-core-sdk-check/zlib-copyright",
+    "sha256": "9e5b96d63773a5d177ba264254390f792be07e41748ebd94730981c6cac31cc6",
+    "bytes": 2927
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/registration-public-core-sdk-check/zstd-copyright",
+    "sha256": "5cec9fef4d3fa7e0371fbef4ec3fc416e0105dc2a9922117f84e825cb11f50f8",
+    "bytes": 5332
+  }
+]

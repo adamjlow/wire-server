@@ -5,8 +5,10 @@ User-selected goal2026-10-10. Reference/upstream source f6636ed53315fa7b0fc4c8aa
 ## Current status (2026-10-11)
 
 Brig remains implementing/unavailable; Galley is authorized only after actual
-whole Brig completion. Latest source75243a72f has pinned Go checks and static
-original-runner units PASS. Internal invitation acceptance is implemented with
+whole Brig completion. Latest source6cfd8048d has pinned Go checks and static
+original-runner units PASS. Public registration policy/mail ordering/session
+composition now exists; actual mail adapters and HTTP startup wiring remain
+pending, so the public endpoint is not claimed implemented. Internal invitation acceptance is implemented with
 native validation/SCIM/claim/membership/activation/cleanup ordering; actual
 native-schema code/deletion/pending checks PASS at04c621ce6. The latest count-only
 fix preserves native integer-valued Scientific team totals without rounding;
@@ -303,3 +305,5 @@ Close the identified native Natural/Scientific team-size codec gap: decode integ
 Scientific count source75243a72f/candidatef3aaa361465f678b17303a6a0a504cbba79b65de4a322855f052d07ffd26ce3b passes pinned full Go/static original-runner unit checks, evidence team-size-scientific. Decoding-only change; no redundant native-store rerun or wider API/e2e claim. Reconciled module README/current-status plan to distinguish implemented slices and exact prior witnesses from outstanding original535/whole-service work.
 
 Implement public-registration orchestration and native policy as the next composition boundary: configured restricted-creation exceptions (team members/ephemeral), required ephemeral-enable flag, exact optional allowlist domain comparison including empty-list denial, policy checks before creation and IP-scoped password rate key. Preserve create→activation mail→member/SSO welcome mail→new U cookie order and stop on mail failure before cookie issuance; creator gets no welcome email. Bind the existing actual unlimited sessionManager.newCookie with no client, session/persistent type and same-label revocation (not login cookie limits). Preserve provisioned SCIM display name for public versions before18 while internal/current version remains strict. Add finite policy/effect/cookie/legacy controls. This stage has real policy/session composition but mail rendering/transports and /register HTTP/version/IP-header wiring are still pending; do not expose fake successful mail paths or claim API/original e2e completion. No storage-query/Haskell/oracle/fixture/deadline/policy repair changes.
+
+Public composition source6cfd8048d/candidate399a291cbc209d2155c58a3af297992f22735eaa12650d9a910daf29d769f11f passes full pinned Go/static original-runner checks; evidence registration-public-core. Policy-before-effects, exact allowlist, native IP rate key, creator/member mail ordering/failure and actual unlimited U-cookie/same-label session controls PASS, including legacy SCIM name preservation. No storage query changes/native database rerun or /register/original e2e claim. Next complete native localized templates/MIME and actual SES/SMTP delivery, wire request-scoped service/version/strict IP header/cookie response, then reuse original accepted-invitation tests unchanged.
