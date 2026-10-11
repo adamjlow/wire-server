@@ -1765,3 +1765,11 @@ The observer uses fixed AWS CLI arguments, bounded timeouts and parameterized JS
 no host/production endpoint, new dependency, TLS bypass or credential capture.
 Stop after this finite combined configuration passes or exposes a concrete
 implementation mismatch; it is not whole-service qualification.
+
+The first optimistic combined run at sourcef6a18be5b stopped in the candidate
+observer before service lock creation: pinned AWS CLI `get-item` emits empty
+stdout for an absent Item, and the observer attempted JSON decoding. Native
+optimistic claim controls passed beforehand; this failed run is not qualified.
+All25 managed exits0, runner1/cleanup0 and independent resources empty. Correct
+only the observer's empty-output handling; retain the run and rerun unchanged
+production/original assertions. Initial disk-floor preflight also retained.

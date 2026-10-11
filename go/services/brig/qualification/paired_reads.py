@@ -103,7 +103,8 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             '--key', json.dumps(key), '--consistent-read', '--output', 'json'],
             capture_output=True, text=True, timeout=30)
         assert result.returncode == 0, 'owned prekey lock read failed'
-        return json.loads(result.stdout).get('Item', {})
+        # The pinned CLI emits no stdout for an absent Item.
+        return json.loads(result.stdout).get('Item', {}) if result.stdout.strip() else {}
 
     def service_actor(phase):
         actor = request('POST', '/i/users', body={'name': 'Synthetic service queue bot'})[0]
