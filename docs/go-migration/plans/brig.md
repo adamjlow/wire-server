@@ -1270,3 +1270,10 @@ closes their connection to bound shutdown; reconnect restores future availabilit
 Use an owned broker qualification (synthetic env credentials/private network/no
 host ports), inspect delivery mode/body/queue arguments, and prove reconnect.
 No backend/public deletion/whole-service claim from queue-only qualification.
+
+Initial publisher SDK sourcef197defff stops at tidy diff: sum-file insertion used
+lexical version sorting, unlike Go's semantic version order for testify. No
+compilation/security/runtime assertions ran in that attempt. Correct checksum
+ordering only and rerun; retain initial failure. Controller terminal1/cleanup0
+and independent owned resources empty. No dependency version changes beyond the
+planned AMQP pin; goleak checksums are its upstream test dependency.
