@@ -67,13 +67,19 @@ func (s passwordResetStore) lookup(ctx context.Context, key string) (*passwordRe
 			return nil, nil
 		}
 	case "cassandra", "migration-to-postgresql":
-		err := s.databases.cassandra.Query(`SELECT code,user,retries,timeout FROM password_reset WHERE key=?`, key).WithContext(ctx).Consistency(gocql.LocalQuorum).RetryPolicy(&gocql.SimpleRetryPolicy{NumRetries: 1}).Scan(&record.code, &record.user, &record.retries, &record.timeout)
+		var code *string
+		var user *gocql.UUID
+		err := s.databases.cassandra.Query(`SELECT code,user,retries,timeout FROM password_reset WHERE key=?`, key).WithContext(ctx).Consistency(gocql.LocalQuorum).RetryPolicy(&gocql.SimpleRetryPolicy{NumRetries: 1}).Scan(&code, &user, &record.retries, &record.timeout)
 		if errors.Is(err, gocql.ErrNotFound) {
 			return nil, nil
 		}
 		if err != nil {
 			return nil, userStorageError(err)
 		}
+		if code == nil || user == nil {
+			return nil, errors.New("incomplete stored password reset")
+		}
+		record.code, record.user = *code, *user
 	default:
 		return nil, errors.New("invalid password reset storage mode")
 	}

@@ -572,4 +572,29 @@ func TestOwnedDurableStores(t *testing.T) {
 	if got, err := pgReset.lookup(ctx, pgResetKey); err != nil || got != nil {
 		t.Fatal("expired PG reset accepted", err)
 	}
+	// Only retries/timeout are nullable in native PRQueryData Maybe. Never
+	// manufacture an empty code or zero UUID from missing required columns.
+	legacyResetKey := "synthetic-legacy-nullable-reset"
+	if err := cassandra.Query(`INSERT INTO password_reset (key,code,user) VALUES (?,?,?)`, legacyResetKey, "synthetic-code", pgResetUser).WithContext(ctx).Consistency(gocql.LocalQuorum).Exec(); err != nil {
+		t.Fatal(err)
+	}
+	cassReset := passwordResetStore{databases: resetDB, mode: "cassandra"}
+	if got, err := cassReset.lookup(ctx, legacyResetKey); err != nil || got == nil || got.retries != nil || got.timeout != nil {
+		t.Fatal("legacy nullable reset fields rejected", err)
+	}
+	for _, column := range []string{"code", "user"} {
+		partialKey := "synthetic-missing-" + column + "-reset"
+		query := `INSERT INTO password_reset (key,code) VALUES (?,?)`
+		value := any("synthetic-code")
+		if column == "code" {
+			query = `INSERT INTO password_reset (key,user) VALUES (?,?)`
+			value = pgResetUser
+		}
+		if err := cassandra.Query(query, partialKey, value).WithContext(ctx).Consistency(gocql.LocalQuorum).Exec(); err != nil {
+			t.Fatal(err)
+		}
+		if _, err := cassReset.lookup(ctx, partialKey); err == nil {
+			t.Fatal("missing required reset column accepted", column)
+		}
+	}
 }
