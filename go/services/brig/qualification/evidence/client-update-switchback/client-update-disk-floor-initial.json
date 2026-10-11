@@ -1,0 +1,27 @@
+{
+  "result": "failed",
+  "source_revision": "98d256fa1bf15d5b743269acf4a78c61e6ce73ae",
+  "project": "wire-e2e-3f67f7ba42a2421a92ccf8f505e664b2",
+  "failure": "owned dependency disk floor unmet before Docker startup",
+  "required_floor_bytes": 2147483648,
+  "observed_later_free_bytes": 2147041280,
+  "observed_later_not_exact_launch_sample": true,
+  "backend_started": false,
+  "e2e_executed": false,
+  "owned_resources": {
+    "container": "",
+    "network": "",
+    "volume": ""
+  },
+  "artifacts": {
+    "/home/operator/.cache/wire-migration/brig-20261010/client-update-switchback-paired/environment.json": "eeabb6aabf5016c6ebafbdd8c621ac30bd6c5ffba4473c8ba78464df40a0a557",
+    "/home/operator/.cache/wire-migration/brig-20261010/client-update-switchback-paired/compose.json": "e49aae319577bd1de4d41b363e1aaea8a80819025c8176d7d4b02e574627c2eb",
+    "/home/operator/.cache/wire-migration/brig-20261010/client-update-switchback-paired/fixtures/configs.json": "a72b39e034c0563ea28260de4782ee8122f5b8e015887f835fd30b04ad4b8180",
+    "/home/operator/.cache/wire-migration/brig-20261010/client-update-switchback-paired/fixtures/coredns-db.sft": "38b816d19035e42da7b3fbb90f419641b222d38c17d8c09000d773484b1aa03a",
+    "/home/operator/.cache/wire-migration/brig-20261010/client-update-switchback-paired/fixtures/coredns-db.example.com": "6405b829e03e3c98f6742245bedffaf2e6ce80bc0f5202ccc5da5dee501c4b9f",
+    "/home/operator/.cache/wire-migration/brig-20261010/client-update-switchback-paired/fixtures/peers.json": "1877182efbc07cc70bf12db44905c75d5b6fe15cc849cb8143891db9617883f2",
+    "/home/operator/.cache/wire-migration/brig-20261010/client-update-switchback-paired/fixtures/coredns-Corefile": "f86a1dd0ea71d82a8f03c554e5ad80523d70615aa511889b5206179a538094e5",
+    "/home/operator/.cache/wire-migration/brig-20261010/client-update-switchback-paired/fixtures/integration.json": "d8834dad54e1f851e689ac00691cd527aac69e0e9ce00baf149835433812c73c"
+  },
+  "resolution": "Relocate verified completed retired access artifacts to owned shm, preserving logical paths and all bytes/ownership/mode; no floor or protected harness relaxation."
+}

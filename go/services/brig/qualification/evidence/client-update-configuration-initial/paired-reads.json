@@ -1,0 +1,295 @@
+{
+  "result": "failed",
+  "e2e_executed": false,
+  "scope": "Finite native -> Go read/reauthentication observations on native-created state.",
+  "records": [],
+  "native_brig": {
+    "path": "/nix/store/f6l2f0l8l2r6z9jbg937q96k6056iqfn-brig/bin/brig",
+    "sha256": "c45a40da63268712a7cacdbd884287fa3dc93cec179d70323d3f22f7d5cdf1ca"
+  },
+  "go_gundeck_sha256": "a50512ef30d7fa9ddf92c2c1933e69769d6691e08cdfbe9f7c4f2d266071f46c",
+  "native_setup": [
+    {
+      "method": "POST",
+      "path": "/i/users",
+      "status": 201,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"accent_id\":0,\"assets\":[],\"email\":\"synthetic-parity-ae75b06863ac4360bb6a9b0f5d9e4f47@example.com\",\"id\":\"1cdab310-aeca-4f10-9041-a471d38ff77b\",\"locale\":\"en\",\"managed_by\":\"wire\",\"name\":\"Synthetic parity reader\",\"picture\":[],\"qualified_id\":{\"domain\":\"example.com\",\"id\":\"1cdab310-aeca-4f10-9041-a471d38ff77b\"},\"searchable\":true,\"status\":\"active\",\"supported_protocols\":[\"proteus\"],\"type\":\"regular\"}",
+      "location": "1cdab310-aeca-4f10-9041-a471d38ff77b",
+      "json": {
+        "accent_id": 0,
+        "assets": [],
+        "email": "synthetic-parity-ae75b06863ac4360bb6a9b0f5d9e4f47@example.com",
+        "id": "1cdab310-aeca-4f10-9041-a471d38ff77b",
+        "locale": "en",
+        "managed_by": "wire",
+        "name": "Synthetic parity reader",
+        "picture": [],
+        "qualified_id": {
+          "domain": "example.com",
+          "id": "1cdab310-aeca-4f10-9041-a471d38ff77b"
+        },
+        "searchable": true,
+        "status": "active",
+        "supported_protocols": [
+          "proteus"
+        ],
+        "type": "regular"
+      }
+    },
+    {
+      "operation": "persistent login",
+      "status": 200,
+      "cookie_issued": true
+    }
+  ],
+  "client_update_native_setup": [
+    {
+      "actor": {
+        "method": "POST",
+        "path": "/i/users",
+        "status": 201,
+        "content_type": "application/json;charset=utf-8",
+        "body": "{\"accent_id\":0,\"assets\":[],\"expires_at\":\"2026-10-11T07:32:17.438Z\",\"id\":\"99dacddc-c426-417b-8931-a7c8a751c41b\",\"locale\":\"en\",\"managed_by\":\"wire\",\"name\":\"Synthetic client update shared state\",\"picture\":[],\"qualified_id\":{\"domain\":\"example.com\",\"id\":\"99dacddc-c426-417b-8931-a7c8a751c41b\"},\"searchable\":true,\"status\":\"ephemeral\",\"supported_protocols\":[\"proteus\"],\"type\":\"regular\"}",
+        "location": "99dacddc-c426-417b-8931-a7c8a751c41b",
+        "json": {
+          "accent_id": 0,
+          "assets": [],
+          "expires_at": "2026-10-11T07:32:17.438Z",
+          "id": "99dacddc-c426-417b-8931-a7c8a751c41b",
+          "locale": "en",
+          "managed_by": "wire",
+          "name": "Synthetic client update shared state",
+          "picture": [],
+          "qualified_id": {
+            "domain": "example.com",
+            "id": "99dacddc-c426-417b-8931-a7c8a751c41b"
+          },
+          "searchable": true,
+          "status": "ephemeral",
+          "supported_protocols": [
+            "proteus"
+          ],
+          "type": "regular"
+        }
+      },
+      "client": {
+        "method": "POST",
+        "path": "/v19/clients",
+        "status": 201,
+        "content_type": "application/json;charset=utf-8",
+        "body": "{\"capabilities\":[\"legalhold-implicit-consent\"],\"id\":\"afc1c13c3c651593\",\"label\":\"synthetic-initial\",\"mls_public_keys\":{\"ed25519\":\"AQI=\"},\"time\":\"2026-10-11T07:31:57.438Z\",\"type\":\"permanent\"}",
+        "json": {
+          "capabilities": [
+            "legalhold-implicit-consent"
+          ],
+          "id": "afc1c13c3c651593",
+          "label": "synthetic-initial",
+          "mls_public_keys": {
+            "ed25519": "AQI="
+          },
+          "time": "2026-10-11T07:31:57.438Z",
+          "type": "permanent"
+        }
+      }
+    },
+    {
+      "actor": {
+        "method": "POST",
+        "path": "/i/users",
+        "status": 201,
+        "content_type": "application/json;charset=utf-8",
+        "body": "{\"accent_id\":0,\"assets\":[],\"expires_at\":\"2026-10-11T07:32:17.438Z\",\"id\":\"c4b992cb-d531-4bdf-8c25-9f7bab36a8db\",\"locale\":\"en\",\"managed_by\":\"wire\",\"name\":\"Synthetic client update positive reference\",\"picture\":[],\"qualified_id\":{\"domain\":\"example.com\",\"id\":\"c4b992cb-d531-4bdf-8c25-9f7bab36a8db\"},\"searchable\":true,\"status\":\"ephemeral\",\"supported_protocols\":[\"proteus\"],\"type\":\"regular\"}",
+        "location": "c4b992cb-d531-4bdf-8c25-9f7bab36a8db",
+        "json": {
+          "accent_id": 0,
+          "assets": [],
+          "expires_at": "2026-10-11T07:32:17.438Z",
+          "id": "c4b992cb-d531-4bdf-8c25-9f7bab36a8db",
+          "locale": "en",
+          "managed_by": "wire",
+          "name": "Synthetic client update positive reference",
+          "picture": [],
+          "qualified_id": {
+            "domain": "example.com",
+            "id": "c4b992cb-d531-4bdf-8c25-9f7bab36a8db"
+          },
+          "searchable": true,
+          "status": "ephemeral",
+          "supported_protocols": [
+            "proteus"
+          ],
+          "type": "regular"
+        }
+      },
+      "client": {
+        "method": "POST",
+        "path": "/v19/clients",
+        "status": 201,
+        "content_type": "application/json;charset=utf-8",
+        "body": "{\"capabilities\":[\"legalhold-implicit-consent\"],\"id\":\"afc1c13c3c651593\",\"label\":\"synthetic-initial\",\"mls_public_keys\":{\"ed25519\":\"AQI=\"},\"time\":\"2026-10-11T07:31:57.438Z\",\"type\":\"permanent\"}",
+        "json": {
+          "capabilities": [
+            "legalhold-implicit-consent"
+          ],
+          "id": "afc1c13c3c651593",
+          "label": "synthetic-initial",
+          "mls_public_keys": {
+            "ed25519": "AQI="
+          },
+          "time": "2026-10-11T07:31:57.438Z",
+          "type": "permanent"
+        }
+      }
+    }
+  ],
+  "native_client_update_controls": [
+    {
+      "method": "PUT",
+      "path": "/v19/clients/f",
+      "status": 404,
+      "content_type": "application/json",
+      "body": "{\"code\":404,\"label\":\"client-not-found\",\"message\":\"Client not found\"}",
+      "json": {
+        "code": 404,
+        "label": "client-not-found",
+        "message": "Client not found"
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/v19/clients/afc1c13c3c651593",
+      "status": 400,
+      "content_type": "application/json",
+      "body": "{\"code\":400,\"label\":\"bad-request\",\"message\":\"Malformed prekeys uploaded\"}",
+      "json": {
+        "code": 400,
+        "label": "bad-request",
+        "message": "Malformed prekeys uploaded"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v19/clients/afc1c13c3c651593",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"capabilities\":[\"legalhold-implicit-consent\"],\"id\":\"afc1c13c3c651593\",\"label\":\"partial-before-prekey\",\"mls_public_keys\":{\"ed25519\":\"AQI=\"},\"time\":\"2026-10-11T07:31:57.438Z\",\"type\":\"permanent\"}",
+      "json": {
+        "capabilities": [
+          "legalhold-implicit-consent"
+        ],
+        "id": "afc1c13c3c651593",
+        "label": "partial-before-prekey",
+        "mls_public_keys": {
+          "ed25519": "AQI="
+        },
+        "time": "2026-10-11T07:31:57.438Z",
+        "type": "permanent"
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/v19/clients/afc1c13c3c651593",
+      "status": 409,
+      "content_type": "application/json",
+      "body": "{\"code\":409,\"label\":\"client-capabilities-cannot-be-removed\",\"message\":\"You can only add capabilities to a client, not remove them.\"}",
+      "json": {
+        "code": 409,
+        "label": "client-capabilities-cannot-be-removed",
+        "message": "You can only add capabilities to a client, not remove them."
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v19/clients/afc1c13c3c651593",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"capabilities\":[\"legalhold-implicit-consent\"],\"id\":\"afc1c13c3c651593\",\"label\":\"partial-before-removal\",\"mls_public_keys\":{\"ed25519\":\"AQI=\"},\"time\":\"2026-10-11T07:31:57.438Z\",\"type\":\"permanent\"}",
+      "json": {
+        "capabilities": [
+          "legalhold-implicit-consent"
+        ],
+        "id": "afc1c13c3c651593",
+        "label": "partial-before-removal",
+        "mls_public_keys": {
+          "ed25519": "AQI="
+        },
+        "time": "2026-10-11T07:31:57.438Z",
+        "type": "permanent"
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/v19/clients/afc1c13c3c651593",
+      "status": 200,
+      "content_type": null,
+      "body": ""
+    },
+    {
+      "method": "PUT",
+      "path": "/v19/clients/afc1c13c3c651593",
+      "status": 400,
+      "content_type": "application/json",
+      "body": "{\"code\":400,\"label\":\"mls-duplicate-public-key\",\"message\":\"MLS public key for the given signature scheme already exists\"}",
+      "json": {
+        "code": 400,
+        "label": "mls-duplicate-public-key",
+        "message": "MLS public key for the given signature scheme already exists"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v19/clients/afc1c13c3c651593",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"capabilities\":[\"legalhold-implicit-consent\"],\"id\":\"afc1c13c3c651593\",\"label\":\"partial-before-duplicate\",\"mls_public_keys\":{\"ed25519\":\"AQI=\"},\"time\":\"2026-10-11T07:31:57.438Z\",\"type\":\"permanent\"}",
+      "json": {
+        "capabilities": [
+          "legalhold-implicit-consent"
+        ],
+        "id": "afc1c13c3c651593",
+        "label": "partial-before-duplicate",
+        "mls_public_keys": {
+          "ed25519": "AQI="
+        },
+        "time": "2026-10-11T07:31:57.438Z",
+        "type": "permanent"
+      }
+    }
+  ],
+  "native_client_update_positive": {
+    "method": "PUT",
+    "path": "/v19/clients/afc1c13c3c651593",
+    "status": 200,
+    "content_type": null,
+    "body": ""
+  },
+  "native_client_update_claim_reference": {
+    "method": "GET",
+    "path": "/v19/users/example.com/c4b992cb-d531-4bdf-8c25-9f7bab36a8db/prekeys/afc1c13c3c651593",
+    "status": 200,
+    "content_type": "application/json;charset=utf-8",
+    "body": "{\"client\":\"afc1c13c3c651593\",\"prekey\":{\"id\":7,\"key\":\"pQACAQcCoQBYIDXdN8VlKb5lbgPmoDPLPyqNIEyShG4oT/DlW0peRRZUA6EAoQBYILLf1TIwSB62q69Ojs/X1tzJ+dYHNAw4QbW/7TC5vSZqBPY=\"}}",
+    "json": {
+      "client": "afc1c13c3c651593",
+      "prekey": {
+        "id": 7,
+        "key": "pQACAQcCoQBYIDXdN8VlKb5lbgPmoDPLPyqNIEyShG4oT/DlW0peRRZUA6EAoQBYILLf1TIwSB62q69Ojs/X1tzJ+dYHNAw4QbW/7TC5vSZqBPY="
+      }
+    }
+  },
+  "failure": "'consumableNotifications'",
+  "owned_process_exit_codes": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ]
+}

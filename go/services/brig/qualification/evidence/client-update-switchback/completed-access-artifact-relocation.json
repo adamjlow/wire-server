@@ -1,0 +1,114 @@
+{
+  "retired_logical_path": "/home/operator/.cache/wire-migration/brig-20261010/access-validation-corrected-check",
+  "physical_archive": "/dev/shm/wire-migration-brig-20261010/access-validation-corrected-check-archive",
+  "source_receipt": {
+    "source_revision": "8f2d83cb58bdc2124ec842ecec4690dbdc955945",
+    "binary_sha256": "93231cc583008570794780e95c15c298b80b4cf1a295f020578831602de92776",
+    "unit_binary_sha256": "cde1ee9d8ff400e47ad59137b2f8e4726519a3dc466bdb571873006ebdb957e5",
+    "sdk_image": "sha256:f2f47f614f5dbefa4ef1bc2cbf2f24cf95dfa0d65e3e73c8878a74630baaae30",
+    "runner_image": "sha256:f487c90fd364aac9daee5a1ce6e60fdba0ab74ab0c671ab0de0198e8f05659a9",
+    "toolchain": "go1.26.9",
+    "sdk_controller_exit_code": 0,
+    "unchanged_runner_unit_exit_code": 0,
+    "network_cleanup_exit_code": 0,
+    "owned_containers_remaining": false,
+    "owned_networks_remaining": false,
+    "go_checks": "pass",
+    "sdk_archives_manifest_sha256": "07173839615bf3c6d83058fb88319bd292d232bf9584f84fbf17cb5652e198b5"
+  },
+  "manifest": {
+    "brig.test": {
+      "sha256": "cde1ee9d8ff400e47ad59137b2f8e4726519a3dc466bdb571873006ebdb957e5",
+      "uid": 65534,
+      "gid": 65534,
+      "mode": 33261,
+      "bytes": 21474344
+    },
+    "controller.log": {
+      "sha256": "30b58616557fa38990332b294affe5db8e8dcc32e25c3ee3de209a9265cf840f",
+      "uid": 1001,
+      "gid": 37,
+      "mode": 33204,
+      "bytes": 1920
+    },
+    "build-receipt.json": {
+      "sha256": "9139d101ea6256175d2dfa1b02dfea239aad5169899c2c605e07856c64cb154f",
+      "uid": 1001,
+      "gid": 37,
+      "mode": 33204,
+      "bytes": 765
+    },
+    "zstd-copyright": {
+      "sha256": "5cec9fef4d3fa7e0371fbef4ec3fc416e0105dc2a9922117f84e825cb11f50f8",
+      "uid": 65534,
+      "gid": 65534,
+      "mode": 33188,
+      "bytes": 5332
+    },
+    "zlib-copyright": {
+      "sha256": "9e5b96d63773a5d177ba264254390f792be07e41748ebd94730981c6cac31cc6",
+      "uid": 65534,
+      "gid": 65534,
+      "mode": 33188,
+      "bytes": 2927
+    },
+    "runtime-units.log": {
+      "sha256": "8286285f32d3d20aa8736c5ef22b8bc1bf80dbc332cfbc3fb8b14a581244df0f",
+      "uid": 1001,
+      "gid": 37,
+      "mode": 33204,
+      "bytes": 6601
+    },
+    "brig": {
+      "sha256": "93231cc583008570794780e95c15c298b80b4cf1a295f020578831602de92776",
+      "uid": 65534,
+      "gid": 65534,
+      "mode": 33261,
+      "bytes": 25454392
+    },
+    "openssl-copyright": {
+      "sha256": "6a7da622fe0637a334d2a8fc470852d2ffb77d9a2b2f930f854e32a41ad6ef35",
+      "uid": 65534,
+      "gid": 65534,
+      "mode": 33188,
+      "bytes": 2543
+    },
+    "argon2-copyright": {
+      "sha256": "6059eb2b0f8f23b5c6023b08f68d4df9addd834665d07e5dcc364d4ae80d9b69",
+      "uid": 65534,
+      "gid": 65534,
+      "mode": 33188,
+      "bytes": 8745
+    },
+    "packages.txt": {
+      "sha256": "6ef4c0b8c148253218e320961e83c126701015c56b8e5210f48256611c2da50a",
+      "uid": 65534,
+      "gid": 65534,
+      "mode": 33188,
+      "bytes": 3596
+    },
+    "glibc-copyright": {
+      "sha256": "f5788886720a2605a946e81d571e6c8162b09f58d2e2ceb8d36e5768fccd850d",
+      "uid": 65534,
+      "gid": 65534,
+      "mode": 33188,
+      "bytes": 51200
+    },
+    "libraries.sha256": {
+      "sha256": "07173839615bf3c6d83058fb88319bd292d232bf9584f84fbf17cb5652e198b5",
+      "uid": 65534,
+      "gid": 65534,
+      "mode": 33188,
+      "bytes": 409
+    },
+    "go-check.log": {
+      "sha256": "9838f96806500dda7cde10d10d11b55381194cc0d060b8dbf40f159b8b22bca3",
+      "uid": 65534,
+      "gid": 65534,
+      "mode": 33188,
+      "bytes": 1383
+    }
+  },
+  "bytes_reclaimed_on_root": 47014157,
+  "owned_container_remaining": ""
+}

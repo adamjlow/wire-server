@@ -1,0 +1,50 @@
+{
+  "observed_at_utc": "2026-10-11T07:41:19.714591+00:00",
+  "projects": {
+    "wire-e2e-3f67f7ba42a2421a92ccf8f505e664b2": {
+      "container": "",
+      "network": "",
+      "volume": ""
+    },
+    "wire-e2e-628380f3049f42e093c6f494d56d1fb9": {
+      "container": "",
+      "network": "",
+      "volume": ""
+    },
+    "wire-e2e-1101ebdfac744170af487708bb2b3a22": {
+      "container": "",
+      "network": "",
+      "volume": ""
+    }
+  },
+  "sdk_prefixes": {
+    "brig-client-prekey-codec-sdk": {
+      "containers": "",
+      "networks": ""
+    },
+    "brig-client-update-core-sdk": {
+      "containers": "",
+      "networks": ""
+    },
+    "brig-client-update-observer-sdk": {
+      "containers": "",
+      "networks": ""
+    },
+    "brig-client-update-observer-qualified-sdk": {
+      "containers": "",
+      "networks": ""
+    },
+    "brig-client-update-config-corrected-sdk": {
+      "containers": "",
+      "networks": ""
+    },
+    "brig-client-stale-owned-go-cache": {
+      "containers": "",
+      "networks": ""
+    },
+    "brig-retired-access-artifact-relocation": {
+      "containers": "",
+      "networks": ""
+    }
+  }
+}

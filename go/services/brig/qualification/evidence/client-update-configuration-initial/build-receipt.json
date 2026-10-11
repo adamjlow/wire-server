@@ -1,0 +1,18 @@
+{
+  "source_revision": "98d256fa1bf15d5b743269acf4a78c61e6ce73ae",
+  "sdk_image": "sha256:2f9e4393295d7270538dd1c666ab1345eaec06b2c2f8c217283ba6565caee399",
+  "runner_image": "sha256:f487c90fd364aac9daee5a1ce6e60fdba0ab74ab0c671ab0de0198e8f05659a9",
+  "result": "pass",
+  "sdk_controller_exit_code": 0,
+  "unchanged_runner_unit_exit_code": 0,
+  "binary_sha256": "d95d366f2a74ad6b2b5af300e56f03fc9a20904320cf7dde4a59a1ec8666d4d0",
+  "unit_binary_sha256": "7d7430250f46eeb1372639e377e27d42521bc8c6d612d00bb401d3cccbcdae2d",
+  "store_binary_sha256": "44bfc46d08e5e78e16579302eade4e2e977305d4a13c9d651613373dad170de4",
+  "toolchain": "go1.26.9",
+  "sdk_archives_manifest_sha256": "875560a1f32f1ad76a866a7f792a6b392f64c5555e8f55f270f60869079f9af2",
+  "go_checks": "inherited full Go checks from identical sourcee5dbed9bd production and normal-unit artifacts; guarded scope, tagged-test vet/build and actual normal static units; actual new store assertions require separate execution",
+  "baseline_source_revision": "e5dbed9bd0c6a2e5696c136232002cc00f25c1c3",
+  "network_cleanup_exit_code": 0,
+  "remaining_owned_containers": "",
+  "remaining_owned_networks": ""
+}

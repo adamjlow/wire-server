@@ -1,1 +1,1 @@
-Extend the optional Go Brig implementation with property APIs validated by the six original Haskell tests and native state switchback; whole-service migration remains in progress, with Haskell supported and default.
+Extend the optional Go Brig implementation with property APIs and client updates, validated by original property tests and native data switchback; whole-service migration remains in progress, with Haskell supported and default.
