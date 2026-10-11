@@ -42,27 +42,30 @@ func TestOwnedBackendNotifications(t *testing.T) {
 		t.Fatal(err)
 	}
 	defer channel.Close()
+	var deliveries <-chan amqp.Delivery
 	for i := 0; i < 2; i++ {
 		if err := q.enqueue(ctx, "remote.example.com", body); err != nil {
 			t.Fatal("persistent enqueue", err)
 		}
-		for {
-			message, ok, err := channel.Get("backend-notifications.remote.example.com", false)
+		if i == 0 {
+			deliveries, err = channel.Consume("backend-notifications.remote.example.com", "owned-proof", false, false, false, false, nil)
 			if err != nil {
 				t.Fatal(err)
 			}
-			if ok {
-				if message.DeliveryMode != amqp.Persistent || message.ContentType != "application/json" || !bytes.Equal(message.Body, body) {
-					t.Fatal("native publication properties/body changed")
-				}
-				if err := message.Ack(false); err != nil {
-					t.Fatal(err)
-				}
-				break
+		}
+		select {
+		case message, ok := <-deliveries:
+			if !ok {
+				t.Fatal("owned consumer closed before delivery")
 			}
-			if waitBrigRetry(ctx, 10*time.Millisecond) != nil {
-				t.Fatal("published message unavailable")
+			if message.DeliveryMode != amqp.Persistent || message.ContentType != "application/json" || !bytes.Equal(message.Body, body) {
+				t.Fatal("native publication properties/body changed")
 			}
+			if err := message.Ack(false); err != nil {
+				t.Fatal(err)
+			}
+		case <-ctx.Done():
+			t.Fatal("published message unavailable")
 		}
 		if i == 0 {
 			q.mu.Lock()

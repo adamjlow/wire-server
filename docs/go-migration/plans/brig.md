@@ -1285,3 +1285,11 @@ candidate fixture to check_running before test execution, retaining all delivery
 queue and reconnect assertions. Terminal runner1/cleanup0 and independent owned
 namespace empty. Rebuild tagged executable for corrected fixture revision; Go
 source/dependencies/normal units unchanged, reuse exact367d55f64 quality evidence.
+
+Corrected readiness reaches successful publication/declaration, then the candidate
+observer fails because basic.get is forbidden on quorum queues with single active
+consumer (broker405 RESOURCE_LOCKED). Production behavior is unchanged. Replace
+only the observer's get with an actual basic.consume/manual acknowledgement,
+retaining exact body/content type/persistence and reconnect assertions. Both
+failed attempts retained; terminal runner1/cleanup0 and independent namespaces
+empty. Tagged observer rebuild only; reuse unchanged production/module quality.
