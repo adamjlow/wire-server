@@ -1,0 +1,142 @@
+[
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/registration-invitation-writer-sdk-check/argon2-copyright",
+    "sha256": "6059eb2b0f8f23b5c6023b08f68d4df9addd834665d07e5dcc364d4ae80d9b69",
+    "bytes": 8745
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/registration-invitation-writer-sdk-check/brig",
+    "sha256": "33fea19e1aa53161dd37a63114c715550109413b990ffe4211671299f3d582d0",
+    "bytes": 67847016
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/registration-invitation-writer-sdk-check/brig.test",
+    "sha256": "859d891f8447fc83d1d1aa5ff0ebccde23abe30e33effa6ff1d013620d981dcf",
+    "bytes": 64615472
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/registration-invitation-writer-sdk-check/build-receipt.json",
+    "sha256": "ba21a3745db190a6c0e571d2dcabab76a99eb10da9b8b012d225ed0c9ce51a53",
+    "bytes": 872
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/registration-invitation-writer-sdk-check/controller.log",
+    "sha256": "5b2278170b6160b9a369f404cd0d8b492feb291ecfe3b02e76a9f973097a7e22",
+    "bytes": 2878
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/registration-invitation-writer-sdk-check/cxx-package.sha256",
+    "sha256": "5abc52f67b0befe6317695d4489a2433b32854cbb6b5916a6f875b2c0e300636",
+    "bytes": 102
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/registration-invitation-writer-sdk-check/cxx-package.txt",
+    "sha256": "d41b16dcb551842304cab9549bb3da24fdb859d85d690bd121de7f3cb29cce01",
+    "bytes": 59
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/registration-invitation-writer-sdk-check/glibc-copyright",
+    "sha256": "f5788886720a2605a946e81d571e6c8162b09f58d2e2ceb8d36e5768fccd850d",
+    "bytes": 51200
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/registration-invitation-writer-sdk-check/go-check.log",
+    "sha256": "196739686fc80e4228221d28021286130fa6bdb93f77593575c9b6f8422bf949",
+    "bytes": 3723
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/registration-invitation-writer-sdk-check/icu-copyright",
+    "sha256": "5bbff5f646ce750ac0a347e7f91793279b7422a1119820b5f75d98879c201c68",
+    "bytes": 2214
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/registration-invitation-writer-sdk-check/libraries.sha256",
+    "sha256": "875560a1f32f1ad76a866a7f792a6b392f64c5555e8f55f270f60869079f9af2",
+    "bytes": 846
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/registration-invitation-writer-sdk-check/libstdc++-copyright",
+    "sha256": "20390f8a6f3b1e4d7cb45dd8652dabb259bbef688cbad839bcdb0b9ba7252f79",
+    "bytes": 69004
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/registration-invitation-writer-sdk-check/openssl-copyright",
+    "sha256": "6a7da622fe0637a334d2a8fc470852d2ffb77d9a2b2f930f854e32a41ad6ef35",
+    "bytes": 2543
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/registration-invitation-writer-sdk-check/packages.txt",
+    "sha256": "9e9db92065c33bc81e7e8b5ff6f5c0a9a32814690509f59c88718cc418f5e262",
+    "bytes": 3793
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/registration-invitation-writer-sdk-check/runtime-units.log",
+    "sha256": "2aa4e3f973b4acb7c70b4b778b5d98df481766367b35eaf3b6a4d6d7163f8468",
+    "bytes": 32549
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/registration-invitation-writer-sdk-check/stores-build-receipt.json",
+    "sha256": "33d37d76380f77d81dc660a174d6ab5a3127d00c5fdd7795b20c42204ccfd753",
+    "bytes": 872
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/registration-invitation-writer-sdk-check/stores.test",
+    "sha256": "a01400ced0e7ae75a3a88ea3211d38ec93801ba818f84f88ea1c6df8f4e96af6",
+    "bytes": 69420616
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/registration-invitation-writer-sdk-check/zlib-copyright",
+    "sha256": "9e5b96d63773a5d177ba264254390f792be07e41748ebd94730981c6cac31cc6",
+    "bytes": 2927
+  },
+  {
+    "path": "/dev/shm/wire-migration-brig-20261010/registration-invitation-writer-sdk-check/zstd-copyright",
+    "sha256": "5cec9fef4d3fa7e0371fbef4ec3fc416e0105dc2a9922117f84e825cb11f50f8",
+    "bytes": 5332
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/registration-invitation-native-stores/brig.json",
+    "sha256": "f7b9560124a3305a40832e104f44066c770cdf4b41aa3c5d23eb217f5454dbe0",
+    "bytes": 7569
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/registration-invitation-native-stores/cassandra.log",
+    "sha256": "6e988e22880442e9c81b41ff59cf83ebb5402ddf783143e3f5d2c82d6836ff13",
+    "bytes": 597771
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/registration-invitation-native-stores/independent-cleanup.json",
+    "sha256": "2bbbf5d1884deda474a4f4aa2c9e051452df47587b5f54ad64dd030ab802b2ec",
+    "bytes": 149
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/registration-invitation-native-stores/native-schema.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/registration-invitation-native-stores/native-schema.stdout",
+    "sha256": "f18daec4c5576effaeee9c866894f742df171f42bce4bf0b599fe2587d1d071f",
+    "bytes": 21319
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/registration-invitation-native-stores/postgres.log",
+    "sha256": "352da4fbe3201c223f8060f9363ef416d142bea9306d19d24550b53d3913fc69",
+    "bytes": 3232
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/registration-invitation-native-stores/result.json",
+    "sha256": "91bf469e5261339a3d55f81f780a2cfbbfa8759c57d2414554260ba3244f7f7c",
+    "bytes": 1063
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/registration-invitation-native-stores/test.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "/home/operator/.cache/wire-migration/brig-20261010/registration-invitation-native-stores/test.stdout",
+    "sha256": "f46c83f1e1d01f2816783c0860f25f017bf7ae51c1a1fc093a32da1450527fab",
+    "bytes": 79
+  }
+]
