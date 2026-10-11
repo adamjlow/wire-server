@@ -323,6 +323,19 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
                 connection_cursor=page['json']['paging_state']
             else: raise AssertionError('native connection pagination failed to terminate')
             report['connections_native_pages']=native_connection_pages
+            # Separate actors prevent write proof from changing read fixtures.
+            connection_write_actors=[]
+            for _ in range(2):
+                actor,_=request('POST','/i/users',body={'name':'Synthetic local connection write','email':'synthetic-local-connect-'+uuid.uuid4().hex+'@example.com','password':password})
+                assert actor['status']==201, 'native local connection write actor setup failed'
+                connection_write_actors.append(actor['json']['id'])
+            connection_writer,connection_recipient=connection_write_actors
+            connection_write_headers={'Z-User':connection_writer,'Z-Connection':'synthetic-local-create'}
+            connection_create_path='/v19/connections/'+local_domain+'/'+connection_recipient
+            connection_create_cases=[('POST','/v19/connections/'+local_domain+'/'+connection_writer,connection_write_headers),('POST','/v19/connections/'+local_domain+'/'+str(uuid.uuid4()),connection_write_headers),('POST',connection_create_path,lifecycle_headers)]
+            native_connection_create_controls=[request(*case)[0] for case in connection_create_cases]
+            report['connections_native_create_controls']=native_connection_create_controls
+            assert [r['status'] for r in native_connection_create_controls]==[400,400,403], 'native local connection admission changed'
             assert sum(len(p['json']['connections']) for p in native_connection_pages)==4, 'native paged connection rows lost or repeated'
             local_multi={lifecycle_user:[lifecycle_id,'f',lifecycle_id]}
             oversized={str(uuid.uuid4()):[] for _ in range(peers['brig']['optSettings']['setMaxConvSize']+1)}
@@ -805,6 +818,19 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
                 report['e2e_attempted']=True;report['e2e_executed']=xml.is_file()
                 if xml.is_file():report['original_mls_upload_tests']['validated_report']=harness.check_xml(xml,required)
                 assert original.returncode==0, 'original compiled MLS upload tests failed'
+            go_connection_create_controls=[request(*case)[0] for case in connection_create_cases]
+            report['connections_go_create_controls']=go_connection_create_controls
+            assert all(same(ref,actual) for ref,actual in zip(native_connection_create_controls,go_connection_create_controls)), 'native/Go connection creation admission mismatch'
+            go_connection_created,_=request('POST',connection_create_path,connection_write_headers)
+            report['connections_go_created']=go_connection_created
+            assert go_connection_created['status']==201 and go_connection_created['json']['status']=='sent', 'Go local connection creation failed'
+            assert go_connection_created['json']['from']==connection_writer and go_connection_created['json']['to']==connection_recipient, 'Go directed connection identity changed'
+            reverse_path='/v19/connections/'+local_domain+'/'+connection_writer
+            recipient_headers={'Z-User':connection_recipient,'Z-Connection':'synthetic-local-recipient'}
+            go_connection_reverse,_=request('GET',reverse_path,recipient_headers)
+            report['connections_go_reverse']=go_connection_reverse
+            assert go_connection_reverse['status']==200 and go_connection_reverse['json']['status']=='pending', 'Go reverse pending row missing'
+            assert go_connection_reverse['json']['qualified_conversation']==go_connection_created['json']['qualified_conversation'], 'Go connection pair has distinct conversations'
             go_created,_=request('POST','/v19/clients',lifecycle_headers,{**new_body,'password':password})
             report['client_lifecycle_go_created']=go_created
             assert go_created['status']==201 and go_created['location']==go_created['json']['id'], 'Go client creation failed'
@@ -832,6 +858,14 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
                 if i: body['paging_state']=go_connection_pages[i-1]['json']['paging_state']
                 native_connection_switchback.append(request('POST','/v19/list-connections',connection_headers,body)[0])
             report['connections_native_switchback']=native_connection_switchback
+            native_connection_creation_reads=[request('GET',connection_create_path,connection_write_headers)[0],request('GET',reverse_path,recipient_headers)[0]]
+            report['connections_native_reads_go_creation']=native_connection_creation_reads
+            assert all(same(ref,actual) for ref,actual in zip([go_connection_created,go_connection_reverse],native_connection_creation_reads) if ref['status']==200), 'native lost Go reverse connection row'
+            forward_read=native_connection_creation_reads[0]
+            assert forward_read['status']==200 and forward_read.get('content_type')==go_connection_created.get('content_type') and forward_read['json']==go_connection_created['json'], 'native lost Go created connection row'
+            native_connection_accepted,_=request('POST',reverse_path,recipient_headers)
+            report['connections_native_accepts_go_creation']=native_connection_accepted
+            assert native_connection_accepted['status']==200 and native_connection_accepted['json']['status']=='accepted', 'native cannot accept Go-created Galley conversation'
             assert all(same(ref,actual) for ref,actual in zip(go_connection_pages,native_connection_switchback)), 'native cannot use Go connection cursors after switchback'
             native_go_state=[request('GET',go_path,lifecycle_headers)[0],request('GET',go_path+'/prekeys',lifecycle_headers)[0]]
             native_deleted_state=[request('GET',lifecycle_path,lifecycle_headers)[0],request('GET',lifecycle_path+'/prekeys',lifecycle_headers)[0]]

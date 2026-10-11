@@ -86,8 +86,8 @@ func (p brigPeers) connectionGalley(ctx context.Context, method, path string, us
 		}
 	}
 }
-func (p brigPeers) createConnectionConversation(ctx context.Context, self, target gocql.UUID, connection, requestID string) (gocql.UUID, error) {
-	body, err := json.Marshal(map[string]string{"user": target.String()})
+func (p brigPeers) createConnectionConversation(ctx context.Context, self, target gocql.UUID, connection, requestID, domain string) (gocql.UUID, error) {
+	body, err := json.Marshal(map[string]any{"qualified_recipient": map[string]string{"id": target.String(), "domain": domain}, "recipient": target.String()})
 	if err != nil {
 		return gocql.UUID{}, err
 	}
