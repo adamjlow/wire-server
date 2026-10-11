@@ -78,3 +78,14 @@ func TestConnectionPagingTableBoundariesAndAdmission(t *testing.T) {
 		t.Fatal("invalid cursor/size reached storage")
 	}
 }
+
+func TestConnectionAbsentNativeMedia(t *testing.T) {
+	s := connectionReads{domain: "example.com", get: func(context.Context, gocql.UUID, gocql.UUID, string) (*storedConnection, error) { return nil, nil }}
+	req := httptest.NewRequest("GET", "/connections/example.com/00000000-0000-0000-0000-000000000001", nil)
+	req.Header.Set("Z-User", "00000000-0000-0000-0000-000000000002")
+	req.Header.Set("X-Wire-API-Version", "19")
+	response := httptest.NewRecorder()
+	if !s.handle(response, req, req.URL.Path) || response.Code != 404 || response.Header().Get("Content-Type") != "text/plain;charset=utf-8" || response.Body.Len() != 0 {
+		t.Fatal("native absent connection response changed")
+	}
+}

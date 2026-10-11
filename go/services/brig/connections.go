@@ -252,6 +252,7 @@ func (s connectionReads) handle(w http.ResponseWriter, r *http.Request, path str
 		if err != nil {
 			authenticationHTTPError(w, err)
 		} else if row == nil {
+			w.Header().Set("Content-Type", "text/plain;charset=utf-8")
 			w.WriteHeader(404)
 		} else {
 			wire, err := row.wire()

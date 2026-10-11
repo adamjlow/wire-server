@@ -826,7 +826,11 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             log=open('/reports/brig-native-client-lifecycle-switchback.log','w');logs.append(log)
             active=subprocess.Popen([str(native_brig_path),'-c',str(runtime.WORK/'brig-static-0.json')],cwd=runtime.WORK/'services/brig',stdout=log,stderr=subprocess.STDOUT)
             processes.append(active);ready(active)
-            native_connection_switchback=[request(*case)[0] for case in connection_page_cases]
+            native_connection_switchback=[]
+            for i,go_page in enumerate(go_connection_pages):
+                body={'size':1}
+                if i: body['paging_state']=go_connection_pages[i-1]['json']['paging_state']
+                native_connection_switchback.append(request('POST','/v19/list-connections',connection_headers,body)[0])
             report['connections_native_switchback']=native_connection_switchback
             assert all(same(ref,actual) for ref,actual in zip(go_connection_pages,native_connection_switchback)), 'native cannot use Go connection cursors after switchback'
             native_go_state=[request('GET',go_path,lifecycle_headers)[0],request('GET',go_path+'/prekeys',lifecycle_headers)[0]]

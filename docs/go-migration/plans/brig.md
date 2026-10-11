@@ -931,3 +931,10 @@ across local/remote tables against Go, then native switchback. Existing signed
 MLS witnesses and14 unchanged originals remain regressions. Creation/update
 state machines, Galley and notification effects remain required next; no whole
 connection/Brig acceptance is claimed by read support.
+
+First actual comparison at source1aad93a08 failed only absent connection404
+media: native includes text/plain;charset=utf-8, candidate omitted it. All
+other10 read controls and5 native cursor pages matched exact JSON/token bytes.
+No original suite ran after failure. All24 managed processes exited0, runner1/
+cleanup0 and independent owned-project audit empty. Preserve failed artifacts;
+correct candidate header and add regression, then repeat exact evidence.
