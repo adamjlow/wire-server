@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "id": "experiment-documentation",
+  "title": "Document experimental scope, remaining services, Go layout and validation options",
+  "service": "framework",
+  "kind": "framework",
+  "status": "queued",
+  "owner": null,
+  "branch": null,
+  "depends_on": [],
+  "write_paths": [
+    ".migration/tasks/experiment-documentation.json",
+    "docs/go-migration/README.md",
+    "go/README.md",
+    "docs/go-migration/plans/experiment-review.md"
+  ],
+  "plan": "docs/go-migration/plans/experiment-review.md",
+  "acceptance_criteria": [
+    {
+      "id": "documentation",
+      "description": "Source-cited experiment README accurately distinguishes implementation, qualification, remaining scope and comparative measurement options.",
+      "required_evidence": "Review inventory against services Cabal packages, Stern executable, migration registry, Go layout and existing test/performance sources; validate links and migration records without changing runtime/oracle/defaults."
+    }
+  ],
+  "evidence": [],
+  "review": null,
+  "handoff": "User requested README, six-item audit and push to origin/go-migration. Bounded documentation only; Brig remains active and Galley follows its completion."
+}
