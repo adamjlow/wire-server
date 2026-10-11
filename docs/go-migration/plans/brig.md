@@ -601,3 +601,21 @@ Internal legalhold add/disable/events and original last-active remain pending;
 final whole-service gates unchanged. SDK outputs use a fresh owned runtime
 temporary directory to keep compiler/build space bounded; no fixture,
 deadline, disk floor or protected assertion change.
+
+
+Public registration sourcea3980be43/servicefd9052f9 PASS full pinned Go checks
+(normal/race plus original-runner static units), successful/partial failure
+composition/code/SAML/account/response/YAML/template/date controls. Two
+containers0/network0/independent audits empty; tagged stores compile only.
+Evidence client-registration-public records exact boundaries and same-author
+slice review; no native-stack/state/new-client delivery/original Client case
+claim yet. Public POST now unblocks original three capability/create/update/
+v6-v7 representation cases; add a bounded own observer/original-test option
+without changing original17/protected assertions/fixtures/rates/deadlines,
+use guarded byte-identical rebuild for observer-only source changes against
+this exact a398 production/service/normal-unit tuple, then actual native
+registration/deletion/same-store recovery. Original last-active needs real
+internal callback; offline cross-backend needs connections/federation.
+Go deletion consumer/STOMP/internal legalhold and full remaining contracts
+and whole535/eight-Go/final operations/allentities/three modes/image/default
+selector/legal/security/review remain pending.

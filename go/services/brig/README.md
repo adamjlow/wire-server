@@ -70,3 +70,16 @@ Password existence/change passes [native API and credential switchback](qualific
 
 
 [Client update and native prekey consumption](qualification/evidence/client-update-switchback/README.md) at source85bb0c30b/service34ff1c754b7bd3b284e9e21e69c8ff98f1a90a02ef9eb975e4436d7eee2954a4 passes full Go/static original-runner checks, original17 comparisons, eight native update/partial-write controls and actual native→Go→native client capability/prekey/MLS state. Native reads identical Go full client/IDs and claims the Go-written prekey after clean restart; all13 process exits0/cleanup independently empty. Config uses native `setConsumableNotifications`; current live fixture disables queue setup, whose enabled lifecycle remains pending. This supplemental proof executes no original compiled Client test; those require Go client registration next. Registration/deletion/last-active/claims/federation and whole535/eight-Go gates remain pending; Brig is unavailable for selection and Galley follows whole completion.
+
+
+[Public client registration and deletion](qualification/evidence/client-registration-public/README.md)
+are now implemented at sourcea3980be43/servicefd9052f9 with full pinned Go
+checks/static runner units. Registration binds actual account/code/storage/
+peer/deletion/mail effects in native order; public deletion publishes native
+client.delete and removes client/prekeys/configured lock while retaining MLS
+rows. The [pinned Dynamo retry source alignment](qualification/evidence/client-deletion-native-retries/README.md)
+remains distinct from native executable fault-injection proof. No original
+compiled Client case or native registration/deletion switchback is claimed
+yet. Those are next, followed by last-active and remaining whole-service
+contracts. Earlier update/property receipts retain their own tested source
+identities. Brig remains unavailable; Haskell remains supported/default.
