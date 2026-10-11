@@ -1,0 +1,28 @@
+{
+  "/dev/shm/wire-migration-brig-20261010/registration-schema-sdk-check": {
+    "argon2-copyright": "6059eb2b0f8f23b5c6023b08f68d4df9addd834665d07e5dcc364d4ae80d9b69",
+    "brig": "140120324fc7d9250022bc44f027aa70ae27ebc859716a8d3f75f20e4c2ef917",
+    "brig.test": "9553fcbeecd6e1d0fcc772bab04d4f077055ae6bfb26d8a275e6103a7c60d09d",
+    "build-receipt.json": "98bce5f4728356953b8ebeb9cd0ae9d3d09abf3658f6a7f3f241d47ee0c5c3e5",
+    "controller.log": "5b2278170b6160b9a369f404cd0d8b492feb291ecfe3b02e76a9f973097a7e22",
+    "cxx-package.sha256": "5abc52f67b0befe6317695d4489a2433b32854cbb6b5916a6f875b2c0e300636",
+    "cxx-package.txt": "d41b16dcb551842304cab9549bb3da24fdb859d85d690bd121de7f3cb29cce01",
+    "glibc-copyright": "f5788886720a2605a946e81d571e6c8162b09f58d2e2ceb8d36e5768fccd850d",
+    "go-check.log": "abf74a5d2fad15de4f614652e7511892f77f7057449678abaad0c148d73190c2",
+    "icu-copyright": "5bbff5f646ce750ac0a347e7f91793279b7422a1119820b5f75d98879c201c68",
+    "libraries.sha256": "875560a1f32f1ad76a866a7f792a6b392f64c5555e8f55f270f60869079f9af2",
+    "libstdc++-copyright": "20390f8a6f3b1e4d7cb45dd8652dabb259bbef688cbad839bcdb0b9ba7252f79",
+    "openssl-copyright": "6a7da622fe0637a334d2a8fc470852d2ffb77d9a2b2f930f854e32a41ad6ef35",
+    "packages.txt": "9e9db92065c33bc81e7e8b5ff6f5c0a9a32814690509f59c88718cc418f5e262",
+    "runtime-units.log": "5fda45663f3886515977555374e4bb2243d41403ae11252783106c0bde865bda",
+    "stores-build-receipt.json": "a4b0fca5de7239ab425f1fd859a70a2a15af5c4a85fcc2238661dd0ae084f06d",
+    "stores.test": "f32cfef18fb3045bd1c129b9e9ef66ebf4f4109c9c967a482f49ca63208ee484",
+    "zlib-copyright": "9e5b96d63773a5d177ba264254390f792be07e41748ebd94730981c6cac31cc6",
+    "zstd-copyright": "5cec9fef4d3fa7e0371fbef4ec3fc416e0105dc2a9922117f84e825cb11f50f8"
+  },
+  "/home/operator/.cache/wire-migration/brig-20261010/registration-schema-native": {
+    "Currency.hs": "19b9a9103276ac565e80e4291000cd2e4476d6772eefe4076d08a3ecfb5d2c13",
+    "LICENSE": "a130ae204d3b0b189632dc70b0c17c0ac9ad0bb97a2dcea868ddfc0a2986b40d",
+    "currency-codes-3.0.0.1.tar.gz": "48c5bc7e4054c2eec32e036b4351c6ddc64a9ab1354b75b82c93a27697c77e2c"
+  }
+}
