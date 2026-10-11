@@ -13,3 +13,5 @@ Wire public client registration to real native-order account/code, storage, peer
 Add native MLS package count/read cleanup and public reference deletion, validated by exact Haskell/Go responses and real Cassandra deletion/retention through switchback; whole Brig migration remains in progress.
 
 Add signed MLS key-package upload and replacement core using standard Go crypto; seven original compiled Haskell MLS upload/count/delete tests pass across supported suites, with whole-service qualification pending.
+
+Add native MLS local/federated claim admission and package consumption; fourteen unchanged compiled Haskell MLS tests including claim and replacement pass, while whole-service qualification remains in progress.
