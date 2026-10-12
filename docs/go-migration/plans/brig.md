@@ -1969,3 +1969,12 @@ native/Go response/error shapes, consume native code in Go, prove code deletion,
 restart native and accept Go reset password/reject old. Retain observer/candidate
 failures; original22 and prior provider-auth/profile/queue regression unchanged.
 Remaining provider lifecycle/service/bot and whole Brig acceptance stay open.
+
+Provider reset production100238fba/full pinned Go/static passes. Retain first
+SDK0625 unused-import vet failure corrected only Go. First backend observerfd564
+failed during third extra native provider creation (go-begin), before Go startup;
+all23 exits0/runner1/cleanup0/independent project empty. Reset actors previously
+shared X-Forwarded-For127.0.0.46; give each a distinct synthetic address as prior
+provider setup does, retaining configured five-operation buckets. Record each
+registration response before assertion to diagnose native fixture failures.
+No rate-limit/exception config, original assertions or Haskell code change.

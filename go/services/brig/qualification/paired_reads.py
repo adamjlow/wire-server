@@ -527,12 +527,13 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             assert provider_native_old_rejected['status'] == 403, 'native previous provider password remained valid'
         if provider_reset_contract:
             reset_actors = {}
-            for kind in ('native', 'go', 'go-begin', 'exhausted'):
+            for actor_index, kind in enumerate(('native', 'go', 'go-begin', 'exhausted')):
                 email = 'synthetic-provider-reset-'+kind+'-'+uuid.uuid4().hex+'@example.com'
-                actor = request('POST', '/v19/provider/register', {'X-Forwarded-For': '127.0.0.46'},
+                actor = request('POST', '/v19/provider/register', {'X-Forwarded-For': '127.0.0.'+str(46+actor_index)},
                     {'name': 'Synthetic reset provider', 'email': email, 'password': 'Synthetic-provider-password!',
                      'url': 'https://example.com/provider', 'description': 'Synthetic reset switchback'})[0]
-                assert actor['status'] == 201, 'native reset provider setup failed: '+kind
+                report['provider_reset_native_registration_'+kind] = actor
+                assert actor['status'] == 201, 'native reset provider setup failed: '+kind+' status='+str(actor['status'])
                 activation = request('GET', '/i/provider/activation-code?'+urlencode({'email': email}))[0]
                 assert activation['status'] == 200 and request('GET', '/v19/provider/activate?'+urlencode(activation['json']))[0]['status'] == 200, 'native reset actor activation failed'
                 provider_login_ids[email] = actor['json']['id']
