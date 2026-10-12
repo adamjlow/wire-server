@@ -2133,3 +2133,15 @@ failed capture and correct only Go404 media/body plus new observer's assumed
 status list/repeated-delete expected404, grounded in actual native capture and
 Provider.API helper1094. Original assertions/comparator unchanged. All23 managed
 exits0/runner1/cleanup0/independent empty. Rebuild fresh production quality.
+
+Provider deletion production/observere8dfc7b0a finite matrix passes with fresh
+full Go/static checks, actual native-created two-service providers, exact native/
+Go negatives and synchronous metadata/index/whitelist/Galley cleanup, retained
+bot/client/prekey/MLS/property/member state and native readback of Go deletion.
+Native original Provider2/Go24 exact names/XML/no failure/error/skip and prior
+provider/queue/store regressions pass. All25 managed exits0/original processes0/
+runner0/cleanup0/independent empty. Same-author review and serious inherited
+orphan bot/member/cookie/code concern recorded in qualification/evidence/provider-
+deletion; initial native404 correction capture retained. Stop this finite slice;
+next public service/bot APIs, then remaining whole surface/full535/eight-Go/all-
+entity three modes/loaded operations/image/selector/legal gates.
