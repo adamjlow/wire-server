@@ -2096,3 +2096,31 @@ retained. Original dynamic selection concern resolved by actual dist/brig hash
 checks, not source inspection alone. Stop this finite enrollment validation.
 Next provider deletion/public service/bot APIs and remaining whole surface, then
 full535/eight-Go/all-entity three modes/operations/image/selector/legal gates.
+
+### Provider deletion
+Implement DELETE /provider (JSON password6..1024, provider gateway type/id),
+native Provider.API deleteAccount. Global feature guard -> activated account
+lookup (403 invalid-provider when missing/unactivated) -> password verification
+(provider rate namespace, ignore hash-update status) -> full service-list decode
+-> sequential Galley disconnect/service metadata removal -> delete email key ->
+delete provider row -> empty200. This is synchronous; do not use queued bot
+cascade, revoke provider cookies, delete verification codes or add transactions.
+Reuse validated service row decoder and metadata/index/whitelist cleanup, real
+Galley deleteServiceConnection. Native SELECT all service fields has no explicit
+paging; collect/decode its rows before any removal, preserve storage order and
+read LocalQuorum/retry1; deletion writes LocalQuorum/retry5. Go1.26.9, no dependency
+or schema changes. Validate JSON/password/provider headers, retain bounded password
+worker/rate/context/peer deadlines, parameterized CQL and generic errors; never log
+submitted password or stored secret service fields. Missing/wrong credentials
+must not reach service effects. Failure retains provider/key and already-completed
+service effects in native order. Serious inherited concern: provider deletion
+removes service metadata/connections without bot/client cascade and keeps existing
+provider cookies/codes; document without repairing Haskell or security policy.
+Finite tests: admission/guard/activated lookup before credentials; full-list before
+mutation; sequential two-service order; disconnect/remove/key/provider failure
+cutoffs; no bot or queue callback. Owned comparator will delete native-created
+providers, including native-schema service fixtures/Galley connections, compare
+negative/status/media responses and raw metadata cleanup, then prove native
+switchback sees provider/key absent. Reuse original Provider2 plus prior22 and
+existing provider/queue switchback controls. Remaining public service/bot and
+whole Brig535/eight-Go/three-mode/operations/image/selector gates stay open.

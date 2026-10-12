@@ -51,6 +51,7 @@ type brigReadHandlers struct {
 	providerAuth         *providerAuthHTTP
 	providerReset        *providerResetService
 	providerRegistration *providerRegistrationService
+	providerDeletion     *providerDeletionService
 }
 
 func readJSON(w http.ResponseWriter, r *http.Request, body any) {
@@ -87,6 +88,9 @@ func routeParseError(w http.ResponseWriter, message string) {
 }
 
 func (b brigReadHandlers) handle(w http.ResponseWriter, r *http.Request, path string) bool {
+	if b.providerDeletion != nil && b.providerDeletion.handle(w, r, path) {
+		return true
+	}
 	if b.providerRegistration != nil && b.providerRegistration.handle(w, r, path) {
 		return true
 	}
