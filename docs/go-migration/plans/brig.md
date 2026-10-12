@@ -1877,3 +1877,34 @@ boundaries; remaining whole Brig contracts and final535/eight-Go/all-entity thre
 selectors/operations/image/legal gates remain open. Disk shortage resolved: about
 55GiB free and new SDK/cache output on disk; old shared-memory artifacts retained.
 Do not repeat unchanged provider-profile controls without relevant input changes.
+
+### Provider login and password change
+
+Implement POST `/provider/login` and PUT `/provider/password`, using the existing
+password worker, native provider CQL and Ed25519 token codec (Go1.26.9, no new
+module dependency). Reference Provider.API login/updateAccountPassword,
+AuthenticationSubsystem.verifyProviderPasswordImpl, PasswordStore.Cassandra and
+User.Auth.ptcToSetCookie. Login resolves the normalized provider email key,
+reads only password, verifies in the provider rate namespace, discards native
+password-update status, and issues configured-TTL provider token cookie. Preserve
+zprovider, Path=/provider, UTC expiry, HttpOnly, secure=!cookieInsecure and empty200;
+no user-cookie storage, session revocation or password-upgrade side effect.
+
+Password change requires Z-Type=provider/Z-Provider, both passwords length6..1024,
+global disabled-second-factor guard, then old verify -> new verify -> hash6 ->
+provider password write; same-password409 uses native reset message. Password
+lookup is independent of account email activation. Parameterized LocalQuorum
+CQL/read retry1/write retry5, generic failures, no passwords/hashes in error/log
+strings. Existing worker limits/rate policy, context cancellation and validated
+JSON text; preserve inherited no-provider-cookie revocation and gateway trust.
+
+Finite validation: login wrong/missing/unactivated, disabled/enabled feature,
+provider namespace/minimum6, invalid type/header, old/same password and write/hash
+order; cookie identity/TTL/signature/path/secure flags. Existing owned observer
+creates native provider actors; use distinct actors so configured five-operation
+buckets are respected without disabling limits. Compare native/Go response shapes,
+verify Go-issued provider token with actual native Nginz on a no-write provider
+asset request (and falsified-token negative), change a native password in Go,
+then have restarted native accept the Go password and reject its predecessor.
+Reuse the existing original22 regression. Remaining provider lifecycle/service/bot
+families and whole535/eight-Go/full operations/storage/selector gates remain open.

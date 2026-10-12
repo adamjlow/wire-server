@@ -239,6 +239,7 @@ func Run(ctx context.Context, c Config) error {
 	business.clientUpdate = &clientUpdateService{store: clientStore{cassandra}, consumable: c.Settings.ConsumableNotifications, setup: business.peers.setupConsumableClient}
 	business.bulkClients = &clientBulkReads{clients: (clientStore{cassandra}).list, ids: (clientStore{cassandra}).ids}
 	issuer := tokenIssuer{key: private, index: int64(c.ZAuth.Settings.KeyIndex), userTTL: c.ZAuth.Settings.UserTTL, sessionTTL: c.ZAuth.Settings.SessionTTL, accessTTL: c.ZAuth.Settings.AccessTTL, legalUserTTL: c.ZAuth.Settings.LegalHoldUserTTL, legalAccessTTL: c.ZAuth.Settings.LegalHoldAccessTTL}
+	business.providerAuth = &providerAuthHTTP{byEmail: providerStore.byEmail, password: providerStore.password, write: providerStore.setPassword, verify: passwords.verify, hash: passwords.hash, secondFactorEnabled: business.peers.providerSecondFactorEnabled, issuer: issuer, ttl: c.ZAuth.Settings.ProviderTTL, cookieInsecure: c.Settings.CookieInsecure, now: time.Now}
 	business.access = &accessTokenService{lookup: business.sessions, sessions: sessionManager{store: business.sessions, issuer: issuer, renewAge: *c.Settings.CookieRenewAge}, keys: public, now: time.Now}
 	business.index = indexWriter
 	business.appIDs = business.users.teamAppIDs
