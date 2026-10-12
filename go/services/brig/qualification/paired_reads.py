@@ -31,7 +31,7 @@ def same_response(reference, actual):
     return all(reference.get(field) == actual.get(field) for field in fields)
 
 
-def inside(gundeck_path=None, access_switchback=False, login_contract=False, activation_contract=False, registration_contract=False, saml_registration_contract=False, public_registration_contract=False, password_reset_contract=False, password_change_contract=False, ses_feedback_contract=False, properties_contract=False, client_update_contract=False, client_registration_contract=False, client_lifecycle_contract=False, store_fixture_path=None, mls_upload_originals=False, stomp_internal_events=False, service_deletion_queue=False, service_galley_event=False, optimistic_prekeys=False, provider_profile_contract=False, provider_auth_contract=False, provider_reset_contract=False, provider_registration_contract=False, provider_deletion_contract=False, provider_service_contract=False):
+def inside(gundeck_path=None, access_switchback=False, login_contract=False, activation_contract=False, registration_contract=False, saml_registration_contract=False, public_registration_contract=False, password_reset_contract=False, password_change_contract=False, ses_feedback_contract=False, properties_contract=False, client_update_contract=False, client_registration_contract=False, client_lifecycle_contract=False, store_fixture_path=None, mls_upload_originals=False, stomp_internal_events=False, service_deletion_queue=False, service_galley_event=False, optimistic_prekeys=False, provider_profile_contract=False, provider_auth_contract=False, provider_reset_contract=False, provider_registration_contract=False, provider_deletion_contract=False, provider_service_contract=False, provider_service_create_contract=False):
     registration_contract = registration_contract or saml_registration_contract
     if os.getuid() != 65534 or os.environ.get('WIRE_E2E_DISPOSABLE') != '1':
         raise ValueError('owned nonroot Docker runner required')
@@ -254,6 +254,19 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             membership = request('GET', path, headers, port=8085)[0]
             assert membership['status'] == 200 and any(member['qualified_id']['id'] == fixture['User'] for member in membership['json']['members']['others']), 'provider deletion cascaded bot membership: '+phase
         report['provider_deleted_services_'+phase] = observed
+        return observed
+
+    def creation_fingerprint(phase, service):
+        output = '/reports/service-fingerprint-'+phase+'.json'
+        manifest = Path('/reports/service-fingerprint-'+phase+'-input.json')
+        manifest.write_text(json.dumps({'Provider':creation_parent_id,'Service':service,'Output':output}))
+        env = {**os.environ,'BRIG_STORE_CONFIG':str(runtime.WORK/'brig-static-0.json'),'BRIG_SERVICE_FINGERPRINT_INPUT':str(manifest)}
+        with open('/reports/service-fingerprint-'+phase+'.log','w') as log:
+            result = subprocess.run([store_fixture_path,'-test.run=^TestOwnedServiceFingerprint$','-test.v','-test.timeout=45s'],env=env,stdout=log,stderr=subprocess.STDOUT,timeout=50)
+        assert result.returncode == 0, 'owned fingerprint read failed: '+phase
+        observed = json.loads(Path(output).read_text())
+        report['service_creation_fingerprint_'+phase] = observed
+        assert observed['enabled'] is False and len(observed['fingerprints']) == 1 and len(observed['fingerprints'][0]) == 64, 'native initial service fingerprint/state invalid: '+phase
         return observed
 
     def enqueue_service(actor):
@@ -1217,6 +1230,33 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             report['service_api_native_delete'] = service_api_native_response
             assert service_api_native_response['status'] == 202, 'native public service deletion failed'
             service_api_native_rows = await_service(service_api_actors['native']['fixture'],'service-api-native',service_api_native_before)
+        if provider_service_create_contract:
+            creation_parent_email = 'p-create-'+uuid.uuid4().hex+'@example.com'
+            creation_parent = request('POST','/v19/provider/register',{'X-Forwarded-For':'127.0.0.63'},
+                {'name':'Synthetic creation provider','email':creation_parent_email,'password':'Create6','url':'https://example.com/create','description':'Synthetic creation'})[0]
+            assert creation_parent['status'] == 201, 'native creation provider failed'
+            creation_parent_id = creation_parent['json']['id']
+            creation_parent_headers = {'Z-Provider':creation_parent_id,'Z-Type':'provider'}
+            creation_activation = request('GET','/i/provider/activation-code?'+urlencode({'email':creation_parent_email}))[0]
+            assert creation_activation['status'] == 200 and request('GET','/v19/provider/activate?'+urlencode(creation_activation['json']))[0]['status'] == 200, 'native creation provider activation failed'
+            creation_body = {'name':'Synthetic created service','summary':'Synthetic summary','description':'Synthetic created description',
+                'base_url':'https://example.com/created','public_key':service_api_native_controls[1]['json']['public_keys'][0]['pem'],
+                'assets':[{'type':'image','key':'3-1-'+str(uuid.uuid4()),'size':'complete'}], 'tags':['business','audio','audio']}
+            creation_negative_cases = [('POST','/v19/provider/services',{'Z-Provider':str(uuid.uuid4()),'Z-Type':'provider'},creation_body),
+                ('POST','/v19/provider/services',hidden_headers,creation_body),
+                ('POST','/v19/provider/services',creation_parent_headers,{**creation_body,'public_key':'-----BEGIN PUBLIC KEY-----\nAQID\n-----END PUBLIC KEY-----\n'})]
+            creation_native_negatives = [request(*case)[0] for case in creation_negative_cases]
+            report['service_creation_native_negatives'] = creation_native_negatives
+            assert [r['status'] for r in creation_native_negatives] == [404,404,400], 'native create gate/key controls changed'
+            creation_native = {}
+            for creation_kind,creation_token in (('supplied','c3ludGhldGljLWNyZWF0ZQ'),('generated',None)):
+                creation_result = request('POST','/v19/provider/services',creation_parent_headers,{**creation_body,'auth_token':creation_token})[0]
+                report['service_creation_native_'+creation_kind] = creation_result
+                assert creation_result['status'] == 201 and set(creation_result['json']) == ({'id'} if creation_token is not None else {'id','auth_token'}), 'native create reply changed'
+                creation_sid = creation_result['json']['id']
+                creation_definition = request('GET','/v19/provider/services/'+creation_sid,creation_parent_headers)[0]
+                assert creation_definition['status'] == 200, 'native created service unreadable'
+                creation_native[creation_kind] = {'reply':creation_result,'definition':creation_definition,'fingerprint':creation_fingerprint('native-'+creation_kind,creation_sid)}
         if provider_deletion_contract:
             deletion_actors = {}
             for deletion_kind in ('native','go'):
@@ -1413,6 +1453,30 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             service_api_go_absent = [request('GET',service_api_path,service_api_go_actor['headers'])[0],request('GET','/v19/provider/services',service_api_go_actor['headers'])[0]]
             report['service_api_go_absent'] = service_api_go_absent
             assert [r['status'] for r in service_api_go_absent] == [404,200] and service_api_go_absent[1]['json'] == [], 'Go service deletion remains visible'
+        if provider_service_create_contract:
+            creation_go_negatives = [request(*case)[0] for case in creation_negative_cases]
+            report['service_creation_go_negatives'] = creation_go_negatives
+            assert all(same(ref,actual) for ref,actual in zip(creation_native_negatives,creation_go_negatives)), 'native/Go create gate/key response differs'
+            creation_go = {}
+            for creation_kind,creation_token in (('supplied','c3ludGhldGljLWNyZWF0ZQ'),('generated',None)):
+                creation_result = request('POST','/v19/provider/services',creation_parent_headers,{**creation_body,'auth_token':creation_token})[0]
+                report['service_creation_go_'+creation_kind] = creation_result
+                creation_reference = creation_native[creation_kind]
+                assert creation_result['status'] == creation_reference['reply']['status'] and creation_result['content_type'] == creation_reference['reply']['content_type'] and set(creation_result['json']) == set(creation_reference['reply']['json']), 'Go service creation reply schema differs'
+                creation_sid = creation_result['json']['id'];uuid.UUID(creation_sid)
+                creation_auth_token = creation_token if creation_token is not None else creation_result['json']['auth_token']
+                if creation_token is None:
+                    import base64
+                    assert len(creation_auth_token) == 24 and len(base64.urlsafe_b64decode(creation_auth_token)) == 18, 'Go service token format differs'
+                creation_definition = request('GET','/v19/provider/services/'+creation_sid,creation_parent_headers)[0]
+                # Only independent random identifiers/tokens are parameterized;
+                # all stored profile/key/asset/tag/disabled fields compare to native.
+                creation_expected = {**creation_reference['definition'],'json':{**creation_reference['definition']['json'],'id':creation_sid,'auth_tokens':[creation_auth_token]}}
+                assert same(creation_expected,creation_definition), 'Go created service definition differs'
+                creation_fp = creation_fingerprint('go-'+creation_kind,creation_sid)
+                assert creation_fp == creation_reference['fingerprint'], 'Go OpenSSL RSA fingerprint bytes differ from native'
+                creation_go[creation_kind] = {'id':creation_sid,'definition':creation_definition,'fingerprint':creation_fp}
+            report['service_creation_go_definitions'] = creation_go
         go_records = [request(*case)[0] for case in cases]
         report['records'].append({'implementation': 'go', 'observations': go_records})
         mismatches = []
@@ -1666,6 +1730,22 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
                 report['service_api_native_after_go'] = service_api_native_after_go
                 assert all(same(ref,actual) for ref,actual in zip(service_api_go_absent,service_api_native_after_go)), 'native switchback restored Go-deleted service'
                 assert service_api_go_rows == service_row_fixture('read','service-api-native-reads-go',service_api_go_actor['fixture']), 'native switchback changed public service DELETE bot state'
+            if provider_service_create_contract:
+                creation_native_reads_go = []
+                for creation_kind,creation_actor in creation_go.items():
+                    creation_definition = request('GET','/v19/provider/services/'+creation_actor['id'],creation_parent_headers)[0]
+                    creation_native_reads_go.append(creation_definition)
+                    assert same(creation_actor['definition'],creation_definition), 'native cannot read Go service definition'
+                    assert creation_fingerprint('native-reads-go-'+creation_kind,creation_actor['id']) == creation_actor['fingerprint'], 'native switchback changed Go fingerprint'
+                    creation_deleted = request('DELETE','/v19/provider/services/'+creation_actor['id'],creation_parent_headers,{'password':'Create6'})[0]
+                    assert creation_deleted['status'] == 202, 'native cannot delete Go-created service'
+                    creation_deadline = time.monotonic()+30
+                    while True:
+                        creation_missing = request('GET','/v19/provider/services/'+creation_actor['id'],creation_parent_headers)[0]
+                        if creation_missing['status'] == 404: break
+                        assert time.monotonic() < creation_deadline, 'native cleanup of Go-created service stalled'
+                        time.sleep(0.2)
+                report['service_creation_native_reads_go'] = creation_native_reads_go
             if service_deletion_queue:
                 native_readback = await_service(pending_service_actor, 'native-reads-go')
                 assert native_readback == go_service_rows, 'native switchback service raw state differs'
@@ -2352,6 +2432,7 @@ def main():
     parser.add_argument('--provider-registration-contract', action='store_true')
     parser.add_argument('--provider-deletion-contract', action='store_true')
     parser.add_argument('--provider-service-contract', action='store_true')
+    parser.add_argument('--provider-service-create-contract', action='store_true')
     args = parser.parse_args()
     if (args.registration_contract or args.saml_registration_contract) and (args.activation_contract or args.access_switchback or args.login_contract):
         parser.error('registration observation runs separately from credential/activation observations')
@@ -2393,8 +2474,10 @@ def main():
         parser.error('provider deletion requires provider and native-schema service/Galley fixtures')
     if args.provider_service_contract and not args.provider_deletion_contract:
         parser.error('provider service control requires native provider/service/Galley fixtures')
+    if args.provider_service_create_contract and not args.provider_service_contract:
+        parser.error('service creation requires native service projection/fingerprint fixtures')
     if args.in_container:
-        return inside(args.gundeck_path, args.access_switchback, args.login_contract, args.activation_contract, args.registration_contract, args.saml_registration_contract, args.public_registration_contract, args.password_reset_contract, args.password_change_contract, args.ses_feedback_contract, args.properties_contract, args.client_update_contract, args.client_registration_contract, args.client_lifecycle_contract, args.store_fixture_path, args.mls_upload_originals, args.stomp_internal_events, args.service_deletion_queue, args.service_galley_event, args.optimistic_prekeys, args.provider_profile_contract, args.provider_auth_contract, args.provider_reset_contract, args.provider_registration_contract, args.provider_deletion_contract, args.provider_service_contract)
+        return inside(args.gundeck_path, args.access_switchback, args.login_contract, args.activation_contract, args.registration_contract, args.saml_registration_contract, args.public_registration_contract, args.password_reset_contract, args.password_change_contract, args.ses_feedback_contract, args.properties_contract, args.client_update_contract, args.client_registration_contract, args.client_lifecycle_contract, args.store_fixture_path, args.mls_upload_originals, args.stomp_internal_events, args.service_deletion_queue, args.service_galley_event, args.optimistic_prekeys, args.provider_profile_contract, args.provider_auth_contract, args.provider_reset_contract, args.provider_registration_contract, args.provider_deletion_contract, args.provider_service_contract, args.provider_service_create_contract)
     if args.binary is None or args.build_receipt is None or args.output is None:
         parser.error('identified binary, receipt and new output required')
     sys.path.insert(0, str(ROOT / 'tools/parity/docker'))
@@ -2466,6 +2549,8 @@ def main():
         runner['command'].append('--provider-deletion-contract')
     if args.provider_service_contract:
         runner['command'].append('--provider-service-contract')
+    if args.provider_service_create_contract:
+        runner['command'].append('--provider-service-create-contract')
     if args.stomp_internal_events:
         import stomp_broker
         stomp_broker.prepare(spec, output)
