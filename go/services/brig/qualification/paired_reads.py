@@ -31,7 +31,7 @@ def same_response(reference, actual):
     return all(reference.get(field) == actual.get(field) for field in fields)
 
 
-def inside(gundeck_path=None, access_switchback=False, login_contract=False, activation_contract=False, registration_contract=False, saml_registration_contract=False, public_registration_contract=False, password_reset_contract=False, password_change_contract=False, ses_feedback_contract=False, properties_contract=False, client_update_contract=False, client_registration_contract=False, client_lifecycle_contract=False, store_fixture_path=None, mls_upload_originals=False, stomp_internal_events=False, service_deletion_queue=False, service_galley_event=False, optimistic_prekeys=False, provider_profile_contract=False, provider_auth_contract=False):
+def inside(gundeck_path=None, access_switchback=False, login_contract=False, activation_contract=False, registration_contract=False, saml_registration_contract=False, public_registration_contract=False, password_reset_contract=False, password_change_contract=False, ses_feedback_contract=False, properties_contract=False, client_update_contract=False, client_registration_contract=False, client_lifecycle_contract=False, store_fixture_path=None, mls_upload_originals=False, stomp_internal_events=False, service_deletion_queue=False, service_galley_event=False, optimistic_prekeys=False, provider_profile_contract=False, provider_auth_contract=False, provider_reset_contract=False):
     registration_contract = registration_contract or saml_registration_contract
     if os.getuid() != 65534 or os.environ.get('WIRE_E2E_DISPOSABLE') != '1':
         raise ValueError('owned nonroot Docker runner required')
@@ -62,6 +62,8 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             data = response.read()
             result = {'method': method, 'path': path, 'status': response.status,
                       'content_type': response.getheader('Content-Type'), 'body': data.decode()}
+            if path == '/v19/provider/password-reset':
+                result['retry_after'] = response.getheader('Retry-After')
             if method == 'POST' and (path in ('/i/users','/register') or path.endswith('/clients')):
                 result['location'] = response.getheader('Location')
             try:
@@ -523,6 +525,58 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             provider_native_old_rejected = request('POST', '/v19/provider/login', body={'email': password_email, 'password': 'Synthetic-provider-password!'})[0]
             report['provider_native_old_password_rejected'] = provider_native_old_rejected
             assert provider_native_old_rejected['status'] == 403, 'native previous provider password remained valid'
+        if provider_reset_contract:
+            reset_actors = {}
+            for kind in ('native', 'go', 'go-begin', 'exhausted'):
+                email = 'synthetic-provider-reset-'+kind+'-'+uuid.uuid4().hex+'@example.com'
+                actor = request('POST', '/v19/provider/register', {'X-Forwarded-For': '127.0.0.46'},
+                    {'name': 'Synthetic reset provider', 'email': email, 'password': 'Synthetic-provider-password!',
+                     'url': 'https://example.com/provider', 'description': 'Synthetic reset switchback'})[0]
+                assert actor['status'] == 201, 'native reset provider setup failed: '+kind
+                activation = request('GET', '/i/provider/activation-code?'+urlencode({'email': email}))[0]
+                assert activation['status'] == 200 and request('GET', '/v19/provider/activate?'+urlencode(activation['json']))[0]['status'] == 200, 'native reset actor activation failed'
+                provider_login_ids[email] = actor['json']['id']
+                reset_actors[kind] = {'email': email, 'id': actor['json']['id']}
+                if kind != 'go-begin':
+                    begin = request('POST', '/v19/provider/password-reset', body={'email': email})[0]
+                    assert begin['status'] == 201, 'native reset begin failed: '+kind
+                    pair = request('GET', '/i/provider/password-reset-code?'+urlencode({'email': email}))[0]
+                    assert pair['status'] == 200, 'native reset pair unavailable: '+kind
+                    reset_actors[kind].update(pair=pair, begin=begin)
+            report['provider_reset_native_actors'] = reset_actors
+            missing_reset_email = 'synthetic-provider-reset-missing-'+uuid.uuid4().hex+'@example.com'
+            def reset_cases(kind):
+                actor = reset_actors[kind]; pair = actor['pair']['json']
+                return [('POST', '/v19/provider/password-reset', None, {'email': missing_reset_email}),
+                    ('GET', '/i/provider/password-reset-code?'+urlencode({'email': missing_reset_email})),
+                    ('POST', '/v19/provider/password-reset/complete', None, {'key': 'ABCDEFGHIJKLMNOPQRST', 'code': 'WrongCode', 'password': 'Reset6'}),
+                    ('POST', '/v19/provider/password-reset', None, {'email': actor['email']}),
+                    ('POST', '/v19/provider/password-reset/complete', None, {**pair, 'password': 'Synthetic-provider-password!'}),
+                    ('POST', '/v19/provider/password-reset/complete', None, {**pair, 'code': 'WrongCode', 'password': 'Reset6'})]
+            reset_native_controls = [request(*case)[0] for case in reset_cases('native')]
+            report['provider_reset_native_controls'] = reset_native_controls
+            assert [r['status'] for r in reset_native_controls] == [403,404,403,409,409,403], 'native provider reset contract changed'
+            pending_ttl = int(reset_native_controls[3]['retry_after'])
+            assert 3500 <= pending_ttl <= 3600, 'native pending reset Retry-After missing'
+            exhausted = reset_actors['exhausted']
+            exhausted_body = {**exhausted['pair']['json'], 'password': 'Reset6'}
+            exhausted_wrong = [request('POST', '/v19/provider/password-reset/complete', body={**exhausted_body, 'code': 'WrongCode'})[0] for _ in range(3)]
+            reset_native_exhausted = request('POST', '/v19/provider/password-reset/complete', body=exhausted_body)[0]
+            report['provider_reset_native_exhaustion'] = {'wrong': exhausted_wrong, 'correct_exhausted': reset_native_exhausted}
+            assert all(r['status'] == 403 for r in exhausted_wrong+[reset_native_exhausted]), 'native exhausted code accepted'
+            reset_native_exhausted_pair = request('GET', '/i/provider/password-reset-code?'+urlencode({'email': exhausted['email']}))[0]
+            report['provider_reset_native_exhausted_pair'] = reset_native_exhausted_pair
+            assert same(exhausted['pair'], reset_native_exhausted_pair), 'native internal lookup consumed exhausted code'
+            reset_native_complete = request('POST', '/v19/provider/password-reset/complete', body={**reset_actors['native']['pair']['json'], 'password': 'Reset6'})[0]
+            report['provider_reset_native_complete'] = reset_native_complete
+            assert reset_native_complete['status'] == 200, 'native reset completion failed'
+            reset_native_deleted_pair = request('GET', '/i/provider/password-reset-code?'+urlencode({'email': reset_actors['native']['email']}))[0]
+            report['provider_reset_native_deleted_pair'] = reset_native_deleted_pair
+            assert same(reset_native_controls[1], reset_native_deleted_pair), 'native reset code not deleted'
+            reset_native_login, reset_native_gateway = provider_login(reset_actors['native']['email'], 'Reset6', 'native-reset')
+            reset_native_old = request('POST', '/v19/provider/login', body={'email': reset_actors['native']['email'], 'password': 'Synthetic-provider-password!'})[0]
+            report['provider_reset_native_old_rejected'] = reset_native_old
+            assert reset_native_old['status'] == 403, 'native pre-reset password remained valid'
         registration_body, registration_reference, registration_reads = None, None, None
         if registration_contract:
             actor = str(uuid.uuid4())
@@ -1124,6 +1178,35 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             provider_go_old_rejected = request('POST', '/v19/provider/login', body={'email': password_email, 'password': 'Nextp6'})[0]
             report['provider_go_old_password_rejected'] = provider_go_old_rejected
             assert same(provider_native_old_rejected, provider_go_old_rejected), 'Go previous provider password remained valid'
+        if provider_reset_contract:
+            reset_go_controls = [request(*case)[0] for case in reset_cases('go')]
+            report['provider_reset_go_controls'] = reset_go_controls
+            assert all(same(ref, actual) for ref, actual in zip(reset_native_controls, reset_go_controls)), 'native/Go provider reset controls differ'
+            assert 3500 <= int(reset_go_controls[3]['retry_after']) <= 3600, 'Go pending reset TTL missing'
+            reset_go_pair = request('GET', '/i/provider/password-reset-code?'+urlencode({'email': reset_actors['go']['email']}))[0]
+            report['provider_reset_go_pair_after_wrong'] = reset_go_pair
+            assert same(reset_actors['go']['pair'], reset_go_pair), 'Go wrong attempt lost code'
+            reset_go_exhausted = request('POST', '/v19/provider/password-reset/complete', body=exhausted_body)[0]
+            reset_go_exhausted_pair = request('GET', '/i/provider/password-reset-code?'+urlencode({'email': exhausted['email']}))[0]
+            report['provider_reset_go_exhaustion'] = {'correct_exhausted': reset_go_exhausted, 'pair': reset_go_exhausted_pair}
+            assert same(reset_native_exhausted, reset_go_exhausted) and same(reset_native_exhausted_pair, reset_go_exhausted_pair), 'Go exhausted code behavior differs'
+            reset_go_complete = request('POST', '/v19/provider/password-reset/complete', body={**reset_go_pair['json'], 'password': 'Reset6'})[0]
+            report['provider_reset_go_complete'] = reset_go_complete
+            assert same(reset_native_complete, reset_go_complete), 'Go reset completion differs'
+            reset_go_deleted_pair = request('GET', '/i/provider/password-reset-code?'+urlencode({'email': reset_actors['go']['email']}))[0]
+            report['provider_reset_go_deleted_pair'] = reset_go_deleted_pair
+            assert same(reset_native_deleted_pair, reset_go_deleted_pair), 'Go did not delete reset code'
+            reset_go_login, reset_go_gateway = provider_login(reset_actors['go']['email'], 'Reset6', 'go-reset')
+            assert same(reset_native_login, reset_go_login) and same(reset_native_gateway, reset_go_gateway), 'Go reset credentials differ'
+            reset_go_old = request('POST', '/v19/provider/login', body={'email': reset_actors['go']['email'], 'password': 'Synthetic-provider-password!'})[0]
+            report['provider_reset_go_old_rejected'] = reset_go_old
+            assert same(reset_native_old, reset_go_old), 'Go old reset password remained valid'
+            reset_go_begin = request('POST', '/v19/provider/password-reset', body={'email': reset_actors['go-begin']['email']})[0]
+            report['provider_reset_go_begin'] = reset_go_begin
+            assert same(reset_actors['native']['begin'], reset_go_begin), 'Go reset begin/mail delivery differs'
+            reset_go_created_pair = request('GET', '/i/provider/password-reset-code?'+urlencode({'email': reset_actors['go-begin']['email']}))[0]
+            report['provider_reset_go_created_pair'] = reset_go_created_pair
+            assert reset_go_created_pair['status'] == 200 and len(reset_go_created_pair['json']['key']) == 20 and len(reset_go_created_pair['json']['code']) == 20, 'Go reset code absent/invalid'
         go_records = [request(*case)[0] for case in cases]
         report['records'].append({'implementation': 'go', 'observations': go_records})
         mismatches = []
@@ -1340,6 +1423,17 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
                 provider_native_switchback_old = request('POST', '/v19/provider/login', body={'email': password_email, 'password': 'Nextp6'})[0]
                 report['provider_native_switchback_old_password_rejected'] = provider_native_switchback_old
                 assert same(provider_go_old_rejected, provider_native_switchback_old), 'native switchback restored old provider password'
+            if provider_reset_contract:
+                reset_native_reads_go, reset_native_reads_go_gateway = provider_login(reset_actors['go']['email'], 'Reset6', 'native-reads-go-reset')
+                reset_native_reads_go_old = request('POST', '/v19/provider/login', body={'email': reset_actors['go']['email'], 'password': 'Synthetic-provider-password!'})[0]
+                assert same(reset_go_login, reset_native_reads_go) and same(reset_go_gateway, reset_native_reads_go_gateway) and same(reset_go_old, reset_native_reads_go_old), 'native cannot read Go-reset credentials'
+                reset_native_consumes_go_pair = request('GET', '/i/provider/password-reset-code?'+urlencode({'email': reset_actors['go-begin']['email']}))[0]
+                report['provider_reset_native_consumes_go_pair'] = reset_native_consumes_go_pair
+                assert same(reset_go_created_pair, reset_native_consumes_go_pair), 'native cannot read Go-generated code'
+                reset_native_consumes_go = request('POST', '/v19/provider/password-reset/complete', body={**reset_native_consumes_go_pair['json'], 'password': 'Native6'})[0]
+                report['provider_reset_native_consumes_go'] = reset_native_consumes_go
+                assert same(reset_native_complete, reset_native_consumes_go), 'native cannot consume Go-generated code'
+                provider_login(reset_actors['go-begin']['email'], 'Native6', 'native-consumes-go-code')
             if service_deletion_queue:
                 native_readback = await_service(pending_service_actor, 'native-reads-go')
                 assert native_readback == go_service_rows, 'native switchback service raw state differs'
@@ -2022,6 +2116,7 @@ def main():
     parser.add_argument('--optimistic-prekeys', action='store_true')
     parser.add_argument('--provider-profile-contract', action='store_true')
     parser.add_argument('--provider-auth-contract', action='store_true')
+    parser.add_argument('--provider-reset-contract', action='store_true')
     args = parser.parse_args()
     if (args.registration_contract or args.saml_registration_contract) and (args.activation_contract or args.access_switchback or args.login_contract):
         parser.error('registration observation runs separately from credential/activation observations')
@@ -2055,8 +2150,10 @@ def main():
         parser.error('provider profile control requires durable switchback observation')
     if args.provider_auth_contract and not args.provider_profile_contract:
         parser.error('provider auth requires native provider actors and switchback')
+    if args.provider_reset_contract and not args.provider_auth_contract:
+        parser.error('provider reset requires native provider/auth actors')
     if args.in_container:
-        return inside(args.gundeck_path, args.access_switchback, args.login_contract, args.activation_contract, args.registration_contract, args.saml_registration_contract, args.public_registration_contract, args.password_reset_contract, args.password_change_contract, args.ses_feedback_contract, args.properties_contract, args.client_update_contract, args.client_registration_contract, args.client_lifecycle_contract, args.store_fixture_path, args.mls_upload_originals, args.stomp_internal_events, args.service_deletion_queue, args.service_galley_event, args.optimistic_prekeys, args.provider_profile_contract, args.provider_auth_contract)
+        return inside(args.gundeck_path, args.access_switchback, args.login_contract, args.activation_contract, args.registration_contract, args.saml_registration_contract, args.public_registration_contract, args.password_reset_contract, args.password_change_contract, args.ses_feedback_contract, args.properties_contract, args.client_update_contract, args.client_registration_contract, args.client_lifecycle_contract, args.store_fixture_path, args.mls_upload_originals, args.stomp_internal_events, args.service_deletion_queue, args.service_galley_event, args.optimistic_prekeys, args.provider_profile_contract, args.provider_auth_contract, args.provider_reset_contract)
     if args.binary is None or args.build_receipt is None or args.output is None:
         parser.error('identified binary, receipt and new output required')
     sys.path.insert(0, str(ROOT / 'tools/parity/docker'))
@@ -2120,6 +2217,8 @@ def main():
         runner['command'].append('--provider-profile-contract')
     if args.provider_auth_contract:
         runner['command'].append('--provider-auth-contract')
+    if args.provider_reset_contract:
+        runner['command'].append('--provider-reset-contract')
     if args.stomp_internal_events:
         import stomp_broker
         stomp_broker.prepare(spec, output)
