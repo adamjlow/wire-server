@@ -87,7 +87,14 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
         properties = dict(part.split('=', 1) for part in cookie.value.split('.')[1:])
         expiry = int(properties['d'])
         assert properties['v'] == '1' and properties['t'] == 'p' and properties['p'] == provider_login_ids[email], 'provider token identity changed: '+phase
-        assert before+60 <= expiry <= int(time.time())+60, 'provider token TTL changed: '+phase
+        after = int(time.time())
+        report['provider_cookie_'+phase] = {'token_fields': properties, 'request_time_before': before,
+            'request_time_after': after, 'expires': cookie['expires'], 'path': cookie['path'],
+            'http_only': bool(cookie['httponly']), 'secure': bool(cookie['secure'])}
+        # Native Brig.App uses mkAutoUpdate defaultUpdateSettings for Now:
+        # its documented update interval is one second. Preserve floor(now+TTL),
+        # accounting for that native cache rather than assuming request-start Now.
+        assert before-1+60 <= expiry <= after+60, 'provider token TTL changed: '+phase
         assert parsedate_to_datetime(cookie['expires']).timestamp() == expiry, 'provider cookie expiry differs from token: '+phase
         valid = request('GET', '/v19/provider/assets', {'Authorization': 'Bearer '+cookie.value}, port=8098)[0]
         forged = ('A' if cookie.value[0] != 'A' else 'B')+cookie.value[1:]

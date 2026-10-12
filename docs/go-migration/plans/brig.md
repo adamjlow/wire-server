@@ -1908,3 +1908,13 @@ asset request (and falsified-token negative), change a native password in Go,
 then have restarted native accept the Go password and reject its predecessor.
 Reuse the existing original22 regression. Remaining provider lifecycle/service/bot
 families and whole535/eight-Go/full operations/storage/selector gates remain open.
+
+Provider auth production98ec9f19b passed full pinned Go1.26.9 checks/static units.
+Initial observerffe97767d backend failed before Go startup on the newly-added
+TTL lower bound: native Brig.App caches Now with mkAutoUpdate defaultUpdateSettings
+(one-second interval; [dependency source](https://raw.githubusercontent.com/yesodweb/wai/master/auto-update/Control/AutoUpdate/Types.hs)).
+Correct observer to capture request interval/token expiry and admit that native
+cache interval while keeping configured TTL/signature/identity/cookie checks.
+This corrects a new task-owned observation assumption, not an original assertion,
+frozen golden or existing response comparator. Retain initial failed result, all23
+managed exits0/cleanup0 and independently empty project; no Haskell/Go fix needed.
