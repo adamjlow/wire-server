@@ -2070,3 +2070,14 @@ accept Go supplied/generated credentials/codes. Reuse original22 plus existing
 provider-auth/reset/profile/queue proofs. Original Provider password-reset tests
 can run once registration/activation and correct dynamic Go selection are ready;
 keep all535/eight-Go/whole-service acceptance unchanged, no availability promotion.
+
+Provider registration/activation/email production688ac8404 passes full pinned
+Go/static quality. Observer93a31 run intentionally stopped with SIGINT during
+disposable dependency initialization, before backend test execution, after
+read-only review found new generated-response variable colliding with existing
+MLS material subprocess variable. Namespace new enrollment temporaries (token
+replacement only NAMEs; JSON keys/strings and existing assertions unchanged).
+Retain aborted runner130/cleanup0/independent empty record; it is not test evidence.
+Original Provider password-reset2 selected unchanged against native and Go, with
+explicit runtime dist/brig byte hash proving correct dynamic executable selection.
+Still require actual execution/results; no discovery/source-only pass claim.

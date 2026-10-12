@@ -624,9 +624,9 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             assert enrollment_pending['status'] == 201, 'native pending enrollment setup failed'
             enrollment_pending_pair = request('GET','/i/provider/activation-code?'+urlencode({'email':enrollment_pending_email}))[0]
             assert enrollment_pending_pair['status'] == 200, 'native pending enrollment code absent'
-            generated = request('POST','/v19/provider/register',{'X-Forwarded-For':'127.0.0.53'}, {**enrollment_body,'email':enrollment_generated_email,'password':None})[0]
-            report['provider_enrollment_native_generated'] = generated
-            assert generated['status'] == 201 and set(generated['json']) == {'id','password'} and len(generated['json']['password']) == 16, 'native generated-password registration changed'
+            enrollment_native_generated = request('POST','/v19/provider/register',{'X-Forwarded-For':'127.0.0.53'}, {**enrollment_body,'email':enrollment_generated_email,'password':None})[0]
+            report['provider_enrollment_native_generated'] = enrollment_native_generated
+            assert enrollment_native_generated['status'] == 201 and set(enrollment_native_generated['json']) == {'id','password'} and len(enrollment_native_generated['json']['password']) == 16, 'native generated-password registration changed'
             provider_originals('native')
         registration_body, registration_reference, registration_reads = None, None, None
         if registration_contract:
@@ -1271,31 +1271,31 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             assert same(enrollment_replay,enrollment_go_replay), 'Go activation replay differs'
             enrollment_go_profiles = []
             enrollment_go_created = []
-            for kind, generated_password in (('supplied',False),('generated',True)):
-                email = 'p-go-enroll-'+kind+'-'+uuid.uuid4().hex+'@example.com'
-                body = {**enrollment_body,'email':email,'password':None if generated_password else 'GoPwd6'}
-                registered = request('POST','/v19/provider/register',{'X-Forwarded-For':'127.0.0.54'},body)[0]
-                report['provider_enrollment_go_register_'+kind] = registered
-                reference = generated if generated_password else enrollment_registered
-                assert registered['status'] == reference['status'] and registered['content_type'] == reference['content_type'] and set(registered['json']) == set(reference['json']), 'Go enrollment response schema differs'
-                password = registered['json']['password'] if generated_password else 'GoPwd6'
-                if generated_password:
+            for enrollment_kind, enrollment_generated_password in (('supplied',False),('generated',True)):
+                enrollment_email = 'p-go-enroll-'+enrollment_kind+'-'+uuid.uuid4().hex+'@example.com'
+                enrollment_request_body = {**enrollment_body,'email':enrollment_email,'password':None if enrollment_generated_password else 'GoPwd6'}
+                enrollment_go_registered = request('POST','/v19/provider/register',{'X-Forwarded-For':'127.0.0.54'},enrollment_request_body)[0]
+                report['provider_enrollment_go_register_'+enrollment_kind] = enrollment_go_registered
+                enrollment_schema_reference = enrollment_native_generated if enrollment_generated_password else enrollment_registered
+                assert enrollment_go_registered['status'] == enrollment_schema_reference['status'] and enrollment_go_registered['content_type'] == enrollment_schema_reference['content_type'] and set(enrollment_go_registered['json']) == set(enrollment_schema_reference['json']), 'Go enrollment response schema differs'
+                enrollment_password = enrollment_go_registered['json']['password'] if enrollment_generated_password else 'GoPwd6'
+                if enrollment_generated_password:
                     import base64
-                    assert len(password) == 16 and len(base64.b64decode(password,validate=True)) == 12, 'Go generated credential format differs'
-                id = registered['json']['id']; uuid.UUID(id)
-                headers = {'Z-Provider':id,'Z-Type':'provider'}
-                hidden = request('GET','/v19/provider',headers)[0]
+                    assert len(enrollment_password) == 16 and len(base64.b64decode(enrollment_password,validate=True)) == 12, 'Go generated credential format differs'
+                enrollment_id = enrollment_go_registered['json']['id']; uuid.UUID(enrollment_id)
+                enrollment_headers = {'Z-Provider':enrollment_id,'Z-Type':'provider'}
+                hidden = request('GET','/v19/provider',enrollment_headers)[0]
                 assert hidden['status'] == 404, 'Go registration became visible before activation'
-                pair = request('GET','/i/provider/activation-code?'+urlencode({'email':email}))[0]
-                assert pair['status'] == 200 and len(pair['json']['key']) == 20 and len(pair['json']['code']) == 20, 'Go enrollment code invalid'
-                activated = request('GET','/v19/provider/activate?'+urlencode(pair['json']))[0]
-                assert activated['status'] == 200 and activated['json'] == {'email':email}, 'Go enrollment activation failed'
-                profile = request('GET','/v19/provider',headers)[0]
-                assert profile['status'] == 200 and profile['json'] == {'id':id,'name':body['name'],'email':email,'url':body['url'],'description':body['description']}, 'Go enrollment profile fields differ'
-                provider_login_ids[email] = id
-                provider_login(email,password,'go-enrollment-'+kind)
-                enrollment_go_created.append({'email':email,'password':password,'headers':headers,'pair':pair})
-                enrollment_go_profiles.append(profile)
+                enrollment_code_pair = request('GET','/i/provider/activation-code?'+urlencode({'email':enrollment_email}))[0]
+                assert enrollment_code_pair['status'] == 200 and len(enrollment_code_pair['json']['key']) == 20 and len(enrollment_code_pair['json']['code']) == 20, 'Go enrollment code invalid'
+                activated = request('GET','/v19/provider/activate?'+urlencode(enrollment_code_pair['json']))[0]
+                assert activated['status'] == 200 and activated['json'] == {'email':enrollment_email}, 'Go enrollment activation failed'
+                enrollment_profile = request('GET','/v19/provider',enrollment_headers)[0]
+                assert enrollment_profile['status'] == 200 and enrollment_profile['json'] == {'id':enrollment_id,'name':enrollment_request_body['name'],'email':enrollment_email,'url':enrollment_request_body['url'],'description':enrollment_request_body['description']}, 'Go enrollment profile fields differ'
+                provider_login_ids[enrollment_email] = enrollment_id
+                provider_login(enrollment_email,enrollment_password,'go-enrollment-'+enrollment_kind)
+                enrollment_go_created.append({'email':enrollment_email,'password':enrollment_password,'headers':enrollment_headers,'pair':enrollment_code_pair})
+                enrollment_go_profiles.append(enrollment_profile)
             report['provider_enrollment_go_profiles'] = enrollment_go_profiles
         go_records = [request(*case)[0] for case in cases]
         report['records'].append({'implementation': 'go', 'observations': go_records})
@@ -1528,12 +1528,12 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
                 provider_login(reset_actors['go-begin']['email'], 'Native6', 'native-consumes-go-code')
             if provider_registration_contract:
                 enrollment_native_go_profiles = []
-                for kind, actor in zip(('supplied','generated'),enrollment_go_created):
-                    profile = request('GET','/v19/provider',actor['headers'])[0]
-                    enrollment_native_go_profiles.append(profile)
-                    pair = request('GET','/i/provider/activation-code?'+urlencode({'email':actor['email']}))[0]
-                    assert same(actor['pair'],pair), 'native cannot read Go activation code'
-                    provider_login(actor['email'],actor['password'],'native-reads-go-enrollment-'+kind)
+                for enrollment_kind, enrollment_actor in zip(('supplied','generated'),enrollment_go_created):
+                    enrollment_profile = request('GET','/v19/provider',enrollment_actor['headers'])[0]
+                    enrollment_native_go_profiles.append(enrollment_profile)
+                    enrollment_code_pair = request('GET','/i/provider/activation-code?'+urlencode({'email':enrollment_actor['email']}))[0]
+                    assert same(enrollment_actor['pair'],enrollment_code_pair), 'native cannot read Go activation code'
+                    provider_login(enrollment_actor['email'],enrollment_actor['password'],'native-reads-go-enrollment-'+enrollment_kind)
                 report['provider_enrollment_native_reads_go'] = enrollment_native_go_profiles
                 assert all(same(ref,actual) for ref,actual in zip(enrollment_go_profiles,enrollment_native_go_profiles)), 'native cannot read Go enrollment account/index'
                 pending_replay = request('GET','/v19/provider/activate?'+urlencode(enrollment_pending_pair['json']))[0]
