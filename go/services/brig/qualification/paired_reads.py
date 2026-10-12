@@ -31,7 +31,7 @@ def same_response(reference, actual):
     return all(reference.get(field) == actual.get(field) for field in fields)
 
 
-def inside(gundeck_path=None, access_switchback=False, login_contract=False, activation_contract=False, registration_contract=False, saml_registration_contract=False, public_registration_contract=False, password_reset_contract=False, password_change_contract=False, ses_feedback_contract=False, properties_contract=False, client_update_contract=False, client_registration_contract=False, client_lifecycle_contract=False, store_fixture_path=None, mls_upload_originals=False, stomp_internal_events=False, service_deletion_queue=False, service_galley_event=False, optimistic_prekeys=False, provider_profile_contract=False):
+def inside(gundeck_path=None, access_switchback=False, login_contract=False, activation_contract=False, registration_contract=False, saml_registration_contract=False, public_registration_contract=False, password_reset_contract=False, password_change_contract=False, ses_feedback_contract=False, properties_contract=False, client_update_contract=False, client_registration_contract=False, client_lifecycle_contract=False, store_fixture_path=None, mls_upload_originals=False, stomp_internal_events=False, service_deletion_queue=False, service_galley_event=False, optimistic_prekeys=False, provider_profile_contract=False, provider_auth_contract=False):
     registration_contract = registration_contract or saml_registration_contract
     if os.getuid() != 65534 or os.environ.get('WIRE_E2E_DISPOSABLE') != '1':
         raise ValueError('owned nonroot Docker runner required')
@@ -71,6 +71,30 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             return result, response.getheader('Set-Cookie')
         finally:
             connection.close()
+
+    def provider_login(email, password, phase):
+        from http.cookies import SimpleCookie
+        from email.utils import parsedate_to_datetime
+        before = int(time.time())
+        response, raw_cookie = request('POST', '/v19/provider/login', body={'email': email, 'password': password})
+        report['provider_login_'+phase] = response
+        assert response['status'] == 200, 'provider login failed: '+phase
+        cookies = SimpleCookie(); cookies.load(raw_cookie or '')
+        assert set(cookies) == {'zprovider'}, 'provider login cookie missing: '+phase
+        cookie = cookies['zprovider']
+        assert cookie['path'] == '/provider' and cookie['httponly'] and not cookie['secure'], 'native configured provider cookie attributes changed: '+phase
+        assert not cookie['domain'] and not cookie['max-age'] and not cookie['samesite'], 'provider cookie policy changed: '+phase
+        properties = dict(part.split('=', 1) for part in cookie.value.split('.')[1:])
+        expiry = int(properties['d'])
+        assert properties['v'] == '1' and properties['t'] == 'p' and properties['p'] == provider_login_ids[email], 'provider token identity changed: '+phase
+        assert before+60 <= expiry <= int(time.time())+60, 'provider token TTL changed: '+phase
+        assert parsedate_to_datetime(cookie['expires']).timestamp() == expiry, 'provider cookie expiry differs from token: '+phase
+        valid = request('GET', '/v19/provider/assets', {'Authorization': 'Bearer '+cookie.value}, port=8098)[0]
+        forged = ('A' if cookie.value[0] != 'A' else 'B')+cookie.value[1:]
+        invalid = request('GET', '/v19/provider/assets', {'Authorization': 'Bearer '+forged}, port=8098)[0]
+        report['provider_token_native_gateway_'+phase] = {'valid': valid, 'invalid': invalid, 'token_fields': properties, 'cookie_path': cookie['path'], 'expires': cookie['expires']}
+        assert valid['status'] not in (401,403) and invalid['status'] in (401,403), 'native gateway provider signature boundary failed: '+phase
+        return response, valid
 
     def mls_row_fixture(action, phase, user=None, client=None):
         assert store_fixture_path, 'identified tagged store fixture required'
@@ -433,9 +457,10 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             activated = request('GET', '/v19/provider/activate?'+urlencode(pair['json']))[0]
             report['provider_native_activated'] = activated
             assert activated['status'] == 200, 'native provider activation failed'
+            hidden_email = 'synthetic-unactivated-'+uuid.uuid4().hex+'@example.com'
             hidden_provider = request('POST', '/v19/provider/register',
                 {'X-Forwarded-For': '127.0.0.44'}, {'name': 'Synthetic unactivated provider',
-                'email': 'synthetic-unactivated-'+uuid.uuid4().hex+'@example.com',
+                'email': hidden_email,
                 'password': 'Synthetic-provider-password!', 'url': 'https://example.com/provider',
                 'description': 'Synthetic unactivated provider'})[0]
             assert hidden_provider['status'] == 201, 'native unactivated provider setup failed'
@@ -460,6 +485,37 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             provider_native_controls = [request(*case)[0] for case in provider_cases]
             report['provider_native_controls'] = provider_native_controls
             assert [r['status'] for r in provider_native_controls] == [403,403,200,200,200,404,404,404,200,200,200,404,404,404], 'native provider read/update reference changed'
+        if provider_auth_contract:
+            provider_login_ids = {provider_email: provider_id}
+            auth_cases = [('POST', '/v19/provider/login', None, {'email': provider_email, 'password': 'Wrongp6!'}),
+                ('POST', '/v19/provider/login', None, {'email': 'synthetic-missing-'+uuid.uuid4().hex+'@example.com', 'password': 'Goodp6!'}),
+                ('POST', '/v19/provider/login', None, {'email': hidden_email, 'password': 'Synthetic-provider-password!'}),
+                ('PUT', '/v19/provider/password', hidden_headers, {'old_password': 'Wrongp6!', 'new_password': 'Newp6!'}),
+                ('PUT', '/v19/provider/password', provider_headers, {'old_password': 'Synthetic-provider-password!', 'new_password': 'Synthetic-provider-password!'}),
+                ('PUT', '/v19/provider/password', {'Z-Provider': provider_id, 'Z-Type': 'user'}, {'old_password': 'Synthetic-provider-password!', 'new_password': 'Newp6!'})]
+            provider_native_auth = [request(*case)[0] for case in auth_cases]
+            report['provider_native_auth_controls'] = provider_native_auth
+            assert [r['status'] for r in provider_native_auth] == [403,403,403,403,409,403], 'native provider auth reference changed'
+            provider_native_login, provider_native_gateway = provider_login(provider_email, 'Synthetic-provider-password!', 'native')
+            password_email = 'synthetic-provider-password-'+uuid.uuid4().hex+'@example.com'
+            password_actor = request('POST', '/v19/provider/register', {'X-Forwarded-For': '127.0.0.45'},
+                {'name': 'Synthetic password provider', 'email': password_email, 'password': 'Synthetic-provider-password!',
+                 'url': 'https://example.com/provider', 'description': 'Synthetic password switchback'})[0]
+            report['provider_password_native_actor'] = password_actor
+            assert password_actor['status'] == 201, 'native password provider setup failed'
+            password_id = password_actor['json']['id']
+            password_headers = {'Z-Provider': password_id, 'Z-Type': 'provider'}
+            provider_login_ids[password_email] = password_id
+            activation = request('GET', '/i/provider/activation-code?'+urlencode({'email': password_email}))[0]
+            assert activation['status'] == 200 and request('GET', '/v19/provider/activate?'+urlencode(activation['json']))[0]['status'] == 200, 'native password provider activation failed'
+            provider_native_changed = request('PUT', '/v19/provider/password', password_headers,
+                {'old_password': 'Synthetic-provider-password!', 'new_password': 'Nextp6'})[0]
+            report['provider_native_password_change'] = provider_native_changed
+            assert provider_native_changed['status'] == 200, 'native six-character provider password change failed'
+            provider_native_new_login, provider_native_new_gateway = provider_login(password_email, 'Nextp6', 'native-new-password')
+            provider_native_old_rejected = request('POST', '/v19/provider/login', body={'email': password_email, 'password': 'Synthetic-provider-password!'})[0]
+            report['provider_native_old_password_rejected'] = provider_native_old_rejected
+            assert provider_native_old_rejected['status'] == 403, 'native previous provider password remained valid'
         registration_body, registration_reference, registration_reads = None, None, None
         if registration_contract:
             actor = str(uuid.uuid4())
@@ -1046,6 +1102,21 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             if service_deletion_queue:
                 go_service_rows = await_service(pending_service_actor, 'go-consumes-native', pending_service_dequeue)
                 await_service(pending_service_actor, 'go-replays-cleanup', enqueue_service(pending_service_actor))
+        if provider_auth_contract:
+            provider_go_auth = [request(*case)[0] for case in auth_cases]
+            report['provider_go_auth_controls'] = provider_go_auth
+            assert all(same(ref, actual) for ref, actual in zip(provider_native_auth, provider_go_auth)), 'native/Go provider auth differs'
+            provider_go_login, provider_go_gateway = provider_login(provider_email, 'Synthetic-provider-password!', 'go')
+            assert same(provider_native_login, provider_go_login) and same(provider_native_gateway, provider_go_gateway), 'provider Go cookie rejected by native gateway'
+            provider_go_changed = request('PUT', '/v19/provider/password', password_headers,
+                {'old_password': 'Nextp6', 'new_password': 'GoNew6'})[0]
+            report['provider_go_password_change'] = provider_go_changed
+            assert same(provider_native_changed, provider_go_changed), 'native/Go password change response differs'
+            provider_go_new_login, provider_go_new_gateway = provider_login(password_email, 'GoNew6', 'go-new-password')
+            assert same(provider_native_new_login, provider_go_new_login) and same(provider_native_new_gateway, provider_go_new_gateway), 'provider Go-written password login differs'
+            provider_go_old_rejected = request('POST', '/v19/provider/login', body={'email': password_email, 'password': 'Nextp6'})[0]
+            report['provider_go_old_password_rejected'] = provider_go_old_rejected
+            assert same(provider_native_old_rejected, provider_go_old_rejected), 'Go previous provider password remained valid'
         go_records = [request(*case)[0] for case in cases]
         report['records'].append({'implementation': 'go', 'observations': go_records})
         mismatches = []
@@ -1256,6 +1327,12 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
                     request('GET', '/v19/providers/'+provider_id, provider_user_headers)[0]]
                 report['provider_native_reads_go'] = provider_native_switchback
                 assert all(same(ref, actual) for ref, actual in zip(provider_go_written, provider_native_switchback)), 'native provider switchback lost Go-written state'
+            if provider_auth_contract:
+                provider_native_reads_go_password, provider_native_reads_go_gateway = provider_login(password_email, 'GoNew6', 'native-reads-go-password')
+                assert same(provider_go_new_login, provider_native_reads_go_password) and same(provider_go_new_gateway, provider_native_reads_go_gateway), 'native cannot read Go-written provider password'
+                provider_native_switchback_old = request('POST', '/v19/provider/login', body={'email': password_email, 'password': 'Nextp6'})[0]
+                report['provider_native_switchback_old_password_rejected'] = provider_native_switchback_old
+                assert same(provider_go_old_rejected, provider_native_switchback_old), 'native switchback restored old provider password'
             if service_deletion_queue:
                 native_readback = await_service(pending_service_actor, 'native-reads-go')
                 assert native_readback == go_service_rows, 'native switchback service raw state differs'
@@ -1937,6 +2014,7 @@ def main():
     parser.add_argument('--service-galley-event', action='store_true')
     parser.add_argument('--optimistic-prekeys', action='store_true')
     parser.add_argument('--provider-profile-contract', action='store_true')
+    parser.add_argument('--provider-auth-contract', action='store_true')
     args = parser.parse_args()
     if (args.registration_contract or args.saml_registration_contract) and (args.activation_contract or args.access_switchback or args.login_contract):
         parser.error('registration observation runs separately from credential/activation observations')
@@ -1968,8 +2046,10 @@ def main():
         parser.error('optimistic prekey control requires the owned service queue proof')
     if args.provider_profile_contract and not args.client_lifecycle_contract:
         parser.error('provider profile control requires durable switchback observation')
+    if args.provider_auth_contract and not args.provider_profile_contract:
+        parser.error('provider auth requires native provider actors and switchback')
     if args.in_container:
-        return inside(args.gundeck_path, args.access_switchback, args.login_contract, args.activation_contract, args.registration_contract, args.saml_registration_contract, args.public_registration_contract, args.password_reset_contract, args.password_change_contract, args.ses_feedback_contract, args.properties_contract, args.client_update_contract, args.client_registration_contract, args.client_lifecycle_contract, args.store_fixture_path, args.mls_upload_originals, args.stomp_internal_events, args.service_deletion_queue, args.service_galley_event, args.optimistic_prekeys, args.provider_profile_contract)
+        return inside(args.gundeck_path, args.access_switchback, args.login_contract, args.activation_contract, args.registration_contract, args.saml_registration_contract, args.public_registration_contract, args.password_reset_contract, args.password_change_contract, args.ses_feedback_contract, args.properties_contract, args.client_update_contract, args.client_registration_contract, args.client_lifecycle_contract, args.store_fixture_path, args.mls_upload_originals, args.stomp_internal_events, args.service_deletion_queue, args.service_galley_event, args.optimistic_prekeys, args.provider_profile_contract, args.provider_auth_contract)
     if args.binary is None or args.build_receipt is None or args.output is None:
         parser.error('identified binary, receipt and new output required')
     sys.path.insert(0, str(ROOT / 'tools/parity/docker'))
@@ -2031,6 +2111,8 @@ def main():
         runner['command'].append('--optimistic-prekeys')
     if args.provider_profile_contract:
         runner['command'].append('--provider-profile-contract')
+    if args.provider_auth_contract:
+        runner['command'].append('--provider-auth-contract')
     if args.stomp_internal_events:
         import stomp_broker
         stomp_broker.prepare(spec, output)
