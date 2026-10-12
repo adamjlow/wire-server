@@ -1939,3 +1939,33 @@ Evidence qualification/evidence/provider-auth; exact build98 source reused for
 observer/docs only. Next provider registration/activation/email/reset/deletion
 and public service/bot APIs, then remaining whole surface and full acceptance.
 No whole535/eight-Go/all3 modes/operations/image/selector/compatibility claim.
+
+### Provider verification/password reset
+Implement POST /provider/password-reset, POST /provider/password-reset/complete
+and GET /i/provider/password-reset-code?email using native vcodes scope3 and
+vcodes_throttle, not user password_reset. Reference Provider.API begin/complete/
+getPasswordResetCode and VerificationCodeSubsystem/Store Cassandra. Go1.26.9,
+existing gocql/password/mail dependencies; no new module. Preserve email key
+hash120/base64url, random120-bit value, three attempts, storage TTL3600, pending
+code precedence including exhausted retries, configured generation throttle and
+write-throttle -> write-code -> await-mail ordering. Delivery failure leaves code
+and throttle as native. Failed verification rewrites full row with remaining TTL;
+valid verification keeps code until provider verify-new -> hash6 -> write ->
+delete. Missing account in valid code is400 invalid reset; missing/bad/exhausted
+code403 invalid verification. Global second-factor guard applies only to public
+reset routes; native internal reset-code lookup is unguarded and does not consume.
+No provider-cookie revocation, hash upgrade, transactional storage or Haskell fix.
+
+Security: parameterized LocalQuorum CQL/retry1 reads/retry5 writes, cryptographic
+randomness/constant-time comparison, strict key20/value6..20/JSON/password6..1024
+validation, existing rate/worker/cancellation limits, generic errors/redacted
+credential/code formatting. Use native provider default-locale reset template,
+providerPwResetUrl/branding/HTML escaping and existing awaited SES/SMTP delivery.
+Finite tests cover pending/throttle/mail-failure ordering, attempts/TTL, success/
+same-password/write/delete failures and missing account, required JSON fields,
+mail purpose/URL/default locale/escaping, global guard/internal no-consumption.
+Owned comparator will use distinct native-created provider actors/codes, compare
+native/Go response/error shapes, consume native code in Go, prove code deletion,
+restart native and accept Go reset password/reject old. Retain observer/candidate
+failures; original22 and prior provider-auth/profile/queue regression unchanged.
+Remaining provider lifecycle/service/bot and whole Brig acceptance stay open.

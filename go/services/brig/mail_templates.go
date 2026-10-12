@@ -97,8 +97,9 @@ type mailTemplates struct {
 }
 
 var nativeMailFiles = map[string][]string{
-	"user": {"verification", "activation", "update", "team-activation", "password-reset", "deletion", "new-client", "verification-login", "verification-scim-token", "verification-delete-team"},
-	"team": {"invitation", "migration", "new-member-welcome", "new-team-owner-welcome", "idp-config-change"},
+	"provider": {"password-reset"},
+	"user":     {"verification", "activation", "update", "team-activation", "password-reset", "deletion", "new-client", "verification-login", "verification-scim-token", "verification-delete-team"},
+	"team":     {"invitation", "migration", "new-member-welcome", "new-team-owner-welcome", "idp-config-change"},
 }
 
 func loadMailTemplates(base, defaultLocale string) (mailTemplates, error) {
