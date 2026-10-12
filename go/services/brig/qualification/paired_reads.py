@@ -31,7 +31,7 @@ def same_response(reference, actual):
     return all(reference.get(field) == actual.get(field) for field in fields)
 
 
-def inside(gundeck_path=None, access_switchback=False, login_contract=False, activation_contract=False, registration_contract=False, saml_registration_contract=False, public_registration_contract=False, password_reset_contract=False, password_change_contract=False, ses_feedback_contract=False, properties_contract=False, client_update_contract=False, client_registration_contract=False, client_lifecycle_contract=False, store_fixture_path=None, mls_upload_originals=False, stomp_internal_events=False, service_deletion_queue=False, service_galley_event=False, optimistic_prekeys=False, provider_profile_contract=False, provider_auth_contract=False, provider_reset_contract=False, provider_registration_contract=False, provider_deletion_contract=False):
+def inside(gundeck_path=None, access_switchback=False, login_contract=False, activation_contract=False, registration_contract=False, saml_registration_contract=False, public_registration_contract=False, password_reset_contract=False, password_change_contract=False, ses_feedback_contract=False, properties_contract=False, client_update_contract=False, client_registration_contract=False, client_lifecycle_contract=False, store_fixture_path=None, mls_upload_originals=False, stomp_internal_events=False, service_deletion_queue=False, service_galley_event=False, optimistic_prekeys=False, provider_profile_contract=False, provider_auth_contract=False, provider_reset_contract=False, provider_registration_contract=False, provider_deletion_contract=False, provider_service_contract=False):
     registration_contract = registration_contract or saml_registration_contract
     if os.getuid() != 65534 or os.environ.get('WIRE_E2E_DISPOSABLE') != '1':
         raise ValueError('owned nonroot Docker runner required')
@@ -1176,6 +1176,47 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
                       ('POST', '/activate', {}, {'key': 'synthetic-missing', 'code': '000000', 'dryrun': True})]
         native_records = [request(*case)[0] for case in cases]
         report['records'].append({'implementation': 'haskell', 'observations': native_records})
+        if provider_service_contract:
+            service_api_actors = {}
+            for service_api_kind in ('native','go'):
+                service_api_email = 'p-service-'+service_api_kind+'-'+uuid.uuid4().hex+'@example.com'
+                service_api_setup = request('POST','/v19/provider/register',{'X-Forwarded-For':'127.0.0.62'},
+                    {'name':'Synthetic service API provider','email':service_api_email,'password':'Service6',
+                     'url':'https://example.com/service-api','description':'Synthetic service API'})[0]
+                assert service_api_setup['status'] == 201, 'native service API provider setup failed'
+                service_api_pid = service_api_setup['json']['id']
+                service_api_pair = request('GET','/i/provider/activation-code?'+urlencode({'email':service_api_email}))[0]
+                assert service_api_pair['status'] == 200 and request('GET','/v19/provider/activate?'+urlencode(service_api_pair['json']))[0]['status'] == 200, 'native service API provider activation failed'
+                service_api_actors[service_api_kind] = {'id':service_api_pid,'email':service_api_email,
+                    'headers':{'Z-Provider':service_api_pid,'Z-Type':'provider'},
+                    'fixture':service_actor('service-api-'+service_api_kind,service_api_pid)}
+            service_api_go_actor = service_api_actors['go']
+            service_api_path = '/v19/provider/services/'+service_api_go_actor['fixture']['Service']
+            service_api_public = '/v19/providers/'+service_api_go_actor['id']+'/services'
+            service_api_missing = str(uuid.uuid4())
+            service_api_cases = [('GET','/v19/provider/services',service_api_go_actor['headers']),
+                ('GET',service_api_path,service_api_go_actor['headers']),
+                ('HEAD',service_api_path,service_api_go_actor['headers']),
+                ('GET',service_api_public,{'Z-User':user}),
+                ('GET',service_api_public+'/'+service_api_go_actor['fixture']['Service'],{'Z-User':user}),
+                ('HEAD',service_api_public+'/'+service_api_go_actor['fixture']['Service'],{'Z-User':user}),
+                ('GET','/v19/services/tags',{'Z-User':user}),
+                ('GET','/v19/provider/services/'+service_api_missing,service_api_go_actor['headers']),
+                ('GET',service_api_public+'/'+service_api_missing,{'Z-User':user}),
+                ('GET','/v19/provider/services',{'Z-Provider':service_api_missing,'Z-Type':'provider'}),
+                ('GET','/v19/providers/'+service_api_missing+'/services',{'Z-User':user}),
+                ('GET',service_api_path,{'Z-Provider':service_api_go_actor['id'],'Z-Type':'user'}),
+                ('DELETE',service_api_path,service_api_go_actor['headers'],{'password':'Wrongp6!'}),
+                ('DELETE','/v19/provider/services/'+service_api_missing,service_api_go_actor['headers'],{'password':'Service6'})]
+            service_api_native_controls = [request(*case)[0] for case in service_api_cases]
+            report['service_api_native_controls'] = service_api_native_controls
+            assert [r['status'] for r in service_api_native_controls] == [200,200,200,200,200,200,200,404,404,200,200,403,403,404], 'native service API control contract changed'
+            assert len(service_api_native_controls[6]['json']) == 31, 'native tag catalog changed'
+            service_api_native_before = stomp_broker.queue_state()
+            service_api_native_response = request('DELETE','/v19/provider/services/'+service_api_actors['native']['fixture']['Service'],service_api_actors['native']['headers'],{'password':'Service6'})[0]
+            report['service_api_native_delete'] = service_api_native_response
+            assert service_api_native_response['status'] == 202, 'native public service deletion failed'
+            service_api_native_rows = await_service(service_api_actors['native']['fixture'],'service-api-native',service_api_native_before)
         if provider_deletion_contract:
             deletion_actors = {}
             for deletion_kind in ('native','go'):
@@ -1359,6 +1400,19 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
                 request('DELETE','/v19/provider',deletion_actors['go']['headers'],{'password':'Delete6'})[0]]
             report['provider_deletion_go_after'] = deletion_go_after
             assert all(same(ref,actual) for ref,actual in zip(deletion_native_after,deletion_go_after)), 'native/Go provider deletion account/key effects differ'
+        if provider_service_contract:
+            service_api_go_controls = [request(*case)[0] for case in service_api_cases]
+            report['service_api_go_controls'] = service_api_go_controls
+            assert all(same(ref,actual) for ref,actual in zip(service_api_native_controls,service_api_go_controls)), 'native/Go service private/public/read/delete controls differ'
+            service_api_go_before = stomp_broker.queue_state()
+            service_api_go_response = request('DELETE',service_api_path,service_api_go_actor['headers'],{'password':'Service6'})[0]
+            report['service_api_go_delete'] = service_api_go_response
+            assert same(service_api_native_response,service_api_go_response), 'native/Go public service DELETE response differs'
+            service_api_go_rows = await_service(service_api_go_actor['fixture'],'service-api-go',service_api_go_before)
+            assert service_api_native_rows['counts'] == service_api_go_rows['counts'], 'native/Go public service DELETE cleanup differs'
+            service_api_go_absent = [request('GET',service_api_path,service_api_go_actor['headers'])[0],request('GET','/v19/provider/services',service_api_go_actor['headers'])[0]]
+            report['service_api_go_absent'] = service_api_go_absent
+            assert [r['status'] for r in service_api_go_absent] == [404,200] and service_api_go_absent[1]['json'] == [], 'Go service deletion remains visible'
         go_records = [request(*case)[0] for case in cases]
         report['records'].append({'implementation': 'go', 'observations': go_records})
         mismatches = []
@@ -1607,6 +1661,11 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
                 report['provider_deletion_native_reads_go'] = deletion_native_reads_go
                 assert all(same(ref,actual) for ref,actual in zip(deletion_go_after,deletion_native_reads_go)), 'native switchback restored Go-deleted provider/key'
                 assert deletion_go_rows == provider_deleted_services(deletion_actors['go'],'native-reads-go'), 'native switchback changed Go metadata/bot state'
+            if provider_service_contract:
+                service_api_native_after_go = [request('GET',service_api_path,service_api_go_actor['headers'])[0],request('GET','/v19/provider/services',service_api_go_actor['headers'])[0]]
+                report['service_api_native_after_go'] = service_api_native_after_go
+                assert all(same(ref,actual) for ref,actual in zip(service_api_go_absent,service_api_native_after_go)), 'native switchback restored Go-deleted service'
+                assert service_api_go_rows == service_row_fixture('read','service-api-native-reads-go',service_api_go_actor['fixture']), 'native switchback changed public service DELETE bot state'
             if service_deletion_queue:
                 native_readback = await_service(pending_service_actor, 'native-reads-go')
                 assert native_readback == go_service_rows, 'native switchback service raw state differs'
@@ -2292,6 +2351,7 @@ def main():
     parser.add_argument('--provider-reset-contract', action='store_true')
     parser.add_argument('--provider-registration-contract', action='store_true')
     parser.add_argument('--provider-deletion-contract', action='store_true')
+    parser.add_argument('--provider-service-contract', action='store_true')
     args = parser.parse_args()
     if (args.registration_contract or args.saml_registration_contract) and (args.activation_contract or args.access_switchback or args.login_contract):
         parser.error('registration observation runs separately from credential/activation observations')
@@ -2331,8 +2391,10 @@ def main():
         parser.error('provider enrollment requires provider fixtures and original-suite selection')
     if args.provider_deletion_contract and not (args.provider_registration_contract and args.service_galley_event):
         parser.error('provider deletion requires provider and native-schema service/Galley fixtures')
+    if args.provider_service_contract and not args.provider_deletion_contract:
+        parser.error('provider service control requires native provider/service/Galley fixtures')
     if args.in_container:
-        return inside(args.gundeck_path, args.access_switchback, args.login_contract, args.activation_contract, args.registration_contract, args.saml_registration_contract, args.public_registration_contract, args.password_reset_contract, args.password_change_contract, args.ses_feedback_contract, args.properties_contract, args.client_update_contract, args.client_registration_contract, args.client_lifecycle_contract, args.store_fixture_path, args.mls_upload_originals, args.stomp_internal_events, args.service_deletion_queue, args.service_galley_event, args.optimistic_prekeys, args.provider_profile_contract, args.provider_auth_contract, args.provider_reset_contract, args.provider_registration_contract, args.provider_deletion_contract)
+        return inside(args.gundeck_path, args.access_switchback, args.login_contract, args.activation_contract, args.registration_contract, args.saml_registration_contract, args.public_registration_contract, args.password_reset_contract, args.password_change_contract, args.ses_feedback_contract, args.properties_contract, args.client_update_contract, args.client_registration_contract, args.client_lifecycle_contract, args.store_fixture_path, args.mls_upload_originals, args.stomp_internal_events, args.service_deletion_queue, args.service_galley_event, args.optimistic_prekeys, args.provider_profile_contract, args.provider_auth_contract, args.provider_reset_contract, args.provider_registration_contract, args.provider_deletion_contract, args.provider_service_contract)
     if args.binary is None or args.build_receipt is None or args.output is None:
         parser.error('identified binary, receipt and new output required')
     sys.path.insert(0, str(ROOT / 'tools/parity/docker'))
@@ -2402,6 +2464,8 @@ def main():
         runner['command'].append('--provider-registration-contract')
     if args.provider_deletion_contract:
         runner['command'].append('--provider-deletion-contract')
+    if args.provider_service_contract:
+        runner['command'].append('--provider-service-contract')
     if args.stomp_internal_events:
         import stomp_broker
         stomp_broker.prepare(spec, output)
