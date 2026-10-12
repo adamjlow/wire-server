@@ -2280,3 +2280,20 @@ updates with raw prefix/tag rows and Haskell readback. Reuse unchanged original
 Services.testUpdateServiceUpdateAcceptHeader against native and selected Go,
 plus current24 originals/queue witnesses. Connection/search/whitelist/bot and
 whole Brig535/eight-Go/three-mode/ops/image/selector gates remain open.
+
+### Server transfer, 2026-10-12
+
+Latest service profile PUT source00ebe6cf6 passes pinned Go/static quality;
+backend/native index comparisons and unchanged original Accept-header execution
+are pending. Keep task active and compatibility null. The previous source839ef3030
+creation evidence does not qualify this newer executable. See
+[restart instructions](../../../go/services/brig/qualification/RESTART.md) for
+current work, exact evidence, external inputs, transfer and resume commands.
+Transfer preparation is bounded to the existing Brig task paths: preserve current
+SDK receipts, make its controller portable, document repo-wide authoritative
+records and package local restart inputs outside Git. Acceptance: framework/scope
+checks pass, all tracked work committed and remote branch matches local HEAD,
+external image/toolchain prerequisites explicit and checksummed. Reuse unchanged
+Go evidence; no Haskell repair, new backend execution, deployment or oracle change.
+Synthetic private fixture data stays in the external transfer archive; no real
+credentials, customer data or binaries are committed.

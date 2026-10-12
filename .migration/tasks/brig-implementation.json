@@ -353,6 +353,13 @@
       "command": "Scoped service creation source839ef3030 fresh pinned Go/static checks; native/Go supplied/generated token schemas/definitions, exact4 provider/key/PEM negatives, independent native CQL RSA fingerprint bytes/Haskell readback+native cleanup. Original Go24/native2 unchanged names/XML/no failure/error/skip plus prior service14/queue/provider regression pass. All25 managed exits0/original processes0/runner0/cleanup0/independent empty. Queue-interference/PEM-boundary failures retained; not whole535/eight-Go/all3 modes/outboundTLS/full service.",
       "revision": "839ef3030cd6c015649fa30f62956bc2562570af",
       "artifact": "go/services/brig/qualification/evidence/provider-service-create/README.md"
+    },
+    {
+      "criterion": "quality",
+      "result": "pass",
+      "command": "Service profile update: pinned Go1.26.9 full quality/static normal units pass; tagged storage fixture compiles only; SDK/unit/cleanup exits0 and owned namespace empty. Native comparison, raw index state and original service-update test NOT run; not whole Brig acceptance.",
+      "revision": "00ebe6cf604856cc6ad52ff1339a1ae0abe6451f",
+      "artifact": "go/services/brig/qualification/evidence/provider-service-update-build/README.md"
     }
   ],
   "review": null,
@@ -388,5 +395,5 @@
       "required_evidence": "Frozen100request/concurrency8 latency/RSS/CPU/metrics smoke and eight held-body drain/listener close/SIGTERM0 within35s; actual unchanged-schema same-state native-Go-native auth/password/cookie/client/prekey/MLS/property/connection/pending action/OAuth/apps/groups/domain/queue/search and storage-mode witnesses. Trusted nonroot optional source/license image and separately scoped image-only/default-byte-preserving selector. Exact final qualified artifact and user-delegated same-author self-review with serious inherited concerns and unavailable native checks accurately recorded."
     }
   ],
-  "handoff": "Service creation source839ef3030cd6c015649fa30f62956bc2562570af executable8092495c11e60074969652750187c9b667adf8e71e67ff3f556a792bec0d7011 passes fresh full Go/static checks, exact4 native/Go negatives, supplied/generated replies and definitions/assets/tags/disabled state, independently read native CQL RSA fingerprint bytes/native readback+cleanup. Native2/Go24 unchanged original names/no failure/error/skip and service14/previous queue/provider regressions pass; all25 managed exits0/original processes0/runner0/cleanup0/independent empty. Retain queue-probe interference and native PEM header boundary failures; no oracle/Haskell/policy changes. Native line parser/noninteractive reader; other malformed base64 diagnostics remain generic/unqualified. Next service updates/connection/search/whitelist/bot and other whole Brig contracts, full535/eight-Go/three modes/loaded ops/image/default selector/legal gates. Exact artifacts provider-service-create-pem-sdk-check/backend; evidence qualification/evidence/provider-service-create. Owned sessions terminal/audited; work local/no push/default/security/Haskell removal authorization. Complete Brig before Galley."
+  "handoff": "Server-transfer handoff: go/services/brig/qualification/RESTART.md. Current service profile PUT source00ebe6cf604856cc6ad52ff1339a1ae0abe6451f passes pinned Go/static checks; native/API/index/original-update execution pending. Latest fully compared creation artifact source839ef3030cd6c015649fa30f62956bc2562570af and its native2/Go24 originals remain exact historical evidence, not qualification of latest PUT. Whole Brig remains active/implementing with null compatibility; finish finite update matrix then remaining whole surface/final535/eight-Go/three-mode/operations/image/selector gates before Galley. User2026-10-12 authorizes reconciliation, commit and push origin/go-migration for transfer. No live owned containers/controllers at handoff. Git carries code/docs/receipts; private Docker images/toolchain/fixtures/binaries need external transfer bundle or rebuilt inputs. Haskell supported/default; no production/security/contract exception."
 }

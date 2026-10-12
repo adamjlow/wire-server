@@ -1,0 +1,36 @@
+{
+  "source_revision": "00ebe6cf604856cc6ad52ff1339a1ae0abe6451f",
+  "selected_cache_paths": [
+    "toolchains/go-security-20261009",
+    "brig-20261010/native-original310-fixture-corrected",
+    "brig-20261010/provider-service-update-sdk-check",
+    "brig-20261010/provider-service-create-pem-sdk-check",
+    "brig-20261010/provider-service-create-pem-backend-controller.py",
+    "brig-20261010/provider-service-update-sdk-controller.py",
+    "go-patched-20261009/gundeck",
+    "go-patched-20261009/gundeck-image.json"
+  ],
+  "private_images": [
+    "sha256:2f9e4393295d7270538dd1c666ab1345eaec06b2c2f8c217283ba6565caee399",
+    "sha256:f487c90fd364aac9daee5a1ce6e60fdba0ab74ab0c671ab0de0198e8f05659a9"
+  ],
+  "pull_dependencies": [
+    "apache/activemq@sha256:1cacfbd9c08ad437c5e1177a9f1217e7c7ada62a64065128acd1a81866a03711",
+    "cassandra@sha256:dad4cd7ee4281df4e96944a1faebfebd2e50ee19a9f0a1d42ac0bb17c820dd74",
+    "coredns/coredns@sha256:6e5a02c21641597998b4be7cb5eb1e7b02c0d8d23cce4dd09f4682d463798890",
+    "dxflrs/garage@sha256:9c96caa2612d3411acc5b0e6701fb238dbfba33e533a6d7d3d811a4b12d0d020",
+    "elasticsearch@sha256:deda76957c8cacc5dbf0d535fd14fe365f37d839813099bc32f26390a5e232dc",
+    "postgres@sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24",
+    "quay.io/wire/dynamodb_local@sha256:e092d4b32889277f9dc0954bf99caaa216bdb621e399d460ac396e41c8c1a9f1",
+    "quay.io/wire/localstack@sha256:544be04ed93def3e636cc96550f262c1c8ac7f4d40e17b7c76583590a26e78d3",
+    "rabbitmq@sha256:5cbd7145b0306399ad68422c3350b6cbd1bb95704b39f5896480e5b6d4238a04",
+    "redis@sha256:29e8589c3f9ba699b5f7aa4b3c7733c58852a3626439e619aa0ee78de08c6ca0",
+    "softwaremill/elasticmq-native@sha256:32d4b42a1f1fd5d311d2f46e388587c87b297364df3d25cc807f1dd361df1153",
+    "technitium/dns-server@sha256:1045db38fd2f2e4d9578f9168b7eb4862575469ed0ffc79e03f36bdc772a93b5"
+  ],
+  "result": "complete",
+  "sha256": {
+    "restart-inputs.tar.gz": "f6ab494faa10e3caddf82c0b0124574575abc214d2eed479b46feb243e81e853",
+    "private-images.tar": "83c2c077b1715b8bcfa9e59a139b457c70ea926bb9c49ecf9f8aaf4cb82ecc19"
+  }
+}

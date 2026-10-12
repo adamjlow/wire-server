@@ -32,3 +32,5 @@ Add Go Brig synchronous provider deletion with native authentication, connection
 Add Go Brig private/public provider service reads, native tag catalog and public queued deletion, preserving secret projections and single-delivery bot cleanup with Haskell switchback.
 
 Add Go Brig service creation with native PEM/RSA/MPI fingerprints, token/storage ordering and Haskell readback; preserve security policy and record failed attempts.
+
+Add native-ordered provider service profile updates; pinned Go checks pass, native comparison remains pending. Preserve current evidence and document transfer/restart prerequisites.
