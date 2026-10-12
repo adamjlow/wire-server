@@ -31,7 +31,7 @@ def same_response(reference, actual):
     return all(reference.get(field) == actual.get(field) for field in fields)
 
 
-def inside(gundeck_path=None, access_switchback=False, login_contract=False, activation_contract=False, registration_contract=False, saml_registration_contract=False, public_registration_contract=False, password_reset_contract=False, password_change_contract=False, ses_feedback_contract=False, properties_contract=False, client_update_contract=False, client_registration_contract=False, client_lifecycle_contract=False, store_fixture_path=None, mls_upload_originals=False, stomp_internal_events=False, service_deletion_queue=False, service_galley_event=False, optimistic_prekeys=False, provider_profile_contract=False, provider_auth_contract=False, provider_reset_contract=False):
+def inside(gundeck_path=None, access_switchback=False, login_contract=False, activation_contract=False, registration_contract=False, saml_registration_contract=False, public_registration_contract=False, password_reset_contract=False, password_change_contract=False, ses_feedback_contract=False, properties_contract=False, client_update_contract=False, client_registration_contract=False, client_lifecycle_contract=False, store_fixture_path=None, mls_upload_originals=False, stomp_internal_events=False, service_deletion_queue=False, service_galley_event=False, optimistic_prekeys=False, provider_profile_contract=False, provider_auth_contract=False, provider_reset_contract=False, provider_registration_contract=False):
     registration_contract = registration_contract or saml_registration_contract
     if os.getuid() != 65534 or os.environ.get('WIRE_E2E_DISPOSABLE') != '1':
         raise ValueError('owned nonroot Docker runner required')
@@ -104,6 +104,24 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
         report['provider_token_native_gateway_'+phase] = {'valid': valid, 'invalid': invalid, 'token_fields': properties, 'cookie_path': cookie['path'], 'expires': cookie['expires']}
         assert valid['status'] not in (401,403) and invalid['status'] in (401,403), 'native gateway provider signature boundary failed: '+phase
         return response, valid
+
+    def provider_originals(phase):
+        import runner, harness
+        required = ['Provider.testProviderPasswordReset', 'Provider.testProviderPasswordResetAfterEmailUpdate']
+        assert set(required).issubset(runner.discover('brig')), 'original provider reset cases absent'
+        executable = runtime.WORK/'dist/brig'
+        identity = hashlib.sha256(executable.read_bytes()).hexdigest()
+        expected = report['native_brig']['sha256'] if phase == 'native' else report['candidate_brig_sha256']
+        assert identity == expected, 'dynamic provider original runner selects wrong Brig implementation'
+        xml = Path('/reports/provider-original-'+phase+'.xml')
+        with open('/reports/provider-original-'+phase+'.log', 'w') as log:
+            result = subprocess.run([runner.binary('integration')['path'], '--config', str(runtime.WORK/'services/integration.yaml'),
+                *[arg for name in required for arg in ('--include', name)], '--xml', str(xml)],
+                cwd=runtime.WORK, stdout=log, stderr=subprocess.STDOUT, timeout=1200)
+        report['provider_original_'+phase] = {'required_tests': required, 'process_exit_code': result.returncode,
+            'integration_binary': runner.binary('integration'), 'dynamic_brig_sha256': identity}
+        report['provider_original_'+phase]['validated_report'] = harness.check_xml(xml, required)
+        assert result.returncode == 0, 'original provider tests failed: '+phase
 
     def mls_row_fixture(action, phase, user=None, client=None):
         assert store_fixture_path, 'identified tagged store fixture required'
@@ -578,6 +596,38 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             reset_native_old = request('POST', '/v19/provider/login', body={'email': reset_actors['native']['email'], 'password': 'Synthetic-provider-password!'})[0]
             report['provider_reset_native_old_rejected'] = reset_native_old
             assert reset_native_old['status'] == 403, 'native pre-reset password remained valid'
+        if provider_registration_contract:
+            enrollment_body = {'name': 'Synthetic enrollment', 'url': 'https://example.com/enroll', 'description': 'Synthetic enrollment profile', 'password': 'Native6'}
+            enrollment_native_email = 'p-enroll-native-'+uuid.uuid4().hex+'@example.com'
+            enrollment_pending_email = 'p-enroll-pending-'+uuid.uuid4().hex+'@example.com'
+            enrollment_generated_email = 'p-enroll-generated-'+uuid.uuid4().hex+'@example.com'
+            enrollment_registered = request('POST', '/v19/provider/register', {'X-Forwarded-For':'127.0.0.51'}, {**enrollment_body, 'email':enrollment_native_email})[0]
+            report['provider_enrollment_native_registered'] = enrollment_registered
+            assert enrollment_registered['status'] == 201 and set(enrollment_registered['json']) == {'id'}, 'native supplied-password registration shape changed'
+            enrollment_native_id = enrollment_registered['json']['id']
+            enrollment_pair = request('GET', '/i/provider/activation-code?'+urlencode({'email':enrollment_native_email}))[0]
+            assert enrollment_pair['status'] == 200, 'native enrollment activation pair absent'
+            enrollment_bad_activation = request('GET', '/v19/provider/activate?'+urlencode({**enrollment_pair['json'], 'code':'WrongCode'}))[0]
+            enrollment_first_activation = request('GET', '/v19/provider/activate?'+urlencode(enrollment_pair['json']))[0]
+            enrollment_replay = request('GET', '/v19/provider/activate?'+urlencode(enrollment_pair['json']))[0]
+            report['provider_enrollment_native_activation'] = {'bad':enrollment_bad_activation, 'first':enrollment_first_activation, 'replay':enrollment_replay}
+            assert [r['status'] for r in (enrollment_bad_activation,enrollment_first_activation,enrollment_replay)] == [403,200,204], 'native enrollment activation contract changed'
+            enrollment_negative_cases = [('POST','/v19/provider/register',{}, {**enrollment_body,'email':enrollment_native_email}),
+                ('POST','/v19/provider/register',{'X-Forwarded-For':'127.0.0.51'}, {**enrollment_body,'email':enrollment_native_email}),
+                ('GET','/i/provider/activation-code?'+urlencode({'email':'p-enroll-missing-'+uuid.uuid4().hex+'@example.com'})),
+                ('PUT','/v19/provider/email',{'Z-Provider':enrollment_native_id,'Z-Type':'provider'}, {'email':enrollment_native_email})]
+            enrollment_native_negatives = [request(*case)[0] for case in enrollment_negative_cases]
+            report['provider_enrollment_native_negatives'] = enrollment_native_negatives
+            assert [r['status'] for r in enrollment_native_negatives] == [400,409,404,409], 'native enrollment negative controls changed'
+            enrollment_pending = request('POST','/v19/provider/register',{'X-Forwarded-For':'127.0.0.52'}, {**enrollment_body,'email':enrollment_pending_email})[0]
+            report['provider_enrollment_native_pending'] = enrollment_pending
+            assert enrollment_pending['status'] == 201, 'native pending enrollment setup failed'
+            enrollment_pending_pair = request('GET','/i/provider/activation-code?'+urlencode({'email':enrollment_pending_email}))[0]
+            assert enrollment_pending_pair['status'] == 200, 'native pending enrollment code absent'
+            generated = request('POST','/v19/provider/register',{'X-Forwarded-For':'127.0.0.53'}, {**enrollment_body,'email':enrollment_generated_email,'password':None})[0]
+            report['provider_enrollment_native_generated'] = generated
+            assert generated['status'] == 201 and set(generated['json']) == {'id','password'} and len(generated['json']['password']) == 16, 'native generated-password registration changed'
+            provider_originals('native')
         registration_body, registration_reference, registration_reads = None, None, None
         if registration_contract:
             actor = str(uuid.uuid4())
@@ -1208,6 +1258,45 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             reset_go_created_pair = request('GET', '/i/provider/password-reset-code?'+urlencode({'email': reset_actors['go-begin']['email']}))[0]
             report['provider_reset_go_created_pair'] = reset_go_created_pair
             assert reset_go_created_pair['status'] == 200 and len(reset_go_created_pair['json']['key']) == 20 and len(reset_go_created_pair['json']['code']) == 20, 'Go reset code absent/invalid'
+        if provider_registration_contract:
+            enrollment_go_negatives = [request(*case)[0] for case in enrollment_negative_cases]
+            report['provider_enrollment_go_negatives'] = enrollment_go_negatives
+            assert all(same(ref,actual) for ref,actual in zip(enrollment_native_negatives,enrollment_go_negatives)), 'native/Go enrollment negatives differ'
+            enrollment_go_bad = request('GET','/v19/provider/activate?'+urlencode({**enrollment_pending_pair['json'],'code':'WrongCode'}))[0]
+            assert same(enrollment_bad_activation,enrollment_go_bad), 'Go activation wrong-code response differs'
+            enrollment_go_first = request('GET','/v19/provider/activate?'+urlencode(enrollment_pending_pair['json']))[0]
+            enrollment_go_replay = request('GET','/v19/provider/activate?'+urlencode(enrollment_pending_pair['json']))[0]
+            report['provider_enrollment_go_activation'] = {'bad':enrollment_go_bad,'first':enrollment_go_first,'replay':enrollment_go_replay}
+            assert enrollment_go_first['status'] == enrollment_first_activation['status'] and enrollment_go_first['content_type'] == enrollment_first_activation['content_type'] and enrollment_go_first['json'] == {'email':enrollment_pending_email}, 'Go native-code activation differs'
+            assert same(enrollment_replay,enrollment_go_replay), 'Go activation replay differs'
+            enrollment_go_profiles = []
+            enrollment_go_created = []
+            for kind, generated_password in (('supplied',False),('generated',True)):
+                email = 'p-go-enroll-'+kind+'-'+uuid.uuid4().hex+'@example.com'
+                body = {**enrollment_body,'email':email,'password':None if generated_password else 'GoPwd6'}
+                registered = request('POST','/v19/provider/register',{'X-Forwarded-For':'127.0.0.54'},body)[0]
+                report['provider_enrollment_go_register_'+kind] = registered
+                reference = generated if generated_password else enrollment_registered
+                assert registered['status'] == reference['status'] and registered['content_type'] == reference['content_type'] and set(registered['json']) == set(reference['json']), 'Go enrollment response schema differs'
+                password = registered['json']['password'] if generated_password else 'GoPwd6'
+                if generated_password:
+                    import base64
+                    assert len(password) == 16 and len(base64.b64decode(password,validate=True)) == 12, 'Go generated credential format differs'
+                id = registered['json']['id']; uuid.UUID(id)
+                headers = {'Z-Provider':id,'Z-Type':'provider'}
+                hidden = request('GET','/v19/provider',headers)[0]
+                assert hidden['status'] == 404, 'Go registration became visible before activation'
+                pair = request('GET','/i/provider/activation-code?'+urlencode({'email':email}))[0]
+                assert pair['status'] == 200 and len(pair['json']['key']) == 20 and len(pair['json']['code']) == 20, 'Go enrollment code invalid'
+                activated = request('GET','/v19/provider/activate?'+urlencode(pair['json']))[0]
+                assert activated['status'] == 200 and activated['json'] == {'email':email}, 'Go enrollment activation failed'
+                profile = request('GET','/v19/provider',headers)[0]
+                assert profile['status'] == 200 and profile['json'] == {'id':id,'name':body['name'],'email':email,'url':body['url'],'description':body['description']}, 'Go enrollment profile fields differ'
+                provider_login_ids[email] = id
+                provider_login(email,password,'go-enrollment-'+kind)
+                enrollment_go_created.append({'email':email,'password':password,'headers':headers,'pair':pair})
+                enrollment_go_profiles.append(profile)
+            report['provider_enrollment_go_profiles'] = enrollment_go_profiles
         go_records = [request(*case)[0] for case in cases]
         report['records'].append({'implementation': 'go', 'observations': go_records})
         mismatches = []
@@ -1306,6 +1395,8 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
                     original_failures.append(str(error))
                 if original.returncode != 0: original_failures.append('original compiled MLS/connection tests failed')
                 report['original_mls_upload_tests']['failures']=list(original_failures)
+                if provider_registration_contract:
+                    provider_originals('go')
             go_profile_controls=[request(*case)[0] for case in profile_cases]
             report['profiles_go_controls']=go_profile_controls
             assert all(same(ref,actual) for ref,actual in zip(native_profile_controls,go_profile_controls)), 'native/Go federation profile projection mismatch'
@@ -1435,6 +1526,18 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
                 report['provider_reset_native_consumes_go'] = reset_native_consumes_go
                 assert same(reset_native_complete, reset_native_consumes_go), 'native cannot consume Go-generated code'
                 provider_login(reset_actors['go-begin']['email'], 'Native6', 'native-consumes-go-code')
+            if provider_registration_contract:
+                enrollment_native_go_profiles = []
+                for kind, actor in zip(('supplied','generated'),enrollment_go_created):
+                    profile = request('GET','/v19/provider',actor['headers'])[0]
+                    enrollment_native_go_profiles.append(profile)
+                    pair = request('GET','/i/provider/activation-code?'+urlencode({'email':actor['email']}))[0]
+                    assert same(actor['pair'],pair), 'native cannot read Go activation code'
+                    provider_login(actor['email'],actor['password'],'native-reads-go-enrollment-'+kind)
+                report['provider_enrollment_native_reads_go'] = enrollment_native_go_profiles
+                assert all(same(ref,actual) for ref,actual in zip(enrollment_go_profiles,enrollment_native_go_profiles)), 'native cannot read Go enrollment account/index'
+                pending_replay = request('GET','/v19/provider/activate?'+urlencode(enrollment_pending_pair['json']))[0]
+                assert same(enrollment_go_replay,pending_replay), 'native cannot replay Go-activated native code'
             if service_deletion_queue:
                 native_readback = await_service(pending_service_actor, 'native-reads-go')
                 assert native_readback == go_service_rows, 'native switchback service raw state differs'
@@ -2118,6 +2221,7 @@ def main():
     parser.add_argument('--provider-profile-contract', action='store_true')
     parser.add_argument('--provider-auth-contract', action='store_true')
     parser.add_argument('--provider-reset-contract', action='store_true')
+    parser.add_argument('--provider-registration-contract', action='store_true')
     args = parser.parse_args()
     if (args.registration_contract or args.saml_registration_contract) and (args.activation_contract or args.access_switchback or args.login_contract):
         parser.error('registration observation runs separately from credential/activation observations')
@@ -2153,8 +2257,10 @@ def main():
         parser.error('provider auth requires native provider actors and switchback')
     if args.provider_reset_contract and not args.provider_auth_contract:
         parser.error('provider reset requires native provider/auth actors')
+    if args.provider_registration_contract and not (args.provider_reset_contract and args.mls_upload_originals):
+        parser.error('provider enrollment requires provider fixtures and original-suite selection')
     if args.in_container:
-        return inside(args.gundeck_path, args.access_switchback, args.login_contract, args.activation_contract, args.registration_contract, args.saml_registration_contract, args.public_registration_contract, args.password_reset_contract, args.password_change_contract, args.ses_feedback_contract, args.properties_contract, args.client_update_contract, args.client_registration_contract, args.client_lifecycle_contract, args.store_fixture_path, args.mls_upload_originals, args.stomp_internal_events, args.service_deletion_queue, args.service_galley_event, args.optimistic_prekeys, args.provider_profile_contract, args.provider_auth_contract, args.provider_reset_contract)
+        return inside(args.gundeck_path, args.access_switchback, args.login_contract, args.activation_contract, args.registration_contract, args.saml_registration_contract, args.public_registration_contract, args.password_reset_contract, args.password_change_contract, args.ses_feedback_contract, args.properties_contract, args.client_update_contract, args.client_registration_contract, args.client_lifecycle_contract, args.store_fixture_path, args.mls_upload_originals, args.stomp_internal_events, args.service_deletion_queue, args.service_galley_event, args.optimistic_prekeys, args.provider_profile_contract, args.provider_auth_contract, args.provider_reset_contract, args.provider_registration_contract)
     if args.binary is None or args.build_receipt is None or args.output is None:
         parser.error('identified binary, receipt and new output required')
     sys.path.insert(0, str(ROOT / 'tools/parity/docker'))
@@ -2220,6 +2326,8 @@ def main():
         runner['command'].append('--provider-auth-contract')
     if args.provider_reset_contract:
         runner['command'].append('--provider-reset-contract')
+    if args.provider_registration_contract:
+        runner['command'].append('--provider-registration-contract')
     if args.stomp_internal_events:
         import stomp_broker
         stomp_broker.prepare(spec, output)
