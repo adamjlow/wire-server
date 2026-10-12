@@ -77,7 +77,7 @@ func TestNativeServiceRSAAdmissionAndCancellation(t *testing.T) {
 		t.Fatal(err)
 	}
 	edDER, _ := x509.MarshalPKIXPublicKey(edPublic)
-	for _, bad := range [][]byte{pem.EncodeToMemory(&pem.Block{Type: "PUBLIC KEY", Bytes: weakDER}), pem.EncodeToMemory(&pem.Block{Type: "PUBLIC KEY", Bytes: edDER}), []byte("invalid")} {
+	for _, bad := range [][]byte{pem.EncodeToMemory(&pem.Block{Type: "PUBLIC KEY", Bytes: weakDER}), pem.EncodeToMemory(&pem.Block{Type: "PUBLIC KEY", Bytes: edDER}), []byte("invalid"), pem.EncodeToMemory(&pem.Block{Type: "PUBLIC KEY", Headers: map[string]string{"Proc-Type": "4,ENCRYPTED", "DEK-Info": "AES-256-CBC,00000000000000000000000000000000"}, Bytes: make([]byte, 16)})} {
 		if _, _, err := worker.serviceKey(context.Background(), bad); !errors.Is(err, errServiceKeyInvalid) {
 			t.Fatal("invalid native key accepted", err)
 		}

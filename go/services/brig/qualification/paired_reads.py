@@ -1245,9 +1245,10 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             creation_negative_cases = [('POST','/v19/provider/services',{'Z-Provider':str(uuid.uuid4()),'Z-Type':'provider'},creation_body),
                 ('POST','/v19/provider/services',hidden_headers,creation_body),
                 ('POST','/v19/provider/services',creation_parent_headers,{**creation_body,'public_key':'-----BEGIN PUBLIC KEY-----\nAQID\n-----END PUBLIC KEY-----\n'})]
+            creation_negative_cases.append(('POST','/v19/provider/services',creation_parent_headers,{**creation_body,'public_key':'-----BEGIN PUBLIC KEY-----\nProc-Type: 4,ENCRYPTED\nDEK-Info: AES-256-CBC,00000000000000000000000000000000\n\nAAAAAAAAAAAAAAAAAAAAAA==\n-----END PUBLIC KEY-----\n'}))
             creation_native_negatives = [request(*case)[0] for case in creation_negative_cases]
             report['service_creation_native_negatives'] = creation_native_negatives
-            assert [r['status'] for r in creation_native_negatives] == [404,404,400], 'native create gate/key controls changed'
+            assert [r['status'] for r in creation_native_negatives] == [404,404,400,400], 'native create gate/key controls changed'
             creation_native = {}
             for creation_kind,creation_token in (('supplied','c3ludGhldGljLWNyZWF0ZQ'),('generated',None)):
                 creation_result = request('POST','/v19/provider/services',creation_parent_headers,{**creation_body,'auth_token':creation_token})[0]
@@ -1737,6 +1738,14 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
                     creation_native_reads_go.append(creation_definition)
                     assert same(creation_actor['definition'],creation_definition), 'native cannot read Go service definition'
                     assert creation_fingerprint('native-reads-go-'+creation_kind,creation_actor['id']) == creation_actor['fingerprint'], 'native switchback changed Go fingerprint'
+                report['service_creation_native_reads_go'] = creation_native_reads_go
+            if service_deletion_queue:
+                native_readback = await_service(pending_service_actor, 'native-reads-go')
+                assert native_readback == go_service_rows, 'native switchback service raw state differs'
+                await_service(go_pending_service_actor, 'native-consumes-go', go_pending_service_dequeue)
+                await_service(pending_service_actor, 'native-replays-cleanup', enqueue_service(pending_service_actor))
+            if provider_service_create_contract:
+                for creation_actor in creation_go.values():
                     creation_deleted = request('DELETE','/v19/provider/services/'+creation_actor['id'],creation_parent_headers,{'password':'Create6'})[0]
                     assert creation_deleted['status'] == 202, 'native cannot delete Go-created service'
                     creation_deadline = time.monotonic()+30
@@ -1745,12 +1754,6 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
                         if creation_missing['status'] == 404: break
                         assert time.monotonic() < creation_deadline, 'native cleanup of Go-created service stalled'
                         time.sleep(0.2)
-                report['service_creation_native_reads_go'] = creation_native_reads_go
-            if service_deletion_queue:
-                native_readback = await_service(pending_service_actor, 'native-reads-go')
-                assert native_readback == go_service_rows, 'native switchback service raw state differs'
-                await_service(go_pending_service_actor, 'native-consumes-go', go_pending_service_dequeue)
-                await_service(pending_service_actor, 'native-replays-cleanup', enqueue_service(pending_service_actor))
             native_connection_switchback=[]
             for i,go_page in enumerate(go_connection_pages):
                 body={'size':1}

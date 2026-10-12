@@ -2217,3 +2217,19 @@ compare schema/negative responses/read definitions, read actual native versus Go
 CQL fingerprint bytes, then restart native to read Go definition and delete it
 through the native worker. Reuse original24 and previous service14/queue proofs.
 Updates/connection/search/whitelist/bot APIs and whole Brig gates remain open.
+
+Productiona9fa full Go/static passes. Initial observer9447 proves exact native
+RSA fingerprint8a8cb719e22381046ca1b7f610a18edcef26abf1687c5c4746acb44f8111219f
+for supplied/generated Go services, native definition/readback, and original24,
+then fails old service single-delivery guard because new native cleanup jobs were
+injected before its pending queue-count assertion. Move only new cleanup after
+existing single-delivery assertions; keep counts/original comparator unchanged.
+Retain failure/all25 managed exits0/runner1/cleanup0/independent empty.
+
+Code review found OpenSSL NULL password callback can request terminal input
+([upstream API docs](https://docs.openssl.org/3.5/man3/PEM_read_bio_PrivateKey/)).
+Service-key schema supplies no passphrase; use explicit failure callback instead
+of reading operator stdin. No RSA minimum/token/TLS/auth policy change. Add an
+encrypted public-PEM negative against actual native noninteractive runner and
+focused unit, keep malformed/non-RSA/weak controls. Rebuild fresh full quality
+because crypto input changed; earlier tested artifact identities remain retained.

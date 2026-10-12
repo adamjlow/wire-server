@@ -11,6 +11,13 @@ package brig
 #include <openssl/pem.h>
 #include <openssl/core_names.h>
 
+// The public service-key API has no passphrase input. Never invoke OpenSSL's
+// default terminal callback from a request handler.
+static int brig_no_key_password(char *buffer, int size, int writing, void *user) {
+    (void)buffer; (void)size; (void)writing; (void)user;
+    return -1;
+}
+
 static int brig_service_key(const void *pem, int length, int *bits, unsigned char *fingerprint) {
     int ok = 0;
     BIO *bio = BIO_new_mem_buf(pem, length);
@@ -19,7 +26,7 @@ static int brig_service_key(const void *pem, int length, int *bits, unsigned cha
     EVP_MD_CTX *digest = NULL;
     unsigned char *mpi = NULL;
     if (bio == NULL) goto done;
-    key = PEM_read_bio_PUBKEY(bio, NULL, NULL, NULL);
+    key = PEM_read_bio_PUBKEY(bio, NULL, brig_no_key_password, NULL);
     if (key == NULL || EVP_PKEY_base_id(key) != EVP_PKEY_RSA) goto done;
     int size = EVP_PKEY_get_size(key);
     if (size < 256 || size > 268435455) goto done;
