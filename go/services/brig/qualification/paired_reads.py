@@ -546,7 +546,7 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
                     reset_actors[kind].update(pair=pair, begin=begin)
             report['provider_reset_native_actors'] = reset_actors
             missing_reset_email = 'provider-reset-missing-'+uuid.uuid4().hex+'@example.com'
-            def reset_cases(kind):
+            def provider_reset_cases(kind):
                 actor = reset_actors[kind]; pair = actor['pair']['json']
                 return [('POST', '/v19/provider/password-reset', None, {'email': missing_reset_email}),
                     ('GET', '/i/provider/password-reset-code?'+urlencode({'email': missing_reset_email})),
@@ -554,7 +554,7 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
                     ('POST', '/v19/provider/password-reset', None, {'email': actor['email']}),
                     ('POST', '/v19/provider/password-reset/complete', None, {**pair, 'password': 'Synthetic-provider-password!'}),
                     ('POST', '/v19/provider/password-reset/complete', None, {**pair, 'code': 'WrongCode', 'password': 'Reset6'})]
-            reset_native_controls = [request(*case)[0] for case in reset_cases('native')]
+            reset_native_controls = [request(*case)[0] for case in provider_reset_cases('native')]
             report['provider_reset_native_controls'] = reset_native_controls
             assert [r['status'] for r in reset_native_controls] == [403,404,403,409,409,403], 'native provider reset contract changed'
             pending_ttl = int(reset_native_controls[3]['retry_after'])
@@ -1180,7 +1180,7 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
             report['provider_go_old_password_rejected'] = provider_go_old_rejected
             assert same(provider_native_old_rejected, provider_go_old_rejected), 'Go previous provider password remained valid'
         if provider_reset_contract:
-            reset_go_controls = [request(*case)[0] for case in reset_cases('go')]
+            reset_go_controls = [request(*case)[0] for case in provider_reset_cases('go')]
             report['provider_reset_go_controls'] = reset_go_controls
             assert all(same(ref, actual) for ref, actual in zip(reset_native_controls, reset_go_controls)), 'native/Go provider reset controls differ'
             assert 3500 <= int(reset_go_controls[3]['retry_after']) <= 3600, 'Go pending reset TTL missing'

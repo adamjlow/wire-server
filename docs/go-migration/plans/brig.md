@@ -1996,3 +1996,14 @@ real native pending409 has Retry-After and JSON body with no Content-Type; fix
 only Go's pending error to match, add focused media regression and rebuild full
 quality because production changed. All23 managed exits0/runner1/cleanup0 and
 independent namespace empty. No original suite/reference assertion change.
+
+Fresh production3c9f3deae passes pinned full quality/static runner units. Backend
+retains correct native6 reset references, pending409 no media/Retry-After3600,
+three wrong-attempt exhaustion, unconsumed exhausted internal code, complete200/
+delete404/new-login/old-rejection. Existing Go provider profile/auth already ran,
+then observer helper reset_cases was overwritten by the older user-reset list.
+Rename only new helper provider_reset_cases; AST check confirms no assignment to
+that helper. No production or comparator/original assertion change; retain raw
+failed run, all25 managed exits0/runner1/cleanup0/independent namespace empty.
+Reuse exact3c artifact/compiler inputs for corrected observer; Go reset native
+comparison and original22 still pending on this executable.
