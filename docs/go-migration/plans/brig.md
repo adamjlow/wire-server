@@ -2124,3 +2124,12 @@ negative/status/media responses and raw metadata cleanup, then prove native
 switchback sees provider/key absent. Reuse original Provider2 plus prior22 and
 existing provider/queue switchback controls. Remaining public service/bot and
 whole Brig535/eight-Go/three-mode/operations/image/selector gates stay open.
+
+Provider-delete productionf734 passes full pinned Go/static quality. Initial
+observer2aca native capture exposes misleading helper/type declaration: native
+maybeInvalidProvider actually throws ProviderNotFound404 (bare JSON, Provider
+not found.) for missing/unactivated, not MapError InvalidProvider403. Retain
+failed capture and correct only Go404 media/body plus new observer's assumed
+status list/repeated-delete expected404, grounded in actual native capture and
+Provider.API helper1094. Original assertions/comparator unchanged. All23 managed
+exits0/runner1/cleanup0/independent empty. Rebuild fresh production quality.

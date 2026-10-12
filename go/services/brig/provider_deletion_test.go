@@ -131,6 +131,7 @@ func TestProviderDeletionHTTPBoundaries(t *testing.T) {
 		want            int
 		calls           int
 	}{
+		{"missing provider", "provider", `{"password":"Goodp6"}`, false, 404, 1},
 		{"feature guard", "provider", `{"password":"Goodp6"}`, true, 403, 1},
 		{"wrong token type", "user", `{"password":"Goodp6"}`, false, 403, 0},
 		{"missing password", "provider", `{}`, false, 400, 0},
@@ -140,7 +141,9 @@ func TestProviderDeletionHTTPBoundaries(t *testing.T) {
 		t.Run(tc.name, func(t *testing.T) {
 			calls := 0
 			s := providerDeletionService{auth: providerAuthHTTP{secondFactorEnabled: func(context.Context, string) (bool, error) { calls++; return tc.enabled, nil }}, account: func(context.Context, gocql.UUID) (*providerAccount, error) {
-				t.Fatal("failed guard reached storage")
+				if tc.want != 404 {
+					t.Fatal("failed guard reached storage")
+				}
 				return nil, nil
 			}}
 			r := httptest.NewRequest(http.MethodDelete, "/provider", strings.NewReader(tc.body))

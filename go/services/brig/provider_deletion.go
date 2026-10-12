@@ -142,7 +142,7 @@ func (s providerDeletionService) handle(w http.ResponseWriter, r *http.Request, 
 	}
 	err = s.execute(r.Context(), id, *password)
 	if errors.Is(err, errProviderDeletionInvalid) {
-		authenticationWireError(w, 403, "invalid-provider", "The provider does not exist.")
+		authenticationWireError(w, 404, "not-found", "Provider not found.")
 	} else if err != nil {
 		authenticationHTTPError(w, err)
 	} else {

@@ -1197,7 +1197,7 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
                 ('DELETE','/v19/provider',provider_headers,{'password':'Wrongp6!'})]
             deletion_native_negatives = [request(*case)[0] for case in deletion_negative_cases]
             report['provider_deletion_native_negatives'] = deletion_native_negatives
-            assert [r['status'] for r in deletion_native_negatives] == [403,403,403,403], 'native provider deletion negatives changed'
+            assert [r['status'] for r in deletion_native_negatives] == [403,404,404,403], 'native provider deletion negatives changed'
             deletion_native_response = request('DELETE','/v19/provider',deletion_actors['native']['headers'],{'password':'Delete6'})[0]
             report['provider_deletion_native_response'] = deletion_native_response
             assert deletion_native_response['status'] == 200, 'native synchronous provider deletion failed'
@@ -1206,7 +1206,7 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
                 request('POST','/v19/provider/login',body={'email':deletion_actors['native']['email'],'password':'Delete6'})[0],
                 request('DELETE','/v19/provider',deletion_actors['native']['headers'],{'password':'Delete6'})[0]]
             report['provider_deletion_native_after'] = deletion_native_after
-            assert [r['status'] for r in deletion_native_after] == [404,403,403], 'native deletion provider/key remained'
+            assert [r['status'] for r in deletion_native_after] == [404,403,404], 'native deletion provider/key remained'
         if client_lifecycle_contract:
             if not stomp_internal_events:
                 internal_queue_url = internal_sqs('get-queue-url', '--queue-name',
