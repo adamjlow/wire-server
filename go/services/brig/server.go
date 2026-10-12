@@ -473,6 +473,7 @@ func Run(ctx context.Context, c Config) error {
 	}
 	serviceMetadata := serviceDeletionStore{cassandra}
 	business.providerServices = &providerServiceHTTP{auth: *business.providerAuth, get: serviceMetadata.serviceGet, list: serviceMetadata.serviceList, lookup: serviceMetadata.lookup, disable: serviceMetadata.disable, enqueue: internalQueue.enqueueServiceDeletion}
+	business.providerServices.create = &providerServiceCreation{auth: *business.providerAuth, account: providerStore.lookup, key: passwords.serviceKey, insert: serviceMetadata.create, newToken: newServiceToken}
 	business.providerDeletion = &providerDeletionService{auth: *business.providerAuth, account: providerStore.lookup, services: serviceMetadata.providerServices, disconnect: business.peers.deleteServiceConnection, remove: serviceMetadata.remove, removeKey: providerStore.deleteKey, removeAccount: providerStore.delete}
 	queuedServiceDeletion := serviceDeletion{
 		lookup: serviceMetadata.lookup, pages: business.users.serviceBotPages,

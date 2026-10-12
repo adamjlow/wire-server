@@ -2187,3 +2187,33 @@ independent empty. Same-author review/evidence qualification/evidence/provider-
 service-reads-delete. No failed attempts or oracle/Haskell changes in this slice.
 Stop finite read/delete validation; next service create/update/connection/search/
 whitelist/bot APIs and remaining whole Brig surface/final acceptance.
+
+### Provider service creation
+Implement POST /provider/services using Provider.API addService/validateServiceKey,
+Provider.DB insertService, Service.NewService schema and Ssl.Util.rsaFingerprint.
+Go1.26.9/existing pinned OpenSSL3, no dependency/schema change. Native provider
+header/global guard -> activated provider lookup404 -> RSA public-key validation
+(RSA_size >=256bytes) -> supplied token or random18bytes/base64url24chars ->
+UUID/LocalQuorum retry5 insertion -> id and generated-only auth_token201 JSON.
+Stored service starts disabled, with singleton auth_tokens/pubkeys/fingerprints,
+assets and enum-sorted unique1..3 tag set; no index, Galley registration, bot or
+queue side effect. Required name1..128, summary1..128, description1..1024, strict
+HTTPS base_url, one parsed PEM block, required assets array; optional/null token
+uses native unbounded base64url alphabet, including inherited empty token.
+
+Security: validate input server-side using existing JSON/URI/asset codecs,
+cryptographic token/UUID randomness, parameterized CQL, no token/private fields
+in logs/error formatting. Use OpenSSL public reader/RSA parameters for native
+acceptance (not Go X509-only parsing), minimum size and custom SHA256 fingerprint:
+decimal RSA byte size || BN_bn2mpi(modulus) || BN_bn2mpi(exponent). Bound native
+key work with existing crypto slots/cancellation before and after the synchronous
+call; do not consume password rate budget. Free BIO/PKEY/BN/digest/buffers on all
+paths; generic invalid-key errors, keep TLS policy unchanged. Preserve parsed PEM
+wire canonicalization and native partial failure/order; no architecture repair.
+Finite unit admission/provided/generated token, activated gate/key/insert order,
+RSA/non-RSA/weak/malformed key/cancel/slot bounds and redacted formatting. Owned
+observer will create native and Go services from the same native public sample,
+compare schema/negative responses/read definitions, read actual native versus Go
+CQL fingerprint bytes, then restart native to read Go definition and delete it
+through the native worker. Reuse original24 and previous service14/queue proofs.
+Updates/connection/search/whitelist/bot APIs and whole Brig gates remain open.

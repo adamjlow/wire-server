@@ -14,6 +14,7 @@ import (
 var errProviderServiceNotFound = errors.New("service not found")
 
 type providerServiceHTTP struct {
+	create  *providerServiceCreation
 	auth    providerAuthHTTP
 	get     func(context.Context, gocql.UUID, gocql.UUID, bool) (any, error)
 	list    func(context.Context, gocql.UUID, bool) ([]any, error)
@@ -53,6 +54,13 @@ func (s providerServiceHTTP) handle(w http.ResponseWriter, r *http.Request, path
 	private := len(parts) >= 2 && parts[0] == "provider" && parts[1] == "services" && len(parts) <= 3
 	if !catalog && !public && !private {
 		return false
+	}
+	if private && len(parts) == 2 && r.Method == http.MethodPost {
+		if s.create == nil {
+			return false
+		}
+		s.create.handle(w, r)
+		return true
 	}
 	deleting := private && len(parts) == 3 && r.Method == http.MethodDelete
 	if !deleting && r.Method != http.MethodGet && r.Method != http.MethodHead {
