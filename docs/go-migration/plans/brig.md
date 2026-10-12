@@ -2007,3 +2007,19 @@ that helper. No production or comparator/original assertion change; retain raw
 failed run, all25 managed exits0/runner1/cleanup0/independent namespace empty.
 Reuse exact3c artifact/compiler inputs for corrected observer; Go reset native
 comparison and original22 still pending on this executable.
+
+Provider reset production3c9f3deae / observer2d3cea1cb finite matrix passes.
+Fresh full pinned Go/static checks and exact6 native/Go reset controls, pending
+no-media409/Retry-After, exhausted-code/internal preservation, Go complete/deletion/
+credentials and native readback, plus native consumption of Go-created code pass.
+Existing original22 exact names/no failures/errors/skips and prior provider/auth/
+Nginz/optimistic-STOMP/Galley/client/connection regression pass. All25 exits0/
+runner0/cleanup0/independent empty. Same-author bounded review/evidence retained
+in qualification/evidence/provider-reset, including every failed/canceled run.
+Inherited account enumeration, mail-failure pending code/throttle and provider
+cookie nonrevocation are unchanged; future improvements need contract/policy work.
+Next provider registration/activation/email/deletion and public service/bot APIs.
+Original Test.Provider password-reset cases identified but setupProvider needs
+Go registration/activation and its dynamic modified-backend launch must select
+Go; do not count source review or a native dynamic execution as Go original proof.
+Whole535/eight-Go/all-entity three modes/operations/image/selector gates remain open.

@@ -22,3 +22,5 @@ Fix Go Brig startup for optimistic DynamoDB prekeys with STOMP queues; qualify r
 Add Go Brig native-schema provider account/profile reads and partial profile updates, preserving activation visibility, provider token-type authorization and global second-factor guard; qualify native/Go responses and durable native readback.
 
 Add Go Brig provider login/password changes using native provider rate limits, hashes and signed cookies; validate native gateway signature acceptance and Haskell-Go-Haskell password switchback without revoking provider cookies or changing Haskell defaults.
+
+Add Go Brig provider password reset and internal code lookup with native verification retries, remaining TTL, throttle and provider mail; qualify shared Haskell-Go-Haskell reset codes/passwords and preserve provider cookie policy.

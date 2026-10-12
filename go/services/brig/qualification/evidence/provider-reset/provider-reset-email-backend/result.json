@@ -1,0 +1,48 @@
+{
+  "result": "failed",
+  "source_revision": "c1424392ef6d0944d72c7b5b37ef86da4f854883",
+  "build": {
+    "source_revision": "c1424392ef6d0944d72c7b5b37ef86da4f854883",
+    "sdk_image": "sha256:2f9e4393295d7270538dd1c666ab1345eaec06b2c2f8c217283ba6565caee399",
+    "runner_image": "sha256:f487c90fd364aac9daee5a1ce6e60fdba0ab74ab0c671ab0de0198e8f05659a9",
+    "result": "pass",
+    "sdk_controller_exit_code": 0,
+    "unchanged_runner_unit_exit_code": 0,
+    "binary_sha256": "9dd7d3515158d1e41d15c888e8d98aaec12d1b31ab97685e495350484f10ae08",
+    "unit_binary_sha256": "1b3bc7c9bdf100adfe75f0772da39c452fb80000c446460186e1430b690eb01e",
+    "store_binary_sha256": "f4c12275c5d3f317bb90e5306285028950f649a89dd0544218d06e6a93b7d1e7",
+    "toolchain": "go1.26.9",
+    "sdk_archives_manifest_sha256": "875560a1f32f1ad76a866a7f792a6b392f64c5555e8f55f270f60869079f9af2",
+    "go_checks": "pass",
+    "network_cleanup_exit_code": 0,
+    "remaining_owned_containers": "",
+    "remaining_owned_networks": "",
+    "artifact_build_source_revision": "100238fba6251ee5127b12468720a0ff2971f109",
+    "reused_quality": true,
+    "reuse_basis": "Full quality/static exact source100238fba reused only unchanged production/compiler inputs; observer-only additions",
+    "changed_paths": [
+      "docs/go-migration/plans/brig.md",
+      "go/services/brig/qualification/paired_reads.py"
+    ]
+  },
+  "project": "wire-e2e-a40dfa3166404fbda26a8a5667b06b9f",
+  "compose_sha256": "b05c7b824a20f14e552158b6bc95826fd7544f2a9c5ba7fa0b38eb80ef3dcb83",
+  "runner_image": "sha256:f487c90fd364aac9daee5a1ce6e60fdba0ab74ab0c671ab0de0198e8f05659a9",
+  "e2e_executed": false,
+  "peer_candidates": {
+    "gundeck": {
+      "path": "/home/operator/.cache/wire-migration/go-patched-20261009/gundeck",
+      "sha256": "a50512ef30d7fa9ddf92c2c1933e69769d6691e08cdfbe9f7c4f2d266071f46c",
+      "source_revision": "c1120238f8ecd7480742156df6c5dd2d2ec41f56"
+    }
+  },
+  "redis_cluster_initialization_completed": true,
+  "runner_exit_code": 1,
+  "broker_log_capture_exit_code": 0,
+  "cleanup_exit_code": 0,
+  "remaining_resources": {
+    "container": "",
+    "network": "",
+    "volume": ""
+  }
+}

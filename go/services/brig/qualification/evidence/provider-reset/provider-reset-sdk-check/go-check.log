@@ -1,0 +1,7 @@
+all modules verified
+# github.com/adamjlow/wire-server/go/services/brig
+./provider_reset.go:14:2: "github.com/apache/cassandra-gocql-driver/v2" imported as gocql and not used
+# github.com/adamjlow/wire-server/go/services/brig
+# [github.com/adamjlow/wire-server/go/services/brig]
+vet: ./provider_reset.go:14:2: "github.com/apache/cassandra-gocql-driver/v2" imported as gocql and not used
+Candidate checks failed: go vet failed (exit 1)

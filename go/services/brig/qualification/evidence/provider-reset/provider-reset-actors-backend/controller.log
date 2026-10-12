@@ -1,0 +1,16 @@
+ Container wire-e2e-fd8649097e7f4122b75311ecca32355d-runner-run-7c019403b786 Creating 
+ Container wire-e2e-fd8649097e7f4122b75311ecca32355d-runner-run-7c019403b786 Created 
+Traceback (most recent call last):
+  File "/source/go/services/brig/qualification/paired_reads.py", line 2307, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/source/go/services/brig/qualification/paired_reads.py", line 2157, in main
+    return inside(args.gundeck_path, args.access_switchback, args.login_contract, args.activation_contract, args.registration_contract, args.saml_registration_contract, args.public_registration_contract, args.password_reset_contract, args.password_change_contract, args.ses_feedback_contract, args.properties_contract, args.client_update_contract, args.client_registration_contract, args.client_lifecycle_contract, args.store_fixture_path, args.mls_upload_originals, args.stomp_internal_events, args.service_deletion_queue, args.service_galley_event, args.optimistic_prekeys, args.provider_profile_contract, args.provider_auth_contract, args.provider_reset_contract)
+  File "/source/go/services/brig/qualification/paired_reads.py", line 369, in inside
+    runtime.wait_dependencies()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/wire-e2e/runtime.py", line 95, in wait_dependencies
+    if pending:time.sleep(1)
+               ~~~~~~~~~~^^^
+KeyboardInterrupt
+
