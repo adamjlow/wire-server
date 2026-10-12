@@ -2145,3 +2145,34 @@ orphan bot/member/cookie/code concern recorded in qualification/evidence/provide
 deletion; initial native404 correction capture retained. Stop this finite slice;
 next public service/bot APIs, then remaining whole surface/full535/eight-Go/all-
 entity three modes/loaded operations/image/selector/legal gates.
+
+### Provider service reads, tag catalog and queued deletion
+Implement provider GET/HEAD /provider/services[/sid], public GET/HEAD
+/providers/pid/services[/sid], GET/HEAD /services/tags and DELETE
+/provider/services/sid. Reference Provider.API list/getService/list/getServiceProfile/
+getServiceTagList/deleteService and Provider.DB projections/updateServiceConn.
+Go1.26.9/existing gocql/PEM/password/queue, no new dependency/schema. Preserve
+provider type/id or public user headers, global feature guard, list-without-provider
+existence check and disabled rows. Full provider projection includes id/name/
+summary(empty for null)/description/base_url/tokens/keys/assets/tags/enabled;
+public projection selects only public columns and includes provider ID. Never
+read or expose secrets on public routes. Native tag bits map to enum-sorted string
+sets; tag catalog is the entire31-element array. Native PEM output normalized
+from its parsed single public block; asset image/optional preview/complete schema
+reuses established codec. Missing service404 bare JSON; reads200 typed charset.
+Delete parses password6..1024/header/UUID, feature guard -> provider-password
+verify (no activation/account lookup/hash upgrade) -> service lookup -> disable
+LocalQuorum/retry5 -> enqueue native service.delete event -> empty202. Preserve
+partial disabled state on enqueue failure; existing worker performs bot cleanup.
+Queries parameterized/read retry1, no-explicit-page list, context/worker/rate/peer
+bounds and generic/redacted errors. Freeze unit security negatives/projection/
+nullable collections/order/tag/asset/PEM, guard-before-read, delete auth/lookup/
+disable/enqueue cutoffs. Extend owned observer on existing native-schema service
+actors: exact private/public/list/catalog/header/missing responses and actual
+native/Go public DELETE with single broker delivery/full bot cleanup/native replay.
+Reuse original Provider2/MLS-connection22 and all existing queue/deletion witnesses;
+no original assertion/comparator or security policy change. Create/update/connection/
+search/whitelist/bot public contracts and whole Brig gates remain open.
+Public profile list specifically uses native Consistency One/retry1; single
+profile/private reads use LocalQuorum. The tag catalog is a bare array (newtype
+schema), not an object. Keep these source-observed distinctions.

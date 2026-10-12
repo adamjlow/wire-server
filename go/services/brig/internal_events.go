@@ -53,6 +53,18 @@ func (q *internalEventQueue) enqueueUserDeletion(ctx context.Context, user gocql
 	return q.enqueue(ctx, body)
 }
 
+func (q *internalEventQueue) enqueueServiceDeletion(ctx context.Context, provider, service gocql.UUID) error {
+	body, err := json.Marshal(struct {
+		Type     string `json:"type"`
+		Provider string `json:"provider"`
+		Service  string `json:"service"`
+	}{"service.delete", provider.String(), service.String()})
+	if err != nil {
+		return errors.New("internal event encoding failed")
+	}
+	return q.enqueue(ctx, body)
+}
+
 func (q *internalEventQueue) enqueueClientDeletion(ctx context.Context, user gocql.UUID, client string, connection *string) error {
 	body, err := json.Marshal(struct {
 		Client     string  `json:"client"`
