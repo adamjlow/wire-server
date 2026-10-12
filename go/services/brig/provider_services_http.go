@@ -15,6 +15,7 @@ var errProviderServiceNotFound = errors.New("service not found")
 
 type providerServiceHTTP struct {
 	create  *providerServiceCreation
+	update  *providerServiceProfileUpdate
 	auth    providerAuthHTTP
 	get     func(context.Context, gocql.UUID, gocql.UUID, bool) (any, error)
 	list    func(context.Context, gocql.UUID, bool) ([]any, error)
@@ -63,7 +64,8 @@ func (s providerServiceHTTP) handle(w http.ResponseWriter, r *http.Request, path
 		return true
 	}
 	deleting := private && len(parts) == 3 && r.Method == http.MethodDelete
-	if !deleting && r.Method != http.MethodGet && r.Method != http.MethodHead {
+	updating := private && len(parts) == 3 && r.Method == http.MethodPut
+	if !deleting && !updating && r.Method != http.MethodGet && r.Method != http.MethodHead {
 		return false
 	}
 	var provider, id gocql.UUID
@@ -93,6 +95,14 @@ func (s providerServiceHTTP) handle(w http.ResponseWriter, r *http.Request, path
 			return true
 		}
 		id, _ = gocql.ParseUUID(canonical)
+	}
+	if updating {
+		if s.update == nil {
+			authenticationHTTPError(w, errors.New("service update unavailable"))
+			return true
+		}
+		s.update.handle(w, r, provider, id)
+		return true
 	}
 	var password *string
 	if deleting {

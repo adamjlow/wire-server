@@ -2254,3 +2254,29 @@ outputs copied via nonroot/no-network/read-only SDK without chmod/chown. Native
 empty supplied-token concern recorded; other malformed base64 diagnostic wording
 is generic/uncharacterized. Stop finite creation proof; next service updates/
 connection/search/whitelist/bot, remaining whole surface and final gates.
+
+### Provider service profile update
+Implement PUT /provider/services/sid using Provider.API updateService and
+Provider.DB.updateService/updateServicePrefix/updateServiceTags. Go1.26.9,
+existing codecs/gocql/Unicode casing only, no dependency/schema changes. Provider
+headers/UUID/JSON/native name1..128/summary1..128/description1..1024/optional assets/
+unique1..3 tags, null optional fields absent. Global feature guard -> activated
+provider404 -> full service lookup404 -> unlogged LocalQuorum/retry5 batch.
+No password, queue or Galley update. Empty update200. Native response supports
+PlainText/JSON Accept; honor it before effects, empty body/no media on success.
+
+Enabled name change updates prefix and old-name/old-tags -> new-name/old-tags;
+tag change separately applies old-name/old-tags -> new-name/new-tags (or same
+name). Preserve native literal operation order, same-key delete/insert and partial
+failures, not a deduplicated final-state rewrite. Same-name tag changes mutate
+only mask differences; Unicode lower/non-contextual sigma/dotted-I and first-rune
+prefix reuse existing native-compatible casing. Disabled services get metadata
+only. Parameterized queries, validated input, context/deadlines, no secret/error
+leaks or new auth/TLS policy. Serious inherited concern: simultaneous name/tags
+can retain old-tag rows under new name; record actual native/Go index state.
+Finite schema/null/range/set/security/guard/order/index-op units; actual native/
+Go profile/media/default/empty/missing responses, disabled and enabled two-field
+updates with raw prefix/tag rows and Haskell readback. Reuse unchanged original
+Services.testUpdateServiceUpdateAcceptHeader against native and selected Go,
+plus current24 originals/queue witnesses. Connection/search/whitelist/bot and
+whole Brig535/eight-Go/three-mode/ops/image/selector gates remain open.
