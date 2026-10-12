@@ -30,3 +30,5 @@ Add Go Brig provider registration, generated credentials, activation/replay and 
 Add Go Brig synchronous provider deletion with native authentication, connection/metadata/key cleanup ordering and error media; validate native switchback and record inherited retained bot/member state without changing policy.
 
 Add Go Brig private/public provider service reads, native tag catalog and public queued deletion, preserving secret projections and single-delivery bot cleanup with Haskell switchback.
+
+Add Go Brig service creation with native PEM/RSA/MPI fingerprints, token/storage ordering and Haskell readback; preserve security policy and record failed attempts.

@@ -1,0 +1,1 @@
+<?xml version='1.0' ?><testsuites name="wire-server"><testsuite name="integration" tests="2" failures="0" time="5.674320759"><testcase name="Provider.testProviderPasswordReset" time="2.829452071" /><testcase name="Provider.testProviderPasswordResetAfterEmailUpdate" time="2.844868688" /></testsuite></testsuites>

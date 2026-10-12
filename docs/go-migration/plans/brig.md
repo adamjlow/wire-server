@@ -2242,3 +2242,15 @@ path/media, and retain explicit no-password callback as defense in depth. Origin
 assertions/comparator unchanged. Retain second failed run (all25 exits0/runner1/
 cleanup0/independent empty); ordinary RSA fingerprints/creation fields already
 matched, encrypted error boundary mismatched. Rebuild exact new production.
+
+Service creation production/observer839ef3030 finite matrix passes: fresh full
+Go/static, exact4 native/Go key/provider/PEM responses, provided/generated tokens/
+definitions/assets/tags/disabled state, actual native fingerprint bytes equal
+Go/native readback and native cleanup. Original Go24/native2 exact names/XML
+pass plus previous service14/provider/queue controls. All25 exits0/original0/
+runner0/cleanup0/independent empty. Same-author review/evidence qualification/
+evidence/provider-service-create; both failed attempts retained. Raw0600 fixture
+outputs copied via nonroot/no-network/read-only SDK without chmod/chown. Native
+empty supplied-token concern recorded; other malformed base64 diagnostic wording
+is generic/uncharacterized. Stop finite creation proof; next service updates/
+connection/search/whitelist/bot, remaining whole surface and final gates.
