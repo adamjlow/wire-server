@@ -545,7 +545,7 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
                     assert pair['status'] == 200, 'native reset pair unavailable: '+kind
                     reset_actors[kind].update(pair=pair, begin=begin)
             report['provider_reset_native_actors'] = reset_actors
-            missing_reset_email = 'synthetic-provider-reset-missing-'+uuid.uuid4().hex+'@example.com'
+            missing_reset_email = 'provider-reset-missing-'+uuid.uuid4().hex+'@example.com'
             def reset_cases(kind):
                 actor = reset_actors[kind]; pair = actor['pair']['json']
                 return [('POST', '/v19/provider/password-reset', None, {'email': missing_reset_email}),

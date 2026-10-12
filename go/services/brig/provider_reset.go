@@ -175,7 +175,10 @@ func providerResetHTTPError(w http.ResponseWriter, err error) {
 	switch {
 	case errors.As(err, &pending):
 		w.Header().Set("Retry-After", strconv.FormatInt(int64(pending.ttl), 10))
-		wireError(w, 409, "code-exists", "A password reset is already in progress.")
+		// Native RichError supplies Retry-After but no Content-Type header.
+		w.Header()["Content-Type"] = nil
+		w.WriteHeader(409)
+		_ = json.NewEncoder(w).Encode(map[string]any{"code": 409, "label": "code-exists", "message": "A password reset is already in progress."})
 	case errors.As(err, &throttle):
 		w.Header().Set("Retry-After", strconv.FormatInt(int64(throttle.ttl), 10))
 		authenticationWireError(w, 429, "too-many-requests", "Too many request to generate a verification code.")

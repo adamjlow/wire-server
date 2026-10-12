@@ -277,3 +277,11 @@ func TestProviderResetNativeMail(t *testing.T) {
 		t.Fatal("native provider reset mail changed")
 	}
 }
+
+func TestProviderResetPendingNativeMedia(t *testing.T) {
+	w := httptest.NewRecorder()
+	providerResetHTTPError(w, providerResetPending{123})
+	if w.Code != 409 || w.Result().Header.Get("Content-Type") != "" || w.Header().Get("Retry-After") != "123" || !strings.Contains(w.Body.String(), `"code-exists"`) {
+		t.Fatal("native pending reset headers/body changed")
+	}
+}

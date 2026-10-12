@@ -1987,3 +1987,12 @@ rerun84d4 was canceled early with SIGINT while its runner had no backend childre
 (no Haskell/Go test executions), to avoid a known invalid setup. Controller
 terminal1/runner130/cleanup0/independent namespace empty; retain aborted result.
 Distinct addresses are harmless fixture separation, not a fix to Haskell limits.
+
+Observerc142 confirms four native providers/codes register correctly. Retain
+failed new control setup: missing-email sentinel also exceeded64 localpart bytes
+and got400 instead of intended unknown-email403/internal404. Shorten that
+synthetic sentinel too, preserving intended unknown-account assertions. Captured
+real native pending409 has Retry-After and JSON body with no Content-Type; fix
+only Go's pending error to match, add focused media regression and rebuild full
+quality because production changed. All23 managed exits0/runner1/cleanup0 and
+independent namespace empty. No original suite/reference assertion change.
