@@ -10,8 +10,6 @@ import (
 	"errors"
 	"net/http"
 	"strconv"
-
-	"github.com/apache/cassandra-gocql-driver/v2"
 )
 
 var errProviderVerificationCode = errors.New("invalid provider verification code")
