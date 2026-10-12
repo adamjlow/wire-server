@@ -24,3 +24,5 @@ Add Go Brig native-schema provider account/profile reads and partial profile upd
 Add Go Brig provider login/password changes using native provider rate limits, hashes and signed cookies; validate native gateway signature acceptance and Haskell-Go-Haskell password switchback without revoking provider cookies or changing Haskell defaults.
 
 Add Go Brig provider password reset and internal code lookup with native verification retries, remaining TTL, throttle and provider mail; qualify shared Haskell-Go-Haskell reset codes/passwords and preserve provider cookie policy.
+
+Add Go Brig provider registration, generated credentials, activation/replay and email updates with native code/key/mail ordering; execute original provider reset/email tests against actual selected Go binaries and prove Haskell readback of Go-created accounts.

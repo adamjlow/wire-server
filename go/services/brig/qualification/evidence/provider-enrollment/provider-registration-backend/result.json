@@ -1,0 +1,47 @@
+{
+  "result": "failed",
+  "source_revision": "93a31d51e2240678f2c19da516d4f354fea6c082",
+  "build": {
+    "source_revision": "93a31d51e2240678f2c19da516d4f354fea6c082",
+    "sdk_image": "sha256:2f9e4393295d7270538dd1c666ab1345eaec06b2c2f8c217283ba6565caee399",
+    "runner_image": "sha256:f487c90fd364aac9daee5a1ce6e60fdba0ab74ab0c671ab0de0198e8f05659a9",
+    "result": "pass",
+    "sdk_controller_exit_code": 0,
+    "unchanged_runner_unit_exit_code": 0,
+    "binary_sha256": "3c321e5bce5363c0f46edc48e7addce812f5f37e218789a629e39c75114b7dbd",
+    "unit_binary_sha256": "1dd31d5a39d365fc9363c42a64d6ba60b7183cda2e41cb2c3dc53a9208ab98fb",
+    "store_binary_sha256": "f31ecba4c18f6e517199c4d935d4324a12a50648c3fc2461e2dab5e419c869e9",
+    "toolchain": "go1.26.9",
+    "sdk_archives_manifest_sha256": "875560a1f32f1ad76a866a7f792a6b392f64c5555e8f55f270f60869079f9af2",
+    "go_checks": "pass",
+    "network_cleanup_exit_code": 0,
+    "remaining_owned_containers": "",
+    "remaining_owned_networks": "",
+    "artifact_build_source_revision": "688ac8404c8aff8115ff77f15f79d337e8d433d2",
+    "reused_quality": true,
+    "reuse_basis": "Full quality/static exact source688ac8404 reused only unchanged production/compiler inputs; observer-only additions",
+    "changed_paths": [
+      "go/services/brig/qualification/paired_reads.py"
+    ]
+  },
+  "project": "wire-e2e-369d757773da487d958da337f526a863",
+  "compose_sha256": "62db2f220a5a46ee2574c84dbb14bc34647e2cc03950af09823b0a08fb3f34bb",
+  "runner_image": "sha256:f487c90fd364aac9daee5a1ce6e60fdba0ab74ab0c671ab0de0198e8f05659a9",
+  "e2e_executed": false,
+  "peer_candidates": {
+    "gundeck": {
+      "path": "/home/operator/.cache/wire-migration/go-patched-20261009/gundeck",
+      "sha256": "a50512ef30d7fa9ddf92c2c1933e69769d6691e08cdfbe9f7c4f2d266071f46c",
+      "source_revision": "c1120238f8ecd7480742156df6c5dd2d2ec41f56"
+    }
+  },
+  "redis_cluster_initialization_completed": true,
+  "runner_exit_code": 130,
+  "broker_log_capture_exit_code": 0,
+  "cleanup_exit_code": 0,
+  "remaining_resources": {
+    "container": "",
+    "network": "",
+    "volume": ""
+  }
+}

@@ -2081,3 +2081,18 @@ Retain aborted runner130/cleanup0/independent empty record; it is not test evide
 Original Provider password-reset2 selected unchanged against native and Go, with
 explicit runtime dist/brig byte hash proving correct dynamic executable selection.
 Still require actual execution/results; no discovery/source-only pass claim.
+
+Provider enrollment/email production688ac8404 / observer1fd59542c qualifies the
+four endpoints: full pinned Go/static checks, actual original Provider reset2
+both native and Go with dynamic executable hash selection, plus existing22
+exact original executions/no failures/errors/skips pass. Native-created code
+activated/replayed Go/native; Go supplied/generated credentials/profiles/keys/
+code pairs are read/accepted by restarted Haskell. Supplemental enrollment
+negatives and prior provider/reset/queue/Galley/MLS/connection controls pass.
+All25 managed exits0/original subprocesses0/runner0/cleanup0/independent empty.
+Evidence qualification/evidence/provider-enrollment; same-author bounded review,
+native partial-write/mail/reset-clear/cookie concerns and aborted preflight
+retained. Original dynamic selection concern resolved by actual dist/brig hash
+checks, not source inspection alone. Stop this finite enrollment validation.
+Next provider deletion/public service/bot APIs and remaining whole surface, then
+full535/eight-Go/all-entity three modes/operations/image/selector/legal gates.
