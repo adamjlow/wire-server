@@ -1918,3 +1918,11 @@ cache interval while keeping configured TTL/signature/identity/cookie checks.
 This corrects a new task-owned observation assumption, not an original assertion,
 frozen golden or existing response comparator. Retain initial failed result, all23
 managed exits0/cleanup0 and independently empty project; no Haskell/Go fix needed.
+
+Observer40feca9d3 confirms native token expiry is exactly one second behind the
+request-start floor (configured60/cached Now), then fails its positive/negative
+gateway control: both404 because the new probe mistakenly targeted Federator8098.
+Existing runtime.nginz_config binds native Nginz HTTP8080. Correct only the two
+new probe ports, retaining strict forged-token denial and native/Go response
+comparison. All23 managed exits0/runner1/cleanup0/independent resources empty;
+retain this observer failure. No candidate/reference/original assertion changes.

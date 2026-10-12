@@ -96,9 +96,9 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
         # accounting for that native cache rather than assuming request-start Now.
         assert before-1+60 <= expiry <= after+60, 'provider token TTL changed: '+phase
         assert parsedate_to_datetime(cookie['expires']).timestamp() == expiry, 'provider cookie expiry differs from token: '+phase
-        valid = request('GET', '/v19/provider/assets', {'Authorization': 'Bearer '+cookie.value}, port=8098)[0]
+        valid = request('GET', '/v19/provider/assets', {'Authorization': 'Bearer '+cookie.value}, port=8080)[0]
         forged = ('A' if cookie.value[0] != 'A' else 'B')+cookie.value[1:]
-        invalid = request('GET', '/v19/provider/assets', {'Authorization': 'Bearer '+forged}, port=8098)[0]
+        invalid = request('GET', '/v19/provider/assets', {'Authorization': 'Bearer '+forged}, port=8080)[0]
         report['provider_token_native_gateway_'+phase] = {'valid': valid, 'invalid': invalid, 'token_fields': properties, 'cookie_path': cookie['path'], 'expires': cookie['expires']}
         assert valid['status'] not in (401,403) and invalid['status'] in (401,403), 'native gateway provider signature boundary failed: '+phase
         return response, valid
