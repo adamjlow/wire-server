@@ -2176,3 +2176,14 @@ search/whitelist/bot public contracts and whole Brig gates remain open.
 Public profile list specifically uses native Consistency One/retry1; single
 profile/private reads use LocalQuorum. The tag catalog is a bare array (newtype
 schema), not an object. Keep these source-observed distinctions.
+
+Service reads/catalog/public-delete productiona2fb668aa / observerb32dd9af0
+finite matrix passes: fresh full Go/static checks, exact14 native/Go projections/
+HEAD/catalog/header/missing/delete controls, real DELETE202/single broker delivery/
+bot-client-index-Galley cleanup and native readback. Native Provider2/Go24 exact
+original names/XML/no failure/error/skip and all prior provider/queue/store
+witnesses pass. All25 managed exits0/original processes0/runner0/cleanup0/
+independent empty. Same-author review/evidence qualification/evidence/provider-
+service-reads-delete. No failed attempts or oracle/Haskell changes in this slice.
+Stop finite read/delete validation; next service create/update/connection/search/
+whitelist/bot APIs and remaining whole Brig surface/final acceptance.

@@ -28,3 +28,5 @@ Add Go Brig provider password reset and internal code lookup with native verific
 Add Go Brig provider registration, generated credentials, activation/replay and email updates with native code/key/mail ordering; execute original provider reset/email tests against actual selected Go binaries and prove Haskell readback of Go-created accounts.
 
 Add Go Brig synchronous provider deletion with native authentication, connection/metadata/key cleanup ordering and error media; validate native switchback and record inherited retained bot/member state without changing policy.
+
+Add Go Brig private/public provider service reads, native tag catalog and public queued deletion, preserving secret projections and single-delivery bot cleanup with Haskell switchback.
