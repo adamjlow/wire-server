@@ -1,0 +1,24 @@
+{
+  "source_revision": "ee7bc4bca14365094238d4477871c0d8f80cd96c",
+  "sdk_image": "sha256:2f9e4393295d7270538dd1c666ab1345eaec06b2c2f8c217283ba6565caee399",
+  "runner_image": "sha256:f487c90fd364aac9daee5a1ce6e60fdba0ab74ab0c671ab0de0198e8f05659a9",
+  "result": "pass",
+  "sdk_controller_exit_code": 0,
+  "unchanged_runner_unit_exit_code": 0,
+  "binary_sha256": "899523f667e56ec540e3111febaa8c0e013242dda448a468b9c9fc1551d6fe20",
+  "unit_binary_sha256": "1302b8e1234be16ef705eabcda9e86b8f7b27e86cc3b9f40ef4290c669cd2049",
+  "store_binary_sha256": "ab6c8c0cac16f4ae6ccc5301b61cd4ba2716060869cc5c3fd063023313782868",
+  "toolchain": "go1.26.9",
+  "sdk_archives_manifest_sha256": "875560a1f32f1ad76a866a7f792a6b392f64c5555e8f55f270f60869079f9af2",
+  "go_checks": "pass",
+  "network_cleanup_exit_code": 0,
+  "remaining_owned_containers": "",
+  "remaining_owned_networks": "",
+  "artifact_build_source_revision": "98ec9f19b61b557c69523f83d487bcea671c5b36",
+  "reused_quality": true,
+  "reuse_basis": "Observer/docs only; exact production, tests, dependencies and compiler inputs unchanged",
+  "changed_paths": [
+    "docs/go-migration/plans/brig.md",
+    "go/services/brig/qualification/paired_reads.py"
+  ]
+}

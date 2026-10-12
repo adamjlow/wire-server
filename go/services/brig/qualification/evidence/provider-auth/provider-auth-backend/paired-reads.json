@@ -1,0 +1,373 @@
+{
+  "result": "failed",
+  "e2e_executed": false,
+  "scope": "Finite native -> Go read/reauthentication observations on native-created state.",
+  "records": [],
+  "prekey_allocation": {
+    "strategy": "optimistic",
+    "table": "integration-brig-prekeys",
+    "owned_dynamo": true
+  },
+  "internal_transport": {
+    "type": "stomp",
+    "broker_image": "apache/activemq@sha256:1cacfbd9c08ad437c5e1177a9f1217e7c7ada62a64065128acd1a81866a03711",
+    "broker_image_id": "sha256:b9972c335fae8deb648f3f048622aaf3540c82d5c42741c9e6dad43af1e18180",
+    "synthetic_authentication": true
+  },
+  "native_brig": {
+    "path": "/nix/store/f6l2f0l8l2r6z9jbg937q96k6056iqfn-brig/bin/brig",
+    "sha256": "c45a40da63268712a7cacdbd884287fa3dc93cec179d70323d3f22f7d5cdf1ca"
+  },
+  "go_gundeck_sha256": "a50512ef30d7fa9ddf92c2c1933e69769d6691e08cdfbe9f7c4f2d266071f46c",
+  "native_setup": [
+    {
+      "method": "POST",
+      "path": "/i/users",
+      "status": 201,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"accent_id\":0,\"assets\":[],\"email\":\"synthetic-parity-2a6dc300d42742bdbc576b7cd4b80827@example.com\",\"id\":\"faedcbc8-cc75-4035-ace7-2612f7966f63\",\"locale\":\"en\",\"managed_by\":\"wire\",\"name\":\"Synthetic parity reader\",\"picture\":[],\"qualified_id\":{\"domain\":\"example.com\",\"id\":\"faedcbc8-cc75-4035-ace7-2612f7966f63\"},\"searchable\":true,\"status\":\"active\",\"supported_protocols\":[\"proteus\"],\"type\":\"regular\"}",
+      "location": "faedcbc8-cc75-4035-ace7-2612f7966f63",
+      "json": {
+        "accent_id": 0,
+        "assets": [],
+        "email": "synthetic-parity-2a6dc300d42742bdbc576b7cd4b80827@example.com",
+        "id": "faedcbc8-cc75-4035-ace7-2612f7966f63",
+        "locale": "en",
+        "managed_by": "wire",
+        "name": "Synthetic parity reader",
+        "picture": [],
+        "qualified_id": {
+          "domain": "example.com",
+          "id": "faedcbc8-cc75-4035-ace7-2612f7966f63"
+        },
+        "searchable": true,
+        "status": "active",
+        "supported_protocols": [
+          "proteus"
+        ],
+        "type": "regular"
+      }
+    }
+  ],
+  "provider_native_registered": {
+    "method": "POST",
+    "path": "/v19/provider/register",
+    "status": 201,
+    "content_type": "application/json;charset=utf-8",
+    "body": "{\"id\":\"704d4f66-4227-4943-bb26-ab014f4f4910\"}",
+    "json": {
+      "id": "704d4f66-4227-4943-bb26-ab014f4f4910"
+    }
+  },
+  "provider_native_unactivated": [
+    {
+      "method": "GET",
+      "path": "/v19/provider",
+      "status": 404,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"code\":404,\"label\":\"not-found\",\"message\":\"Provider not found.\"}",
+      "json": {
+        "code": 404,
+        "label": "not-found",
+        "message": "Provider not found."
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v19/providers/704d4f66-4227-4943-bb26-ab014f4f4910",
+      "status": 404,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"code\":404,\"label\":\"not-found\",\"message\":\"Provider not found.\"}",
+      "json": {
+        "code": 404,
+        "label": "not-found",
+        "message": "Provider not found."
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/v19/provider",
+      "status": 404,
+      "content_type": "application/json",
+      "body": "{\"code\":404,\"label\":\"not-found\",\"message\":\"Provider not found.\"}",
+      "json": {
+        "code": 404,
+        "label": "not-found",
+        "message": "Provider not found."
+      }
+    }
+  ],
+  "provider_native_activated": {
+    "method": "GET",
+    "path": "/v19/provider/activate?code=Y6R7EuXSAHwDbePwr9PT&key=tib0PL603UzIlbkMz8d6",
+    "status": 200,
+    "content_type": "application/json;charset=utf-8",
+    "body": "{\"email\":\"synthetic-provider-9220eee1f81c48e9adbc7c1f69aece7b@example.com\"}",
+    "json": {
+      "email": "synthetic-provider-9220eee1f81c48e9adbc7c1f69aece7b@example.com"
+    }
+  },
+  "provider_native_hidden_actor": {
+    "method": "POST",
+    "path": "/v19/provider/register",
+    "status": 201,
+    "content_type": "application/json;charset=utf-8",
+    "body": "{\"id\":\"6d546c59-8fff-4de1-bd4d-47dce313db5d\"}",
+    "json": {
+      "id": "6d546c59-8fff-4de1-bd4d-47dce313db5d"
+    }
+  },
+  "provider_native_controls": [
+    {
+      "method": "GET",
+      "path": "/v19/provider",
+      "status": 403,
+      "content_type": null,
+      "body": ""
+    },
+    {
+      "method": "GET",
+      "path": "/v19/provider",
+      "status": 403,
+      "content_type": null,
+      "body": ""
+    },
+    {
+      "method": "GET",
+      "path": "/v19/provider",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"description\":\"Synthetic provider profile\",\"email\":\"synthetic-provider-9220eee1f81c48e9adbc7c1f69aece7b@example.com\",\"id\":\"704d4f66-4227-4943-bb26-ab014f4f4910\",\"name\":\"Synthetic native provider\",\"url\":\"https://example.com/provider\"}",
+      "json": {
+        "description": "Synthetic provider profile",
+        "email": "synthetic-provider-9220eee1f81c48e9adbc7c1f69aece7b@example.com",
+        "id": "704d4f66-4227-4943-bb26-ab014f4f4910",
+        "name": "Synthetic native provider",
+        "url": "https://example.com/provider"
+      }
+    },
+    {
+      "method": "HEAD",
+      "path": "/v19/provider",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": ""
+    },
+    {
+      "method": "GET",
+      "path": "/v19/providers/704d4f66-4227-4943-bb26-ab014f4f4910",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"description\":\"Synthetic provider profile\",\"email\":\"synthetic-provider-9220eee1f81c48e9adbc7c1f69aece7b@example.com\",\"id\":\"704d4f66-4227-4943-bb26-ab014f4f4910\",\"name\":\"Synthetic native provider\",\"url\":\"https://example.com/provider\"}",
+      "json": {
+        "description": "Synthetic provider profile",
+        "email": "synthetic-provider-9220eee1f81c48e9adbc7c1f69aece7b@example.com",
+        "id": "704d4f66-4227-4943-bb26-ab014f4f4910",
+        "name": "Synthetic native provider",
+        "url": "https://example.com/provider"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v19/provider",
+      "status": 404,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"code\":404,\"label\":\"not-found\",\"message\":\"Provider not found.\"}",
+      "json": {
+        "code": 404,
+        "label": "not-found",
+        "message": "Provider not found."
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v19/providers/9bd75bad-2e07-4b39-a904-65453815fe95",
+      "status": 404,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"code\":404,\"label\":\"not-found\",\"message\":\"Provider not found.\"}",
+      "json": {
+        "code": 404,
+        "label": "not-found",
+        "message": "Provider not found."
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/v19/provider",
+      "status": 404,
+      "content_type": "application/json",
+      "body": "{\"code\":404,\"label\":\"not-found\",\"message\":\"Provider not found.\"}",
+      "json": {
+        "code": 404,
+        "label": "not-found",
+        "message": "Provider not found."
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/v19/provider",
+      "status": 200,
+      "content_type": null,
+      "body": ""
+    },
+    {
+      "method": "PUT",
+      "path": "/v19/provider",
+      "status": 200,
+      "content_type": null,
+      "body": ""
+    },
+    {
+      "method": "GET",
+      "path": "/v19/provider",
+      "status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"description\":\"Synthetic provider profile\",\"email\":\"synthetic-provider-9220eee1f81c48e9adbc7c1f69aece7b@example.com\",\"id\":\"704d4f66-4227-4943-bb26-ab014f4f4910\",\"name\":\"Synthetic native provider\",\"url\":\"https://example.com/provider\"}",
+      "json": {
+        "description": "Synthetic provider profile",
+        "email": "synthetic-provider-9220eee1f81c48e9adbc7c1f69aece7b@example.com",
+        "id": "704d4f66-4227-4943-bb26-ab014f4f4910",
+        "name": "Synthetic native provider",
+        "url": "https://example.com/provider"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v19/provider",
+      "status": 404,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"code\":404,\"label\":\"not-found\",\"message\":\"Provider not found.\"}",
+      "json": {
+        "code": 404,
+        "label": "not-found",
+        "message": "Provider not found."
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v19/providers/6d546c59-8fff-4de1-bd4d-47dce313db5d",
+      "status": 404,
+      "content_type": "application/json;charset=utf-8",
+      "body": "{\"code\":404,\"label\":\"not-found\",\"message\":\"Provider not found.\"}",
+      "json": {
+        "code": 404,
+        "label": "not-found",
+        "message": "Provider not found."
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/v19/provider",
+      "status": 404,
+      "content_type": "application/json",
+      "body": "{\"code\":404,\"label\":\"not-found\",\"message\":\"Provider not found.\"}",
+      "json": {
+        "code": 404,
+        "label": "not-found",
+        "message": "Provider not found."
+      }
+    }
+  ],
+  "provider_native_auth_controls": [
+    {
+      "method": "POST",
+      "path": "/v19/provider/login",
+      "status": 403,
+      "content_type": "application/json",
+      "body": "{\"code\":403,\"label\":\"invalid-credentials\",\"message\":\"Authentication failed\"}",
+      "json": {
+        "code": 403,
+        "label": "invalid-credentials",
+        "message": "Authentication failed"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v19/provider/login",
+      "status": 403,
+      "content_type": "application/json",
+      "body": "{\"code\":403,\"label\":\"invalid-credentials\",\"message\":\"Authentication failed\"}",
+      "json": {
+        "code": 403,
+        "label": "invalid-credentials",
+        "message": "Authentication failed"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v19/provider/login",
+      "status": 403,
+      "content_type": "application/json",
+      "body": "{\"code\":403,\"label\":\"invalid-credentials\",\"message\":\"Authentication failed\"}",
+      "json": {
+        "code": 403,
+        "label": "invalid-credentials",
+        "message": "Authentication failed"
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/v19/provider/password",
+      "status": 403,
+      "content_type": "application/json",
+      "body": "{\"code\":403,\"label\":\"invalid-credentials\",\"message\":\"Authentication failed\"}",
+      "json": {
+        "code": 403,
+        "label": "invalid-credentials",
+        "message": "Authentication failed"
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/v19/provider/password",
+      "status": 409,
+      "content_type": "application/json",
+      "body": "{\"code\":409,\"label\":\"password-must-differ\",\"message\":\"For password reset, new and old password must be different.\"}",
+      "json": {
+        "code": 409,
+        "label": "password-must-differ",
+        "message": "For password reset, new and old password must be different."
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/v19/provider/password",
+      "status": 403,
+      "content_type": null,
+      "body": ""
+    }
+  ],
+  "provider_login_native": {
+    "method": "POST",
+    "path": "/v19/provider/login",
+    "status": 200,
+    "content_type": null,
+    "body": ""
+  },
+  "failure": "provider token TTL changed: native",
+  "owned_process_exit_codes": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ]
+}

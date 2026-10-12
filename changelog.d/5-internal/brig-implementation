@@ -20,3 +20,5 @@ replay, plus durable switchback and22 unchanged originals. Full Brig work remain
 Fix Go Brig startup for optimistic DynamoDB prekeys with STOMP queues; qualify real lock creation/deletion and retain all failed attempts.
 
 Add Go Brig native-schema provider account/profile reads and partial profile updates, preserving activation visibility, provider token-type authorization and global second-factor guard; qualify native/Go responses and durable native readback.
+
+Add Go Brig provider login/password changes using native provider rate limits, hashes and signed cookies; validate native gateway signature acceptance and Haskell-Go-Haskell password switchback without revoking provider cookies or changing Haskell defaults.

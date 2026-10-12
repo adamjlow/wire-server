@@ -1926,3 +1926,16 @@ Existing runtime.nginz_config binds native Nginz HTTP8080. Correct only the two
 new probe ports, retaining strict forged-token denial and native/Go response
 comparison. All23 managed exits0/runner1/cleanup0/independent resources empty;
 retain this observer failure. No candidate/reference/original assertion changes.
+
+Provider auth production98ec9f19b / observeree7bc4bca qualifies both endpoints.
+Full pinned Go/static checks pass. Native/Go6 auth negatives and successful
+login/change/readback match; actual Nginz validprovider405/forged401; native
+accepts Go-written six-character password and rejects its predecessor. Original22
+unchanged names/XML/no failures/errors/skips plus prior14 provider controls,
+optimistic-STOMP/Dynamo/Galley/client/MLS/connection durable regressions pass.
+All25 exits0/runner0/cleanup0/independent empty. Record same-author bounded review
+and inherited no-provider-cookie revocation; retain both observer failures.
+Evidence qualification/evidence/provider-auth; exact build98 source reused for
+observer/docs only. Next provider registration/activation/email/reset/deletion
+and public service/bot APIs, then remaining whole surface and full acceptance.
+No whole535/eight-Go/all3 modes/operations/image/selector/compatibility claim.

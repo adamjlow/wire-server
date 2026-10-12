@@ -1,0 +1,9 @@
+{
+  "project": "wire-e2e-ef7683a8c9ad42c2adc81dcf3500a86f",
+  "result": "pass",
+  "resources": {
+    "containers": "",
+    "networks": "",
+    "volumes": ""
+  }
+}
