@@ -97,7 +97,7 @@ type mailTemplates struct {
 }
 
 var nativeMailFiles = map[string][]string{
-	"provider": {"password-reset"},
+	"provider": {"password-reset", "activation", "update", "approval-confirm"},
 	"user":     {"verification", "activation", "update", "team-activation", "password-reset", "deletion", "new-client", "verification-login", "verification-scim-token", "verification-delete-team"},
 	"team":     {"invitation", "migration", "new-member-welcome", "new-team-owner-welcome", "idp-config-change"},
 }

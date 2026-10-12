@@ -48,7 +48,20 @@ func decodeProviderProfileUpdate(raw json.RawMessage) (providerProfileUpdate, er
 
 type providerAccountStore struct{ cassandra *gocql.Session }
 
+type providerAccountData struct {
+	name, url, description string
+	email                  *string
+}
+
 func (s providerAccountStore) lookup(ctx context.Context, id gocql.UUID) (*providerAccount, error) {
+	data, err := s.data(ctx, id)
+	if err != nil || data == nil || data.email == nil {
+		return nil, err
+	}
+	return &providerAccount{ID: id, Name: data.name, Email: *data.email, URL: data.url, Description: data.description}, nil
+}
+
+func (s providerAccountStore) data(ctx context.Context, id gocql.UUID) (*providerAccountData, error) {
 	var name, email, description *string
 	var rawURL []byte
 	err := s.cassandra.Query(`SELECT name,email,url,descr FROM provider WHERE id=?`, id).
@@ -64,15 +77,14 @@ func (s providerAccountStore) lookup(ctx context.Context, id gocql.UUID) (*provi
 	if err != nil || name == nil || description == nil || !utf8.ValidString(*name) || !utf8.ValidString(*description) {
 		return nil, errors.New("invalid stored provider")
 	}
-	// Native lookupAccount hides a registered account until its email is activated.
-	if email == nil {
-		return nil, nil
+	if email != nil {
+		canonicalEmail, err := canonicalRegistrationEmail(*email)
+		if err != nil {
+			return nil, errors.New("invalid stored provider email")
+		}
+		email = &canonicalEmail
 	}
-	canonicalEmail, err := canonicalRegistrationEmail(*email)
-	if err != nil {
-		return nil, errors.New("invalid stored provider email")
-	}
-	return &providerAccount{ID: id, Name: *name, Email: canonicalEmail, URL: string(url), Description: *description}, nil
+	return &providerAccountData{name: *name, email: email, url: string(url), description: *description}, nil
 }
 
 func (s providerAccountStore) update(ctx context.Context, id gocql.UUID, update providerProfileUpdate) error {

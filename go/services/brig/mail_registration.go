@@ -16,6 +16,8 @@ type registrationMailRenderer struct {
 	activationURL, teamActivationURL mailTemplate
 	passwordResetURL                 mailTemplate
 	providerResetURL                 mailTemplate
+	providerActivationURL            mailTemplate
+	providerHomeURL                  string
 	deletionURL                      mailTemplate
 	memberWelcomeURL                 string
 	warn                             func(string)
@@ -96,6 +98,7 @@ func newRegistrationMailRenderer(c Config, warn func(string)) (registrationMailR
 		{user, "activationUrl", &result.activationURL}, {team, "tActivationUrl", &result.teamActivationURL}, {user, "passwordResetUrl", &result.passwordResetURL},
 		{user, "deletionUrl", &result.deletionURL},
 		{provider, "providerPwResetUrl", &result.providerResetURL},
+		{provider, "providerActivationUrl", &result.providerActivationURL},
 	} {
 		value, err := text(url.fields, url.key)
 		if err != nil {
@@ -106,6 +109,15 @@ func newRegistrationMailRenderer(c Config, warn func(string)) (registrationMailR
 			return result, err
 		}
 	}
+	home, err := text(provider, "homeUrl")
+	if err != nil {
+		return result, err
+	}
+	canonicalHome, err := storedHTTPSURL([]byte(home))
+	if err != nil {
+		return result, failure
+	}
+	result.providerHomeURL = string(canonicalHome)
 	result.memberWelcomeURL, err = text(team, "tMemberWelcomeUrl")
 	if err != nil {
 		return result, err

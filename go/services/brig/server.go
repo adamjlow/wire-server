@@ -321,6 +321,7 @@ func Run(ctx context.Context, c Config) error {
 	}
 	verificationStore := verificationCodeStore{cassandra}
 	business.providerReset = &providerResetService{auth: *business.providerAuth, lookup: verificationStore.providerLookup, insert: verificationStore.providerInsert, remove: verificationStore.providerRemove, throttle: verificationStore.providerThrottle, insertThrottle: verificationStore.providerInsertThrottle, mail: mailDelivery.providerPasswordReset, newValue: newProviderCodeValue, throttleTTL: throttleTTL}
+	business.providerRegistration = &providerRegistrationService{auth: *business.providerAuth, codes: *business.providerReset, create: providerStore.create, data: providerStore.data, activateKey: providerStore.activate, mail: mailDelivery.providerActivation, approval: mailDelivery.providerApproval, newPassword: newProviderPassword}
 	deletionCodes := accountDeletionCodes{lookup: verificationStore.deletionLookup, insert: verificationStore.deletionInsert, remove: verificationStore.deletionRemove, throttle: verificationStore.deletionThrottle, insertThrottle: verificationStore.deletionInsertThrottle, mail: mailDelivery.deletion, throttleTTL: throttleTTL}
 	deletionPeers := accountDeletionPeers{peers: business.peers, cargohold: c.Cargohold}
 	deletionGroups := accountDeletionGroups{member: business.peers.deletionTeamMember, page: business.users.deletionGroupPage, remove: business.users.removeDeletionGroupMember}

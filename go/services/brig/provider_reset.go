@@ -181,7 +181,9 @@ func providerResetHTTPError(w http.ResponseWriter, err error) {
 		_ = json.NewEncoder(w).Encode(map[string]any{"code": 409, "label": "code-exists", "message": "A password reset is already in progress."})
 	case errors.As(err, &throttle):
 		w.Header().Set("Retry-After", strconv.FormatInt(int64(throttle.ttl), 10))
-		authenticationWireError(w, 429, "too-many-requests", "Too many request to generate a verification code.")
+		w.Header()["Content-Type"] = nil
+		w.WriteHeader(429)
+		_ = json.NewEncoder(w).Encode(map[string]any{"code": 429, "label": "too-many-requests", "message": "Too many request to generate a verification code."})
 	case errors.Is(err, errProviderVerificationCode):
 		authenticationWireError(w, 403, "invalid-code", "Invalid verification code")
 	case errors.Is(err, errPasswordResetCode), errors.Is(err, errPasswordResetSame):

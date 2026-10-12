@@ -2023,3 +2023,50 @@ Original Test.Provider password-reset cases identified but setupProvider needs
 Go registration/activation and its dynamic modified-backend launch must select
 Go; do not count source review or a native dynamic execution as Go original proof.
 Whole535/eight-Go/all-entity three modes/operations/image/selector gates remain open.
+
+### Provider registration, activation and email
+Implement POST /provider/register, GET/HEAD /provider/activate?key&code,
+GET/HEAD /i/provider/activation-code?email and PUT /provider/email. Reference
+Provider.API newAccount/activateAccountKey/getActivationCode/updateAccountEmail/
+activate, Provider.DB account/key logged batch and Provider.Email/Template.
+Go1.26.9/existing password/gocql/mail dependencies, no new module. Native name
+1..128/HTTPS/email/description1..1024 and optional password6..1024; missing/null
+password generates12random bytes in standard base64 (16 characters), hash8,
+returns it once; supplied password hash6 and response omits password. Require
+native X-Forwarded-For and preserve per-IP hash rate keys. Active key collision409;
+hidden account duplicates remain native supported. Register hashes -> inserts
+hidden provider -> generates scope2 code -> checks/writes throttle -> writes
+24-hour code/retries3 -> awaits activation mail. No compensating deletes on
+throttle/mail failure. Email update requires provider gateway type/id, checks key
+collision (including self), writes scope2 code/throttle and awaits update mail
+using native placeholder name "name"; no extra account-existence gate.
+
+Activation verifies code with remaining TTL/three attempts and requires attached
+provider/raw account. Same stored email returns204 without deleting code. Initial
+activation checks new-key ownership, logged LocalQuorum batch key+email updates,
+then approval confirmation mail -> email200. Changed email deletes old scope3
+reset code before key collision check/batch (preserve native partial failure),
+deletes old key and writes new normalized key/original email. Keep code/replay;
+internal activation pair lookup is feature-guarded and nonconsuming. Parameterized
+read retry1/write retry5; no IF EXISTS, transaction/LWT or schema changes.
+
+Security: existing bounded JSON/header/UUID/URI/password validation, cryptographic
+randomness, provider/IP worker/rate namespace, constant-time code checks,
+redacted credential formatting, cancellation/generic errors, verified TLS and
+existing awaited mail transport. Render native default-locale provider activation/
+update/approval-confirm templates, providerActivationUrl/homeUrl, branding/name/
+email values and HTML escaping; no secret logs. Native code-throttle RichError
+has Retry-After/JSON/no Content-Type (VerificationCodeSubsystem error source);
+correct provider throttle response and add focused regression, without touching
+Haskell or original assertions. Inherited registration/mail partial writes and
+stateless provider-cookie behavior remain unchanged and recorded.
+Finite checks: supplied/generated/null password/schema boundaries; registration
+order/throttle/mail failure retention; initial/replay/email-change/code attempts/
+missing account/key collision/old-reset removal ordering; global guard/provider
+headers/internal nonconsumption; default provider mail purpose/rendering/escaping.
+Owned observer creates native actors/codes and compares Go activation/replay/email
+update, registers/activates Go actors, then restarts native to read profiles and
+accept Go supplied/generated credentials/codes. Reuse original22 plus existing
+provider-auth/reset/profile/queue proofs. Original Provider password-reset tests
+can run once registration/activation and correct dynamic Go selection are ready;
+keep all535/eight-Go/whole-service acceptance unchanged, no availability promotion.
