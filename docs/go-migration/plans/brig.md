@@ -1978,3 +1978,12 @@ shared X-Forwarded-For127.0.0.46; give each a distinct synthetic address as prio
 provider setup does, retaining configured five-operation buckets. Record each
 registration response before assertion to diagnose native fixture failures.
 No rate-limit/exception config, original assertions or Haskell code change.
+
+Reassessment identifies the actual fixture bug before re-execution: generated
+localparts for go-begin/exhausted were66/67characters, above native EmailAddress
+limit64 (native/go actors64/60 had registered). Shorten only synthetic prefix;
+all new addresses now<=57characters. No parser policy change. The actor-address
+rerun84d4 was canceled early with SIGINT while its runner had no backend children
+(no Haskell/Go test executions), to avoid a known invalid setup. Controller
+terminal1/runner130/cleanup0/independent namespace empty; retain aborted result.
+Distinct addresses are harmless fixture separation, not a fix to Haskell limits.

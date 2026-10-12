@@ -528,7 +528,7 @@ def inside(gundeck_path=None, access_switchback=False, login_contract=False, act
         if provider_reset_contract:
             reset_actors = {}
             for actor_index, kind in enumerate(('native', 'go', 'go-begin', 'exhausted')):
-                email = 'synthetic-provider-reset-'+kind+'-'+uuid.uuid4().hex+'@example.com'
+                email = 'provider-reset-'+kind+'-'+uuid.uuid4().hex+'@example.com'
                 actor = request('POST', '/v19/provider/register', {'X-Forwarded-For': '127.0.0.'+str(46+actor_index)},
                     {'name': 'Synthetic reset provider', 'email': email, 'password': 'Synthetic-provider-password!',
                      'url': 'https://example.com/provider', 'description': 'Synthetic reset switchback'})[0]
