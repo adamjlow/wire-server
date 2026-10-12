@@ -147,3 +147,14 @@ func TestServiceCreateNativeEffectOrder(t *testing.T) {
 		})
 	}
 }
+
+func TestNativeServicePEMLineDecoder(t *testing.T) {
+	for _, text := range []string{"noise\n-----BEGIN PUBLIC KEY-----\nAQID\nBAUG\n-----END PUBLIC KEY-----\ntrailing noise", "-----BEGIN PUBLIC KEY-----\r\nAQID\r\n-----END PUBLIC KEY-----\r\n"} {
+		if _, err := nativeServicePEM(text); err != nil {
+			t.Fatal("native line decoding rejected", err)
+		}
+	}
+	if _, err := nativeServicePEM("-----BEGIN PUBLIC KEY-----\nProc-Type: 4,ENCRYPTED\n-----END PUBLIC KEY-----\n"); err == nil || err.Error() != "invalid PEM: decoding failed: Base64-encoded bytestring requires padding" {
+		t.Fatal("native encrypted-header parser boundary changed", err)
+	}
+}

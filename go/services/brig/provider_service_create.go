@@ -6,11 +6,9 @@ import (
 	"crypto/rand"
 	"encoding/base64"
 	"encoding/json"
-	"encoding/pem"
 	"errors"
 	"net/http"
 	"sort"
-	"strings"
 	"unicode/utf8"
 
 	"github.com/apache/cassandra-gocql-driver/v2"
@@ -65,11 +63,10 @@ func decodeProviderNewService(raw json.RawMessage) (providerNewService, error) {
 	if err != nil {
 		return result, err
 	}
-	block, rest := pem.Decode([]byte(*key))
-	if block == nil || len(strings.TrimSpace(string(rest))) != 0 {
-		return result, errors.New("invalid service PEM")
+	result.key, err = nativeServicePEM(*key)
+	if err != nil {
+		return result, err
 	}
-	result.key = pem.EncodeToMemory(block)
 	result.token, err = registrationText(fields, "auth_token", false)
 	if err != nil || result.token != nil && !validActivationValue(*result.token) {
 		return result, errors.New("invalid service token")
@@ -182,7 +179,12 @@ func (s providerServiceCreation) handle(w http.ResponseWriter, r *http.Request) 
 		request, err = decodeProviderNewService(raw)
 	}
 	if err != nil {
-		authenticationWireError(w, 400, "bad-request", "Invalid new service request")
+		var pemError servicePEMError
+		if errors.As(err, &pemError) {
+			wireError(w, 400, "bad-request", "Error in $['public_key']: Failed reading: "+pemError.Error())
+		} else {
+			authenticationWireError(w, 400, "bad-request", "Invalid new service request")
+		}
 		return
 	}
 	if s.auth.secondFactorEnabled == nil {

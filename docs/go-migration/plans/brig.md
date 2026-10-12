@@ -2233,3 +2233,12 @@ of reading operator stdin. No RSA minimum/token/TLS/auth policy change. Add an
 encrypted public-PEM negative against actual native noninteractive runner and
 focused unit, keep malformed/non-RSA/weak controls. Rebuild fresh full quality
 because crypto input changed; earlier tested artifact identities remain retained.
+Native encrypted negative reaches schema parsing400 bad-request/charset, not
+key validation400: Data.PEM0.2.4 primary source decodes each content line separately
+and does not implement headers. Retrieved immutable Hackage package source to
+verify parser/64-column writer rather than special-case the test payload. Add
+native one-block/linewise base64/CR/end-name parser, preserve native padding error
+path/media, and retain explicit no-password callback as defense in depth. Original
+assertions/comparator unchanged. Retain second failed run (all25 exits0/runner1/
+cleanup0/independent empty); ordinary RSA fingerprints/creation fields already
+matched, encrypted error boundary mismatched. Rebuild exact new production.
